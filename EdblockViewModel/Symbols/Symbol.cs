@@ -1,0 +1,71 @@
+﻿using System.ComponentModel;
+using System.Runtime.CompilerServices;
+
+namespace EdblockViewModel.Symbols;
+
+public abstract class Symbol : INotifyPropertyChanged
+{
+    protected const int defaultWidth = 140;
+    protected const int defaultHeigth = 60;
+
+    private int width;
+    public int Width
+    {
+        get => width;
+        set
+        {
+            width = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private int heigth;
+    public int Height
+    {
+        get => heigth;
+        set
+        {
+            heigth = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private double xCoordinate;
+    public double XCoordinate
+    {
+        get => xCoordinate;
+        set
+        {
+            xCoordinate = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private int yCoordinate;
+    public int YCoordinate
+    {
+        get => yCoordinate;
+        set
+        {
+            yCoordinate = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private bool focus = false;
+    public bool Focus
+    {
+        get => focus;
+        set
+        {
+            focus = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public event PropertyChangedEventHandler? PropertyChanged;
+    public void OnPropertyChanged([CallerMemberName] string prop = "")
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
+    }
+}
