@@ -7,4 +7,8 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\EdblockViewModel\EdblockViewModel.csproj" />
+  </ItemGroup>
+
 </Project>
