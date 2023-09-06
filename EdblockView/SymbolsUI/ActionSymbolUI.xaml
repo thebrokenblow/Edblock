@@ -3,9 +3,18 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors" 
+             xmlns:edblockviewmodel="clr-namespace:EdblockViewModel;assembly=EdblockViewModel"
+             d:DataContext="{d:DesignInstance Type=edblockviewmodel:CanvasSymbolsVM}"
              mc:Ignorable="d" 
              d:DesignHeight="60" d:DesignWidth="140">
     <Canvas Style="{StaticResource FrameSymbol}" Background="#FF52C0AA">
-        <TextBox Style="{StaticResource TextFrameSymbol}" Text="Действие"/>
+        <TextBox Style="{StaticResource TextFrameSymbol}" Text="Действие">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                    <i:InvokeCommandAction Command="{Binding ClickSymbol}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </TextBox>
     </Canvas>
 </UserControl>

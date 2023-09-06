@@ -1,5 +1,4 @@
-﻿using EdblockViewModel;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
 
 namespace EdblockView.Components;
 
@@ -11,6 +10,5 @@ public partial class CanvasSymbols : UserControl
     public CanvasSymbols()
     {
         InitializeComponent();
-        DataContext = new CanvasSymbolsVM();
     }
 }

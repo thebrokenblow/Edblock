@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using EdblockViewModel;
 
 namespace EdblockView;
 
@@ -10,5 +11,6 @@ public partial class Edblock : Window
     public Edblock()
     {
         InitializeComponent();
+        DataContext = new CanvasSymbolsVM();
     }
 }
