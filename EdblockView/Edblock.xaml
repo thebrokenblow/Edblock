@@ -4,15 +4,15 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
         xmlns:components="clr-namespace:EdblockView.Components" 
-        xmlns:symbolsUI="clr-namespace:EdblockView.SymbolsUI" 
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors" 
-        xmlns:edblockVM="clr-namespace:EdblockViewModel;assembly=EdblockViewModel" 
+        xmlns:edblockVM="clr-namespace:EdblockViewModel;assembly=EdblockViewModel"
+        xmlns:symbolsUI="clr-namespace:EdblockView.SymbolsUI"
         d:DataContext="{d:DesignInstance Type=edblockVM:CanvasSymbolsVM}"
         mc:Ignorable="d"
         Title="Edblock" Height="450" Width="800">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="140"/>
+            <ColumnDefinition Width="160"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Column="0">

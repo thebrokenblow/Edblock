@@ -24,6 +24,11 @@
                                 MouseX="{Binding PanelX, Mode=OneWayToSource}" 
                                 MouseY="{Binding PanelY, Mode=OneWayToSource}" />
                     </i:Interaction.Behaviors>
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="MouseLeftButtonDown">
+                            <i:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}, Path=DataContext.FocusableRemove}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
                     <Canvas.Background>
                         <DrawingBrush 
                                 TileMode="Tile" 

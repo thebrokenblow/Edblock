@@ -2,6 +2,6 @@
 
 public static class CanvasSymbols
 {
-    public const int LENGTH_GRID = 15;
+    public const int LENGTH_GRID = 20;
 
 }
