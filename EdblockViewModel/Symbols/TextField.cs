@@ -2,10 +2,9 @@
 using Prism.Commands;
 using EdblockViewModel.Symbols;
 
-
 namespace MVVM.ViewModel.SymbolsViewModel;
 
-internal class TextField : BindableBase
+public class TextField : BindableBase
 {
     private bool focus = false;
     public bool Focus

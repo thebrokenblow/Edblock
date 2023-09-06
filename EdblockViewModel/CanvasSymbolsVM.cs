@@ -72,15 +72,17 @@ public class CanvasSymbolsVM : BindableBase
     public DelegateCommand ClickSymbol { get; init; }
     public DelegateCommand<Symbol> MouseMoveSymbol { get; init; }
     public DelegateCommand MouseUpSymbol { get; init; }
+    public DelegateCommand FocusableRemove { get; init; }
     public CanvasSymbolsVM()
     {
         Symbols = new();
+
         ClickSymbol = new(CreateSymbol);
         MouseMoveSymbol = new(MoveSymbol);
         MouseUpSymbol = new(RemoveSymbol);
         FocusableRemove = new(ChangeFocus);
+
         var lengthGrid = CanvasSymbols.LENGTH_GRID;
-        DoubleClickedTextField = new(AddFocus);
         Grid = new Rect(-lengthGrid, -lengthGrid, lengthGrid, lengthGrid);
     }
 
@@ -110,25 +112,5 @@ public class CanvasSymbolsVM : BindableBase
                 symbol.Focus = false;
             }
         }
-    }
-
-    private bool focus = false;
-    public bool Focus
-    {
-        get => focus;
-        set
-        {
-            focus = value;
-            SetProperty(ref focus, value);
-        }
-
-    }
-
-    public DelegateCommand<Symbol> DoubleClickedTextField { get; init; }
-    public DelegateCommand FocusableRemove { get; init; }
-
-    private void AddFocus(Symbol symbolViewModel)
-    {
-        symbolViewModel.Focus = true;
     }
 }

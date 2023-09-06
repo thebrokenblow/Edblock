@@ -15,10 +15,10 @@
         <TextBox Text="Действие" Style="{StaticResource TextFrameSymbol}">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
-                    <i:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}, Path=DataContext.MouseMoveSymbol }" CommandParameter="{ Binding }"/>
+                    <i:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}, Path=DataContext.MouseMoveSymbol}" CommandParameter="{Binding}"/>
                 </i:EventTrigger>
                 <i:EventTrigger EventName="PreviewMouseDoubleClick">
-                    <i:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}, Path=DataContext.DoubleClickedTextField}" CommandParameter="{Binding}"/>
+                    <i:InvokeCommandAction Command="{Binding TextField.DoubleClickedTextField}" CommandParameter="{Binding}"/>
                 </i:EventTrigger>
             </i:Interaction.Triggers>
         </TextBox>
