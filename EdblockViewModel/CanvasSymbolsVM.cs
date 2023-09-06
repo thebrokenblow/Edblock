@@ -9,7 +9,8 @@ namespace EdblockViewModel;
 public class CanvasSymbolsVM
 {
     public Rect Grid { get; init; }
-    private Cursor cursor;
+    
+    private Cursor cursor = Cursors.Arrow;
     public Cursor Cursor
     {
         get => cursor;
@@ -18,17 +19,41 @@ public class CanvasSymbolsVM
             cursor = value;
         }
     }
+
+    private int _panelX;
+    public int PanelX
+    {
+        get => _panelX;
+        set
+        {
+            if (value.Equals(_panelX))
+            {
+                return;
+            }
+
+            _panelX = value;
+        }
+    }
+
+    private int _panelY;
+    public int PanelY
+    {
+        get => _panelY;
+        set
+        {
+            if (value.Equals(_panelY))
+            {
+                return;
+            }
+
+            _panelY = value;
+        }
+    }
+
     public ObservableCollection<Symbol> Symbols { get; init; }
     public CanvasSymbolsVM()
     {
         Symbols = new();
-        cursor = Cursors.Hand;
-        var actionSymbol = new ActionSymbol();
-        actionSymbol.Width = 140;
-        actionSymbol.Height = 60;
-        actionSymbol.XCoordinate = 100;
-        actionSymbol.YCoordinate = 100;
-        Symbols.Add(actionSymbol);
         var lengthGrid = CanvasSymbols.LENGTH_GRID;
         Grid = new Rect(-lengthGrid, -lengthGrid, lengthGrid, lengthGrid);
     }

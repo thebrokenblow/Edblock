@@ -1,0 +1,15 @@
+﻿<UserControl x:Class="EdblockView.Symbols.ActionSymbol"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:symbols="clr-namespace:EdblockViewModel.Symbols;assembly=EdblockViewModel"
+             d:DataContext="{d:DesignInstance Type=symbols:Symbol}"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    
+    <Canvas 
+        Width="{Binding Width}" 
+        Height="{Binding Height}" 
+        Background="#FF52C0AA"/>
+</UserControl>

@@ -1,5 +1,5 @@
 ﻿namespace EdblockViewModel.Symbols;
 
-internal class ConditionSymbol
+public class ConditionSymbol
 {
 }

@@ -3,20 +3,27 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:canvasSymbols="clr-namespace:EdblockViewModel;assembly=EdblockViewModel" 
-             xmlns:symbol="clr-namespace:EdblockViewModel.Symbols;assembly=EdblockViewModel" 
-             d:DataContext="{d:DesignInstance Type=canvasSymbols:CanvasSymbolsVM}"
+             xmlns:edblockViewModel="clr-namespace:EdblockViewModel;assembly=EdblockViewModel" 
+             xmlns:symbolsVM="clr-namespace:EdblockViewModel.Symbols;assembly=EdblockViewModel"
+             xmlns:symbols="clr-namespace:EdblockView.Symbols" 
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             d:DataContext="{d:DesignInstance Type=edblockViewModel:CanvasSymbolsVM}"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <ItemsControl Grid.Column="1" ItemsSource="{Binding Symbols}">
         <ItemsControl.Resources>
-            <DataTemplate DataType="{x:Type symbol:ActionSymbol}">
-                <Canvas Width="{Binding Width}" Height="{Binding Height}" Background="#FF52C0AA"/>
+            <DataTemplate DataType="{x:Type symbolsVM:ActionSymbol}">
+                <symbols:ActionSymbol/>
             </DataTemplate>
         </ItemsControl.Resources>
         <ItemsControl.ItemsPanel>
             <ItemsPanelTemplate>
                 <Canvas Cursor="{Binding Cursor}" ClipToBounds="True">
+                    <i:Interaction.Behaviors>
+                        <edblockViewModel:MouseBehaviourVM 
+                                MouseX="{Binding PanelX, Mode=OneWayToSource}" 
+                                MouseY="{Binding PanelY, Mode=OneWayToSource}" />
+                    </i:Interaction.Behaviors>
                     <Canvas.Background>
                         <DrawingBrush 
                                 TileMode="Tile" 

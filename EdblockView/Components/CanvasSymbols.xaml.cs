@@ -1,6 +1,5 @@
 ﻿using EdblockViewModel;
 using System.Windows.Controls;
-using System.Windows.Media;
 
 namespace EdblockView.Components;
 
