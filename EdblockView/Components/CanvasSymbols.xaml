@@ -18,7 +18,7 @@
         </ItemsControl.Resources>
         <ItemsControl.ItemsPanel>
             <ItemsPanelTemplate>
-                <Canvas Cursor="{Binding Cursor}" ClipToBounds="True">
+                <Canvas ClipToBounds="True">
                     <i:Interaction.Behaviors>
                         <edblockViewModel:MouseBehaviourVM 
                                 MouseX="{Binding PanelX, Mode=OneWayToSource}" 

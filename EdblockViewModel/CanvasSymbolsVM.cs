@@ -89,12 +89,16 @@ public class CanvasSymbolsVM : BindableBase
     private void CreateSymbol()
     {
         var currentSymbol = new ActionSymbol();
+        currentSymbol.TextField.Cursor = Cursors.SizeAll;
+
         DraggableSymbol = currentSymbol;
         Symbols.Add(currentSymbol);
     }
 
     private void MoveSymbol(Symbol currentSymbol)
     {
+        Cursor = Cursors.SizeAll;
+        currentSymbol.TextField.Cursor = Cursors.SizeAll;
         DraggableSymbol = currentSymbol;
     }
 
