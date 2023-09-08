@@ -31,8 +31,8 @@ public abstract class Symbol : INotifyPropertyChanged
         }
     }
 
-    private double xCoordinate;
-    public double XCoordinate
+    private int xCoordinate;
+    public int XCoordinate
     {
         get => xCoordinate;
         set

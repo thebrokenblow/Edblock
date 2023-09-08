@@ -16,7 +16,7 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Column="0">
-            <symbolsUI:ActionSymbolUI/>
+            <symbolsUI:ActionSymbolUI Margin="0 10 0 0"/>
         </StackPanel>
         <components:CanvasSymbols Grid.Column="1"/>
         <i:Interaction.Triggers>

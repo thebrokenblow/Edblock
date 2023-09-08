@@ -5,6 +5,8 @@ using Prism.Commands;
 using System.Windows.Input;
 using EdblockViewModel.Symbols;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Windows.Controls;
 
 namespace EdblockViewModel;
 
@@ -36,9 +38,11 @@ public class CanvasSymbolsVM : BindableBase
                 return;
             }
 
+
             if (DraggableSymbol != null)
             {
-                DraggableSymbol.XCoordinate = value - DraggableSymbol.Width / 2;
+                //offset.X = value - DraggableSymbol.XCoordinate;
+                DraggableSymbol.XCoordinate = value - (int)offset.X;
             }
 
             _panelX = value;
@@ -58,9 +62,11 @@ public class CanvasSymbolsVM : BindableBase
                 return;
             }
 
+           
             if (DraggableSymbol != null)
             {
-                DraggableSymbol.YCoordinate = value - DraggableSymbol.Height / 2;
+                //offset.Y = value - DraggableSymbol.YCoordinate;
+                DraggableSymbol.YCoordinate = value - (int)offset.Y;
             }
 
             _panelY = value;
@@ -76,7 +82,10 @@ public class CanvasSymbolsVM : BindableBase
     public CanvasSymbolsVM()
     {
         Symbols = new();
-
+        var actionSymbol = new ActionSymbol();
+        actionSymbol.XCoordinate = 0;
+        actionSymbol.YCoordinate = 0;
+        Symbols.Add(actionSymbol);
         ClickSymbol = new(CreateSymbol);
         MouseMoveSymbol = new(MoveSymbol);
         MouseUpSymbol = new(RemoveSymbol);
@@ -117,4 +126,51 @@ public class CanvasSymbolsVM : BindableBase
             }
         }
     }
+
+    private double x;
+    private double y;
+
+    public double X
+    {
+        get { return X; }
+        set
+        {
+            if (value.Equals(x))
+            {
+                return;
+            }
+            x = value;
+            if (DraggableSymbol == null)
+            {
+                DraggableSymbol = Symbols[0];
+            }
+            if (DraggableSymbol != null)
+            {
+                offset.X = _panelX - DraggableSymbol.XCoordinate;
+            }
+        }
+    }
+
+    public double Y
+    {
+        get { return y; }
+        set
+        {
+            if (value.Equals(y))
+            {
+                return;
+            }
+            y = value;
+            if (DraggableSymbol == null)
+            {
+                DraggableSymbol = Symbols[0];
+            }
+            if (DraggableSymbol != null)
+            {
+                offset.Y = _panelY - DraggableSymbol.YCoordinate;
+            }
+        }
+    }
+
+    Point offset;
 }
