@@ -5,8 +5,6 @@ using Prism.Commands;
 using System.Windows.Input;
 using EdblockViewModel.Symbols;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Windows.Controls;
 
 namespace EdblockViewModel;
 
@@ -25,51 +23,47 @@ public class CanvasSymbolsVM : BindableBase
         }
     }
 
-    private int _panelX;
-    public int PanelX
+    private int x;
+    public int X
     {
-        get => _panelX;
+        get => x;
         set
         {
-            value -= value % (CanvasSymbols.LENGTH_GRID / 2);
+            value = CanvasSymbols.ChangeCoordinateSymbol(value);
 
-            if (value.Equals(_panelX))
+            if (value.Equals(x))
             {
                 return;
             }
 
-
             if (DraggableSymbol != null)
             {
-                //offset.X = value - DraggableSymbol.XCoordinate;
-                DraggableSymbol.XCoordinate = value - (int)offset.X;
+                DraggableSymbol.XCoordinate = value - (x - DraggableSymbol.XCoordinate);
             }
 
-            _panelX = value;
+            x = value;
         }
     }
 
-    private int _panelY;
-    public int PanelY
+    private int y;
+    public int Y
     {
-        get => _panelY;
+        get => y;
         set
         {
-            value -= value % (CanvasSymbols.LENGTH_GRID / 2);
+            value = CanvasSymbols.ChangeCoordinateSymbol(value);
 
-            if (value.Equals(_panelY))
+            if (value.Equals(y))
             {
                 return;
             }
 
-           
             if (DraggableSymbol != null)
             {
-                //offset.Y = value - DraggableSymbol.YCoordinate;
-                DraggableSymbol.YCoordinate = value - (int)offset.Y;
+                DraggableSymbol.YCoordinate = value - (y - DraggableSymbol.YCoordinate);
             }
 
-            _panelY = value;
+            y = value;
         }
     }
 
@@ -82,10 +76,6 @@ public class CanvasSymbolsVM : BindableBase
     public CanvasSymbolsVM()
     {
         Symbols = new();
-        var actionSymbol = new ActionSymbol();
-        actionSymbol.XCoordinate = 0;
-        actionSymbol.YCoordinate = 0;
-        Symbols.Add(actionSymbol);
         ClickSymbol = new(CreateSymbol);
         MouseMoveSymbol = new(MoveSymbol);
         MouseUpSymbol = new(RemoveSymbol);
@@ -126,51 +116,4 @@ public class CanvasSymbolsVM : BindableBase
             }
         }
     }
-
-    private double x;
-    private double y;
-
-    public double X
-    {
-        get { return X; }
-        set
-        {
-            if (value.Equals(x))
-            {
-                return;
-            }
-            x = value;
-            if (DraggableSymbol == null)
-            {
-                DraggableSymbol = Symbols[0];
-            }
-            if (DraggableSymbol != null)
-            {
-                offset.X = _panelX - DraggableSymbol.XCoordinate;
-            }
-        }
-    }
-
-    public double Y
-    {
-        get { return y; }
-        set
-        {
-            if (value.Equals(y))
-            {
-                return;
-            }
-            y = value;
-            if (DraggableSymbol == null)
-            {
-                DraggableSymbol = Symbols[0];
-            }
-            if (DraggableSymbol != null)
-            {
-                offset.Y = _panelY - DraggableSymbol.YCoordinate;
-            }
-        }
-    }
-
-    Point offset;
 }

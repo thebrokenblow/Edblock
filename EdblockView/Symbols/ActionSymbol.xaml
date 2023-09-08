@@ -5,7 +5,6 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"  
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors" 
              xmlns:symbols="clr-namespace:EdblockViewModel.Symbols;assembly=EdblockViewModel"
-             xmlns:viewModel="clr-namespace:EdblockViewModel;assembly=EdblockViewModel"
              d:DataContext="{d:DesignInstance Type=symbols:Symbol}"
              mc:Ignorable="d" 
              d:DesignHeight="60" d:DesignWidth="140">
@@ -16,16 +15,16 @@
         <TextBox Text="Действие" Style="{StaticResource TextFrameSymbol}">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
-                    <i:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}, Path=DataContext.MouseMoveSymbol}" CommandParameter="{Binding}"/>
+                    <i:InvokeCommandAction 
+                        Command="{Binding RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}, Path=DataContext.MouseMoveSymbol}" 
+                        CommandParameter="{Binding}"/>
                 </i:EventTrigger>
                 <i:EventTrigger EventName="PreviewMouseDoubleClick">
-                    <i:InvokeCommandAction Command="{Binding TextField.DoubleClickedTextField}" CommandParameter="{Binding}"/>
+                    <i:InvokeCommandAction 
+                        Command="{Binding TextField.DoubleClickedTextField}" 
+                        CommandParameter="{Binding}"/>
                 </i:EventTrigger>
             </i:Interaction.Triggers>
-            <i:Interaction.Behaviors>
-                <viewModel:MouseBehaviourVM1 MouseX1="{Binding RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}, Path=DataContext.X, Mode=OneWayToSource}" 
-                                            MouseY1="{Binding RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}, Path=DataContext.Y, Mode=OneWayToSource}" />
-            </i:Interaction.Behaviors>
         </TextBox>
     </Canvas>
 </UserControl>
