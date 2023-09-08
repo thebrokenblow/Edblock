@@ -26,7 +26,14 @@ public class CanvasSymbolsVM
 
             if (DraggableSymbol != null)
             {
-                DraggableSymbol.XCoordinate = value - (x - DraggableSymbol.XCoordinate);
+                if (DraggableSymbol.XCoordinate == 0)
+                {
+                    DraggableSymbol.XCoordinate = value - DraggableSymbol.Width / 2;
+                }
+                else
+                {
+                    DraggableSymbol.XCoordinate = value - (x - DraggableSymbol.XCoordinate);
+                }
             }
 
             x = value;
@@ -48,7 +55,14 @@ public class CanvasSymbolsVM
 
             if (DraggableSymbol != null)
             {
-                DraggableSymbol.YCoordinate = value - (y - DraggableSymbol.YCoordinate);
+                if (DraggableSymbol.YCoordinate == 0)
+                {
+                    DraggableSymbol.YCoordinate = value - DraggableSymbol.Height / 2;
+                }
+                else
+                {
+                    DraggableSymbol.YCoordinate = value - (y - DraggableSymbol.YCoordinate);
+                }
             }
 
             y = value;
@@ -56,11 +70,11 @@ public class CanvasSymbolsVM
     }
 
     public ObservableCollection<Symbol> Symbols { get; init; }
-    public Symbol? DraggableSymbol { get; set; }
     public DelegateCommand ClickSymbol { get; init; }
     public DelegateCommand<Symbol> MouseMoveSymbol { get; init; }
     public DelegateCommand MouseUpSymbol { get; init; }
     public DelegateCommand FocusableRemove { get; init; }
+    public Symbol? DraggableSymbol { get; set; }
     public CanvasSymbolsVM()
     {
         Symbols = new();
