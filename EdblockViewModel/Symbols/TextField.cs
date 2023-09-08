@@ -1,11 +1,12 @@
-﻿using Prism.Mvvm;
-using Prism.Commands;
-using EdblockViewModel.Symbols;
+﻿using Prism.Commands;
 using System.Windows.Input;
+using System.ComponentModel;
+using EdblockViewModel.Symbols;
+using System.Runtime.CompilerServices;
 
 namespace MVVM.ViewModel.SymbolsViewModel;
 
-public class TextField : BindableBase
+public class TextField : INotifyPropertyChanged
 {
     private bool focus = false;
     public bool Focus
@@ -14,8 +15,8 @@ public class TextField : BindableBase
         set
         {
             focus = value;
-            SetProperty(ref focus, value);
-        }   
+            OnPropertyChanged();
+        }
     }
 
     private Cursor cursor = Cursors.Hand;
@@ -25,7 +26,7 @@ public class TextField : BindableBase
         set
         {
             cursor = value;
-            SetProperty(ref cursor, value);
+            OnPropertyChanged();
         }
     }
 
@@ -38,6 +39,13 @@ public class TextField : BindableBase
 
     private void AddFocus(Symbol symbolViewModel)
     {
-        symbolViewModel.Focus = true;
+        symbolViewModel.TextField.Cursor = Cursors.IBeam;
+        symbolViewModel.TextField.Focus = true;
+    }
+
+    public event PropertyChangedEventHandler? PropertyChanged;
+    public void OnPropertyChanged([CallerMemberName] string prop = "")
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
     }
 }

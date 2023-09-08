@@ -1,5 +1,5 @@
-﻿using MVVM.ViewModel.SymbolsViewModel;
-using System.ComponentModel;
+﻿using System.ComponentModel;
+using MVVM.ViewModel.SymbolsViewModel;
 using System.Runtime.CompilerServices;
 
 namespace EdblockViewModel.Symbols;
@@ -49,17 +49,6 @@ public abstract class Symbol : INotifyPropertyChanged
         set
         {
             yCoordinate = value;
-            OnPropertyChanged();
-        }
-    }
-
-    private bool focus = false;
-    public bool Focus
-    {
-        get => focus;
-        set
-        {
-            focus = value;
             OnPropertyChanged();
         }
     }

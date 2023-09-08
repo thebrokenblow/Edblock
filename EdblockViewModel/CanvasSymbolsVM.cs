@@ -1,5 +1,4 @@
-﻿using Prism.Mvvm;
-using EdblockModel;
+﻿using EdblockModel;
 using System.Windows;
 using Prism.Commands;
 using System.Windows.Input;
@@ -8,20 +7,9 @@ using System.Collections.ObjectModel;
 
 namespace EdblockViewModel;
 
-public class CanvasSymbolsVM : BindableBase
+public class CanvasSymbolsVM
 {
     public Rect Grid { get; init; }
-    
-    private Cursor cursor = Cursors.Arrow;
-    public Cursor Cursor
-    {
-        get => cursor;
-        set
-        {
-            cursor = value;
-            SetProperty(ref cursor, value);
-        }
-    }
 
     private int x;
     public int X
@@ -96,8 +84,11 @@ public class CanvasSymbolsVM : BindableBase
 
     private void MoveSymbol(Symbol currentSymbol)
     {
-        Cursor = Cursors.SizeAll;
-        currentSymbol.TextField.Cursor = Cursors.SizeAll;
+        if (!currentSymbol.TextField.Focus)
+        {
+            currentSymbol.TextField.Cursor = Cursors.SizeAll;
+        }
+
         DraggableSymbol = currentSymbol;
     }
 
@@ -110,9 +101,9 @@ public class CanvasSymbolsVM : BindableBase
     {
         foreach (var symbol in Symbols)
         {
-            if (symbol.Focus)
+            if (symbol.TextField.Focus)
             {
-                symbol.Focus = false;
+                symbol.TextField.Focus = false;
             }
         }
     }
