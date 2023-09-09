@@ -1,5 +1,5 @@
-﻿using System.ComponentModel;
-using MVVM.ViewModel.SymbolsViewModel;
+﻿using EdblockModel;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
 namespace EdblockViewModel.Symbols;
@@ -54,10 +54,15 @@ public abstract class Symbol : INotifyPropertyChanged
     }
 
     public TextField TextField { get; init; }
-
+    public SymolModel SymolModel { get; init; } 
     public Symbol()
     {
         TextField = new();
+        SymolModel = new()
+        {
+            Width = defaultWidth,
+            Height = defaultHeigth
+        };
         width = defaultWidth;
         heigth = defaultHeigth;
     }

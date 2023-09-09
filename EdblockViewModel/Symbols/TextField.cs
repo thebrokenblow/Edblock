@@ -1,10 +1,9 @@
 ﻿using Prism.Commands;
 using System.Windows.Input;
 using System.ComponentModel;
-using EdblockViewModel.Symbols;
 using System.Runtime.CompilerServices;
 
-namespace MVVM.ViewModel.SymbolsViewModel;
+namespace EdblockViewModel.Symbols;
 
 public class TextField : INotifyPropertyChanged
 {

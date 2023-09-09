@@ -19,21 +19,10 @@ public class CanvasSymbolsVM
         {
             value = CanvasSymbols.ChangeCoordinateSymbol(value);
 
-            if (value.Equals(x))
-            {
-                return;
-            }
-
             if (DraggableSymbol != null)
             {
-                if (DraggableSymbol.XCoordinate == 0)
-                {
-                    DraggableSymbol.XCoordinate = value - DraggableSymbol.Width / 2;
-                }
-                else
-                {
-                    DraggableSymbol.XCoordinate = value - (x - DraggableSymbol.XCoordinate);
-                }
+                CanvasSymbols.SetXCoordinateSymbol(DraggableSymbol.SymolModel, value, x);
+                DraggableSymbol.XCoordinate = DraggableSymbol.SymolModel.X;
             }
 
             x = value;
@@ -48,21 +37,10 @@ public class CanvasSymbolsVM
         {
             value = CanvasSymbols.ChangeCoordinateSymbol(value);
 
-            if (value.Equals(y))
-            {
-                return;
-            }
-
             if (DraggableSymbol != null)
             {
-                if (DraggableSymbol.YCoordinate == 0)
-                {
-                    DraggableSymbol.YCoordinate = value - DraggableSymbol.Height / 2;
-                }
-                else
-                {
-                    DraggableSymbol.YCoordinate = value - (y - DraggableSymbol.YCoordinate);
-                }
+                CanvasSymbols.SetYCoordinateSymbol(DraggableSymbol.SymolModel, value, y);
+                DraggableSymbol.YCoordinate = DraggableSymbol.SymolModel.Y;
             }
 
             y = value;
