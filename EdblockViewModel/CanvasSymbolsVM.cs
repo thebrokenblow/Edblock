@@ -17,15 +17,14 @@ public class CanvasSymbolsVM
         get => x;
         set
         {
-            value = CanvasSymbols.ChangeCoordinateSymbol(value);
-
             if (DraggableSymbol != null)
             {
-                CanvasSymbols.SetXCoordinateSymbol(DraggableSymbol.SymolModel, value, x);
-                DraggableSymbol.XCoordinate = DraggableSymbol.SymolModel.X;
+                var currentXCoordinate = CanvasSymbols.GetCoordinateSymbol(DraggableSymbol.XCoordinate, value, x, DraggableSymbol.Width);
+                DraggableSymbol.XCoordinate = currentXCoordinate;
+                DraggableSymbol.SymolModel.X = currentXCoordinate;
             }
 
-            x = value;
+            x = CanvasSymbols.ChangeCoordinateSymbol(value);
         }
     }
 
@@ -35,18 +34,17 @@ public class CanvasSymbolsVM
         get => y;
         set
         {
-            value = CanvasSymbols.ChangeCoordinateSymbol(value);
-
             if (DraggableSymbol != null)
             {
-                CanvasSymbols.SetYCoordinateSymbol(DraggableSymbol.SymolModel, value, y);
-                DraggableSymbol.YCoordinate = DraggableSymbol.SymolModel.Y;
+                var currentYCoordinate = CanvasSymbols.GetCoordinateSymbol(DraggableSymbol.YCoordinate, value, y, DraggableSymbol.Height);
+                DraggableSymbol.YCoordinate = currentYCoordinate;
+                DraggableSymbol.SymolModel.Y = currentYCoordinate;
             }
 
-            y = value;
+            y = CanvasSymbols.ChangeCoordinateSymbol(value);
         }
     }
-
+   
     public ObservableCollection<Symbol> Symbols { get; init; }
     public DelegateCommand ClickSymbol { get; init; }
     public DelegateCommand<Symbol> MouseMoveSymbol { get; init; }

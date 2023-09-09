@@ -7,27 +7,17 @@ public static class CanvasSymbols
     public static int ChangeCoordinateSymbol(int coordinate) =>
         coordinate - coordinate % (LENGTH_GRID / 2);
 
-    public static void SetXCoordinateSymbol(SymolModel symolModel, int currentCoordinate, int previousCoordinate)
+    public static int GetCoordinateSymbol(int coordinateSymbol, int currentCoordinateCursor, int previousCoordinateCursor, int sizeSymbol)
     {
-        if (symolModel.X == 0)
-        {
-            symolModel.X = currentCoordinate - symolModel.Width / 2;
-        }
-        else
-        {
-            symolModel.X = currentCoordinate - (previousCoordinate - symolModel.X);
-        }
-    }
+        currentCoordinateCursor = ChangeCoordinateSymbol(currentCoordinateCursor);
 
-    public static void SetYCoordinateSymbol(SymolModel symolModel, int currentCoordinate, int previousCoordinate)
-    {
-        if (symolModel.Y == 0)
+        if (coordinateSymbol == 0)
         {
-            symolModel.Y = currentCoordinate - symolModel.Height / 2;
+            return currentCoordinateCursor - sizeSymbol / 2;
         }
         else
         {
-            symolModel.Y = currentCoordinate - (previousCoordinate - symolModel.Y);
+            return currentCoordinateCursor - (previousCoordinateCursor - coordinateSymbol);
         }
     }
 }
