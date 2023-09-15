@@ -4,7 +4,7 @@ using System.Windows;
 using System.ComponentModel;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using EdblockViewModel.ConnectionPointViewModel;
+using EdblockViewModel.ConnectionPointVM;
 
 namespace EdblockViewModel.Symbols;
 
@@ -67,7 +67,7 @@ public abstract class Symbol : INotifyPropertyChanged
     {
         _canvasSymbolsVM = canvasSymbolsVM;
 
-        TextField = new();
+        TextField = new(canvasSymbolsVM);
         
         SymolModel = new()
         {
@@ -80,10 +80,10 @@ public abstract class Symbol : INotifyPropertyChanged
 
         ConnectionPoints = new()
         {
-            new ConnectionPoint(this, GetCoordinateTopCP),
-            new ConnectionPoint(this, GetCoordinateRightCP),
-            new ConnectionPoint(this, GetCoordinateBottomCP),
-            new ConnectionPoint(this, GetCoordinateLeftCP)
+            new ConnectionPoint(canvasSymbolsVM, this, GetCoordinateTopCP),
+            new ConnectionPoint(canvasSymbolsVM, this, GetCoordinateRightCP),
+            new ConnectionPoint(canvasSymbolsVM, this, GetCoordinateBottomCP),
+            new ConnectionPoint(canvasSymbolsVM, this, GetCoordinateLeftCP)
         };
 
         EnterCursor = new(ShowStroke);

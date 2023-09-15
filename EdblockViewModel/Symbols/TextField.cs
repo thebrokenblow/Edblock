@@ -18,7 +18,7 @@ public class TextField : INotifyPropertyChanged
         }
     }
 
-    private Cursor cursor = Cursors.Hand;
+    private Cursor cursor = Cursors.Arrow;
     public Cursor Cursor
     {
         get => cursor;
@@ -30,14 +30,16 @@ public class TextField : INotifyPropertyChanged
     }
 
     public DelegateCommand<Symbol> DoubleClickedTextField { get; init; }
-
-    public TextField()
+    private readonly CanvasSymbolsVM _canvasSymbolsVM;
+    public TextField(CanvasSymbolsVM canvasSymbolsVM)
     {
+        _canvasSymbolsVM = canvasSymbolsVM;
         DoubleClickedTextField = new(AddFocus);
     }
 
     private void AddFocus(Symbol symbolViewModel)
     {
+        _canvasSymbolsVM.Cursor = Cursors.IBeam;
         symbolViewModel.TextField.Cursor = Cursors.IBeam;
         symbolViewModel.TextField.Focus = true;
     }

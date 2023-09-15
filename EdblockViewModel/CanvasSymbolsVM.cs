@@ -6,7 +6,7 @@ using System.ComponentModel;
 using EdblockViewModel.Symbols;
 using System.Collections.ObjectModel;
 using System.Runtime.CompilerServices;
-using EdblockViewModel.ConnectionPointViewModel;
+using EdblockViewModel.ConnectionPointVM;
 
 namespace EdblockViewModel;
 
@@ -47,6 +47,17 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
             y = CanvasSymbols.ChangeCoordinateSymbol(value);
         }
     }
+
+    private Cursor cursor;
+    public Cursor Cursor
+    {
+        get => cursor;
+        set
+        {
+            cursor = value;
+            OnPropertyChanged();
+        }
+    }
    
     public ObservableCollection<Symbol> Symbols { get; init; }
     public DelegateCommand ClickSymbol { get; init; }
@@ -58,6 +69,7 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
     public CanvasSymbolsVM()
     {
         Symbols = new();
+        cursor = Cursors.Arrow;
         ClickSymbol = new(CreateSymbol);
         MouseMoveSymbol = new(MoveSymbol);
         MouseUpSymbol = new(RemoveSymbol);
@@ -70,6 +82,7 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
     {
         var currentSymbol = new ActionSymbol(this);
         currentSymbol.TextField.Cursor = Cursors.SizeAll;
+        Cursor = Cursors.SizeAll;
 
         DraggableSymbol = currentSymbol;
         Symbols.Add(currentSymbol);
@@ -81,6 +94,7 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
         {
             ColorConnectionPoint.Hide(currentSymbol.ConnectionPoints);
             currentSymbol.TextField.Cursor = Cursors.SizeAll;
+            Cursor = Cursors.SizeAll;
         }
 
         DraggableSymbol = currentSymbol;
@@ -89,6 +103,7 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
     private void RemoveSymbol()
     {
         DraggableSymbol = null;
+        Cursor = Cursors.Arrow;
     }
 
     public void ChangeFocus()
