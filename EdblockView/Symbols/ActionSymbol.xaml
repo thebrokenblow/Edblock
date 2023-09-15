@@ -4,8 +4,9 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"  
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors" 
-             xmlns:symbols="clr-namespace:EdblockViewModel.Symbols;assembly=EdblockViewModel"
-             d:DataContext="{d:DesignInstance Type=symbols:Symbol}"
+             xmlns:symbolVM="clr-namespace:EdblockViewModel.Symbols;assembly=EdblockViewModel" 
+             xmlns:symbol="clr-namespace:EdblockView.Symbols"
+             d:DataContext="{d:DesignInstance Type=symbolVM:Symbol}"
              mc:Ignorable="d" 
              d:DesignHeight="60" d:DesignWidth="140">
     <Canvas 
@@ -34,33 +35,6 @@
                 </i:EventTrigger>
             </i:Interaction.Triggers>
         </TextBox>
-        <ItemsControl ItemsSource="{Binding ConnectionPoints}">
-            <ItemsControl.ItemTemplate>
-                <DataTemplate DataType="Points">
-                    <Ellipse 
-                        Style="{StaticResource ConnectionPoint}">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="MouseEnter">
-                                <i:InvokeCommandAction Command="{Binding EnterCursor}" />
-                            </i:EventTrigger>
-                            <i:EventTrigger EventName="MouseLeave">
-                                <i:InvokeCommandAction Command="{Binding LeaveCursor}" />
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                    </Ellipse>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <Canvas />
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-            <ItemsControl.ItemContainerStyle>
-                <Style TargetType="FrameworkElement">
-                    <Setter Property="Canvas.Left" Value="{Binding Coordinate.X}" />
-                    <Setter Property="Canvas.Top" Value="{Binding Coordinate.Y}" />
-                </Style>
-            </ItemsControl.ItemContainerStyle>
-        </ItemsControl>
+        <symbol:ConnectionPoints/>
     </Canvas>
 </UserControl>
