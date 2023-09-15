@@ -2,7 +2,7 @@
 
 public class ActionSymbol : Symbol
 {
-    public ActionSymbol()
+    public ActionSymbol(CanvasSymbolsVM canvasSymbolsVM) : base(canvasSymbolsVM)
     {
     }
 }

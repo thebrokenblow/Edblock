@@ -2,12 +2,15 @@
 using System.Windows;
 using Prism.Commands;
 using System.Windows.Input;
+using System.ComponentModel;
 using EdblockViewModel.Symbols;
 using System.Collections.ObjectModel;
+using System.Runtime.CompilerServices;
+using EdblockViewModel.ConnectionPointViewModel;
 
 namespace EdblockViewModel;
 
-public class CanvasSymbolsVM
+public class CanvasSymbolsVM : INotifyPropertyChanged
 {
     public Rect Grid { get; init; }
 
@@ -51,6 +54,7 @@ public class CanvasSymbolsVM
     public DelegateCommand MouseUpSymbol { get; init; }
     public DelegateCommand FocusableRemove { get; init; }
     public Symbol? DraggableSymbol { get; set; }
+
     public CanvasSymbolsVM()
     {
         Symbols = new();
@@ -58,14 +62,13 @@ public class CanvasSymbolsVM
         MouseMoveSymbol = new(MoveSymbol);
         MouseUpSymbol = new(RemoveSymbol);
         FocusableRemove = new(ChangeFocus);
-
         var lengthGrid = CanvasSymbols.LENGTH_GRID;
         Grid = new Rect(-lengthGrid, -lengthGrid, lengthGrid, lengthGrid);
     }
 
     private void CreateSymbol()
     {
-        var currentSymbol = new ActionSymbol();
+        var currentSymbol = new ActionSymbol(this);
         currentSymbol.TextField.Cursor = Cursors.SizeAll;
 
         DraggableSymbol = currentSymbol;
@@ -76,6 +79,7 @@ public class CanvasSymbolsVM
     {
         if (!currentSymbol.TextField.Focus)
         {
+            ColorConnectionPoint.Hide(currentSymbol.ConnectionPoints);
             currentSymbol.TextField.Cursor = Cursors.SizeAll;
         }
 
@@ -96,5 +100,11 @@ public class CanvasSymbolsVM
                 symbol.TextField.Focus = false;
             }
         }
+    }
+
+    public event PropertyChangedEventHandler? PropertyChanged;
+    public void OnPropertyChanged([CallerMemberName] string prop = "")
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
     }
 }

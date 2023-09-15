@@ -24,7 +24,43 @@
                         Command="{Binding TextField.DoubleClickedTextField}" 
                         CommandParameter="{Binding}"/>
                 </i:EventTrigger>
+                <i:EventTrigger EventName="MouseEnter">
+                    <i:InvokeCommandAction 
+                        Command="{Binding EnterCursor}"/>
+                </i:EventTrigger>
+                <i:EventTrigger EventName="MouseLeave">
+                    <i:InvokeCommandAction 
+                        Command="{Binding LeaveCursor}"/>
+                </i:EventTrigger>
             </i:Interaction.Triggers>
         </TextBox>
+        <ItemsControl ItemsSource="{Binding ConnectionPoints}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate DataType="Points">
+                    <Ellipse 
+                        Style="{StaticResource ConnectionPoint}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="MouseEnter">
+                                <i:InvokeCommandAction Command="{Binding EnterCursor}" />
+                            </i:EventTrigger>
+                            <i:EventTrigger EventName="MouseLeave">
+                                <i:InvokeCommandAction Command="{Binding LeaveCursor}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </Ellipse>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Canvas />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemContainerStyle>
+                <Style TargetType="FrameworkElement">
+                    <Setter Property="Canvas.Left" Value="{Binding Coordinate.X}" />
+                    <Setter Property="Canvas.Top" Value="{Binding Coordinate.Y}" />
+                </Style>
+            </ItemsControl.ItemContainerStyle>
+        </ItemsControl>
     </Canvas>
 </UserControl>

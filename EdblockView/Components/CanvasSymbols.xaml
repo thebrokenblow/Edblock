@@ -18,7 +18,7 @@
         </ItemsControl.Resources>
         <ItemsControl.ItemsPanel>
             <ItemsPanelTemplate>
-                <Canvas ClipToBounds="True">
+                <Canvas Width="{Binding RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}, Path=DataContext.Width}" ClipToBounds="True">
                     <i:Interaction.Behaviors>
                         <edblockViewModel:MouseBehaviourVM 
                                 MouseX="{Binding X, Mode=OneWayToSource}" 
@@ -27,6 +27,9 @@
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="MouseLeftButtonDown">
                             <i:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}, Path=DataContext.FocusableRemove}"/>
+                        </i:EventTrigger>
+                        <i:EventTrigger EventName="MouseLeave">
+                            <i:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}, Path=DataContext.ScaleCanvas}"/>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                     <Canvas.Background>

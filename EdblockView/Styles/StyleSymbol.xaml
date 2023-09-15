@@ -15,5 +15,13 @@
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Foreground" Value="White" />
     </Style>
-    
+
+    <Style x:Key="ConnectionPoint" TargetType="Ellipse">
+        <Setter Property="Width" Value="{Binding Diameter}" />
+        <Setter Property="Height" Value="{Binding Diameter}" />
+        <Setter Property="Fill" Value="{Binding Fill}" />
+        <Setter Property="Stroke" Value="{Binding Stroke}" />
+        <Setter Property="StrokeThickness" Value="1.5" />
+    </Style>
+
 </ResourceDictionary>
