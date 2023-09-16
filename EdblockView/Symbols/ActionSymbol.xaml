@@ -36,40 +36,6 @@
             </i:Interaction.Triggers>
         </TextBox>
         <symbol:ConnectionPoints/>
-        <ItemsControl ItemsSource="{Binding ScaleRectangles}">
-            <ItemsControl.ItemTemplate>
-                <DataTemplate DataType="Rectangles">
-                    <Border BorderBrush="{Binding BorderBrush}" 
-                            BorderThickness="2">
-                        <Rectangle Width="{Binding Width}" 
-                                   Height="{Binding Height}" 
-                                   Fill="{Binding Fill}">
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="MouseEnter">
-                                    <i:InvokeCommandAction Command="{Binding EnterCursor}" />
-                                </i:EventTrigger>
-                                <i:EventTrigger EventName="MouseLeave">
-                                    <i:InvokeCommandAction Command="{Binding LeaveCursor}" />
-                                </i:EventTrigger>
-                                <i:EventTrigger EventName="MouseDown">
-                                    <i:InvokeCommandAction Command="{Binding ClickScaleRectangles}" />
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
-                        </Rectangle>
-                    </Border>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <Canvas />
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-            <ItemsControl.ItemContainerStyle>
-                <Style TargetType="FrameworkElement">
-                    <Setter Property="Canvas.Left" Value="{Binding Coordinate.X}" />
-                    <Setter Property="Canvas.Top" Value="{Binding Coordinate.Y}" />
-                </Style>
-            </ItemsControl.ItemContainerStyle>
-        </ItemsControl>
+        <symbol:ScaleRectangles/>
     </Canvas>
 </UserControl>

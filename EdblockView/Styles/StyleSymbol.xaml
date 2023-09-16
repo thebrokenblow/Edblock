@@ -24,4 +24,15 @@
         <Setter Property="StrokeThickness" Value="1.5" />
     </Style>
 
+    <Style x:Key="BorderSR" TargetType="Border">
+        <Setter Property="BorderBrush" Value="{Binding BorderBrush}" />
+        <Setter Property="BorderThickness" Value="2" />
+    </Style>
+
+    <Style x:Key="RectangleSR" TargetType="Rectangle">
+        <Setter Property="Width" Value="{Binding Width}" />
+        <Setter Property="Height" Value="{Binding Height}" />
+        <Setter Property="Fill" Value="{Binding Fill}" />
+    </Style>
+
 </ResourceDictionary>
