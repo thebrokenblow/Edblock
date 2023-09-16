@@ -6,7 +6,8 @@ using System.ComponentModel;
 using EdblockViewModel.Symbols;
 using System.Collections.ObjectModel;
 using System.Runtime.CompilerServices;
-using EdblockViewModel.ConnectionPointVM;
+using EdblockViewModel.Symbols.ConnectionPoints;
+using EdblockViewModel.Symbols.ScaleRectangles;
 
 namespace EdblockViewModel;
 
@@ -48,7 +49,7 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
         }
     }
 
-    private Cursor cursor;
+    private Cursor cursor = Cursors.Arrow;
     public Cursor Cursor
     {
         get => cursor;
@@ -69,7 +70,6 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
     public CanvasSymbolsVM()
     {
         Symbols = new();
-        cursor = Cursors.Arrow;
         ClickSymbol = new(CreateSymbol);
         MouseMoveSymbol = new(MoveSymbol);
         MouseUpSymbol = new(RemoveSymbol);
@@ -93,6 +93,7 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
         if (!currentSymbol.TextField.Focus)
         {
             ColorConnectionPoint.Hide(currentSymbol.ConnectionPoints);
+            ColorScaleRectangle.Hide(currentSymbol.ScaleRectangles);
             currentSymbol.TextField.Cursor = Cursors.SizeAll;
             Cursor = Cursors.SizeAll;
         }

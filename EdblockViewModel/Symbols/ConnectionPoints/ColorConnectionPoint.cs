@@ -1,7 +1,7 @@
 ﻿using System.Windows.Media;
 using System.Collections.Generic;
 
-namespace EdblockViewModel.ConnectionPointVM;
+namespace EdblockViewModel.Symbols.ConnectionPoints;
 
 internal static class ColorConnectionPoint
 {
@@ -20,6 +20,7 @@ internal static class ColorConnectionPoint
         }
 
         var convertFromHoverStroke = brushConverterConnectionPoint.ConvertFrom(hexHoverStroke);
+
         if (convertFromHoverStroke != null)
         {
             HoverStroke = (Brush)convertFromHoverStroke;

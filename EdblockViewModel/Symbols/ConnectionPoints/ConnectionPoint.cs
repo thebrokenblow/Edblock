@@ -4,10 +4,9 @@ using System.Windows;
 using System.Windows.Media;
 using System.Windows.Input;
 using System.ComponentModel;
-using EdblockViewModel.Symbols;
 using System.Runtime.CompilerServices;
 
-namespace EdblockViewModel.ConnectionPointVM;
+namespace EdblockViewModel.Symbols.ConnectionPoints;
 
 public class ConnectionPoint : INotifyPropertyChanged
 {

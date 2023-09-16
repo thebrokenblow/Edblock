@@ -1,10 +1,12 @@
 ﻿using EdblockModel;
 using Prism.Commands;
 using System.Windows;
+using System.Windows.Input;
 using System.ComponentModel;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using EdblockViewModel.ConnectionPointVM;
+using EdblockViewModel.Symbols.ConnectionPoints;
+using EdblockViewModel.Symbols.ScaleRectangles;
 
 namespace EdblockViewModel.Symbols;
 
@@ -13,6 +15,7 @@ public abstract class Symbol : INotifyPropertyChanged
     protected const int defaultWidth = 140;
     protected const int defaultHeigth = 60;
     public List<ConnectionPoint> ConnectionPoints { get; init; }
+    public List<ScaleRectangle> ScaleRectangles { get; init; }
 
     private int width;
     public int Width
@@ -86,6 +89,9 @@ public abstract class Symbol : INotifyPropertyChanged
             new ConnectionPoint(canvasSymbolsVM, this, GetCoordinateLeftCP)
         };
 
+        ScaleRectangles = new();
+        AddScaleRectangle();
+
         EnterCursor = new(ShowStroke);
         LeaveCursor = new(HideStroke);
     }
@@ -95,12 +101,28 @@ public abstract class Symbol : INotifyPropertyChanged
         if (_canvasSymbolsVM.DraggableSymbol == null)
         {
             ColorConnectionPoint.Show(ConnectionPoints);
+            ColorScaleRectangle.Show(ScaleRectangles);
         }
     }
 
     public void HideStroke()
     {
         ColorConnectionPoint.Hide(ConnectionPoints);
+        ColorScaleRectangle.Hide(ScaleRectangles);
+    }
+
+    protected virtual void AddScaleRectangle()
+    {
+        var coordinateScaleRectangle = new CoordinateScaleRectangle(width, heigth);
+
+        ScaleRectangles.Add(new(_canvasSymbolsVM, this, coordinateScaleRectangle.GetCoordinateMiddleTopRectangle, Cursors.SizeNS));
+        ScaleRectangles.Add(new(_canvasSymbolsVM, this, coordinateScaleRectangle.GetCoordinateRightTopRectangle, Cursors.SizeNESW));
+        ScaleRectangles.Add(new(_canvasSymbolsVM, this, coordinateScaleRectangle.GetCoordinateRightMiddleRectangle, Cursors.SizeWE));
+        ScaleRectangles.Add(new(_canvasSymbolsVM, this, coordinateScaleRectangle.GetCoordinateRightBottomRectangle, Cursors.SizeNWSE));
+        ScaleRectangles.Add(new(_canvasSymbolsVM, this, coordinateScaleRectangle.GetCoordinateMiddleBottomRectangle, Cursors.SizeNS));
+        ScaleRectangles.Add(new(_canvasSymbolsVM, this, coordinateScaleRectangle.GetCoordinateLeftBottomRectangle, Cursors.SizeNESW));
+        ScaleRectangles.Add(new(_canvasSymbolsVM, this, coordinateScaleRectangle.GetCoordinateLeftMiddleRectangle, Cursors.SizeWE));
+        ScaleRectangles.Add(new(_canvasSymbolsVM, this, coordinateScaleRectangle.GetCoordinateLeftTopRectangle, Cursors.SizeNWSE));
     }
 
     protected virtual Point GetCoordinateLeftCP(double diametr, int offset)
