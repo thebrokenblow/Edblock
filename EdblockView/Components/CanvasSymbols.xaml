@@ -17,29 +17,12 @@
                 <symbols:ActionSymbol/>
             </DataTemplate>
             <DataTemplate DataType="{x:Type symbolsVM:ListLineSymbol}">
-                <ItemsControl ItemsSource="{Binding LineSymbols}">
-                    <ItemsControl.Resources>
-                        <DataTemplate DataType="{x:Type symbolsVM:LineSymbol}">
-                            <Line 
-                                X1="{Binding X1}"
-                                Y1="{Binding Y1}"
-                                X2="{Binding X2}"
-                                Y2="{Binding Y2}"
-                                Stroke="Black"/>
-                        </DataTemplate>
-                    </ItemsControl.Resources>
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <Canvas/>
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-                </ItemsControl>
+                <symbols:LineSymbol/>
             </DataTemplate>
         </ItemsControl.Resources>
-
         <ItemsControl.ItemsPanel>
             <ItemsPanelTemplate>
-                <Canvas x:Name="test" Cursor="{Binding Cursor}" ClipToBounds="True">
+                <Canvas Cursor="{Binding Cursor}" ClipToBounds="True">
                     <i:Interaction.Behaviors>
                         <edblockViewModel:MouseBehaviourVM 
                                 MouseX="{Binding X, Mode=OneWayToSource}" 

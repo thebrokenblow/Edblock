@@ -9,6 +9,9 @@ using System.Runtime.CompilerServices;
 using EdblockViewModel.Symbols.Abstraction;
 using EdblockViewModel.Symbols.ScaleRectangles;
 using EdblockViewModel.Symbols.ConnectionPoints;
+using static System.Net.Mime.MediaTypeNames;
+using System.Windows.Controls;
+using System.Windows.Media.Imaging;
 
 namespace EdblockViewModel;
 

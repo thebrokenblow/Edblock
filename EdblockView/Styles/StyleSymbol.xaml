@@ -35,4 +35,13 @@
         <Setter Property="Fill" Value="{Binding Fill}" />
     </Style>
 
+    <Style x:Key="LineSymbol" TargetType="Line">
+        <Setter Property="X1" Value="{Binding X1}" />
+        <Setter Property="Y1" Value="{Binding Y1}" />
+        <Setter Property="X2" Value="{Binding X2}" />
+        <Setter Property="Y2" Value="{Binding Y2}" />
+        <Setter Property="Stroke" Value="Black" />
+
+    </Style>
+
 </ResourceDictionary>
