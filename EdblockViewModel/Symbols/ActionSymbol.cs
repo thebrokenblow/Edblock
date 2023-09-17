@@ -1,6 +1,8 @@
-﻿namespace EdblockViewModel.Symbols;
+﻿using EdblockViewModel.Symbols.Abstraction;
 
-public class ActionSymbol : Symbol
+namespace EdblockViewModel.Symbols;
+
+public class ActionSymbol : BlockSymbol
 {
     public ActionSymbol(CanvasSymbolsVM canvasSymbolsVM) : base(canvasSymbolsVM)
     {

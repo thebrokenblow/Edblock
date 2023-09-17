@@ -5,6 +5,7 @@ using System.Windows.Media;
 using System.Windows.Input;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using EdblockViewModel.Symbols.Abstraction;
 
 namespace EdblockViewModel.Symbols.ConnectionPoints;
 
@@ -49,9 +50,9 @@ public class ConnectionPoint : INotifyPropertyChanged
     public DelegateCommand EnterCursor { get; init; }
     public DelegateCommand LeaveCursor { get; init; }
     private readonly CanvasSymbolsVM _canvasSymbolsVM;
-    private readonly Symbol _symbol;
+    private readonly BlockSymbol _symbol;
     private const int offset = 10;
-    public ConnectionPoint(CanvasSymbolsVM canvasSymbolsVM, Symbol symbol, Func<double, int, Point> getCoordinate)
+    public ConnectionPoint(CanvasSymbolsVM canvasSymbolsVM, BlockSymbol symbol, Func<double, int, Point> getCoordinate)
     {
         _canvasSymbolsVM = canvasSymbolsVM;
         _symbol = symbol;

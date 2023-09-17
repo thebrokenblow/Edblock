@@ -10,6 +10,7 @@
         d:DataContext="{d:DesignInstance Type=edblockVM:CanvasSymbolsVM}"
         mc:Ignorable="d"
         Title="Edblock" Height="450" Width="800">
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="160"/>

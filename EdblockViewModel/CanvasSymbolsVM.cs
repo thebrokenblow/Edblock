@@ -6,8 +6,9 @@ using System.ComponentModel;
 using EdblockViewModel.Symbols;
 using System.Collections.ObjectModel;
 using System.Runtime.CompilerServices;
-using EdblockViewModel.Symbols.ConnectionPoints;
+using EdblockViewModel.Symbols.Abstraction;
 using EdblockViewModel.Symbols.ScaleRectangles;
+using EdblockViewModel.Symbols.ConnectionPoints;
 
 namespace EdblockViewModel;
 
@@ -62,10 +63,10 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
    
     public ObservableCollection<Symbol> Symbols { get; init; }
     public DelegateCommand ClickSymbol { get; init; }
-    public DelegateCommand<Symbol> MouseMoveSymbol { get; init; }
+    public DelegateCommand<BlockSymbol> MouseMoveSymbol { get; init; }
     public DelegateCommand MouseUpSymbol { get; init; }
     public DelegateCommand FocusableRemove { get; init; }
-    public Symbol? DraggableSymbol { get; set; }
+    public BlockSymbol? DraggableSymbol { get; set; }
 
     public CanvasSymbolsVM()
     {
@@ -88,7 +89,7 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
         Symbols.Add(currentSymbol);
     }
 
-    private void MoveSymbol(Symbol currentSymbol)
+    private void MoveSymbol(BlockSymbol currentSymbol)
     {
         if (!currentSymbol.TextField.Focus)
         {
@@ -111,9 +112,12 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
     {
         foreach (var symbol in Symbols)
         {
-            if (symbol.TextField.Focus)
+            if (symbol is BlockSymbol blockSymbol)
             {
-                symbol.TextField.Focus = false;
+                if (blockSymbol.TextField.Focus)
+                {
+                    blockSymbol.TextField.Focus = false;
+                }
             }
         }
     }

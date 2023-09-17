@@ -5,6 +5,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using EdblockViewModel.Symbols.Abstraction;
 
 namespace EdblockViewModel.Symbols.ScaleRectangles;
 
@@ -58,9 +59,9 @@ public class ScaleRectangle : INotifyPropertyChanged
     public DelegateCommand EnterCursor { get; init; }
     public DelegateCommand LeaveCursor { get; init; }
     private readonly CanvasSymbolsVM _canvasSymbolsVM;
-    private readonly Symbol _symbol;
+    private readonly BlockSymbol _symbol;
     private readonly Cursor _cursorHover;
-    public ScaleRectangle(CanvasSymbolsVM canvasSymbolsVM, Symbol symbol, Func<int, int, Point> getCoordinateScaleRectangle, Cursor cursorHover)
+    public ScaleRectangle(CanvasSymbolsVM canvasSymbolsVM, BlockSymbol symbol, Func<int, int, Point> getCoordinateScaleRectangle, Cursor cursorHover)
     {
         _canvasSymbolsVM = canvasSymbolsVM;
         _symbol = symbol;

@@ -2,6 +2,7 @@
 using System.Windows.Input;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using EdblockViewModel.Symbols.Abstraction;
 
 namespace EdblockViewModel.Symbols;
 
@@ -29,7 +30,7 @@ public class TextField : INotifyPropertyChanged
         }
     }
 
-    public DelegateCommand<Symbol> DoubleClickedTextField { get; init; }
+    public DelegateCommand<BlockSymbol> DoubleClickedTextField { get; init; }
     private readonly CanvasSymbolsVM _canvasSymbolsVM;
     public TextField(CanvasSymbolsVM canvasSymbolsVM)
     {
@@ -37,7 +38,7 @@ public class TextField : INotifyPropertyChanged
         DoubleClickedTextField = new(AddFocus);
     }
 
-    private void AddFocus(Symbol symbolViewModel)
+    private void AddFocus(BlockSymbol symbolViewModel)
     {
         _canvasSymbolsVM.Cursor = Cursors.IBeam;
         symbolViewModel.TextField.Cursor = Cursors.IBeam;

@@ -2,15 +2,13 @@
 using Prism.Commands;
 using System.Windows;
 using System.Windows.Input;
-using System.ComponentModel;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using EdblockViewModel.Symbols.ConnectionPoints;
 using EdblockViewModel.Symbols.ScaleRectangles;
 
-namespace EdblockViewModel.Symbols;
+namespace EdblockViewModel.Symbols.Abstraction;
 
-public abstract class Symbol : INotifyPropertyChanged
+public abstract class BlockSymbol : Symbol
 {
     protected const int defaultWidth = 140;
     protected const int defaultHeigth = 60;
@@ -66,12 +64,12 @@ public abstract class Symbol : INotifyPropertyChanged
     public DelegateCommand EnterCursor { get; set; }
     public DelegateCommand LeaveCursor { get; set; }
     private readonly CanvasSymbolsVM _canvasSymbolsVM;
-    public Symbol(CanvasSymbolsVM canvasSymbolsVM)
+    public BlockSymbol(CanvasSymbolsVM canvasSymbolsVM)
     {
         _canvasSymbolsVM = canvasSymbolsVM;
 
         TextField = new(canvasSymbolsVM);
-        
+
         SymolModel = new()
         {
             Width = defaultWidth,
@@ -159,11 +157,5 @@ public abstract class Symbol : INotifyPropertyChanged
         var coordinateTopConnectionPoint = new Point(connectionPointsX, connectionPointsY);
 
         return coordinateTopConnectionPoint;
-    }
-
-    public event PropertyChangedEventHandler? PropertyChanged;
-    public void OnPropertyChanged([CallerMemberName] string prop = "")
-    {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
     }
 }
