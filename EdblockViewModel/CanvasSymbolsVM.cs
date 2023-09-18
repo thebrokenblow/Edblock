@@ -32,7 +32,6 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
 
             x = CanvasSymbols.ChangeCoordinateSymbol(value);
 
-
             if (ScaleData != null)
             {
                 if (ScaleData.GetWidthSymbol != null)
@@ -42,8 +41,6 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
                     Cursor = Cursors.SizeWE;
                 }
             }
-
-           
         }
     }
 
@@ -61,6 +58,16 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
             }
 
             y = CanvasSymbols.ChangeCoordinateSymbol(value);
+
+            if (ScaleData != null)
+            {
+                if (ScaleData.GetHeigthSymbol != null)
+                {
+                    int heigth = ScaleData.GetHeigthSymbol.Invoke(ScaleData, this);
+                    ScaleData.BlockSymbol.SetHeigth(heigth);
+                    Cursor = Cursors.SizeNS;
+                }
+            }
         }
     }
 

@@ -19,18 +19,18 @@ internal class SizesScaleRectangle
         return width;
     }
 
-    //public static int ChangeHeigthBottom(ScaleData scaleData, EdSymbolViewModel edSymbolViewModel)
-    //{
-    //    int heigth = scaleData.InitialHeigth + (edSymbolViewModel.PanelY - scaleData.InitialY) - 10;
+    public static int ChangeHeigthBottom(ScaleData scaleData, CanvasSymbolsVM edSymbolViewModel)
+    {
+        int heigth = edSymbolViewModel.Y - scaleData.InitialY;
 
-    //    return heigth;
-    //}
+        return heigth;
+    }
 
-    //public static int ChangeHeigthTop(ScaleData scaleData, EdSymbolViewModel edSymbolViewModel)
-    //{
-    //    int heigth = scaleData.InitialHeigth + (scaleData.InitialY - edSymbolViewModel.PanelY) - 10;
-    //    scaleData.Symbol.YCoordinate = scaleData.InitialY - (heigth - scaleData.InitialHeigth) + 10;
+    public static int ChangeHeigthTop(ScaleData scaleData, CanvasSymbolsVM edSymbolViewModel)
+    {
+        int heigth = scaleData.InitialHeigth + (scaleData.InitialY - edSymbolViewModel.Y) - 10;
+        scaleData.BlockSymbol.YCoordinate = scaleData.InitialY - (heigth - scaleData.InitialHeigth);
 
-    //    return heigth;
-    //}
+        return heigth;
+    }
 }

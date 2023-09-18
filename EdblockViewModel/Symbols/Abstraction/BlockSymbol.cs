@@ -114,17 +114,18 @@ public abstract class BlockSymbol : Symbol
     {
         var coordinateScaleRectangle = new CoordinateScaleRectangle(this);
 
-        //ScaleRectangles.Add(new(_canvasSymbolsVM, this, coordinateScaleRectangle.GetCoordinateMiddleTopRectangle, Cursors.SizeNS));
+        ScaleRectangles.Add(new(_canvasSymbolsVM, this, Cursors.SizeNS, null, SizesScaleRectangle.ChangeHeigthTop, coordinateScaleRectangle.GetCoordinateMiddleTopRectangle));
         //ScaleRectangles.Add(new(_canvasSymbolsVM, this, coordinateScaleRectangle.GetCoordinateRightTopRectangle, Cursors.SizeNESW));
-        ScaleRectangles.Add(new(_canvasSymbolsVM, this, Cursors.SizeWE, SizesScaleRectangle.ChangeWidthRigth, coordinateScaleRectangle.GetCoordinateRightMiddleRectangle));
+        ScaleRectangles.Add(new(_canvasSymbolsVM, this, Cursors.SizeWE, SizesScaleRectangle.ChangeWidthRigth, null, coordinateScaleRectangle.GetCoordinateRightMiddleRectangle));
         //ScaleRectangles.Add(new(_canvasSymbolsVM, this, coordinateScaleRectangle.GetCoordinateRightBottomRectangle, Cursors.SizeNWSE));
-        //ScaleRectangles.Add(new(_canvasSymbolsVM, this, coordinateScaleRectangle.GetCoordinateMiddleBottomRectangle, Cursors.SizeNS));
+        ScaleRectangles.Add(new(_canvasSymbolsVM, this, Cursors.SizeNS, null, SizesScaleRectangle.ChangeHeigthBottom, coordinateScaleRectangle.GetCoordinateMiddleBottomRectangle));
         //ScaleRectangles.Add(new(_canvasSymbolsVM, this, coordinateScaleRectangle.GetCoordinateLeftBottomRectangle, Cursors.SizeNESW));
-        ScaleRectangles.Add(new(_canvasSymbolsVM, this, Cursors.SizeWE, SizesScaleRectangle.ChangeWidthLeft, coordinateScaleRectangle.GetCoordinateLeftMiddleRectangle));
+        ScaleRectangles.Add(new(_canvasSymbolsVM, this, Cursors.SizeWE, SizesScaleRectangle.ChangeWidthLeft, null, coordinateScaleRectangle.GetCoordinateLeftMiddleRectangle));
         //ScaleRectangles.Add(new(_canvasSymbolsVM, this, coordinateScaleRectangle.GetCoordinateLeftTopRectangle, Cursors.SizeNWSE));
     }
 
     public abstract void SetWidth(int width);
+    public abstract void SetHeigth(int height);
 
     protected virtual Point GetCoordinateLeftCP(double diametr, int offset) // DOTO: Factory отдельный класс
     {

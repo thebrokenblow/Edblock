@@ -10,6 +10,22 @@ public class ActionSymbol : BlockSymbol
         TextField.Height = 60;
     }
 
+    public override void SetHeigth(int height)
+    {
+        Height = height;
+        TextField.Height = height;
+
+        foreach (var item in ConnectionPoints)
+        {
+            item.ChangeCoordination();
+        }
+
+        foreach (var item in ScaleRectangles)
+        {
+            item.ChangeCoordination();
+        }
+    }
+
     public override void SetWidth(int width)
     {
         Width = width;

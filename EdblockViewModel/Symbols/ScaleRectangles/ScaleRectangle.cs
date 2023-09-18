@@ -66,11 +66,14 @@ public class ScaleRectangle : INotifyPropertyChanged
     private readonly Cursor _cursorHover;
     private readonly Func<int, int, Point> _getCoordinateScaleRectangle;
     private readonly Func<ScaleData, CanvasSymbolsVM, int>? _getWidthSymbol;
+    private readonly Func<ScaleData, CanvasSymbolsVM, int>? _getHeightSymbol;
+
     public ScaleRectangle(
         CanvasSymbolsVM canvasSymbolsVM, 
         BlockSymbol blockSymbol,
         Cursor cursorHover,
         Func<ScaleData, CanvasSymbolsVM, int>? getWidthSymbol,
+        Func<ScaleData, CanvasSymbolsVM, int>? getHeightSymbol,
         Func<int, int, Point> getCoordinateScaleRectangle
         )
     {
@@ -78,6 +81,7 @@ public class ScaleRectangle : INotifyPropertyChanged
         _cursorHover = cursorHover;
         _canvasSymbolsVM = canvasSymbolsVM;
         _getWidthSymbol = getWidthSymbol;
+        _getHeightSymbol = getHeightSymbol;
 
         _getCoordinateScaleRectangle = getCoordinateScaleRectangle;
         Coordinate = getCoordinateScaleRectangle.Invoke(width, height);
@@ -109,7 +113,7 @@ public class ScaleRectangle : INotifyPropertyChanged
 
     private void SaveScaleRectangle()
     {
-        _canvasSymbolsVM.ScaleData = new(_blockSymbol, _getWidthSymbol, null, _blockSymbol.Width, _blockSymbol.Height, _blockSymbol.XCoordinate, _blockSymbol.YCoordinate);
+        _canvasSymbolsVM.ScaleData = new(_blockSymbol, _getWidthSymbol, _getHeightSymbol, _blockSymbol.Width, _blockSymbol.Height, _blockSymbol.XCoordinate, _blockSymbol.YCoordinate);
         _canvasSymbolsVM.Cursor = _cursorHover;
     }
 
