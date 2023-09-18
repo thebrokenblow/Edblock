@@ -13,7 +13,7 @@
         Width="{Binding Width}" 
         Height="{Binding Height}" 
         Background="#FF52C0AA">
-        <TextBox Text="Действие" Style="{StaticResource TextFrameSymbol}">
+        <!--<TextBox Text="Действие" Style="{StaticResource TextFrameSymbol}" Width="{Binding TextField.Width}" Height="{Binding TextField.Height}">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
                     <i:InvokeCommandAction 
@@ -21,20 +21,16 @@
                         CommandParameter="{Binding}"/>
                 </i:EventTrigger>
                 <i:EventTrigger EventName="PreviewMouseDoubleClick">
-                    <i:InvokeCommandAction 
-                        Command="{Binding TextField.DoubleClickedTextField}" 
-                        CommandParameter="{Binding}"/>
+                    <i:InvokeCommandAction Command="{Binding TextField.DoubleClickedTextField}" CommandParameter="{Binding}"/>
                 </i:EventTrigger>
                 <i:EventTrigger EventName="MouseEnter">
-                    <i:InvokeCommandAction 
-                        Command="{Binding EnterCursor}"/>
+                    <i:InvokeCommandAction Command="{Binding EnterCursor}"/>
                 </i:EventTrigger>
                 <i:EventTrigger EventName="MouseLeave">
-                    <i:InvokeCommandAction 
-                        Command="{Binding LeaveCursor}"/>
+                    <i:InvokeCommandAction Command="{Binding LeaveCursor}"/>
                 </i:EventTrigger>
             </i:Interaction.Triggers>
-        </TextBox>
+        </TextBox>-->
         <symbol:ConnectionPoints/>
         <symbol:ScaleRectangles/>
     </Canvas>

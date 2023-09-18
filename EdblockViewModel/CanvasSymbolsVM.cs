@@ -9,9 +9,7 @@ using System.Runtime.CompilerServices;
 using EdblockViewModel.Symbols.Abstraction;
 using EdblockViewModel.Symbols.ScaleRectangles;
 using EdblockViewModel.Symbols.ConnectionPoints;
-using static System.Net.Mime.MediaTypeNames;
-using System.Windows.Controls;
-using System.Windows.Media.Imaging;
+using MVVM.ViewModel.SymbolsViewModel;
 
 namespace EdblockViewModel;
 
@@ -33,6 +31,19 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
             }
 
             x = CanvasSymbols.ChangeCoordinateSymbol(value);
+
+
+            if (ScaleData != null)
+            {
+                if (ScaleData.GetWidthSymbol != null)
+                {
+                    int width = ScaleData.GetWidthSymbol.Invoke(ScaleData, this);
+                    ScaleData.BlockSymbol.SetWidth(width);
+                    Cursor = Cursors.SizeWE;
+                }
+            }
+
+           
         }
     }
 
@@ -59,6 +70,7 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
         get => cursor;
         set
         {
+
             cursor = value;
             OnPropertyChanged();
         }
@@ -70,6 +82,7 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
     public DelegateCommand MouseUpSymbol { get; init; }
     public DelegateCommand FocusableRemove { get; init; }
     public BlockSymbol? DraggableSymbol { get; set; }
+    public ScaleData? ScaleData { get; set; }
 
     public CanvasSymbolsVM()
     {
@@ -85,8 +98,8 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
     private void CreateSymbol()
     {
         var currentSymbol = new ActionSymbol(this);
-        currentSymbol.TextField.Cursor = Cursors.SizeAll;
-        Cursor = Cursors.SizeAll;
+        //currentSymbol.TextField.Cursor = Cursors.SizeAll;
+        //Cursor = Cursors.SizeAll;
 
         DraggableSymbol = currentSymbol;
         Symbols.Add(currentSymbol);
@@ -98,8 +111,8 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
         {
             ColorConnectionPoint.Hide(currentSymbol.ConnectionPoints);
             ColorScaleRectangle.Hide(currentSymbol.ScaleRectangles);
-            currentSymbol.TextField.Cursor = Cursors.SizeAll;
-            Cursor = Cursors.SizeAll;
+            //currentSymbol.TextField.Cursor = Cursors.SizeAll;
+            //Cursor = Cursors.SizeAll;
         }
 
         DraggableSymbol = currentSymbol;
@@ -108,6 +121,8 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
     private void RemoveSymbol()
     {
         DraggableSymbol = null;
+        ScaleData = null;
+        
         Cursor = Cursors.Arrow;
     }
 

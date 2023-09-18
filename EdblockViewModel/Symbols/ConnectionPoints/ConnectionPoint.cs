@@ -6,6 +6,7 @@ using System.Windows.Input;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using EdblockViewModel.Symbols.Abstraction;
+using EdblockModel;
 
 namespace EdblockViewModel.Symbols.ConnectionPoints;
 
@@ -51,21 +52,31 @@ public class ConnectionPoint : INotifyPropertyChanged
     public DelegateCommand LeaveCursor { get; init; }
     private readonly CanvasSymbolsVM _canvasSymbolsVM;
     private readonly BlockSymbol _symbol;
+    private readonly Func<double, int, Point> _getCoordinate;
     private const int offset = 10;
     public ConnectionPoint(CanvasSymbolsVM canvasSymbolsVM, BlockSymbol symbol, Func<double, int, Point> getCoordinate)
     {
         _canvasSymbolsVM = canvasSymbolsVM;
         _symbol = symbol;
+        _getCoordinate = getCoordinate; 
         Coordinate = getCoordinate.Invoke(diameter, offset);
         EnterCursor = new(ShowStroke);
         LeaveCursor = new(HideStroke);
     }
 
+    public void ChangeCoordination()
+    {
+        Coordinate = _getCoordinate.Invoke(diameter, offset);
+    }
+
     public void ShowStroke()
     {
-        _canvasSymbolsVM.Cursor = Cursors.Hand;
-        ColorConnectionPoint.Show(_symbol.ConnectionPoints);
-        ColorConnectionPoint.ShowStroke(this);
+        if (_canvasSymbolsVM.ScaleData == null)
+        {
+            _canvasSymbolsVM.Cursor = Cursors.Hand;
+            ColorConnectionPoint.Show(_symbol.ConnectionPoints);
+            ColorConnectionPoint.ShowStroke(this);
+        }
     }
 
     public void HideStroke()

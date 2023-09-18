@@ -1,16 +1,14 @@
 ﻿using System.Windows;
+using EdblockViewModel.Symbols.Abstraction;
 
 namespace EdblockViewModel.Symbols.ScaleRectangles;
 
 internal class CoordinateScaleRectangle
 {
-    public int WidthSymbol { get; set; }
-    public int HeightSymbol { get; set; }
-
-    public CoordinateScaleRectangle(int widthSymbol, int heightSymbol)
+    private readonly BlockSymbol _blockSymbol;
+    public CoordinateScaleRectangle(BlockSymbol blockSymbol)
     {
-        WidthSymbol = widthSymbol;
-        HeightSymbol = heightSymbol;
+        _blockSymbol = blockSymbol; 
     }
 
     public Point GetCoordinateLeftTopRectangle(int widthScaleRectangle, int heightScaleRectangle)
@@ -20,36 +18,36 @@ internal class CoordinateScaleRectangle
 
     public Point GetCoordinateLeftMiddleRectangle(int widthScaleRectangle, int heightScaleRectangle)
     {
-        return new Point(-widthScaleRectangle, HeightSymbol / 2 - heightScaleRectangle);
+        return new Point(-widthScaleRectangle, _blockSymbol.Height / 2 - heightScaleRectangle);
     }
 
     public Point GetCoordinateLeftBottomRectangle(int widthScaleRectangle, int heightScaleRectangle)
     {
-        return new Point(-widthScaleRectangle, HeightSymbol - heightScaleRectangle);
+        return new Point(-widthScaleRectangle, _blockSymbol.Height - heightScaleRectangle);
     }
 
     public Point GetCoordinateRightTopRectangle(int widthScaleRectangle, int heightScaleRectangle)
     {
-        return new Point(WidthSymbol - widthScaleRectangle, -heightScaleRectangle);
+        return new Point(_blockSymbol.Width - widthScaleRectangle, -heightScaleRectangle);
     }
 
     public Point GetCoordinateRightMiddleRectangle(int widthScaleRectangle, int heightScaleRectangle)
     {
-        return new Point(WidthSymbol - widthScaleRectangle, HeightSymbol / 2 - heightScaleRectangle);
+        return new Point(_blockSymbol.Width - widthScaleRectangle, _blockSymbol.Height / 2 - heightScaleRectangle);
     }
 
     public Point GetCoordinateRightBottomRectangle(int widthScaleRectangle, int heightScaleRectangle)
     {
-        return new Point(WidthSymbol - widthScaleRectangle, HeightSymbol - heightScaleRectangle);
+        return new Point(_blockSymbol.Width - widthScaleRectangle, _blockSymbol.Height - heightScaleRectangle);
     }
 
     public Point GetCoordinateMiddleBottomRectangle(int widthScaleRectangle, int heightScaleRectangle)
     {
-        return new Point(WidthSymbol / 2 - widthScaleRectangle, HeightSymbol - heightScaleRectangle);
+        return new Point(_blockSymbol.Width / 2 - widthScaleRectangle, _blockSymbol.Height - heightScaleRectangle);
     }
 
     public Point GetCoordinateMiddleTopRectangle(int widthScaleRectangle, int heightScaleRectangle)
     {
-        return new Point(WidthSymbol / 2 - widthScaleRectangle, -heightScaleRectangle);
+        return new Point(_blockSymbol.Width / 2 - widthScaleRectangle, -heightScaleRectangle);
     }
 }

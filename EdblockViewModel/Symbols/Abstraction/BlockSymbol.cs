@@ -3,8 +3,9 @@ using Prism.Commands;
 using System.Windows;
 using System.Windows.Input;
 using System.Collections.Generic;
-using EdblockViewModel.Symbols.ConnectionPoints;
 using EdblockViewModel.Symbols.ScaleRectangles;
+using EdblockViewModel.Symbols.ConnectionPoints;
+using MVVM.ViewModel.SymbolsViewModel.ScaleRectangleViewModel;
 
 namespace EdblockViewModel.Symbols.Abstraction;
 
@@ -79,7 +80,7 @@ public abstract class BlockSymbol : Symbol
         Width = defaultWidth;
         Height = defaultHeigth;
 
-        ConnectionPoints = new()
+        ConnectionPoints = new() // DOTO: Factory отдельный класс
         {
             new ConnectionPoint(canvasSymbolsVM, this, GetCoordinateTopCP),
             new ConnectionPoint(canvasSymbolsVM, this, GetCoordinateRightCP),
@@ -96,7 +97,7 @@ public abstract class BlockSymbol : Symbol
 
     public void ShowStroke()
     {
-        if (_canvasSymbolsVM.DraggableSymbol == null)
+        if (_canvasSymbolsVM.DraggableSymbol == null && _canvasSymbolsVM.ScaleData == null)
         {
             ColorConnectionPoint.Show(ConnectionPoints);
             ColorScaleRectangle.Show(ScaleRectangles);
@@ -109,21 +110,23 @@ public abstract class BlockSymbol : Symbol
         ColorScaleRectangle.Hide(ScaleRectangles);
     }
 
-    protected virtual void AddScaleRectangle()
+    protected virtual void AddScaleRectangle() //Factory отдельный класс
     {
-        var coordinateScaleRectangle = new CoordinateScaleRectangle(width, heigth);
+        var coordinateScaleRectangle = new CoordinateScaleRectangle(this);
 
-        ScaleRectangles.Add(new(_canvasSymbolsVM, this, coordinateScaleRectangle.GetCoordinateMiddleTopRectangle, Cursors.SizeNS));
-        ScaleRectangles.Add(new(_canvasSymbolsVM, this, coordinateScaleRectangle.GetCoordinateRightTopRectangle, Cursors.SizeNESW));
-        ScaleRectangles.Add(new(_canvasSymbolsVM, this, coordinateScaleRectangle.GetCoordinateRightMiddleRectangle, Cursors.SizeWE));
-        ScaleRectangles.Add(new(_canvasSymbolsVM, this, coordinateScaleRectangle.GetCoordinateRightBottomRectangle, Cursors.SizeNWSE));
-        ScaleRectangles.Add(new(_canvasSymbolsVM, this, coordinateScaleRectangle.GetCoordinateMiddleBottomRectangle, Cursors.SizeNS));
-        ScaleRectangles.Add(new(_canvasSymbolsVM, this, coordinateScaleRectangle.GetCoordinateLeftBottomRectangle, Cursors.SizeNESW));
-        ScaleRectangles.Add(new(_canvasSymbolsVM, this, coordinateScaleRectangle.GetCoordinateLeftMiddleRectangle, Cursors.SizeWE));
-        ScaleRectangles.Add(new(_canvasSymbolsVM, this, coordinateScaleRectangle.GetCoordinateLeftTopRectangle, Cursors.SizeNWSE));
+        //ScaleRectangles.Add(new(_canvasSymbolsVM, this, coordinateScaleRectangle.GetCoordinateMiddleTopRectangle, Cursors.SizeNS));
+        //ScaleRectangles.Add(new(_canvasSymbolsVM, this, coordinateScaleRectangle.GetCoordinateRightTopRectangle, Cursors.SizeNESW));
+        ScaleRectangles.Add(new(_canvasSymbolsVM, this, Cursors.SizeWE, SizesScaleRectangle.ChangeWidthRigth, coordinateScaleRectangle.GetCoordinateRightMiddleRectangle));
+        //ScaleRectangles.Add(new(_canvasSymbolsVM, this, coordinateScaleRectangle.GetCoordinateRightBottomRectangle, Cursors.SizeNWSE));
+        //ScaleRectangles.Add(new(_canvasSymbolsVM, this, coordinateScaleRectangle.GetCoordinateMiddleBottomRectangle, Cursors.SizeNS));
+        //ScaleRectangles.Add(new(_canvasSymbolsVM, this, coordinateScaleRectangle.GetCoordinateLeftBottomRectangle, Cursors.SizeNESW));
+        ScaleRectangles.Add(new(_canvasSymbolsVM, this, Cursors.SizeWE, SizesScaleRectangle.ChangeWidthLeft, coordinateScaleRectangle.GetCoordinateLeftMiddleRectangle));
+        //ScaleRectangles.Add(new(_canvasSymbolsVM, this, coordinateScaleRectangle.GetCoordinateLeftTopRectangle, Cursors.SizeNWSE));
     }
 
-    protected virtual Point GetCoordinateLeftCP(double diametr, int offset)
+    public abstract void SetWidth(int width);
+
+    protected virtual Point GetCoordinateLeftCP(double diametr, int offset) // DOTO: Factory отдельный класс
     {
         double connectionPointsX = -offset - diametr;
         double connectionPointsY = Height / 2 - diametr / 2;
