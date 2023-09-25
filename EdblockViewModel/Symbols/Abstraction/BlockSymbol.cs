@@ -1,11 +1,10 @@
-﻿using EdblockModel;
-using Prism.Commands;
+﻿using Prism.Commands;
 using System.Windows;
 using System.Windows.Input;
+using EdblockModel.Symbols;
 using System.Collections.Generic;
 using EdblockViewModel.Symbols.ScaleRectangles;
 using EdblockViewModel.Symbols.ConnectionPoints;
-using MVVM.ViewModel.SymbolsViewModel.ScaleRectangleViewModel;
 
 namespace EdblockViewModel.Symbols.Abstraction;
 
@@ -61,7 +60,7 @@ public abstract class BlockSymbol : Symbol
     }
 
     public TextField TextField { get; init; }
-    public SymolModel SymolModel { get; init; }
+    public BlockSymbolModel BlockSymbolModel { get; init; }
     public DelegateCommand EnterCursor { get; set; }
     public DelegateCommand LeaveCursor { get; set; }
     private readonly CanvasSymbolsVM _canvasSymbolsVM;
@@ -69,13 +68,18 @@ public abstract class BlockSymbol : Symbol
     {
         _canvasSymbolsVM = canvasSymbolsVM;
 
-        TextField = new(canvasSymbolsVM);
-
-        SymolModel = new()
+        TextField = new(canvasSymbolsVM)
         {
             Width = defaultWidth,
             Height = defaultHeigth
         };
+
+        BlockSymbolModel = new ActionSymbolModel()
+        {
+            Width = defaultWidth,
+            Height = defaultHeigth
+        };
+
 
         Width = defaultWidth;
         Height = defaultHeigth;
@@ -116,17 +120,17 @@ public abstract class BlockSymbol : Symbol
         var coordinateScaleRectangle = new CoordinateScaleRectangle(this);
 
         ScaleRectangles.Add(new(_canvasSymbolsVM, this, Cursors.SizeNS, null, SizesScaleRectangle.ChangeHeigthTop, coordinateScaleRectangle.GetCoordinateMiddleTopRectangle));
-        //ScaleRectangles.Add(new(_canvasSymbolsVM, this, coordinateScaleRectangle.GetCoordinateRightTopRectangle, Cursors.SizeNESW));
+        ScaleRectangles.Add(new(_canvasSymbolsVM, this, Cursors.SizeNESW, SizesScaleRectangle.ChangeWidthRigth, SizesScaleRectangle.ChangeHeigthTop, coordinateScaleRectangle.GetCoordinateRightTopRectangle));
         ScaleRectangles.Add(new(_canvasSymbolsVM, this, Cursors.SizeWE, SizesScaleRectangle.ChangeWidthRigth, null, coordinateScaleRectangle.GetCoordinateRightMiddleRectangle));
-        //ScaleRectangles.Add(new(_canvasSymbolsVM, this, coordinateScaleRectangle.GetCoordinateRightBottomRectangle, Cursors.SizeNWSE));
+        ScaleRectangles.Add(new(_canvasSymbolsVM, this, Cursors.SizeNWSE, SizesScaleRectangle.ChangeWidthRigth, SizesScaleRectangle.ChangeHeigthBottom, coordinateScaleRectangle.GetCoordinateRightBottomRectangle));
         ScaleRectangles.Add(new(_canvasSymbolsVM, this, Cursors.SizeNS, null, SizesScaleRectangle.ChangeHeigthBottom, coordinateScaleRectangle.GetCoordinateMiddleBottomRectangle));
-        //ScaleRectangles.Add(new(_canvasSymbolsVM, this, coordinateScaleRectangle.GetCoordinateLeftBottomRectangle, Cursors.SizeNESW));
+        ScaleRectangles.Add(new(_canvasSymbolsVM, this, Cursors.SizeNESW, SizesScaleRectangle.ChangeWidthLeft, SizesScaleRectangle.ChangeHeigthBottom, coordinateScaleRectangle.GetCoordinateLeftBottomRectangle));
         ScaleRectangles.Add(new(_canvasSymbolsVM, this, Cursors.SizeWE, SizesScaleRectangle.ChangeWidthLeft, null, coordinateScaleRectangle.GetCoordinateLeftMiddleRectangle));
-        //ScaleRectangles.Add(new(_canvasSymbolsVM, this, coordinateScaleRectangle.GetCoordinateLeftTopRectangle, Cursors.SizeNWSE));
+        ScaleRectangles.Add(new(_canvasSymbolsVM, this, Cursors.SizeNWSE, SizesScaleRectangle.ChangeWidthLeft, SizesScaleRectangle.ChangeHeigthTop, coordinateScaleRectangle.GetCoordinateLeftTopRectangle));
     }
 
     public abstract void SetWidth(int width);
-    public abstract void SetHeigth(int height);
+    public abstract void SetHeight(int height);
 
     protected virtual Point GetCoordinateLeftCP(double diametr, int offset) // DOTO: Factory отдельный класс
     {
@@ -162,5 +166,18 @@ public abstract class BlockSymbol : Symbol
         var coordinateTopConnectionPoint = new Point(connectionPointsX, connectionPointsY);
 
         return coordinateTopConnectionPoint;
+    }
+
+    protected void ChangeCoordinateAuxiliaryElements()
+    {
+        foreach (var connectionPoint in ConnectionPoints)
+        {
+            connectionPoint.ChangeCoordination();
+        }
+
+        foreach (var scaleRectangle in ScaleRectangles)
+        {
+            scaleRectangle.ChangeCoordination();
+        }
     }
 }

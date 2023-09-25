@@ -1,6 +1,4 @@
-﻿using EdblockViewModel;
-
-namespace MVVM.ViewModel.SymbolsViewModel.ScaleRectangleViewModel;
+﻿namespace EdblockViewModel.Symbols.ScaleRectangles;
 
 internal class SizesScaleRectangle
 {

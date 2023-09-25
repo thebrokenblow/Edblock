@@ -6,8 +6,6 @@ using System.Windows.Media;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using EdblockViewModel.Symbols.Abstraction;
-using EdblockModel;
-using MVVM.ViewModel.SymbolsViewModel;
 
 namespace EdblockViewModel.Symbols.ScaleRectangles;
 
@@ -113,7 +111,14 @@ public class ScaleRectangle : INotifyPropertyChanged
 
     private void SaveScaleRectangle()
     {
-        _canvasSymbolsVM.ScaleData = new(_blockSymbol, _getWidthSymbol, _getHeightSymbol, _blockSymbol.Width, _blockSymbol.Height, _blockSymbol.XCoordinate, _blockSymbol.YCoordinate);
+        _canvasSymbolsVM.ScaleData = new(_cursorHover, 
+                                         _blockSymbol, 
+                                         _getWidthSymbol, 
+                                         _getHeightSymbol, 
+                                         _blockSymbol.Width, 
+                                         _blockSymbol.Height,
+                                         _blockSymbol.XCoordinate, 
+                                         _blockSymbol.YCoordinate);
         _canvasSymbolsVM.Cursor = _cursorHover;
     }
 

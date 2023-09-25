@@ -9,7 +9,6 @@ using System.Runtime.CompilerServices;
 using EdblockViewModel.Symbols.Abstraction;
 using EdblockViewModel.Symbols.ScaleRectangles;
 using EdblockViewModel.Symbols.ConnectionPoints;
-using MVVM.ViewModel.SymbolsViewModel;
 
 namespace EdblockViewModel;
 
@@ -27,7 +26,7 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
             {
                 var currentXCoordinate = CanvasSymbols.GetCoordinateSymbol(DraggableSymbol.XCoordinate, value, x, DraggableSymbol.Width);
                 DraggableSymbol.XCoordinate = currentXCoordinate;
-                DraggableSymbol.SymolModel.X = currentXCoordinate;
+                DraggableSymbol.BlockSymbolModel.X = currentXCoordinate;
             }
 
             x = CanvasSymbols.ChangeCoordinateSymbol(value);
@@ -44,8 +43,8 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
 
             int width = ScaleData.GetWidthSymbol.Invoke(ScaleData, this);
             ScaleData.BlockSymbol.SetWidth(width);
-            Cursor = Cursors.SizeWE;
-            ScaleData.BlockSymbol.TextField.Cursor = Cursors.SizeWE;
+            Cursor = ScaleData.Cursor;
+            ScaleData.BlockSymbol.TextField.Cursor = ScaleData.Cursor;
         }
     }
 
@@ -59,7 +58,7 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
             {
                 var currentYCoordinate = CanvasSymbols.GetCoordinateSymbol(DraggableSymbol.YCoordinate, value, y, DraggableSymbol.Height);
                 DraggableSymbol.YCoordinate = currentYCoordinate;
-                DraggableSymbol.SymolModel.Y = currentYCoordinate;
+                DraggableSymbol.BlockSymbolModel.Y = currentYCoordinate;
             }
 
             y = CanvasSymbols.ChangeCoordinateSymbol(value);
@@ -75,9 +74,9 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
             }
 
             int heigth = ScaleData.GetHeigthSymbol.Invoke(ScaleData, this);
-            ScaleData.BlockSymbol.SetHeigth(heigth);
-            Cursor = Cursors.SizeNS;
-            ScaleData.BlockSymbol.TextField.Cursor = Cursors.SizeNS;
+            ScaleData.BlockSymbol.SetHeight(heigth);
+            Cursor = ScaleData.Cursor;
+            ScaleData.BlockSymbol.TextField.Cursor = ScaleData.Cursor;
         }
     }
 

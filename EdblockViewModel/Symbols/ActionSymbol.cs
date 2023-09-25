@@ -6,39 +6,29 @@ public class ActionSymbol : BlockSymbol
 {
     public ActionSymbol(CanvasSymbolsVM canvasSymbolsVM) : base(canvasSymbolsVM)
     {
-        TextField.Width = 140;
-        TextField.Height = 60;
-    }
-
-    public override void SetHeigth(int height)
-    {
-        Height = height;
-        TextField.Height = height;
-
-        foreach (var item in ConnectionPoints)
-        {
-            item.ChangeCoordination();
-        }
-
-        foreach (var item in ScaleRectangles)
-        {
-            item.ChangeCoordination();
-        }
     }
 
     public override void SetWidth(int width)
     {
-        Width = width;
-        TextField.Width = width;
-
-        foreach (var item in ConnectionPoints)
+        if (width >= BlockSymbolModel.MinWidth)
         {
-            item.ChangeCoordination();
+            BlockSymbolModel.SetWidth(width);
+
+            Width = width;
+            TextField.Width = width;
+            ChangeCoordinateAuxiliaryElements();
         }
+    }
 
-        foreach (var item in ScaleRectangles)
+    public override void SetHeight(int height)
+    {
+        if (height >= BlockSymbolModel.MinHeight)
         {
-            item.ChangeCoordination();
+            BlockSymbolModel.SetHeight(height);
+
+            Height = height;
+            TextField.Height = height;
+            ChangeCoordinateAuxiliaryElements();
         }
     }
 }
