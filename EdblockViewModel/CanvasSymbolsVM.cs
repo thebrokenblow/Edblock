@@ -32,15 +32,20 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
 
             x = CanvasSymbols.ChangeCoordinateSymbol(value);
 
-            if (ScaleData != null)
+            if (ScaleData == null)
             {
-                if (ScaleData.GetWidthSymbol != null)
-                {
-                    int width = ScaleData.GetWidthSymbol.Invoke(ScaleData, this);
-                    ScaleData.BlockSymbol.SetWidth(width);
-                    Cursor = Cursors.SizeWE;
-                }
+                return;
             }
+
+            if (ScaleData.GetWidthSymbol == null)
+            {
+                return;
+            }
+
+            int width = ScaleData.GetWidthSymbol.Invoke(ScaleData, this);
+            ScaleData.BlockSymbol.SetWidth(width);
+            Cursor = Cursors.SizeWE;
+            ScaleData.BlockSymbol.TextField.Cursor = Cursors.SizeWE;
         }
     }
 
@@ -59,15 +64,20 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
 
             y = CanvasSymbols.ChangeCoordinateSymbol(value);
 
-            if (ScaleData != null)
+            if (ScaleData == null)
             {
-                if (ScaleData.GetHeigthSymbol != null)
-                {
-                    int heigth = ScaleData.GetHeigthSymbol.Invoke(ScaleData, this);
-                    ScaleData.BlockSymbol.SetHeigth(heigth);
-                    Cursor = Cursors.SizeNS;
-                }
+                return;
             }
+
+            if (ScaleData.GetHeigthSymbol == null)
+            {
+                return;
+            }
+
+            int heigth = ScaleData.GetHeigthSymbol.Invoke(ScaleData, this);
+            ScaleData.BlockSymbol.SetHeigth(heigth);
+            Cursor = Cursors.SizeNS;
+            ScaleData.BlockSymbol.TextField.Cursor = Cursors.SizeNS;
         }
     }
 
@@ -105,8 +115,8 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
     private void CreateSymbol()
     {
         var currentSymbol = new ActionSymbol(this);
-        //currentSymbol.TextField.Cursor = Cursors.SizeAll;
-        //Cursor = Cursors.SizeAll;
+        currentSymbol.TextField.Cursor = Cursors.SizeAll;
+        Cursor = Cursors.SizeAll;
 
         DraggableSymbol = currentSymbol;
         Symbols.Add(currentSymbol);
@@ -118,8 +128,8 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
         {
             ColorConnectionPoint.Hide(currentSymbol.ConnectionPoints);
             ColorScaleRectangle.Hide(currentSymbol.ScaleRectangles);
-            //currentSymbol.TextField.Cursor = Cursors.SizeAll;
-            //Cursor = Cursors.SizeAll;
+            currentSymbol.TextField.Cursor = Cursors.SizeAll;
+            Cursor = Cursors.SizeAll;
         }
 
         DraggableSymbol = currentSymbol;

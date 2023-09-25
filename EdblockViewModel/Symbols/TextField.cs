@@ -25,12 +25,6 @@ public class TextField : INotifyPropertyChanged
         get => cursor;
         set
         {
-
-            if (cursor == Cursors.SizeAll)
-            {
-
-            }
-
             cursor = value;
             OnPropertyChanged();
         }

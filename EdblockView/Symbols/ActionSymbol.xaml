@@ -3,7 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"  
-             xmlns:i="http://schemas.microsoft.com/xaml/behaviors" 
              xmlns:symbol="clr-namespace:EdblockView.Symbols" 
              xmlns:symbolVM="clr-namespace:EdblockViewModel.Symbols.Abstraction;assembly=EdblockViewModel" 
              d:DataContext="{d:DesignInstance Type=symbolVM:BlockSymbol}"
@@ -13,24 +12,7 @@
         Width="{Binding Width}" 
         Height="{Binding Height}" 
         Background="#FF52C0AA">
-        <!--<TextBox Text="Действие" Style="{StaticResource TextFrameSymbol}" Width="{Binding TextField.Width}" Height="{Binding TextField.Height}">
-            <i:Interaction.Triggers>
-                <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
-                    <i:InvokeCommandAction 
-                        Command="{Binding RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}, Path=DataContext.MouseMoveSymbol}" 
-                        CommandParameter="{Binding}"/>
-                </i:EventTrigger>
-                <i:EventTrigger EventName="PreviewMouseDoubleClick">
-                    <i:InvokeCommandAction Command="{Binding TextField.DoubleClickedTextField}" CommandParameter="{Binding}"/>
-                </i:EventTrigger>
-                <i:EventTrigger EventName="MouseEnter">
-                    <i:InvokeCommandAction Command="{Binding EnterCursor}"/>
-                </i:EventTrigger>
-                <i:EventTrigger EventName="MouseLeave">
-                    <i:InvokeCommandAction Command="{Binding LeaveCursor}"/>
-                </i:EventTrigger>
-            </i:Interaction.Triggers>
-        </TextBox>-->
+        <symbol:TextField/>
         <symbol:ConnectionPoints/>
         <symbol:ScaleRectangles/>
     </Canvas>

@@ -20,9 +20,50 @@
                 <symbols:LineSymbol/>
             </DataTemplate>
         </ItemsControl.Resources>
-        <ItemsControl.ItemsPanel>
+        <ItemsControl.Template>
+            <ControlTemplate>
+                <ScrollViewer MouseLeave="ScrollViewer_MouseLeave" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden">
+                    <Canvas Cursor="{Binding Cursor}" ClipToBounds="True" IsItemsHost="True">
+
+                <i:Interaction.Behaviors>
+                    <edblockViewModel:MouseBehaviourVM 
+                                MouseX="{Binding X, Mode=OneWayToSource}" 
+                                MouseY="{Binding Y, Mode=OneWayToSource}" />
+                </i:Interaction.Behaviors>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="MouseLeftButtonDown">
+                        <i:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}, Path=DataContext.FocusableRemove}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+                <Canvas.Background>
+                    <DrawingBrush 
+                                TileMode="Tile" 
+                                Viewport="{Binding Grid}" 
+                                ViewportUnits="Absolute">
+                        <DrawingBrush.Drawing>
+                            <GeometryDrawing>
+                                <GeometryDrawing.Geometry>
+                                    <RectangleGeometry Rect="0,0,50,50"/>
+                                </GeometryDrawing.Geometry>
+                                <GeometryDrawing.Pen>
+                                    <Pen Brush="#ececec" Thickness="1"/>
+                                </GeometryDrawing.Pen>
+                            </GeometryDrawing>
+                        </DrawingBrush.Drawing>
+                    </DrawingBrush>
+                </Canvas.Background>
+            </Canvas>
+                </ScrollViewer>
+            </ControlTemplate>
+
+
+        </ItemsControl.Template>
+        
+        
+        <!-- <ItemsControl.ItemsPanel>
             <ItemsPanelTemplate>
                 <Canvas Cursor="{Binding Cursor}" ClipToBounds="True">
+                    
                     <i:Interaction.Behaviors>
                         <edblockViewModel:MouseBehaviourVM 
                                 MouseX="{Binding X, Mode=OneWayToSource}" 
@@ -52,7 +93,7 @@
                     </Canvas.Background>
                 </Canvas>
             </ItemsPanelTemplate>
-        </ItemsControl.ItemsPanel>
+        </ItemsControl.ItemsPanel>-->
         <ItemsControl.ItemContainerStyle>
             <Style TargetType="ContentPresenter">
                 <Setter Property="Canvas.Left" Value="{Binding XCoordinate}" />

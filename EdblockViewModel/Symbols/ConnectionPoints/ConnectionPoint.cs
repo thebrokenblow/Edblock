@@ -81,9 +81,12 @@ public class ConnectionPoint : INotifyPropertyChanged
 
     public void HideStroke()
     {
-        _canvasSymbolsVM.Cursor = Cursors.Arrow;
-        ColorConnectionPoint.Hide(_symbol.ConnectionPoints);
-        ColorConnectionPoint.HideStroke(this);
+        if (_canvasSymbolsVM.ScaleData == null)
+        {
+            _canvasSymbolsVM.Cursor = Cursors.Arrow;
+            ColorConnectionPoint.Hide(_symbol.ConnectionPoints);
+            ColorConnectionPoint.HideStroke(this);
+        }
     }
 
     public event PropertyChangedEventHandler? PropertyChanged;

@@ -101,6 +101,7 @@ public abstract class BlockSymbol : Symbol
         {
             ColorConnectionPoint.Show(ConnectionPoints);
             ColorScaleRectangle.Show(ScaleRectangles);
+            TextField.Cursor = Cursors.SizeAll;
         }
     }
 
