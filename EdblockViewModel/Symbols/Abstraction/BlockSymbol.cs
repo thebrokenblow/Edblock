@@ -1,5 +1,4 @@
 ﻿using Prism.Commands;
-using System.Windows;
 using System.Windows.Input;
 using EdblockModel.Symbols;
 using System.Collections.Generic;
@@ -84,13 +83,8 @@ public abstract class BlockSymbol : Symbol
         Width = defaultWidth;
         Height = defaultHeigth;
 
-        ConnectionPoints = new() // DOTO: Factory отдельный класс
-        {
-            new ConnectionPoint(canvasSymbolsVM, this, GetCoordinateTopCP),
-            new ConnectionPoint(canvasSymbolsVM, this, GetCoordinateRightCP),
-            new ConnectionPoint(canvasSymbolsVM, this, GetCoordinateBottomCP),
-            new ConnectionPoint(canvasSymbolsVM, this, GetCoordinateLeftCP)
-        };
+        var factoryConnectionPoints = new FactoryConnectionPoints(_canvasSymbolsVM, this);
+        ConnectionPoints = factoryConnectionPoints.Create();
 
         ScaleRectangles = new();
         AddScaleRectangle();
@@ -131,42 +125,6 @@ public abstract class BlockSymbol : Symbol
 
     public abstract void SetWidth(int width);
     public abstract void SetHeight(int height);
-
-    protected virtual Point GetCoordinateLeftCP(double diametr, int offset) // DOTO: Factory отдельный класс
-    {
-        double connectionPointsX = -offset - diametr;
-        double connectionPointsY = Height / 2 - diametr / 2;
-        var coordinateLeftConnectionPoint = new Point(connectionPointsX, connectionPointsY);
-
-        return coordinateLeftConnectionPoint;
-    }
-
-    protected virtual Point GetCoordinateRightCP(double diametr, int offset)
-    {
-        double connectionPointsX = Width + offset;
-        double connectionPointsY = Height / 2 - diametr / 2;
-        var coordinateRightConnectionPoint = new Point(connectionPointsX, connectionPointsY);
-
-        return coordinateRightConnectionPoint;
-    }
-
-    protected virtual Point GetCoordinateTopCP(double diametr, int offset)
-    {
-        double connectionPointsX = Width / 2 - diametr / 2;
-        double connectionPointsY = -offset - diametr;
-        var coordinateTopConnectionPoint = new Point(connectionPointsX, connectionPointsY);
-
-        return coordinateTopConnectionPoint;
-    }
-
-    protected virtual Point GetCoordinateBottomCP(double diametr, int offset)
-    {
-        double connectionPointsX = Width / 2 - diametr / 2;
-        double connectionPointsY = Height + offset;
-        var coordinateTopConnectionPoint = new Point(connectionPointsX, connectionPointsY);
-
-        return coordinateTopConnectionPoint;
-    }
 
     protected void ChangeCoordinateAuxiliaryElements()
     {
