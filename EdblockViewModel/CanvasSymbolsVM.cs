@@ -93,7 +93,7 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
     }
    
     public ObservableCollection<Symbol> Symbols { get; init; }
-    public DelegateCommand ClickSymbol { get; init; }
+    public DelegateCommand<string> ClickSymbol { get; init; }
     public DelegateCommand<BlockSymbol> MouseMoveSymbol { get; init; }
     public DelegateCommand MouseUpSymbol { get; init; }
     public DelegateCommand FocusableRemove { get; init; }
@@ -111,9 +111,10 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
         Grid = new Rect(-lengthGrid, -lengthGrid, lengthGrid, lengthGrid);
     }
 
-    private void CreateSymbol()
+    private void CreateSymbol(string nameBlockSymbol)
     {
-        var currentSymbol = new ActionSymbol(this);
+        var currentSymbol = FactoryBlockSymbol.Create(nameBlockSymbol, this);
+
         currentSymbol.TextField.Cursor = Cursors.SizeAll;
         Cursor = Cursors.SizeAll;
 

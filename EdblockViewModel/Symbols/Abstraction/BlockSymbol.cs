@@ -60,7 +60,6 @@ public abstract class BlockSymbol : Symbol
     public BlockSymbolModel BlockSymbolModel { get; init; }
     public DelegateCommand EnterCursor { get; set; }
     public DelegateCommand LeaveCursor { get; set; }
-
     private readonly CanvasSymbolsVM _canvasSymbolsVM;
     protected const int defaultWidth = 140;
     protected const int defaultHeigth = 60;
@@ -86,7 +85,7 @@ public abstract class BlockSymbol : Symbol
         var factoryConnectionPoints = new FactoryConnectionPoints(_canvasSymbolsVM, this);
         ConnectionPoints = factoryConnectionPoints.Create();
 
-        var factoryScaleRectangles = new FactoryScaleRectangles(this, _canvasSymbolsVM);
+        var factoryScaleRectangles = new FactoryScaleRectangles(_canvasSymbolsVM, this);
         ScaleRectangles = factoryScaleRectangles.Create();
 
         EnterCursor = new(ShowStroke);

@@ -8,8 +8,8 @@ internal class FactoryScaleRectangles
 {
     private readonly BlockSymbol _blockSymbol;
     private readonly CanvasSymbolsVM _canvasSymbolsVM;
-    public FactoryScaleRectangles(BlockSymbol blockSymbol, CanvasSymbolsVM canvasSymbolsVM) =>
-        (_blockSymbol, _canvasSymbolsVM) = (blockSymbol, canvasSymbolsVM); 
+    public FactoryScaleRectangles(CanvasSymbolsVM canvasSymbolsVM, BlockSymbol blockSymbol) =>
+        (_canvasSymbolsVM, _blockSymbol) = (canvasSymbolsVM, blockSymbol); 
 
     public List<ScaleRectangle> Create()
     {

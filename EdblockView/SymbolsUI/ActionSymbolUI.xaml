@@ -12,7 +12,7 @@
         <TextBox Style="{StaticResource TextFrameSymbol}" Width="140" Height="60" Focusable="False" Cursor="Hand" Text="Действие">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
-                    <i:InvokeCommandAction Command="{Binding ClickSymbol}"/>
+                    <i:InvokeCommandAction Command="{Binding ClickSymbol}" CommandParameter="ActionSymbol"/>
                 </i:EventTrigger>
             </i:Interaction.Triggers>
         </TextBox>
