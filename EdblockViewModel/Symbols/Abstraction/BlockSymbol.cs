@@ -9,8 +9,6 @@ namespace EdblockViewModel.Symbols.Abstraction;
 
 public abstract class BlockSymbol : Symbol
 {
-    protected const int defaultWidth = 140;
-    protected const int defaultHeigth = 60;
     public List<ConnectionPoint> ConnectionPoints { get; init; }
     public List<ScaleRectangle> ScaleRectangles { get; init; }
 
@@ -62,7 +60,10 @@ public abstract class BlockSymbol : Symbol
     public BlockSymbolModel BlockSymbolModel { get; init; }
     public DelegateCommand EnterCursor { get; set; }
     public DelegateCommand LeaveCursor { get; set; }
+
     private readonly CanvasSymbolsVM _canvasSymbolsVM;
+    protected const int defaultWidth = 140;
+    protected const int defaultHeigth = 60;
     public BlockSymbol(CanvasSymbolsVM canvasSymbolsVM)
     {
         _canvasSymbolsVM = canvasSymbolsVM;
@@ -79,15 +80,14 @@ public abstract class BlockSymbol : Symbol
             Height = defaultHeigth
         };
 
-
         Width = defaultWidth;
         Height = defaultHeigth;
 
         var factoryConnectionPoints = new FactoryConnectionPoints(_canvasSymbolsVM, this);
         ConnectionPoints = factoryConnectionPoints.Create();
 
-        ScaleRectangles = new();
-        AddScaleRectangle();
+        var factoryScaleRectangles = new FactoryScaleRectangles(this, _canvasSymbolsVM);
+        ScaleRectangles = factoryScaleRectangles.Create();
 
         EnterCursor = new(ShowStroke);
         LeaveCursor = new(HideStroke);
@@ -107,20 +107,6 @@ public abstract class BlockSymbol : Symbol
     {
         ColorConnectionPoint.Hide(ConnectionPoints);
         ColorScaleRectangle.Hide(ScaleRectangles);
-    }
-
-    protected virtual void AddScaleRectangle() //Factory отдельный класс
-    {
-        var coordinateScaleRectangle = new CoordinateScaleRectangle(this);
-
-        ScaleRectangles.Add(new(_canvasSymbolsVM, this, Cursors.SizeNS, null, SizesScaleRectangle.ChangeHeigthTop, coordinateScaleRectangle.GetCoordinateMiddleTopRectangle));
-        ScaleRectangles.Add(new(_canvasSymbolsVM, this, Cursors.SizeNESW, SizesScaleRectangle.ChangeWidthRigth, SizesScaleRectangle.ChangeHeigthTop, coordinateScaleRectangle.GetCoordinateRightTopRectangle));
-        ScaleRectangles.Add(new(_canvasSymbolsVM, this, Cursors.SizeWE, SizesScaleRectangle.ChangeWidthRigth, null, coordinateScaleRectangle.GetCoordinateRightMiddleRectangle));
-        ScaleRectangles.Add(new(_canvasSymbolsVM, this, Cursors.SizeNWSE, SizesScaleRectangle.ChangeWidthRigth, SizesScaleRectangle.ChangeHeigthBottom, coordinateScaleRectangle.GetCoordinateRightBottomRectangle));
-        ScaleRectangles.Add(new(_canvasSymbolsVM, this, Cursors.SizeNS, null, SizesScaleRectangle.ChangeHeigthBottom, coordinateScaleRectangle.GetCoordinateMiddleBottomRectangle));
-        ScaleRectangles.Add(new(_canvasSymbolsVM, this, Cursors.SizeNESW, SizesScaleRectangle.ChangeWidthLeft, SizesScaleRectangle.ChangeHeigthBottom, coordinateScaleRectangle.GetCoordinateLeftBottomRectangle));
-        ScaleRectangles.Add(new(_canvasSymbolsVM, this, Cursors.SizeWE, SizesScaleRectangle.ChangeWidthLeft, null, coordinateScaleRectangle.GetCoordinateLeftMiddleRectangle));
-        ScaleRectangles.Add(new(_canvasSymbolsVM, this, Cursors.SizeNWSE, SizesScaleRectangle.ChangeWidthLeft, SizesScaleRectangle.ChangeHeigthTop, coordinateScaleRectangle.GetCoordinateLeftTopRectangle));
     }
 
     public abstract void SetWidth(int width);
