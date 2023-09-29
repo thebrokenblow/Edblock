@@ -1,4 +1,5 @@
 ﻿using Prism.Commands;
+using System.Windows;
 using System.Windows.Input;
 using EdblockModel.Symbols;
 using System.Collections.Generic;
@@ -34,24 +35,13 @@ public abstract class BlockSymbol : Symbol
         }
     }
 
-    private int xCoordinate; //TODO: Заменить на структуру Point
-    public int XCoordinate
+    private Point coordinate;
+    public Point Coordinate
     {
-        get => xCoordinate;
+        get => coordinate;
         set
         {
-            xCoordinate = value;
-            OnPropertyChanged();
-        }
-    }
-
-    private int yCoordinate;
-    public int YCoordinate
-    {
-        get => yCoordinate;
-        set
-        {
-            yCoordinate = value;
+            coordinate = value;
             OnPropertyChanged();
         }
     }
