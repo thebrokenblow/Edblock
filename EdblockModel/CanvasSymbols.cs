@@ -7,7 +7,7 @@ public static class CanvasSymbols
     public static int ChangeCoordinateSymbol(int coordinate) =>
         coordinate - coordinate % (LENGTH_GRID / 2);
 
-    public static int GetCoordinateSymbol(double coordinateSymbol, int currentCoordinateCursor, int previousCoordinateCursor, int sizeSymbol)
+    public static int GetCoordinateSymbol(int coordinateSymbol, int currentCoordinateCursor, int previousCoordinateCursor, int sizeSymbol)
     {
         currentCoordinateCursor = ChangeCoordinateSymbol(currentCoordinateCursor);
 
@@ -17,7 +17,7 @@ public static class CanvasSymbols
         }
         else
         {
-            return (int)(currentCoordinateCursor - (previousCoordinateCursor - coordinateSymbol));
+            return currentCoordinateCursor - (previousCoordinateCursor - coordinateSymbol);
         }
     }
 }

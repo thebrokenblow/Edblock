@@ -9,8 +9,8 @@ internal class CoordinateBlockSymbol
     {
         if (blockSymbol != null)
         {
-            var currentXCoordinate = CanvasSymbols.GetCoordinateSymbol(blockSymbol.Coordinate.X, currentX, previousX, blockSymbol.Width);
-            blockSymbol.Coordinate.X = currentXCoordinate;
+            var currentXCoordinate = CanvasSymbols.GetCoordinateSymbol(blockSymbol.XCoordinate, currentX, previousX, blockSymbol.Width);
+            blockSymbol.XCoordinate = currentXCoordinate;
             blockSymbol.BlockSymbolModel.X = currentXCoordinate;
         }
     }
@@ -19,8 +19,8 @@ internal class CoordinateBlockSymbol
     {
         if (blockSymbol != null)
         {
-            var currentYCoordinate = CanvasSymbols.GetCoordinateSymbol(blockSymbol.Coordinate.Y, currentY, previousY, blockSymbol.Height);
-            blockSymbol.Coordinate = currentYCoordinate;
+            var currentYCoordinate = CanvasSymbols.GetCoordinateSymbol(blockSymbol.YCoordinate, currentY, previousY, blockSymbol.Height);
+            blockSymbol.YCoordinate = currentYCoordinate;
             blockSymbol.BlockSymbolModel.Y = currentYCoordinate;
         }
     }
