@@ -22,29 +22,20 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
         get => x;
         set
         {
-            if (DraggableSymbol != null)
-            {
-                var currentXCoordinate = CanvasSymbols.GetCoordinateSymbol(DraggableSymbol.XCoordinate, value, x, DraggableSymbol.Width);
-                DraggableSymbol.XCoordinate = currentXCoordinate;
-                DraggableSymbol.BlockSymbolModel.X = currentXCoordinate;
-            }
-
+            CoordinateBlockSymbol.SetXCoordinate(DraggableSymbol, value, x);
             x = CanvasSymbols.ChangeCoordinateSymbol(value);
 
-            if (ScaleData == null)
+            if (currentLines != null)
             {
-                return;
+                currentLines.LineSymbols[^1].X2 = x;
             }
 
-            if (ScaleData.GetWidthSymbol == null)
+            if (ScaleData != null)
             {
-                return;
+                SizeBlockSymbol.SetSize(ScaleData, this, ScaleData?.GetWidthSymbol, ScaleData!.BlockSymbol.SetWidth);
+                Cursor = ScaleData.Cursor;
+                ScaleData.BlockSymbol.TextField.Cursor = ScaleData.Cursor;
             }
-
-            int width = ScaleData.GetWidthSymbol.Invoke(ScaleData, this);
-            ScaleData.BlockSymbol.SetWidth(width);
-            Cursor = ScaleData.Cursor;
-            ScaleData.BlockSymbol.TextField.Cursor = ScaleData.Cursor;
         }
     }
 
@@ -54,29 +45,20 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
         get => y;
         set
         {
-            if (DraggableSymbol != null)
-            {
-                var currentYCoordinate = CanvasSymbols.GetCoordinateSymbol(DraggableSymbol.YCoordinate, value, y, DraggableSymbol.Height);
-                DraggableSymbol.YCoordinate = currentYCoordinate;
-                DraggableSymbol.BlockSymbolModel.Y = currentYCoordinate;
-            }
-
+            CoordinateBlockSymbol.SetYCoordinate(DraggableSymbol, value, y);
             y = CanvasSymbols.ChangeCoordinateSymbol(value);
 
-            if (ScaleData == null)
+            if (currentLines != null)
             {
-                return;
+                currentLines.LineSymbols[^1].Y2 = y;
             }
 
-            if (ScaleData.GetHeigthSymbol == null)
+            if (ScaleData != null)
             {
-                return;
+                SizeBlockSymbol.SetSize(ScaleData, this, ScaleData?.GetHeigthSymbol, ScaleData!.BlockSymbol.SetHeight);
+                Cursor = ScaleData.Cursor;
+                ScaleData.BlockSymbol.TextField.Cursor = ScaleData.Cursor;
             }
-
-            int heigth = ScaleData.GetHeigthSymbol.Invoke(ScaleData, this);
-            ScaleData.BlockSymbol.SetHeight(heigth);
-            Cursor = ScaleData.Cursor;
-            ScaleData.BlockSymbol.TextField.Cursor = ScaleData.Cursor;
         }
     }
 
@@ -99,6 +81,7 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
     public DelegateCommand FocusableRemove { get; init; }
     public BlockSymbol? DraggableSymbol { get; set; }
     public ScaleData? ScaleData { get; set; }
+    private ListLineSymbol? currentLines;
 
     public CanvasSymbolsVM()
     {
@@ -161,5 +144,18 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
     public void OnPropertyChanged([CallerMemberName] string prop = "")
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
+    }
+
+    internal void DrawLine(Point positionConnectionPoint)
+    {
+        var line = new LineSymbol
+        {
+            X1 = (int)positionConnectionPoint.X,
+            Y1 = (int)positionConnectionPoint.Y
+        };
+
+        currentLines ??= new();
+        currentLines.LineSymbols.Add(line);
+        Symbols.Add(currentLines);
     }
 }

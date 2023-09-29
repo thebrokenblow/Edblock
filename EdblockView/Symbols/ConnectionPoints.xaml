@@ -3,9 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:i="http://schemas.microsoft.com/xaml/behaviors" 
-             xmlns:symbols="clr-namespace:EdblockViewModel.Symbols;assembly=EdblockViewModel"
-             d:DataContext="{d:DesignInstance Type=symbols:Symbol}"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:blockSymbol="clr-namespace:EdblockViewModel.Symbols.Abstraction;assembly=EdblockViewModel" 
+             d:DataContext="{d:DesignInstance Type=blockSymbol:BlockSymbol}"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <ItemsControl ItemsSource="{Binding ConnectionPoints}">
@@ -18,6 +18,9 @@
                         </i:EventTrigger>
                         <i:EventTrigger EventName="MouseLeave">
                             <i:InvokeCommandAction Command="{Binding LeaveCursor}" />
+                        </i:EventTrigger>
+                        <i:EventTrigger EventName="MouseDown">
+                            <i:InvokeCommandAction Command="{Binding ClickConnectionPoint}" CommandParameter="{Binding}"/>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </Ellipse>

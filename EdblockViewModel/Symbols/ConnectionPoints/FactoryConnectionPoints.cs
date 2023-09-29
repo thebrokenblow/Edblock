@@ -1,5 +1,5 @@
-﻿using EdblockViewModel.Symbols.Abstraction;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using EdblockViewModel.Symbols.Abstraction;
 
 namespace EdblockViewModel.Symbols.ConnectionPoints;
 
@@ -19,10 +19,10 @@ internal class FactoryConnectionPoints
     {
         return new List<ConnectionPoint>()
         {
-            new ConnectionPoint(_canvasSymbolsVM, _blockSymbol, coordinateConnectionPoint.GetCoordinateTopCP),
-            new ConnectionPoint(_canvasSymbolsVM, _blockSymbol, coordinateConnectionPoint.GetCoordinateRightCP),
-            new ConnectionPoint(_canvasSymbolsVM, _blockSymbol, coordinateConnectionPoint.GetCoordinateBottomCP),
-            new ConnectionPoint(_canvasSymbolsVM, _blockSymbol, coordinateConnectionPoint.GetCoordinateLeftCP)
+            new ConnectionPoint(_canvasSymbolsVM, _blockSymbol, coordinateConnectionPoint.GetCoordinateTopCP, OrientationConnectionPoint.Vertical),
+            new ConnectionPoint(_canvasSymbolsVM, _blockSymbol, coordinateConnectionPoint.GetCoordinateRightCP, OrientationConnectionPoint.Horizontal),
+            new ConnectionPoint(_canvasSymbolsVM, _blockSymbol, coordinateConnectionPoint.GetCoordinateBottomCP, OrientationConnectionPoint.Vertical),
+            new ConnectionPoint(_canvasSymbolsVM, _blockSymbol, coordinateConnectionPoint.GetCoordinateLeftCP, OrientationConnectionPoint.Horizontal)
         };
     }
 }

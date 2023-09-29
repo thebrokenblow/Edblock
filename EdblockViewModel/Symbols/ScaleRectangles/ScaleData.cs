@@ -1,5 +1,4 @@
 ﻿using System;
-using EdblockViewModel;
 using System.Windows.Input;
 using EdblockViewModel.Symbols.Abstraction;
 

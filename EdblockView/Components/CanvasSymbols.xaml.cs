@@ -1,4 +1,5 @@
-﻿using System.Windows.Input;
+﻿using System.Windows;
+using System.Windows.Input;
 using System.Windows.Controls;
 
 namespace EdblockView.Components;
@@ -15,27 +16,22 @@ public partial class CanvasSymbols : UserControl
 
     private void ScrollViewer_MouseLeave(object sender, MouseEventArgs e)
     {
-        //var pos = e.MouseDevice.GetPosition(this);
+        //var cursorPosition = e.MouseDevice.GetPosition(this);
+        //var scrollViewer = (ScrollViewer)sender;
+        //var canvasSymbols = (Canvas)scrollViewer.Content;
+       
+        //var x = cursorPosition.X - (cursorPosition.X % 100);
+        //var x1 = scrollViewer.ActualWidth - (scrollViewer.ActualWidth % 100);
 
-        //int current = constX;
-        //if (pos.X > 500)
+        //if (x == x1)
         //{
-        //    var scrollViewer = (ScrollViewer)sender;
-        //    var t = (Canvas)scrollViewer.Content;
-        //    while (!t.IsMouseOver && current != 0)
-        //    {
-        //        t.Width = t.ActualWidth + 50;
-        //        x += 50;
-        //        current -= 50;
-        //        scrollViewer.ScrollToHorizontalOffset(x);
-        //    }
-        //} else
+        //    canvasSymbols.Width = canvasSymbols.ActualWidth + 25;
+        //    scrollViewer.ScrollToHorizontalOffset(canvasSymbols.Width);
+        //}
+        //else if (x <= 0)
         //{
-        //    var scrollViewer = (ScrollViewer)sender;
-        //    var t = (Canvas)scrollViewer.Content;
-        //    t.Width = t.ActualWidth - 50;
-        //    x -= 50;
-        //    scrollViewer.ScrollToHorizontalOffset(x);
+        //    canvasSymbols.Width = canvasSymbols.ActualWidth + 25;
+        //    scrollViewer.ScrollToHorizontalOffset(-25);
         //}
     }
 }
