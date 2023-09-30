@@ -104,14 +104,28 @@ public class ConnectionPoint : INotifyPropertyChanged
 
     public void CreateLine(ConnectionPoint connectionPoint)
     {
-        int x = (int)(connectionPoint.Coordinate.X + connectionPoint.BlockSymbol.XCoordinate + diameter / 2);
-        x = CanvasSymbols.ChangeCoordinateSymbol(x);
+        if (Orientation == Orientation.Vertical)
+        {
+            int x = (int)(connectionPoint.Coordinate.X + connectionPoint.BlockSymbol.XCoordinate + diameter / 2);
+            x = CanvasSymbols.ChangeCoordinateSymbol(x);
 
-        int y = (int)connectionPoint.Coordinate.Y + connectionPoint.BlockSymbol.YCoordinate - offset;
-        y = CanvasSymbols.ChangeCoordinateSymbol(y);
+            int y = (int)connectionPoint.Coordinate.Y + connectionPoint.BlockSymbol.YCoordinate - offset;
+            y = CanvasSymbols.ChangeCoordinateSymbol(y);
 
-        var coordinateConnectionPoint = new Point(x, y);
-        _canvasSymbolsVM.DrawLine(coordinateConnectionPoint, Orientation);
+            var coordinateConnectionPoint = new Point(x, y);
+            _canvasSymbolsVM.DrawLine(coordinateConnectionPoint, Orientation);
+        }
+        else 
+        {
+            int x = (int)(connectionPoint.Coordinate.X + connectionPoint.BlockSymbol.XCoordinate - diameter / 2);
+            x = CanvasSymbols.ChangeCoordinateSymbol(x);
+
+            int y = (int)connectionPoint.Coordinate.Y + connectionPoint.BlockSymbol.YCoordinate + offset;
+            y = CanvasSymbols.ChangeCoordinateSymbol(y);
+
+            var coordinateConnectionPoint = new Point(x, y);
+            _canvasSymbolsVM.DrawLine(coordinateConnectionPoint, Orientation);
+        } 
     }
 
     public event PropertyChangedEventHandler? PropertyChanged;
