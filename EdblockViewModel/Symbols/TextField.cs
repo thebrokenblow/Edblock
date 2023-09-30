@@ -3,6 +3,8 @@ using System.Windows.Input;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using EdblockViewModel.Symbols.Abstraction;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace EdblockViewModel.Symbols;
 
@@ -68,6 +70,20 @@ public class TextField : INotifyPropertyChanged
         _canvasSymbolsVM.Cursor = Cursors.IBeam;
         symbolViewModel.TextField.Cursor = Cursors.IBeam;
         symbolViewModel.TextField.Focus = true;
+    }
+
+    public static void ChangeFocus(ObservableCollection<Symbol> Symbols)
+    {
+        foreach (var symbol in Symbols)
+        {
+            if (symbol is BlockSymbol blockSymbol)
+            {
+                if (blockSymbol.TextField.Focus)
+                {
+                    blockSymbol.TextField.Focus = false;
+                }
+            }
+        }
     }
 
     public event PropertyChangedEventHandler? PropertyChanged;

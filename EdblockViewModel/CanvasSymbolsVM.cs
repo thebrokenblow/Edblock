@@ -131,16 +131,7 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
 
     public void ChangeFocus()
     {
-        foreach (var symbol in Symbols)
-        {
-            if (symbol is BlockSymbol blockSymbol)
-            {
-                if (blockSymbol.TextField.Focus)
-                {
-                    blockSymbol.TextField.Focus = false;
-                }
-            }
-        }
+        TextField.ChangeFocus(Symbols);
     }
 
     public event PropertyChangedEventHandler? PropertyChanged;
