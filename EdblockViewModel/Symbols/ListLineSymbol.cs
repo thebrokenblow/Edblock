@@ -1,90 +1,41 @@
 ﻿using System.Collections.ObjectModel;
+using EdblockModel.Symbols.LineSymbols;
 using EdblockViewModel.Symbols.Abstraction;
-using EdblockViewModel.Symbols.ConnectionPoints;
 
 namespace EdblockViewModel.Symbols;
 
 public class ListLineSymbol : Symbol
 {
-    public ObservableCollection<LineSymbol> LineSymbols { get; init; }
+    public ObservableCollection<LineSymbol> LineSymbols { get; init; } = new();
+    public ListLineSymbolModel LineSymbolModel { get; init; } = new();
 
-    public ListLineSymbol()
+    public ListLineSymbol(LineSymbolModel lineSymbolModel)
     {
-        LineSymbols = new();
+        LineSymbolModel.LinesSymbols.Add(lineSymbolModel);
     }
 
-    internal void DrawLine(int x, int y)
+    public void ChangeCoordination(int x, int y)
     {
-        var lastLine = LineSymbols[^1];
-        if (lastLine.Orientation == Orientation.Vertical)
-        {
-            if (LineSymbols.Count % 2 == 0)
-            {
-                lastLine = LineSymbols[^2];
-                var secondLine = LineSymbols[^1];
-                lastLine.Y2 = y;
-                secondLine.X2 = x;
-                secondLine.Y1 = lastLine.Y2;
-                secondLine.Y2 = lastLine.Y2;
+        var linesSymbModel = LineSymbolModel.GetLines(x, y);
 
-                if (secondLine.X2 == lastLine.X2)
-                {
-                    LineSymbols.Remove(secondLine);
-                }
-            }
-            else
-            {
-                lastLine.Y2 = y;
-                if (lastLine.X2 != x)
-                {
-                    if (LineSymbols.Count % 2 != 0)
-                    {
-                        var line = new LineSymbol
-                        {
-                            X1 = lastLine.X1,
-                            X2 = lastLine.X1,
-                            Y1 = lastLine.Y2,
-                            Y2 = lastLine.Y2,
-                            Orientation = lastLine.Orientation
-                        };
-                        LineSymbols.Add(line);
-                    }
-                }
-            }
+        if (linesSymbModel.Count == 1)
+        {
+            LineSymbols.Clear();
+            var lineSymbol = FactoryLineSymbol.CreateLine(linesSymbModel[0]);
+            LineSymbols.Add(lineSymbol);
         }
         else
         {
-            if (LineSymbols.Count % 2 == 0)
+            for (int i = 0; i < linesSymbModel.Count; i++)
             {
-                lastLine = LineSymbols[^2];
-                var secondLine = LineSymbols[^1];
-                lastLine.X2 = x;
-                secondLine.Y2 = y;
-                secondLine.X1 = lastLine.X2;
-                secondLine.X2 = lastLine.X2;
-
-                if (secondLine.Y2 == lastLine.Y2)
+                var lineSymbol = FactoryLineSymbol.CreateLine(linesSymbModel[i]);
+                if (i >= LineSymbols.Count)
                 {
-                    LineSymbols.Remove(secondLine);
+                    LineSymbols.Add(lineSymbol);
                 }
-            }
-            else
-            {
-                lastLine.X2 = x;
-                if (lastLine.Y2 != y)
+                else
                 {
-                    if (LineSymbols.Count % 2 != 0)
-                    {
-                        var line = new LineSymbol
-                        {
-                            X1 = lastLine.X1,
-                            X2 = lastLine.X1,
-                            Y1 = lastLine.Y2,
-                            Y2 = lastLine.Y2,
-                            Orientation = lastLine.Orientation
-                        };
-                        LineSymbols.Add(line);
-                    }
+                    LineSymbols[i] = FactoryLineSymbol.CreateLine(linesSymbModel[i]);
                 }
             }
         }

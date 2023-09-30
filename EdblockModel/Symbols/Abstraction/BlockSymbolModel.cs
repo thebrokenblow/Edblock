@@ -1,4 +1,4 @@
-﻿namespace EdblockModel.Symbols;
+﻿namespace EdblockModel.Symbols.Abstraction;
 
 public abstract class BlockSymbolModel
 {

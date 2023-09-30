@@ -9,6 +9,7 @@ using System.Runtime.CompilerServices;
 using EdblockViewModel.Symbols.Abstraction;
 using EdblockViewModel.Symbols.ScaleRectangles;
 using EdblockViewModel.Symbols.ConnectionPoints;
+using EdblockModel.Symbols.LineSymbols;
 
 namespace EdblockViewModel;
 
@@ -23,11 +24,11 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
         set
         {
             CoordinateBlockSymbol.SetXCoordinate(DraggableSymbol, value, x);
-            x = CanvasSymbols.ChangeCoordinateSymbol(value);
+            x = CanvasSymbols.СorrectionCoordinateSymbol(value);
 
             if (currentLines != null)
             {
-                currentLines.DrawLine(x, y);
+                currentLines.ChangeCoordination(x, y);
             }
 
             if (ScaleData != null)
@@ -46,11 +47,11 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
         set
         {
             CoordinateBlockSymbol.SetYCoordinate(DraggableSymbol, value, y);
-            y = CanvasSymbols.ChangeCoordinateSymbol(value);
+            y = CanvasSymbols.СorrectionCoordinateSymbol(value);
 
             if (currentLines != null)
             {
-                currentLines.DrawLine(x, y);
+                currentLines.ChangeCoordination(x, y);
             }
 
             if (ScaleData != null)
@@ -82,6 +83,7 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
     public BlockSymbol? DraggableSymbol { get; set; }
     public ScaleData? ScaleData { get; set; }
     private ListLineSymbol? currentLines;
+    private readonly SerializableSymbols serializableSymbols = new();
 
     public CanvasSymbolsVM()
     {
@@ -102,6 +104,7 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
         Cursor = Cursors.SizeAll;
 
         DraggableSymbol = currentSymbol;
+        serializableSymbols.blocksSymbolModel.Add(currentSymbol.BlockSymbolModel);
         Symbols.Add(currentSymbol);
     }
 
@@ -146,19 +149,13 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
     }
 
-    internal void DrawLine(Point positionConnectionPoint, Orientation orientationConnectionPoint)
+    internal void DrawLine(LineSymbolModel lineSymbolModel)
     {
-        var line = new LineSymbol
-        {
-            X1 = (int)positionConnectionPoint.X,
-            Y1 = (int)positionConnectionPoint.Y,
-            X2 = (int)positionConnectionPoint.X,
-            Y2 = (int)positionConnectionPoint.Y,
-            Orientation = orientationConnectionPoint
-        };
+        var lineSymbol = FactoryLineSymbol.CreateStartLine(lineSymbolModel);
 
-        currentLines ??= new();
-        currentLines.LineSymbols.Add(line);
+        currentLines ??= new(lineSymbolModel);
+        currentLines.LineSymbols.Add(lineSymbol);
+        serializableSymbols.linesSymbolModel.Add(currentLines.LineSymbolModel);
         Symbols.Add(currentLines);
     }
 }

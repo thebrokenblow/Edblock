@@ -4,13 +4,12 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:edblockViewModel="clr-namespace:EdblockViewModel;assembly=EdblockViewModel" 
-             xmlns:symbolsVM="clr-namespace:EdblockViewModel.Symbols;assembly=EdblockViewModel"
+             xmlns:symbolsVM="clr-namespace:EdblockViewModel.Symbols;assembly=EdblockViewModel"          
              xmlns:symbols="clr-namespace:EdblockView.Symbols" 
-             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
-             d:DataContext="{d:DesignInstance Type=edblockViewModel:CanvasSymbolsVM}"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors" 
              mc:Ignorable="d" 
+             d:DataContext="{d:DesignInstance Type=edblockViewModel:CanvasSymbolsVM}"
              d:DesignHeight="450" d:DesignWidth="800">
-
     <ItemsControl Grid.Column="1" ItemsSource="{Binding Symbols}">
         <ItemsControl.Resources>
             <DataTemplate DataType="{x:Type symbolsVM:ActionSymbol}">
@@ -24,7 +23,6 @@
             <ControlTemplate>
                 <ScrollViewer MouseLeave="ScrollViewer_MouseLeave" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden">
                     <Canvas Cursor="{Binding Cursor}" ClipToBounds="True" IsItemsHost="True">
-
                         <i:Interaction.Behaviors>
                             <edblockViewModel:MouseBehaviourVM 
                                 MouseX="{Binding X, Mode=OneWayToSource}" 
@@ -62,5 +60,5 @@
                 <Setter Property="Canvas.Top" Value="{Binding YCoordinate}" />
             </Style>
         </ItemsControl.ItemContainerStyle>
-    </ItemsControl>
+    </ItemsControl> 
 </UserControl>

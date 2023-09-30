@@ -1,4 +1,5 @@
-﻿using EdblockViewModel.Symbols.Abstraction;
+﻿using System;
+using EdblockViewModel.Symbols.Abstraction;
 
 namespace EdblockViewModel.Symbols;
 
@@ -8,8 +9,9 @@ internal static class FactoryBlockSymbol
     {
         if (nameBlockSymbol == "ActionSymbol")
         {
-            return new ActionSymbol(canvasSymbolsVM);
+            return new ActionSymbol(nameBlockSymbol, canvasSymbolsVM);
         }
-        else return new ActionSymbol(canvasSymbolsVM);
+
+        throw new Exception("Нет символа с таким именем, возможно вы ошиблись в названии");
     }
 }

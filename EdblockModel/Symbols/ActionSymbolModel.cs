@@ -1,4 +1,6 @@
-﻿namespace EdblockModel.Symbols;
+﻿using EdblockModel.Symbols.Abstraction;
+
+namespace EdblockModel.Symbols;
 
 public class ActionSymbolModel : BlockSymbolModel
 {

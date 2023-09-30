@@ -4,12 +4,12 @@ public static class CanvasSymbols
 {
     public const int LENGTH_GRID = 20;
 
-    public static int ChangeCoordinateSymbol(int coordinate) =>
+    public static int СorrectionCoordinateSymbol(int coordinate) =>
         coordinate - coordinate % (LENGTH_GRID / 2);
 
     public static int GetCoordinateSymbol(int coordinateSymbol, int currentCoordinateCursor, int previousCoordinateCursor, int sizeSymbol)
     {
-        currentCoordinateCursor = ChangeCoordinateSymbol(currentCoordinateCursor);
+        currentCoordinateCursor = СorrectionCoordinateSymbol(currentCoordinateCursor);
 
         if (coordinateSymbol == 0)
         {

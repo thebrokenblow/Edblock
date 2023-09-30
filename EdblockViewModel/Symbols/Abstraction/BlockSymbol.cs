@@ -2,6 +2,7 @@
 using System.Windows.Input;
 using EdblockModel.Symbols;
 using System.Collections.Generic;
+using EdblockModel.Symbols.Abstraction;
 using EdblockViewModel.Symbols.ScaleRectangles;
 using EdblockViewModel.Symbols.ConnectionPoints;
 
@@ -63,20 +64,16 @@ public abstract class BlockSymbol : Symbol
     private readonly CanvasSymbolsVM _canvasSymbolsVM;
     protected const int defaultWidth = 140;
     protected const int defaultHeigth = 60;
-    public BlockSymbol(CanvasSymbolsVM canvasSymbolsVM)
+    public BlockSymbol(string nameBlockSymbol, CanvasSymbolsVM canvasSymbolsVM)
     {
         _canvasSymbolsVM = canvasSymbolsVM;
 
-        TextField = new(canvasSymbolsVM)
-        {
-            Width = defaultWidth,
-            Height = defaultHeigth
-        };
+        TextField = new(canvasSymbolsVM);
 
-        BlockSymbolModel = new ActionSymbolModel()
+        BlockSymbolModel = FactoryBlockSymbolModel.Create(nameBlockSymbol);
         {
-            Width = defaultWidth,
-            Height = defaultHeigth
+            Width = defaultWidth;
+            Height = defaultHeigth;
         };
 
         Width = defaultWidth;

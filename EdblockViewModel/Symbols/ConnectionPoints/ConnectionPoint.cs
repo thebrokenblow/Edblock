@@ -1,5 +1,4 @@
 ﻿using System;
-using EdblockModel;
 using Prism.Commands;
 using System.Windows;
 using System.Windows.Media;
@@ -7,14 +6,10 @@ using System.Windows.Input;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using EdblockViewModel.Symbols.Abstraction;
+using EdblockModel.Symbols;
+using EdblockModel.Symbols.LineSymbols;
 
 namespace EdblockViewModel.Symbols.ConnectionPoints;
-
-public enum Orientation
-{
-    Vertical,
-    Horizontal
-}
 
 public class ConnectionPoint : INotifyPropertyChanged
 {
@@ -29,8 +24,7 @@ public class ConnectionPoint : INotifyPropertyChanged
         }
     }
 
-    private const double diameter = 8.5;
-    public double Diameter { get; init; } = diameter;
+    public double Diameter { get; init; } = ConnectionPointModel.DIAMETR;
 
     private Brush? fill = Brushes.Transparent;
     public Brush? Fill
@@ -60,8 +54,7 @@ public class ConnectionPoint : INotifyPropertyChanged
     public BlockSymbol BlockSymbol { get; init; }
     public DelegateCommand<ConnectionPoint> ClickConnectionPoint { get; init; }
     private readonly CanvasSymbolsVM _canvasSymbolsVM;
-    private readonly Func<double, int, Point> _getCoordinate; 
-    private const int offset = 10;
+    private readonly Func<double, int, Point> _getCoordinate;
     public ConnectionPoint(CanvasSymbolsVM canvasSymbolsVM, 
                            BlockSymbol symbol, 
                            Func<double, int, Point> getCoordinate, 
@@ -70,7 +63,7 @@ public class ConnectionPoint : INotifyPropertyChanged
         _canvasSymbolsVM = canvasSymbolsVM;
         BlockSymbol = symbol;
         _getCoordinate = getCoordinate; 
-        Coordinate = getCoordinate.Invoke(diameter, offset);
+        Coordinate = getCoordinate.Invoke(ConnectionPointModel.DIAMETR, ConnectionPointModel.OFFSET);
         Orientation = orientation;
         EnterCursor = new(ShowStroke);
         LeaveCursor = new(HideStroke);
@@ -79,7 +72,7 @@ public class ConnectionPoint : INotifyPropertyChanged
 
     public void ChangeCoordination()
     {
-        Coordinate = _getCoordinate.Invoke(diameter, offset);
+        Coordinate = _getCoordinate.Invoke(ConnectionPointModel.DIAMETR, ConnectionPointModel.OFFSET);
     }
 
     public void ShowStroke()
@@ -104,28 +97,13 @@ public class ConnectionPoint : INotifyPropertyChanged
 
     public void CreateLine(ConnectionPoint connectionPoint)
     {
-        if (Orientation == Orientation.Vertical)
-        {
-            int x = (int)(connectionPoint.Coordinate.X + connectionPoint.BlockSymbol.XCoordinate + diameter / 2);
-            x = CanvasSymbols.ChangeCoordinateSymbol(x);
+        var coordinate = connectionPoint.Coordinate;
+        var orientation = connectionPoint.Orientation;
+        var blockSymbolModel = connectionPoint.BlockSymbol.BlockSymbolModel;
 
-            int y = (int)connectionPoint.Coordinate.Y + connectionPoint.BlockSymbol.YCoordinate - offset;
-            y = CanvasSymbols.ChangeCoordinateSymbol(y);
-
-            var coordinateConnectionPoint = new Point(x, y);
-            _canvasSymbolsVM.DrawLine(coordinateConnectionPoint, Orientation);
-        }
-        else 
-        {
-            int x = (int)(connectionPoint.Coordinate.X + connectionPoint.BlockSymbol.XCoordinate - diameter / 2);
-            x = CanvasSymbols.ChangeCoordinateSymbol(x);
-
-            int y = (int)connectionPoint.Coordinate.Y + connectionPoint.BlockSymbol.YCoordinate + offset;
-            y = CanvasSymbols.ChangeCoordinateSymbol(y);
-
-            var coordinateConnectionPoint = new Point(x, y);
-            _canvasSymbolsVM.DrawLine(coordinateConnectionPoint, Orientation);
-        } 
+        var lineSymbolModel = new LineSymbolModel(orientation);
+        lineSymbolModel.SetStarCoordinate((int)coordinate.X, (int)coordinate.Y, blockSymbolModel);
+        _canvasSymbolsVM.DrawLine(lineSymbolModel);
     }
 
     public event PropertyChangedEventHandler? PropertyChanged;

@@ -4,8 +4,10 @@ namespace EdblockViewModel.Symbols;
 
 public class ActionSymbol : BlockSymbol
 {
-    public ActionSymbol(CanvasSymbolsVM canvasSymbolsVM) : base(canvasSymbolsVM)
+    public ActionSymbol(string nameBlockSymbol, CanvasSymbolsVM canvasSymbolsVM) : base(nameBlockSymbol, canvasSymbolsVM)
     {
+        TextField.Width = Width;
+        TextField.Height = Height;
     }
 
     public override void SetWidth(int width)

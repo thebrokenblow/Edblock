@@ -1,5 +1,4 @@
 ﻿using EdblockViewModel.Symbols.Abstraction;
-using EdblockViewModel.Symbols.ConnectionPoints;
 
 namespace EdblockViewModel.Symbols;
 
@@ -49,6 +48,4 @@ public class LineSymbol : Symbol
             OnPropertyChanged();
         }
     }
-
-    public Orientation Orientation { get; init; }
 }

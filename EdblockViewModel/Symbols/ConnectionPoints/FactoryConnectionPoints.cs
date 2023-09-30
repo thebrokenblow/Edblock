@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using EdblockModel.Symbols.LineSymbols;
 using EdblockViewModel.Symbols.Abstraction;
 
 namespace EdblockViewModel.Symbols.ConnectionPoints;
