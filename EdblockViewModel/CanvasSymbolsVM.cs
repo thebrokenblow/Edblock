@@ -27,7 +27,7 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
 
             if (currentLines != null)
             {
-                currentLines.LineSymbols[^1].X2 = x;
+                currentLines.DrawLine(x, y);
             }
 
             if (ScaleData != null)
@@ -50,7 +50,7 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
 
             if (currentLines != null)
             {
-                currentLines.LineSymbols[^1].Y2 = y;
+                currentLines.DrawLine(x, y);
             }
 
             if (ScaleData != null)
@@ -146,12 +146,15 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
     }
 
-    internal void DrawLine(Point positionConnectionPoint)
+    internal void DrawLine(Point positionConnectionPoint, Orientation orientationConnectionPoint)
     {
         var line = new LineSymbol
         {
             X1 = (int)positionConnectionPoint.X,
-            Y1 = (int)positionConnectionPoint.Y
+            Y1 = (int)positionConnectionPoint.Y,
+            X2 = (int)positionConnectionPoint.X,
+            Y2 = (int)positionConnectionPoint.Y,
+            Orientation = orientationConnectionPoint
         };
 
         currentLines ??= new();

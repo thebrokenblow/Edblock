@@ -34,7 +34,7 @@ public abstract class BlockSymbol : Symbol
         }
     }
 
-    private int xCoordinate; //TODO: Заменить на структуру Point
+    private int xCoordinate; 
     public int XCoordinate
     {
         get => xCoordinate;

@@ -10,7 +10,7 @@ using EdblockViewModel.Symbols.Abstraction;
 
 namespace EdblockViewModel.Symbols.ConnectionPoints;
 
-public enum OrientationConnectionPoint
+public enum Orientation
 {
     Vertical,
     Horizontal
@@ -54,7 +54,7 @@ public class ConnectionPoint : INotifyPropertyChanged
         }
     }
 
-    public OrientationConnectionPoint OrientationConnectionPoint { get; init; }
+    public Orientation Orientation { get; init; }
     public DelegateCommand EnterCursor { get; init; }
     public DelegateCommand LeaveCursor { get; init; }
     public BlockSymbol BlockSymbol { get; init; }
@@ -65,13 +65,13 @@ public class ConnectionPoint : INotifyPropertyChanged
     public ConnectionPoint(CanvasSymbolsVM canvasSymbolsVM, 
                            BlockSymbol symbol, 
                            Func<double, int, Point> getCoordinate, 
-                           OrientationConnectionPoint orientationConnectionPoint)
+                           Orientation orientation)
     {
         _canvasSymbolsVM = canvasSymbolsVM;
         BlockSymbol = symbol;
         _getCoordinate = getCoordinate; 
         Coordinate = getCoordinate.Invoke(diameter, offset);
-        OrientationConnectionPoint = orientationConnectionPoint;
+        Orientation = orientation;
         EnterCursor = new(ShowStroke);
         LeaveCursor = new(HideStroke);
         ClickConnectionPoint = new(CreateLine);
@@ -111,7 +111,7 @@ public class ConnectionPoint : INotifyPropertyChanged
         y = CanvasSymbols.ChangeCoordinateSymbol(y);
 
         var coordinateConnectionPoint = new Point(x, y);
-        _canvasSymbolsVM.DrawLine(coordinateConnectionPoint);
+        _canvasSymbolsVM.DrawLine(coordinateConnectionPoint, Orientation);
     }
 
     public event PropertyChangedEventHandler? PropertyChanged;

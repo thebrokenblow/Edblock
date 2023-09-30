@@ -19,10 +19,10 @@ internal class FactoryConnectionPoints
     {
         return new List<ConnectionPoint>()
         {
-            new ConnectionPoint(_canvasSymbolsVM, _blockSymbol, coordinateConnectionPoint.GetCoordinateTopCP, OrientationConnectionPoint.Vertical),
-            new ConnectionPoint(_canvasSymbolsVM, _blockSymbol, coordinateConnectionPoint.GetCoordinateRightCP, OrientationConnectionPoint.Horizontal),
-            new ConnectionPoint(_canvasSymbolsVM, _blockSymbol, coordinateConnectionPoint.GetCoordinateBottomCP, OrientationConnectionPoint.Vertical),
-            new ConnectionPoint(_canvasSymbolsVM, _blockSymbol, coordinateConnectionPoint.GetCoordinateLeftCP, OrientationConnectionPoint.Horizontal)
+            new ConnectionPoint(_canvasSymbolsVM, _blockSymbol, coordinateConnectionPoint.GetCoordinateTopCP, Orientation.Vertical),
+            new ConnectionPoint(_canvasSymbolsVM, _blockSymbol, coordinateConnectionPoint.GetCoordinateRightCP, Orientation.Horizontal),
+            new ConnectionPoint(_canvasSymbolsVM, _blockSymbol, coordinateConnectionPoint.GetCoordinateBottomCP, Orientation.Vertical),
+            new ConnectionPoint(_canvasSymbolsVM, _blockSymbol, coordinateConnectionPoint.GetCoordinateLeftCP, Orientation.Horizontal)
         };
     }
 }
