@@ -22,7 +22,7 @@
         <ItemsControl.Template>
             <ControlTemplate>
                 <ScrollViewer MouseLeave="ScrollViewer_MouseLeave" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden">
-                    <Canvas Cursor="{Binding Cursor}" ClipToBounds="True" IsItemsHost="True">
+                    <Canvas Focusable="True" Cursor="{Binding Cursor}" ClipToBounds="True" IsItemsHost="True">
                         <i:Interaction.Behaviors>
                             <edblockViewModel:MouseBehaviourVM 
                                 MouseX="{Binding X, Mode=OneWayToSource}" 

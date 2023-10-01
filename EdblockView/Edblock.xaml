@@ -10,6 +10,9 @@
         d:DataContext="{d:DesignInstance Type=edblockviewmodel:CanvasSymbolsVM}"
         mc:Ignorable="d"
         Title="Edblock" Height="450" Width="800">
+    <Window.InputBindings>
+        <KeyBinding Command="{Binding ClickEsc}" Key="Esc"/>
+    </Window.InputBindings>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="160"/>

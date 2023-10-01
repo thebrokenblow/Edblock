@@ -80,6 +80,7 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
     public DelegateCommand<BlockSymbol> MouseMoveSymbol { get; init; }
     public DelegateCommand MouseUpSymbol { get; init; }
     public DelegateCommand FocusableRemove { get; init; }
+    public DelegateCommand ClickEsc { get; init; }
     public BlockSymbol? DraggableSymbol { get; set; }
     public ScaleData? ScaleData { get; set; }
     private ListLineSymbol? currentLines;
@@ -92,8 +93,18 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
         MouseMoveSymbol = new(MoveSymbol);
         MouseUpSymbol = new(RemoveSymbol);
         FocusableRemove = new(ChangeFocus);
+        ClickEsc = new(DeleteLine);
         var lengthGrid = CanvasSymbols.LENGTH_GRID;
         Grid = new Rect(-lengthGrid, -lengthGrid, lengthGrid, lengthGrid);
+    }
+
+    private void DeleteLine()
+    {
+        if (currentLines != null)
+        {
+            Symbols.Remove(currentLines);
+            currentLines = null;
+        }
     }
 
     private void CreateSymbol(string nameBlockSymbol)
