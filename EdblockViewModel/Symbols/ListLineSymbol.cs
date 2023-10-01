@@ -26,17 +26,11 @@ public class ListLineSymbol : Symbol
         }
         else
         {
+            LineSymbols.Clear();
             for (int i = 0; i < linesSymbModel.Count; i++)
             {
                 var lineSymbol = FactoryLineSymbol.CreateLine(linesSymbModel[i]);
-                if (i >= LineSymbols.Count)
-                {
-                    LineSymbols.Add(lineSymbol);
-                }
-                else
-                {
-                    LineSymbols[i] = FactoryLineSymbol.CreateLine(linesSymbModel[i]);
-                }
+                LineSymbols.Add(lineSymbol);
             }
         }
     }

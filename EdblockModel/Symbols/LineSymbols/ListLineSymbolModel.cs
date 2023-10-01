@@ -30,7 +30,7 @@ public class ListLineSymbolModel
 
                 if (lastLineSymbol.X2 != x)
                 {
-                    var lineSymbol = FactoryLineSymbolModel.CreateLine(lastLineSymbol);
+                    var lineSymbol = FactoryLineSymbolModel.CreateLineByLine(lastLineSymbol);
                     LinesSymbols.Add(lineSymbol);
                 }
             }
@@ -58,7 +58,7 @@ public class ListLineSymbolModel
                 {
                     if (LinesSymbols.Count % 2 != 0)
                     {
-                        var lineSymbol = FactoryLineSymbolModel.CreateLine(lastLineSymbol);
+                        var lineSymbol = FactoryLineSymbolModel.CreateLineByLine(lastLineSymbol);
                         LinesSymbols.Add(lineSymbol);
                     }
                 }

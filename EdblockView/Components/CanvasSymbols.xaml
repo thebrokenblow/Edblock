@@ -22,7 +22,7 @@
         <ItemsControl.Template>
             <ControlTemplate>
                 <ScrollViewer MouseLeave="ScrollViewer_MouseLeave" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden">
-                    <Canvas Focusable="True" Cursor="{Binding Cursor}" ClipToBounds="True" IsItemsHost="True">
+                    <Canvas Cursor="{Binding Cursor}" Focusable="True" ClipToBounds="True" IsItemsHost="True">
                         <i:Interaction.Behaviors>
                             <edblockViewModel:MouseBehaviourVM 
                                 MouseX="{Binding X, Mode=OneWayToSource}" 
@@ -30,7 +30,7 @@
                         </i:Interaction.Behaviors>
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="MouseLeftButtonDown">
-                                <i:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}, Path=DataContext.FocusableRemove}"/>
+                                <i:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}, Path=DataContext.ClickCanvasSymbols}"/>
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                         <Canvas.Background>

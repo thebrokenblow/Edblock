@@ -1,8 +1,8 @@
 ﻿namespace EdblockModel.Symbols.LineSymbols;
 
-internal class FactoryLineSymbolModel
+public class FactoryLineSymbolModel
 {
-    public static LineSymbolModel CreateLine(LineSymbolModel lineSymbolModel)
+    public static LineSymbolModel CreateLineByLine(LineSymbolModel lineSymbolModel)
     {
         var lineSymbol = new LineSymbolModel(lineSymbolModel.Orientation)
         {
@@ -12,6 +12,12 @@ internal class FactoryLineSymbolModel
             Y2 = lineSymbolModel.Y1
         };
 
+        return lineSymbol;
+    }
+
+    public static LineSymbolModel CreateLine(Orientation orientation)
+    {
+        var lineSymbol = new LineSymbolModel(orientation);
         return lineSymbol;
     }
 }

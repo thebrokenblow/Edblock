@@ -79,7 +79,7 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
     public DelegateCommand<string> ClickSymbol { get; init; }
     public DelegateCommand<BlockSymbol> MouseMoveSymbol { get; init; }
     public DelegateCommand MouseUpSymbol { get; init; }
-    public DelegateCommand FocusableRemove { get; init; }
+    public DelegateCommand ClickCanvasSymbols { get; init; }
     public DelegateCommand ClickEsc { get; init; }
     public BlockSymbol? DraggableSymbol { get; set; }
     public ScaleData? ScaleData { get; set; }
@@ -92,7 +92,7 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
         ClickSymbol = new(CreateSymbol);
         MouseMoveSymbol = new(MoveSymbol);
         MouseUpSymbol = new(RemoveSymbol);
-        FocusableRemove = new(ChangeFocus);
+        ClickCanvasSymbols = new(ClickCanvas);
         ClickEsc = new(DeleteLine);
         var lengthGrid = CanvasSymbols.LENGTH_GRID;
         Grid = new Rect(-lengthGrid, -lengthGrid, lengthGrid, lengthGrid);
@@ -140,8 +140,28 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
         Cursor = Cursors.Arrow;
     }
 
-    public void ChangeFocus()
+    public void ClickCanvas()
     {
+        if (currentLines != null && currentLines.LineSymbols.Count > 1)
+        {
+            var line = currentLines.LineSymbols[^1];
+            var orientation = currentLines.LineSymbolModel.LinesSymbols[^1].Orientation;
+
+            var lineSymbolModel = FactoryLineSymbolModel.CreateLine(orientation);
+            lineSymbolModel.X1 = line.X2;
+            lineSymbolModel.Y1 = line.Y2;
+            lineSymbolModel.X2 = line.X2;
+            lineSymbolModel.Y2 = line.Y2;
+
+            var lineSymbol = FactoryLineSymbol.CreateStartLine(lineSymbolModel);
+            lineSymbol.X1 = line.X2;
+            lineSymbol.Y1 = line.Y2;
+            lineSymbol.X2 = line.X2;
+            lineSymbol.Y2 = line.Y2;
+
+            currentLines.LineSymbolModel.LinesSymbols.Add(lineSymbolModel);
+            currentLines.LineSymbols.Add(lineSymbol);
+        }
         TextField.ChangeFocus(Symbols);
     }
 
