@@ -1,16 +1,13 @@
 ﻿using System.Windows;
 using System.Windows.Media;
+using EdblockModel.Symbols.LineSymbols;
 using EdblockViewModel.Symbols.Abstraction;
 
 namespace EdblockViewModel.Symbols;
 
 public class ArrowSymbol : Symbol
 {
-    private const int WidthArrow = 10;
-    private const int HeightArrow = 10;
-    public ArrowSymbol()
-    {
-    }
+    private readonly ArrowSymbolModel arrowSymbolModel = new();
 
     private PointCollection pointArrowSymbol = new();
     public PointCollection PointArrowSymbol
@@ -26,17 +23,16 @@ public class ArrowSymbol : Symbol
         }
     }
 
-    public void DrawRigthArrow(int currentX, int currentY)
+    public void DrawRigthArrow(int x, int y)
     {
         var pointArrowSymbol = new PointCollection();
+        var Coordinates = arrowSymbolModel.DrawRigthArrow(x, y);
 
-        var topPoint = new Point(currentX - WidthArrow, currentY + HeightArrow / 2);
-        var middlePoint = new Point(currentX - WidthArrow, currentY - HeightArrow / 2);
-        var bottomPoint = new Point(currentX, currentY);
-
-        pointArrowSymbol.Add(topPoint);
-        pointArrowSymbol.Add(middlePoint);
-        pointArrowSymbol.Add(bottomPoint);
+        foreach (var coordinate in Coordinates)
+        {
+            var pointCoordinate = new Point(coordinate.Item1, coordinate.Item2);
+            pointArrowSymbol.Add(pointCoordinate);
+        }
 
         PointArrowSymbol = pointArrowSymbol;
     }
