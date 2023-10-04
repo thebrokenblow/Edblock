@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:edblockViewModel="clr-namespace:EdblockViewModel;assembly=EdblockViewModel" 
              xmlns:symbolsVM="clr-namespace:EdblockViewModel.Symbols;assembly=EdblockViewModel"          
+             xmlns:symbolLineVM="clr-namespace:EdblockViewModel.Symbols.LineSymbols;assembly=EdblockViewModel"          
              xmlns:symbols="clr-namespace:EdblockView.Symbols" 
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors" 
              mc:Ignorable="d" 
@@ -15,7 +16,7 @@
             <DataTemplate DataType="{x:Type symbolsVM:ActionSymbol}">
                 <symbols:ActionSymbol/>
             </DataTemplate>
-            <DataTemplate DataType="{x:Type symbolsVM:ListLineSymbol}">
+            <DataTemplate DataType="{x:Type symbolLineVM:ListLineSymbol}">
                 <symbols:LineSymbol/>
             </DataTemplate>
         </ItemsControl.Resources>

@@ -10,6 +10,7 @@ using EdblockViewModel.Symbols.Abstraction;
 using EdblockViewModel.Symbols.ScaleRectangles;
 using EdblockViewModel.Symbols.ConnectionPoints;
 using EdblockModel.Symbols.LineSymbols;
+using EdblockViewModel.Symbols.LineSymbols;
 
 namespace EdblockViewModel;
 

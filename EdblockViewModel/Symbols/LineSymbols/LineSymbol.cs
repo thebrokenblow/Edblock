@@ -1,6 +1,6 @@
 ﻿using EdblockViewModel.Symbols.Abstraction;
 
-namespace EdblockViewModel.Symbols;
+namespace EdblockViewModel.Symbols.LineSymbols;
 
 public class LineSymbol : Symbol
 {

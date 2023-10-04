@@ -1,6 +1,6 @@
 ﻿using EdblockModel.Symbols.LineSymbols;
 
-namespace EdblockViewModel.Symbols;
+namespace EdblockViewModel.Symbols.LineSymbols;
 
 public class FactoryLineSymbol
 {

@@ -2,7 +2,7 @@
 using EdblockModel.Symbols.LineSymbols;
 using EdblockViewModel.Symbols.Abstraction;
 
-namespace EdblockViewModel.Symbols;
+namespace EdblockViewModel.Symbols.LineSymbols;
 
 public class ListLineSymbol : Symbol
 {

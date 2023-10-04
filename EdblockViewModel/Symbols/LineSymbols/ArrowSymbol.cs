@@ -3,7 +3,7 @@ using System.Windows.Media;
 using EdblockModel.Symbols.LineSymbols;
 using EdblockViewModel.Symbols.Abstraction;
 
-namespace EdblockViewModel.Symbols;
+namespace EdblockViewModel.Symbols.LineSymbols;
 
 public class ArrowSymbol : Symbol
 {
