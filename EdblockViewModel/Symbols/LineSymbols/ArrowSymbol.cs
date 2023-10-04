@@ -22,28 +22,10 @@ public class ArrowSymbol : Symbol
         }
     }
 
-    public void SetCoodinateRigthArrow(int x, int y)
+    public void ChangeOrientationArrow(int startX, int startY, int currentX, int currentY)
     {
-        var coordinatesArror = ArrowSymbolModel.GetCoordinateRigth(x, y);
-        SetCoodinate(coordinatesArror);
-    }
-
-    public void SetCoodinateLeftArrow(int x, int y)
-    {
-        var coordinatesArror = ArrowSymbolModel.GetCoordinateLeft(x, y);
-        SetCoodinate(coordinatesArror);
-    }
-
-    public void SetCoodinateUpperArrow(int x, int y)
-    {
-        var coordinatesArror = ArrowSymbolModel.GetCoordinateUpper(x, y);
-        SetCoodinate(coordinatesArror);
-    }
-
-    public void SetCoodinateBottomArrow(int x, int y)
-    {
-        var coordinatesArror = ArrowSymbolModel.GetCoordinateBottom(x, y);
-        SetCoodinate(coordinatesArror);
+        var coordinatesArrow = ArrowSymbolModel.ChangeOrientationArrow(startX, startY, currentX, currentY);
+        SetCoodinate(coordinatesArrow);
     }
 
     private void SetCoodinate(List<(int, int)> coordinatesArrow)

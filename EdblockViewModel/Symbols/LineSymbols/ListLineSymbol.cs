@@ -1,6 +1,4 @@
 ﻿using System.Collections.ObjectModel;
-using System.Text;
-using System.Windows.Shapes;
 using EdblockModel.Symbols.LineSymbols;
 using EdblockViewModel.Symbols.Abstraction;
 
@@ -19,11 +17,16 @@ public class ListLineSymbol : Symbol
         LineSymbolModel.LinesSymbols.Add(lineSymbolModel);
     }
 
-    public void ChangeCoordination(int x, int y)
+    public void ChangeCoordination(int currentX, int currentY)
     {
-        var linesSymbModel = LineSymbolModel.GetLines(x, y);
+        var firstLine = LineSymbols[0];
 
-        ChangeOrientationArrow(x, y);
+        int startX = firstLine.X1;
+        int startY = firstLine.Y1;
+
+        ArrowSymbol.ChangeOrientationArrow(startX, startY, currentX, currentY);
+
+        var linesSymbModel = LineSymbolModel.GetLines(currentX, currentY);
         if (linesSymbModel.Count == 1)
         {
             LineSymbols.Clear();
@@ -38,33 +41,6 @@ public class ListLineSymbol : Symbol
                 var lineSymbol = FactoryLineSymbol.CreateLine(linesSymbModel[i]);
                 LineSymbols.Add(lineSymbol);
 
-            }
-        }
-    }
-
-    private void ChangeOrientationArrow(int x, int y)
-    {
-        var firstLine = LineSymbols[0];
-        if (firstLine.X1 == x)
-        {
-            if (y > firstLine.Y1)
-            {
-                ArrowSymbol.SetCoodinateBottomArrow(x, y);
-            }
-            else
-            {
-                ArrowSymbol.SetCoodinateUpperArrow(x, y);
-            }
-        }
-        else
-        {
-            if (x > firstLine.X1)
-            {
-                ArrowSymbol.SetCoodinateRigthArrow(x, y);
-            }
-            else
-            {
-                ArrowSymbol.SetCoodinateLeftArrow(x, y);
             }
         }
     }
