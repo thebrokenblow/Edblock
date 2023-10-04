@@ -4,20 +4,22 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:symbolsVM="clr-namespace:EdblockViewModel.Symbols;assembly=EdblockViewModel"
-             xmlns:symbols="clr-namespace:EdblockViewModel.Symbols;assembly=EdblockViewModel" 
-             d:DataContext="{d:DesignInstance Type=symbols:ListLineSymbol}"
+             d:DataContext="{d:DesignInstance Type=symbolsVM:ListLineSymbol}"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <ItemsControl ItemsSource="{Binding LineSymbols}">
-        <ItemsControl.Resources>
-            <DataTemplate DataType="{x:Type symbolsVM:LineSymbol}">
-                <Line Style="{StaticResource LineSymbol}"/>
-            </DataTemplate>
-        </ItemsControl.Resources>
-        <ItemsControl.ItemsPanel>
-            <ItemsPanelTemplate>
-                <Canvas/>
-            </ItemsPanelTemplate>
-        </ItemsControl.ItemsPanel>
-    </ItemsControl>
+    <Grid>
+        <ItemsControl ItemsSource="{Binding LineSymbols}">
+            <ItemsControl.Resources>
+                <DataTemplate DataType="{x:Type symbolsVM:LineSymbol}">
+                    <Line Style="{StaticResource LineSymbol}"/>
+                </DataTemplate>
+            </ItemsControl.Resources>
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Canvas/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+        </ItemsControl>
+        <Polygon DataContext="{Binding ArrowSymbol}" Points="{Binding PointArrowSymbol}" Fill="Black"/>
+    </Grid>
 </UserControl>

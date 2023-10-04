@@ -8,6 +8,7 @@ public class ListLineSymbol : Symbol
 {
     public ObservableCollection<LineSymbol> LineSymbols { get; init; } = new();
     public ListLineSymbolModel LineSymbolModel { get; init; } = new();
+    public ArrowSymbol ArrowSymbol { get; set; } = new();
 
     public ListLineSymbol(LineSymbolModel lineSymbolModel)
     {
@@ -17,7 +18,7 @@ public class ListLineSymbol : Symbol
     public void ChangeCoordination(int x, int y)
     {
         var linesSymbModel = LineSymbolModel.GetLines(x, y);
-
+        ArrowSymbol.DrawRigthArrow(x, y);
         if (linesSymbModel.Count == 1)
         {
             LineSymbols.Clear();
@@ -31,6 +32,7 @@ public class ListLineSymbol : Symbol
             {
                 var lineSymbol = FactoryLineSymbol.CreateLine(linesSymbModel[i]);
                 LineSymbols.Add(lineSymbol);
+
             }
         }
     }
