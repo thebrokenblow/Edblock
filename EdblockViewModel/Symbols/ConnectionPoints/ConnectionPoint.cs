@@ -103,7 +103,7 @@ public class ConnectionPoint : INotifyPropertyChanged
 
         var lineSymbolModel = new LineSymbolModel(orientation);
         lineSymbolModel.SetStarCoordinate((int)coordinate.X, (int)coordinate.Y, blockSymbolModel);
-        _canvasSymbolsVM.DrawLine(lineSymbolModel);
+        _canvasSymbolsVM.DrawLine(lineSymbolModel, BlockSymbol);
     }
 
     public event PropertyChangedEventHandler? PropertyChanged;

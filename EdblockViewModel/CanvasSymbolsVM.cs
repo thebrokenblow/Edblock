@@ -172,12 +172,13 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
     }
 
-    internal void DrawLine(LineSymbolModel lineSymbolModel)
+    internal void DrawLine(LineSymbolModel lineSymbolModel, BlockSymbol blockSymbol)
     {
         var lineSymbol = FactoryLineSymbol.CreateStartLine(lineSymbolModel);
-
+       
         currentLines ??= new(lineSymbolModel);
         currentLines.LineSymbols.Add(lineSymbol);
+        currentLines.SymbolOutgoingLine = blockSymbol;
         serializableSymbols.linesSymbolModel.Add(currentLines.LineSymbolModel);
         Symbols.Add(currentLines);
     }
