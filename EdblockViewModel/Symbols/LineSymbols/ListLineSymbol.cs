@@ -20,10 +20,31 @@ public class ListLineSymbol : Symbol
     public void ChangeCoordination(int currentX, int currentY)
     {
         var positionConnectionPoint = LineSymbolModel.LinesSymbols[0].PositionConnectionPoint;
-        var firstLine = LineSymbols[0];
 
-        int startX = firstLine.X1;
-        int startY = firstLine.Y1;
+        int startX = 0;
+        int startY = 0;
+
+        if (LineSymbols.Count == 1 || LineSymbols.Count == 2)
+        {
+            var firstLine = LineSymbols[0];
+
+            startX = firstLine.X1;
+            startY = firstLine.Y1;
+        }
+        else if (LineSymbols.Count % 2 == 1)
+        {
+            var firstLine = LineSymbols[^1];
+
+            startX = firstLine.X1;
+            startY = firstLine.Y1;
+        }
+        else
+        {
+            var firstLine = LineSymbols[^2];
+
+            startX = firstLine.X1;
+            startY = firstLine.Y1;
+        }
 
         ArrowSymbol.ChangeOrientationArrow(startX, startY, currentX, currentY, positionConnectionPoint);
 
