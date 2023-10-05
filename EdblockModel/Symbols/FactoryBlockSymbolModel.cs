@@ -4,13 +4,13 @@ namespace EdblockModel.Symbols;
 
 public class FactoryBlockSymbolModel
 {
-    public static BlockSymbolModel Create(string nameBlockSymbol)
+    private readonly Dictionary<string, Func<string, BlockSymbolModel>> instanceSymbolByName = new()
     {
-        if (nameBlockSymbol == "ActionSymbol")
-        {
-            return new ActionSymbolModel();
-        }
+        { "ActionSymbol", x => new ActionSymbolModel() }
+    };
 
-        throw new Exception("Нет символа с таким именем, возможно вы ошиблись в названии");
+    public BlockSymbolModel Create(string nameBlockSymbol)
+    {
+        return instanceSymbolByName[nameBlockSymbol].Invoke(nameBlockSymbol);
     }
 }

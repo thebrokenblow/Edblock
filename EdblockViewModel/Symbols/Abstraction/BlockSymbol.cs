@@ -62,6 +62,7 @@ public abstract class BlockSymbol : Symbol
     public DelegateCommand EnterCursor { get; set; }
     public DelegateCommand LeaveCursor { get; set; }
     private readonly CanvasSymbolsVM _canvasSymbolsVM;
+    private readonly FactoryBlockSymbolModel factoryBlockSymbolModel = new();
     protected const int defaultWidth = 140;
     protected const int defaultHeigth = 60;
     public BlockSymbol(string nameBlockSymbol, CanvasSymbolsVM canvasSymbolsVM)
@@ -70,7 +71,7 @@ public abstract class BlockSymbol : Symbol
 
         TextField = new(canvasSymbolsVM);
 
-        BlockSymbolModel = FactoryBlockSymbolModel.Create(nameBlockSymbol);
+        BlockSymbolModel = factoryBlockSymbolModel.Create(nameBlockSymbol);
         BlockSymbolModel.Width = defaultWidth;
         BlockSymbolModel.Height = defaultHeigth;
 

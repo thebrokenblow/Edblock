@@ -85,6 +85,7 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
     public BlockSymbol? DraggableSymbol { get; set; }
     public ScaleData? ScaleData { get; set; }
     private ListLineSymbol? currentLines;
+    private readonly FactoryBlockSymbol factoryBlockSymbol;
     private readonly SerializableSymbols serializableSymbols = new();
 
     public CanvasSymbolsVM()
@@ -95,6 +96,7 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
         MouseUpSymbol = new(RemoveSymbol);
         ClickCanvasSymbols = new(ClickCanvas);
         ClickEsc = new(DeleteLine);
+        factoryBlockSymbol = new(this);
         var lengthGrid = CanvasSymbols.LengthGrid;
         Grid = new Rect(-lengthGrid, -lengthGrid, lengthGrid, lengthGrid);
     }
@@ -110,7 +112,7 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
 
     private void CreateSymbol(string nameBlockSymbol)
     {
-        var currentSymbol = FactoryBlockSymbol.Create(nameBlockSymbol, this);
+        var currentSymbol = factoryBlockSymbol.Create(nameBlockSymbol);
 
         currentSymbol.TextField.Cursor = Cursors.SizeAll;
         Cursor = Cursors.SizeAll;

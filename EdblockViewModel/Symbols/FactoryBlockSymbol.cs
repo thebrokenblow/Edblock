@@ -1,17 +1,23 @@
 ﻿using System;
+using System.Collections.Generic;
 using EdblockViewModel.Symbols.Abstraction;
 
 namespace EdblockViewModel.Symbols;
 
-internal static class FactoryBlockSymbol
+internal class FactoryBlockSymbol
 {
-    public static BlockSymbol Create(string nameBlockSymbol, CanvasSymbolsVM canvasSymbolsVM)
+    private readonly Dictionary<string, Func<string, BlockSymbol>> instanceSymbolByName = new();
+    public FactoryBlockSymbol(CanvasSymbolsVM canvasSymbolsVM)
     {
-        if (nameBlockSymbol == "ActionSymbol")
+        instanceSymbolByName = new()
         {
-            return new ActionSymbol(nameBlockSymbol, canvasSymbolsVM);
-        }
+            { "ActionSymbol", _ => new ActionSymbol("ActionSymbol", canvasSymbolsVM) }
+        };
 
-        throw new Exception("Нет символа с таким именем, возможно вы ошиблись в названии");
+    }
+
+    public BlockSymbol Create(string nameBlockSymbol)
+    {
+        return instanceSymbolByName[nameBlockSymbol].Invoke(nameBlockSymbol);
     }
 }
