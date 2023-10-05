@@ -16,10 +16,8 @@ public class ConnectionPointModel
     public const int offsetPosition = 10;
     private readonly BlockSymbolModel _blockSymbolModel;
 
-    public ConnectionPointModel(BlockSymbolModel blockSymbolModel)
-    {
+    public ConnectionPointModel(BlockSymbolModel blockSymbolModel) =>
         _blockSymbolModel = blockSymbolModel;
-    }
 
     public (int, int) GetCoordinateLeft()
     {

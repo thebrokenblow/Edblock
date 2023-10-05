@@ -95,7 +95,7 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
         MouseUpSymbol = new(RemoveSymbol);
         ClickCanvasSymbols = new(ClickCanvas);
         ClickEsc = new(DeleteLine);
-        var lengthGrid = CanvasSymbols.LENGTH_GRID;
+        var lengthGrid = CanvasSymbols.LengthGrid;
         Grid = new Rect(-lengthGrid, -lengthGrid, lengthGrid, lengthGrid);
     }
 

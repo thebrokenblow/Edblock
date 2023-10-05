@@ -22,6 +22,16 @@ public class LineSymbolModel
         int x = xCoordinateCP + blockSymbolModel.X;
         int y = yCoordinateCP + blockSymbolModel.Y;
 
+        (x, y) = ChangeStartCoordinateLine(x, y);
+
+        X1 = CanvasSymbols.СorrectionCoordinateSymbol(x);
+        Y1 = CanvasSymbols.СorrectionCoordinateSymbol(y);
+        X2 = X1;
+        Y2 = Y1;
+    }
+
+    private (int, int) ChangeStartCoordinateLine(int x, int y)
+    {
         if (PositionConnectionPoint == PositionConnectionPoint.Bottom)
         {
             x += ConnectionPointModel.diametr / 2;
@@ -43,9 +53,6 @@ public class LineSymbolModel
             y += ConnectionPointModel.diametr;
         }
 
-        X1 = CanvasSymbols.СorrectionCoordinateSymbol(x);
-        Y1 = CanvasSymbols.СorrectionCoordinateSymbol(y);
-        X2 = X1;
-        Y2 = Y1;
+        return (x, y);
     }
 }

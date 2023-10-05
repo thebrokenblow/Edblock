@@ -8,6 +8,7 @@ public class ListLineSymbolModel
     {
         var lastLineSymbol = LinesSymbols[^1];
        
+        //TODO: улучшить код и сделать оптимизацию
         if (lastLineSymbol.PositionConnectionPoint == PositionConnectionPoint.Bottom ||
             lastLineSymbol.PositionConnectionPoint == PositionConnectionPoint.Top)
         {

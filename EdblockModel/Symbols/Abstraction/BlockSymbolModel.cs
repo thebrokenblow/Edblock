@@ -10,4 +10,6 @@ public abstract class BlockSymbolModel
     public int MinHeight { get; } = 20;
     public abstract void SetWidth(int width);
     public abstract void SetHeight(int height);
+    public abstract void SetTextFieldWidth(int width);
+    public abstract void SetTextFieldHeight(int height);
 }

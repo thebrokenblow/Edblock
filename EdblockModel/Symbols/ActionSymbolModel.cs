@@ -13,4 +13,12 @@ public class ActionSymbolModel : BlockSymbolModel
     {
         Height = height;
     }
+
+    public override void SetTextFieldWidth(int width)
+    {
+    }
+
+    public override void SetTextFieldHeight(int height)
+    {
+    }
 }
