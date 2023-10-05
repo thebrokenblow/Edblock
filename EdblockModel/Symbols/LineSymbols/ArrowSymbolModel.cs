@@ -5,66 +5,85 @@ public class ArrowSymbolModel
     private const int WidthArrow = 8;
     private const int HeightArrow = 8;
 
-    public static List<(int, int)> ChangeOrientationArrow(int startX, int startY, int currentX, int currentY, PositionConnectionPoint positionConnectionPoint)
+    public static List<(int, int)> GetCoordinateArrow(Tuple<int, int> startCoordinate, int currentX, int currentY, PositionConnectionPoint positionConnectionPoint)
     {
         if (positionConnectionPoint == PositionConnectionPoint.Top ||
             positionConnectionPoint == PositionConnectionPoint.Bottom)
         {
+            var coordinateArrow = GetCoordinateArrowVerticalCP(startCoordinate, currentX, currentY);
+            return coordinateArrow;
+        }
+        else
+        {
+            var coordinateArrow = GetCoordinateArrowHorizontalCP(startCoordinate, currentX, currentY);
+            return coordinateArrow;
+        }
+    }
 
-            if (currentX == startX)
+    //Получение координа стрелки, если линия выходит из левой и правой точки соединения
+    private static List<(int, int)> GetCoordinateArrowHorizontalCP(Tuple<int, int> startCoordinate, int currentX, int currentY)
+    {
+        int startX = startCoordinate.Item1;
+        int startY = startCoordinate.Item2;
+
+        if (currentY == startY)
+        {
+            if (currentX > startX)
             {
-                if (currentY > startY)
-                {
-                    var coordinateArrow = GetCoordinateBottom(currentX, currentY);
-                    return coordinateArrow;
-                }
-                else
-                {
-                    var coordinateArrow = GetCoordinateUpper(currentX, currentY);
-                    return coordinateArrow;
-                }
+                var coordinateArrow = GetCoordinateRigth(currentX, currentY);
+                return coordinateArrow;
             }
             else
             {
-                if (currentX > startX)
-                {
-                    var coordinateArrow = GetCoordinateRigth(currentX, currentY);
-                    return coordinateArrow;
-                }
-                else
-                {
-                    var coordinateArrow = GetCoordinateLeft(currentX, currentY);
-                    return coordinateArrow;
-                }
+                var coordinateArrow = GetCoordinateLeft(currentX, currentY);
+                return coordinateArrow;
             }
         }
         else
         {
-            if (currentY == startY)
+            if (currentY > startY)
             {
-                if (currentX > startX)
-                {
-                    var coordinateArrow = GetCoordinateRigth(currentX, currentY);
-                    return coordinateArrow;
-                }
-                else
-                {
-                    var coordinateArrow = GetCoordinateLeft(currentX, currentY);
-                    return coordinateArrow;
-                }
+                var coordinateArrow = GetCoordinateBottom(currentX, currentY);
+                return coordinateArrow;
             }
             else
             {
-                if (currentY > startY)
-                {
-                    var coordinateArrow = GetCoordinateBottom(currentX, currentY);
-                    return coordinateArrow;
-                }
-                else
-                {
-                    var coordinateArrow = GetCoordinateUpper(currentX, currentY);
-                    return coordinateArrow;
-                }
+                var coordinateArrow = GetCoordinateUpper(currentX, currentY);
+                return coordinateArrow;
+            }
+        }
+    }
+
+    //Получение координа стрелки, если линия выходит из верхней и нижней точки соединения
+    private static List<(int, int)> GetCoordinateArrowVerticalCP(Tuple<int, int> startCoordinate, int currentX, int currentY)
+    {
+        int startX = startCoordinate.Item1;
+        int startY = startCoordinate.Item2;
+
+        if (currentX == startX)
+        {
+            if (currentY > startY)
+            {
+                var coordinateArrow = GetCoordinateBottom(currentX, currentY);
+                return coordinateArrow;
+            }
+            else
+            {
+                var coordinateArrow = GetCoordinateUpper(currentX, currentY);
+                return coordinateArrow;
+            }
+        }
+        else
+        {
+            if (currentX > startX)
+            {
+                var coordinateArrow = GetCoordinateRigth(currentX, currentY);
+                return coordinateArrow;
+            }
+            else
+            {
+                var coordinateArrow = GetCoordinateLeft(currentX, currentY);
+                return coordinateArrow;
             }
         }
     }
