@@ -71,10 +71,8 @@ public abstract class BlockSymbol : Symbol
         TextField = new(canvasSymbolsVM);
 
         BlockSymbolModel = FactoryBlockSymbolModel.Create(nameBlockSymbol);
-        {
-            Width = defaultWidth;
-            Height = defaultHeigth;
-        };
+        BlockSymbolModel.Width = defaultWidth;
+        BlockSymbolModel.Height = defaultHeigth;
 
         Width = defaultWidth;
         Height = defaultHeigth;

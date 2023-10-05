@@ -24,7 +24,7 @@ public class ConnectionPoint : INotifyPropertyChanged
         }
     }
 
-    public double Diameter { get; init; } = ConnectionPointModel.DIAMETR;
+    public double Diameter { get; init; } = ConnectionPointModel.diametr;
 
     private Brush? fill = Brushes.Transparent;
     public Brush? Fill
@@ -48,31 +48,36 @@ public class ConnectionPoint : INotifyPropertyChanged
         }
     }
 
-    public Orientation Orientation { get; init; }
     public DelegateCommand EnterCursor { get; init; }
     public DelegateCommand LeaveCursor { get; init; }
     public BlockSymbol BlockSymbol { get; init; }
     public DelegateCommand<ConnectionPoint> ClickConnectionPoint { get; init; }
+    public PositionConnectionPoint PositionConnectionPoint { get; init; }
     private readonly CanvasSymbolsVM _canvasSymbolsVM;
-    private readonly Func<double, int, Point> _getCoordinate;
+    private readonly Func<(int, int)> _getCoordinate;
     public ConnectionPoint(CanvasSymbolsVM canvasSymbolsVM, 
-                           BlockSymbol symbol, 
-                           Func<double, int, Point> getCoordinate, 
-                           Orientation orientation)
+                           BlockSymbol blockSymbol, 
+                           Func<(int, int)> getCoordinate, 
+                           PositionConnectionPoint positionConnectionPoint)
     {
         _canvasSymbolsVM = canvasSymbolsVM;
-        BlockSymbol = symbol;
-        _getCoordinate = getCoordinate; 
-        Coordinate = getCoordinate.Invoke(ConnectionPointModel.DIAMETR, ConnectionPointModel.OFFSET);
-        Orientation = orientation;
+        _getCoordinate = getCoordinate;
+
+        PositionConnectionPoint = positionConnectionPoint;
+        BlockSymbol = blockSymbol;
+        
         EnterCursor = new(ShowStroke);
         LeaveCursor = new(HideStroke);
         ClickConnectionPoint = new(CreateLine);
+
+        var coordinate = getCoordinate.Invoke();
+        Coordinate = CoordinateSymbols.GetPointCoordinate(coordinate);
     }
 
     public void ChangeCoordination()
     {
-        Coordinate = _getCoordinate.Invoke(ConnectionPointModel.DIAMETR, ConnectionPointModel.OFFSET);
+        var coordinate = _getCoordinate.Invoke();
+        Coordinate = CoordinateSymbols.GetPointCoordinate(coordinate);
     }
 
     public void ShowStroke()
@@ -98,10 +103,10 @@ public class ConnectionPoint : INotifyPropertyChanged
     public void CreateLine(ConnectionPoint connectionPoint)
     {
         var coordinate = connectionPoint.Coordinate;
-        var orientation = connectionPoint.Orientation;
+        var positionConnectionPoint = connectionPoint.PositionConnectionPoint;
         var blockSymbolModel = connectionPoint.BlockSymbol.BlockSymbolModel;
 
-        var lineSymbolModel = new LineSymbolModel(orientation);
+        var lineSymbolModel = new LineSymbolModel(positionConnectionPoint);
         lineSymbolModel.SetStarCoordinate((int)coordinate.X, (int)coordinate.Y, blockSymbolModel);
         _canvasSymbolsVM.DrawLine(lineSymbolModel, BlockSymbol);
     }

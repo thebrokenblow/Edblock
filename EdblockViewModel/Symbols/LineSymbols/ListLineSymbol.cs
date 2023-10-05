@@ -19,12 +19,13 @@ public class ListLineSymbol : Symbol
 
     public void ChangeCoordination(int currentX, int currentY)
     {
+        var positionConnectionPoint = LineSymbolModel.LinesSymbols[0].PositionConnectionPoint;
         var firstLine = LineSymbols[0];
 
         int startX = firstLine.X1;
         int startY = firstLine.Y1;
 
-        ArrowSymbol.ChangeOrientationArrow(startX, startY, currentX, currentY);
+        ArrowSymbol.ChangeOrientationArrow(startX, startY, currentX, currentY, positionConnectionPoint);
 
         var linesSymbModel = LineSymbolModel.GetLines(currentX, currentY);
         if (linesSymbModel.Count == 1)

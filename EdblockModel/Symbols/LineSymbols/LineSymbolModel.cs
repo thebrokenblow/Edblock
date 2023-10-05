@@ -2,12 +2,6 @@
 
 namespace EdblockModel.Symbols.LineSymbols;
 
-public enum Orientation
-{
-    Vertical,
-    Horizontal
-}
-
 public class LineSymbolModel
 {
     public int X1 { get; set; }
@@ -18,25 +12,35 @@ public class LineSymbolModel
 
     public int Y2 { get; set; }
 
-    public Orientation Orientation { get; init; }
+    public PositionConnectionPoint PositionConnectionPoint { get; init; }
 
-    public LineSymbolModel(Orientation orientation) =>
-        Orientation = orientation;
+    public LineSymbolModel(PositionConnectionPoint positionConnectionPoint) =>
+        PositionConnectionPoint = positionConnectionPoint;
 
     public void SetStarCoordinate(int xCoordinateCP, int yCoordinateCP, BlockSymbolModel blockSymbolModel)
     {
         int x = xCoordinateCP + blockSymbolModel.X;
         int y = yCoordinateCP + blockSymbolModel.Y;
 
-        if (Orientation == Orientation.Vertical)
+        if (PositionConnectionPoint == PositionConnectionPoint.Bottom)
         {
-            x += (int)ConnectionPointModel.DIAMETR / 2;
-            y -= ConnectionPointModel.OFFSET;
+            x += ConnectionPointModel.diametr / 2;
+            y -= ConnectionPointModel.offsetPosition;
+        }
+        else if (PositionConnectionPoint == PositionConnectionPoint.Top)
+        {
+            x += ConnectionPointModel.diametr / 2;
+            y += ConnectionPointModel.offsetPosition * 2;
+        }
+        else if (PositionConnectionPoint == PositionConnectionPoint.Right)
+        {
+            x -= ConnectionPointModel.diametr / 2;
+            y += ConnectionPointModel.offsetPosition;
         }
         else
         {
-            x -= (int)ConnectionPointModel.DIAMETR / 2;
-            y += ConnectionPointModel.OFFSET;
+            x += ConnectionPointModel.offsetPosition * 2;
+            y += ConnectionPointModel.diametr;
         }
 
         X1 = CanvasSymbols.СorrectionCoordinateSymbol(x);

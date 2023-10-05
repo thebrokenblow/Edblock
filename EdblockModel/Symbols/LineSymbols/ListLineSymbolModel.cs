@@ -8,7 +8,8 @@ public class ListLineSymbolModel
     {
         var lastLineSymbol = LinesSymbols[^1];
        
-        if (lastLineSymbol.Orientation == Orientation.Vertical)
+        if (lastLineSymbol.PositionConnectionPoint == PositionConnectionPoint.Bottom ||
+            lastLineSymbol.PositionConnectionPoint == PositionConnectionPoint.Top)
         {
             if (LinesSymbols.Count % 2 == 0)
             {

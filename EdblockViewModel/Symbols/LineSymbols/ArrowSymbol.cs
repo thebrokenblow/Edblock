@@ -1,8 +1,8 @@
-﻿using System.Windows;
-using System.Windows.Media;
+﻿using System.Windows.Media;
 using System.Collections.Generic;
 using EdblockModel.Symbols.LineSymbols;
 using EdblockViewModel.Symbols.Abstraction;
+using EdblockModel.Symbols;
 
 namespace EdblockViewModel.Symbols.LineSymbols;
 
@@ -22,9 +22,9 @@ public class ArrowSymbol : Symbol
         }
     }
 
-    public void ChangeOrientationArrow(int startX, int startY, int currentX, int currentY)
+    public void ChangeOrientationArrow(int startX, int startY, int currentX, int currentY, PositionConnectionPoint positionConnectionPoint)
     {
-        var coordinatesArrow = ArrowSymbolModel.ChangeOrientationArrow(startX, startY, currentX, currentY);
+        var coordinatesArrow = ArrowSymbolModel.ChangeOrientationArrow(startX, startY, currentX, currentY, positionConnectionPoint);
         SetCoodinate(coordinatesArrow);
     }
 
@@ -33,7 +33,7 @@ public class ArrowSymbol : Symbol
         var pointArrowSymbol = new PointCollection();
         foreach (var coordinate in coordinatesArrow)
         {
-            var pointCoordinate = new Point(coordinate.Item1, coordinate.Item2);
+            var pointCoordinate = CoordinateSymbols.GetPointCoordinate(coordinate);
             pointArrowSymbol.Add(pointCoordinate);
         }
 

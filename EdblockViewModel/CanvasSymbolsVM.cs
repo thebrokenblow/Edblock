@@ -146,9 +146,9 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
         if (currentLines != null && currentLines.LineSymbols.Count > 1)
         {
             var line = currentLines.LineSymbols[^1];
-            var orientation = currentLines.LineSymbolModel.LinesSymbols[^1].Orientation;
+            var positionConnectionPoint = currentLines.LineSymbolModel.LinesSymbols[^1].PositionConnectionPoint;
 
-            var lineSymbolModel = FactoryLineSymbolModel.CreateLine(orientation);
+            var lineSymbolModel = FactoryLineSymbolModel.CreateLine(positionConnectionPoint);
             lineSymbolModel.X1 = line.X2;
             lineSymbolModel.Y1 = line.Y2;
             lineSymbolModel.X2 = line.X2;

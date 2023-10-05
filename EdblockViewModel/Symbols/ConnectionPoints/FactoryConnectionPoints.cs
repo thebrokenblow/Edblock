@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using EdblockModel.Symbols.LineSymbols;
+﻿using EdblockModel.Symbols;
+using System.Collections.Generic;
 using EdblockViewModel.Symbols.Abstraction;
 
 namespace EdblockViewModel.Symbols.ConnectionPoints;
@@ -8,22 +8,23 @@ internal class FactoryConnectionPoints
 {
     private readonly CanvasSymbolsVM _canvasSymbolsVM;
     private readonly BlockSymbol _blockSymbol;
-    private readonly CoordinateConnectionPoint coordinateConnectionPoint;
+    private readonly ConnectionPointModel connectionPointModel;
+
     public FactoryConnectionPoints(CanvasSymbolsVM canvasSymbolsVM, BlockSymbol blockSymbol)
     {
         _canvasSymbolsVM = canvasSymbolsVM;
         _blockSymbol = blockSymbol;
-        coordinateConnectionPoint = new(_blockSymbol);
+        connectionPointModel = new(_blockSymbol.BlockSymbolModel);
     }
 
     public List<ConnectionPoint> Create()
     {
         return new List<ConnectionPoint>()
         {
-            new ConnectionPoint(_canvasSymbolsVM, _blockSymbol, coordinateConnectionPoint.GetCoordinateTopCP, Orientation.Vertical),
-            new ConnectionPoint(_canvasSymbolsVM, _blockSymbol, coordinateConnectionPoint.GetCoordinateRightCP, Orientation.Horizontal),
-            new ConnectionPoint(_canvasSymbolsVM, _blockSymbol, coordinateConnectionPoint.GetCoordinateBottomCP, Orientation.Vertical),
-            new ConnectionPoint(_canvasSymbolsVM, _blockSymbol, coordinateConnectionPoint.GetCoordinateLeftCP, Orientation.Horizontal)
+            new ConnectionPoint(_canvasSymbolsVM, _blockSymbol, connectionPointModel.GetCoordinateLeft, PositionConnectionPoint.Left),
+            new ConnectionPoint(_canvasSymbolsVM, _blockSymbol, connectionPointModel.GetCoordinateRight, PositionConnectionPoint.Right),
+            new ConnectionPoint(_canvasSymbolsVM, _blockSymbol, connectionPointModel.GetCoordinateTop, PositionConnectionPoint.Top),
+            new ConnectionPoint(_canvasSymbolsVM, _blockSymbol, connectionPointModel.GetCoordinateBottomCP, PositionConnectionPoint.Bottom)
         };
     }
 }

@@ -4,7 +4,7 @@ public class FactoryLineSymbolModel
 {
     public static LineSymbolModel CreateLineByLine(LineSymbolModel lineSymbolModel)
     {
-        var lineSymbol = new LineSymbolModel(lineSymbolModel.Orientation)
+        var lineSymbol = new LineSymbolModel(lineSymbolModel.PositionConnectionPoint)
         {
             X1 = lineSymbolModel.X1,
             Y1 = lineSymbolModel.Y1,
@@ -15,9 +15,9 @@ public class FactoryLineSymbolModel
         return lineSymbol;
     }
 
-    public static LineSymbolModel CreateLine(Orientation orientation)
+    public static LineSymbolModel CreateLine(PositionConnectionPoint positionConnectionPoint)
     {
-        var lineSymbol = new LineSymbolModel(orientation);
+        var lineSymbol = new LineSymbolModel(positionConnectionPoint);
         return lineSymbol;
     }
 }
