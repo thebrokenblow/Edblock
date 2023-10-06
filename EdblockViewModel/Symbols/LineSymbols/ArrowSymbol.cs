@@ -1,9 +1,9 @@
 ﻿using System.Windows.Media;
-using EdblockModel.Symbols;
 using System.Collections.Generic;
 using EdblockModel.Symbols.LineSymbols;
 using EdblockViewModel.Symbols.Abstraction;
 using System;
+using EdblockModel.Symbols.ConnectionPoints;
 
 namespace EdblockViewModel.Symbols.LineSymbols;
 

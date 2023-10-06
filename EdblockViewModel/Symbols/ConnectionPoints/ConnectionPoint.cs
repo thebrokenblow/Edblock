@@ -6,13 +6,14 @@ using System.Windows.Input;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using EdblockViewModel.Symbols.Abstraction;
-using EdblockModel.Symbols;
 using EdblockModel.Symbols.LineSymbols;
+using EdblockModel.Symbols.ConnectionPoints;
 
 namespace EdblockViewModel.Symbols.ConnectionPoints;
 
 public class ConnectionPoint : INotifyPropertyChanged
 {
+    //TODO: По хорошему заменить Point на int x, y;
     private Point coordinate;
     public Point Coordinate
     {

@@ -1,6 +1,6 @@
 ﻿using EdblockModel.Symbols.Abstraction;
 
-namespace EdblockModel.Symbols;
+namespace EdblockModel.Symbols.ConnectionPoints;
 
 public enum PositionConnectionPoint
 {
@@ -23,7 +23,7 @@ public class ConnectionPointModel
     {
         int pointsX = -offsetPosition - diametr;
         int pointsY = _blockSymbolModel.Height / 2 - diametr / 2;
-       
+
         return (pointsX, pointsY);
     }
 
@@ -39,7 +39,7 @@ public class ConnectionPointModel
     {
         int pointsX = _blockSymbolModel.Width / 2 - diametr / 2;
         int pointsY = -offsetPosition - diametr;
-        
+
         return (pointsX, pointsY);
     }
 

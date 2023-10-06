@@ -9,7 +9,7 @@
         xmlns:edblockviewmodel="clr-namespace:EdblockViewModel;assembly=EdblockViewModel" 
         d:DataContext="{d:DesignInstance Type=edblockviewmodel:CanvasSymbolsVM}"
         mc:Ignorable="d"
-        Title="Edblock" Height="450" Width="800">
+        Title="Edblock" Height="600" Width="1200">
     <Window.InputBindings>
         <KeyBinding Command="{Binding ClickEsc}" Key="Esc"/>
     </Window.InputBindings>

@@ -1,50 +1,51 @@
 ﻿using System.Windows.Media;
 using System.Collections.Generic;
+using EdblockModel.Symbols.ConnectionPoints;
 
 namespace EdblockViewModel.Symbols.ConnectionPoints;
 
-internal static class ColorConnectionPoint
+internal class ColorConnectionPoint
 {
-    private static readonly Brush? HoverFill;
-    private static readonly Brush? HoverStroke;
-    private const string hexHoverFill = "#777777";
-    private const string hexHoverStroke = "#00ff00";
+    private static readonly Brush? FocusFill;
+    private static readonly Brush? NotFocusFill;
+    private static readonly Brush? FocusStroke;
+    private static readonly Brush? NotFocusStroke;
+    private static readonly BrushConverter brushConverter = new();
     static ColorConnectionPoint()
     {
-        var brushConverterConnectionPoint = new BrushConverter();
-        var convertFromHoverFill = brushConverterConnectionPoint.ConvertFrom(hexHoverFill);
+        SetBrushColor(ref FocusFill, ColorConnectionPointModel.HexFocusFill);
+        SetBrushColor(ref NotFocusFill, ColorConnectionPointModel.HexNotFocusFill);
+        SetBrushColor(ref FocusStroke, ColorConnectionPointModel.HexFocusStroke);
+        SetBrushColor(ref NotFocusStroke, ColorConnectionPointModel.HexNotFocusStroke);
+    }
 
-        if (convertFromHoverFill != null)
+    private static void SetBrushColor(ref Brush? brush, string hexColor)
+    {
+        var convertFrom = brushConverter.ConvertFrom(hexColor);
+        if (convertFrom != null)
         {
-            HoverFill = (Brush)convertFromHoverFill;
-        }
-
-        var convertFromHoverStroke = brushConverterConnectionPoint.ConvertFrom(hexHoverStroke);
-
-        if (convertFromHoverStroke != null)
-        {
-            HoverStroke = (Brush)convertFromHoverStroke;
+            brush = (Brush)convertFrom;
         }
     }
 
     public static void Show(List<ConnectionPoint> connectionPoints)
     {
-        ChangeColor(connectionPoints, HoverFill);
+        ChangeColor(connectionPoints, FocusFill);
     }
 
     public static void Hide(List<ConnectionPoint> connectionPoints)
     {
-        ChangeColor(connectionPoints, Brushes.Transparent);
+        ChangeColor(connectionPoints, NotFocusFill);
     }
 
     public static void ShowStroke(ConnectionPoint connectionPoint)
     {
-        connectionPoint.Stroke = HoverStroke;
+        connectionPoint.Stroke = FocusStroke;
     }
 
     public static void HideStroke(ConnectionPoint connectionPoint)
     {
-        connectionPoint.Stroke = Brushes.Transparent;
+        connectionPoint.Stroke = NotFocusStroke;
     }
 
     private static void ChangeColor(List<ConnectionPoint> connectionPoints, Brush? fill)

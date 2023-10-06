@@ -1,6 +1,6 @@
-﻿using EdblockModel.Symbols;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using EdblockViewModel.Symbols.Abstraction;
+using EdblockModel.Symbols.ConnectionPoints;
 
 namespace EdblockViewModel.Symbols.ConnectionPoints;
 
