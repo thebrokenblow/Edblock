@@ -18,37 +18,10 @@ public class LineSymbolModel
     public LineSymbolModel(PositionConnectionPoint positionConnectionPoint) =>
         PositionConnectionPoint = positionConnectionPoint;
 
-    public void SetStarCoordinate(int xCoordinateCP, int yCoordinateCP, BlockSymbolModel blockSymbolModel)
+    public void SetStarCoordinate((int x, int y) coordinateConnectionPoint, BlockSymbolModel blockSymbolModel)
     {
-        var t = (xCoordinateCP, yCoordinateCP);
-        (X1, Y1) = CoordinateLineModel.GetStartCoordinateLine(blockSymbolModel, t, PositionConnectionPoint);
+        (X1, Y1) = CoordinateLineModel.GetStartCoordinateLine(blockSymbolModel, coordinateConnectionPoint, PositionConnectionPoint);
         X2 = X1;
         Y2 = Y1;
-    }
-
-    private (int, int) ChangeStartCoordinateLine(int x, int y)
-    {
-        if (PositionConnectionPoint == PositionConnectionPoint.Bottom)
-        {
-            x += ConnectionPointModel.diametr / 2;
-            y -= ConnectionPointModel.offsetPosition;
-        }
-        else if (PositionConnectionPoint == PositionConnectionPoint.Top)
-        {
-            x += ConnectionPointModel.diametr / 2;
-            y += ConnectionPointModel.offsetPosition * 2;
-        }
-        else if (PositionConnectionPoint == PositionConnectionPoint.Right)
-        {
-            x -= ConnectionPointModel.diametr / 2;
-            y += ConnectionPointModel.offsetPosition;
-        }
-        else
-        {
-            x += ConnectionPointModel.offsetPosition * 2;
-            y += ConnectionPointModel.diametr;
-        }
-
-        return (x, y);
     }
 }

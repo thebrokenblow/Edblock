@@ -4,8 +4,8 @@ using System.Windows.Media;
 using System.Windows.Input;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using EdblockViewModel.Symbols.Abstraction;
 using EdblockModel.Symbols.LineSymbols;
+using EdblockViewModel.Symbols.Abstraction;
 using EdblockModel.Symbols.ConnectionPoints;
 
 namespace EdblockViewModel.Symbols.ConnectionPoints;
@@ -36,7 +36,7 @@ public class ConnectionPoint : INotifyPropertyChanged
 
     public int Diameter { get; init; } = ConnectionPointModel.diametr;
 
-    private Brush? fill = Brushes.Transparent;
+    private Brush? fill = ColorConnectionPoint.NotFocusFill;
     public Brush? Fill
     {
         get => fill;
@@ -47,7 +47,7 @@ public class ConnectionPoint : INotifyPropertyChanged
         }
     }
 
-    private Brush? stroke = Brushes.Transparent;
+    private Brush? stroke = ColorConnectionPoint.NotFocusStroke;
     public Brush? Stroke
     {
         get => stroke;
@@ -112,14 +112,11 @@ public class ConnectionPoint : INotifyPropertyChanged
     {
         if (_canvasSymbolsVM.CurrentLines == null)
         {
-            int xCoordinate = connectionPoint.XCoordinate;
-            int yCoordinate = connectionPoint.YCoordinate;
-
-            var positionConnectionPoint = connectionPoint.PositionConnectionPoint;
             var blockSymbolModel = connectionPoint.BlockSymbol.BlockSymbolModel;
-
+            var positionConnectionPoint = connectionPoint.PositionConnectionPoint;
+            var coordinateConnectionPoint = (connectionPoint.XCoordinate, connectionPoint.YCoordinate);
             var lineSymbolModel = new LineSymbolModel(positionConnectionPoint);
-            lineSymbolModel.SetStarCoordinate(xCoordinate, yCoordinate, blockSymbolModel);
+            lineSymbolModel.SetStarCoordinate(coordinateConnectionPoint, blockSymbolModel);
             _canvasSymbolsVM.DrawLine(lineSymbolModel, BlockSymbol);
         }
         else

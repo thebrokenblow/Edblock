@@ -1,4 +1,5 @@
-﻿using System.Windows.Media;
+﻿using System.Windows;
+using System.Windows.Media;
 using System.Collections.Generic;
 using EdblockModel.Symbols.LineSymbols;
 using EdblockViewModel.Symbols.Abstraction;
@@ -39,7 +40,7 @@ public class ArrowSymbol : Symbol
         var pointArrowSymbol = new PointCollection();
         foreach (var coordinate in coordinatesArrow)
         {
-            var pointCoordinate = CoordinateSymbols.GetPointCoordinate(coordinate);
+            var pointCoordinate = new Point(coordinate.Item1, coordinate.Item2);
             pointArrowSymbol.Add(pointCoordinate);
         }
 

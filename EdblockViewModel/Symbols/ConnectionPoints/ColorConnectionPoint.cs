@@ -7,9 +7,9 @@ namespace EdblockViewModel.Symbols.ConnectionPoints;
 internal class ColorConnectionPoint
 {
     private static readonly Brush? FocusFill;
-    private static readonly Brush? NotFocusFill;
+    public static readonly Brush? NotFocusFill;
     private static readonly Brush? FocusStroke;
-    private static readonly Brush? NotFocusStroke;
+    public static readonly Brush? NotFocusStroke;
     private static readonly BrushConverter brushConverter = new();
     static ColorConnectionPoint()
     {
