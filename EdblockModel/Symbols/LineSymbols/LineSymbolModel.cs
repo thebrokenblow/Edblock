@@ -20,30 +20,25 @@ public class LineSymbolModel
 
     public void SetStarCoordinate(int xCoordinateCP, int yCoordinateCP, BlockSymbolModel blockSymbolModel)
     {
-        int x = xCoordinateCP + blockSymbolModel.X;
-        int y = yCoordinateCP + blockSymbolModel.Y;
-
-        (x, y) = ChangeStartCoordinateLine(x, y, PositionConnectionPoint);
-
-        X1 = x;
-        Y1 = y;
+        var t = (xCoordinateCP, yCoordinateCP);
+        (X1, Y1) = CoordinateLineModel.GetStartCoordinateLine(blockSymbolModel, t, PositionConnectionPoint);
         X2 = X1;
         Y2 = Y1;
     }
 
-    public static (int, int) ChangeStartCoordinateLine(int x, int y, PositionConnectionPoint positionConnectionPoint)
+    private (int, int) ChangeStartCoordinateLine(int x, int y)
     {
-        if (positionConnectionPoint == PositionConnectionPoint.Bottom)
+        if (PositionConnectionPoint == PositionConnectionPoint.Bottom)
         {
-            x += ConnectionPointModel.diametr;
+            x += ConnectionPointModel.diametr / 2;
             y -= ConnectionPointModel.offsetPosition;
         }
-        else if (positionConnectionPoint == PositionConnectionPoint.Top)
+        else if (PositionConnectionPoint == PositionConnectionPoint.Top)
         {
             x += ConnectionPointModel.diametr / 2;
             y += ConnectionPointModel.offsetPosition * 2;
         }
-        else if (positionConnectionPoint == PositionConnectionPoint.Right)
+        else if (PositionConnectionPoint == PositionConnectionPoint.Right)
         {
             x -= ConnectionPointModel.diametr / 2;
             y += ConnectionPointModel.offsetPosition;
@@ -53,9 +48,6 @@ public class LineSymbolModel
             x += ConnectionPointModel.offsetPosition * 2;
             y += ConnectionPointModel.diametr;
         }
-
-        x = CanvasSymbols.СorrectionCoordinateSymbol(x);
-        y = CanvasSymbols.СorrectionCoordinateSymbol(y);
 
         return (x, y);
     }

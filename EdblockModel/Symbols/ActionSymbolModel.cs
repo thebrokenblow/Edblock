@@ -4,6 +4,11 @@ namespace EdblockModel.Symbols;
 
 public class ActionSymbolModel : BlockSymbolModel
 {
+    public ActionSymbolModel()
+    {
+        HexColor = "#FF52C0AA";
+    }
+
     public override void SetWidth(int width)
     {
         Width = width;

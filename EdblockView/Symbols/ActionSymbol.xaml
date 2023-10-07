@@ -11,7 +11,7 @@
     <Canvas 
         Width="{Binding Width}" 
         Height="{Binding Height}" 
-        Background="#FF52C0AA">
+        Background="{Binding HexColor}">
         <symbol:TextField/>
         <symbol:ConnectionPoints/>
         <symbol:ScaleRectangles/>

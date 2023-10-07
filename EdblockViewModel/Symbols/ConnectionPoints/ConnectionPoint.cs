@@ -124,25 +124,7 @@ public class ConnectionPoint : INotifyPropertyChanged
         }
         else
         {
-            int xCoordinate = connectionPoint.XCoordinate;
-            int yCoordinate = connectionPoint.YCoordinate;
-
-            (xCoordinate, yCoordinate) = LineSymbolModel.ChangeStartCoordinateLine(xCoordinate, yCoordinate, connectionPoint.PositionConnectionPoint);
-            xCoordinate += connectionPoint.BlockSymbol.XCoordinate;
-            yCoordinate += connectionPoint.BlockSymbol.YCoordinate;
-
-            if (connectionPoint.PositionConnectionPoint == PositionConnectionPoint.Bottom)
-            {
-                xCoordinate += Diameter;
-            }
-            else if (connectionPoint.PositionConnectionPoint == PositionConnectionPoint.Top)
-            {
-                yCoordinate -= Diameter;
-            }
-
-            var arror = _canvasSymbolsVM.CurrentLines.ArrowSymbol;
-            arror.ChangeOrientationArrow(xCoordinate, yCoordinate, connectionPoint.PositionConnectionPoint);
-
+            _canvasSymbolsVM.CurrentLines.SymbolaIncomingLine = connectionPoint.BlockSymbol;
             _canvasSymbolsVM.CurrentLines = null;
         }
     }

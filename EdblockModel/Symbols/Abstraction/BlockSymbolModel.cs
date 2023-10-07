@@ -1,6 +1,6 @@
 ﻿namespace EdblockModel.Symbols.Abstraction;
 
-public abstract class BlockSymbolModel
+public abstract class BlockSymbolModel : SymbolModel
 {
     public int Width { get; set; }
     public int Height { get; set; }

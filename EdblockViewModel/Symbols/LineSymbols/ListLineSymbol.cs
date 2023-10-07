@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using EdblockModel.Symbols.LineSymbols;
 using EdblockViewModel.Symbols.Abstraction;
 
@@ -22,9 +21,10 @@ public class ListLineSymbol : Symbol
     {
         var positionConnectionPoint = LineSymbolModel.LinesSymbols[0].PositionConnectionPoint;
 
-        var startCoordinate = GetStartCoordinate();
+        var startCoordinate = LineSymbolModel.GetStartCoordinate();
+        var currentCoordinateLine = (currentX, currentY);
 
-        ArrowSymbol.ChangeOrientationArrow(startCoordinate, currentX, currentY, positionConnectionPoint);
+        ArrowSymbol.ChangeOrientationArrow(startCoordinate, currentCoordinateLine, positionConnectionPoint);
 
         var linesSymbModel = LineSymbolModel.GetLines(currentX, currentY);
         if (linesSymbModel.Count == 1)
@@ -42,28 +42,6 @@ public class ListLineSymbol : Symbol
                 LineSymbols.Add(lineSymbol);
 
             }
-        }
-    }
-
-    private Tuple<int, int> GetStartCoordinate() //Получение начальных координат в зависимости от уже нарисованных линий
-    {
-        if (LineSymbols.Count == 1 || LineSymbols.Count == 2)
-        {
-            var firstLine = LineSymbols[0];
-
-            return new Tuple<int, int>(firstLine.X1, firstLine.Y1);
-        }
-        else if (LineSymbols.Count % 2 == 1)
-        {
-            var lastLine = LineSymbols[^1];
-
-            return new Tuple<int, int>(lastLine.X1, lastLine.Y1);
-        }
-        else
-        {
-            var penultimateLine = LineSymbols[^2];
-
-            return new Tuple<int, int>(penultimateLine.X1, penultimateLine.Y1);
         }
     }
 }

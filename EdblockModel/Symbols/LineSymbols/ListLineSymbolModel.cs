@@ -71,4 +71,26 @@ public class ListLineSymbolModel
 
         return LinesSymbols;
     }
+
+    public (int, int) GetStartCoordinate() //Получение начальных координат в зависимости от уже нарисованных линий
+    {
+        if (LinesSymbols.Count == 1 || LinesSymbols.Count == 2)
+        {
+            var firstLine = LinesSymbols[0];
+
+            return (firstLine.X1, firstLine.Y1);
+        }
+        else if (LinesSymbols.Count % 2 == 1)
+        {
+            var lastLine = LinesSymbols[^1];
+
+            return (lastLine.X1, lastLine.Y1);
+        }
+        else
+        {
+            var penultimateLine = LinesSymbols[^2];
+
+            return (penultimateLine.X1, penultimateLine.Y1);
+        }
+    }
 }
