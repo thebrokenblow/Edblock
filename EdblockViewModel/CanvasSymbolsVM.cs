@@ -27,9 +27,9 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
             CoordinateBlockSymbol.SetXCoordinate(DraggableSymbol, value, x);
             x = CanvasSymbols.СorrectionCoordinateSymbol(value);
 
-            if (currentLines != null)
+            if (CurrentLines != null)
             {
-                currentLines.ChangeCoordination(x, y);
+                CurrentLines.ChangeCoordination(x, y);
             }
 
             if (ScaleData != null)
@@ -50,9 +50,9 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
             CoordinateBlockSymbol.SetYCoordinate(DraggableSymbol, value, y);
             y = CanvasSymbols.СorrectionCoordinateSymbol(value);
 
-            if (currentLines != null)
+            if (CurrentLines != null)
             {
-                currentLines.ChangeCoordination(x, y);
+                CurrentLines.ChangeCoordination(x, y);
             }
 
             if (ScaleData != null)
@@ -84,7 +84,7 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
     public DelegateCommand ClickEsc { get; init; }
     public BlockSymbol? DraggableSymbol { get; set; }
     public ScaleData? ScaleData { get; set; }
-    private ListLineSymbol? currentLines;
+    public ListLineSymbol? CurrentLines { get; set; }
     private readonly FactoryBlockSymbol factoryBlockSymbol;
     private readonly SerializableSymbols serializableSymbols = new();
 
@@ -103,10 +103,10 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
 
     private void DeleteLine()
     {
-        if (currentLines != null)
+        if (CurrentLines != null)
         {
-            Symbols.Remove(currentLines);
-            currentLines = null;
+            Symbols.Remove(CurrentLines);
+            CurrentLines = null;
         }
     }
 
@@ -145,10 +145,10 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
 
     public void ClickCanvas()
     {
-        if (currentLines != null && currentLines.LineSymbols.Count > 1)
+        if (CurrentLines != null && CurrentLines.LineSymbols.Count > 1)
         {
-            var line = currentLines.LineSymbols[^1];
-            var positionConnectionPoint = currentLines.LineSymbolModel.LinesSymbols[^1].PositionConnectionPoint;
+            var line = CurrentLines.LineSymbols[^1];
+            var positionConnectionPoint = CurrentLines.LineSymbolModel.LinesSymbols[^1].PositionConnectionPoint;
 
             var lineSymbolModel = FactoryLineSymbolModel.CreateLine(positionConnectionPoint);
             lineSymbolModel.X1 = line.X2;
@@ -162,8 +162,8 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
             lineSymbol.X2 = line.X2;
             lineSymbol.Y2 = line.Y2;
 
-            currentLines.LineSymbolModel.LinesSymbols.Add(lineSymbolModel);
-            currentLines.LineSymbols.Add(lineSymbol);
+            CurrentLines.LineSymbolModel.LinesSymbols.Add(lineSymbolModel);
+            CurrentLines.LineSymbols.Add(lineSymbol);
         }
         TextField.ChangeFocus(Symbols);
     }
@@ -178,10 +178,10 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
     {
         var lineSymbol = FactoryLineSymbol.CreateStartLine(lineSymbolModel);
        
-        currentLines ??= new(lineSymbolModel);
-        currentLines.LineSymbols.Add(lineSymbol);
-        currentLines.SymbolOutgoingLine = blockSymbol;
-        serializableSymbols.linesSymbolModel.Add(currentLines.LineSymbolModel);
-        Symbols.Add(currentLines);
+        CurrentLines ??= new(lineSymbolModel);
+        CurrentLines.LineSymbols.Add(lineSymbol);
+        CurrentLines.SymbolOutgoingLine = blockSymbol;
+        serializableSymbols.linesSymbolModel.Add(CurrentLines.LineSymbolModel);
+        Symbols.Add(CurrentLines);
     }
 }

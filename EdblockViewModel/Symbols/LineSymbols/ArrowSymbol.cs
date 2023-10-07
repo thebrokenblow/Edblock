@@ -29,6 +29,12 @@ public class ArrowSymbol : Symbol
         SetCoodinate(coordinatesArrow);
     }
 
+    public void ChangeOrientationArrow(int currentX, int currentY, PositionConnectionPoint positionConnectionPoint)
+    {
+        var coordinatesArrow = ArrowSymbolModel.GetCoordinateArrow(currentX, currentY, positionConnectionPoint);
+        SetCoodinate(coordinatesArrow);
+    }
+
     private void SetCoodinate(List<(int, int)> coordinatesArrow)
     {
         var pointArrowSymbol = new PointCollection();

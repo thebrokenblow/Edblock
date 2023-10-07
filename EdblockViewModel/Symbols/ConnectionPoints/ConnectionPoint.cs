@@ -25,7 +25,7 @@ public class ConnectionPoint : INotifyPropertyChanged
         }
     }
 
-    public double Diameter { get; init; } = ConnectionPointModel.diametr;
+    public int Diameter { get; init; } = ConnectionPointModel.diametr;
 
     private Brush? fill = Brushes.Transparent;
     public Brush? Fill
@@ -53,23 +53,23 @@ public class ConnectionPoint : INotifyPropertyChanged
     public DelegateCommand LeaveCursor { get; init; }
     public BlockSymbol BlockSymbol { get; init; }
     public DelegateCommand<ConnectionPoint> ClickConnectionPoint { get; init; }
+    public Func<(int, int)> GetCoordinate { get; init; }
     public PositionConnectionPoint PositionConnectionPoint { get; init; }
     private readonly CanvasSymbolsVM _canvasSymbolsVM;
-    private readonly Func<(int, int)> _getCoordinate;
     public ConnectionPoint(CanvasSymbolsVM canvasSymbolsVM, 
                            BlockSymbol blockSymbol, 
                            Func<(int, int)> getCoordinate, 
                            PositionConnectionPoint positionConnectionPoint)
     {
         _canvasSymbolsVM = canvasSymbolsVM;
-        _getCoordinate = getCoordinate;
+        GetCoordinate = getCoordinate;
 
         PositionConnectionPoint = positionConnectionPoint;
         BlockSymbol = blockSymbol;
         
         EnterCursor = new(ShowStroke);
         LeaveCursor = new(HideStroke);
-        ClickConnectionPoint = new(CreateLine);
+        ClickConnectionPoint = new(DrawLine);
 
         var coordinate = getCoordinate.Invoke();
         Coordinate = CoordinateSymbols.GetPointCoordinate(coordinate);
@@ -77,7 +77,7 @@ public class ConnectionPoint : INotifyPropertyChanged
 
     public void ChangeCoordination()
     {
-        var coordinate = _getCoordinate.Invoke();
+        var coordinate = GetCoordinate.Invoke();
         Coordinate = CoordinateSymbols.GetPointCoordinate(coordinate);
     }
 
@@ -101,15 +101,61 @@ public class ConnectionPoint : INotifyPropertyChanged
         }
     }
 
-    public void CreateLine(ConnectionPoint connectionPoint)
+    public void DrawLine(ConnectionPoint connectionPoint)
     {
-        var coordinate = connectionPoint.Coordinate;
-        var positionConnectionPoint = connectionPoint.PositionConnectionPoint;
-        var blockSymbolModel = connectionPoint.BlockSymbol.BlockSymbolModel;
+        if (_canvasSymbolsVM.CurrentLines == null)
+        {
+            var coordinate = connectionPoint.Coordinate;
+            var positionConnectionPoint = connectionPoint.PositionConnectionPoint;
+            var blockSymbolModel = connectionPoint.BlockSymbol.BlockSymbolModel;
 
-        var lineSymbolModel = new LineSymbolModel(positionConnectionPoint);
-        lineSymbolModel.SetStarCoordinate((int)coordinate.X, (int)coordinate.Y, blockSymbolModel);
-        _canvasSymbolsVM.DrawLine(lineSymbolModel, BlockSymbol);
+            var lineSymbolModel = new LineSymbolModel(positionConnectionPoint);
+            lineSymbolModel.SetStarCoordinate((int)coordinate.X, (int)coordinate.Y, blockSymbolModel);
+            _canvasSymbolsVM.DrawLine(lineSymbolModel, BlockSymbol);
+        }
+        else
+        {
+            var coordinate = connectionPoint.Coordinate;
+            (int currentX, int currentY) = LineSymbolModel.ChangeStartCoordinateLine((int)coordinate.X, (int)coordinate.Y, connectionPoint.PositionConnectionPoint);
+            currentX += connectionPoint.BlockSymbol.XCoordinate;
+            currentY += connectionPoint.BlockSymbol.YCoordinate;
+
+            if (connectionPoint.PositionConnectionPoint == PositionConnectionPoint.Bottom)
+            {
+                currentY += Diameter;
+            }
+            else if (connectionPoint.PositionConnectionPoint == PositionConnectionPoint.Top)
+            {
+                currentY -= Diameter;
+            }
+
+            var arror = _canvasSymbolsVM.CurrentLines.ArrowSymbol;
+            arror.ChangeOrientationArrow(currentX, currentY, connectionPoint.PositionConnectionPoint);
+
+            _canvasSymbolsVM.CurrentLines = null;
+        }
+    }
+
+    private static (int, int) ChangeEndCoordinateLine(PositionConnectionPoint positionConnectionPoint, int x, int y)
+    {
+        if (positionConnectionPoint == PositionConnectionPoint.Bottom)
+        {
+            y -= ConnectionPointModel.offsetPosition;
+        }
+        else if (positionConnectionPoint == PositionConnectionPoint.Top)
+        {
+            y += ConnectionPointModel.offsetPosition ;
+        }
+        else if (positionConnectionPoint == PositionConnectionPoint.Right)
+        {
+            x -= ConnectionPointModel.offsetPosition;
+        }
+        else
+        {
+            x += ConnectionPointModel.offsetPosition;
+        }
+
+        return (x, y);
     }
 
     public event PropertyChangedEventHandler? PropertyChanged;

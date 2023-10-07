@@ -23,27 +23,27 @@ public class LineSymbolModel
         int x = xCoordinateCP + blockSymbolModel.X;
         int y = yCoordinateCP + blockSymbolModel.Y;
 
-        (x, y) = ChangeStartCoordinateLine(x, y);
+        (x, y) = ChangeStartCoordinateLine(x, y, PositionConnectionPoint);
 
-        X1 = CanvasSymbols.СorrectionCoordinateSymbol(x);
-        Y1 = CanvasSymbols.СorrectionCoordinateSymbol(y);
+        X1 = x;
+        Y1 = y;
         X2 = X1;
         Y2 = Y1;
     }
 
-    private (int, int) ChangeStartCoordinateLine(int x, int y)
+    public static (int, int) ChangeStartCoordinateLine(int x, int y, PositionConnectionPoint positionConnectionPoint)
     {
-        if (PositionConnectionPoint == PositionConnectionPoint.Bottom)
+        if (positionConnectionPoint == PositionConnectionPoint.Bottom)
         {
             x += ConnectionPointModel.diametr / 2;
             y -= ConnectionPointModel.offsetPosition;
         }
-        else if (PositionConnectionPoint == PositionConnectionPoint.Top)
+        else if (positionConnectionPoint == PositionConnectionPoint.Top)
         {
             x += ConnectionPointModel.diametr / 2;
             y += ConnectionPointModel.offsetPosition * 2;
         }
-        else if (PositionConnectionPoint == PositionConnectionPoint.Right)
+        else if (positionConnectionPoint == PositionConnectionPoint.Right)
         {
             x -= ConnectionPointModel.diametr / 2;
             y += ConnectionPointModel.offsetPosition;
@@ -53,6 +53,9 @@ public class LineSymbolModel
             x += ConnectionPointModel.offsetPosition * 2;
             y += ConnectionPointModel.diametr;
         }
+
+        x = CanvasSymbols.СorrectionCoordinateSymbol(x);
+        y = CanvasSymbols.СorrectionCoordinateSymbol(y);
 
         return (x, y);
     }
