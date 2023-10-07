@@ -35,7 +35,7 @@ public class LineSymbolModel
     {
         if (positionConnectionPoint == PositionConnectionPoint.Bottom)
         {
-            x += ConnectionPointModel.diametr / 2;
+            x += ConnectionPointModel.diametr;
             y -= ConnectionPointModel.offsetPosition;
         }
         else if (positionConnectionPoint == PositionConnectionPoint.Top)

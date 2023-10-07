@@ -11,55 +11,57 @@
              mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance Type=edblockViewModel:CanvasSymbolsVM}"
              d:DesignHeight="450" d:DesignWidth="800">
-    <ItemsControl Grid.Column="1" ItemsSource="{Binding Symbols}">
-        <ItemsControl.Resources>
-            <DataTemplate DataType="{x:Type symbolsVM:ActionSymbol}">
-                <symbols:ActionSymbol/>
-            </DataTemplate>
-            <DataTemplate DataType="{x:Type symbolLineVM:ListLineSymbol}">
-                <symbols:LineSymbol/>
-            </DataTemplate>
-        </ItemsControl.Resources>
-        <ItemsControl.Template>
-            <ControlTemplate>
-                <ScrollViewer MouseLeave="ScrollViewer_MouseLeave" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden">
-                    <Canvas Cursor="{Binding Cursor}" Focusable="True" ClipToBounds="True" IsItemsHost="True">
-                        <i:Interaction.Behaviors>
-                            <edblockViewModel:MouseBehaviourVM 
+    <Grid>
+        <ItemsControl ItemsSource="{Binding Symbols}">
+            <ItemsControl.Resources>
+                <DataTemplate DataType="{x:Type symbolsVM:ActionSymbol}">
+                    <symbols:ActionSymbol/>
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type symbolLineVM:ListLineSymbol}">
+                    <symbols:LineSymbol/>
+                </DataTemplate>
+            </ItemsControl.Resources>
+            <ItemsControl.Template>
+                <ControlTemplate>
+                    <ScrollViewer MouseLeave="ScrollViewer_MouseLeave" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden">
+                        <Canvas Cursor="{Binding Cursor}" Focusable="True" ClipToBounds="True" IsItemsHost="True">
+                            <i:Interaction.Behaviors>
+                                <edblockViewModel:MouseBehaviourVM 
                                 MouseX="{Binding X, Mode=OneWayToSource}" 
                                 MouseY="{Binding Y, Mode=OneWayToSource}" />
-                        </i:Interaction.Behaviors>
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="MouseLeftButtonDown">
-                                <i:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}, Path=DataContext.ClickCanvasSymbols}"/>
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                        <Canvas.Background>
-                            <DrawingBrush 
+                            </i:Interaction.Behaviors>
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="MouseLeftButtonDown">
+                                    <i:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}, Path=DataContext.ClickCanvasSymbols}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                            <Canvas.Background>
+                                <DrawingBrush 
                                 TileMode="Tile" 
                                 Viewport="{Binding Grid}" 
                                 ViewportUnits="Absolute">
-                                <DrawingBrush.Drawing>
-                                    <GeometryDrawing>
-                                        <GeometryDrawing.Geometry>
-                                            <RectangleGeometry Rect="0,0,50,50"/>
-                                        </GeometryDrawing.Geometry>
-                                        <GeometryDrawing.Pen>
-                                            <Pen Brush="#ececec" Thickness="1"/>
-                                        </GeometryDrawing.Pen>
-                                    </GeometryDrawing>
-                                </DrawingBrush.Drawing>
-                            </DrawingBrush>
-                        </Canvas.Background>
-                    </Canvas>
-                </ScrollViewer>
-            </ControlTemplate>
-        </ItemsControl.Template>
-        <ItemsControl.ItemContainerStyle>
-            <Style TargetType="ContentPresenter">
-                <Setter Property="Canvas.Left" Value="{Binding XCoordinate}" />
-                <Setter Property="Canvas.Top" Value="{Binding YCoordinate}" />
-            </Style>
-        </ItemsControl.ItemContainerStyle>
-    </ItemsControl> 
+                                    <DrawingBrush.Drawing>
+                                        <GeometryDrawing>
+                                            <GeometryDrawing.Geometry>
+                                                <RectangleGeometry Rect="0,0,50,50"/>
+                                            </GeometryDrawing.Geometry>
+                                            <GeometryDrawing.Pen>
+                                                <Pen Brush="#ececec" Thickness="1"/>
+                                            </GeometryDrawing.Pen>
+                                        </GeometryDrawing>
+                                    </DrawingBrush.Drawing>
+                                </DrawingBrush>
+                            </Canvas.Background>
+                        </Canvas>
+                    </ScrollViewer>
+                </ControlTemplate>
+            </ItemsControl.Template>
+            <ItemsControl.ItemContainerStyle>
+                <Style TargetType="ContentPresenter">
+                    <Setter Property="Canvas.Left" Value="{Binding XCoordinate}" />
+                    <Setter Property="Canvas.Top" Value="{Binding YCoordinate}" />
+                </Style>
+            </ItemsControl.ItemContainerStyle>
+        </ItemsControl>
+    </Grid>
 </UserControl>
