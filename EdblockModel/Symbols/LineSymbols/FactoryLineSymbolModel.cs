@@ -4,7 +4,7 @@ namespace EdblockModel.Symbols.LineSymbols;
 
 public class FactoryLineSymbolModel
 {
-    public static LineSymbolModel CreateLineByLine(LineSymbolModel lineSymbolModel)
+    public static LineSymbolModel CreateCloneLine(LineSymbolModel lineSymbolModel)
     {
         var lineSymbol = new LineSymbolModel(lineSymbolModel.PositionConnectionPoint)
         {

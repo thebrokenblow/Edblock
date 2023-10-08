@@ -6,70 +6,80 @@ public class ListLineSymbolModel
 {
     public List<LineSymbolModel> LinesSymbols { get; set; } = new();
 
-    public List<LineSymbolModel> GetLines(int x, int y)
+    public List<LineSymbolModel> GetLines(int currentX, int currentY)
     {
         var lastLineSymbol = LinesSymbols[^1];
-       
-        //TODO: улучшить код и сделать оптимизацию
+
         if (lastLineSymbol.PositionConnectionPoint == PositionConnectionPoint.Bottom ||
             lastLineSymbol.PositionConnectionPoint == PositionConnectionPoint.Top)
         {
-            if (LinesSymbols.Count % 2 == 0)
-            {
-                lastLineSymbol = LinesSymbols[^2];
-                var secondLine = LinesSymbols[^1];
-                lastLineSymbol.Y2 = y;
-                secondLine.X2 = x;
-                secondLine.Y1 = lastLineSymbol.Y2;
-                secondLine.Y2 = lastLineSymbol.Y2;
-
-                if (secondLine.X2 == lastLineSymbol.X2)
-                {
-                    LinesSymbols.Remove(secondLine);
-                }
-            }
-            else
-            {
-                lastLineSymbol.Y2 = y;
-
-                if (lastLineSymbol.X2 != x)
-                {
-                    var lineSymbol = FactoryLineSymbolModel.CreateLineByLine(lastLineSymbol);
-                    LinesSymbols.Add(lineSymbol);
-                }
-            }
+            ChangeCoordinatesVerticalLines(lastLineSymbol, currentX, currentY);
         }
         else
         {
-            if (LinesSymbols.Count % 2 == 0)
-            {
-                lastLineSymbol = LinesSymbols[^2];
-                var secondLine = LinesSymbols[^1];
-                lastLineSymbol.X2 = x;
-                secondLine.Y2 = y;
-                secondLine.X1 = lastLineSymbol.X2;
-                secondLine.X2 = lastLineSymbol.X2;
-
-                if (secondLine.Y2 == lastLineSymbol.Y2)
-                {
-                    LinesSymbols.Remove(secondLine);
-                }
-            }
-            else
-            {
-                lastLineSymbol.X2 = x;
-                if (lastLineSymbol.Y2 != y)
-                {
-                    if (LinesSymbols.Count % 2 != 0)
-                    {
-                        var lineSymbol = FactoryLineSymbolModel.CreateLineByLine(lastLineSymbol);
-                        LinesSymbols.Add(lineSymbol);
-                    }
-                }
-            }
+            ChangeCoordinatesHorizontalLines(lastLineSymbol, currentX, currentY);
         }
 
         return LinesSymbols;
+    }
+
+    private void ChangeCoordinatesVerticalLines(LineSymbolModel lastLineSymbol, int currentX, int currentY)
+    {
+        if (LinesSymbols.Count % 2 == 0)
+        {
+            var penultimateLine = LinesSymbols[^2];
+            penultimateLine.Y2 = currentY;
+
+            lastLineSymbol = LinesSymbols[^1];
+            lastLineSymbol.X2 = currentX;
+            lastLineSymbol.Y1 = penultimateLine.Y2;
+            lastLineSymbol.Y2 = penultimateLine.Y2;
+
+            RemoveNewLine(lastLineSymbol, lastLineSymbol.X2, penultimateLine.X2);
+        }
+        else
+        {
+            lastLineSymbol.Y2 = currentY;
+            AddNewLine(lastLineSymbol, lastLineSymbol.X2, currentY);
+        }
+    }
+
+    private void ChangeCoordinatesHorizontalLines(LineSymbolModel lastLineSymbol, int currentX, int currentY)
+    {
+        if (LinesSymbols.Count % 2 == 0)
+        {
+            var penultimateLine = LinesSymbols[^2];
+            penultimateLine.X2 = currentX;
+
+            lastLineSymbol = LinesSymbols[^1];
+            lastLineSymbol.Y2 = currentY;
+            lastLineSymbol.X1 = penultimateLine.X2;
+            lastLineSymbol.X2 = penultimateLine.X2;
+
+            RemoveNewLine(lastLineSymbol, lastLineSymbol.Y2, penultimateLine.Y2);
+        }
+        else
+        {
+            lastLineSymbol.X2 = currentX;
+            AddNewLine(lastLineSymbol, lastLineSymbol.Y2, currentY);
+        }
+    }
+
+    private void RemoveNewLine(LineSymbolModel lastLineSymbol, int coordinateLastLine, int coordinatePenultimateLine)
+    {
+        if (coordinateLastLine == coordinatePenultimateLine)
+        {
+            LinesSymbols.Remove(lastLineSymbol);
+        }
+    }
+
+    private void AddNewLine(LineSymbolModel lastLineSymbol, int coordinateCurrentLine, int coordinate)
+    {
+        if (coordinateCurrentLine != coordinate)
+        {
+            var lineSymbol = FactoryLineSymbolModel.CreateCloneLine(lastLineSymbol);
+            LinesSymbols.Add(lineSymbol);
+        }
     }
 
     public (int, int) GetStartCoordinate() //Получение начальных координат в зависимости от уже нарисованных линий
