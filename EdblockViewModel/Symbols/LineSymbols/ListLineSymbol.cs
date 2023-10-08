@@ -21,7 +21,7 @@ public class ListLineSymbol : Symbol
     {
         var positionConnectionPoint = LineSymbolModel.LinesSymbols[0].PositionConnectionPoint;
 
-        var startCoordinate = LineSymbolModel.GetStartCoordinate();
+        var startCoordinate = CoordinateLineModel.GetStartCoordinate(LineSymbolModel.LinesSymbols);
         var currentCoordinateLine = (currentX, currentY);
 
         ArrowSymbol.ChangeOrientationArrow(startCoordinate, currentCoordinateLine, positionConnectionPoint);
