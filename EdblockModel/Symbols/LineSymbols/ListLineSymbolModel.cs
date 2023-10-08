@@ -6,7 +6,7 @@ public class ListLineSymbolModel
 {
     public List<LineSymbolModel> LinesSymbols { get; set; } = new();
 
-    public List<LineSymbolModel> GetLines(int currentX, int currentY)
+    public void GetLines(int currentX, int currentY)
     {
         var lastLineSymbol = LinesSymbols[^1];
 
@@ -19,7 +19,5 @@ public class ListLineSymbolModel
         {
             CoordinateLineModel.ChangeCoordinatesHorizontalLines(LinesSymbols, lastLineSymbol, currentX, currentY);
         }
-
-        return LinesSymbols;
     }
 }

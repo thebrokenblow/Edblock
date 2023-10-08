@@ -1,8 +1,10 @@
 ﻿using System.Collections.ObjectModel;
+using System.Linq;
 using EdblockModel.Symbols.LineSymbols;
 using EdblockViewModel.Symbols.Abstraction;
 
 namespace EdblockViewModel.Symbols.LineSymbols;
+
 
 public class ListLineSymbol : Symbol
 {
@@ -25,23 +27,42 @@ public class ListLineSymbol : Symbol
         var currentCoordinateLine = (currentX, currentY);
 
         ArrowSymbol.ChangeOrientationArrow(startCoordinate, currentCoordinateLine, positionConnectionPoint);
+        LineSymbolModel.GetLines(currentX, currentY);
 
-        var linesSymbModel = LineSymbolModel.GetLines(currentX, currentY);
-        if (linesSymbModel.Count == 1)
+        if (LineSymbolModel.LinesSymbols.Count >= 2)
         {
-            LineSymbols.Clear();
-            var lineSymbol = FactoryLineSymbol.CreateLine(linesSymbModel[0]);
-            LineSymbols.Add(lineSymbol);
+            var linesSymbModel = LineSymbolModel.LinesSymbols.TakeLast(2).ToList();
+
+            if (LineSymbolModel.LinesSymbols.Count < LineSymbols.Count)
+            {
+                LineSymbols.RemoveAt(LineSymbols.Count - 1);
+                LineSymbols[^1] = FactoryLineSymbol.CreateLine(linesSymbModel[1]);
+            }
+            else if (LineSymbolModel.LinesSymbols.Count > LineSymbols.Count)
+            {
+                LineSymbols[^1] = FactoryLineSymbol.CreateLine(linesSymbModel[0]);
+                LineSymbols.Add(FactoryLineSymbol.CreateLine(linesSymbModel[1]));
+            }
+            else if (LineSymbolModel.LinesSymbols.Count == LineSymbols.Count)
+            {
+                for (int i = LineSymbolModel.LinesSymbols.Count - 2; i < LineSymbolModel.LinesSymbols.Count; i++)
+                {
+                    LineSymbols[i] = FactoryLineSymbol.CreateLine(LineSymbolModel.LinesSymbols[i]);
+                }
+            }
         }
         else
         {
-            LineSymbols.Clear();
-            for (int i = 0; i < linesSymbModel.Count; i++)
+            var lineSymbol = FactoryLineSymbol.CreateLine(LineSymbolModel.LinesSymbols[0]);
+            if (LineSymbols.Count == 0)
             {
-                var lineSymbol = FactoryLineSymbol.CreateLine(linesSymbModel[i]);
                 LineSymbols.Add(lineSymbol);
-
+            }
+            else
+            {
+                LineSymbols[0] = lineSymbol;
             }
         }
+
     }
 }
