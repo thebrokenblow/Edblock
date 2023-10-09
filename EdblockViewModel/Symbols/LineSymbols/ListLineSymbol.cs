@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using EdblockModel.Symbols.LineSymbols;
 using EdblockViewModel.Symbols.Abstraction;
+using EdblockModel.Symbols.ConnectionPoints;
 
 namespace EdblockViewModel.Symbols.LineSymbols;
 
@@ -10,24 +11,26 @@ public class ListLineSymbol : Symbol
 {
     public BlockSymbol? SymbolOutgoingLine { get; set; }
     public BlockSymbol? SymbolaIncomingLine { get; set; }
+    public ListLineSymbolModel LineSymbolModel { get; init; }
     public ObservableCollection<LineSymbol> LineSymbols { get; init; } = new();
-    public ListLineSymbolModel LineSymbolModel { get; init; } = new();
     public ArrowSymbol ArrowSymbol { get; set; } = new();
+    public PositionConnectionPoint PositionConnectionPoint { get; init; }
 
-    public ListLineSymbol(LineSymbolModel lineSymbolModel)
+    public ListLineSymbol(LineSymbolModel lineSymbolModel, PositionConnectionPoint positionConnectionPoint)
     {
+        LineSymbolModel = new(positionConnectionPoint);
         LineSymbolModel.LinesSymbols.Add(lineSymbolModel);
+        PositionConnectionPoint = positionConnectionPoint;
     }
 
     public void ChangeCoordination(int currentX, int currentY)
     {
         var linesSymbolModel = LineSymbolModel.LinesSymbols;
-        var positionConnectionPoint = linesSymbolModel[0].PositionConnectionPoint;
 
         var startCoordinate = CoordinateLineModel.GetStartCoordinate(LineSymbolModel.LinesSymbols);
         var currentCoordinateLine = (currentX, currentY);
         
-        ArrowSymbol.ChangeOrientationArrow(startCoordinate, currentCoordinateLine, positionConnectionPoint);
+        ArrowSymbol.ChangeOrientationArrow(startCoordinate, currentCoordinateLine, PositionConnectionPoint);
         LineSymbolModel.ChangeCoordinateLine(currentX, currentY);
 
         if (linesSymbolModel.Count == 1)

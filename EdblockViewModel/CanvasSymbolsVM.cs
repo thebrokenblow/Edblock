@@ -11,6 +11,7 @@ using EdblockViewModel.Symbols.ScaleRectangles;
 using EdblockViewModel.Symbols.ConnectionPoints;
 using EdblockModel.Symbols.LineSymbols;
 using EdblockViewModel.Symbols.LineSymbols;
+using EdblockModel.Symbols.ConnectionPoints;
 
 namespace EdblockViewModel;
 
@@ -147,41 +148,30 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
     {
         if (CurrentLines != null && CurrentLines.LineSymbols.Count > 1)
         {
-            var line = CurrentLines.LineSymbols[^1];
-            var positionConnectionPoint = CurrentLines.LineSymbolModel.LinesSymbols[^1].PositionConnectionPoint;
+            var newLineSymbolModel = CurrentLines.LineSymbolModel.GetNewLine();
+            var newLineSymbol = FactoryLineSymbol.CreateNewLine(newLineSymbolModel);
 
-            var lineSymbolModel = FactoryLineSymbolModel.CreateLine(positionConnectionPoint);
-            lineSymbolModel.X1 = line.X2;
-            lineSymbolModel.Y1 = line.Y2;
-            lineSymbolModel.X2 = line.X2;
-            lineSymbolModel.Y2 = line.Y2;
-
-            var lineSymbol = FactoryLineSymbol.CreateStartLine(lineSymbolModel);
-            lineSymbol.X1 = line.X2;
-            lineSymbol.Y1 = line.Y2;
-            lineSymbol.X2 = line.X2;
-            lineSymbol.Y2 = line.Y2;
-
-            CurrentLines.LineSymbolModel.LinesSymbols.Add(lineSymbolModel);
-            CurrentLines.LineSymbols.Add(lineSymbol);
+            CurrentLines.LineSymbols.Add(newLineSymbol);
         }
         TextField.ChangeFocus(Symbols);
     }
+
+    public void DrawLine(LineSymbolModel lineSymbolModel, BlockSymbol blockSymbol, PositionConnectionPoint positionConnectionPoint)
+    {
+        var startLine = FactoryLineSymbol.CreateStartLine(lineSymbolModel);
+       
+        CurrentLines ??= new(lineSymbolModel, positionConnectionPoint);
+        CurrentLines.SymbolOutgoingLine = blockSymbol;
+        CurrentLines.LineSymbols.Add(startLine);
+
+        Symbols.Add(CurrentLines);
+        serializableSymbols.linesSymbolModel.Add(CurrentLines.LineSymbolModel);
+    }
+
 
     public event PropertyChangedEventHandler? PropertyChanged;
     public void OnPropertyChanged([CallerMemberName] string prop = "")
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
-    }
-
-    internal void DrawLine(LineSymbolModel lineSymbolModel, BlockSymbol blockSymbol)
-    {
-        var lineSymbol = FactoryLineSymbol.CreateStartLine(lineSymbolModel);
-       
-        CurrentLines ??= new(lineSymbolModel);
-        CurrentLines.LineSymbols.Add(lineSymbol);
-        CurrentLines.SymbolOutgoingLine = blockSymbol;
-        serializableSymbols.linesSymbolModel.Add(CurrentLines.LineSymbolModel);
-        Symbols.Add(CurrentLines);
     }
 }

@@ -117,7 +117,7 @@ public class ConnectionPoint : INotifyPropertyChanged
             var coordinateConnectionPoint = (connectionPoint.XCoordinate, connectionPoint.YCoordinate);
             var lineSymbolModel = new LineSymbolModel(positionConnectionPoint);
             lineSymbolModel.SetStarCoordinate(coordinateConnectionPoint, blockSymbolModel);
-            _canvasSymbolsVM.DrawLine(lineSymbolModel, BlockSymbol);
+            _canvasSymbolsVM.DrawLine(lineSymbolModel, BlockSymbol, positionConnectionPoint);
         }
         else
         {
