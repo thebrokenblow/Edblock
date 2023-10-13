@@ -78,9 +78,7 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
     public ObservableCollection<Symbol> Symbols { get; init; }
     public DelegateCommand<string> ClickSymbol { get; init; }
     public DelegateCommand<BlockSymbol> MouseMoveSymbol { get; init; }
-    public DelegateCommand MouseUpSymbol { get; init; }
     public DelegateCommand ClickCanvasSymbols { get; init; }
-    public DelegateCommand ClickEsc { get; init; }
     public BlockSymbol? DraggableSymbol { get; set; }
     public ScaleData? ScaleData { get; set; }
     public DrawnLineSymbolVM? CurrentLines { get; set; }
@@ -91,15 +89,13 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
         Symbols = new();
         ClickSymbol = new(CreateSymbol);
         MouseMoveSymbol = new(MoveSymbol);
-        MouseUpSymbol = new(RemoveSymbol);
         ClickCanvasSymbols = new(ClickCanvas);
-        ClickEsc = new(DeleteCurrentLine);
         factoryBlockSymbol = new(this);
         var lengthGrid = CanvasSymbols.LengthGrid;
         Grid = new Rect(-lengthGrid, -lengthGrid, lengthGrid, lengthGrid);
     }
 
-    private void DeleteCurrentLine()
+    public void DeleteCurrentLine()
     {
         if (CurrentLines != null)
         {
@@ -108,7 +104,7 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
         }
     }
 
-    private void CreateSymbol(string nameBlockSymbol)
+    public void CreateSymbol(string nameBlockSymbol)
     {
         var currentSymbol = factoryBlockSymbol.Create(nameBlockSymbol);
 
@@ -119,7 +115,7 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
         Symbols.Add(currentSymbol);
     }
 
-    private void MoveSymbol(BlockSymbol currentSymbol)
+    public void MoveSymbol(BlockSymbol currentSymbol)
     {
         if (!currentSymbol.TextField.Focus)
         {
@@ -132,7 +128,7 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
         DraggableSymbol = currentSymbol;
     }
 
-    private void RemoveSymbol()
+    public void RemoveSymbol()
     {
         DraggableSymbol = null;
         ScaleData = null;

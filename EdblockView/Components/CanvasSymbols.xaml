@@ -32,7 +32,7 @@
                             </i:Interaction.Behaviors>
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="MouseLeftButtonDown">
-                                    <i:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}, Path=DataContext.ClickCanvasSymbols}"/>
+                                    <i:InvokeCommandAction Command="{Binding ClickCanvasSymbols}"/>
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                             <Canvas.Background>

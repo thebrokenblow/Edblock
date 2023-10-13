@@ -58,10 +58,12 @@ public class TextField : INotifyPropertyChanged
     }
 
     public DelegateCommand<BlockSymbol> DoubleClickedTextField { get; init; }
+    public DelegateCommand<BlockSymbol> MouseMoveSymbol { get; init; }
     private readonly CanvasSymbolsVM _canvasSymbolsVM;
     public TextField(CanvasSymbolsVM canvasSymbolsVM)
     {
         _canvasSymbolsVM = canvasSymbolsVM;
+        MouseMoveSymbol = new(canvasSymbolsVM.MoveSymbol);
         DoubleClickedTextField = new(AddFocus);
     }
 

@@ -12,7 +12,7 @@
         <i:Interaction.Triggers>
             <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
                 <i:InvokeCommandAction 
-                        Command="{Binding RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}, Path=DataContext.MouseMoveSymbol}" 
+                        Command="{Binding TextField.MouseMoveSymbol}" 
                         CommandParameter="{Binding}"/>
             </i:EventTrigger>
             <i:EventTrigger EventName="PreviewMouseDoubleClick">
