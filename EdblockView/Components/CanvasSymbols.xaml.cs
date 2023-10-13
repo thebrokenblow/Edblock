@@ -1,4 +1,4 @@
-﻿using EdblockViewModel;
+﻿using System.Windows;
 using System.Windows.Input;
 using System.Windows.Controls;
 
@@ -9,14 +9,6 @@ namespace EdblockView.Components;
 /// </summary>
 public partial class CanvasSymbols : UserControl
 {
-    public CanvasSymbolsVM? CanvasSymbolsVM 
-    {
-        set
-        {
-            DataContext = value;
-        }
-    }
-
     public CanvasSymbols()
     {
         InitializeComponent();
