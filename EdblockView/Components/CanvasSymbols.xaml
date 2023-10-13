@@ -17,7 +17,7 @@
                 <DataTemplate DataType="{x:Type symbolsVM:ActionSymbol}">
                     <symbols:ActionSymbol/>
                 </DataTemplate>
-                <DataTemplate DataType="{x:Type symbolLineVM:ListLineSymbol}">
+                <DataTemplate DataType="{x:Type symbolLineVM:DrawnLineSymbolVM}">
                     <symbols:LineSymbol/>
                 </DataTemplate>
             </ItemsControl.Resources>

@@ -1,13 +1,14 @@
-﻿using EdblockModel.Symbols.ConnectionPoints;
+﻿using EdblockModel.Symbols.Abstraction;
+using EdblockModel.Symbols.ConnectionPoints;
 
 namespace EdblockModel.Symbols.LineSymbols;
 
-public class ListLineSymbolModel
+public class DrawnLineSymbolModel
 {
     public List<LineSymbolModel> LinesSymbols { get; set; } = new();
     private readonly PositionConnectionPoint _positionConnectionPoint;
 
-    public ListLineSymbolModel(PositionConnectionPoint positionConnectionPoint)
+    public DrawnLineSymbolModel(PositionConnectionPoint positionConnectionPoint)
     {
         _positionConnectionPoint = positionConnectionPoint;
     }
@@ -24,6 +25,12 @@ public class ListLineSymbolModel
         {
             CoordinateLineModel.ChangeCoordinatesHorizontalLines(LinesSymbols, lastLineSymbol, currentX, currentY);
         }
+    }
+
+    public void AddFirstLine((int x, int y) coordinateConnectionPoint, PositionConnectionPoint positionConnectionPoint, BlockSymbolModel blockSymbolModel)
+    {
+        var lineSymbolModel = FactoryLineSymbolModel.CreateFirstLine(coordinateConnectionPoint, positionConnectionPoint, blockSymbolModel);
+        LinesSymbols.Add(lineSymbolModel);
     }
 
     public LineSymbolModel GetNewLine()

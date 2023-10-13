@@ -9,9 +9,7 @@ using System.Runtime.CompilerServices;
 using EdblockViewModel.Symbols.Abstraction;
 using EdblockViewModel.Symbols.ScaleRectangles;
 using EdblockViewModel.Symbols.ConnectionPoints;
-using EdblockModel.Symbols.LineSymbols;
 using EdblockViewModel.Symbols.LineSymbols;
-using EdblockModel.Symbols.ConnectionPoints;
 
 namespace EdblockViewModel;
 
@@ -85,9 +83,8 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
     public DelegateCommand ClickEsc { get; init; }
     public BlockSymbol? DraggableSymbol { get; set; }
     public ScaleData? ScaleData { get; set; }
-    public ListLineSymbol? CurrentLines { get; set; }
+    public DrawnLineSymbolVM? CurrentLines { get; set; }
     private readonly FactoryBlockSymbol factoryBlockSymbol;
-    private readonly SerializableSymbols serializableSymbols = new();
 
     public CanvasSymbolsVM()
     {
@@ -96,13 +93,13 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
         MouseMoveSymbol = new(MoveSymbol);
         MouseUpSymbol = new(RemoveSymbol);
         ClickCanvasSymbols = new(ClickCanvas);
-        ClickEsc = new(DeleteLine);
+        ClickEsc = new(DeleteCurrentLine);
         factoryBlockSymbol = new(this);
         var lengthGrid = CanvasSymbols.LengthGrid;
         Grid = new Rect(-lengthGrid, -lengthGrid, lengthGrid, lengthGrid);
     }
 
-    private void DeleteLine()
+    private void DeleteCurrentLine()
     {
         if (CurrentLines != null)
         {
@@ -119,7 +116,6 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
         Cursor = Cursors.SizeAll;
 
         DraggableSymbol = currentSymbol;
-        serializableSymbols.blocksSymbolModel.Add(currentSymbol.BlockSymbolModel);
         Symbols.Add(currentSymbol);
     }
 
@@ -148,26 +144,13 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
     {
         if (CurrentLines != null && CurrentLines.LineSymbols.Count > 1)
         {
-            var newLineSymbolModel = CurrentLines.LineSymbolModel.GetNewLine();
+            var newLineSymbolModel = CurrentLines.DrawnLineSymbolModel.GetNewLine();
             var newLineSymbol = FactoryLineSymbol.CreateNewLine(newLineSymbolModel);
 
             CurrentLines.LineSymbols.Add(newLineSymbol);
         }
         TextField.ChangeFocus(Symbols);
     }
-
-    public void DrawLine(LineSymbolModel lineSymbolModel, BlockSymbol blockSymbol, PositionConnectionPoint positionConnectionPoint)
-    {
-        var startLine = FactoryLineSymbol.CreateStartLine(lineSymbolModel);
-       
-        CurrentLines ??= new(lineSymbolModel, positionConnectionPoint);
-        CurrentLines.SymbolOutgoingLine = blockSymbol;
-        CurrentLines.LineSymbols.Add(startLine);
-
-        Symbols.Add(CurrentLines);
-        serializableSymbols.linesSymbolModel.Add(CurrentLines.LineSymbolModel);
-    }
-
 
     public event PropertyChangedEventHandler? PropertyChanged;
     public void OnPropertyChanged([CallerMemberName] string prop = "")

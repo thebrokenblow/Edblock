@@ -7,6 +7,7 @@ using System.Runtime.CompilerServices;
 using EdblockModel.Symbols.LineSymbols;
 using EdblockViewModel.Symbols.Abstraction;
 using EdblockModel.Symbols.ConnectionPoints;
+using EdblockViewModel.Symbols.LineSymbols;
 
 namespace EdblockViewModel.Symbols.ConnectionPoints;
 
@@ -78,7 +79,7 @@ public class ConnectionPoint : INotifyPropertyChanged
         
         EnterCursor = new(ShowStroke);
         LeaveCursor = new(HideStroke);
-        ClickConnectionPoint = new(DrawLine);
+        ClickConnectionPoint = new(TrackStageDrawLine);
 
         (XCoordinate, YCoordinate) = getCoordinate.Invoke();
     }
@@ -108,21 +109,15 @@ public class ConnectionPoint : INotifyPropertyChanged
         }
     }
 
-    public void DrawLine(ConnectionPoint connectionPoint)
+    public void TrackStageDrawLine(ConnectionPoint connectionPoint)
     {
         if (_canvasSymbolsVM.CurrentLines == null)
         {
-            var blockSymbolModel = connectionPoint.BlockSymbol.BlockSymbolModel;
-            var positionConnectionPoint = connectionPoint.PositionConnectionPoint;
-            var coordinateConnectionPoint = (connectionPoint.XCoordinate, connectionPoint.YCoordinate);
-            var lineSymbolModel = new LineSymbolModel(positionConnectionPoint);
-            lineSymbolModel.SetStarCoordinate(coordinateConnectionPoint, blockSymbolModel);
-            _canvasSymbolsVM.DrawLine(lineSymbolModel, BlockSymbol, positionConnectionPoint);
+            StarDrawLine(connectionPoint);
         }
         else
         {
-            _canvasSymbolsVM.CurrentLines.SymbolaIncomingLine = connectionPoint.BlockSymbol;
-            _canvasSymbolsVM.CurrentLines = null;
+            EndDrawLine(connectionPoint);
         }
     }
 
@@ -130,5 +125,27 @@ public class ConnectionPoint : INotifyPropertyChanged
     public void OnPropertyChanged([CallerMemberName] string prop = "")
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
+    }
+
+    private void StarDrawLine(ConnectionPoint connectionPoint)
+    {
+        var coordinateConnectionPoint = (connectionPoint.XCoordinate, connectionPoint.YCoordinate);
+        var positionConnectionPoint = connectionPoint.PositionConnectionPoint;
+        var blockSymbolModel = connectionPoint.BlockSymbol.BlockSymbolModel;
+
+        var drawnLineSymbolModel = new DrawnLineSymbolModel(connectionPoint.PositionConnectionPoint);
+        drawnLineSymbolModel.AddFirstLine(coordinateConnectionPoint, positionConnectionPoint, blockSymbolModel);
+
+        var drawnLineSymbolVM = new DrawnLineSymbolVM(positionConnectionPoint, drawnLineSymbolModel);
+        _canvasSymbolsVM.CurrentLines = drawnLineSymbolVM;
+        _canvasSymbolsVM.Symbols.Add(drawnLineSymbolVM);
+
+        _canvasSymbolsVM.CurrentLines.SymbolOutgoingLine = connectionPoint.BlockSymbol;
+    }
+
+    private void EndDrawLine(ConnectionPoint connectionPoint)
+    {
+        _canvasSymbolsVM.CurrentLines!.SymbolaIncomingLine = connectionPoint.BlockSymbol;
+        _canvasSymbolsVM.CurrentLines = null;
     }
 }

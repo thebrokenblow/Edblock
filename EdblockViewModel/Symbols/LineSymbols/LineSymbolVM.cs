@@ -2,7 +2,7 @@
 
 namespace EdblockViewModel.Symbols.LineSymbols;
 
-public class LineSymbol : Symbol
+public class LineSymbolVM : Symbol
 {
     private int x1;
     public int X1

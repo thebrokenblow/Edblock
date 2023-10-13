@@ -13,14 +13,9 @@ public class LineSymbolModel
 
     public int Y2 { get; set; }
 
-    public PositionConnectionPoint PositionConnectionPoint { get; init; }
-
-    public LineSymbolModel(PositionConnectionPoint positionConnectionPoint) =>
-        PositionConnectionPoint = positionConnectionPoint;
-
-    public void SetStarCoordinate((int x, int y) coordinateConnectionPoint, BlockSymbolModel blockSymbolModel)
+    public void SetStarCoordinate((int x, int y) coordinateConnectionPoint, PositionConnectionPoint positionConnectionPoint, BlockSymbolModel blockSymbolModel)
     {
-        (X1, Y1) = CoordinateLineModel.GetStartCoordinateLine(blockSymbolModel, coordinateConnectionPoint, PositionConnectionPoint);
+        (X1, Y1) = CoordinateLineModel.GetStartCoordinateLine(blockSymbolModel, coordinateConnectionPoint, positionConnectionPoint);
         X2 = X1;
         Y2 = Y1;
     }

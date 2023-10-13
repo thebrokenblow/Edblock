@@ -66,7 +66,7 @@ public class CoordinateLineModel
         else
         {
             lastLineSymbol.Y2 = currentY;
-            AddNewLine(linesSymbols, lastLineSymbol, lastLineSymbol.X2, currentY);
+            AddNewLine(linesSymbols, lastLineSymbol, lastLineSymbol.X2, currentX);
         }
     }
 

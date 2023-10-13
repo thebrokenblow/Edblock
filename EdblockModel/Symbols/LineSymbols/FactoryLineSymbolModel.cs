@@ -1,4 +1,5 @@
-﻿using EdblockModel.Symbols.ConnectionPoints;
+﻿using EdblockModel.Symbols.Abstraction;
+using EdblockModel.Symbols.ConnectionPoints;
 
 namespace EdblockModel.Symbols.LineSymbols;
 
@@ -6,7 +7,7 @@ public class FactoryLineSymbolModel
 {
     public static LineSymbolModel CreateNewLine(LineSymbolModel lineSymbolModel)
     {
-        var lineSymbol = new LineSymbolModel(lineSymbolModel.PositionConnectionPoint)
+        var lineSymbol = new LineSymbolModel()
         {
             X1 = lineSymbolModel.X2,
             Y1 = lineSymbolModel.Y2,
@@ -19,7 +20,7 @@ public class FactoryLineSymbolModel
 
     public static LineSymbolModel CreateCloneLine(LineSymbolModel lineSymbolModel)
     {
-        var lineSymbol = new LineSymbolModel(lineSymbolModel.PositionConnectionPoint)
+        var lineSymbol = new LineSymbolModel()
         {
             X1 = lineSymbolModel.X1,
             Y1 = lineSymbolModel.Y1,
@@ -30,9 +31,12 @@ public class FactoryLineSymbolModel
         return lineSymbol;
     }
 
-    public static LineSymbolModel CreateLine(PositionConnectionPoint positionConnectionPoint)
+    public static LineSymbolModel CreateFirstLine((int x, int y) coordinateConnectionPoint, PositionConnectionPoint positionConnectionPoint, BlockSymbolModel blockSymbolModel)
     {
-        var lineSymbol = new LineSymbolModel(positionConnectionPoint);
-        return lineSymbol;
+        var firstLineSymbolModel = new LineSymbolModel();
+        (firstLineSymbolModel.X1, firstLineSymbolModel.Y1) = CoordinateLineModel.GetStartCoordinateLine(blockSymbolModel, coordinateConnectionPoint, positionConnectionPoint);
+        firstLineSymbolModel.X2 = firstLineSymbolModel.X1;
+        firstLineSymbolModel.Y2 = firstLineSymbolModel.Y1;
+        return firstLineSymbolModel;
     }
 }
