@@ -1,6 +1,5 @@
 ﻿using System;
 using Prism.Commands;
-using System.Windows.Media;
 using System.Windows.Input;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -37,8 +36,8 @@ public class ConnectionPoint : INotifyPropertyChanged
 
     public int Diameter { get; init; } = ConnectionPointModel.diametr;
 
-    private Brush? fill = ColorConnectionPoint.NotFocusFill;
-    public Brush? Fill
+    private string? fill = ColorConnectionPointModel.HexNotFocusFill;
+    public string? Fill
     {
         get => fill;
         set
@@ -48,8 +47,8 @@ public class ConnectionPoint : INotifyPropertyChanged
         }
     }
 
-    private Brush? stroke = ColorConnectionPoint.NotFocusStroke;
-    public Brush? Stroke
+    private string? stroke = ColorConnectionPointModel.HexNotFocusStroke;
+    public string? Stroke
     {
         get => stroke;
         set
@@ -66,10 +65,7 @@ public class ConnectionPoint : INotifyPropertyChanged
     public Func<(int, int)> GetCoordinate { get; init; }
     public PositionConnectionPoint PositionConnectionPoint { get; init; }
     private readonly CanvasSymbolsVM _canvasSymbolsVM;
-    public ConnectionPoint(CanvasSymbolsVM canvasSymbolsVM, 
-                           BlockSymbol blockSymbol, 
-                           Func<(int, int)> getCoordinate, 
-                           PositionConnectionPoint positionConnectionPoint)
+    public ConnectionPoint(CanvasSymbolsVM canvasSymbolsVM, BlockSymbol blockSymbol, Func<(int, int)> getCoordinate, PositionConnectionPoint positionConnectionPoint)
     {
         _canvasSymbolsVM = canvasSymbolsVM;
         GetCoordinate = getCoordinate;
@@ -94,8 +90,8 @@ public class ConnectionPoint : INotifyPropertyChanged
         if (_canvasSymbolsVM.ScaleData == null)
         {
             _canvasSymbolsVM.Cursor = Cursors.Hand;
-            ColorConnectionPoint.Show(BlockSymbol.ConnectionPoints);
-            ColorConnectionPoint.ShowStroke(this);
+            ColorConnectionPoint.SetFill(ColorConnectionPointModel.HexFocusFill, BlockSymbol.ConnectionPoints);
+            Stroke = ColorConnectionPointModel.HexFocusStroke;
         }
     }
 
@@ -104,8 +100,8 @@ public class ConnectionPoint : INotifyPropertyChanged
         if (_canvasSymbolsVM.ScaleData == null)
         {
             _canvasSymbolsVM.Cursor = Cursors.Arrow;
-            ColorConnectionPoint.Hide(BlockSymbol.ConnectionPoints);
-            ColorConnectionPoint.HideStroke(this);
+            ColorConnectionPoint.SetFill(ColorConnectionPointModel.HexNotFocusFill, BlockSymbol.ConnectionPoints);
+            Stroke = ColorConnectionPointModel.HexNotFocusStroke;
         }
     }
 

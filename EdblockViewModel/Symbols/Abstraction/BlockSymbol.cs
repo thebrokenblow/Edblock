@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using EdblockModel.Symbols.Abstraction;
 using EdblockViewModel.Symbols.ScaleRectangles;
 using EdblockViewModel.Symbols.ConnectionPoints;
+using EdblockModel.Symbols.ConnectionPoints;
 
 namespace EdblockViewModel.Symbols.Abstraction;
 
@@ -93,7 +94,7 @@ public abstract class BlockSymbol : Symbol
     {
         if (_canvasSymbolsVM.DraggableSymbol == null && _canvasSymbolsVM.ScaleData == null)
         {
-            ColorConnectionPoint.Show(ConnectionPoints);
+            ColorConnectionPoint.SetFill(ColorConnectionPointModel.HexFocusFill, ConnectionPoints);
             ColorScaleRectangle.Show(ScaleRectangles);
             TextField.Cursor = Cursors.SizeAll;
         }
@@ -101,7 +102,7 @@ public abstract class BlockSymbol : Symbol
 
     public void HideStroke()
     {
-        ColorConnectionPoint.Hide(ConnectionPoints);
+        ColorConnectionPoint.SetFill(ColorConnectionPointModel.HexNotFocusFill, ConnectionPoints);
         ColorScaleRectangle.Hide(ScaleRectangles);
     }
 

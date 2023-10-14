@@ -10,6 +10,7 @@ using EdblockViewModel.Symbols.Abstraction;
 using EdblockViewModel.Symbols.ScaleRectangles;
 using EdblockViewModel.Symbols.ConnectionPoints;
 using EdblockViewModel.Symbols.LineSymbols;
+using EdblockModel.Symbols.ConnectionPoints;
 
 namespace EdblockViewModel;
 
@@ -119,7 +120,7 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
     {
         if (!currentSymbol.TextField.Focus)
         {
-            ColorConnectionPoint.Hide(currentSymbol.ConnectionPoints);
+            ColorConnectionPoint.SetFill(ColorConnectionPointModel.HexNotFocusFill, currentSymbol.ConnectionPoints);
             ColorScaleRectangle.Hide(currentSymbol.ScaleRectangles);
             currentSymbol.TextField.Cursor = Cursors.SizeAll;
             Cursor = Cursors.SizeAll;
@@ -138,7 +139,7 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
 
     public void ClickCanvas()
     {
-        if (CurrentLines != null && CurrentLines.LineSymbols.Count > 1)
+        if (CurrentLines != null && CurrentLines?.LineSymbols.Count > 1)
         {
             var newLineSymbolModel = CurrentLines.DrawnLineSymbolModel.GetNewLine();
             var newLineSymbol = FactoryLineSymbol.CreateNewLine(newLineSymbolModel);
