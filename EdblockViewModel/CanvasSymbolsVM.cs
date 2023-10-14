@@ -11,6 +11,7 @@ using EdblockViewModel.Symbols.ScaleRectangles;
 using EdblockViewModel.Symbols.ConnectionPoints;
 using EdblockViewModel.Symbols.LineSymbols;
 using EdblockModel.Symbols.ConnectionPoints;
+using EdblockModel.Symbols.ScaleRectangles;
 
 namespace EdblockViewModel;
 
@@ -80,6 +81,7 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
     public DelegateCommand<string> ClickSymbol { get; init; }
     public DelegateCommand<BlockSymbol> MouseMoveSymbol { get; init; }
     public DelegateCommand ClickCanvasSymbols { get; init; }
+    public event PropertyChangedEventHandler? PropertyChanged;
     public BlockSymbol? DraggableSymbol { get; set; }
     public ScaleData? ScaleData { get; set; }
     public DrawnLineSymbolVM? CurrentLines { get; set; }
@@ -120,8 +122,8 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
     {
         if (!currentSymbol.TextField.Focus)
         {
-            ColorConnectionPoint.SetFill(ColorConnectionPointModel.HexNotFocusFill, currentSymbol.ConnectionPoints);
-            ColorScaleRectangle.Hide(currentSymbol.ScaleRectangles);
+            ConnectionPoint.SetFill(ConnectionPointModel.HexNotFocusFill, currentSymbol.ConnectionPoints);
+            ScaleRectangle.SetColor(ScaleRectangleModel.HexNotFocusFill, ScaleRectangleModel.HexNotFocusBorderBrush, currentSymbol.ScaleRectangles);
             currentSymbol.TextField.Cursor = Cursors.SizeAll;
             Cursor = Cursors.SizeAll;
         }
@@ -149,7 +151,6 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
         TextField.ChangeFocus(Symbols);
     }
 
-    public event PropertyChangedEventHandler? PropertyChanged;
     public void OnPropertyChanged([CallerMemberName] string prop = "")
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));

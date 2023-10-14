@@ -2,26 +2,18 @@
 using System.Windows;
 using Prism.Commands;
 using System.Windows.Input;
-using System.Windows.Media;
 using System.ComponentModel;
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using EdblockViewModel.Symbols.Abstraction;
+using EdblockModel.Symbols.ScaleRectangles;
 
 namespace EdblockViewModel.Symbols.ScaleRectangles;
 
 public class ScaleRectangle : INotifyPropertyChanged
 {
-    private const int width = 4;
-    public int Width 
-    { 
-        get => width;
-    }
-
-    private const int height = 4;
-    public int Height 
-    {
-        get => height;
-    }
+    public int Width { get; } = 4;
+    public int Height { get; } = 4;
 
     private Point coordinate;
     public Point Coordinate
@@ -34,8 +26,8 @@ public class ScaleRectangle : INotifyPropertyChanged
         }
     }
 
-    private Brush? fill = Brushes.Transparent;
-    public Brush? Fill
+    private string? fill = ScaleRectangleModel.HexNotFocusFill;
+    public string? Fill
     {
         get => fill;
         set
@@ -45,8 +37,8 @@ public class ScaleRectangle : INotifyPropertyChanged
         }
     }
 
-    private Brush? borderBrush = Brushes.Transparent;
-    public Brush? BorderBrush
+    private string? borderBrush = ScaleRectangleModel.HexNotFocusBorderBrush;
+    public string? BorderBrush
     {
         get => borderBrush;
         set
@@ -59,6 +51,7 @@ public class ScaleRectangle : INotifyPropertyChanged
     public DelegateCommand EnterCursor { get; init; }
     public DelegateCommand LeaveCursor { get; init; }
     public DelegateCommand ClickScaleRectangle { get; init; }
+    public event PropertyChangedEventHandler? PropertyChanged;
     private readonly CanvasSymbolsVM _canvasSymbolsVM;
     private readonly BlockSymbol _blockSymbol;
     private readonly Cursor _cursorHover;
@@ -82,7 +75,7 @@ public class ScaleRectangle : INotifyPropertyChanged
         _getHeightSymbol = getHeightSymbol;
 
         _getCoordinateScaleRectangle = getCoordinateScaleRectangle;
-        Coordinate = getCoordinateScaleRectangle.Invoke(width, height);
+        Coordinate = getCoordinateScaleRectangle.Invoke(Width, Height);
 
         EnterCursor = new(ShowAuxiliaryElements);
         LeaveCursor = new(HideAuxiliaryElements);
@@ -91,7 +84,21 @@ public class ScaleRectangle : INotifyPropertyChanged
 
     public void ChangeCoordination()
     {
-        Coordinate = _getCoordinateScaleRectangle.Invoke(width, height);
+        Coordinate = _getCoordinateScaleRectangle.Invoke(Width, Height);
+    }
+
+    public void OnPropertyChanged([CallerMemberName] string prop = "")
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
+    }
+
+    public static void SetColor(string? hexFill, string hexBorderBrush, List<ScaleRectangle> scaleRectangles)
+    {
+        foreach (var scaleRectangle in scaleRectangles)
+        {
+            scaleRectangle.Fill = hexFill;
+            scaleRectangle.BorderBrush = hexBorderBrush;
+        }
     }
 
     private void ShowAuxiliaryElements()
@@ -99,14 +106,14 @@ public class ScaleRectangle : INotifyPropertyChanged
         if (_canvasSymbolsVM.ScaleData == null)
         {
             _canvasSymbolsVM.Cursor = _cursorHover;
-            ColorScaleRectangle.Show(_blockSymbol.ScaleRectangles);
+            SetColor(ScaleRectangleModel.HexFocusFill, ScaleRectangleModel.HexFocusBorderBrush, _blockSymbol.ScaleRectangles);
         }
     }
 
     private void HideAuxiliaryElements()
     {
         _canvasSymbolsVM.Cursor = Cursors.Arrow;
-        ColorScaleRectangle.Hide(_blockSymbol.ScaleRectangles);
+        SetColor(ScaleRectangleModel.HexNotFocusFill, ScaleRectangleModel.HexNotFocusBorderBrush, _blockSymbol.ScaleRectangles);
     }
 
     private void SaveScaleRectangle()
@@ -120,11 +127,5 @@ public class ScaleRectangle : INotifyPropertyChanged
                                          _blockSymbol.XCoordinate, 
                                          _blockSymbol.YCoordinate);
         _canvasSymbolsVM.Cursor = _cursorHover;
-    }
-
-    public event PropertyChangedEventHandler? PropertyChanged;
-    public void OnPropertyChanged([CallerMemberName] string prop = "")
-    {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
     }
 }

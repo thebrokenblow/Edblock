@@ -2,7 +2,7 @@
 
 internal class SizesScaleRectangle
 {
-    public static int ChangeWidthLeft(ScaleData scaleData, CanvasSymbolsVM edSymbolViewModel)
+    internal static int ChangeWidthLeft(ScaleData scaleData, CanvasSymbolsVM edSymbolViewModel)
     {
         int width = scaleData.InitialWidth + (scaleData.InitialX - edSymbolViewModel.X);
         scaleData.BlockSymbol.XCoordinate = scaleData.InitialX - (width - scaleData.InitialWidth);
@@ -10,21 +10,21 @@ internal class SizesScaleRectangle
         return width;
     }
 
-    public static int ChangeWidthRigth(ScaleData scaleData, CanvasSymbolsVM edSymbolViewModel)
+    internal static int ChangeWidthRigth(ScaleData scaleData, CanvasSymbolsVM edSymbolViewModel)
     {
         int width = edSymbolViewModel.X - scaleData.InitialX;
 
         return width;
     }
 
-    public static int ChangeHeigthBottom(ScaleData scaleData, CanvasSymbolsVM edSymbolViewModel)
+    internal static int ChangeHeigthBottom(ScaleData scaleData, CanvasSymbolsVM edSymbolViewModel)
     {
         int heigth = edSymbolViewModel.Y - scaleData.InitialY;
 
         return heigth;
     }
 
-    public static int ChangeHeigthTop(ScaleData scaleData, CanvasSymbolsVM edSymbolViewModel)
+    internal static int ChangeHeigthTop(ScaleData scaleData, CanvasSymbolsVM edSymbolViewModel)
     {
         int heigth = scaleData.InitialHeigth + (scaleData.InitialY - edSymbolViewModel.Y);
         scaleData.BlockSymbol.YCoordinate = scaleData.InitialY - (heigth - scaleData.InitialHeigth);

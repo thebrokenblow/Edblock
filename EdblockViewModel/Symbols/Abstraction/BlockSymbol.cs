@@ -3,9 +3,10 @@ using System.Windows.Input;
 using EdblockModel.Symbols;
 using System.Collections.Generic;
 using EdblockModel.Symbols.Abstraction;
+using EdblockModel.Symbols.ScaleRectangles;
+using EdblockModel.Symbols.ConnectionPoints;
 using EdblockViewModel.Symbols.ScaleRectangles;
 using EdblockViewModel.Symbols.ConnectionPoints;
-using EdblockModel.Symbols.ConnectionPoints;
 
 namespace EdblockViewModel.Symbols.Abstraction;
 
@@ -90,24 +91,24 @@ public abstract class BlockSymbol : Symbol
         LeaveCursor = new(HideStroke);
     }
 
+    public abstract void SetWidth(int width);
+    public abstract void SetHeight(int height);
+
     public void ShowStroke()
     {
         if (_canvasSymbolsVM.DraggableSymbol == null && _canvasSymbolsVM.ScaleData == null)
         {
-            ColorConnectionPoint.SetFill(ColorConnectionPointModel.HexFocusFill, ConnectionPoints);
-            ColorScaleRectangle.Show(ScaleRectangles);
+            ConnectionPoint.SetFill(ConnectionPointModel.HexFocusFill, ConnectionPoints);
+            ScaleRectangle.SetColor(ScaleRectangleModel.HexFocusFill, ScaleRectangleModel.HexFocusBorderBrush, ScaleRectangles);
             TextField.Cursor = Cursors.SizeAll;
         }
     }
 
     public void HideStroke()
     {
-        ColorConnectionPoint.SetFill(ColorConnectionPointModel.HexNotFocusFill, ConnectionPoints);
-        ColorScaleRectangle.Hide(ScaleRectangles);
+        ConnectionPoint.SetFill(ConnectionPointModel.HexNotFocusFill, ConnectionPoints);
+        ScaleRectangle.SetColor(ScaleRectangleModel.HexNotFocusFill, ScaleRectangleModel.HexNotFocusBorderBrush, ScaleRectangles);
     }
-
-    public abstract void SetWidth(int width);
-    public abstract void SetHeight(int height);
 
     protected void ChangeCoordinateAuxiliaryElements()
     {
