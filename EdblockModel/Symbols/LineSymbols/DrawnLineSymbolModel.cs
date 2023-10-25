@@ -7,6 +7,7 @@ public class DrawnLineSymbolModel
 {
     public List<LineSymbolModel> LinesSymbols { get; set; } = new();
     private readonly PositionConnectionPoint _positionConnectionPoint;
+    private readonly int offsetLine = CanvasSymbols.LengthGrid / 2;
 
     public DrawnLineSymbolModel(PositionConnectionPoint positionConnectionPoint)
     {
@@ -15,39 +16,51 @@ public class DrawnLineSymbolModel
 
     public (int x, int y) RoundingCoordinatesLines((int x, int y) startCoordinate, (int x, int y) currentCoordinate)
     {
-        if (_positionConnectionPoint == PositionConnectionPoint.Bottom || _positionConnectionPoint == PositionConnectionPoint.Top)
+        if (_positionConnectionPoint == PositionConnectionPoint.Bottom || 
+            _positionConnectionPoint == PositionConnectionPoint.Top)
         {
-            if (LinesSymbols.Count % 2 == 1)
+            return HorizontalRounding(startCoordinate, currentCoordinate);
+        }
+        else
+        {
+            return VerticallyRounding(startCoordinate, currentCoordinate);
+        }
+    }
+
+    private (int x, int y) HorizontalRounding((int x, int y) startCoordinate, (int x, int y) currentCoordinate)
+    {
+        if (LinesSymbols.Count % 2 == 1)
+        {
+            if (startCoordinate.y - offsetLine > currentCoordinate.y)
             {
-                if (startCoordinate.y - 10 > currentCoordinate.y)
-                {
-                    currentCoordinate.y += 10;
-                }
+                currentCoordinate.y += offsetLine;
             }
-            else
+        }
+        else
+        {
+            if (startCoordinate.x - offsetLine > currentCoordinate.x)
             {
-                if (startCoordinate.x - 20 > currentCoordinate.x)
-                {
-                    currentCoordinate.x += 10;
-                }
+                currentCoordinate.x += offsetLine;
             }
         }
 
-        if (_positionConnectionPoint == PositionConnectionPoint.Left || _positionConnectionPoint == PositionConnectionPoint.Right)
+        return currentCoordinate;
+    }
+
+    private (int x, int y) VerticallyRounding((int x, int y) startCoordinate, (int x, int y) currentCoordinate)
+    {
+        if (LinesSymbols.Count % 2 == 1)
         {
-            if (LinesSymbols.Count % 2 == 1)
+            if (startCoordinate.x - offsetLine > currentCoordinate.x)
             {
-                if (startCoordinate.x - 10 > currentCoordinate.x)
-                {
-                    currentCoordinate.x += 10;
-                }
+                currentCoordinate.x += offsetLine;
             }
-            else
+        }
+        else
+        {
+            if (startCoordinate.y - offsetLine > currentCoordinate.y)
             {
-                if (startCoordinate.y - 10 > currentCoordinate.y)
-                {
-                    currentCoordinate.y += 10;
-                }
+                currentCoordinate.y += offsetLine;
             }
         }
 
