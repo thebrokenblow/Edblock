@@ -28,43 +28,7 @@ public class DrawnLineSymbolVM : Symbol
 
         var startCoordinate = CoordinateLineModel.GetStartCoordinate(DrawnLineSymbolModel.LinesSymbols);
 
-
-        if (PositionConnectionPoint == PositionConnectionPoint.Bottom || PositionConnectionPoint == PositionConnectionPoint.Top)
-        {
-            if (linesSymbolModel.Count % 2 == 1)
-            {
-                if (startCoordinate.Item2 - 10 > currentY)
-                {
-                    currentY += 10;
-                }
-            }
-            else
-            {
-                if (startCoordinate.Item1 - 20 > currentX)
-                {
-                    currentX += 10;
-                }
-            }
-        }
-
-        if (PositionConnectionPoint == PositionConnectionPoint.Left || PositionConnectionPoint == PositionConnectionPoint.Right)
-        {
-            if (linesSymbolModel.Count % 2 == 1)
-            {
-                if (startCoordinate.Item1 - 10 > currentX)
-                {
-                    currentX += 10;
-                }
-            }
-            else
-            {
-                if (startCoordinate.Item2 - 10 > currentY)
-                {
-                    currentY += 10;
-                }
-            }
-        }
-
+        (currentX, currentY) = DrawnLineSymbolModel.RoundingCoordinatesLines(startCoordinate, (currentX, currentY));
         ArrowSymbol.ChangeOrientationArrow(startCoordinate, (currentX, currentY), PositionConnectionPoint);
         DrawnLineSymbolModel.ChangeCoordinateLine(currentX, currentY);
 
