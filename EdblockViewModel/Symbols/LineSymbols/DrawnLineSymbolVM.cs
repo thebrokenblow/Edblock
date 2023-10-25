@@ -33,14 +33,14 @@ public class DrawnLineSymbolVM : Symbol
         {
             if (linesSymbolModel.Count % 2 == 1)
             {
-                if (startCoordinate.Item2 > currentY)
+                if (startCoordinate.Item2 - 10 > currentY)
                 {
                     currentY += 10;
                 }
             }
             else
             {
-                if (startCoordinate.Item1 - 10 > currentX)
+                if (startCoordinate.Item1 - 20 > currentX)
                 {
                     currentX += 10;
                 }
@@ -51,7 +51,7 @@ public class DrawnLineSymbolVM : Symbol
         {
             if (linesSymbolModel.Count % 2 == 1)
             {
-                if (startCoordinate.Item1 > currentX)
+                if (startCoordinate.Item1 - 10 > currentX)
                 {
                     currentX += 10;
                 }
