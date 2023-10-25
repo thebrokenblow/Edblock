@@ -6,7 +6,7 @@ namespace EdblockViewModel.Symbols.ScaleRectangles;
 
 public record ScaleData(
     Cursor Cursor,
-    BlockSymbol BlockSymbol, 
+    BlockSymbol BlockSymbolModel, 
     Func<ScaleData, CanvasSymbolsVM, int>? GetWidthSymbol, 
     Func<ScaleData, CanvasSymbolsVM, int>? GetHeigthSymbol, 
     int InitialWidth,

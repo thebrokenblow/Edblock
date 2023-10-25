@@ -35,9 +35,9 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
 
             if (ScaleData != null)
             {
-                SizeBlockSymbol.SetSize(ScaleData, this, ScaleData?.GetWidthSymbol, ScaleData!.BlockSymbol.SetWidth);
+                SizeBlockSymbol.SetSize(ScaleData, this, ScaleData?.GetWidthSymbol, ScaleData!.BlockSymbolModel.SetWidth);
                 Cursor = ScaleData.Cursor;
-                ScaleData.BlockSymbol.TextField.Cursor = ScaleData.Cursor;
+                ScaleData.BlockSymbolModel.TextField.Cursor = ScaleData.Cursor;
             }
         }
     }
@@ -58,9 +58,9 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
 
             if (ScaleData != null)
             {
-                SizeBlockSymbol.SetSize(ScaleData, this, ScaleData?.GetHeigthSymbol, ScaleData!.BlockSymbol.SetHeight);
+                SizeBlockSymbol.SetSize(ScaleData, this, ScaleData?.GetHeigthSymbol, ScaleData!.BlockSymbolModel.SetHeight);
                 Cursor = ScaleData.Cursor;
-                ScaleData.BlockSymbol.TextField.Cursor = ScaleData.Cursor;
+                ScaleData.BlockSymbolModel.TextField.Cursor = ScaleData.Cursor;
             }
         }
     }

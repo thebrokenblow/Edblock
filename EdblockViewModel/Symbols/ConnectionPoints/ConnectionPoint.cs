@@ -75,8 +75,8 @@ public class ConnectionPoint : INotifyPropertyChanged
         PositionConnectionPoint = positionConnectionPoint;
         BlockSymbol = blockSymbol;
         
-        EnterCursor = new(ShowStroke);
-        LeaveCursor = new(HideStroke);
+        EnterCursor = new(Show);
+        LeaveCursor = new(Hide);
         ClickConnectionPoint = new(TrackStageDrawLine);
 
         (XCoordinate, YCoordinate) = getCoordinate.Invoke();
@@ -87,7 +87,7 @@ public class ConnectionPoint : INotifyPropertyChanged
         (XCoordinate, YCoordinate) = GetCoordinate.Invoke();
     }
 
-    public void ShowStroke()
+    public void Show()
     {
         if (_canvasSymbolsVM.ScaleData == null)
         {
@@ -97,7 +97,7 @@ public class ConnectionPoint : INotifyPropertyChanged
         }
     }
 
-    public void HideStroke()
+    public void Hide()
     {
         if (_canvasSymbolsVM.ScaleData == null)
         {

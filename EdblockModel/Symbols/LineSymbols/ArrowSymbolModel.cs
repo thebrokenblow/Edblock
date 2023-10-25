@@ -20,12 +20,12 @@ public class ArrowSymbolModel
         if (positionConnectionPoint == PositionConnectionPoint.Top ||
             positionConnectionPoint == PositionConnectionPoint.Bottom)
         {
-            var coordinateArrow = GetCoordinateArrowVerticalCP(startCoordinateLine, currentCoordinateLine);
+            var coordinateArrow = GetCoordinateVerticalCP(startCoordinateLine, currentCoordinateLine);
             return coordinateArrow;
         }
         else
         {
-            var coordinateArrow = GetCoordinateArrowHorizontalCP(startCoordinateLine, currentCoordinateLine);
+            var coordinateArrow = GetCoordinateHorizontalCP(startCoordinateLine, currentCoordinateLine);
             return coordinateArrow;
         }
     }
@@ -40,7 +40,7 @@ public class ArrowSymbolModel
 
 
     //Получение координа стрелки, если линия выходит из левой и правой точки соединения
-    private static List<(int, int)> GetCoordinateArrowHorizontalCP((int x, int y) startCoordinateLine, (int x, int y) currentCoordinateLine)
+    private static List<(int, int)> GetCoordinateHorizontalCP((int x, int y) startCoordinateLine, (int x, int y) currentCoordinateLine)
     {
         if (currentCoordinateLine.y == startCoordinateLine.y)
         {
@@ -71,7 +71,7 @@ public class ArrowSymbolModel
     }
 
     //Получение координа стрелки, если линия выходит из верхней и нижней точки соединения
-    private static List<(int, int)> GetCoordinateArrowVerticalCP((int x, int y) startCoordinateLine, (int x, int y) currentCoordinateLine)
+    private static List<(int, int)> GetCoordinateVerticalCP((int x, int y) startCoordinateLine, (int x, int y) currentCoordinateLine)
     {
         if (currentCoordinateLine.x == startCoordinateLine.x)
         {

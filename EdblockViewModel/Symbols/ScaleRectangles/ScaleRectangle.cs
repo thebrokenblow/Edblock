@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Windows;
 using Prism.Commands;
 using System.Windows.Input;
 using System.ComponentModel;
@@ -7,21 +6,33 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using EdblockViewModel.Symbols.Abstraction;
 using EdblockModel.Symbols.ScaleRectangles;
+using EdblockModel.Symbols.Abstraction;
 
 namespace EdblockViewModel.Symbols.ScaleRectangles;
 
 public class ScaleRectangle : INotifyPropertyChanged
 {
-    public int Width { get; } = 4;
-    public int Height { get; } = 4;
+    public int Width { get; } = ScaleRectangleModel.Width;
+    public int Height { get; } = ScaleRectangleModel.Height;
 
-    private Point coordinate;
-    public Point Coordinate
+    private int xCoordinate;
+    public int XCoordinate
     {
-        get => coordinate;
+        get => xCoordinate;
         set
         {
-            coordinate = value;
+            xCoordinate = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private int yCoordinate;
+    public int YCoordinate
+    {
+        get => yCoordinate;
+        set
+        {
+            yCoordinate = value;
             OnPropertyChanged();
         }
     }
@@ -53,38 +64,38 @@ public class ScaleRectangle : INotifyPropertyChanged
     public DelegateCommand ClickScaleRectangle { get; init; }
     public event PropertyChangedEventHandler? PropertyChanged;
     private readonly CanvasSymbolsVM _canvasSymbolsVM;
-    private readonly BlockSymbol _blockSymbol;
+    private readonly BlockSymbol _blockSymbolModel;
     private readonly Cursor _cursorHover;
-    private readonly Func<int, int, Point> _getCoordinateScaleRectangle;
+    private readonly Func<int, int, (int, int)> _getCoordinateScaleRectangle;
     private readonly Func<ScaleData, CanvasSymbolsVM, int>? _getWidthSymbol;
     private readonly Func<ScaleData, CanvasSymbolsVM, int>? _getHeightSymbol;
 
     public ScaleRectangle(
         CanvasSymbolsVM canvasSymbolsVM, 
-        BlockSymbol blockSymbol,
+        BlockSymbol blockSymbolModel,
         Cursor cursorHover,
         Func<ScaleData, CanvasSymbolsVM, int>? getWidthSymbol,
         Func<ScaleData, CanvasSymbolsVM, int>? getHeightSymbol,
-        Func<int, int, Point> getCoordinateScaleRectangle
+        Func<int, int, (int, int)> getCoordinateScaleRectangle
         )
     {
-        _blockSymbol = blockSymbol;
+        _blockSymbolModel = blockSymbolModel;
         _cursorHover = cursorHover;
         _canvasSymbolsVM = canvasSymbolsVM;
         _getWidthSymbol = getWidthSymbol;
         _getHeightSymbol = getHeightSymbol;
 
         _getCoordinateScaleRectangle = getCoordinateScaleRectangle;
-        Coordinate = getCoordinateScaleRectangle.Invoke(Width, Height);
+        (XCoordinate, YCoordinate) = getCoordinateScaleRectangle.Invoke(Width, Height);
 
-        EnterCursor = new(ShowAuxiliaryElements);
-        LeaveCursor = new(HideAuxiliaryElements);
+        EnterCursor = new(Show);
+        LeaveCursor = new(Hide);
         ClickScaleRectangle = new(SaveScaleRectangle);
     }
 
     public void ChangeCoordination()
     {
-        Coordinate = _getCoordinateScaleRectangle.Invoke(Width, Height);
+        (XCoordinate, YCoordinate) = _getCoordinateScaleRectangle.Invoke(Width, Height);
     }
 
     public void OnPropertyChanged([CallerMemberName] string prop = "")
@@ -101,31 +112,31 @@ public class ScaleRectangle : INotifyPropertyChanged
         }
     }
 
-    private void ShowAuxiliaryElements()
+    private void Show()
     {
         if (_canvasSymbolsVM.ScaleData == null)
         {
             _canvasSymbolsVM.Cursor = _cursorHover;
-            SetColor(ScaleRectangleModel.HexFocusFill, ScaleRectangleModel.HexFocusBorderBrush, _blockSymbol.ScaleRectangles);
+            SetColor(ScaleRectangleModel.HexFocusFill, ScaleRectangleModel.HexFocusBorderBrush, _blockSymbolModel.ScaleRectangles);
         }
     }
 
-    private void HideAuxiliaryElements()
+    private void Hide()
     {
         _canvasSymbolsVM.Cursor = Cursors.Arrow;
-        SetColor(ScaleRectangleModel.HexNotFocusFill, ScaleRectangleModel.HexNotFocusBorderBrush, _blockSymbol.ScaleRectangles);
+        SetColor(ScaleRectangleModel.HexNotFocusFill, ScaleRectangleModel.HexNotFocusBorderBrush, _blockSymbolModel.ScaleRectangles);
     }
 
     private void SaveScaleRectangle()
     {
         _canvasSymbolsVM.ScaleData = new(_cursorHover, 
-                                         _blockSymbol, 
+                                         _blockSymbolModel, 
                                          _getWidthSymbol, 
                                          _getHeightSymbol, 
-                                         _blockSymbol.Width, 
-                                         _blockSymbol.Height,
-                                         _blockSymbol.XCoordinate, 
-                                         _blockSymbol.YCoordinate);
+                                         _blockSymbolModel.Width, 
+                                         _blockSymbolModel.Height,
+                                         _blockSymbolModel.XCoordinate, 
+                                         _blockSymbolModel.YCoordinate);
         _canvasSymbolsVM.Cursor = _cursorHover;
     }
 }

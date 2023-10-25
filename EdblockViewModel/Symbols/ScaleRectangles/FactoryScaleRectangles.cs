@@ -1,32 +1,34 @@
 ﻿using System.Windows.Input;
 using System.Collections.Generic;
+using EdblockModel.Symbols.Abstraction;
 using EdblockViewModel.Symbols.Abstraction;
+using EdblockModel.Symbols.ScaleRectangles;
 
 namespace EdblockViewModel.Symbols.ScaleRectangles;
 
 internal class FactoryScaleRectangles
 {
-    private readonly BlockSymbol _blockSymbol;
+    private readonly BlockSymbol _blockSymbolModel;
     private readonly CanvasSymbolsVM _canvasSymbolsVM;
-    public FactoryScaleRectangles(CanvasSymbolsVM canvasSymbolsVM, BlockSymbol blockSymbol) =>
-        (_canvasSymbolsVM, _blockSymbol) = (canvasSymbolsVM, blockSymbol); 
+    public FactoryScaleRectangles(CanvasSymbolsVM canvasSymbolsVM, BlockSymbol blockSymbolModel) =>
+        (_canvasSymbolsVM, _blockSymbolModel) = (canvasSymbolsVM, blockSymbolModel); 
 
     public List<ScaleRectangle> Create()
     {
-        var coordinateScaleRectangle = new CoordinateScaleRectangle(_blockSymbol);
+        var coordinateScaleRectangle = new CoordinateScaleRectangleModel(_blockSymbolModel.BlockSymbolModel);
         var scaleRectangles = new List<ScaleRectangle>
         {
             new(
-                _canvasSymbolsVM, 
-                _blockSymbol, 
+                _canvasSymbolsVM,
+                _blockSymbolModel, 
                 Cursors.SizeNS, 
                 null, 
                 SizesScaleRectangle.ChangeHeigthTop, 
                 coordinateScaleRectangle.GetCoordinateMiddleTopRectangle),
 
             new(
-                _canvasSymbolsVM, 
-                _blockSymbol, 
+                _canvasSymbolsVM,
+                _blockSymbolModel, 
                 Cursors.SizeNESW, 
                 SizesScaleRectangle.ChangeWidthRigth, 
                 SizesScaleRectangle.ChangeHeigthTop, 
@@ -34,7 +36,7 @@ internal class FactoryScaleRectangles
 
             new(
                 _canvasSymbolsVM, 
-                _blockSymbol, 
+                _blockSymbolModel, 
                 Cursors.SizeWE, 
                 SizesScaleRectangle.ChangeWidthRigth, 
                 null, 
@@ -42,7 +44,7 @@ internal class FactoryScaleRectangles
 
             new(
                 _canvasSymbolsVM, 
-                _blockSymbol, 
+                _blockSymbolModel, 
                 Cursors.SizeNWSE,
                 SizesScaleRectangle.ChangeWidthRigth, 
                 SizesScaleRectangle.ChangeHeigthBottom, 
@@ -50,7 +52,7 @@ internal class FactoryScaleRectangles
 
             new(
                 _canvasSymbolsVM, 
-                _blockSymbol, 
+                _blockSymbolModel, 
                 Cursors.SizeNS, 
                 null, 
                 SizesScaleRectangle.ChangeHeigthBottom,
@@ -58,7 +60,7 @@ internal class FactoryScaleRectangles
 
             new(
                 _canvasSymbolsVM, 
-                _blockSymbol, 
+                _blockSymbolModel, 
                 Cursors.SizeNESW, 
                 SizesScaleRectangle.ChangeWidthLeft,
                 SizesScaleRectangle.ChangeHeigthBottom,
@@ -66,7 +68,7 @@ internal class FactoryScaleRectangles
 
             new(
                 _canvasSymbolsVM, 
-                _blockSymbol, 
+                _blockSymbolModel, 
                 Cursors.SizeWE, 
                 SizesScaleRectangle.ChangeWidthLeft, 
                 null, 
@@ -74,7 +76,7 @@ internal class FactoryScaleRectangles
 
             new(
                 _canvasSymbolsVM, 
-                _blockSymbol, 
+                _blockSymbolModel, 
                 Cursors.SizeNWSE, 
                 SizesScaleRectangle.ChangeWidthLeft, 
                 SizesScaleRectangle.ChangeHeigthTop, 
