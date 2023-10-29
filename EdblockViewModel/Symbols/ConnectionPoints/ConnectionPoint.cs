@@ -150,6 +150,61 @@ public class ConnectionPoint : INotifyPropertyChanged
 
     private void EndDrawLine(ConnectionPoint connectionPoint)
     {
+        var outgoingPositionConnectionPoint = _canvasSymbolsVM.CurrentLines!.PositionConnectionPoint;
+        var incomingPositionConnectionPoint = connectionPoint.PositionConnectionPoint;
+
+        if (_canvasSymbolsVM.CurrentLines!.LineSymbols.Count % 2 == 1)
+        {
+            if (outgoingPositionConnectionPoint == PositionConnectionPoint.Bottom)
+            {
+                if (incomingPositionConnectionPoint == PositionConnectionPoint.Top)
+                {
+                    var lastLine = _canvasSymbolsVM.CurrentLines.LineSymbols[^1];
+
+                    int finalX = connectionPoint.BlockSymbol.XCoordinate + connectionPoint.BlockSymbol.Width / 2;
+                    int finalY = connectionPoint.BlockSymbol.YCoordinate - 8;
+
+                    if (lastLine.X2 == finalX)
+                    {
+                        lastLine.X2 = finalX;
+                        lastLine.Y2 = finalY;
+
+                        _canvasSymbolsVM.CurrentLines!.ArrowSymbol.ChangeOrientationArrow(lastLine.X2, lastLine.Y2, incomingPositionConnectionPoint);
+                    }
+                    else
+                    {
+                        //TODO: создать две линии и дорисовать
+                    }
+                }
+                else if (incomingPositionConnectionPoint == PositionConnectionPoint.Bottom)
+                {
+                    var lastLine = _canvasSymbolsVM.CurrentLines.LineSymbols[^1];
+
+                    int finalX = connectionPoint.BlockSymbol.XCoordinate + connectionPoint.BlockSymbol.Width / 2;
+                    int finalY = connectionPoint.BlockSymbol.YCoordinate + connectionPoint.BlockSymbol.Height + 8;
+
+                    if (lastLine.X2 == finalX)
+                    {
+                        lastLine.X2 = finalX;
+                        lastLine.Y2 = finalY;
+
+                        _canvasSymbolsVM.CurrentLines!.ArrowSymbol.ChangeOrientationArrow(lastLine.X2, lastLine.Y2, incomingPositionConnectionPoint);
+                    }
+                    else
+                    {
+                        //TODO: создать две линии и дорисовать
+                    }
+                }
+                else if (incomingPositionConnectionPoint == PositionConnectionPoint.Left)
+                {
+                    //TODO: создать одну линии и дорисовать
+                }
+                else if (incomingPositionConnectionPoint == PositionConnectionPoint.Right)
+                {
+                    //TODO: создать одну линии и дорисовать
+                }
+            }
+        }
         _canvasSymbolsVM.CurrentLines!.SymbolaIncomingLine = connectionPoint.BlockSymbol;
         _canvasSymbolsVM.CurrentLines = null;
     }

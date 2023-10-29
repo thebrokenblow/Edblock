@@ -35,12 +35,20 @@ public class DrawnLineSymbolModel
             {
                 currentCoordinate.y += offsetLine;
             }
+            else if (startCoordinate.y + offsetLine < currentCoordinate.y)
+            {
+                currentCoordinate.y -= offsetLine;
+            }
         }
         else
         {
             if (startCoordinate.x - offsetLine > currentCoordinate.x)
             {
                 currentCoordinate.x += offsetLine;
+            }
+            else if (startCoordinate.x + offsetLine < currentCoordinate.x)
+            {
+                currentCoordinate.x -= offsetLine;
             }
         }
 
