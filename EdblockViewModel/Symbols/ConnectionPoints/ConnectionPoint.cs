@@ -2,12 +2,12 @@
 using Prism.Commands;
 using System.Windows.Input;
 using System.ComponentModel;
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using EdblockModel.Symbols.LineSymbols;
 using EdblockViewModel.Symbols.LineSymbols;
 using EdblockViewModel.Symbols.Abstraction;
 using EdblockModel.Symbols.ConnectionPoints;
-using System.Collections.Generic;
 
 namespace EdblockViewModel.Symbols.ConnectionPoints;
 
@@ -251,6 +251,104 @@ public class ConnectionPoint : INotifyPropertyChanged
                 else if (incomingPositionConnectionPoint == PositionConnectionPoint.Right)
                 {
                     //TODO: создать одну линии и дорисовать
+                }
+            }
+            else if (outgoingPositionConnectionPoint == PositionConnectionPoint.Left)
+            {
+                if (incomingPositionConnectionPoint == PositionConnectionPoint.Top)
+                {
+                    
+                }
+                else if (incomingPositionConnectionPoint == PositionConnectionPoint.Bottom)
+                {
+
+                }
+                else if (incomingPositionConnectionPoint == PositionConnectionPoint.Left)
+                {
+                    var lastLine = _canvasSymbolsVM.CurrentLines.LineSymbols[^1];
+
+                    int finalX = connectionPoint.BlockSymbol.XCoordinate;
+                    int finalY = connectionPoint.BlockSymbol.YCoordinate + connectionPoint.BlockSymbol.Height / 2;
+
+                    if (lastLine.Y2 == finalY)
+                    {
+                        lastLine.X2 = finalX;
+                        lastLine.Y2 = finalY;
+
+                        _canvasSymbolsVM.CurrentLines!.ArrowSymbol.ChangeOrientationArrow(lastLine.X2, lastLine.Y2, incomingPositionConnectionPoint);
+                    }
+                    else
+                    {
+                        //TODO: создать две линии и дорисовать
+                    }
+                }
+                else if (incomingPositionConnectionPoint == PositionConnectionPoint.Right)
+                {
+                    var lastLine = _canvasSymbolsVM.CurrentLines.LineSymbols[^1];
+
+                    int finalX = connectionPoint.BlockSymbol.XCoordinate + connectionPoint.BlockSymbol.Width;
+                    int finalY = connectionPoint.BlockSymbol.YCoordinate + connectionPoint.BlockSymbol.Height / 2;
+
+                    if (lastLine.Y2 == finalY)
+                    {
+                        lastLine.X2 = finalX;
+                        lastLine.Y2 = finalY;
+
+                        _canvasSymbolsVM.CurrentLines!.ArrowSymbol.ChangeOrientationArrow(lastLine.X2, lastLine.Y2, incomingPositionConnectionPoint);
+                    }
+                    else
+                    {
+                        //TODO: создать две линии и дорисовать
+                    }
+                }
+            }
+            else if (outgoingPositionConnectionPoint == PositionConnectionPoint.Right)
+            {
+                if (incomingPositionConnectionPoint == PositionConnectionPoint.Top)
+                {
+
+                }
+                else if (incomingPositionConnectionPoint == PositionConnectionPoint.Bottom)
+                {
+
+                }
+                else if (incomingPositionConnectionPoint == PositionConnectionPoint.Left)
+                {
+                    var lastLine = _canvasSymbolsVM.CurrentLines.LineSymbols[^1];
+
+                    int finalX = connectionPoint.BlockSymbol.XCoordinate;
+                    int finalY = connectionPoint.BlockSymbol.YCoordinate + connectionPoint.BlockSymbol.Height / 2;
+
+                    if (lastLine.Y2 == finalY)
+                    {
+                        lastLine.X2 = finalX;
+                        lastLine.Y2 = finalY;
+
+                        _canvasSymbolsVM.CurrentLines!.ArrowSymbol.ChangeOrientationArrow(lastLine.X2, lastLine.Y2, incomingPositionConnectionPoint);
+                    }
+                    else
+                    {
+                        //TODO: создать две линии и дорисовать
+                    }
+                }
+                else if (incomingPositionConnectionPoint == PositionConnectionPoint.Right)
+                {
+                    var lastLine = _canvasSymbolsVM.CurrentLines.LineSymbols[^1];
+
+                    int finalX = connectionPoint.BlockSymbol.XCoordinate + connectionPoint.BlockSymbol.Width;
+                    int finalY = connectionPoint.BlockSymbol.YCoordinate + connectionPoint.BlockSymbol.Height / 2;
+
+                    if (lastLine.Y2 == finalY)
+                    {
+                        lastLine.X2 = finalX;
+                        lastLine.Y2 = finalY;
+
+                        _canvasSymbolsVM.CurrentLines!.ArrowSymbol.ChangeOrientationArrow(lastLine.X2, lastLine.Y2, incomingPositionConnectionPoint);
+                    }
+                    else
+                    {
+                        //TODO: создать две линии и дорисовать
+                    }
                 }
             }
         }
