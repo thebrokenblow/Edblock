@@ -397,11 +397,43 @@ public class ConnectionPoint : INotifyPropertyChanged
             {
                 if (incomingPositionConnectionPoint == PositionConnectionPoint.Top)
                 {
-                    
+                    var lastLine = _canvasSymbolsVM.CurrentLines.LineSymbols[^1];
+
+                    int finalX = connectionPoint.BlockSymbol.XCoordinate + connectionPoint.BlockSymbol.Width / 2;
+                    int finalY = connectionPoint.BlockSymbol.YCoordinate;
+
+                    lastLine.X2 = finalX;
+
+                    var firstLine = new LineSymbolVM
+                    {
+                        X1 = finalX,
+                        Y1 = lastLine.Y2,
+                        X2 = finalX,
+                        Y2 = finalY
+                    };
+
+                    _canvasSymbolsVM.CurrentLines.LineSymbols.Add(firstLine);
+                    _canvasSymbolsVM.CurrentLines!.ArrowSymbol.ChangeOrientationArrow(finalX, finalY, incomingPositionConnectionPoint);
                 }
                 else if (incomingPositionConnectionPoint == PositionConnectionPoint.Bottom)
                 {
+                    var lastLine = _canvasSymbolsVM.CurrentLines.LineSymbols[^1];
 
+                    int finalX = connectionPoint.BlockSymbol.XCoordinate + connectionPoint.BlockSymbol.Width / 2;
+                    int finalY = connectionPoint.BlockSymbol.YCoordinate + connectionPoint.BlockSymbol.Height;
+
+                    lastLine.X2 = finalX;
+
+                    var firstLine = new LineSymbolVM
+                    {
+                        X1 = finalX,
+                        Y1 = lastLine.Y2,
+                        X2 = finalX,
+                        Y2 = finalY
+                    };
+
+                    _canvasSymbolsVM.CurrentLines.LineSymbols.Add(firstLine);
+                    _canvasSymbolsVM.CurrentLines!.ArrowSymbol.ChangeOrientationArrow(finalX, finalY, incomingPositionConnectionPoint);
                 }
                 else if (incomingPositionConnectionPoint == PositionConnectionPoint.Left)
                 {
@@ -484,11 +516,43 @@ public class ConnectionPoint : INotifyPropertyChanged
             {
                 if (incomingPositionConnectionPoint == PositionConnectionPoint.Top)
                 {
+                    var lastLine = _canvasSymbolsVM.CurrentLines.LineSymbols[^1];
 
+                    int finalX = connectionPoint.BlockSymbol.XCoordinate + connectionPoint.BlockSymbol.Width / 2;
+                    int finalY = connectionPoint.BlockSymbol.YCoordinate;
+
+                    lastLine.X2 = finalX;
+
+                    var firstLine = new LineSymbolVM
+                    {
+                        X1 = finalX,
+                        Y1 = lastLine.Y2,
+                        X2 = finalX,
+                        Y2 = finalY
+                    };
+
+                    _canvasSymbolsVM.CurrentLines.LineSymbols.Add(firstLine);
+                    _canvasSymbolsVM.CurrentLines!.ArrowSymbol.ChangeOrientationArrow(finalX, finalY, incomingPositionConnectionPoint);
                 }
                 else if (incomingPositionConnectionPoint == PositionConnectionPoint.Bottom)
                 {
+                    var lastLine = _canvasSymbolsVM.CurrentLines.LineSymbols[^1];
 
+                    int finalX = connectionPoint.BlockSymbol.XCoordinate + connectionPoint.BlockSymbol.Width / 2;
+                    int finalY = connectionPoint.BlockSymbol.YCoordinate + connectionPoint.BlockSymbol.Height;
+
+                    lastLine.X2 = finalX;
+
+                    var firstLine = new LineSymbolVM
+                    {
+                        X1 = finalX,
+                        Y1 = lastLine.Y2,
+                        X2 = finalX,
+                        Y2 = finalY
+                    };
+
+                    _canvasSymbolsVM.CurrentLines.LineSymbols.Add(firstLine);
+                    _canvasSymbolsVM.CurrentLines!.ArrowSymbol.ChangeOrientationArrow(finalX, finalY, incomingPositionConnectionPoint);
                 }
                 else if (incomingPositionConnectionPoint == PositionConnectionPoint.Left)
                 {
