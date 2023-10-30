@@ -173,7 +173,26 @@ public class ConnectionPoint : INotifyPropertyChanged
                     }
                     else
                     {
-                        //TODO: создать две линии и дорисовать
+                        var firstLine = new LineSymbolVM
+                        {
+                            X1 = lastLine.X2,
+                            Y1 = lastLine.Y2,
+                            X2 = finalX,
+                            Y2 = lastLine.Y2
+                        };
+
+                        var secondLine = new LineSymbolVM
+                        {
+                            X1 = finalX,
+                            Y1 = lastLine.Y2,
+                            X2 = finalX,
+                            Y2 = finalY,
+                        };
+
+                        _canvasSymbolsVM.CurrentLines.LineSymbols.Add(firstLine);
+                        _canvasSymbolsVM.CurrentLines.LineSymbols.Add(secondLine);
+
+                        _canvasSymbolsVM.CurrentLines!.ArrowSymbol.ChangeOrientationArrow(secondLine.X2, secondLine.Y2, incomingPositionConnectionPoint);
                     }
                 }
                 else if (incomingPositionConnectionPoint == PositionConnectionPoint.Bottom)
@@ -192,16 +211,67 @@ public class ConnectionPoint : INotifyPropertyChanged
                     }
                     else
                     {
-                        //TODO: создать две линии и дорисовать
+                        var firstLine = new LineSymbolVM
+                        {
+                            X1 = lastLine.X2,
+                            Y1 = lastLine.Y2,
+                            X2 = finalX,
+                            Y2 = lastLine.Y2
+                        };
+
+                        var secondLine = new LineSymbolVM
+                        {
+                            X1 = finalX,
+                            Y1 = lastLine.Y2,
+                            X2 = finalX,
+                            Y2 = finalY,
+                        };
+
+                        _canvasSymbolsVM.CurrentLines.LineSymbols.Add(firstLine);
+                        _canvasSymbolsVM.CurrentLines.LineSymbols.Add(secondLine);
+
+                        _canvasSymbolsVM.CurrentLines!.ArrowSymbol.ChangeOrientationArrow(secondLine.X2, secondLine.Y2, incomingPositionConnectionPoint);
                     }
                 }
                 else if (incomingPositionConnectionPoint == PositionConnectionPoint.Left)
                 {
-                    //TODO: создать одну линии и дорисовать
+                    var lastLine = _canvasSymbolsVM.CurrentLines.LineSymbols[^1];
+
+                    int finalX = connectionPoint.BlockSymbol.XCoordinate;
+                    int finalY = connectionPoint.BlockSymbol.YCoordinate + connectionPoint.BlockSymbol.Height / 2;
+
+                    lastLine.Y2 = finalY;
+
+                    var firstLine = new LineSymbolVM
+                    {
+                        X1 = lastLine.X2,
+                        Y1 = finalY,
+                        X2 = finalX,
+                        Y2 = finalY
+                    };
+
+                    _canvasSymbolsVM.CurrentLines.LineSymbols.Add(firstLine);
+                    _canvasSymbolsVM.CurrentLines!.ArrowSymbol.ChangeOrientationArrow(finalX, finalY, incomingPositionConnectionPoint);
                 }
                 else if (incomingPositionConnectionPoint == PositionConnectionPoint.Right)
                 {
-                    //TODO: создать одну линии и дорисовать
+                    var lastLine = _canvasSymbolsVM.CurrentLines.LineSymbols[^1];
+
+                    int finalX = connectionPoint.BlockSymbol.XCoordinate + connectionPoint.BlockSymbol.Width;
+                    int finalY = connectionPoint.BlockSymbol.YCoordinate + connectionPoint.BlockSymbol.Height / 2;
+
+                    lastLine.Y2 = finalY;
+
+                    var firstLine = new LineSymbolVM
+                    {
+                        X1 = lastLine.X2,
+                        Y1 = finalY,
+                        X2 = finalX,
+                        Y2 = finalY
+                    };
+
+                    _canvasSymbolsVM.CurrentLines.LineSymbols.Add(firstLine);
+                    _canvasSymbolsVM.CurrentLines!.ArrowSymbol.ChangeOrientationArrow(finalX, finalY, incomingPositionConnectionPoint);
                 }
             }
             else if (outgoingPositionConnectionPoint == PositionConnectionPoint.Top)

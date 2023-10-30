@@ -63,10 +63,6 @@ public class DrawnLineSymbolModel
             {
                 currentCoordinate.y += offsetLine;
             }
-            //else if (currentCoordinate.y > startCoordinate.y)
-            //{
-            //    currentCoordinate.y -= offsetLine;
-            //}
         }
 
         return currentCoordinate;
