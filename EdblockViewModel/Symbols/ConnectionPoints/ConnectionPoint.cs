@@ -148,6 +148,128 @@ public class ConnectionPoint : INotifyPropertyChanged
         _canvasSymbolsVM.CurrentLines.SymbolOutgoingLine = connectionPoint.BlockSymbol;
     }
 
+    private static (int, int) GetTopFinalCoordinate(ConnectionPoint connectionPoint)
+    {
+        int finalX = connectionPoint.BlockSymbol.XCoordinate + connectionPoint.BlockSymbol.Width / 2;
+        int finalY = connectionPoint.BlockSymbol.YCoordinate;
+
+        return (finalX, finalY);
+    }
+
+    private static (int, int) GetBottomFinalCoordinate(ConnectionPoint connectionPoint)
+    {
+        int finalX = connectionPoint.BlockSymbol.XCoordinate + connectionPoint.BlockSymbol.Width / 2;
+        int finalY = connectionPoint.BlockSymbol.YCoordinate + connectionPoint.BlockSymbol.Height;
+
+        return (finalX, finalY);
+    }
+
+    private static (int, int) GetLeftFinalCoordinate(ConnectionPoint connectionPoint)
+    {
+        int finalX = connectionPoint.BlockSymbol.XCoordinate;
+        int finalY = connectionPoint.BlockSymbol.YCoordinate + connectionPoint.BlockSymbol.Height / 2;
+
+        return (finalX, finalY);
+    }
+
+    private static (int, int) GetRightFinalCoordinate(ConnectionPoint connectionPoint)
+    {
+        int finalX = connectionPoint.BlockSymbol.XCoordinate + connectionPoint.BlockSymbol.Width;
+        int finalY = connectionPoint.BlockSymbol.YCoordinate + connectionPoint.BlockSymbol.Height / 2;
+
+        return (finalX, finalY);
+    }
+
+    private void FinishDrawingHorizontalToHorizontalLines(LineSymbolVM lastLine, (int x, int y) finalCoordinate)
+    {
+        if (lastLine.X2 == finalCoordinate.x)
+        {
+            lastLine.X2 = finalCoordinate.x;
+            lastLine.Y2 = finalCoordinate.y;
+        }
+        else
+        {
+            var firstLine = new LineSymbolVM
+            {
+                X1 = lastLine.X2,
+                Y1 = lastLine.Y2,
+                X2 = finalCoordinate.x,
+                Y2 = lastLine.Y2
+            };
+
+            var secondLine = new LineSymbolVM
+            {
+                X1 = finalCoordinate.x,
+                Y1 = lastLine.Y2,
+                X2 = finalCoordinate.x,
+                Y2 = finalCoordinate.y,
+            };
+
+            _canvasSymbolsVM.CurrentLines!.LineSymbols.Add(firstLine);
+            _canvasSymbolsVM.CurrentLines.LineSymbols.Add(secondLine);
+        }
+    }
+
+    private void FinishDrawingHorizontalToVerticalLines(LineSymbolVM lastLine, (int x, int y) finalCoordinate)
+    {
+        lastLine.Y2 = finalCoordinate.y;
+
+        var firstLine = new LineSymbolVM
+        {
+            X1 = lastLine.X2,
+            Y1 = finalCoordinate.y,
+            X2 = finalCoordinate.x,
+            Y2 = finalCoordinate.y
+        };
+
+        _canvasSymbolsVM.CurrentLines!.LineSymbols.Add(firstLine);
+    }
+
+    private void FinishDrawingVerticalToHorizontalLines(LineSymbolVM lastLine, (int x, int y) finalCoordinate)
+    {
+        lastLine.X2 = finalCoordinate.x;
+
+        var firstLine = new LineSymbolVM
+        {
+            X1 = finalCoordinate.x,
+            Y1 = lastLine.Y2,
+            X2 = finalCoordinate.x,
+            Y2 = finalCoordinate.y
+        };
+
+        _canvasSymbolsVM.CurrentLines!.LineSymbols.Add(firstLine);
+    }
+
+    private void FinishDrawingVerticalToVerticalLines(LineSymbolVM lastLine, (int x, int y) finalCoordinate)
+    {
+        if (lastLine.Y2 == finalCoordinate.y)
+        {
+            lastLine.X2 = finalCoordinate.x;
+            lastLine.Y2 = finalCoordinate.y;
+        }
+        else
+        {
+            var firstLine = new LineSymbolVM
+            {
+                X1 = lastLine.X2,
+                Y1 = lastLine.Y2,
+                X2 = lastLine.X2,
+                Y2 = finalCoordinate.y
+            };
+
+            var secondLine = new LineSymbolVM
+            {
+                X1 = lastLine.X2,
+                Y1 = finalCoordinate.y,
+                X2 = finalCoordinate.x,
+                Y2 = finalCoordinate.y,
+            };
+
+            _canvasSymbolsVM.CurrentLines!.LineSymbols.Add(firstLine);
+            _canvasSymbolsVM.CurrentLines!.LineSymbols.Add(secondLine);
+        }
+    }
+
     private void EndDrawLine(ConnectionPoint connectionPoint)
     {
         var outgoingPositionConnectionPoint = _canvasSymbolsVM.CurrentLines!.PositionConnectionPoint;
@@ -155,482 +277,57 @@ public class ConnectionPoint : INotifyPropertyChanged
 
         if (_canvasSymbolsVM.CurrentLines!.LineSymbols.Count % 2 == 1)
         {
-            if (outgoingPositionConnectionPoint == PositionConnectionPoint.Bottom)
+            var lastLine = _canvasSymbolsVM.CurrentLines.LineSymbols[^1];
+            var finalCoordinate = (x: 0, y: 0);
+            if (outgoingPositionConnectionPoint == PositionConnectionPoint.Bottom || 
+                outgoingPositionConnectionPoint == PositionConnectionPoint.Top)
             {
                 if (incomingPositionConnectionPoint == PositionConnectionPoint.Top)
                 {
-                    var lastLine = _canvasSymbolsVM.CurrentLines.LineSymbols[^1];
-
-                    int finalX = connectionPoint.BlockSymbol.XCoordinate + connectionPoint.BlockSymbol.Width / 2;
-                    int finalY = connectionPoint.BlockSymbol.YCoordinate;
-
-                    if (lastLine.X2 == finalX)
-                    {
-                        lastLine.X2 = finalX;
-                        lastLine.Y2 = finalY;
-
-                        _canvasSymbolsVM.CurrentLines!.ArrowSymbol.ChangeOrientationArrow(lastLine.X2, lastLine.Y2, incomingPositionConnectionPoint);
-                    }
-                    else
-                    {
-                        var firstLine = new LineSymbolVM
-                        {
-                            X1 = lastLine.X2,
-                            Y1 = lastLine.Y2,
-                            X2 = finalX,
-                            Y2 = lastLine.Y2
-                        };
-
-                        var secondLine = new LineSymbolVM
-                        {
-                            X1 = finalX,
-                            Y1 = lastLine.Y2,
-                            X2 = finalX,
-                            Y2 = finalY,
-                        };
-
-                        _canvasSymbolsVM.CurrentLines.LineSymbols.Add(firstLine);
-                        _canvasSymbolsVM.CurrentLines.LineSymbols.Add(secondLine);
-
-                        _canvasSymbolsVM.CurrentLines!.ArrowSymbol.ChangeOrientationArrow(secondLine.X2, secondLine.Y2, incomingPositionConnectionPoint);
-                    }
+                    finalCoordinate = GetTopFinalCoordinate(connectionPoint);
+                    FinishDrawingHorizontalToHorizontalLines(lastLine, finalCoordinate);
                 }
                 else if (incomingPositionConnectionPoint == PositionConnectionPoint.Bottom)
                 {
-                    var lastLine = _canvasSymbolsVM.CurrentLines.LineSymbols[^1];
-
-                    int finalX = connectionPoint.BlockSymbol.XCoordinate + connectionPoint.BlockSymbol.Width / 2;
-                    int finalY = connectionPoint.BlockSymbol.YCoordinate + connectionPoint.BlockSymbol.Height;
-
-                    if (lastLine.X2 == finalX)
-                    {
-                        lastLine.X2 = finalX;
-                        lastLine.Y2 = finalY;
-
-                        _canvasSymbolsVM.CurrentLines!.ArrowSymbol.ChangeOrientationArrow(lastLine.X2, lastLine.Y2, incomingPositionConnectionPoint);
-                    }
-                    else
-                    {
-                        var firstLine = new LineSymbolVM
-                        {
-                            X1 = lastLine.X2,
-                            Y1 = lastLine.Y2,
-                            X2 = finalX,
-                            Y2 = lastLine.Y2
-                        };
-
-                        var secondLine = new LineSymbolVM
-                        {
-                            X1 = finalX,
-                            Y1 = lastLine.Y2,
-                            X2 = finalX,
-                            Y2 = finalY,
-                        };
-
-                        _canvasSymbolsVM.CurrentLines.LineSymbols.Add(firstLine);
-                        _canvasSymbolsVM.CurrentLines.LineSymbols.Add(secondLine);
-
-                        _canvasSymbolsVM.CurrentLines!.ArrowSymbol.ChangeOrientationArrow(secondLine.X2, secondLine.Y2, incomingPositionConnectionPoint);
-                    }
+                    finalCoordinate = GetBottomFinalCoordinate(connectionPoint);
+                    FinishDrawingHorizontalToHorizontalLines(lastLine, finalCoordinate);
                 }
                 else if (incomingPositionConnectionPoint == PositionConnectionPoint.Left)
                 {
-                    var lastLine = _canvasSymbolsVM.CurrentLines.LineSymbols[^1];
-
-                    int finalX = connectionPoint.BlockSymbol.XCoordinate;
-                    int finalY = connectionPoint.BlockSymbol.YCoordinate + connectionPoint.BlockSymbol.Height / 2;
-
-                    lastLine.Y2 = finalY;
-
-                    var firstLine = new LineSymbolVM
-                    {
-                        X1 = lastLine.X2,
-                        Y1 = finalY,
-                        X2 = finalX,
-                        Y2 = finalY
-                    };
-
-                    _canvasSymbolsVM.CurrentLines.LineSymbols.Add(firstLine);
-                    _canvasSymbolsVM.CurrentLines!.ArrowSymbol.ChangeOrientationArrow(finalX, finalY, incomingPositionConnectionPoint);
+                    finalCoordinate = GetLeftFinalCoordinate(connectionPoint);
+                    FinishDrawingHorizontalToVerticalLines(lastLine, finalCoordinate);
                 }
                 else if (incomingPositionConnectionPoint == PositionConnectionPoint.Right)
                 {
-                    var lastLine = _canvasSymbolsVM.CurrentLines.LineSymbols[^1];
-
-                    int finalX = connectionPoint.BlockSymbol.XCoordinate + connectionPoint.BlockSymbol.Width;
-                    int finalY = connectionPoint.BlockSymbol.YCoordinate + connectionPoint.BlockSymbol.Height / 2;
-
-                    lastLine.Y2 = finalY;
-
-                    var firstLine = new LineSymbolVM
-                    {
-                        X1 = lastLine.X2,
-                        Y1 = finalY,
-                        X2 = finalX,
-                        Y2 = finalY
-                    };
-
-                    _canvasSymbolsVM.CurrentLines.LineSymbols.Add(firstLine);
-                    _canvasSymbolsVM.CurrentLines!.ArrowSymbol.ChangeOrientationArrow(finalX, finalY, incomingPositionConnectionPoint);
+                    finalCoordinate = GetRightFinalCoordinate(connectionPoint);
+                    FinishDrawingHorizontalToVerticalLines(lastLine, finalCoordinate);
                 }
             }
-            else if (outgoingPositionConnectionPoint == PositionConnectionPoint.Top)
+            else if (outgoingPositionConnectionPoint == PositionConnectionPoint.Left || 
+                     outgoingPositionConnectionPoint == PositionConnectionPoint.Right)
             {
                 if (incomingPositionConnectionPoint == PositionConnectionPoint.Top)
                 {
-                    var lastLine = _canvasSymbolsVM.CurrentLines.LineSymbols[^1];
-
-                    int finalX = connectionPoint.BlockSymbol.XCoordinate + connectionPoint.BlockSymbol.Width / 2;
-                    int finalY = connectionPoint.BlockSymbol.YCoordinate;
-
-                    if (lastLine.X2 == finalX)
-                    {
-                        lastLine.X2 = finalX;
-                        lastLine.Y2 = finalY;
-
-                        _canvasSymbolsVM.CurrentLines!.ArrowSymbol.ChangeOrientationArrow(lastLine.X2, lastLine.Y2, incomingPositionConnectionPoint);
-                    }
-                    else
-                    {
-                        var firstLine = new LineSymbolVM
-                        {
-                            X1 = lastLine.X2,
-                            Y1 = lastLine.Y2,
-                            X2 = finalX,
-                            Y2 = lastLine.Y2
-                        };
-
-                        var secondLine = new LineSymbolVM
-                        {
-                            X1 = finalX,
-                            Y1 = lastLine.Y2,
-                            X2 = finalX,
-                            Y2 = finalY,
-                        };
-
-                        _canvasSymbolsVM.CurrentLines.LineSymbols.Add(firstLine);
-                        _canvasSymbolsVM.CurrentLines.LineSymbols.Add(secondLine);
-
-                        _canvasSymbolsVM.CurrentLines!.ArrowSymbol.ChangeOrientationArrow(secondLine.X2, secondLine.Y2, incomingPositionConnectionPoint);
-                    }
+                    finalCoordinate = GetTopFinalCoordinate(connectionPoint);
+                    FinishDrawingVerticalToHorizontalLines(lastLine, finalCoordinate);
                 }
                 else if (incomingPositionConnectionPoint == PositionConnectionPoint.Bottom)
                 {
-                    var lastLine = _canvasSymbolsVM.CurrentLines.LineSymbols[^1];
-
-                    int finalX = connectionPoint.BlockSymbol.XCoordinate + connectionPoint.BlockSymbol.Width / 2;
-                    int finalY = connectionPoint.BlockSymbol.YCoordinate + connectionPoint.BlockSymbol.Height;
-
-                    if (lastLine.X2 == finalX)
-                    {
-                        lastLine.X2 = finalX;
-                        lastLine.Y2 = finalY;
-
-                        _canvasSymbolsVM.CurrentLines!.ArrowSymbol.ChangeOrientationArrow(lastLine.X2, lastLine.Y2, incomingPositionConnectionPoint);
-                    }
-                    else
-                    {
-                        var firstLine = new LineSymbolVM
-                        {
-                            X1 = lastLine.X2,
-                            Y1 = lastLine.Y2,
-                            X2 = finalX,
-                            Y2 = lastLine.Y2
-                        };
-
-                        var secondLine = new LineSymbolVM
-                        {
-                            X1 = finalX,
-                            Y1 = lastLine.Y2,
-                            X2 = finalX,
-                            Y2 = finalY,
-                        };
-
-                        _canvasSymbolsVM.CurrentLines.LineSymbols.Add(firstLine);
-                        _canvasSymbolsVM.CurrentLines.LineSymbols.Add(secondLine);
-
-                        _canvasSymbolsVM.CurrentLines!.ArrowSymbol.ChangeOrientationArrow(secondLine.X2, secondLine.Y2, incomingPositionConnectionPoint);
-                    }
+                    finalCoordinate = GetTopFinalCoordinate(connectionPoint);
+                    FinishDrawingVerticalToHorizontalLines(lastLine, finalCoordinate);
                 }
                 else if (incomingPositionConnectionPoint == PositionConnectionPoint.Left)
                 {
-                    var lastLine = _canvasSymbolsVM.CurrentLines.LineSymbols[^1];
-
-                    int finalX = connectionPoint.BlockSymbol.XCoordinate;
-                    int finalY = connectionPoint.BlockSymbol.YCoordinate + connectionPoint.BlockSymbol.Height / 2;
-
-                    lastLine.Y2 = finalY;
-
-                    var firstLine = new LineSymbolVM
-                    {
-                        X1 = lastLine.X2,
-                        Y1 = finalY,
-                        X2 = finalX,
-                        Y2 = finalY
-                    };
-
-                    _canvasSymbolsVM.CurrentLines.LineSymbols.Add(firstLine);
-                    _canvasSymbolsVM.CurrentLines!.ArrowSymbol.ChangeOrientationArrow(finalX, finalY, incomingPositionConnectionPoint);
+                    finalCoordinate = GetLeftFinalCoordinate(connectionPoint);
+                    FinishDrawingVerticalToVerticalLines(lastLine, finalCoordinate);
                 }
                 else if (incomingPositionConnectionPoint == PositionConnectionPoint.Right)
                 {
-                    var lastLine = _canvasSymbolsVM.CurrentLines.LineSymbols[^1];
-
-                    int finalX = connectionPoint.BlockSymbol.XCoordinate + connectionPoint.BlockSymbol.Width;
-                    int finalY = connectionPoint.BlockSymbol.YCoordinate + connectionPoint.BlockSymbol.Height / 2;
-
-                    lastLine.Y2 = finalY;
-
-                    var firstLine = new LineSymbolVM
-                    {
-                        X1 = lastLine.X2,
-                        Y1 = finalY,
-                        X2 = finalX,
-                        Y2 = finalY
-                    };
-
-                    _canvasSymbolsVM.CurrentLines.LineSymbols.Add(firstLine);
-                    _canvasSymbolsVM.CurrentLines!.ArrowSymbol.ChangeOrientationArrow(finalX, finalY, incomingPositionConnectionPoint);
+                    finalCoordinate = GetRightFinalCoordinate(connectionPoint);
+                    FinishDrawingVerticalToVerticalLines(lastLine, finalCoordinate);
                 }
             }
-            else if (outgoingPositionConnectionPoint == PositionConnectionPoint.Left)
-            {
-                if (incomingPositionConnectionPoint == PositionConnectionPoint.Top)
-                {
-                    var lastLine = _canvasSymbolsVM.CurrentLines.LineSymbols[^1];
-
-                    int finalX = connectionPoint.BlockSymbol.XCoordinate + connectionPoint.BlockSymbol.Width / 2;
-                    int finalY = connectionPoint.BlockSymbol.YCoordinate;
-
-                    lastLine.X2 = finalX;
-
-                    var firstLine = new LineSymbolVM
-                    {
-                        X1 = finalX,
-                        Y1 = lastLine.Y2,
-                        X2 = finalX,
-                        Y2 = finalY
-                    };
-
-                    _canvasSymbolsVM.CurrentLines.LineSymbols.Add(firstLine);
-                    _canvasSymbolsVM.CurrentLines!.ArrowSymbol.ChangeOrientationArrow(finalX, finalY, incomingPositionConnectionPoint);
-                }
-                else if (incomingPositionConnectionPoint == PositionConnectionPoint.Bottom)
-                {
-                    var lastLine = _canvasSymbolsVM.CurrentLines.LineSymbols[^1];
-
-                    int finalX = connectionPoint.BlockSymbol.XCoordinate + connectionPoint.BlockSymbol.Width / 2;
-                    int finalY = connectionPoint.BlockSymbol.YCoordinate + connectionPoint.BlockSymbol.Height;
-
-                    lastLine.X2 = finalX;
-
-                    var firstLine = new LineSymbolVM
-                    {
-                        X1 = finalX,
-                        Y1 = lastLine.Y2,
-                        X2 = finalX,
-                        Y2 = finalY
-                    };
-
-                    _canvasSymbolsVM.CurrentLines.LineSymbols.Add(firstLine);
-                    _canvasSymbolsVM.CurrentLines!.ArrowSymbol.ChangeOrientationArrow(finalX, finalY, incomingPositionConnectionPoint);
-                }
-                else if (incomingPositionConnectionPoint == PositionConnectionPoint.Left)
-                {
-                    var lastLine = _canvasSymbolsVM.CurrentLines.LineSymbols[^1];
-
-                    int finalX = connectionPoint.BlockSymbol.XCoordinate;
-                    int finalY = connectionPoint.BlockSymbol.YCoordinate + connectionPoint.BlockSymbol.Height / 2;
-
-                    if (lastLine.Y2 == finalY)
-                    {
-                        lastLine.X2 = finalX;
-                        lastLine.Y2 = finalY;
-
-                        _canvasSymbolsVM.CurrentLines!.ArrowSymbol.ChangeOrientationArrow(lastLine.X2, lastLine.Y2, incomingPositionConnectionPoint);
-                    }
-                    else
-                    {
-                        var firstLine = new LineSymbolVM
-                        {
-                            X1 = lastLine.X2,
-                            Y1 = lastLine.Y2,
-                            X2 = lastLine.X2,
-                            Y2 = finalY
-                        };
-
-                        var secondLine = new LineSymbolVM
-                        {
-                            X1 = lastLine.X2,
-                            Y1 = finalY,
-                            X2 = finalX,
-                            Y2 = finalY,
-                        };
-
-                        _canvasSymbolsVM.CurrentLines.LineSymbols.Add(firstLine);
-                        _canvasSymbolsVM.CurrentLines.LineSymbols.Add(secondLine);
-
-                        _canvasSymbolsVM.CurrentLines!.ArrowSymbol.ChangeOrientationArrow(secondLine.X2, secondLine.Y2, incomingPositionConnectionPoint);
-                    }
-                }
-                else if (incomingPositionConnectionPoint == PositionConnectionPoint.Right)
-                {
-                    var lastLine = _canvasSymbolsVM.CurrentLines.LineSymbols[^1];
-
-                    int finalX = connectionPoint.BlockSymbol.XCoordinate + connectionPoint.BlockSymbol.Width;
-                    int finalY = connectionPoint.BlockSymbol.YCoordinate + connectionPoint.BlockSymbol.Height / 2;
-
-                    if (lastLine.Y2 == finalY)
-                    {
-                        lastLine.X2 = finalX;
-                        lastLine.Y2 = finalY;
-
-                        _canvasSymbolsVM.CurrentLines!.ArrowSymbol.ChangeOrientationArrow(lastLine.X2, lastLine.Y2, incomingPositionConnectionPoint);
-                    }
-                    else
-                    {
-                        var firstLine = new LineSymbolVM
-                        {
-                            X1 = lastLine.X2,
-                            Y1 = lastLine.Y2,
-                            X2 = lastLine.X2,
-                            Y2 = finalY
-                        };
-
-                        var secondLine = new LineSymbolVM
-                        {
-                            X1 = lastLine.X2,
-                            Y1 = finalY,
-                            X2 = finalX,
-                            Y2 = finalY,
-                        };
-
-                        _canvasSymbolsVM.CurrentLines.LineSymbols.Add(firstLine);
-                        _canvasSymbolsVM.CurrentLines.LineSymbols.Add(secondLine);
-
-                        _canvasSymbolsVM.CurrentLines!.ArrowSymbol.ChangeOrientationArrow(secondLine.X2, secondLine.Y2, incomingPositionConnectionPoint);
-                    }
-                }
-            }
-            else if (outgoingPositionConnectionPoint == PositionConnectionPoint.Right)
-            {
-                if (incomingPositionConnectionPoint == PositionConnectionPoint.Top)
-                {
-                    var lastLine = _canvasSymbolsVM.CurrentLines.LineSymbols[^1];
-
-                    int finalX = connectionPoint.BlockSymbol.XCoordinate + connectionPoint.BlockSymbol.Width / 2;
-                    int finalY = connectionPoint.BlockSymbol.YCoordinate;
-
-                    lastLine.X2 = finalX;
-
-                    var firstLine = new LineSymbolVM
-                    {
-                        X1 = finalX,
-                        Y1 = lastLine.Y2,
-                        X2 = finalX,
-                        Y2 = finalY
-                    };
-
-                    _canvasSymbolsVM.CurrentLines.LineSymbols.Add(firstLine);
-                    _canvasSymbolsVM.CurrentLines!.ArrowSymbol.ChangeOrientationArrow(finalX, finalY, incomingPositionConnectionPoint);
-                }
-                else if (incomingPositionConnectionPoint == PositionConnectionPoint.Bottom)
-                {
-                    var lastLine = _canvasSymbolsVM.CurrentLines.LineSymbols[^1];
-
-                    int finalX = connectionPoint.BlockSymbol.XCoordinate + connectionPoint.BlockSymbol.Width / 2;
-                    int finalY = connectionPoint.BlockSymbol.YCoordinate + connectionPoint.BlockSymbol.Height;
-
-                    lastLine.X2 = finalX;
-
-                    var firstLine = new LineSymbolVM
-                    {
-                        X1 = finalX,
-                        Y1 = lastLine.Y2,
-                        X2 = finalX,
-                        Y2 = finalY
-                    };
-
-                    _canvasSymbolsVM.CurrentLines.LineSymbols.Add(firstLine);
-                    _canvasSymbolsVM.CurrentLines!.ArrowSymbol.ChangeOrientationArrow(finalX, finalY, incomingPositionConnectionPoint);
-                }
-                else if (incomingPositionConnectionPoint == PositionConnectionPoint.Left)
-                {
-                    var lastLine = _canvasSymbolsVM.CurrentLines.LineSymbols[^1];
-
-                    int finalX = connectionPoint.BlockSymbol.XCoordinate;
-                    int finalY = connectionPoint.BlockSymbol.YCoordinate + connectionPoint.BlockSymbol.Height / 2;
-
-                    if (lastLine.Y2 == finalY)
-                    {
-                        lastLine.X2 = finalX;
-                        lastLine.Y2 = finalY;
-
-                        _canvasSymbolsVM.CurrentLines!.ArrowSymbol.ChangeOrientationArrow(lastLine.X2, lastLine.Y2, incomingPositionConnectionPoint);
-                    }
-                    else
-                    {
-                        var firstLine = new LineSymbolVM
-                        {
-                            X1 = lastLine.X2,
-                            Y1 = lastLine.Y2,
-                            X2 = lastLine.X2,
-                            Y2 = finalY
-                        };
-
-                        var secondLine = new LineSymbolVM
-                        {
-                            X1 = lastLine.X2,
-                            Y1 = finalY,
-                            X2 = finalX,
-                            Y2 = finalY,
-                        };
-
-                        _canvasSymbolsVM.CurrentLines.LineSymbols.Add(firstLine);
-                        _canvasSymbolsVM.CurrentLines.LineSymbols.Add(secondLine);
-
-                        _canvasSymbolsVM.CurrentLines!.ArrowSymbol.ChangeOrientationArrow(secondLine.X2, secondLine.Y2, incomingPositionConnectionPoint);
-                    }
-                }
-                else if (incomingPositionConnectionPoint == PositionConnectionPoint.Right)
-                {
-                    var lastLine = _canvasSymbolsVM.CurrentLines.LineSymbols[^1];
-
-                    int finalX = connectionPoint.BlockSymbol.XCoordinate + connectionPoint.BlockSymbol.Width;
-                    int finalY = connectionPoint.BlockSymbol.YCoordinate + connectionPoint.BlockSymbol.Height / 2;
-
-                    if (lastLine.Y2 == finalY)
-                    {
-                        lastLine.X2 = finalX;
-                        lastLine.Y2 = finalY;
-
-                        _canvasSymbolsVM.CurrentLines!.ArrowSymbol.ChangeOrientationArrow(lastLine.X2, lastLine.Y2, incomingPositionConnectionPoint);
-                    }
-                    else
-                    {
-                        var firstLine = new LineSymbolVM
-                        {
-                            X1 = lastLine.X2,
-                            Y1 = lastLine.Y2,
-                            X2 = lastLine.X2,
-                            Y2 = finalY
-                        };
-
-                        var secondLine = new LineSymbolVM
-                        {
-                            X1 = lastLine.X2,
-                            Y1 = finalY,
-                            X2 = finalX,
-                            Y2 = finalY,
-                        };
-
-                        _canvasSymbolsVM.CurrentLines.LineSymbols.Add(firstLine);
-                        _canvasSymbolsVM.CurrentLines.LineSymbols.Add(secondLine);
-
-                        _canvasSymbolsVM.CurrentLines!.ArrowSymbol.ChangeOrientationArrow(secondLine.X2, secondLine.Y2, incomingPositionConnectionPoint);
-                    }
-                }
-            }
+            _canvasSymbolsVM.CurrentLines!.ArrowSymbol.ChangeOrientationArrow(finalCoordinate.x, finalCoordinate.y, incomingPositionConnectionPoint);
         }
         _canvasSymbolsVM.CurrentLines!.SymbolaIncomingLine = connectionPoint.BlockSymbol;
         _canvasSymbolsVM.CurrentLines = null;
