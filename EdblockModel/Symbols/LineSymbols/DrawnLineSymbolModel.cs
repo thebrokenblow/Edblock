@@ -35,20 +35,12 @@ public class DrawnLineSymbolModel
             {
                 currentCoordinate.y += offsetLine;
             }
-            else if (startCoordinate.y + offsetLine < currentCoordinate.y)
-            {
-                currentCoordinate.y -= offsetLine;
-            }
         }
         else
         {
             if (startCoordinate.x - offsetLine > currentCoordinate.x)
             {
                 currentCoordinate.x += offsetLine;
-            }
-            else if (startCoordinate.x + offsetLine < currentCoordinate.x)
-            {
-                currentCoordinate.x -= offsetLine;
             }
         }
 
@@ -57,9 +49,17 @@ public class DrawnLineSymbolModel
 
     private (int x, int y) VerticallyRounding((int x, int y) startCoordinate, (int x, int y) currentCoordinate)
     {
-        if (LinesSymbols.Count % 2 == 0)
+
+        if (LinesSymbols.Count % 2 == 1)
         {
-            if (currentCoordinate.y - 10 <= startCoordinate.y)
+            if (startCoordinate.x - offsetLine > currentCoordinate.x)
+            {
+                currentCoordinate.x += offsetLine;
+            }
+        }
+        else
+        {
+            if (startCoordinate.y - offsetLine > currentCoordinate.y)
             {
                 currentCoordinate.y += offsetLine;
             }

@@ -129,9 +129,9 @@ public class ArrowSymbolModel
     {
         var coordinateArrow = new List<(int, int)>
         {
-            (coordinate.x - WidthArrow / 2,coordinate.y),
-            (coordinate.x, coordinate.y + HeightArrow),
-            (coordinate.x + WidthArrow / 2, coordinate.y),
+            (coordinate.x - WidthArrow / 2,coordinate.y- 8),
+            (coordinate.x, coordinate.y + HeightArrow - 8),
+            (coordinate.x + WidthArrow / 2, coordinate.y - 8),
         };
 
         return coordinateArrow;
@@ -141,9 +141,9 @@ public class ArrowSymbolModel
     {
         var coordinateArrow = new List<(int, int)>
         {
-            (coordinate.x - WidthArrow / 2, coordinate.y),
-            (coordinate.x + WidthArrow / 2, coordinate.y),
-            (coordinate.x, coordinate.y - HeightArrow),
+            (coordinate.x - WidthArrow / 2, coordinate.y + 8),
+            (coordinate.x + WidthArrow / 2, coordinate.y + 8),
+            (coordinate.x, coordinate.y - HeightArrow + 8),
         };
 
         return coordinateArrow;
