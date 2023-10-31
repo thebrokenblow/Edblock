@@ -446,6 +446,16 @@ public class ConnectionPoint : INotifyPropertyChanged
         }
         _canvasSymbolsVM.CurrentLines!.ArrowSymbol.ChangeOrientationArrow(finalCoordinate.x, finalCoordinate.y, incomingPositionConnectionPoint);
         _canvasSymbolsVM.CurrentLines!.SymbolaIncomingLine = connectionPoint.BlockSymbol;
+
+        if (_canvasSymbolsVM.CurrentLines.SymbolOutgoingLine != null)
+        {
+            _canvasSymbolsVM.BlockSymbolByLineSymbol.Add(_canvasSymbolsVM.CurrentLines.SymbolOutgoingLine, _canvasSymbolsVM.CurrentLines);
+        }
+        if (_canvasSymbolsVM.CurrentLines.SymbolaIncomingLine != null)
+        {
+            _canvasSymbolsVM.BlockSymbolByLineSymbol.Add(_canvasSymbolsVM.CurrentLines.SymbolaIncomingLine, _canvasSymbolsVM.CurrentLines);
+        }
+
         _canvasSymbolsVM.CurrentLines = null;
     }
 }

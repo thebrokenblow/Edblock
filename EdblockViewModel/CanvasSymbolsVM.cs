@@ -12,6 +12,7 @@ using EdblockViewModel.Symbols.ConnectionPoints;
 using EdblockViewModel.Symbols.LineSymbols;
 using EdblockModel.Symbols.ConnectionPoints;
 using EdblockModel.Symbols.ScaleRectangles;
+using System.Collections.Generic;
 
 namespace EdblockViewModel;
 
@@ -78,6 +79,7 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
     }
    
     public ObservableCollection<Symbol> Symbols { get; init; }
+    public Dictionary<BlockSymbol, DrawnLineSymbolVM> BlockSymbolByLineSymbol { get; init; }
     public DelegateCommand<string> ClickSymbol { get; init; }
     public DelegateCommand<BlockSymbol> MouseMoveSymbol { get; init; }
     public DelegateCommand ClickCanvasSymbols { get; init; }
@@ -90,6 +92,7 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
     public CanvasSymbolsVM()
     {
         Symbols = new();
+        BlockSymbolByLineSymbol = new();
         ClickSymbol = new(CreateSymbol);
         MouseMoveSymbol = new(MoveSymbol);
         ClickCanvasSymbols = new(ClickCanvas);
@@ -129,6 +132,11 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
         }
 
         DraggableSymbol = currentSymbol;
+        
+        if (BlockSymbolByLineSymbol.ContainsKey(currentSymbol))
+        {
+            var line = BlockSymbolByLineSymbol[currentSymbol];
+        }
     }
 
     public void RemoveSymbol()
