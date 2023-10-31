@@ -61,9 +61,9 @@ public class ConnectionPoint : INotifyPropertyChanged
 
     public DelegateCommand EnterCursor { get; init; }
     public DelegateCommand LeaveCursor { get; init; }
-    public BlockSymbol BlockSymbol { get; init; }
     public DelegateCommand<ConnectionPoint> ClickConnectionPoint { get; init; }
     public event PropertyChangedEventHandler? PropertyChanged;
+    public BlockSymbol BlockSymbol { get; init; }
     public Func<(int, int)> GetCoordinate { get; init; }
     public PositionConnectionPoint PositionConnectionPoint { get; init; }
     private readonly CanvasSymbolsVM _canvasSymbolsVM;
@@ -270,16 +270,81 @@ public class ConnectionPoint : INotifyPropertyChanged
         }
     }
 
+    private void FinishDrawingHorizontalToHorizontalLines2(LineSymbolVM lastLine, (int x, int y) finalCoordinate)
+    {
+        lastLine.X2 = finalCoordinate.x;
+
+        var firstLine = new LineSymbolVM
+        {
+            X1 = finalCoordinate.x,
+            Y1 = lastLine.Y2,
+            Y2 = finalCoordinate.y,
+            X2 = finalCoordinate.x
+        };
+
+        _canvasSymbolsVM.CurrentLines!.LineSymbols.Add(firstLine);
+    }
+
+    private void FinishDrawingHorizontalToVerticalLines2(LineSymbolVM lastLine, (int x, int y) finalCoordinate)
+    {
+        if (lastLine.Y2 == finalCoordinate.y)
+        {
+            lastLine.X2 = finalCoordinate.x;
+        }
+        else
+        {
+            var secondLine = _canvasSymbolsVM.CurrentLines!.LineSymbols[^2];
+
+            secondLine.Y2 = finalCoordinate.y;
+
+            lastLine.Y1 = finalCoordinate.y;
+            lastLine.Y2 = finalCoordinate.y;
+            lastLine.X2 = finalCoordinate.x;
+        }
+    }
+    private void FinishDrawingVerticalToHorizontalLines2(LineSymbolVM lastLine, (int x, int y) finalCoordinate)
+    {
+        if (finalCoordinate.x == lastLine.X2)
+        {
+            lastLine.Y2 = finalCoordinate.y;
+        }
+        else
+        {
+            var secondLine = _canvasSymbolsVM.CurrentLines!.LineSymbols[^2];
+
+            secondLine.X2 = finalCoordinate.x;
+
+            lastLine.X1 = finalCoordinate.x;
+            lastLine.X2 = finalCoordinate.x;
+            lastLine.Y2 = finalCoordinate.y;
+        }
+    }
+
+    private void FinishDrawingVerticalToVerticalLines2(LineSymbolVM lastLine, (int x, int y) finalCoordinate)
+    {
+        lastLine.Y2 = finalCoordinate.y;
+
+        var firstLine = new LineSymbolVM
+        {
+            X1 = lastLine.X2,
+            Y1 = lastLine.Y2,
+            X2 = finalCoordinate.x,
+            Y2 = lastLine.Y2
+        };
+
+        _canvasSymbolsVM.CurrentLines!.LineSymbols.Add(firstLine);
+    }
+
     private void EndDrawLine(ConnectionPoint connectionPoint)
     {
         var outgoingPositionConnectionPoint = _canvasSymbolsVM.CurrentLines!.PositionConnectionPoint;
         var incomingPositionConnectionPoint = connectionPoint.PositionConnectionPoint;
 
+        var finalCoordinate = (x: 0, y: 0);
+        var lastLine = _canvasSymbolsVM.CurrentLines.LineSymbols[^1];
         if (_canvasSymbolsVM.CurrentLines!.LineSymbols.Count % 2 == 1)
         {
-            var lastLine = _canvasSymbolsVM.CurrentLines.LineSymbols[^1];
-            var finalCoordinate = (x: 0, y: 0);
-            if (outgoingPositionConnectionPoint == PositionConnectionPoint.Bottom || 
+            if (outgoingPositionConnectionPoint == PositionConnectionPoint.Bottom ||
                 outgoingPositionConnectionPoint == PositionConnectionPoint.Top)
             {
                 if (incomingPositionConnectionPoint == PositionConnectionPoint.Top)
@@ -303,7 +368,7 @@ public class ConnectionPoint : INotifyPropertyChanged
                     FinishDrawingHorizontalToVerticalLines(lastLine, finalCoordinate);
                 }
             }
-            else if (outgoingPositionConnectionPoint == PositionConnectionPoint.Left || 
+            else if (outgoingPositionConnectionPoint == PositionConnectionPoint.Left ||
                      outgoingPositionConnectionPoint == PositionConnectionPoint.Right)
             {
                 if (incomingPositionConnectionPoint == PositionConnectionPoint.Top)
@@ -327,8 +392,59 @@ public class ConnectionPoint : INotifyPropertyChanged
                     FinishDrawingVerticalToVerticalLines(lastLine, finalCoordinate);
                 }
             }
-            _canvasSymbolsVM.CurrentLines!.ArrowSymbol.ChangeOrientationArrow(finalCoordinate.x, finalCoordinate.y, incomingPositionConnectionPoint);
         }
+        else
+        {
+            if (outgoingPositionConnectionPoint == PositionConnectionPoint.Bottom ||
+                outgoingPositionConnectionPoint == PositionConnectionPoint.Top)
+            {
+                if (incomingPositionConnectionPoint == PositionConnectionPoint.Top)
+                {
+                    finalCoordinate = GetTopFinalCoordinate(connectionPoint);
+                    FinishDrawingHorizontalToHorizontalLines2(lastLine, finalCoordinate);
+                }
+                else if (incomingPositionConnectionPoint == PositionConnectionPoint.Bottom)
+                {
+                    finalCoordinate = GetBottomFinalCoordinate(connectionPoint);
+                    FinishDrawingHorizontalToHorizontalLines2(lastLine, finalCoordinate);
+                }
+                else if (incomingPositionConnectionPoint == PositionConnectionPoint.Left)
+                {
+                    finalCoordinate = GetLeftFinalCoordinate(connectionPoint);
+                    FinishDrawingHorizontalToVerticalLines2(lastLine, finalCoordinate);
+                }
+                else if (incomingPositionConnectionPoint == PositionConnectionPoint.Right)
+                {
+                    finalCoordinate = GetRightFinalCoordinate(connectionPoint);
+                    FinishDrawingHorizontalToVerticalLines2(lastLine, finalCoordinate);
+                }
+            }
+            else if (outgoingPositionConnectionPoint == PositionConnectionPoint.Left ||
+                outgoingPositionConnectionPoint == PositionConnectionPoint.Right)
+            {
+                if (incomingPositionConnectionPoint == PositionConnectionPoint.Top)
+                {
+                    finalCoordinate = GetTopFinalCoordinate(connectionPoint);
+                    FinishDrawingVerticalToHorizontalLines2(lastLine, finalCoordinate);
+                }
+                else if (incomingPositionConnectionPoint == PositionConnectionPoint.Bottom)
+                {
+                    finalCoordinate = GetBottomFinalCoordinate(connectionPoint);
+                    FinishDrawingVerticalToHorizontalLines2(lastLine, finalCoordinate);
+                }
+                else if (incomingPositionConnectionPoint == PositionConnectionPoint.Left)
+                {
+                    finalCoordinate = GetLeftFinalCoordinate(connectionPoint);
+                    FinishDrawingVerticalToVerticalLines2(lastLine, finalCoordinate);
+                }
+                else if (incomingPositionConnectionPoint == PositionConnectionPoint.Right)
+                {
+                    finalCoordinate = GetRightFinalCoordinate(connectionPoint);
+                    FinishDrawingVerticalToVerticalLines2(lastLine, finalCoordinate);
+                }
+            }
+        }
+        _canvasSymbolsVM.CurrentLines!.ArrowSymbol.ChangeOrientationArrow(finalCoordinate.x, finalCoordinate.y, incomingPositionConnectionPoint);
         _canvasSymbolsVM.CurrentLines!.SymbolaIncomingLine = connectionPoint.BlockSymbol;
         _canvasSymbolsVM.CurrentLines = null;
     }

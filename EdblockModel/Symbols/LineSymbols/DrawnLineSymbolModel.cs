@@ -27,52 +27,12 @@ public class DrawnLineSymbolModel
         }
     }
 
-    private (int x, int y) HorizontalRounding((int x, int y) startCoordinate, (int x, int y) currentCoordinate)
-    {
-        if (LinesSymbols.Count % 2 == 1)
-        {
-            if (startCoordinate.y - offsetLine > currentCoordinate.y)
-            {
-                currentCoordinate.y += offsetLine;
-            }
-        }
-        else
-        {
-            if (startCoordinate.x - offsetLine > currentCoordinate.x)
-            {
-                currentCoordinate.x += offsetLine;
-            }
-        }
-
-        return currentCoordinate;
-    }
-
-    private (int x, int y) VerticallyRounding((int x, int y) startCoordinate, (int x, int y) currentCoordinate)
-    {
-
-        if (LinesSymbols.Count % 2 == 1)
-        {
-            if (startCoordinate.x - offsetLine > currentCoordinate.x)
-            {
-                currentCoordinate.x += offsetLine;
-            }
-        }
-        else
-        {
-            if (startCoordinate.y - offsetLine > currentCoordinate.y)
-            {
-                currentCoordinate.y += offsetLine;
-            }
-        }
-
-        return currentCoordinate;
-    }
-
     public void ChangeCoordinateLine(int currentX, int currentY)
     {
         var lastLineSymbol = LinesSymbols[^1];
 
-        if (_positionConnectionPoint == PositionConnectionPoint.Bottom || _positionConnectionPoint == PositionConnectionPoint.Top)
+        if (_positionConnectionPoint == PositionConnectionPoint.Bottom ||
+            _positionConnectionPoint == PositionConnectionPoint.Top)
         {
             CoordinateLineModel.ChangeCoordinatesVerticalLines(LinesSymbols, lastLineSymbol, currentX, currentY);
         }
@@ -96,5 +56,45 @@ public class DrawnLineSymbolModel
         LinesSymbols.Add(newLineSymbolModel);
 
         return newLineSymbolModel;
+    }
+
+    private (int x, int y) HorizontalRounding((int x, int y) startCoordinate, (int x, int y) currentCoordinate)
+    {
+        if (LinesSymbols.Count % 2 == 1)
+        {
+            if (startCoordinate.y > currentCoordinate.y)
+            {
+                currentCoordinate.y += offsetLine;
+            }
+        }
+        else
+        {
+            if (startCoordinate.x - offsetLine > currentCoordinate.x)
+            {
+                currentCoordinate.x += offsetLine;
+            }
+        }
+
+        return currentCoordinate;
+    }
+
+    private (int x, int y) VerticallyRounding((int x, int y) startCoordinate, (int x, int y) currentCoordinate)
+    {
+        if (LinesSymbols.Count % 2 == 1)
+        {
+            if (startCoordinate.x - offsetLine > currentCoordinate.x)
+            {
+                currentCoordinate.x += offsetLine;
+            }
+        }
+        else
+        {
+            if (startCoordinate.y - offsetLine > currentCoordinate.y)
+            {
+                currentCoordinate.y += offsetLine;
+            }
+        }
+
+        return currentCoordinate;
     }
 }
