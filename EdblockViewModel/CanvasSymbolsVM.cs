@@ -107,9 +107,9 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
 
     private void Move()
     {
-        if (currentRedrawLine != null)
+        if (currentRedrawLine != null && DraggableSymbol != null)
         {
-            redrawLineSymbol ??= new(currentRedrawLine);
+            redrawLineSymbol ??= new(currentRedrawLine, DraggableSymbol);
             redrawLineSymbol.Redraw();
         }
     }
