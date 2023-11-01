@@ -8,6 +8,7 @@ internal class RedrawLineSymbol
     private readonly BlockSymbol? _symbolOutgoingLine;
     private readonly BlockSymbol? _symbolaIncomingLine;
     private readonly DrawnLineSymbolVM _drawnLineSymbolVM;
+    private const int baseLineOffset = 20;
 
     public RedrawLineSymbol(DrawnLineSymbolVM drawnLineSymbolVM)
     {
@@ -99,9 +100,7 @@ internal class RedrawLineSymbol
                         _drawnLineSymbolVM.LineSymbols.Add(firstLine);
                         _drawnLineSymbolVM.LineSymbols.Add(secondLine);
                         _drawnLineSymbolVM.LineSymbols.Add(thirdLine);
-
                     }
-
                 }
             }
             else
@@ -110,34 +109,34 @@ internal class RedrawLineSymbol
                 {
                     var firstLine = _drawnLineSymbolVM.LineSymbols[^1];
                     firstLine.X1 = _drawnLineSymbolVM.SymbolaIncomingLine!.XCoordinate + _drawnLineSymbolVM.SymbolaIncomingLine.Width / 2;
-                    firstLine.Y1 = _drawnLineSymbolVM.SymbolaIncomingLine!.YCoordinate - 20;
+                    firstLine.Y1 = _drawnLineSymbolVM.SymbolaIncomingLine!.YCoordinate - baseLineOffset;
                     firstLine.X2 = _drawnLineSymbolVM.SymbolaIncomingLine!.XCoordinate + _drawnLineSymbolVM.SymbolaIncomingLine.Width / 2;
                     firstLine.Y2 = _drawnLineSymbolVM.SymbolaIncomingLine!.YCoordinate;
 
                     var secondLine = _drawnLineSymbolVM.LineSymbols[^2];
                     secondLine.X1 = (_drawnLineSymbolVM.SymbolOutgoingLine!.XCoordinate + _drawnLineSymbolVM.SymbolOutgoingLine.Width + _drawnLineSymbolVM.SymbolaIncomingLine!.XCoordinate) / 2;
-                    secondLine.Y1 = _drawnLineSymbolVM.SymbolaIncomingLine!.YCoordinate - 20;
+                    secondLine.Y1 = _drawnLineSymbolVM.SymbolaIncomingLine!.YCoordinate - baseLineOffset;
                     secondLine.X2 = _drawnLineSymbolVM.SymbolaIncomingLine!.XCoordinate + _drawnLineSymbolVM.SymbolaIncomingLine.Width / 2;
-                    secondLine.Y2 = _drawnLineSymbolVM.SymbolaIncomingLine!.YCoordinate - 20;
+                    secondLine.Y2 = _drawnLineSymbolVM.SymbolaIncomingLine!.YCoordinate - baseLineOffset;
 
                     var thirdLine = _drawnLineSymbolVM.LineSymbols[^3];
                     thirdLine.X1 = (_drawnLineSymbolVM.SymbolOutgoingLine!.XCoordinate + _drawnLineSymbolVM.SymbolOutgoingLine.Width + _drawnLineSymbolVM.SymbolaIncomingLine!.XCoordinate) / 2;
-                    thirdLine.Y1 = _drawnLineSymbolVM.SymbolOutgoingLine!.YCoordinate + _drawnLineSymbolVM.SymbolOutgoingLine.Height + 20;
+                    thirdLine.Y1 = _drawnLineSymbolVM.SymbolOutgoingLine!.YCoordinate + _drawnLineSymbolVM.SymbolOutgoingLine.Height + baseLineOffset;
                     thirdLine.X2 = (_drawnLineSymbolVM.SymbolOutgoingLine!.XCoordinate + _drawnLineSymbolVM.SymbolOutgoingLine.Width + _drawnLineSymbolVM.SymbolaIncomingLine!.XCoordinate) / 2;
-                    thirdLine.Y2 = _drawnLineSymbolVM.SymbolaIncomingLine!.YCoordinate - 20;
+                    thirdLine.Y2 = _drawnLineSymbolVM.SymbolaIncomingLine!.YCoordinate - baseLineOffset;
 
                     var fourthLine = _drawnLineSymbolVM.LineSymbols[^4];
                     fourthLine.X1 = _drawnLineSymbolVM.SymbolOutgoingLine!.XCoordinate + _drawnLineSymbolVM.SymbolOutgoingLine.Width / 2;
-                    fourthLine.Y1 = _drawnLineSymbolVM.SymbolOutgoingLine!.YCoordinate + _drawnLineSymbolVM.SymbolOutgoingLine.Height + 20;
+                    fourthLine.Y1 = _drawnLineSymbolVM.SymbolOutgoingLine!.YCoordinate + _drawnLineSymbolVM.SymbolOutgoingLine.Height + baseLineOffset;
                     fourthLine.X2 = (_drawnLineSymbolVM.SymbolOutgoingLine!.XCoordinate + _drawnLineSymbolVM.SymbolOutgoingLine.Width + _drawnLineSymbolVM.SymbolaIncomingLine!.XCoordinate) / 2;
-                    fourthLine.Y2 = _drawnLineSymbolVM.SymbolOutgoingLine!.YCoordinate + _drawnLineSymbolVM.SymbolOutgoingLine.Height + 20;
+                    fourthLine.Y2 = _drawnLineSymbolVM.SymbolOutgoingLine!.YCoordinate + _drawnLineSymbolVM.SymbolOutgoingLine.Height + baseLineOffset;
 
 
                     var fifthLine = _drawnLineSymbolVM.LineSymbols[^5];
                     fifthLine.X1 = _drawnLineSymbolVM.SymbolOutgoingLine!.XCoordinate + _drawnLineSymbolVM.SymbolOutgoingLine.Width / 2;
                     fifthLine.Y1 = _drawnLineSymbolVM.SymbolOutgoingLine!.YCoordinate + _drawnLineSymbolVM.SymbolOutgoingLine.Height;
                     fifthLine.X2 = _drawnLineSymbolVM.SymbolOutgoingLine!.XCoordinate + _drawnLineSymbolVM.SymbolOutgoingLine.Width / 2;
-                    fifthLine.Y2 = _drawnLineSymbolVM.SymbolOutgoingLine!.YCoordinate + _drawnLineSymbolVM.SymbolOutgoingLine.Height + 20;
+                    fifthLine.Y2 = _drawnLineSymbolVM.SymbolOutgoingLine!.YCoordinate + _drawnLineSymbolVM.SymbolOutgoingLine.Height + baseLineOffset;
                 }
                 else
                 {
@@ -148,37 +147,37 @@ internal class RedrawLineSymbol
                         X1 = _drawnLineSymbolVM.SymbolOutgoingLine!.XCoordinate + _drawnLineSymbolVM.SymbolOutgoingLine.Width / 2,
                         Y1 = _drawnLineSymbolVM.SymbolOutgoingLine!.YCoordinate + _drawnLineSymbolVM.SymbolOutgoingLine.Height,
                         X2 = _drawnLineSymbolVM.SymbolOutgoingLine!.XCoordinate + _drawnLineSymbolVM.SymbolOutgoingLine.Width / 2,
-                        Y2 = _drawnLineSymbolVM.SymbolOutgoingLine!.YCoordinate + _drawnLineSymbolVM.SymbolOutgoingLine.Height + 20
+                        Y2 = _drawnLineSymbolVM.SymbolOutgoingLine!.YCoordinate + _drawnLineSymbolVM.SymbolOutgoingLine.Height + baseLineOffset
                     };
 
                     var secondLine = new LineSymbolVM
                     {
                         X1 = _drawnLineSymbolVM.SymbolOutgoingLine!.XCoordinate + _drawnLineSymbolVM.SymbolOutgoingLine.Width / 2,
-                        Y1 = _drawnLineSymbolVM.SymbolOutgoingLine!.YCoordinate + _drawnLineSymbolVM.SymbolOutgoingLine.Height + 20,
+                        Y1 = _drawnLineSymbolVM.SymbolOutgoingLine!.YCoordinate + _drawnLineSymbolVM.SymbolOutgoingLine.Height + baseLineOffset,
                         X2 = (_drawnLineSymbolVM.SymbolOutgoingLine!.XCoordinate + _drawnLineSymbolVM.SymbolOutgoingLine.Width + _drawnLineSymbolVM.SymbolaIncomingLine!.XCoordinate) / 2,
-                        Y2 = _drawnLineSymbolVM.SymbolOutgoingLine!.YCoordinate + _drawnLineSymbolVM.SymbolOutgoingLine.Height + 20
+                        Y2 = _drawnLineSymbolVM.SymbolOutgoingLine!.YCoordinate + _drawnLineSymbolVM.SymbolOutgoingLine.Height + baseLineOffset
                     };
 
                     var thirdLine = new LineSymbolVM
                     {
                         X1 = (_drawnLineSymbolVM.SymbolOutgoingLine!.XCoordinate + _drawnLineSymbolVM.SymbolOutgoingLine.Width + _drawnLineSymbolVM.SymbolaIncomingLine!.XCoordinate) / 2,
-                        Y1 = _drawnLineSymbolVM.SymbolOutgoingLine!.YCoordinate + _drawnLineSymbolVM.SymbolOutgoingLine.Height + 20,
+                        Y1 = _drawnLineSymbolVM.SymbolOutgoingLine!.YCoordinate + _drawnLineSymbolVM.SymbolOutgoingLine.Height + baseLineOffset,
                         X2 = (_drawnLineSymbolVM.SymbolOutgoingLine!.XCoordinate + _drawnLineSymbolVM.SymbolOutgoingLine.Width + _drawnLineSymbolVM.SymbolaIncomingLine!.XCoordinate) / 2,
-                        Y2 = _drawnLineSymbolVM.SymbolaIncomingLine!.YCoordinate - 20,
+                        Y2 = _drawnLineSymbolVM.SymbolaIncomingLine!.YCoordinate - baseLineOffset,
                     };
 
                     var fourthLine = new LineSymbolVM
                     {
                         X1 = (_drawnLineSymbolVM.SymbolOutgoingLine!.XCoordinate + _drawnLineSymbolVM.SymbolOutgoingLine.Width + _drawnLineSymbolVM.SymbolaIncomingLine!.XCoordinate) / 2,
-                        Y1 = _drawnLineSymbolVM.SymbolaIncomingLine!.YCoordinate - 20,
+                        Y1 = _drawnLineSymbolVM.SymbolaIncomingLine!.YCoordinate - baseLineOffset,
                         X2 = _drawnLineSymbolVM.SymbolaIncomingLine!.XCoordinate + _drawnLineSymbolVM.SymbolaIncomingLine.Width / 2,
-                        Y2 = _drawnLineSymbolVM.SymbolaIncomingLine!.YCoordinate - 20,
+                        Y2 = _drawnLineSymbolVM.SymbolaIncomingLine!.YCoordinate - baseLineOffset,
                     };
 
                     var fifthLine = new LineSymbolVM
                     {
                         X1 = _drawnLineSymbolVM.SymbolaIncomingLine!.XCoordinate + _drawnLineSymbolVM.SymbolaIncomingLine.Width / 2,
-                        Y1 = _drawnLineSymbolVM.SymbolaIncomingLine!.YCoordinate - 20,
+                        Y1 = _drawnLineSymbolVM.SymbolaIncomingLine!.YCoordinate - baseLineOffset,
                         X2 = _drawnLineSymbolVM.SymbolaIncomingLine!.XCoordinate + _drawnLineSymbolVM.SymbolaIncomingLine.Width / 2,
                         Y2 = _drawnLineSymbolVM.SymbolaIncomingLine!.YCoordinate
                     };
