@@ -17,12 +17,15 @@ public class CoordinateLineModel
                                                     (int x, int y) coordinateConnectionPoint,
                                                     PositionConnectionPoint positionConnectionPoint)
     {
-        int startCoordinateX = coordinateConnectionPoint.x + blockSymbolModel.X;
-        int startCoordinateY = coordinateConnectionPoint.y + blockSymbolModel.Y;
+        int x = coordinateConnectionPoint.x + blockSymbolModel.X;
+        int y = coordinateConnectionPoint.y + blockSymbolModel.Y;
 
-        var startCoordinate = (startCoordinateX, startCoordinateY);
+        var startCoordinate = (x, y);
 
         startCoordinate = startCoordinateByPosition[positionConnectionPoint].Invoke(startCoordinate);
+       
+        startCoordinate.x = CanvasSymbols.СorrectionCoordinateSymbol(startCoordinate.x);
+        startCoordinate.y = CanvasSymbols.СorrectionCoordinateSymbol(startCoordinate.y);
 
         return startCoordinate;
     }
@@ -113,9 +116,6 @@ public class CoordinateLineModel
         startCoordinate.x += ConnectionPointModel.diametr / 2;
         startCoordinate.y -= ConnectionPointModel.offsetPosition;
 
-        startCoordinate.x = CanvasSymbols.СorrectionCoordinateSymbol(startCoordinate.x);
-        startCoordinate.y = CanvasSymbols.СorrectionCoordinateSymbol(startCoordinate.y);
-
         return startCoordinate;
     }
 
@@ -123,9 +123,6 @@ public class CoordinateLineModel
     {
         startCoordinate.x += ConnectionPointModel.diametr / 2;
         startCoordinate.y += ConnectionPointModel.offsetPosition * 2;
-
-        startCoordinate.x = CanvasSymbols.СorrectionCoordinateSymbol(startCoordinate.x);
-        startCoordinate.y = CanvasSymbols.СorrectionCoordinateSymbol(startCoordinate.y);
 
         return startCoordinate;
     }
@@ -135,9 +132,6 @@ public class CoordinateLineModel
         startCoordinate.x -= ConnectionPointModel.diametr / 2;
         startCoordinate.y += ConnectionPointModel.offsetPosition;
 
-        startCoordinate.x = CanvasSymbols.СorrectionCoordinateSymbol(startCoordinate.x);
-        startCoordinate.y = CanvasSymbols.СorrectionCoordinateSymbol(startCoordinate.y);
-
         return startCoordinate;
     }
 
@@ -145,9 +139,6 @@ public class CoordinateLineModel
     {
         startCoordinate.x += ConnectionPointModel.offsetPosition * 2;
         startCoordinate.y += ConnectionPointModel.diametr;
-
-        startCoordinate.x = CanvasSymbols.СorrectionCoordinateSymbol(startCoordinate.x);
-        startCoordinate.y = CanvasSymbols.СorrectionCoordinateSymbol(startCoordinate.y);
 
         return startCoordinate;
     }

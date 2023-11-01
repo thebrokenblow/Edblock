@@ -81,17 +81,21 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
     public ObservableCollection<Symbol> Symbols { get; init; }
     public Dictionary<BlockSymbol, DrawnLineSymbolVM> BlockSymbolByLineSymbol { get; init; }
     public DelegateCommand<string> ClickSymbol { get; init; }
+    public DelegateCommand MouseCursor { get; init; }
     public DelegateCommand<BlockSymbol> MouseMoveSymbol { get; init; }
     public DelegateCommand ClickCanvasSymbols { get; init; }
     public event PropertyChangedEventHandler? PropertyChanged;
     public BlockSymbol? DraggableSymbol { get; set; }
     public ScaleData? ScaleData { get; set; }
     public DrawnLineSymbolVM? CurrentLines { get; set; }
-    private readonly FactoryBlockSymbol factoryBlockSymbol;
+    private DrawnLineSymbolVM? currentRedrawLine { get; set; }
 
+    private readonly FactoryBlockSymbol factoryBlockSymbol;
+    private RedrawLineSymbol? redrawLineSymbol;
     public CanvasSymbolsVM()
     {
         Symbols = new();
+        MouseCursor = new(Move);
         BlockSymbolByLineSymbol = new();
         ClickSymbol = new(CreateSymbol);
         MouseMoveSymbol = new(MoveSymbol);
@@ -99,6 +103,15 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
         factoryBlockSymbol = new(this);
         var lengthGrid = CanvasSymbols.LengthGrid;
         Grid = new Rect(-lengthGrid, -lengthGrid, lengthGrid, lengthGrid);
+    }
+
+    private void Move()
+    {
+        if (currentRedrawLine != null)
+        {
+            redrawLineSymbol ??= new(currentRedrawLine);
+            redrawLineSymbol.Redraw();
+        }
     }
 
     public void DeleteCurrentLine()
@@ -135,7 +148,7 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
         
         if (BlockSymbolByLineSymbol.ContainsKey(currentSymbol))
         {
-            var line = BlockSymbolByLineSymbol[currentSymbol];
+            currentRedrawLine = BlockSymbolByLineSymbol[currentSymbol];
         }
     }
 

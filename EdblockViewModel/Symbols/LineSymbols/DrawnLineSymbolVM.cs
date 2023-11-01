@@ -14,12 +14,13 @@ public class DrawnLineSymbolVM : Symbol
     public DrawnLineSymbolModel DrawnLineSymbolModel { get; init; }
     public ObservableCollection<LineSymbolVM> LineSymbols { get; init; } = new();
     public ArrowSymbol ArrowSymbol { get; set; } = new();
-    public PositionConnectionPoint PositionConnectionPoint { get; init; }
+    public PositionConnectionPoint PositionOutgoingConnectionPoint { get; init; }
+    public PositionConnectionPoint PositionIncomingConnectionPoint { get; set; }
 
     public DrawnLineSymbolVM(PositionConnectionPoint positionConnectionPoint, DrawnLineSymbolModel drawnLineSymbolModel)
     {
         DrawnLineSymbolModel = drawnLineSymbolModel;
-        PositionConnectionPoint = positionConnectionPoint;
+        PositionOutgoingConnectionPoint = positionConnectionPoint;
     }
 
     public void ChangeCoordination(int currentX, int currentY)
@@ -29,7 +30,7 @@ public class DrawnLineSymbolVM : Symbol
         var startCoordinate = CoordinateLineModel.GetStartCoordinate(DrawnLineSymbolModel.LinesSymbols);
 
         (currentX, currentY) = DrawnLineSymbolModel.RoundingCoordinatesLines(startCoordinate, (currentX, currentY));
-        ArrowSymbol.ChangeOrientationArrow(startCoordinate, (currentX, currentY), PositionConnectionPoint);
+        ArrowSymbol.ChangeOrientationArrow(startCoordinate, (currentX, currentY), PositionOutgoingConnectionPoint);
         DrawnLineSymbolModel.ChangeCoordinateLine(currentX, currentY);
 
         if (LineSymbols.Count == 0)

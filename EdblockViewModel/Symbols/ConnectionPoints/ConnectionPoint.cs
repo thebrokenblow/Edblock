@@ -337,7 +337,7 @@ public class ConnectionPoint : INotifyPropertyChanged
 
     private void EndDrawLine(ConnectionPoint connectionPoint)
     {
-        var outgoingPositionConnectionPoint = _canvasSymbolsVM.CurrentLines!.PositionConnectionPoint;
+        var outgoingPositionConnectionPoint = _canvasSymbolsVM.CurrentLines!.PositionOutgoingConnectionPoint;
         var incomingPositionConnectionPoint = connectionPoint.PositionConnectionPoint;
 
         var finalCoordinate = (x: 0, y: 0);
@@ -444,7 +444,9 @@ public class ConnectionPoint : INotifyPropertyChanged
                 }
             }
         }
-        _canvasSymbolsVM.CurrentLines!.ArrowSymbol.ChangeOrientationArrow(finalCoordinate.x, finalCoordinate.y, incomingPositionConnectionPoint);
+        _canvasSymbolsVM.CurrentLines.PositionIncomingConnectionPoint = incomingPositionConnectionPoint;
+
+        _canvasSymbolsVM.CurrentLines!.ArrowSymbol.ChangeOrientationArrow(finalCoordinate, incomingPositionConnectionPoint);
         _canvasSymbolsVM.CurrentLines!.SymbolaIncomingLine = connectionPoint.BlockSymbol;
 
         if (_canvasSymbolsVM.CurrentLines.SymbolOutgoingLine != null)

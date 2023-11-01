@@ -31,10 +31,9 @@ public class ArrowSymbolModel
     }
 
     //Получение координат стрелки при присоединение линии
-    public static List<(int, int)> GetCoordinateArrow(int x, int y, PositionConnectionPoint positionConnectionPoint)
+    public static List<(int, int)> GetCoordinateArrow((int x, int y) finalCoordinate, PositionConnectionPoint positionConnectionPoint)
     {
-        var currentCoordinateCP = (x, y);
-        var coordinateArror = coordinateArrorByPosition[positionConnectionPoint].Invoke(currentCoordinateCP);
+        var coordinateArror = coordinateArrorByPosition[positionConnectionPoint].Invoke(finalCoordinate);
         return coordinateArror;
     }
 

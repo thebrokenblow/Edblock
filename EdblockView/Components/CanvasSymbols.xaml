@@ -34,7 +34,11 @@
                                 <i:EventTrigger EventName="MouseLeftButtonDown">
                                     <i:InvokeCommandAction Command="{Binding ClickCanvasSymbols}"/>
                                 </i:EventTrigger>
+                                <i:EventTrigger EventName="MouseMove">
+                                    <i:InvokeCommandAction Command="{Binding MouseCursor}"/>
+                                </i:EventTrigger>
                             </i:Interaction.Triggers>
+                            
                             <Canvas.Background>
                                 <DrawingBrush 
                                 TileMode="Tile" 
