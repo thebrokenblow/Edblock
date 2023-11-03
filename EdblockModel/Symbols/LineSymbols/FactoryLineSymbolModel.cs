@@ -34,6 +34,7 @@ public class FactoryLineSymbolModel
     public static LineSymbolModel CreateFirstLine((int x, int y) coordinateConnectionPoint, PositionConnectionPoint positionConnectionPoint, BlockSymbolModel blockSymbolModel)
     {
         var firstLineSymbolModel = new LineSymbolModel();
+
         (firstLineSymbolModel.X1, firstLineSymbolModel.Y1) = CoordinateLineModel.GetStartCoordinateLine(blockSymbolModel, coordinateConnectionPoint, positionConnectionPoint);
         firstLineSymbolModel.X2 = firstLineSymbolModel.X1;
         firstLineSymbolModel.Y2 = firstLineSymbolModel.Y1;

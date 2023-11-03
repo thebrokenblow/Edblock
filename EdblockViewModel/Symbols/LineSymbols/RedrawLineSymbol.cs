@@ -19,6 +19,7 @@ internal class RedrawLineSymbol
 
     public void Redraw()
     {
+        //TODO: Здесь можно применить паттер стратегия
         if (_positionOutgoing == PositionConnectionPoint.Bottom && 
             _positionIncoming == PositionConnectionPoint.Top)
         {

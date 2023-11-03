@@ -124,7 +124,7 @@ public class ArrowSymbolModel
         return coordinateArrow;
     }
 
-    public static List<(int, int)> GetCoordinateBottom((int x, int y) coordinate)
+    private static List<(int, int)> GetCoordinateBottom((int x, int y) coordinate)
     {
         var coordinateArrow = new List<(int, int)>
         {

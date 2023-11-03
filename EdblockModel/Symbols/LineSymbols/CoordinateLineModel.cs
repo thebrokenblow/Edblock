@@ -5,7 +5,7 @@ namespace EdblockModel.Symbols.LineSymbols;
 
 public class CoordinateLineModel
 {
-    private static readonly Dictionary<PositionConnectionPoint, Func<(int, int), (int, int)>> startCoordinateByPosition = new()
+    private static readonly Dictionary<PositionConnectionPoint, Func<(int, int), (int x, int y)>> startCoordinateByPosition = new()
     {
         { PositionConnectionPoint.Bottom, startCoordinate => GetStartCoordinateBottom(startCoordinate) },
         { PositionConnectionPoint.Top, startCoordinate => GetStartCoordinateTop(startCoordinate) },
@@ -20,9 +20,7 @@ public class CoordinateLineModel
         int x = coordinateConnectionPoint.x + blockSymbolModel.X;
         int y = coordinateConnectionPoint.y + blockSymbolModel.Y;
 
-        var startCoordinate = (x, y);
-
-        startCoordinate = startCoordinateByPosition[positionConnectionPoint].Invoke(startCoordinate);
+        var startCoordinate = startCoordinateByPosition[positionConnectionPoint].Invoke((x, y));
        
         startCoordinate.x = CanvasSymbols.СorrectionCoordinateSymbol(startCoordinate.x);
         startCoordinate.y = CanvasSymbols.СorrectionCoordinateSymbol(startCoordinate.y);
