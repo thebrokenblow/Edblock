@@ -117,7 +117,7 @@ public class ConnectionPoint : INotifyPropertyChanged
 
     public void TrackStageDrawLine(ConnectionPoint connectionPoint)
     {
-        if (_canvasSymbolsVM.CurrentLines == null)
+        if (_canvasSymbolsVM.CurrentDrawnLineSymbol == null)
         {
             StarDrawLine(connectionPoint);
         }
@@ -142,10 +142,10 @@ public class ConnectionPoint : INotifyPropertyChanged
         drawnLineSymbolModel.AddFirstLine(coordinateConnectionPoint, positionConnectionPoint, blockSymbolModel);
 
         var drawnLineSymbolVM = new DrawnLineSymbolVM(positionConnectionPoint, drawnLineSymbolModel);
-        _canvasSymbolsVM.CurrentLines = drawnLineSymbolVM;
+        _canvasSymbolsVM.CurrentDrawnLineSymbol = drawnLineSymbolVM;
         _canvasSymbolsVM.Symbols.Add(drawnLineSymbolVM);
 
-        _canvasSymbolsVM.CurrentLines.SymbolOutgoingLine = connectionPoint.BlockSymbol;
+        _canvasSymbolsVM.CurrentDrawnLineSymbol.SymbolOutgoingLine = connectionPoint.BlockSymbol;
     }
 
     private static (int, int) GetTopFinalCoordinate(ConnectionPoint connectionPoint)
@@ -205,8 +205,8 @@ public class ConnectionPoint : INotifyPropertyChanged
                 Y2 = finalCoordinate.y,
             };
 
-            _canvasSymbolsVM.CurrentLines!.LineSymbols.Add(firstLine);
-            _canvasSymbolsVM.CurrentLines.LineSymbols.Add(secondLine);
+            _canvasSymbolsVM.CurrentDrawnLineSymbol!.LineSymbols.Add(firstLine);
+            _canvasSymbolsVM.CurrentDrawnLineSymbol.LineSymbols.Add(secondLine);
         }
     }
 
@@ -222,7 +222,7 @@ public class ConnectionPoint : INotifyPropertyChanged
             Y2 = finalCoordinate.y
         };
 
-        _canvasSymbolsVM.CurrentLines!.LineSymbols.Add(firstLine);
+        _canvasSymbolsVM.CurrentDrawnLineSymbol!.LineSymbols.Add(firstLine);
     }
 
     private void FinishDrawingVerticalToHorizontalLines(LineSymbolVM lastLine, (int x, int y) finalCoordinate)
@@ -237,7 +237,7 @@ public class ConnectionPoint : INotifyPropertyChanged
             Y2 = finalCoordinate.y
         };
 
-        _canvasSymbolsVM.CurrentLines!.LineSymbols.Add(firstLine);
+        _canvasSymbolsVM.CurrentDrawnLineSymbol!.LineSymbols.Add(firstLine);
     }
 
     private void FinishDrawingVerticalToVerticalLines(LineSymbolVM lastLine, (int x, int y) finalCoordinate)
@@ -265,8 +265,8 @@ public class ConnectionPoint : INotifyPropertyChanged
                 Y2 = finalCoordinate.y,
             };
 
-            _canvasSymbolsVM.CurrentLines!.LineSymbols.Add(firstLine);
-            _canvasSymbolsVM.CurrentLines!.LineSymbols.Add(secondLine);
+            _canvasSymbolsVM.CurrentDrawnLineSymbol!.LineSymbols.Add(firstLine);
+            _canvasSymbolsVM.CurrentDrawnLineSymbol!.LineSymbols.Add(secondLine);
         }
     }
 
@@ -282,7 +282,7 @@ public class ConnectionPoint : INotifyPropertyChanged
             X2 = finalCoordinate.x
         };
 
-        _canvasSymbolsVM.CurrentLines!.LineSymbols.Add(firstLine);
+        _canvasSymbolsVM.CurrentDrawnLineSymbol!.LineSymbols.Add(firstLine);
     }
 
     private void FinishDrawingHorizontalToVerticalLines2(LineSymbolVM lastLine, (int x, int y) finalCoordinate)
@@ -293,7 +293,7 @@ public class ConnectionPoint : INotifyPropertyChanged
         }
         else
         {
-            var secondLine = _canvasSymbolsVM.CurrentLines!.LineSymbols[^2];
+            var secondLine = _canvasSymbolsVM.CurrentDrawnLineSymbol!.LineSymbols[^2];
 
             secondLine.Y2 = finalCoordinate.y;
 
@@ -310,7 +310,7 @@ public class ConnectionPoint : INotifyPropertyChanged
         }
         else
         {
-            var secondLine = _canvasSymbolsVM.CurrentLines!.LineSymbols[^2];
+            var secondLine = _canvasSymbolsVM.CurrentDrawnLineSymbol!.LineSymbols[^2];
 
             secondLine.X2 = finalCoordinate.x;
 
@@ -332,17 +332,17 @@ public class ConnectionPoint : INotifyPropertyChanged
             Y2 = lastLine.Y2
         };
 
-        _canvasSymbolsVM.CurrentLines!.LineSymbols.Add(firstLine);
+        _canvasSymbolsVM.CurrentDrawnLineSymbol!.LineSymbols.Add(firstLine);
     }
 
     private void EndDrawLine(ConnectionPoint connectionPoint)
     {
-        var outgoingPositionConnectionPoint = _canvasSymbolsVM.CurrentLines!.PositionOutgoingConnectionPoint;
+        var outgoingPositionConnectionPoint = _canvasSymbolsVM.CurrentDrawnLineSymbol!.PositionOutgoingConnectionPoint;
         var incomingPositionConnectionPoint = connectionPoint.PositionConnectionPoint;
 
         var finalCoordinate = (x: 0, y: 0);
-        var lastLine = _canvasSymbolsVM.CurrentLines.LineSymbols[^1];
-        if (_canvasSymbolsVM.CurrentLines!.LineSymbols.Count % 2 == 1)
+        var lastLine = _canvasSymbolsVM.CurrentDrawnLineSymbol.LineSymbols[^1];
+        if (_canvasSymbolsVM.CurrentDrawnLineSymbol!.LineSymbols.Count % 2 == 1)
         {
             if (outgoingPositionConnectionPoint == PositionConnectionPoint.Bottom ||
                 outgoingPositionConnectionPoint == PositionConnectionPoint.Top)
@@ -444,20 +444,34 @@ public class ConnectionPoint : INotifyPropertyChanged
                 }
             }
         }
-        _canvasSymbolsVM.CurrentLines.PositionIncomingConnectionPoint = incomingPositionConnectionPoint;
+        _canvasSymbolsVM.CurrentDrawnLineSymbol.PositionIncomingConnectionPoint = incomingPositionConnectionPoint;
 
-        _canvasSymbolsVM.CurrentLines!.ArrowSymbol.ChangeOrientationArrow(finalCoordinate, incomingPositionConnectionPoint);
-        _canvasSymbolsVM.CurrentLines!.SymbolaIncomingLine = connectionPoint.BlockSymbol;
+        _canvasSymbolsVM.CurrentDrawnLineSymbol!.ArrowSymbol.ChangeOrientationArrow(finalCoordinate, incomingPositionConnectionPoint);
+        _canvasSymbolsVM.CurrentDrawnLineSymbol!.SymbolaIncomingLine = connectionPoint.BlockSymbol;
 
-        if (_canvasSymbolsVM.CurrentLines.SymbolOutgoingLine != null)
+        AddBlockSymbol(_canvasSymbolsVM.CurrentDrawnLineSymbol!.SymbolaIncomingLine);
+        AddBlockSymbol(_canvasSymbolsVM.CurrentDrawnLineSymbol!.SymbolOutgoingLine);
+
+        _canvasSymbolsVM.CurrentDrawnLineSymbol = null;
+    }
+
+    private void AddBlockSymbol(BlockSymbol? blockSymbol)
+    {
+        if (blockSymbol != null)
         {
-            _canvasSymbolsVM.BlockSymbolByLineSymbol.Add(_canvasSymbolsVM.CurrentLines.SymbolOutgoingLine, _canvasSymbolsVM.CurrentLines);
+            if (_canvasSymbolsVM.BlockSymbolByLineSymbol.ContainsKey(blockSymbol))
+            {
+                var drawnLines = _canvasSymbolsVM.BlockSymbolByLineSymbol[blockSymbol];
+                drawnLines.Add(_canvasSymbolsVM.CurrentDrawnLineSymbol);
+            }
+            else
+            {
+                var drawnLines = new List<DrawnLineSymbolVM?>
+                {
+                    _canvasSymbolsVM.CurrentDrawnLineSymbol
+                };
+                _canvasSymbolsVM.BlockSymbolByLineSymbol.Add(blockSymbol, drawnLines);
+            }
         }
-        if (_canvasSymbolsVM.CurrentLines.SymbolaIncomingLine != null)
-        {
-            _canvasSymbolsVM.BlockSymbolByLineSymbol.Add(_canvasSymbolsVM.CurrentLines.SymbolaIncomingLine, _canvasSymbolsVM.CurrentLines);
-        }
-
-        _canvasSymbolsVM.CurrentLines = null;
     }
 }

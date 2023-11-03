@@ -71,9 +71,9 @@ internal class RedrawLineBottomTop
         var firstLine = _drawnLineSymbolVM.LineSymbols[^3];
 
         firstLine.X1 = _symbolOutgoingLine!.XCoordinate + _symbolOutgoingLine!.Width / 2;
-        firstLine.Y1 = _symbolOutgoingLine!.YCoordinate + _symbolOutgoingLine!.Height;
-        firstLine.X2 = _symbolOutgoingLine!.XCoordinate + _symbolOutgoingLine!.Width / 2;
-        firstLine.Y2 = (_symbolOutgoingLine!.YCoordinate + _symbolaIncomingLine!.Height + _symbolaIncomingLine!.YCoordinate) / 2;
+        firstLine.Y1 = _symbolOutgoingLine.YCoordinate + _symbolOutgoingLine!.Height;
+        firstLine.X2 = _symbolOutgoingLine.XCoordinate + _symbolOutgoingLine!.Width / 2;
+        firstLine.Y2 = (_symbolOutgoingLine.YCoordinate + _symbolaIncomingLine!.Height + _symbolaIncomingLine!.YCoordinate) / 2;
 
         var secondLine = _drawnLineSymbolVM.LineSymbols[^2];
 

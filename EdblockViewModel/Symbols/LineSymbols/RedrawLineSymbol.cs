@@ -22,7 +22,7 @@ internal class RedrawLineSymbol
         if (_positionOutgoing == PositionConnectionPoint.Bottom && 
             _positionIncoming == PositionConnectionPoint.Top)
         {
-            redrawLineBottomTop ??= new(_drawnLineSymbolVM);
+            redrawLineBottomTop = new(_drawnLineSymbolVM);
             redrawLineBottomTop.Redraw();
         }
 
