@@ -1,6 +1,54 @@
 ﻿using EdblockViewModel.Symbols.Abstraction;
+using System;
 
 namespace EdblockViewModel.Symbols.LineSymbols;
+
+
+//public class FactoryFoo
+//{
+//    private readonly Func<int, int> _bar1;
+//    private readonly Func<int, int> _bar2;
+
+//    public FactoryFoo(Func<int, int> bar1, Func<int, int> bar2)
+//    {
+//        _bar1 = bar1;
+//        _bar2 = bar2;
+//    }
+
+//    public Foo Create(int[] boo)
+//    {
+//        return new Foo(boo, _bar1, _bar2);
+//    }
+//}
+
+//public class Foo
+//{
+//    private readonly int[] _boo1;
+//    private readonly Func<int, int> _boo2;
+//    private readonly Func<int, int> _boo3;
+//    public Foo(int[] boo1, Func<int, int> boo2, Func<int, int> boo3)
+//    {
+//        _boo1 = boo1;
+//        _boo2 = boo2;
+//        _boo3 = boo3;
+//    }
+
+//    public int this[int index]
+//    {
+//        get => _boo3(_boo1[_boo2(index)]);
+//    }
+//}
+
+public class Adapter : IArrayDecorator
+{
+    private readonly int[] _foo;
+    public Adapter(int[] foo)
+    {
+        _foo = foo;
+    }
+
+    public int this[int index] { get => _foo[index]; set => _foo[index] = value; }
+}
 
 internal class RedrawLineBottomTop
 {
@@ -22,11 +70,28 @@ internal class RedrawLineBottomTop
 
     public void Redraw()
     {
-        if (_symbolOutgoingLine!.YCoordinate + _symbolOutgoingLine.Height < _symbolaIncomingLine!.YCoordinate)
+        var factory = new FactoryFoo((int x) =>  x, (int x) => x);
+
+        var sizeSymbolOutgoingLine = factory.Create(new Adapter(_symbolOutgoingLine!.GetSize()));
+        var coordinateSymbolOutgoingLine = factory.Create(new Adapter(_symbolOutgoingLine!.GetCoordinate()));
+
+        var szieSymbolaIncomingLine = factory.Create(new Adapter(_symbolOutgoingLine!.GetSize()));
+        var coordinateSymbolaIncomingLine = factory.Create(new Adapter(_symbolOutgoingLine!.GetCoordinate()));
+
+        //    var f = (int x) => x;
+        //  var f = (int x) => 1-x;
+
+        int ySymbolOutgoingLine = coordinateSymbolOutgoingLine[1] + sizeSymbolOutgoingLine[1];
+        int xSymbolOutgoingLine = coordinateSymbolOutgoingLine[0] + sizeSymbolOutgoingLine[1] / 2;
+
+        int xSymbolaIncomingLine = coordinateSymbolaIncomingLine[0] + szieSymbolaIncomingLine[0] / 2;
+
+
+        if (ySymbolOutgoingLine < szieSymbolaIncomingLine[0])
         {
-            if ((_symbolOutgoingLine!.XCoordinate + _symbolOutgoingLine.Width / 2) == (_symbolaIncomingLine!.XCoordinate + _symbolaIncomingLine.Width / 2))
+            if (xSymbolOutgoingLine == xSymbolaIncomingLine)
             {
-                SetCoordnateOneLine();
+                SetCoordnateOneLine(factory, sizeSymbolOutgoingLine, coordinateSymbolOutgoingLine, szieSymbolaIncomingLine, coordinateSymbolaIncomingLine);
             }
             else
             {
@@ -39,16 +104,19 @@ internal class RedrawLineBottomTop
         }
     }
 
-    private void SetCoordnateOneLine()
+    private void SetCoordnateOneLine(FactoryFoo factory, Foo sizeSymbolOutgoingLine, Foo coordinateSymbolOutgoingLine,
+        Foo szieSymbolaIncomingLine, Foo coordinateSymbolaIncomingLine)
     {
         InitLines(oneLine);
 
-        var firstLine = _drawnLineSymbolVM.LineSymbols[^1];
+        var firstLine = new FooLineSymbolVM(_drawnLineSymbolVM.LineSymbols[^1]);
+        var coordinates1 = factory.Create(firstLine.Coordinate1);
+        var coordinates2 = factory.Create(firstLine.Coordinate2);
 
-        firstLine.X1 = _symbolOutgoingLine!.XCoordinate + _symbolOutgoingLine.Width / 2;
-        firstLine.Y1 = _symbolOutgoingLine.YCoordinate + _symbolOutgoingLine.Height;
-        firstLine.X2 = _symbolaIncomingLine!.XCoordinate + _symbolaIncomingLine.Width / 2;
-        firstLine.Y2 = _symbolaIncomingLine.YCoordinate;
+        coordinates1[0] = coordinateSymbolOutgoingLine[0]! + sizeSymbolOutgoingLine[0] / 2;
+        coordinates1[1] = coordinateSymbolOutgoingLine[1] + sizeSymbolOutgoingLine[1];
+        coordinates2[0] = coordinateSymbolaIncomingLine[0] + szieSymbolaIncomingLine[0] / 2;
+        coordinates2[1] = coordinateSymbolaIncomingLine[1];
     }
 
     private void InitLines(int countLine)

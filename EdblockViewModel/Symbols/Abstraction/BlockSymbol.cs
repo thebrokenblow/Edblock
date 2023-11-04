@@ -59,6 +59,16 @@ public abstract class BlockSymbol : Symbol
         }
     }
 
+    public int[] GetCoordinate()
+    {
+        return new int[2] { xCoordinate, yCoordinate };
+    }
+
+    public int[] GetSize()
+    {
+        return new int[2] { width, heigth };
+    }
+
     public TextField TextField { get; init; }
     public BlockSymbolModel BlockSymbolModel { get; init; }
     public DelegateCommand EnterCursor { get; set; }
