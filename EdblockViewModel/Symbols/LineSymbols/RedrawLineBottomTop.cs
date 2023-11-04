@@ -31,10 +31,22 @@ internal class RedrawLineBottomTop
         var borderCoordinateSymbolOutgoing = _symbolOutgoingLine.GetBorderCoordinate(_positionOutgoing);
         var borderCoordinateSymbolaIncoming = _symbolaIncomingLine.GetBorderCoordinate(_positionIncoming);
 
-        if (borderCoordinateSymbolOutgoing.x == borderCoordinateSymbolaIncoming.x ||
-            borderCoordinateSymbolOutgoing.y == borderCoordinateSymbolaIncoming.y)
+        if ((_positionOutgoing == PositionConnectionPoint.Top && _positionIncoming == PositionConnectionPoint.Bottom) ||
+            (_positionOutgoing == PositionConnectionPoint.Bottom && _positionIncoming == PositionConnectionPoint.Top))
         {
-            SetCoordnateOneLine(borderCoordinateSymbolOutgoing, borderCoordinateSymbolaIncoming);
+            if (borderCoordinateSymbolOutgoing.x == borderCoordinateSymbolaIncoming.x)
+            {
+                SetCoordnateOneLine(borderCoordinateSymbolOutgoing, borderCoordinateSymbolaIncoming);
+            }
+        }
+
+        else if ((_positionOutgoing == PositionConnectionPoint.Left && _positionIncoming == PositionConnectionPoint.Right) || 
+            (_positionOutgoing == PositionConnectionPoint.Right && _positionIncoming == PositionConnectionPoint.Left))
+        {
+            if (borderCoordinateSymbolOutgoing.y == borderCoordinateSymbolaIncoming.y)
+            {
+                SetCoordnateOneLine(borderCoordinateSymbolOutgoing, borderCoordinateSymbolaIncoming);
+            }
         }
     }
 
