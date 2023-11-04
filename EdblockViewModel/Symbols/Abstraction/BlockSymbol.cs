@@ -1,4 +1,5 @@
-﻿using Prism.Commands;
+﻿using System;
+using Prism.Commands;
 using System.Windows.Input;
 using EdblockModel.Symbols;
 using System.Collections.Generic;
@@ -59,22 +60,15 @@ public abstract class BlockSymbol : Symbol
         }
     }
 
-    public int[] GetCoordinate()
-    {
-        return new int[2] { xCoordinate, yCoordinate };
-    }
-
-    public int[] GetSize()
-    {
-        return new int[2] { width, heigth };
-    }
-
     public TextField TextField { get; init; }
     public BlockSymbolModel BlockSymbolModel { get; init; }
     public DelegateCommand EnterCursor { get; set; }
     public DelegateCommand LeaveCursor { get; set; }
+
     private readonly CanvasSymbolsVM _canvasSymbolsVM;
     private readonly FactoryBlockSymbolModel factoryBlockSymbolModel = new();
+    private readonly Dictionary<PositionConnectionPoint, Func<(int x, int y)>> borderCoordinateByPositionCP;
+
     protected const int defaultWidth = 140;
     protected const int defaultHeigth = 60;
     public BlockSymbol(string nameBlockSymbol, CanvasSymbolsVM canvasSymbolsVM)
@@ -91,6 +85,14 @@ public abstract class BlockSymbol : Symbol
         Height = defaultHeigth;
         HexColor = BlockSymbolModel.HexColor;
 
+        borderCoordinateByPositionCP = new()
+        {
+            { PositionConnectionPoint.Top, GetTopBorderCoordinate },
+            { PositionConnectionPoint.Bottom, GetBottomBorderCoordinate },
+            { PositionConnectionPoint.Left, GetLeftBorderCoordinate },
+            { PositionConnectionPoint.Right, GetRightBorderCoordinate }
+        };
+
         var factoryConnectionPoints = new FactoryConnectionPoints(_canvasSymbolsVM, this);
         ConnectionPoints = factoryConnectionPoints.Create();
 
@@ -101,11 +103,37 @@ public abstract class BlockSymbol : Symbol
         LeaveCursor = new(HideStroke);
     }
 
+    private (int x, int y) GetTopBorderCoordinate()
+    {
+        return (xCoordinate + width / 2, yCoordinate);
+    }
+
+    private (int x, int y) GetBottomBorderCoordinate()
+    {
+        return (xCoordinate + width / 2, yCoordinate + heigth);
+    }
+
+    private (int x, int y) GetLeftBorderCoordinate()
+    {
+        return (xCoordinate, yCoordinate + heigth / 2);
+    }
+
+    private (int x, int y) GetRightBorderCoordinate()
+    {
+        return (xCoordinate + width, yCoordinate + heigth / 2);
+    }
+
     public abstract void SetWidth(int width);
     public abstract void SetHeight(int height);
 
+    public (int x, int y) GetBorderCoordinate(PositionConnectionPoint positionConnectionPoint)
+    {
+        return borderCoordinateByPositionCP[positionConnectionPoint].Invoke();
+    }
+
     public void ShowStroke()
     {
+        // Условие истино, когда символ не перемещается и не масштабируется (просто навёл курсор)
         if (_canvasSymbolsVM.DraggableSymbol == null && _canvasSymbolsVM.ScaleData == null)
         {
             ConnectionPoint.SetFill(ConnectionPointModel.HexFocusFill, ConnectionPoints);

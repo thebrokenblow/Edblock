@@ -38,6 +38,7 @@ public class ArrowSymbol : Symbol
     private void SetCoodinate(List<(int, int)> coordinatesArrow)
     {
         var pointArrowSymbol = new PointCollection();
+
         foreach (var coordinate in coordinatesArrow)
         {
             var pointCoordinate = new Point(coordinate.Item1, coordinate.Item2);

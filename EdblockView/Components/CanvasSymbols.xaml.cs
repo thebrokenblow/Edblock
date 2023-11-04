@@ -34,20 +34,20 @@ public partial class CanvasSymbols : UserControl
         if (x == x1)
         {
             var pos = scrollViewer.HorizontalOffset;
+
             if (scrollViewer.ScrollableWidth - scrollViewer.ViewportWidth - scrollViewer.HorizontalOffset <25)
             {
                 canvasSymbols.Width = canvasSymbols.ActualWidth + 25;
             }
-            
-            
-            scrollViewer.ScrollToHorizontalOffset(pos+25);
-            
+
+            scrollViewer.ScrollToHorizontalOffset(pos + 25);
         }
         else if (x <= 0)
         {
-          //  canvasSymbols.Width = canvasSymbols.ActualWidth + 25;
-          if (scrollViewer.HorizontalOffset>=25)
-            scrollViewer.ScrollToHorizontalOffset(scrollViewer.HorizontalOffset-25);
+            if (scrollViewer.HorizontalOffset >= 25)
+            {
+                scrollViewer.ScrollToHorizontalOffset(scrollViewer.HorizontalOffset - 25);
+            }
         }
     }
 }
