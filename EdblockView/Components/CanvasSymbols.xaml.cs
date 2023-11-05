@@ -9,6 +9,7 @@ namespace EdblockView.Components;
 /// </summary>
 public partial class CanvasSymbols : UserControl
 {
+    private const int canvasOffset = 25;
     public CanvasSymbolsVM CanvasSymbolsVM 
     {
         set
@@ -28,25 +29,20 @@ public partial class CanvasSymbols : UserControl
         var scrollViewer = (ScrollViewer)sender;
         var canvasSymbols = (Canvas)scrollViewer.Content;
 
-        var x = cursorPosition.X - (cursorPosition.X % 100);
-        var x1 = scrollViewer.ActualWidth - (scrollViewer.ActualWidth % 100);
-
-        if (x == x1)
+        if (cursorPosition.X > 0)
         {
-            var pos = scrollViewer.HorizontalOffset;
-
-            if (scrollViewer.ScrollableWidth - scrollViewer.ViewportWidth - scrollViewer.HorizontalOffset <25)
+            if (scrollViewer.ScrollableWidth - scrollViewer.ViewportWidth - scrollViewer.HorizontalOffset < canvasOffset)
             {
-                canvasSymbols.Width = canvasSymbols.ActualWidth + 25;
+                canvasSymbols.Width = canvasSymbols.ActualWidth + canvasOffset;
             }
 
-            scrollViewer.ScrollToHorizontalOffset(pos + 25);
+            scrollViewer.ScrollToHorizontalOffset(scrollViewer.HorizontalOffset + canvasOffset);
         }
-        else if (x <= 0)
+        else
         {
-            if (scrollViewer.HorizontalOffset >= 25)
+            if (scrollViewer.HorizontalOffset >= canvasOffset)
             {
-                scrollViewer.ScrollToHorizontalOffset(scrollViewer.HorizontalOffset - 25);
+                scrollViewer.ScrollToHorizontalOffset(scrollViewer.HorizontalOffset - canvasOffset);
             }
         }
     }
