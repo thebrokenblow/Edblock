@@ -41,7 +41,7 @@
                                     <i:InvokeCommandAction Command="{Binding MouseUpCanvasSymbols}"/>
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
-                            
+
                             <Canvas.Background>
                                 <DrawingBrush 
                                 TileMode="Tile" 

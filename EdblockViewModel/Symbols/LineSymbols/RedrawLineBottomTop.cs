@@ -1,4 +1,5 @@
-﻿using EdblockViewModel.Symbols.Abstraction;
+﻿using System;
+using EdblockViewModel.Symbols.Abstraction;
 using EdblockModel.Symbols.ConnectionPoints;
 
 namespace EdblockViewModel.Symbols.LineSymbols;
@@ -19,6 +20,222 @@ internal class RedrawLineBottomTop
         _positionIncoming = drawnLineSymbolVM.PositionIncomingConnectionPoint;
         _symbolaIncomingLine = drawnLineSymbolVM.SymbolaIncomingLine;
         _symbolOutgoingLine = drawnLineSymbolVM.SymbolOutgoingLine;
+    }
+
+    public interface ICoordinateDecorator
+    {
+        public int X { get; set; }
+        public int Y { get; set; }
+
+    }
+
+    public class InversionXCoordinateDecorator : ICoordinateDecorator
+    {
+        public int X
+        {
+            get
+            {
+                return _coordinateDecorator.X * -1;
+            }
+            set
+            {
+                _coordinateDecorator.X = value * -1;
+            }
+        }
+
+        public int Y
+        {
+            get
+            {
+                return _coordinateDecorator.Y;
+            }
+            set
+            {
+                _coordinateDecorator.Y = value;
+            }
+        }
+
+        private readonly ICoordinateDecorator _coordinateDecorator;
+
+        public InversionXCoordinateDecorator(ICoordinateDecorator coordinateDecorator)
+        {
+            _coordinateDecorator = coordinateDecorator;
+        }
+    }
+
+    public class InversionYCoordinateDecorator : ICoordinateDecorator
+    {
+        public int X
+        {
+            get
+            {
+                return _coordinateDecorator.X;
+            }
+            set
+            {
+                _coordinateDecorator.X = value;
+            }
+        }
+
+        public int Y
+        {
+            get
+            {
+                return _coordinateDecorator.Y * -1;
+            }
+            set
+            {
+                _coordinateDecorator.Y = value * -1;
+            }
+        }
+
+        private readonly ICoordinateDecorator _coordinateDecorator;
+
+        public InversionYCoordinateDecorator(ICoordinateDecorator coordinateDecorator)
+        {
+            _coordinateDecorator = coordinateDecorator;
+        }
+    }
+
+    public class SwapCoordinateDecorator : ICoordinateDecorator
+    {
+        public int X 
+        {   
+            get
+            {
+                return _coordinateDecorator.Y;
+            }
+            set
+            {
+                _coordinateDecorator.Y = value; 
+            }
+        }
+        public int Y
+        {
+            get
+            {
+                return _coordinateDecorator.X;
+            }
+            set
+            {
+                _coordinateDecorator.X = value;
+            }
+        }
+
+        private readonly ICoordinateDecorator _coordinateDecorator;
+
+        public SwapCoordinateDecorator(ICoordinateDecorator coordinateDecorator)
+        {
+            _coordinateDecorator = coordinateDecorator;
+        }
+    }
+
+    public class BuildCoordinateDecorator
+    {
+        private bool IsSetSwapCoordinate = false;
+        private bool IsInversionXCoordinate = false;
+        private bool IsInversionYCoordinate = false;
+
+        public BuildCoordinateDecorator SetSwap()
+        {
+            IsSetSwapCoordinate = true;
+
+            return this;
+        }
+
+        public BuildCoordinateDecorator SetInversionXCoordinate()
+        {
+            IsInversionXCoordinate = true;
+
+            return this;
+        }
+
+        public BuildCoordinateDecorator SetInversionYCoordinate()
+        {
+            IsInversionYCoordinate = true;
+
+            return this;
+        }
+
+        public ICoordinateDecorator Create(ICoordinateDecorator coordinate)
+        {
+            if (IsSetSwapCoordinate && IsInversionXCoordinate && IsInversionYCoordinate)
+            {
+                ICoordinateDecorator inversionXCoordinateDecorator = new InversionXCoordinateDecorator(coordinate);
+                ICoordinateDecorator InversionYCoordinateDecorator = new InversionYCoordinateDecorator(inversionXCoordinateDecorator);
+                ICoordinateDecorator swapCoordinateDecorator = new SwapCoordinateDecorator(InversionYCoordinateDecorator);
+
+                return swapCoordinateDecorator;
+            }
+
+            if (!IsSetSwapCoordinate && IsInversionXCoordinate && IsInversionYCoordinate)
+            {
+                ICoordinateDecorator inversionXCoordinateDecorator = new InversionXCoordinateDecorator(coordinate);
+                ICoordinateDecorator InversionYCoordinateDecorator = new InversionYCoordinateDecorator(inversionXCoordinateDecorator);
+
+                return InversionYCoordinateDecorator;
+            }
+
+            if (!IsSetSwapCoordinate && !IsInversionXCoordinate && IsInversionYCoordinate)
+            {
+                ICoordinateDecorator InversionYCoordinateDecorator = new InversionYCoordinateDecorator(coordinate);
+
+                return InversionYCoordinateDecorator;
+            }
+
+            if (!IsSetSwapCoordinate && !IsInversionXCoordinate && !IsInversionYCoordinate)
+            {
+                return coordinate;
+            }
+
+
+            if (IsSetSwapCoordinate && !IsInversionXCoordinate && IsInversionYCoordinate)
+            {
+                ICoordinateDecorator InversionYCoordinateDecorator = new InversionYCoordinateDecorator(coordinate);
+                ICoordinateDecorator swapCoordinateDecorator = new SwapCoordinateDecorator(InversionYCoordinateDecorator);
+
+                return swapCoordinateDecorator;
+            }
+
+            if (IsSetSwapCoordinate && !IsInversionXCoordinate && !IsInversionYCoordinate)
+            {
+                ICoordinateDecorator swapCoordinateDecorator = new SwapCoordinateDecorator(coordinate);
+
+                return swapCoordinateDecorator;
+            }
+
+
+            if (!IsSetSwapCoordinate && IsInversionXCoordinate && !IsInversionYCoordinate)
+            {
+                ICoordinateDecorator InversionXCoordinate = new InversionXCoordinateDecorator(coordinate);
+
+                return InversionXCoordinate;
+            }
+
+            if (IsSetSwapCoordinate && IsInversionXCoordinate && !IsInversionYCoordinate)
+            {
+                ICoordinateDecorator InversionXCoordinateDecorator = new InversionXCoordinateDecorator(coordinate);
+                ICoordinateDecorator swapCoordinateDecorator = new SwapCoordinateDecorator(InversionXCoordinateDecorator);
+
+                return swapCoordinateDecorator;
+            }
+
+            throw new Exception("");
+        }
+    }
+
+    public class Coordinate : ICoordinateDecorator
+    {
+        public Coordinate() {}
+
+        public Coordinate((int x, int y) borderCoordinateSymbol)
+        {
+            X = borderCoordinateSymbol.x;
+            Y = borderCoordinateSymbol.y;
+        }
+
+        public int X { get; set; }
+        public int Y { get; set; }
     }
 
     public void Redraw()
@@ -74,51 +291,81 @@ internal class RedrawLineBottomTop
         (borderCoordinateSymbolaIncoming.x, borderCoordinateSymbolaIncoming.y) = (borderCoordinateSymbolaIncoming.y, borderCoordinateSymbolaIncoming.x);
     }
 
-    private void SetCoordnateTreeLine1((int x, int y) borderCoordinateSymbolOutgoing, (int x, int y) borderCoordinateSymbolaIncoming)
+    private void SetCoordnateTreeLine1((int x, int y) coordinateBorderSymbolOutgoing1, (int x, int y) coordinateBorderSymbolIncoming1)
     {
+        SetCoordnateTreeLine(coordinateBorderSymbolOutgoing1, coordinateBorderSymbolIncoming1, new BuildCoordinateDecorator());
+    }
+
+    private void SetCoordnateTreeLine((int x, int y) coordinateBorderSymbolOutgoing1, (int x, int y) coordinateBorderSymbolIncoming1, BuildCoordinateDecorator buildCoordinateDecorator)
+    {
+        var coordinateBorderSymbolOutgoing = buildCoordinateDecorator.Create(new Coordinate(coordinateBorderSymbolOutgoing1));
+        var coordinateBorderSymbolIncoming = buildCoordinateDecorator.Create(new Coordinate(coordinateBorderSymbolIncoming1));
+
+        var firstLine1Coordinate = new Coordinate();
+        var firstLine1 = buildCoordinateDecorator.Create(firstLine1Coordinate);
+
+        var firstLine2Coordinate = new Coordinate();
+        var firstLine2 = buildCoordinateDecorator.Create(firstLine2Coordinate);
+
+        var secondLine1Coordinate = new Coordinate();
+        var secondLine2Coordinate = new Coordinate();
+
+        var secondLine1 = buildCoordinateDecorator.Create(secondLine1Coordinate);
+        var secondLine2 = buildCoordinateDecorator.Create(secondLine2Coordinate);
+
+        var thirdLine1Coordinate = new Coordinate();
+        var thirdLine2Coordinate = new Coordinate();
+
+        var thirdLine1 = buildCoordinateDecorator.Create(thirdLine1Coordinate);
+        var thirdLine2 = buildCoordinateDecorator.Create(thirdLine2Coordinate);
+
+        firstLine1.X = coordinateBorderSymbolOutgoing.X;
+        firstLine1.Y = coordinateBorderSymbolOutgoing.Y;
+
+        firstLine2.X = coordinateBorderSymbolOutgoing.X;
+        firstLine2.Y = coordinateBorderSymbolOutgoing.Y + (coordinateBorderSymbolIncoming.Y - coordinateBorderSymbolOutgoing.Y) / 2;
+
+
+        secondLine1.X = coordinateBorderSymbolOutgoing.X;
+        secondLine1.Y = coordinateBorderSymbolOutgoing.Y + (coordinateBorderSymbolIncoming.Y - coordinateBorderSymbolOutgoing.Y) / 2;
+
+        secondLine2.X = coordinateBorderSymbolIncoming.X;
+        secondLine2.Y = coordinateBorderSymbolOutgoing.Y + (coordinateBorderSymbolIncoming.Y - coordinateBorderSymbolOutgoing.Y) / 2;
+
+
+        thirdLine1.X = coordinateBorderSymbolIncoming.X;
+        thirdLine1.Y = coordinateBorderSymbolOutgoing.Y + (coordinateBorderSymbolIncoming.Y - coordinateBorderSymbolOutgoing.Y) / 2;
+
+        thirdLine2.X = coordinateBorderSymbolIncoming.X;
+        thirdLine2.Y = coordinateBorderSymbolIncoming.Y;
+
         var firstLine = _drawnLineSymbolVM.LineSymbols[^3];
 
-        firstLine.X1 = borderCoordinateSymbolOutgoing.x;
-        firstLine.Y1 = borderCoordinateSymbolOutgoing.y;
-        firstLine.X2 = borderCoordinateSymbolOutgoing.x;
-        firstLine.Y2 = borderCoordinateSymbolOutgoing.y + (borderCoordinateSymbolaIncoming.y - borderCoordinateSymbolOutgoing.y) / 2;
+        firstLine.X1 = firstLine1Coordinate.X;
+        firstLine.Y1 = firstLine1Coordinate.Y;
+
+        firstLine.X2 = firstLine2Coordinate.X;
+        firstLine.Y2 = firstLine2Coordinate.Y;
 
         var secondLine = _drawnLineSymbolVM.LineSymbols[^2];
 
-        secondLine.X1 = borderCoordinateSymbolOutgoing.x;
-        secondLine.Y1 = borderCoordinateSymbolOutgoing.y + (borderCoordinateSymbolaIncoming.y - borderCoordinateSymbolOutgoing.y) / 2;
-        secondLine.X2 = borderCoordinateSymbolaIncoming.x;
-        secondLine.Y2 = borderCoordinateSymbolOutgoing.y + (borderCoordinateSymbolaIncoming.y - borderCoordinateSymbolOutgoing.y) / 2;
+        secondLine.X1 = secondLine1Coordinate.X;
+        secondLine.Y1 = secondLine1Coordinate.Y;
+
+        secondLine.X2 = secondLine2Coordinate.X;
+        secondLine.Y2 = secondLine2Coordinate.Y;
 
         var thirdLine = _drawnLineSymbolVM.LineSymbols[^1];
 
-        thirdLine.X1 = borderCoordinateSymbolaIncoming.x;
-        thirdLine.Y1 = borderCoordinateSymbolOutgoing.y + (borderCoordinateSymbolaIncoming.y - borderCoordinateSymbolOutgoing.y) / 2;
-        thirdLine.X2 = borderCoordinateSymbolaIncoming.x;
-        thirdLine.Y2 = borderCoordinateSymbolaIncoming.y;
-    }
+        thirdLine.X1 = thirdLine1Coordinate.X;
+        thirdLine.Y1 = thirdLine1Coordinate.Y;
 
+        thirdLine.X2 = thirdLine2Coordinate.X;
+        thirdLine.Y2 = thirdLine2Coordinate.Y;
+    }
 
     private void SetCoordnateTreeLine2((int x, int y) borderCoordinateSymbolOutgoing, (int x, int y) borderCoordinateSymbolaIncoming)
     {
-        var firstLine = _drawnLineSymbolVM.LineSymbols[^3];
-        firstLine.X1 = borderCoordinateSymbolOutgoing.x;
-        firstLine.Y1 = borderCoordinateSymbolOutgoing.y;
-        firstLine.X2 = borderCoordinateSymbolOutgoing.x + (borderCoordinateSymbolaIncoming.x - borderCoordinateSymbolOutgoing.x) / 2;
-        firstLine.Y2 = borderCoordinateSymbolOutgoing.y;
-
-        var secondLine = _drawnLineSymbolVM.LineSymbols[^2];
-
-        secondLine.X1 = borderCoordinateSymbolOutgoing.x + (borderCoordinateSymbolaIncoming.x - borderCoordinateSymbolOutgoing.x) / 2;
-        secondLine.Y1 = borderCoordinateSymbolOutgoing.y;
-        secondLine.X2 = borderCoordinateSymbolOutgoing.x + (borderCoordinateSymbolaIncoming.x - borderCoordinateSymbolOutgoing.x) / 2;
-        secondLine.Y2 = borderCoordinateSymbolaIncoming.y;
-
-        var thirdLine = _drawnLineSymbolVM.LineSymbols[^1];
-
-        thirdLine.X1 = borderCoordinateSymbolOutgoing.x + (borderCoordinateSymbolaIncoming.x - borderCoordinateSymbolOutgoing.x) / 2;
-        thirdLine.Y1 = borderCoordinateSymbolaIncoming.y;
-        thirdLine.X2 = borderCoordinateSymbolaIncoming.x;
-        thirdLine.Y2 = borderCoordinateSymbolaIncoming.y;
+        SetCoordnateTreeLine(borderCoordinateSymbolOutgoing, borderCoordinateSymbolaIncoming, new BuildCoordinateDecorator().SetSwap());
     }
 }

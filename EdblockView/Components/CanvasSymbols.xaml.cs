@@ -1,6 +1,7 @@
 ﻿using EdblockViewModel;
 using System.Windows.Input;
 using System.Windows.Controls;
+using EdblockViewModel.Symbols.Abstraction;
 
 namespace EdblockView.Components;
 
@@ -10,6 +11,7 @@ namespace EdblockView.Components;
 public partial class CanvasSymbols : UserControl
 {
     private const int canvasOffset = 25;
+    
     public CanvasSymbolsVM CanvasSymbolsVM 
     {
         set
@@ -17,6 +19,8 @@ public partial class CanvasSymbols : UserControl
             DataContext = value;
         }
     }
+
+    public BlockSymbol? DraggableSymbol { get; set; }
 
     public CanvasSymbols()
     {
@@ -29,13 +33,17 @@ public partial class CanvasSymbols : UserControl
         var scrollViewer = (ScrollViewer)sender;
         var canvasSymbols = (Canvas)scrollViewer.Content;
 
+        if (DraggableSymbol == null)
+        {
+            return;
+        }
+
         if (cursorPosition.X > 0)
         {
             if (scrollViewer.ScrollableWidth - scrollViewer.ViewportWidth - scrollViewer.HorizontalOffset < canvasOffset)
             {
                 canvasSymbols.Width = canvasSymbols.ActualWidth + canvasOffset;
             }
-
             scrollViewer.ScrollToHorizontalOffset(scrollViewer.HorizontalOffset + canvasOffset);
         }
         else
