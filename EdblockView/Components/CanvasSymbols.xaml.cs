@@ -11,16 +11,17 @@ namespace EdblockView.Components;
 public partial class CanvasSymbols : UserControl
 {
     private const int canvasOffset = 25;
-    
-    public CanvasSymbolsVM CanvasSymbolsVM 
+
+    private CanvasSymbolsVM? canvasSymbolsVM;
+    public CanvasSymbolsVM? CanvasSymbolsVM 
     {
+        get => canvasSymbolsVM;
         set
         {
-            DataContext = value;
+            canvasSymbolsVM = value;
+            DataContext = canvasSymbolsVM;
         }
     }
-
-    public BlockSymbol? DraggableSymbol { get; set; }
 
     public CanvasSymbols()
     {
@@ -33,7 +34,7 @@ public partial class CanvasSymbols : UserControl
         var scrollViewer = (ScrollViewer)sender;
         var canvasSymbols = (Canvas)scrollViewer.Content;
 
-        if (DraggableSymbol == null)
+        if (CanvasSymbolsVM?.DraggableSymbol == null)
         {
             return;
         }

@@ -255,9 +255,13 @@ internal class RedrawLineBottomTop
             {
                 SetCoordnateOneLine(borderCoordinateSymbolOutgoing, borderCoordinateSymbolaIncoming);
             }
-            else if (borderCoordinateSymbolOutgoing.y != borderCoordinateSymbolaIncoming.y)
+            else if (borderCoordinateSymbolOutgoing.y < borderCoordinateSymbolaIncoming.y)
             {
                 SetCoordnateTreeLine1(borderCoordinateSymbolOutgoing, borderCoordinateSymbolaIncoming);
+            }
+            else
+            {
+                SetCoordnateFive();
             }
         }
         else if ((_positionOutgoing == PositionConnectionPoint.Left && _positionIncoming == PositionConnectionPoint.Right) || 
@@ -362,6 +366,44 @@ internal class RedrawLineBottomTop
 
         thirdLine.X2 = thirdLine2Coordinate.X;
         thirdLine.Y2 = thirdLine2Coordinate.Y;
+    }
+
+    private void SetCoordnateFive()
+    {
+        var firstLine = _drawnLineSymbolVM.LineSymbols[^5];
+
+        firstLine.X1 = _symbolOutgoingLine!.XCoordinate + _symbolOutgoingLine.Width / 2;
+        firstLine.Y1 = _symbolOutgoingLine.YCoordinate + _symbolOutgoingLine.Height;
+        firstLine.X2 = _symbolOutgoingLine.XCoordinate + _symbolOutgoingLine.Width / 2;
+        firstLine.Y2 = _symbolOutgoingLine.YCoordinate + _symbolOutgoingLine.Height + baseLineOffset;
+
+        var secondLine = _drawnLineSymbolVM.LineSymbols[^4];
+
+        secondLine.X1 = _symbolOutgoingLine.XCoordinate + _symbolOutgoingLine.Width / 2;
+        secondLine.Y1 = _symbolOutgoingLine.YCoordinate + _symbolOutgoingLine.Height + baseLineOffset;
+        secondLine.X2 = (_symbolOutgoingLine.XCoordinate + _symbolOutgoingLine.Width + _symbolaIncomingLine!.XCoordinate) / 2;
+        secondLine.Y2 = _symbolOutgoingLine.YCoordinate + _symbolOutgoingLine.Height + baseLineOffset;
+
+        var thirdLine = _drawnLineSymbolVM.LineSymbols[^3];
+
+        thirdLine.X1 = (_symbolOutgoingLine.XCoordinate + _symbolOutgoingLine.Width + _symbolaIncomingLine!.XCoordinate) / 2;
+        thirdLine.Y1 = _symbolOutgoingLine.YCoordinate + _symbolOutgoingLine.Height + baseLineOffset;
+        thirdLine.X2 = (_symbolOutgoingLine.XCoordinate + _symbolOutgoingLine.Width + _symbolaIncomingLine.XCoordinate) / 2;
+        thirdLine.Y2 = _symbolaIncomingLine.YCoordinate - baseLineOffset;
+
+        var fourthLine = _drawnLineSymbolVM.LineSymbols[^2];
+
+        fourthLine.X1 = (_symbolOutgoingLine.XCoordinate + _symbolOutgoingLine.Width + _symbolaIncomingLine.XCoordinate) / 2;
+        fourthLine.Y1 = _symbolaIncomingLine.YCoordinate - baseLineOffset;
+        fourthLine.X2 = _symbolaIncomingLine.XCoordinate + _symbolaIncomingLine.Width / 2;
+        fourthLine.Y2 = _symbolaIncomingLine.YCoordinate - baseLineOffset;
+
+        var fifthLine = _drawnLineSymbolVM.LineSymbols[^1];
+
+        fifthLine.X1 = _symbolaIncomingLine.XCoordinate + _symbolaIncomingLine.Width / 2;
+        fifthLine.Y1 = _symbolaIncomingLine.YCoordinate - baseLineOffset;
+        fifthLine.X2 = _symbolaIncomingLine.XCoordinate + _symbolaIncomingLine.Width / 2;
+        fifthLine.Y2 = _symbolaIncomingLine.YCoordinate;
     }
 
     private void SetCoordnateTreeLine2((int x, int y) borderCoordinateSymbolOutgoing, (int x, int y) borderCoordinateSymbolaIncoming)

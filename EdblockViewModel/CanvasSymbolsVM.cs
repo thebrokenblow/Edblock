@@ -195,5 +195,4 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
             }
         }
     }
-
 }
