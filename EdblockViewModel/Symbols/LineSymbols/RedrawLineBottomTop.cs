@@ -261,7 +261,7 @@ internal class RedrawLineBottomTop
             }
             else
             {
-                SetCoordnateFive(borderCoordinateSymbolOutgoing, borderCoordinateSymbolaIncoming);
+                SetCoordnateFive1(borderCoordinateSymbolOutgoing, borderCoordinateSymbolaIncoming);
             }
         }
         else if ((_positionOutgoing == PositionConnectionPoint.Left && _positionIncoming == PositionConnectionPoint.Right) || 
@@ -274,6 +274,10 @@ internal class RedrawLineBottomTop
             else if (borderCoordinateSymbolOutgoing.x < borderCoordinateSymbolaIncoming.x)
             {
                 SetCoordnateTreeLine2(borderCoordinateSymbolOutgoing, borderCoordinateSymbolaIncoming);
+            }
+            else
+            {
+                SetCoordnateFive2(borderCoordinateSymbolOutgoing, borderCoordinateSymbolaIncoming);
             }
         }        
     }
@@ -362,7 +366,7 @@ internal class RedrawLineBottomTop
         thirdLine.Y2 = thirdLine2Coordinate.Y;
     }
 
-    private void SetCoordnateFive((int x, int y) borderCoordinateSymbolOutgoing, (int x, int y) borderCoordinateSymbolaIncoming)
+    private void SetCoordnateFive1((int x, int y) borderCoordinateSymbolOutgoing, (int x, int y) borderCoordinateSymbolaIncoming)
     {
         var firstLine = _drawnLineSymbolVM.LineSymbols[^5];
 
@@ -396,6 +400,44 @@ internal class RedrawLineBottomTop
 
         fifthLine.X1 = borderCoordinateSymbolaIncoming.x;
         fifthLine.Y1 = borderCoordinateSymbolaIncoming.y - baseLineOffset;
+        fifthLine.X2 = borderCoordinateSymbolaIncoming.x;
+        fifthLine.Y2 = borderCoordinateSymbolaIncoming.y;
+    }
+
+    private void SetCoordnateFive2((int x, int y) borderCoordinateSymbolOutgoing, (int x, int y) borderCoordinateSymbolaIncoming)
+    {
+        var firstLine = _drawnLineSymbolVM.LineSymbols[^5];
+
+        firstLine.X1 = borderCoordinateSymbolOutgoing.x;
+        firstLine.Y1 = borderCoordinateSymbolOutgoing.y;
+        firstLine.X2 = borderCoordinateSymbolOutgoing.x + baseLineOffset;
+        firstLine.Y2 = borderCoordinateSymbolOutgoing.y;
+
+        var secondLine = _drawnLineSymbolVM.LineSymbols[^4];
+
+        secondLine.X1 = borderCoordinateSymbolOutgoing.x + baseLineOffset;
+        secondLine.Y1 = borderCoordinateSymbolOutgoing.y;
+        secondLine.X2 = borderCoordinateSymbolOutgoing.x + baseLineOffset;
+        secondLine.Y2 = borderCoordinateSymbolOutgoing.y + (borderCoordinateSymbolaIncoming.y - borderCoordinateSymbolOutgoing.y) / 2;
+
+        var thirdLine = _drawnLineSymbolVM.LineSymbols[^3];
+
+        thirdLine.X1 = borderCoordinateSymbolOutgoing.x + baseLineOffset;
+        thirdLine.Y1 = borderCoordinateSymbolOutgoing.y + (borderCoordinateSymbolaIncoming.y - borderCoordinateSymbolOutgoing.y) / 2;
+        thirdLine.X2 = borderCoordinateSymbolaIncoming.x - baseLineOffset;
+        thirdLine.Y2 = borderCoordinateSymbolOutgoing.y + (borderCoordinateSymbolaIncoming.y - borderCoordinateSymbolOutgoing.y) / 2;
+
+        var fourthLine = _drawnLineSymbolVM.LineSymbols[^2];
+
+        fourthLine.X1 = borderCoordinateSymbolaIncoming.x - baseLineOffset;
+        fourthLine.Y1 = borderCoordinateSymbolOutgoing.y + (borderCoordinateSymbolaIncoming.y - borderCoordinateSymbolOutgoing.y) / 2;
+        fourthLine.X2 = borderCoordinateSymbolaIncoming.x - baseLineOffset;
+        fourthLine.Y2 = borderCoordinateSymbolaIncoming.y;
+
+        var fifthLine = _drawnLineSymbolVM.LineSymbols[^1];
+
+        fifthLine.X1 = borderCoordinateSymbolaIncoming.x - baseLineOffset;
+        fifthLine.Y1 = borderCoordinateSymbolaIncoming.y;
         fifthLine.X2 = borderCoordinateSymbolaIncoming.x;
         fifthLine.Y2 = borderCoordinateSymbolaIncoming.y;
     }
