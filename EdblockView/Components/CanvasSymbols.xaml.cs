@@ -39,7 +39,7 @@ public partial class CanvasSymbols : UserControl
             return;
         }
 
-        if (cursorPosition.X > 0)
+        if (cursorPosition.X - cursorPosition.X % 10 == scrollViewer.ActualWidth - scrollViewer.ActualWidth % 10)
         {
             if (scrollViewer.ScrollableWidth - scrollViewer.ViewportWidth - scrollViewer.HorizontalOffset < canvasOffset)
             {
@@ -47,12 +47,20 @@ public partial class CanvasSymbols : UserControl
             }
             scrollViewer.ScrollToHorizontalOffset(scrollViewer.HorizontalOffset + canvasOffset);
         }
-        else
+        else if (cursorPosition.X <= 0)
         {
             if (scrollViewer.HorizontalOffset >= canvasOffset)
             {
                 scrollViewer.ScrollToHorizontalOffset(scrollViewer.HorizontalOffset - canvasOffset);
             }
+        }
+        if (cursorPosition.Y - cursorPosition.Y % 10 == scrollViewer.ActualHeight - scrollViewer.ActualHeight % 10)
+        {
+            if (scrollViewer.ScrollableHeight - scrollViewer.ViewportHeight - scrollViewer.VerticalOffset < canvasOffset)
+            {
+                canvasSymbols.Height = canvasSymbols.ActualHeight + canvasOffset;
+            }
+            scrollViewer.ScrollToVerticalOffset(scrollViewer.VerticalOffset + canvasOffset);
         }
     }
 }

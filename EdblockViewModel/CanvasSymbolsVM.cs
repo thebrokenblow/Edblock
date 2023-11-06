@@ -93,7 +93,7 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
     public BlockSymbol? DraggableSymbol { get; set; }
     public ScaleData? ScaleData { get; set; }
     public DrawnLineSymbolVM? CurrentDrawnLineSymbol { get; set; }
-    private List<DrawnLineSymbolVM?>? CurrentRedrawLine { get; set; }
+    private List<DrawnLineSymbolVM?>? CurrentRedrawLines { get; set; }
     private readonly FactoryBlockSymbol factoryBlockSymbol;
     private RedrawLineSymbol? redrawLineSymbol;
     public CanvasSymbolsVM()
@@ -172,26 +172,28 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
     {
         if (BlockSymbolByLineSymbol.ContainsKey(currentSymbol))
         {
-            CurrentRedrawLine = BlockSymbolByLineSymbol[currentSymbol];
+            CurrentRedrawLines = BlockSymbolByLineSymbol[currentSymbol];
         }
     }
 
     private void FinishRedrawingLine()
     {
-        CurrentRedrawLine = null;
+        CurrentRedrawLines = null;
     }
 
     private void RedrawLine()
     {
-        if (CurrentRedrawLine != null)
+        if (CurrentRedrawLines == null)
         {
-            foreach (var item in CurrentRedrawLine)
+            return;
+        }
+
+        foreach (var currentRedrawLine in CurrentRedrawLines)
+        {
+            if (currentRedrawLine is not null)
             {
-                if (item != null)
-                {
-                    redrawLineSymbol = new(item);
-                    redrawLineSymbol.Redraw();
-                }
+                redrawLineSymbol = new(currentRedrawLine);
+                redrawLineSymbol.Redraw();
             }
         }
     }
