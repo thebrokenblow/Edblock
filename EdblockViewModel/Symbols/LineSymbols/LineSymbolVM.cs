@@ -1,5 +1,4 @@
-﻿using System;
-using EdblockViewModel.Symbols.Abstraction;
+﻿using EdblockViewModel.Symbols.Abstraction;
 
 namespace EdblockViewModel.Symbols.LineSymbols;
 

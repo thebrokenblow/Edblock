@@ -35,13 +35,13 @@ public class ArrowSymbol : Symbol
         SetCoodinate(coordinatesArrow);
     }
 
-    private void SetCoodinate(List<(int, int)> coordinatesArrow)
+    private void SetCoodinate(List<(int x, int y)> coordinatesArrow)
     {
         var pointArrowSymbol = new PointCollection();
 
         foreach (var coordinate in coordinatesArrow)
         {
-            var pointCoordinate = new Point(coordinate.Item1, coordinate.Item2);
+            var pointCoordinate = new Point(coordinate.x, coordinate.y);
             pointArrowSymbol.Add(pointCoordinate);
         }
 
