@@ -40,11 +40,11 @@ internal class RedrawLineBottomTop
             }
             else if (borderCoordinateSymbolOutgoing.y < borderCoordinateSymbolaIncoming.y)
             {
-                SetCoordnateTreeLine1(borderCoordinateSymbolOutgoing, borderCoordinateSymbolaIncoming);
+                SetCoordnateTreeLine(borderCoordinateSymbolOutgoing, borderCoordinateSymbolaIncoming, new BuildCoordinateDecorator());
             }
             else
             {
-                SetCoordnateFive1(borderCoordinateSymbolOutgoing, borderCoordinateSymbolaIncoming);
+                SetCoordnateFive(borderCoordinateSymbolOutgoing, borderCoordinateSymbolaIncoming, new BuildCoordinateDecorator());
             }
         }
         else if ((_positionOutgoing == PositionConnectionPoint.Left && _positionIncoming == PositionConnectionPoint.Right) || 
@@ -56,11 +56,11 @@ internal class RedrawLineBottomTop
             }
             else if (borderCoordinateSymbolOutgoing.x < borderCoordinateSymbolaIncoming.x)
             {
-                SetCoordnateTreeLine2(borderCoordinateSymbolOutgoing, borderCoordinateSymbolaIncoming);
+                SetCoordnateTreeLine(borderCoordinateSymbolOutgoing, borderCoordinateSymbolaIncoming, new BuildCoordinateDecorator().SetSwap());
             }
             else
             {
-                SetCoordnateFive2(borderCoordinateSymbolOutgoing, borderCoordinateSymbolaIncoming);
+                SetCoordnateFive(borderCoordinateSymbolOutgoing, borderCoordinateSymbolaIncoming, new BuildCoordinateDecorator().SetSwap());
             }
         }        
     }
@@ -76,197 +76,97 @@ internal class RedrawLineBottomTop
         firstLine.Y2 = borderCoordinateSymbolaIncoming.y;
     }
 
-    private void SetCoordnateTreeLine1((int x, int y) coordinateBorderSymbolOutgoing1, (int x, int y) coordinateBorderSymbolIncoming1)
+    private void SetCoordnateTreeLine((int x, int y) coordinateBorderSymbolOutgoing, (int x, int y) coordinateBorderSymbolIncoming, BuildCoordinateDecorator buildCoordinateDecorator)
     {
-        SetCoordnateTreeLine(coordinateBorderSymbolOutgoing1, coordinateBorderSymbolIncoming1, new BuildCoordinateDecorator());
-    }
+        var coordinateDecoratorSymbolOutgoing = buildCoordinateDecorator.Create(new Coordinate(coordinateBorderSymbolOutgoing));
+        var coordinateDecoratorSymbolIncoming = buildCoordinateDecorator.Create(new Coordinate(coordinateBorderSymbolIncoming));
 
-    private void SetCoordnateTreeLine2((int x, int y) borderCoordinateSymbolOutgoing, (int x, int y) borderCoordinateSymbolaIncoming)
-    {
-        SetCoordnateTreeLine(borderCoordinateSymbolOutgoing, borderCoordinateSymbolaIncoming, new BuildCoordinateDecorator().SetSwap());
-    }
+        var linesCoordinates = new (Coordinate firstCoordinate, Coordinate secondCoordinate)[3];
+        var linesCoordinatesDecorator = new (ICoordinateDecorator firstCoordinate, ICoordinateDecorator secondCoordinate)[3];
 
-    private void SetCoordnateFive1((int x, int y) coordinateBorderSymbolOutgoing1, (int x, int y) coordinateBorderSymbolIncoming1)
-    {
-        SetCoordnateFive(coordinateBorderSymbolOutgoing1, coordinateBorderSymbolIncoming1, new BuildCoordinateDecorator());
-    }
+        for (int i = 0; i < 3; i++)
+        {
+            linesCoordinates[i] = (new Coordinate(), new Coordinate());
+            linesCoordinatesDecorator[i] = (
+                buildCoordinateDecorator.Create(linesCoordinates[i].firstCoordinate),
+                buildCoordinateDecorator.Create(linesCoordinates[i].secondCoordinate)
+                );
+        }
 
-    private void SetCoordnateFive2((int x, int y) borderCoordinateSymbolOutgoing, (int x, int y) borderCoordinateSymbolaIncoming)
-    {
-        SetCoordnateFive(borderCoordinateSymbolOutgoing, borderCoordinateSymbolaIncoming, new BuildCoordinateDecorator().SetSwap());
-    }
+        linesCoordinatesDecorator[0].firstCoordinate.X = coordinateDecoratorSymbolOutgoing.X;
+        linesCoordinatesDecorator[0].firstCoordinate.Y = coordinateDecoratorSymbolOutgoing.Y;
+        linesCoordinatesDecorator[0].secondCoordinate.X = coordinateDecoratorSymbolOutgoing.X;
+        linesCoordinatesDecorator[0].secondCoordinate.Y = coordinateDecoratorSymbolOutgoing.Y + (coordinateDecoratorSymbolIncoming.Y - coordinateDecoratorSymbolOutgoing.Y) / 2;
 
-    private void SetCoordnateTreeLine((int x, int y) coordinateBorderSymbolOutgoing1, (int x, int y) coordinateBorderSymbolIncoming1, BuildCoordinateDecorator buildCoordinateDecorator)
-    {
-        var coordinateBorderSymbolOutgoing = buildCoordinateDecorator.Create(new Coordinate(coordinateBorderSymbolOutgoing1));
-        var coordinateBorderSymbolIncoming = buildCoordinateDecorator.Create(new Coordinate(coordinateBorderSymbolIncoming1));
+        linesCoordinatesDecorator[1].firstCoordinate.X = coordinateDecoratorSymbolOutgoing.X;
+        linesCoordinatesDecorator[1].firstCoordinate.Y = coordinateDecoratorSymbolOutgoing.Y + (coordinateDecoratorSymbolIncoming.Y - coordinateDecoratorSymbolOutgoing.Y) / 2;
+        linesCoordinatesDecorator[1].secondCoordinate.X = coordinateDecoratorSymbolIncoming.X;
+        linesCoordinatesDecorator[1].secondCoordinate.Y = coordinateDecoratorSymbolOutgoing.Y + (coordinateDecoratorSymbolIncoming.Y - coordinateDecoratorSymbolOutgoing.Y) / 2;
 
-        var firstLine1Coordinate = new Coordinate();
-        var firstLine1 = buildCoordinateDecorator.Create(firstLine1Coordinate);
+        linesCoordinatesDecorator[2].firstCoordinate.X = coordinateDecoratorSymbolIncoming.X;
+        linesCoordinatesDecorator[2].firstCoordinate.Y = coordinateDecoratorSymbolOutgoing.Y + (coordinateDecoratorSymbolIncoming.Y - coordinateDecoratorSymbolOutgoing.Y) / 2;
+        linesCoordinatesDecorator[2].secondCoordinate.X = coordinateDecoratorSymbolIncoming.X;
+        linesCoordinatesDecorator[2].secondCoordinate.Y = coordinateDecoratorSymbolIncoming.Y;
 
-        var firstLine2Coordinate = new Coordinate();
-        var firstLine2 = buildCoordinateDecorator.Create(firstLine2Coordinate);
-
-        var secondLine1Coordinate = new Coordinate();
-        var secondLine2Coordinate = new Coordinate();
-
-        var secondLine1 = buildCoordinateDecorator.Create(secondLine1Coordinate);
-        var secondLine2 = buildCoordinateDecorator.Create(secondLine2Coordinate);
-
-        var thirdLine1Coordinate = new Coordinate();
-        var thirdLine2Coordinate = new Coordinate();
-
-        var thirdLine1 = buildCoordinateDecorator.Create(thirdLine1Coordinate);
-        var thirdLine2 = buildCoordinateDecorator.Create(thirdLine2Coordinate);
-
-        firstLine1.X = coordinateBorderSymbolOutgoing.X;
-        firstLine1.Y = coordinateBorderSymbolOutgoing.Y;
-
-        firstLine2.X = coordinateBorderSymbolOutgoing.X;
-        firstLine2.Y = coordinateBorderSymbolOutgoing.Y + (coordinateBorderSymbolIncoming.Y - coordinateBorderSymbolOutgoing.Y) / 2;
-
-
-        secondLine1.X = coordinateBorderSymbolOutgoing.X;
-        secondLine1.Y = coordinateBorderSymbolOutgoing.Y + (coordinateBorderSymbolIncoming.Y - coordinateBorderSymbolOutgoing.Y) / 2;
-
-        secondLine2.X = coordinateBorderSymbolIncoming.X;
-        secondLine2.Y = coordinateBorderSymbolOutgoing.Y + (coordinateBorderSymbolIncoming.Y - coordinateBorderSymbolOutgoing.Y) / 2;
-
-
-        thirdLine1.X = coordinateBorderSymbolIncoming.X;
-        thirdLine1.Y = coordinateBorderSymbolOutgoing.Y + (coordinateBorderSymbolIncoming.Y - coordinateBorderSymbolOutgoing.Y) / 2;
-
-        thirdLine2.X = coordinateBorderSymbolIncoming.X;
-        thirdLine2.Y = coordinateBorderSymbolIncoming.Y;
-
-        var firstLine = _drawnLineSymbolVM.LineSymbols[^3];
-
-        firstLine.X1 = firstLine1Coordinate.X;
-        firstLine.Y1 = firstLine1Coordinate.Y;
-
-        firstLine.X2 = firstLine2Coordinate.X;
-        firstLine.Y2 = firstLine2Coordinate.Y;
-
-        var secondLine = _drawnLineSymbolVM.LineSymbols[^2];
-
-        secondLine.X1 = secondLine1Coordinate.X;
-        secondLine.Y1 = secondLine1Coordinate.Y;
-
-        secondLine.X2 = secondLine2Coordinate.X;
-        secondLine.Y2 = secondLine2Coordinate.Y;
-
-        var thirdLine = _drawnLineSymbolVM.LineSymbols[^1];
-
-        thirdLine.X1 = thirdLine1Coordinate.X;
-        thirdLine.Y1 = thirdLine1Coordinate.Y;
-
-        thirdLine.X2 = thirdLine2Coordinate.X;
-        thirdLine.Y2 = thirdLine2Coordinate.Y;
+        for (int i = 0; i < 3; i++)
+        {
+            var lineSymbol = _drawnLineSymbolVM.LineSymbols[i];
+            lineSymbol.X1 = linesCoordinates[i].firstCoordinate.X;
+            lineSymbol.Y1 = linesCoordinates[i].firstCoordinate.Y;
+            lineSymbol.X2 = linesCoordinates[i].secondCoordinate.X;
+            lineSymbol.Y2 = linesCoordinates[i].secondCoordinate.Y;
+        }
     }
 
     private void SetCoordnateFive((int x, int y) coordinateBorderSymbolOutgoing1, (int x, int y) coordinateBorderSymbolIncoming1, BuildCoordinateDecorator buildCoordinateDecorator)
     {
-        var coordinateBorderSymbolOutgoing = buildCoordinateDecorator.Create(new Coordinate(coordinateBorderSymbolOutgoing1));
-        var coordinateBorderSymbolIncoming = buildCoordinateDecorator.Create(new Coordinate(coordinateBorderSymbolIncoming1));
+        var coordinateDecoratorSymbolOutgoing = buildCoordinateDecorator.Create(new Coordinate(coordinateBorderSymbolOutgoing1));
+        var coordinateDecoratorSymbolIncoming = buildCoordinateDecorator.Create(new Coordinate(coordinateBorderSymbolIncoming1));
 
-        var firstLine1Coordinate = new Coordinate();
-        var firstLine2Coordinate = new Coordinate();
+        var linesCoordinates = new (Coordinate firstCoordinate, Coordinate secondCoordinate)[5];
+        var linesCoordinatesDecorator = new (ICoordinateDecorator firstCoordinate, ICoordinateDecorator secondCoordinate)[5];
 
-        var firstLine1 = buildCoordinateDecorator.Create(firstLine1Coordinate);
-        var firstLine2 = buildCoordinateDecorator.Create(firstLine2Coordinate);
+        for (int i = 0; i < 5; i++)
+        {
+            linesCoordinates[i] = (new Coordinate(), new Coordinate());
+            linesCoordinatesDecorator[i] = (
+                buildCoordinateDecorator.Create(linesCoordinates[i].firstCoordinate),
+                buildCoordinateDecorator.Create(linesCoordinates[i].secondCoordinate)
+                );
+        }
 
-        var secondLine1Coordinate = new Coordinate();
-        var secondLine2Coordinate = new Coordinate();
+        linesCoordinatesDecorator[0].firstCoordinate.X = coordinateDecoratorSymbolOutgoing.X;
+        linesCoordinatesDecorator[0].firstCoordinate.Y = coordinateDecoratorSymbolOutgoing.Y;
+        linesCoordinatesDecorator[0].secondCoordinate.X = coordinateDecoratorSymbolOutgoing.X;
+        linesCoordinatesDecorator[0].secondCoordinate.Y = coordinateDecoratorSymbolOutgoing.Y + baseLineOffset;
 
-        var secondLine1 = buildCoordinateDecorator.Create(secondLine1Coordinate);
-        var secondLine2 = buildCoordinateDecorator.Create(secondLine2Coordinate);
+        linesCoordinatesDecorator[1].firstCoordinate.X = coordinateDecoratorSymbolOutgoing.X;
+        linesCoordinatesDecorator[1].firstCoordinate.Y = coordinateDecoratorSymbolOutgoing.Y + baseLineOffset;
+        linesCoordinatesDecorator[1].secondCoordinate.X = coordinateDecoratorSymbolOutgoing.X + (coordinateDecoratorSymbolIncoming.X - coordinateDecoratorSymbolOutgoing.X) / 2;
+        linesCoordinatesDecorator[1].secondCoordinate.Y = coordinateDecoratorSymbolOutgoing.Y + baseLineOffset;
 
-        var thirdLine1Coordinate = new Coordinate();
-        var thirdLine2Coordinate = new Coordinate();
+        linesCoordinatesDecorator[2].firstCoordinate.X = coordinateDecoratorSymbolOutgoing.X + (coordinateDecoratorSymbolIncoming.X - coordinateDecoratorSymbolOutgoing.X) / 2;
+        linesCoordinatesDecorator[2].firstCoordinate.Y = coordinateDecoratorSymbolOutgoing.Y + baseLineOffset;
+        linesCoordinatesDecorator[2].secondCoordinate.X = coordinateDecoratorSymbolOutgoing.X + (coordinateDecoratorSymbolIncoming.X - coordinateDecoratorSymbolOutgoing.X) / 2;
+        linesCoordinatesDecorator[2].secondCoordinate.Y = coordinateDecoratorSymbolIncoming.Y - baseLineOffset;
 
-        var thirdLine1 = buildCoordinateDecorator.Create(thirdLine1Coordinate);
-        var thirdLine2 = buildCoordinateDecorator.Create(thirdLine2Coordinate);
+        linesCoordinatesDecorator[3].firstCoordinate.X = coordinateDecoratorSymbolOutgoing.X + (coordinateDecoratorSymbolIncoming.X - coordinateDecoratorSymbolOutgoing.X) / 2;
+        linesCoordinatesDecorator[3].firstCoordinate.Y = coordinateDecoratorSymbolIncoming.Y - baseLineOffset;
+        linesCoordinatesDecorator[3].secondCoordinate.X = coordinateDecoratorSymbolIncoming.X;
+        linesCoordinatesDecorator[3].secondCoordinate.Y = coordinateDecoratorSymbolIncoming.Y - baseLineOffset;
 
-        var fourthLine1Coordinate = new Coordinate();
-        var fourthLine2Coordinate = new Coordinate();
+        linesCoordinatesDecorator[4].firstCoordinate.X = coordinateDecoratorSymbolIncoming.X;
+        linesCoordinatesDecorator[4].firstCoordinate.Y = coordinateDecoratorSymbolIncoming.Y - baseLineOffset;
+        linesCoordinatesDecorator[4].secondCoordinate.X = coordinateDecoratorSymbolIncoming.X;
+        linesCoordinatesDecorator[4].secondCoordinate.Y = coordinateDecoratorSymbolIncoming.Y;
 
-        var fourthLine1 = buildCoordinateDecorator.Create(fourthLine1Coordinate);
-        var fourthLine2 = buildCoordinateDecorator.Create(fourthLine2Coordinate);
-
-        var fifthLine1Coordinate = new Coordinate();
-        var fifthLine2Coordinate = new Coordinate();
-
-        var fifthLine1 = buildCoordinateDecorator.Create(fifthLine1Coordinate);
-        var fifthLine2 = buildCoordinateDecorator.Create(fifthLine2Coordinate);
-
-        firstLine1.X = coordinateBorderSymbolOutgoing.X;
-        firstLine1.Y = coordinateBorderSymbolOutgoing.Y;
-
-        firstLine2.X = coordinateBorderSymbolOutgoing.X;
-        firstLine2.Y = coordinateBorderSymbolOutgoing.Y + baseLineOffset;
-
-        secondLine1.X = coordinateBorderSymbolOutgoing.X;
-        secondLine1.Y = coordinateBorderSymbolOutgoing.Y + baseLineOffset;
-
-        secondLine2.X = coordinateBorderSymbolOutgoing.X + (coordinateBorderSymbolIncoming.X - coordinateBorderSymbolOutgoing.X) / 2;
-        secondLine2.Y = coordinateBorderSymbolOutgoing.Y + baseLineOffset;
-
-        thirdLine1.X = coordinateBorderSymbolOutgoing.X + (coordinateBorderSymbolIncoming.X - coordinateBorderSymbolOutgoing.X) / 2;
-        thirdLine1.Y = coordinateBorderSymbolOutgoing.Y + baseLineOffset;
-
-        thirdLine2.X = coordinateBorderSymbolOutgoing.X + (coordinateBorderSymbolIncoming.X - coordinateBorderSymbolOutgoing.X) / 2;
-        thirdLine2.Y = coordinateBorderSymbolIncoming.Y - baseLineOffset;
-
-        fourthLine1.X = coordinateBorderSymbolOutgoing.X + (coordinateBorderSymbolIncoming.X - coordinateBorderSymbolOutgoing.X) / 2;
-        fourthLine1.Y = coordinateBorderSymbolIncoming.Y - baseLineOffset;
-
-        fourthLine2.X = coordinateBorderSymbolIncoming.X;
-        fourthLine2.Y = coordinateBorderSymbolIncoming.Y - baseLineOffset;
-
-        fifthLine1.X = coordinateBorderSymbolIncoming.X;
-        fifthLine1.Y = coordinateBorderSymbolIncoming.Y - baseLineOffset;
-
-        fifthLine2.X = coordinateBorderSymbolIncoming.X;
-        fifthLine2.Y = coordinateBorderSymbolIncoming.Y;
-
-        var firstLine = _drawnLineSymbolVM.LineSymbols[^5];
-
-        firstLine.X1 = firstLine1Coordinate.X;
-        firstLine.Y1 = firstLine1Coordinate.Y;
-
-        firstLine.X2 = firstLine2Coordinate.X;
-        firstLine.Y2 = firstLine2Coordinate.Y;
-
-        var secondLine = _drawnLineSymbolVM.LineSymbols[^4];
-
-        secondLine.X1 = secondLine1Coordinate.X;
-        secondLine.Y1 = secondLine1Coordinate.Y;
-
-        secondLine.X2 = secondLine2Coordinate.X;
-        secondLine.Y2 = secondLine2Coordinate.Y;
-
-        var thirdLine = _drawnLineSymbolVM.LineSymbols[^3];
-
-        thirdLine.X1 = thirdLine1Coordinate.X;
-        thirdLine.Y1 = thirdLine1Coordinate.Y;
-
-        thirdLine.X2 = thirdLine2Coordinate.X;
-        thirdLine.Y2 = thirdLine2Coordinate.Y;
-
-        var fourthLine = _drawnLineSymbolVM.LineSymbols[^2];
-
-        fourthLine.X1 = fourthLine1Coordinate.X;
-        fourthLine.Y1 = fourthLine1Coordinate.Y;
-
-        fourthLine.X2 = fourthLine2Coordinate.X;
-        fourthLine.Y2 = fourthLine2Coordinate.Y;
-
-        var fifthLine = _drawnLineSymbolVM.LineSymbols[^1];
-
-        fifthLine.X1 = fifthLine1Coordinate.X;
-        fifthLine.Y1 = fifthLine1Coordinate.Y;
-
-        fifthLine.X2 = fifthLine2Coordinate.X;
-        fifthLine.Y2 = fifthLine2Coordinate.Y;
+        for (int i = 0; i < 5; i++)
+        {
+            var lineSymbol = _drawnLineSymbolVM.LineSymbols[i];
+            lineSymbol.X1 = linesCoordinates[i].firstCoordinate.X;
+            lineSymbol.Y1 = linesCoordinates[i].firstCoordinate.Y;
+            lineSymbol.X2 = linesCoordinates[i].secondCoordinate.X;
+            lineSymbol.Y2 = linesCoordinates[i].secondCoordinate.Y;
+        }
     }
 }

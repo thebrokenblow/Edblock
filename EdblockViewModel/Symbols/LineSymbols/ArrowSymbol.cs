@@ -12,10 +12,7 @@ public class ArrowSymbol : Symbol
     private PointCollection pointArrowSymbol = new();
     public PointCollection PointArrowSymbol
     {
-        get
-        {
-            return pointArrowSymbol;
-        }
+        get => pointArrowSymbol;
         set
         {
             pointArrowSymbol = value;
