@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace EdblockViewModel.Symbols.LineSymbols;
+namespace EdblockViewModel.Symbols.LineSymbols.DecoratorLineSymbols;
 
 public class BuildCoordinateDecorator
 {
