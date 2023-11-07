@@ -8,8 +8,6 @@ public class BuildCoordinateDecorator
     private bool IsInversionXCoordinate = false;
     private bool IsInversionYCoordinate = false;
 
-    private ICoordinateDecorator? container;
-
     public BuildCoordinateDecorator SetSwap()
     {
         IsSetSwapCoordinate = true;
