@@ -35,26 +35,24 @@ public class ConnectionPoint : INotifyPropertyChanged
         }
     }
 
-    public int Diameter { get; init; } = ConnectionPointModel.diametr;
-
-    private string? fill = ConnectionPointModel.HexNotFocusFill;
-    public string? Fill
+    private bool isEnterConnectionPoint = false;
+    public bool IsEnterConnectionPoint
     {
-        get => fill;
+        get => isEnterConnectionPoint;
         set
         {
-            fill = value;
+            isEnterConnectionPoint = value;
             OnPropertyChanged();
         }
     }
 
-    private string? stroke = ConnectionPointModel.HexNotFocusStroke;
-    public string? Stroke
+    private bool isSelectConnectionPoint = false;
+    public bool IsSelectConnectionPoint
     {
-        get => stroke;
+        get => isSelectConnectionPoint;
         set
         {
-            stroke = value;
+            isSelectConnectionPoint = value;
             OnPropertyChanged();
         }
     }
@@ -75,8 +73,8 @@ public class ConnectionPoint : INotifyPropertyChanged
         PositionConnectionPoint = positionConnectionPoint;
         BlockSymbol = blockSymbol;
         
-        EnterCursor = new(Show);
-        LeaveCursor = new(Hide);
+        EnterCursor = new(ShowConnectionPoints);
+        LeaveCursor = new(HideConnectionPoints);
         ClickConnectionPoint = new(TrackStageDrawLine);
 
         (XCoordinate, YCoordinate) = getCoordinate.Invoke();
@@ -87,31 +85,31 @@ public class ConnectionPoint : INotifyPropertyChanged
         (XCoordinate, YCoordinate) = GetCoordinate.Invoke();
     }
 
-    public void Show()
+    public void ShowConnectionPoints()
     {
         if (_canvasSymbolsVM.ScaleData == null)
         {
             _canvasSymbolsVM.Cursor = Cursors.Hand;
-            SetFill(ConnectionPointModel.HexFocusFill, BlockSymbol.ConnectionPoints);
-            Stroke = ConnectionPointModel.HexFocusStroke;
+            SetEnterConnectionPoint(BlockSymbol.ConnectionPoints, true);
+            IsSelectConnectionPoint = true;
         }
     }
 
-    public void Hide()
+    public void HideConnectionPoints()
     {
         if (_canvasSymbolsVM.ScaleData == null)
         {
             _canvasSymbolsVM.Cursor = Cursors.Arrow;
-            SetFill(ConnectionPointModel.HexNotFocusFill, BlockSymbol.ConnectionPoints);
-            Stroke = ConnectionPointModel.HexNotFocusStroke;
+            SetEnterConnectionPoint(BlockSymbol.ConnectionPoints, false);
+            IsSelectConnectionPoint = false;
         }
     }
 
-    internal static void SetFill(string? hexFill, List<ConnectionPoint> connectionPoints)
+    public static void SetEnterConnectionPoint(List<ConnectionPoint> connectionPoints, bool isEnterConnectionPoint)
     {
         foreach (var connectionPoint in connectionPoints)
         {
-            connectionPoint.Fill = hexFill;
+            connectionPoint.IsEnterConnectionPoint = isEnterConnectionPoint;
         }
     }
 

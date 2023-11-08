@@ -134,7 +134,7 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
     {
         if (!currentSymbol.TextField.Focus)
         {
-            ConnectionPoint.SetFill(ConnectionPointModel.HexNotFocusFill, currentSymbol.ConnectionPoints);
+            ConnectionPoint.SetEnterConnectionPoint(currentSymbol.ConnectionPoints, false);
             ScaleRectangle.SetColor(ScaleRectangleModel.HexNotFocusFill, ScaleRectangleModel.HexNotFocusBorderBrush, currentSymbol.ScaleRectangles);
             currentSymbol.TextField.Cursor = Cursors.SizeAll;
             Cursor = Cursors.SizeAll;

@@ -11,7 +11,7 @@
     <ItemsControl ItemsSource="{Binding ConnectionPoints}">
         <ItemsControl.ItemTemplate>
             <DataTemplate DataType="Points">
-                <Ellipse Style="{StaticResource ConnectionPoint}">
+                <Ellipse>
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="MouseEnter">
                             <i:InvokeCommandAction Command="{Binding EnterCursor}" />
@@ -23,6 +23,23 @@
                             <i:InvokeCommandAction Command="{Binding ClickConnectionPoint}" CommandParameter="{Binding}"/>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
+                    <Ellipse.Style>
+                        <Style TargetType="Ellipse">
+                            <Setter Property="Fill" Value="#00FFFFFF"/>
+                            <Setter Property="Stroke" Value="#00FFFFFF"/>
+                            <Setter Property="Width" Value="8"/>
+                            <Setter Property="Height" Value="8"/>
+                            <Setter Property="StrokeThickness" Value="1.5" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsEnterConnectionPoint}" Value="True">
+                                    <Setter Property="Fill" Value="#777777"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding IsSelectConnectionPoint}" Value="True">
+                                    <Setter Property="Stroke" Value="#00FF00"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Ellipse.Style>
                 </Ellipse>
             </DataTemplate>
         </ItemsControl.ItemTemplate>

@@ -136,7 +136,7 @@ public abstract class BlockSymbol : Symbol
         // Условие истино, когда символ не перемещается и не масштабируется (просто навёл курсор)
         if (_canvasSymbolsVM.DraggableSymbol == null && _canvasSymbolsVM.ScaleData == null)
         {
-            ConnectionPoint.SetFill(ConnectionPointModel.HexFocusFill, ConnectionPoints);
+            ConnectionPoint.SetEnterConnectionPoint(ConnectionPoints, true);
             ScaleRectangle.SetColor(ScaleRectangleModel.HexFocusFill, ScaleRectangleModel.HexFocusBorderBrush, ScaleRectangles);
             TextField.Cursor = Cursors.SizeAll;
         }
@@ -144,7 +144,7 @@ public abstract class BlockSymbol : Symbol
 
     public void HideStroke()
     {
-        ConnectionPoint.SetFill(ConnectionPointModel.HexNotFocusFill, ConnectionPoints);
+        ConnectionPoint.SetEnterConnectionPoint(ConnectionPoints, false);
         ScaleRectangle.SetColor(ScaleRectangleModel.HexNotFocusFill, ScaleRectangleModel.HexNotFocusBorderBrush, ScaleRectangles);
     }
 
