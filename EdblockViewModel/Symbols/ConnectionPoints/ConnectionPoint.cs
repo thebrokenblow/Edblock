@@ -35,13 +35,13 @@ public class ConnectionPoint : INotifyPropertyChanged
         }
     }
 
-    private bool isEnterConnectionPoint = false;
-    public bool IsEnterConnectionPoint
+    private bool isShowConnectionPoints = false;
+    public bool IsShowConnectionPoints
     {
-        get => isEnterConnectionPoint;
+        get => isShowConnectionPoints;
         set
         {
-            isEnterConnectionPoint = value;
+            isShowConnectionPoints = value;
             OnPropertyChanged();
         }
     }
@@ -90,7 +90,7 @@ public class ConnectionPoint : INotifyPropertyChanged
         if (_canvasSymbolsVM.ScaleData == null)
         {
             _canvasSymbolsVM.Cursor = Cursors.Hand;
-            SetEnterConnectionPoint(BlockSymbol.ConnectionPoints, true);
+            SetStateDisplayConnectionPoint(BlockSymbol.ConnectionPoints, true);
             IsSelectConnectionPoint = true;
         }
     }
@@ -100,16 +100,16 @@ public class ConnectionPoint : INotifyPropertyChanged
         if (_canvasSymbolsVM.ScaleData == null)
         {
             _canvasSymbolsVM.Cursor = Cursors.Arrow;
-            SetEnterConnectionPoint(BlockSymbol.ConnectionPoints, false);
+            SetStateDisplayConnectionPoint(BlockSymbol.ConnectionPoints, false);
             IsSelectConnectionPoint = false;
         }
     }
 
-    public static void SetEnterConnectionPoint(List<ConnectionPoint> connectionPoints, bool isEnterConnectionPoint)
+    public static void SetStateDisplayConnectionPoint(List<ConnectionPoint> connectionPoints, bool isEnterConnectionPoint)
     {
         foreach (var connectionPoint in connectionPoints)
         {
-            connectionPoint.IsEnterConnectionPoint = isEnterConnectionPoint;
+            connectionPoint.IsShowConnectionPoints = isEnterConnectionPoint;
         }
     }
 
