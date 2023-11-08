@@ -59,17 +59,6 @@ public class ConnectionPoint : INotifyPropertyChanged
         }
     }
 
-    private bool isMouseEnter = false;
-    public bool IsMouseEnter 
-    {
-        get => isMouseEnter;
-        set
-        {
-            isMouseEnter = value;
-            OnPropertyChanged();
-        }
-    }
-
     public DelegateCommand EnterCursor { get; init; }
     public DelegateCommand LeaveCursor { get; init; }
     public DelegateCommand<ConnectionPoint> ClickConnectionPoint { get; init; }
@@ -103,11 +92,8 @@ public class ConnectionPoint : INotifyPropertyChanged
         if (_canvasSymbolsVM.ScaleData == null)
         {
             _canvasSymbolsVM.Cursor = Cursors.Hand;
-
-            foreach (var connectionPoint in BlockSymbol.ConnectionPoints)
-            {
-                connectionPoint.IsMouseEnter = true;
-            }
+            SetFill(ConnectionPointModel.HexFocusFill, BlockSymbol.ConnectionPoints);
+            Stroke = ConnectionPointModel.HexFocusStroke;
         }
     }
 
@@ -116,10 +102,8 @@ public class ConnectionPoint : INotifyPropertyChanged
         if (_canvasSymbolsVM.ScaleData == null)
         {
             _canvasSymbolsVM.Cursor = Cursors.Arrow;
-            foreach (var connectionPoint in BlockSymbol.ConnectionPoints)
-            {
-                connectionPoint.IsMouseEnter = false;
-            }
+            SetFill(ConnectionPointModel.HexNotFocusFill, BlockSymbol.ConnectionPoints);
+            Stroke = ConnectionPointModel.HexNotFocusStroke;
         }
     }
 

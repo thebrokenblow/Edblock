@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32825.248
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EdblockView", "EdblockView\EdblockView.csproj", "{B8BA6DB2-C4F3-4F6C-9AF5-CC41AE65A1DF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EdblockView", "EdblockView\EdblockView.csproj", "{B8BA6DB2-C4F3-4F6C-9AF5-CC41AE65A1DF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EdblockViewModel", "EdblockViewModel\EdblockViewModel.csproj", "{2969BC6F-F644-4F52-AF3B-E9278A590256}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EdblockViewModel", "EdblockViewModel\EdblockViewModel.csproj", "{2969BC6F-F644-4F52-AF3B-E9278A590256}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EdblockModel", "EdblockModel\EdblockModel.csproj", "{782124AC-32EB-41C8-A3F9-B676A5B09CF3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EdblockModel", "EdblockModel\EdblockModel.csproj", "{782124AC-32EB-41C8-A3F9-B676A5B09CF3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

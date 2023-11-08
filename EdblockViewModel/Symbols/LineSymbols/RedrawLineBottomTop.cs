@@ -48,7 +48,7 @@ internal class RedrawLineBottomTop
             }
             else if (borderCoordinateSymbolOutgoing.y > borderCoordinateSymbolIncoming.y)
             {
-                var buildCoordinateDecorator = new BuilderCoordinateDecorator();
+                var buildCoordinateDecorator = new BuildCoordinateDecorator();
                 var coordinateDecoratorSymbolOutgoing = buildCoordinateDecorator.Create(new CoordinateDecorator(borderCoordinateSymbolOutgoing));
                 var coordinateDecoratorSymbolIncoming = buildCoordinateDecorator.Create(new CoordinateDecorator(borderCoordinateSymbolIncoming));
 
@@ -56,7 +56,7 @@ internal class RedrawLineBottomTop
             }
             else
             {
-                var buildCoordinateDecorator = new BuilderCoordinateDecorator().SetInversionYCoordinate();
+                var buildCoordinateDecorator = new BuildCoordinateDecorator().SetInversionYCoordinate();
                 var coordinateDecoratorSymbolOutgoing = buildCoordinateDecorator.Create(new CoordinateDecorator(borderCoordinateSymbolOutgoing));
                 var coordinateDecoratorSymbolIncoming = buildCoordinateDecorator.Create(new CoordinateDecorator(borderCoordinateSymbolIncoming));
 
@@ -71,7 +71,7 @@ internal class RedrawLineBottomTop
             }
             else if (borderCoordinateSymbolOutgoing.y < borderCoordinateSymbolIncoming.y)
             {
-                var buildCoordinateDecorator = new BuilderCoordinateDecorator();
+                var buildCoordinateDecorator = new BuildCoordinateDecorator();
                 var coordinateDecoratorSymbolOutgoing = buildCoordinateDecorator.Create(new CoordinateDecorator(borderCoordinateSymbolOutgoing));
                 var coordinateDecoratorSymbolIncoming = buildCoordinateDecorator.Create(new CoordinateDecorator(borderCoordinateSymbolIncoming));
 
@@ -79,28 +79,12 @@ internal class RedrawLineBottomTop
             }
             else
             {
-                var buildCoordinateDecorator = new BuilderCoordinateDecorator();
+                var buildCoordinateDecorator = new BuildCoordinateDecorator();
                 var coordinateDecoratorSymbolOutgoing = buildCoordinateDecorator.Create(new CoordinateDecorator(borderCoordinateSymbolOutgoing));
                 var coordinateDecoratorSymbolIncoming = buildCoordinateDecorator.Create(new CoordinateDecorator(borderCoordinateSymbolIncoming));
 
                 SetCoordnateFive(coordinateDecoratorSymbolOutgoing, coordinateDecoratorSymbolIncoming, buildCoordinateDecorator);
             }
-        }
-        else if (_positionOutgoing == PositionConnectionPoint.Top && _positionIncoming == PositionConnectionPoint.Right)
-        {
-            var buildCoordinateDecorator = new BuilderCoordinateDecorator();
-            var coordinateDecoratorSymbolOutgoing = buildCoordinateDecorator.Create(new CoordinateDecorator(borderCoordinateSymbolOutgoing));
-            var coordinateDecoratorSymbolIncoming = buildCoordinateDecorator.Create(new CoordinateDecorator(borderCoordinateSymbolIncoming));
-
-            SetCoordnateFourLine(coordinateDecoratorSymbolOutgoing, coordinateDecoratorSymbolIncoming, buildCoordinateDecorator);
-        }
-        else if (_positionOutgoing == PositionConnectionPoint.Top && _positionIncoming == PositionConnectionPoint.Left)
-        {
-            var buildCoordinateDecorator = new BuilderCoordinateDecorator().SetInversionXCoordinate();
-            var coordinateDecoratorSymbolOutgoing = buildCoordinateDecorator.Create(new CoordinateDecorator(borderCoordinateSymbolOutgoing));
-            var coordinateDecoratorSymbolIncoming = buildCoordinateDecorator.Create(new CoordinateDecorator(borderCoordinateSymbolIncoming));
-
-            SetCoordnateFourLine(coordinateDecoratorSymbolOutgoing, coordinateDecoratorSymbolIncoming, buildCoordinateDecorator);
         }
         else if (_positionOutgoing == PositionConnectionPoint.Top && _positionIncoming == PositionConnectionPoint.Top)
         {
@@ -109,7 +93,7 @@ internal class RedrawLineBottomTop
                 || borderCoordinateSymbolOutgoing.x + widthlOutgoing / 2 >= borderCoordinateSymbolIncoming.x
                 && borderCoordinateSymbolOutgoing.x <= borderCoordinateSymbolIncoming.x)
             {
-                var buildCoordinateDecorator = new BuilderCoordinateDecorator().SetInversionXCoordinate();
+                var buildCoordinateDecorator = new BuildCoordinateDecorator().SetInversionXCoordinate();
                 var coordinateDecoratorSymbolOutgoing = buildCoordinateDecorator.Create(new CoordinateDecorator(borderCoordinateSymbolOutgoing));
                 var coordinateDecoratorSymbolIncoming = buildCoordinateDecorator.Create(new CoordinateDecorator(borderCoordinateSymbolIncoming));
 
@@ -117,7 +101,7 @@ internal class RedrawLineBottomTop
             }
             else
             {
-                var buildCoordinateDecorator = new BuilderCoordinateDecorator();
+                var buildCoordinateDecorator = new BuildCoordinateDecorator();
                 var coordinateDecoratorSymbolOutgoing = buildCoordinateDecorator.Create(new CoordinateDecorator(borderCoordinateSymbolOutgoing));
                 var coordinateDecoratorSymbolIncoming = buildCoordinateDecorator.Create(new CoordinateDecorator(borderCoordinateSymbolIncoming));
 
@@ -129,7 +113,7 @@ internal class RedrawLineBottomTop
         {
             if (borderCoordinateSymbolOutgoing.x - widthlOutgoing / 2 <= borderCoordinateSymbolIncoming.x && borderCoordinateSymbolOutgoing.x >= borderCoordinateSymbolIncoming.x)
             {
-                var buildCoordinateDecorator = new BuilderCoordinateDecorator().SetInversionYCoordinate();
+                var buildCoordinateDecorator = new BuildCoordinateDecorator().SetInversionYCoordinate();
                 var coordinateDecoratorSymbolOutgoing = buildCoordinateDecorator.Create(new CoordinateDecorator(borderCoordinateSymbolOutgoing));
                 var coordinateDecoratorSymbolIncoming = buildCoordinateDecorator.Create(new CoordinateDecorator(borderCoordinateSymbolIncoming));
 
@@ -138,7 +122,7 @@ internal class RedrawLineBottomTop
             else if (borderCoordinateSymbolOutgoing.x + widthlOutgoing / 2 >= borderCoordinateSymbolIncoming.x
                 && borderCoordinateSymbolOutgoing.x <= borderCoordinateSymbolIncoming.x)
             {
-                var buildCoordinateDecorator = new BuilderCoordinateDecorator().SetInversionYCoordinate();
+                var buildCoordinateDecorator = new BuildCoordinateDecorator().SetInversionYCoordinate();
                 var coordinateDecoratorSymbolOutgoing = buildCoordinateDecorator.Create(new CoordinateDecorator(borderCoordinateSymbolOutgoing));
                 var coordinateDecoratorSymbolIncoming = buildCoordinateDecorator.Create(new CoordinateDecorator(borderCoordinateSymbolIncoming));
 
@@ -146,7 +130,7 @@ internal class RedrawLineBottomTop
             }
             else
             {
-                var buildCoordinateDecorator = new BuilderCoordinateDecorator().SetInversionYCoordinate();
+                var buildCoordinateDecorator = new BuildCoordinateDecorator().SetInversionYCoordinate();
                 var coordinateDecoratorSymbolOutgoing = buildCoordinateDecorator.Create(new CoordinateDecorator(borderCoordinateSymbolOutgoing));
                 var coordinateDecoratorSymbolIncoming = buildCoordinateDecorator.Create(new CoordinateDecorator(borderCoordinateSymbolIncoming));
 
@@ -161,7 +145,7 @@ internal class RedrawLineBottomTop
             }
             else if (borderCoordinateSymbolOutgoing.x > borderCoordinateSymbolIncoming.x)
             {
-                var buildCoordinateDecorator = new BuilderCoordinateDecorator().SetSwap();
+                var buildCoordinateDecorator = new BuildCoordinateDecorator().SetSwap();
                 var coordinateDecoratorSymbolOutgoing = buildCoordinateDecorator.Create(new CoordinateDecorator(borderCoordinateSymbolOutgoing));
                 var coordinateDecoratorSymbolIncoming = buildCoordinateDecorator.Create(new CoordinateDecorator(borderCoordinateSymbolIncoming));
 
@@ -169,9 +153,10 @@ internal class RedrawLineBottomTop
             }
             else
             {
-                var buildCoordinateDecorator = new BuilderCoordinateDecorator().SetSwap().SetInversionXCoordinate();
+                var buildCoordinateDecorator = new BuildCoordinateDecorator().SetSwap().SetInversionXCoordinate();
                 var coordinateDecoratorSymbolOutgoing = buildCoordinateDecorator.Create(new CoordinateDecorator(borderCoordinateSymbolOutgoing));
                 var coordinateDecoratorSymbolIncoming = buildCoordinateDecorator.Create(new CoordinateDecorator(borderCoordinateSymbolIncoming));
+                SetCoordnateTreeLine(coordinateDecoratorSymbolOutgoing, coordinateDecoratorSymbolIncoming, new BuildCoordinateDecorator().SetSwap());
 
                 SetCoordnateFive(coordinateDecoratorSymbolOutgoing, coordinateDecoratorSymbolIncoming, buildCoordinateDecorator);
             }
@@ -184,7 +169,7 @@ internal class RedrawLineBottomTop
             }
             else if (borderCoordinateSymbolOutgoing.x < borderCoordinateSymbolIncoming.x)
             {
-                var buildCoordinateDecorator = new BuilderCoordinateDecorator().SetSwap();
+                var buildCoordinateDecorator = new BuildCoordinateDecorator().SetSwap();
                 var coordinateDecoratorSymbolOutgoing = buildCoordinateDecorator.Create(new CoordinateDecorator(borderCoordinateSymbolOutgoing));
                 var coordinateDecoratorSymbolIncoming = buildCoordinateDecorator.Create(new CoordinateDecorator(borderCoordinateSymbolIncoming));
 
@@ -192,10 +177,10 @@ internal class RedrawLineBottomTop
             }
             else
             {
-                var buildCoordinateDecorator = new BuilderCoordinateDecorator().SetSwap();
+                var buildCoordinateDecorator = new BuildCoordinateDecorator().SetSwap();
                 var coordinateDecoratorSymbolOutgoing = buildCoordinateDecorator.Create(new CoordinateDecorator(borderCoordinateSymbolOutgoing));
                 var coordinateDecoratorSymbolIncoming = buildCoordinateDecorator.Create(new CoordinateDecorator(borderCoordinateSymbolIncoming));
-                SetCoordnateTreeLine(coordinateDecoratorSymbolOutgoing, coordinateDecoratorSymbolIncoming, new BuilderCoordinateDecorator().SetSwap());
+                SetCoordnateTreeLine(coordinateDecoratorSymbolOutgoing, coordinateDecoratorSymbolIncoming, new BuildCoordinateDecorator().SetSwap());
 
                 SetCoordnateFive(coordinateDecoratorSymbolOutgoing, coordinateDecoratorSymbolIncoming, buildCoordinateDecorator);
             }
@@ -214,7 +199,7 @@ internal class RedrawLineBottomTop
         firstLine.Y2 = borderCoordinateSymbolaIncoming.y;
     }
 
-    private void ChangeCountDecoratedLines(int countLines, BuilderCoordinateDecorator buildCoordinateDecorator)
+    private void ChangeCountDecoratedLines(int countLines, BuildCoordinateDecorator buildCoordinateDecorator)
     {
         var currentCountLines = DecoratedCoordinatesLines.Count;
 
@@ -259,35 +244,7 @@ internal class RedrawLineBottomTop
         }
     }
 
-    private void SetCoordnateFourLine(ICoordinateDecorator coordinateDecoratorSymbolOutgoing, ICoordinateDecorator coordinateDecoratorSymbolIncoming, BuilderCoordinateDecorator buildCoordinateDecorator)
-    {
-        ChangeCountLinesVM(4);
-        ChangeCountDecoratedLines(4, buildCoordinateDecorator);
-
-        DecoratedCoordinatesLines[0].FirstCoordinate.X = coordinateDecoratorSymbolOutgoing.X;
-        DecoratedCoordinatesLines[0].FirstCoordinate.Y = coordinateDecoratorSymbolOutgoing.Y;
-        DecoratedCoordinatesLines[0].SecondCoordinate.X = coordinateDecoratorSymbolOutgoing.X;
-        DecoratedCoordinatesLines[0].SecondCoordinate.Y = coordinateDecoratorSymbolOutgoing.Y - baseLineOffset;
-
-        DecoratedCoordinatesLines[1].FirstCoordinate.X = coordinateDecoratorSymbolOutgoing.X;
-        DecoratedCoordinatesLines[1].FirstCoordinate.Y = coordinateDecoratorSymbolOutgoing.Y - baseLineOffset;
-        DecoratedCoordinatesLines[1].SecondCoordinate.X = coordinateDecoratorSymbolOutgoing.X + coordinateDecoratorSymbolOutgoing.X / 2;
-        DecoratedCoordinatesLines[1].SecondCoordinate.Y = coordinateDecoratorSymbolOutgoing.Y - baseLineOffset;
-
-        DecoratedCoordinatesLines[2].FirstCoordinate.X = coordinateDecoratorSymbolOutgoing.X + coordinateDecoratorSymbolOutgoing.X / 2;
-        DecoratedCoordinatesLines[2].FirstCoordinate.Y = coordinateDecoratorSymbolOutgoing.Y - baseLineOffset;
-        DecoratedCoordinatesLines[2].SecondCoordinate.X = coordinateDecoratorSymbolOutgoing.X + coordinateDecoratorSymbolOutgoing.X / 2;
-        DecoratedCoordinatesLines[2].SecondCoordinate.Y = coordinateDecoratorSymbolIncoming.Y;
-
-        DecoratedCoordinatesLines[3].FirstCoordinate.X = coordinateDecoratorSymbolOutgoing.X + coordinateDecoratorSymbolOutgoing.X / 2;
-        DecoratedCoordinatesLines[3].FirstCoordinate.Y = coordinateDecoratorSymbolIncoming.Y;
-        DecoratedCoordinatesLines[3].SecondCoordinate.X = coordinateDecoratorSymbolIncoming.X;
-        DecoratedCoordinatesLines[3].SecondCoordinate.Y = coordinateDecoratorSymbolIncoming.Y;
-
-        SetCoordinate(4);
-    }
-
-    private void SetCoordnateTreeLine(ICoordinateDecorator coordinateDecoratorSymbolOutgoing, ICoordinateDecorator coordinateDecoratorSymbolIncoming, BuilderCoordinateDecorator buildCoordinateDecorator)
+    private void SetCoordnateTreeLine(ICoordinateDecorator coordinateDecoratorSymbolOutgoing, ICoordinateDecorator coordinateDecoratorSymbolIncoming, BuildCoordinateDecorator buildCoordinateDecorator)
     {
         ChangeCountLinesVM(3);
         ChangeCountDecoratedLines(3, buildCoordinateDecorator);
@@ -309,8 +266,7 @@ internal class RedrawLineBottomTop
 
         SetCoordinate(3);
     }
-
-    private void SetCoordnateTreeLine1(ICoordinateDecorator coordinateDecoratorSymbolOutgoing, ICoordinateDecorator coordinateDecoratorSymbolIncoming, BuilderCoordinateDecorator buildCoordinateDecorator)
+    private void SetCoordnateTreeLine1(ICoordinateDecorator coordinateDecoratorSymbolOutgoing, ICoordinateDecorator coordinateDecoratorSymbolIncoming, BuildCoordinateDecorator buildCoordinateDecorator)
     {
         ChangeCountLinesVM(3);
         ChangeCountDecoratedLines(3, buildCoordinateDecorator);
@@ -333,7 +289,7 @@ internal class RedrawLineBottomTop
         SetCoordinate(3);
     }
 
-    private void SetCoordnateFive(ICoordinateDecorator coordinateDecoratorSymbolOutgoing, ICoordinateDecorator coordinateDecoratorSymbolIncoming, BuilderCoordinateDecorator buildCoordinateDecorator)
+    private void SetCoordnateFive(ICoordinateDecorator coordinateDecoratorSymbolOutgoing, ICoordinateDecorator coordinateDecoratorSymbolIncoming, BuildCoordinateDecorator buildCoordinateDecorator)
     {
         ChangeCountLinesVM(5);
         ChangeCountDecoratedLines(5, buildCoordinateDecorator);
@@ -366,7 +322,7 @@ internal class RedrawLineBottomTop
         SetCoordinate(5);
     }
 
-    private void SetCoordnateFive1(ICoordinateDecorator coordinateDecoratorSymbolOutgoing, ICoordinateDecorator coordinateDecoratorSymbolIncoming, BuilderCoordinateDecorator buildCoordinateDecorator)
+    private void SetCoordnateFive1(ICoordinateDecorator coordinateDecoratorSymbolOutgoing, ICoordinateDecorator coordinateDecoratorSymbolIncoming, BuildCoordinateDecorator buildCoordinateDecorator)
     {
         ChangeCountLinesVM(5);
         ChangeCountDecoratedLines(5, buildCoordinateDecorator);
@@ -399,7 +355,7 @@ internal class RedrawLineBottomTop
         SetCoordinate(5);
     }
 
-    private void SetCoordnateFive2(ICoordinateDecorator coordinateDecoratorSymbolOutgoing, ICoordinateDecorator coordinateDecoratorSymbolIncoming, BuilderCoordinateDecorator buildCoordinateDecorator)
+    private void SetCoordnateFive2(ICoordinateDecorator coordinateDecoratorSymbolOutgoing, ICoordinateDecorator coordinateDecoratorSymbolIncoming, BuildCoordinateDecorator buildCoordinateDecorator)
     {
         ChangeCountLinesVM(5);
         ChangeCountDecoratedLines(5, buildCoordinateDecorator);
