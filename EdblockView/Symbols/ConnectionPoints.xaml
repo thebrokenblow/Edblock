@@ -8,34 +8,66 @@
              d:DataContext="{d:DesignInstance Type=blockSymbol:BlockSymbol}"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <ItemsControl ItemsSource="{Binding ConnectionPoints}">
-        <ItemsControl.ItemTemplate>
-            <DataTemplate DataType="Points">
-                <Ellipse Style="{StaticResource ConnectionPoint}">
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="MouseEnter">
-                            <i:InvokeCommandAction Command="{Binding EnterCursor}" />
-                        </i:EventTrigger>
-                        <i:EventTrigger EventName="MouseLeave">
-                            <i:InvokeCommandAction Command="{Binding LeaveCursor}" />
-                        </i:EventTrigger>
-                        <i:EventTrigger EventName="MouseDown">
-                            <i:InvokeCommandAction Command="{Binding ClickConnectionPoint}" CommandParameter="{Binding}"/>
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
-                </Ellipse>
-            </DataTemplate>
-        </ItemsControl.ItemTemplate>
-        <ItemsControl.ItemsPanel>
-            <ItemsPanelTemplate>
-                <Canvas />
-            </ItemsPanelTemplate>
-        </ItemsControl.ItemsPanel>
-        <ItemsControl.ItemContainerStyle>
-            <Style TargetType="FrameworkElement">
-                <Setter Property="Canvas.Left" Value="{Binding XCoordinate}" />
-                <Setter Property="Canvas.Top" Value="{Binding YCoordinate}" />
-            </Style>
-        </ItemsControl.ItemContainerStyle>
-    </ItemsControl>
+    <UserControl.Resources>
+        <Style TargetType="Ellipse">
+            <Style.Setters>
+                <Setter Property="Ellipse.Fill" Value="#00FFFFFF" />
+                <Setter Property="Ellipse.Stroke" Value="#00FFFFFF" />
+            </Style.Setters>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Ellipse.Fill" Value="#777777" />
+                    <Setter Property="Ellipse.Stroke" Value="White" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+    <StackPanel>
+        <Ellipse Height="30" Width="30"/>
+        <ItemsControl ItemsSource="{Binding ConnectionPoints}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate DataType="Points">
+                    <Ellipse>
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="MouseEnter">
+                                <i:InvokeCommandAction Command="{Binding EnterCursor}" />
+                            </i:EventTrigger>
+                            <i:EventTrigger EventName="MouseLeave">
+                                <i:InvokeCommandAction Command="{Binding LeaveCursor}" />
+                            </i:EventTrigger>
+                            <i:EventTrigger EventName="MouseDown">
+                                <i:InvokeCommandAction Command="{Binding ClickConnectionPoint}" CommandParameter="{Binding}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        <Ellipse.Style>
+                            <Style TargetType="Ellipse">
+                                <Setter Property="Ellipse.Fill" Value="#00FFFFFF" />
+                                <Setter Property="Ellipse.Stroke" Value="#00FFFFFF" />
+                                <Setter Property="Ellipse.Height" Value="8" />
+                                <Setter Property="Ellipse.Width" Value="8" />
+                                <Setter Property="StrokeThickness" Value="1.5" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsMouseEnter}" Value="True">
+                                        <Setter Property="Ellipse.Fill" Value="#777777" />
+                                        <Setter Property="Ellipse.Stroke" Value="#00FF00" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Ellipse.Style>
+                    </Ellipse>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Canvas />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemContainerStyle>
+                <Style TargetType="FrameworkElement">
+                    <Setter Property="Canvas.Left" Value="{Binding XCoordinate}" />
+                    <Setter Property="Canvas.Top" Value="{Binding YCoordinate}" />
+                </Style>
+            </ItemsControl.ItemContainerStyle>
+        </ItemsControl>
+    </StackPanel>
 </UserControl>
