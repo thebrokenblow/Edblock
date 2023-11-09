@@ -1,6 +1,5 @@
 ﻿using System.Windows.Input;
 using System.Collections.Generic;
-using EdblockModel.Symbols.Abstraction;
 using EdblockViewModel.Symbols.Abstraction;
 using EdblockModel.Symbols.ScaleRectangles;
 
@@ -8,14 +7,14 @@ namespace EdblockViewModel.Symbols.ScaleRectangles;
 
 internal class FactoryScaleRectangles
 {
-    private readonly BlockSymbol _blockSymbolModel;
+    private readonly BlockSymbolVM _blockSymbolModel;
     private readonly CanvasSymbolsVM _canvasSymbolsVM;
-    public FactoryScaleRectangles(CanvasSymbolsVM canvasSymbolsVM, BlockSymbol blockSymbolModel) =>
+    public FactoryScaleRectangles(CanvasSymbolsVM canvasSymbolsVM, BlockSymbolVM blockSymbolModel) =>
         (_canvasSymbolsVM, _blockSymbolModel) = (canvasSymbolsVM, blockSymbolModel); 
 
     public List<ScaleRectangle> Create()
     {
-        var coordinateScaleRectangle = new CoordinateScaleRectangleModel(_blockSymbolModel.BlockSymbolModel);
+        var coordinateScaleRectangle = new CoordinateScaleRectangleVM(_blockSymbolModel);
         var scaleRectangles = new List<ScaleRectangle>
         {
             new(
@@ -23,22 +22,22 @@ internal class FactoryScaleRectangles
                 _blockSymbolModel, 
                 Cursors.SizeNS, 
                 null, 
-                SizesScaleRectangle.ChangeHeigthTop, 
+                ScaleBlockSymbolVM.ChangeHeigthTopPart, 
                 coordinateScaleRectangle.GetCoordinateMiddleTopRectangle),
 
             new(
                 _canvasSymbolsVM,
                 _blockSymbolModel, 
                 Cursors.SizeNESW, 
-                SizesScaleRectangle.ChangeWidthRigth, 
-                SizesScaleRectangle.ChangeHeigthTop, 
+                ScaleBlockSymbolVM.ChangeWidthRigthPart, 
+                ScaleBlockSymbolVM.ChangeHeigthTopPart, 
                 coordinateScaleRectangle.GetCoordinateRightTopRectangle),
 
             new(
                 _canvasSymbolsVM, 
                 _blockSymbolModel, 
                 Cursors.SizeWE, 
-                SizesScaleRectangle.ChangeWidthRigth, 
+                ScaleBlockSymbolVM.ChangeWidthRigthPart, 
                 null, 
                 coordinateScaleRectangle.GetCoordinateRightMiddleRectangle),
 
@@ -46,8 +45,8 @@ internal class FactoryScaleRectangles
                 _canvasSymbolsVM, 
                 _blockSymbolModel, 
                 Cursors.SizeNWSE,
-                SizesScaleRectangle.ChangeWidthRigth, 
-                SizesScaleRectangle.ChangeHeigthBottom, 
+                ScaleBlockSymbolVM.ChangeWidthRigthPart, 
+                ScaleBlockSymbolVM.ChangeHeigthBottomPart, 
                 coordinateScaleRectangle.GetCoordinateRightBottomRectangle),
 
             new(
@@ -55,22 +54,22 @@ internal class FactoryScaleRectangles
                 _blockSymbolModel, 
                 Cursors.SizeNS, 
                 null, 
-                SizesScaleRectangle.ChangeHeigthBottom,
+                ScaleBlockSymbolVM.ChangeHeigthBottomPart,
                 coordinateScaleRectangle.GetCoordinateMiddleBottomRectangle),
 
             new(
                 _canvasSymbolsVM, 
                 _blockSymbolModel, 
                 Cursors.SizeNESW, 
-                SizesScaleRectangle.ChangeWidthLeft,
-                SizesScaleRectangle.ChangeHeigthBottom,
+                ScaleBlockSymbolVM.ChangeWidthLeftPart,
+                ScaleBlockSymbolVM.ChangeHeigthBottomPart,
                 coordinateScaleRectangle.GetCoordinateLeftBottomRectangle),
 
             new(
                 _canvasSymbolsVM, 
                 _blockSymbolModel, 
                 Cursors.SizeWE, 
-                SizesScaleRectangle.ChangeWidthLeft, 
+                ScaleBlockSymbolVM.ChangeWidthLeftPart, 
                 null, 
                 coordinateScaleRectangle.GetCoordinateLeftMiddleRectangle),
 
@@ -78,8 +77,8 @@ internal class FactoryScaleRectangles
                 _canvasSymbolsVM, 
                 _blockSymbolModel, 
                 Cursors.SizeNWSE, 
-                SizesScaleRectangle.ChangeWidthLeft, 
-                SizesScaleRectangle.ChangeHeigthTop, 
+                ScaleBlockSymbolVM.ChangeWidthLeftPart, 
+                ScaleBlockSymbolVM.ChangeHeigthTopPart, 
                 coordinateScaleRectangle.GetCoordinateLeftTopRectangle)
         };
 

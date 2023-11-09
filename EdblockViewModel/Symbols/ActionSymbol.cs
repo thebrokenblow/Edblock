@@ -2,7 +2,7 @@
 
 namespace EdblockViewModel.Symbols;
 
-public class ActionSymbol : BlockSymbol
+public class ActionSymbol : BlockSymbolVM
 {
     public ActionSymbol(string nameBlockSymbol, CanvasSymbolsVM canvasSymbolsVM) : base(nameBlockSymbol, canvasSymbolsVM)
     {

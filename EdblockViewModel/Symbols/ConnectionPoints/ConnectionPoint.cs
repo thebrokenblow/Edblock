@@ -61,11 +61,11 @@ public class ConnectionPoint : INotifyPropertyChanged
     public DelegateCommand LeaveCursor { get; init; }
     public DelegateCommand<ConnectionPoint> ClickConnectionPoint { get; init; }
     public event PropertyChangedEventHandler? PropertyChanged;
-    public BlockSymbol BlockSymbol { get; init; }
+    public BlockSymbolVM BlockSymbol { get; init; }
     public Func<(int, int)> GetCoordinate { get; init; }
     public PositionConnectionPoint PositionConnectionPoint { get; init; }
     private readonly CanvasSymbolsVM _canvasSymbolsVM;
-    public ConnectionPoint(CanvasSymbolsVM canvasSymbolsVM, BlockSymbol blockSymbol, Func<(int, int)> getCoordinate, PositionConnectionPoint positionConnectionPoint)
+    public ConnectionPoint(CanvasSymbolsVM canvasSymbolsVM, BlockSymbolVM blockSymbol, Func<(int, int)> getCoordinate, PositionConnectionPoint positionConnectionPoint)
     {
         _canvasSymbolsVM = canvasSymbolsVM;
         GetCoordinate = getCoordinate;
@@ -87,25 +87,25 @@ public class ConnectionPoint : INotifyPropertyChanged
 
     public void ShowConnectionPoints()
     {
-        if (_canvasSymbolsVM.ScaleData == null)
+        if (_canvasSymbolsVM.ScalePartBlockSymbolVM == null)
         {
             _canvasSymbolsVM.Cursor = Cursors.Hand;
-            SetStateDisplayConnectionPoint(BlockSymbol.ConnectionPoints, true);
+            SetStateDisplay(BlockSymbol.ConnectionPoints, true);
             IsSelectConnectionPoint = true;
         }
     }
 
     public void HideConnectionPoints()
     {
-        if (_canvasSymbolsVM.ScaleData == null)
+        if (_canvasSymbolsVM.ScalePartBlockSymbolVM == null)
         {
             _canvasSymbolsVM.Cursor = Cursors.Arrow;
-            SetStateDisplayConnectionPoint(BlockSymbol.ConnectionPoints, false);
+            SetStateDisplay(BlockSymbol.ConnectionPoints, false);
             IsSelectConnectionPoint = false;
         }
     }
 
-    public static void SetStateDisplayConnectionPoint(List<ConnectionPoint> connectionPoints, bool isEnterConnectionPoint)
+    public static void SetStateDisplay(List<ConnectionPoint> connectionPoints, bool isEnterConnectionPoint)
     {
         foreach (var connectionPoint in connectionPoints)
         {
@@ -453,7 +453,7 @@ public class ConnectionPoint : INotifyPropertyChanged
         _canvasSymbolsVM.CurrentDrawnLineSymbol = null;
     }
 
-    private void AddBlockSymbol(BlockSymbol? blockSymbol)
+    private void AddBlockSymbol(BlockSymbolVM? blockSymbol)
     {
         if (blockSymbol != null)
         {

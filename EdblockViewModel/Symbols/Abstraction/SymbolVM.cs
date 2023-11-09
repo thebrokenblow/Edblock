@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 
 namespace EdblockViewModel.Symbols.Abstraction;
 
-public abstract class Symbol : INotifyPropertyChanged
+public abstract class SymbolVM : INotifyPropertyChanged
 {
     public string? HexColor { get; set; }
 

@@ -5,7 +5,7 @@ namespace EdblockViewModel.Symbols;
 
 internal class CoordinateBlockSymbol
 {
-    public static void SetXCoordinate(BlockSymbol? blockSymbol, int currentX, int previousX)
+    public static void SetXCoordinate(BlockSymbolVM? blockSymbol, int currentX, int previousX)
     {
         if (blockSymbol != null)
         {
@@ -15,7 +15,7 @@ internal class CoordinateBlockSymbol
         }
     }
 
-    public static void SetYCoordinate(BlockSymbol? blockSymbol, int currentY, int previousY)
+    public static void SetYCoordinate(BlockSymbolVM? blockSymbol, int currentY, int previousY)
     {
         if (blockSymbol != null)
         {

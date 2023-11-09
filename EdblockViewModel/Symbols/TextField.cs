@@ -57,8 +57,8 @@ public class TextField : INotifyPropertyChanged
         }
     }
 
-    public DelegateCommand<BlockSymbol> DoubleClickedTextField { get; init; }
-    public DelegateCommand<BlockSymbol> MouseMoveSymbol { get; init; }
+    public DelegateCommand<BlockSymbolVM> DoubleClickedTextField { get; init; }
+    public DelegateCommand<BlockSymbolVM> MouseMoveSymbol { get; init; }
     private readonly CanvasSymbolsVM _canvasSymbolsVM;
     public TextField(CanvasSymbolsVM canvasSymbolsVM)
     {
@@ -67,18 +67,18 @@ public class TextField : INotifyPropertyChanged
         DoubleClickedTextField = new(AddFocus);
     }
 
-    private void AddFocus(BlockSymbol symbolViewModel)
+    private void AddFocus(BlockSymbolVM symbolViewModel)
     {
         _canvasSymbolsVM.Cursor = Cursors.IBeam;
         symbolViewModel.TextField.Cursor = Cursors.IBeam;
         symbolViewModel.TextField.Focus = true;
     }
 
-    public static void ChangeFocus(ObservableCollection<Symbol> Symbols)
+    public static void ChangeFocus(ObservableCollection<SymbolVM> Symbols)
     {
         foreach (var symbol in Symbols)
         {
-            if (symbol is BlockSymbol blockSymbol)
+            if (symbol is BlockSymbolVM blockSymbol)
             {
                 if (blockSymbol.TextField.Focus)
                 {

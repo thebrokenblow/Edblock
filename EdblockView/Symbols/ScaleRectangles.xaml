@@ -11,8 +11,8 @@
     <ItemsControl ItemsSource="{Binding ScaleRectangles}">
         <ItemsControl.ItemTemplate>
             <DataTemplate DataType="Rectangles">
-                <Border Style="{StaticResource BorderSR}">
-                    <Rectangle Style="{StaticResource RectangleSR}">
+                <Border Style="{StaticResource BorderScaleRectangle}">
+                    <Rectangle Style="{StaticResource ScaleRectangle}">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="MouseEnter">
                                 <i:InvokeCommandAction Command="{Binding EnterCursor}" />

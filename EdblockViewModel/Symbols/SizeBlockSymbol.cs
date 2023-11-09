@@ -5,7 +5,7 @@ namespace EdblockViewModel.Symbols;
 
 internal class SizeBlockSymbol
 {
-    public static void SetSize(ScaleData scaleData, CanvasSymbolsVM canvasSymbolsVM, Func<ScaleData, CanvasSymbolsVM, int>? getSizeSymbol, Action<int>? setSize)
+    public static void SetSize(ScalePartBlockSymbolVM scaleData, CanvasSymbolsVM canvasSymbolsVM, Func<ScalePartBlockSymbolVM, CanvasSymbolsVM, int>? getSizeSymbol, Action<int>? setSize)
     {
         if (getSizeSymbol == null)
         {

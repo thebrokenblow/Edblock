@@ -7,10 +7,10 @@ using EdblockModel.Symbols.ConnectionPoints;
 
 namespace EdblockViewModel.Symbols.LineSymbols;
 
-public class DrawnLineSymbolVM : Symbol
+public class DrawnLineSymbolVM : SymbolVM
 {
-    public BlockSymbol? SymbolOutgoingLine { get; set; }
-    public BlockSymbol? SymbolaIncomingLine { get; set; }
+    public BlockSymbolVM? SymbolOutgoingLine { get; set; }
+    public BlockSymbolVM? SymbolaIncomingLine { get; set; }
     public DrawnLineSymbolModel DrawnLineSymbolModel { get; init; }
     public ObservableCollection<LineSymbolVM> LineSymbols { get; init; } = new();
     public ArrowSymbol ArrowSymbol { get; set; } = new();

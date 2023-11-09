@@ -5,15 +5,11 @@ using System.ComponentModel;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using EdblockViewModel.Symbols.Abstraction;
-using EdblockModel.Symbols.ScaleRectangles;
-using EdblockModel.Symbols.Abstraction;
 
 namespace EdblockViewModel.Symbols.ScaleRectangles;
 
 public class ScaleRectangle : INotifyPropertyChanged
 {
-    public int Width { get; } = ScaleRectangleModel.Width;
-    public int Height { get; } = ScaleRectangleModel.Height;
 
     private int xCoordinate;
     public int XCoordinate
@@ -37,24 +33,13 @@ public class ScaleRectangle : INotifyPropertyChanged
         }
     }
 
-    private string? fill = ScaleRectangleModel.HexNotFocusFill;
-    public string? Fill
+    private bool isShowScaleRectangle = false;
+    public bool IsShowScaleRectangle
     {
-        get => fill;
+        get => isShowScaleRectangle;
         set
         {
-            fill = value;
-            OnPropertyChanged();
-        }
-    }
-
-    private string? borderBrush = ScaleRectangleModel.HexNotFocusBorderBrush;
-    public string? BorderBrush
-    {
-        get => borderBrush;
-        set
-        {
-            borderBrush = value;
+            isShowScaleRectangle = value;
             OnPropertyChanged();
         }
     }
@@ -64,38 +49,46 @@ public class ScaleRectangle : INotifyPropertyChanged
     public DelegateCommand ClickScaleRectangle { get; init; }
     public event PropertyChangedEventHandler? PropertyChanged;
     private readonly CanvasSymbolsVM _canvasSymbolsVM;
-    private readonly BlockSymbol _blockSymbolModel;
-    private readonly Cursor _cursorHover;
-    private readonly Func<int, int, (int, int)> _getCoordinateScaleRectangle;
-    private readonly Func<ScaleData, CanvasSymbolsVM, int>? _getWidthSymbol;
-    private readonly Func<ScaleData, CanvasSymbolsVM, int>? _getHeightSymbol;
+    private readonly BlockSymbolVM _blockSymbolVM;
+    private readonly Cursor _cursorWhenScaling;
+    private readonly Func<(int, int)> _getCoordinateScaleRectangle;
+    private readonly Func<ScalePartBlockSymbolVM, CanvasSymbolsVM, int>? _getWidthSymbol;
+    private readonly Func<ScalePartBlockSymbolVM, CanvasSymbolsVM, int>? _getHeightSymbol;
 
     public ScaleRectangle(
         CanvasSymbolsVM canvasSymbolsVM, 
-        BlockSymbol blockSymbolModel,
-        Cursor cursorHover,
-        Func<ScaleData, CanvasSymbolsVM, int>? getWidthSymbol,
-        Func<ScaleData, CanvasSymbolsVM, int>? getHeightSymbol,
-        Func<int, int, (int, int)> getCoordinateScaleRectangle
+        BlockSymbolVM blockSymbolVM,
+        Cursor cursorWhenScaling,
+        Func<ScalePartBlockSymbolVM, CanvasSymbolsVM, int>? getWidthSymbol,
+        Func<ScalePartBlockSymbolVM, CanvasSymbolsVM, int>? getHeightSymbol,
+        Func<(int, int)> getCoordinateScaleRectangle
         )
     {
-        _blockSymbolModel = blockSymbolModel;
-        _cursorHover = cursorHover;
+        _blockSymbolVM = blockSymbolVM;
+        _cursorWhenScaling = cursorWhenScaling;
         _canvasSymbolsVM = canvasSymbolsVM;
         _getWidthSymbol = getWidthSymbol;
         _getHeightSymbol = getHeightSymbol;
 
         _getCoordinateScaleRectangle = getCoordinateScaleRectangle;
-        (XCoordinate, YCoordinate) = getCoordinateScaleRectangle.Invoke(Width, Height);
+        (XCoordinate, YCoordinate) = getCoordinateScaleRectangle.Invoke();
 
-        EnterCursor = new(Show);
-        LeaveCursor = new(Hide);
+        EnterCursor = new(ShowScaleRectangles);
+        LeaveCursor = new(HideScaleRectangles);
         ClickScaleRectangle = new(SaveScaleRectangle);
     }
 
     public void ChangeCoordination()
     {
-        (XCoordinate, YCoordinate) = _getCoordinateScaleRectangle.Invoke(Width, Height);
+        (XCoordinate, YCoordinate) = _getCoordinateScaleRectangle.Invoke();
+    }
+
+    public static void SetStateDisplay(List<ScaleRectangle> scaleRectangles, bool isShowScaleRectangle)
+    {
+        foreach (var scaleRectangle in scaleRectangles)
+        {
+            scaleRectangle.IsShowScaleRectangle = isShowScaleRectangle;
+        }
     }
 
     public void OnPropertyChanged([CallerMemberName] string prop = "")
@@ -103,40 +96,31 @@ public class ScaleRectangle : INotifyPropertyChanged
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
     }
 
-    public static void SetColor(string? hexFill, string hexBorderBrush, List<ScaleRectangle> scaleRectangles)
+    private void ShowScaleRectangles()
     {
-        foreach (var scaleRectangle in scaleRectangles)
+        if (_canvasSymbolsVM.ScalePartBlockSymbolVM == null)
         {
-            scaleRectangle.Fill = hexFill;
-            scaleRectangle.BorderBrush = hexBorderBrush;
+            _canvasSymbolsVM.Cursor = _cursorWhenScaling;
+            SetStateDisplay(_blockSymbolVM.ScaleRectangles, true);
         }
     }
 
-    private void Show()
-    {
-        if (_canvasSymbolsVM.ScaleData == null)
-        {
-            _canvasSymbolsVM.Cursor = _cursorHover;
-            SetColor(ScaleRectangleModel.HexFocusFill, ScaleRectangleModel.HexFocusBorderBrush, _blockSymbolModel.ScaleRectangles);
-        }
-    }
-
-    private void Hide()
+    private void HideScaleRectangles()
     {
         _canvasSymbolsVM.Cursor = Cursors.Arrow;
-        SetColor(ScaleRectangleModel.HexNotFocusFill, ScaleRectangleModel.HexNotFocusBorderBrush, _blockSymbolModel.ScaleRectangles);
+        SetStateDisplay(_blockSymbolVM.ScaleRectangles, false);
     }
 
     private void SaveScaleRectangle()
     {
-        _canvasSymbolsVM.ScaleData = new(_cursorHover, 
-                                         _blockSymbolModel, 
+        _canvasSymbolsVM.ScalePartBlockSymbolVM = new(_cursorWhenScaling, 
+                                         _blockSymbolVM, 
                                          _getWidthSymbol, 
                                          _getHeightSymbol, 
-                                         _blockSymbolModel.Width, 
-                                         _blockSymbolModel.Height,
-                                         _blockSymbolModel.XCoordinate, 
-                                         _blockSymbolModel.YCoordinate);
-        _canvasSymbolsVM.Cursor = _cursorHover;
+                                         _blockSymbolVM.Width, 
+                                         _blockSymbolVM.Height,
+                                         _blockSymbolVM.XCoordinate, 
+                                         _blockSymbolVM.YCoordinate);
+        _canvasSymbolsVM.Cursor = _cursorWhenScaling;
     }
 }

@@ -7,7 +7,7 @@ using EdblockModel.Symbols.ConnectionPoints;
 
 namespace EdblockViewModel.Symbols.LineSymbols;
 
-public class ArrowSymbol : Symbol
+public class ArrowSymbol : SymbolVM
 {
     private PointCollection pointArrowSymbol = new();
     public PointCollection PointArrowSymbol

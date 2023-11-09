@@ -4,14 +4,13 @@ using System.Windows.Input;
 using EdblockModel.Symbols;
 using System.Collections.Generic;
 using EdblockModel.Symbols.Abstraction;
-using EdblockModel.Symbols.ScaleRectangles;
 using EdblockModel.Symbols.ConnectionPoints;
 using EdblockViewModel.Symbols.ScaleRectangles;
 using EdblockViewModel.Symbols.ConnectionPoints;
 
 namespace EdblockViewModel.Symbols.Abstraction;
 
-public abstract class BlockSymbol : Symbol
+public abstract class BlockSymbolVM : SymbolVM
 {
     public List<ConnectionPoint> ConnectionPoints { get; init; }
     public List<ScaleRectangle> ScaleRectangles { get; init; }
@@ -71,7 +70,7 @@ public abstract class BlockSymbol : Symbol
 
     protected const int defaultWidth = 140;
     protected const int defaultHeigth = 60;
-    public BlockSymbol(string nameBlockSymbol, CanvasSymbolsVM canvasSymbolsVM)
+    public BlockSymbolVM(string nameBlockSymbol, CanvasSymbolsVM canvasSymbolsVM)
     {
         _canvasSymbolsVM = canvasSymbolsVM;
 
@@ -103,6 +102,44 @@ public abstract class BlockSymbol : Symbol
         LeaveCursor = new(HideStroke);
     }
 
+    public abstract void SetWidth(int width);
+    public abstract void SetHeight(int height);
+
+    public (int x, int y) GetBorderCoordinate(PositionConnectionPoint positionConnectionPoint)
+    {
+        return borderCoordinateByPositionCP[positionConnectionPoint].Invoke();
+    }
+
+    public void ShowStroke()
+    {
+        // Условие истино, когда символ не перемещается и не масштабируется (просто навёл курсор)
+        if (_canvasSymbolsVM.DraggableSymbol == null && _canvasSymbolsVM.ScalePartBlockSymbolVM == null)
+        {
+            ConnectionPoint.SetStateDisplay(ConnectionPoints, true);
+            ScaleRectangle.SetStateDisplay(ScaleRectangles, true);
+            TextField.Cursor = Cursors.SizeAll;
+        }
+    }
+
+    public void HideStroke()
+    {
+        ConnectionPoint.SetStateDisplay(ConnectionPoints, false);
+        ScaleRectangle.SetStateDisplay(ScaleRectangles, false);
+    }
+
+    protected void ChangeCoordinateAuxiliaryElements()
+    {
+        foreach (var connectionPoint in ConnectionPoints)
+        {
+            connectionPoint.ChangeCoordination();
+        }
+
+        foreach (var scaleRectangle in ScaleRectangles)
+        {
+            scaleRectangle.ChangeCoordination();
+        }
+    }
+
     private (int x, int y) GetTopBorderCoordinate()
     {
         return (xCoordinate + width / 2, yCoordinate);
@@ -121,43 +158,5 @@ public abstract class BlockSymbol : Symbol
     private (int x, int y) GetRightBorderCoordinate()
     {
         return (xCoordinate + width, yCoordinate + heigth / 2);
-    }
-
-    public abstract void SetWidth(int width);
-    public abstract void SetHeight(int height);
-
-    public (int x, int y) GetBorderCoordinate(PositionConnectionPoint positionConnectionPoint)
-    {
-        return borderCoordinateByPositionCP[positionConnectionPoint].Invoke();
-    }
-
-    public void ShowStroke()
-    {
-        // Условие истино, когда символ не перемещается и не масштабируется (просто навёл курсор)
-        if (_canvasSymbolsVM.DraggableSymbol == null && _canvasSymbolsVM.ScaleData == null)
-        {
-            ConnectionPoint.SetStateDisplayConnectionPoint(ConnectionPoints, true);
-            ScaleRectangle.SetColor(ScaleRectangleModel.HexFocusFill, ScaleRectangleModel.HexFocusBorderBrush, ScaleRectangles);
-            TextField.Cursor = Cursors.SizeAll;
-        }
-    }
-
-    public void HideStroke()
-    {
-        ConnectionPoint.SetStateDisplayConnectionPoint(ConnectionPoints, false);
-        ScaleRectangle.SetColor(ScaleRectangleModel.HexNotFocusFill, ScaleRectangleModel.HexNotFocusBorderBrush, ScaleRectangles);
-    }
-
-    protected void ChangeCoordinateAuxiliaryElements()
-    {
-        foreach (var connectionPoint in ConnectionPoints)
-        {
-            connectionPoint.ChangeCoordination();
-        }
-
-        foreach (var scaleRectangle in ScaleRectangles)
-        {
-            scaleRectangle.ChangeCoordination();
-        }
     }
 }

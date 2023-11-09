@@ -10,8 +10,6 @@ using EdblockViewModel.Symbols.Abstraction;
 using EdblockViewModel.Symbols.ScaleRectangles;
 using EdblockViewModel.Symbols.ConnectionPoints;
 using EdblockViewModel.Symbols.LineSymbols;
-using EdblockModel.Symbols.ConnectionPoints;
-using EdblockModel.Symbols.ScaleRectangles;
 using System.Collections.Generic;
 
 namespace EdblockViewModel;
@@ -34,13 +32,13 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
                 CurrentDrawnLineSymbol.ChangeCoordination(x, y);
             }
 
-            if (ScaleData != null)
+            if (ScalePartBlockSymbolVM != null)
             {
-                SetCurrentRedrawLine(ScaleData.BlockSymbol);
+                SetCurrentRedrawLine(ScalePartBlockSymbolVM.ScalingBlockSymbol);
                 RedrawLine();
-                SizeBlockSymbol.SetSize(ScaleData, this, ScaleData?.GetWidthSymbol, ScaleData!.BlockSymbol.SetWidth);
-                Cursor = ScaleData.Cursor;
-                ScaleData.BlockSymbol.TextField.Cursor = ScaleData.Cursor;
+                SizeBlockSymbol.SetSize(ScalePartBlockSymbolVM, this, ScalePartBlockSymbolVM?.SetWidthBlockSymbol, ScalePartBlockSymbolVM!.ScalingBlockSymbol.SetWidth);
+                Cursor = ScalePartBlockSymbolVM.CursorWhenScaling;
+                ScalePartBlockSymbolVM.ScalingBlockSymbol.TextField.Cursor = ScalePartBlockSymbolVM.CursorWhenScaling;
             }
         }
     }
@@ -59,13 +57,13 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
                 CurrentDrawnLineSymbol.ChangeCoordination(x, y);
             }
 
-            if (ScaleData != null)
+            if (ScalePartBlockSymbolVM != null)
             {
-                SetCurrentRedrawLine(ScaleData.BlockSymbol);
+                SetCurrentRedrawLine(ScalePartBlockSymbolVM.ScalingBlockSymbol);
                 RedrawLine();
-                SizeBlockSymbol.SetSize(ScaleData, this, ScaleData?.GetHeigthSymbol, ScaleData!.BlockSymbol.SetHeight);
-                Cursor = ScaleData.Cursor;
-                ScaleData.BlockSymbol.TextField.Cursor = ScaleData.Cursor;
+                SizeBlockSymbol.SetSize(ScalePartBlockSymbolVM, this, ScalePartBlockSymbolVM?.SetHeigthBlockSymbol, ScalePartBlockSymbolVM!.ScalingBlockSymbol.SetHeight);
+                Cursor = ScalePartBlockSymbolVM.CursorWhenScaling;
+                ScalePartBlockSymbolVM.ScalingBlockSymbol.TextField.Cursor = ScalePartBlockSymbolVM.CursorWhenScaling;
             }
         }
     }
@@ -82,16 +80,16 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
         }
     }
    
-    public ObservableCollection<Symbol> Symbols { get; init; }
-    public Dictionary<BlockSymbol, List<DrawnLineSymbolVM?>> BlockSymbolByLineSymbol { get; init; }
+    public ObservableCollection<SymbolVM> Symbols { get; init; }
+    public Dictionary<BlockSymbolVM, List<DrawnLineSymbolVM?>> BlockSymbolByLineSymbol { get; init; }
     public DelegateCommand MouseMoveCanvasSymbols { get; init; }
     public DelegateCommand MouseUpCanvasSymbols { get; init; }
     public DelegateCommand ClickCanvasSymbols { get; init; }
     public DelegateCommand<string> ClickSymbol { get; init; }
-    public DelegateCommand<BlockSymbol> MouseMoveSymbol { get; init; }
+    public DelegateCommand<BlockSymbolVM> MouseMoveSymbol { get; init; }
     public event PropertyChangedEventHandler? PropertyChanged;
-    public BlockSymbol? DraggableSymbol { get; set; }
-    public ScaleData? ScaleData { get; set; }
+    public BlockSymbolVM? DraggableSymbol { get; set; }
+    public ScalePartBlockSymbolVM? ScalePartBlockSymbolVM { get; set; }
     public DrawnLineSymbolVM? CurrentDrawnLineSymbol { get; set; }
     private List<DrawnLineSymbolVM?>? CurrentRedrawLines { get; set; }
     private readonly FactoryBlockSymbol factoryBlockSymbol;
@@ -130,12 +128,12 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
         Symbols.Add(currentSymbol);
     }
 
-    public void MoveSymbol(BlockSymbol currentSymbol)
+    public void MoveSymbol(BlockSymbolVM currentSymbol)
     {
         if (!currentSymbol.TextField.Focus)
         {
-            ConnectionPoint.SetStateDisplayConnectionPoint(currentSymbol.ConnectionPoints, false);
-            ScaleRectangle.SetColor(ScaleRectangleModel.HexNotFocusFill, ScaleRectangleModel.HexNotFocusBorderBrush, currentSymbol.ScaleRectangles);
+            ConnectionPoint.SetStateDisplay(currentSymbol.ConnectionPoints, false);
+            ScaleRectangle.SetStateDisplay(currentSymbol.ScaleRectangles, false);
             currentSymbol.TextField.Cursor = Cursors.SizeAll;
             Cursor = Cursors.SizeAll;
         }
@@ -146,7 +144,7 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
     public void RemoveSymbol()
     {
         DraggableSymbol = null;
-        ScaleData = null;
+        ScalePartBlockSymbolVM = null;
 
         Cursor = Cursors.Arrow;
     }
@@ -168,7 +166,7 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
     }
 
-    private void SetCurrentRedrawLine(BlockSymbol currentSymbol)
+    private void SetCurrentRedrawLine(BlockSymbolVM currentSymbol)
     {
         if (BlockSymbolByLineSymbol.ContainsKey(currentSymbol))
         {

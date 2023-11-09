@@ -7,8 +7,8 @@ namespace EdblockViewModel.Symbols.LineSymbols;
 
 internal class RedrawLineBottomTop
 {
-    private readonly BlockSymbol? _symbolaIncomingLine;
-    private readonly BlockSymbol? _symbolOutgoingLine;
+    private readonly BlockSymbolVM? _symbolaIncomingLine;
+    private readonly BlockSymbolVM? _symbolOutgoingLine;
     private readonly DrawnLineSymbolVM _drawnLineSymbolVM;
     private readonly List<CoordinateLine> CoordinatesLines;
     private readonly List<CoordinateLine> DecoratedCoordinatesLines;

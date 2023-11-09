@@ -7,10 +7,10 @@ namespace EdblockViewModel.Symbols.ConnectionPoints;
 internal class FactoryConnectionPoints
 {
     private readonly CanvasSymbolsVM _canvasSymbolsVM;
-    private readonly BlockSymbol _blockSymbol;
+    private readonly BlockSymbolVM _blockSymbol;
     private readonly ConnectionPointModel connectionPointModel;
 
-    public FactoryConnectionPoints(CanvasSymbolsVM canvasSymbolsVM, BlockSymbol blockSymbol)
+    public FactoryConnectionPoints(CanvasSymbolsVM canvasSymbolsVM, BlockSymbolVM blockSymbol)
     {
         _canvasSymbolsVM = canvasSymbolsVM;
         _blockSymbol = blockSymbol;
