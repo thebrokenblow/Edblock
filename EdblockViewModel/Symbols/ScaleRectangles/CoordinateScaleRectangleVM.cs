@@ -7,10 +7,8 @@ internal class CoordinateScaleRectangleVM
     private readonly BlockSymbolVM _blockSymbolVM;
     private const int positionOffset = 4;
 
-    internal CoordinateScaleRectangleVM(BlockSymbolVM blockSymbolVM)
-    {
+    internal CoordinateScaleRectangleVM(BlockSymbolVM blockSymbolVM) =>
         _blockSymbolVM = blockSymbolVM;
-    }
 
     internal (int, int) GetCoordinateLeftTopRectangle()
     {

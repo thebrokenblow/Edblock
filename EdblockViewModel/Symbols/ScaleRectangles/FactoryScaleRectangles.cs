@@ -49,7 +49,7 @@ internal class FactoryScaleRectangles
 
     private ScaleRectangle CreateRightTopRectangle()
     {
-        var middleTopRectangle = new ScaleRectangle(
+        var rightTopRectangle = new ScaleRectangle(
                  _canvasSymbolsVM,
                 _blockSymbolModel,
                 Cursors.SizeNESW,
@@ -57,7 +57,7 @@ internal class FactoryScaleRectangles
                 ScaleBlockSymbolVM.ChangeHeigthTopPart,
                 coordinateScaleRectangle.GetCoordinateRightTopRectangle);
 
-        return middleTopRectangle;
+        return rightTopRectangle;
     }
 
     private ScaleRectangle CreateRightMiddleRectangle()
@@ -114,7 +114,7 @@ internal class FactoryScaleRectangles
 
     private ScaleRectangle CreateLeftMiddleRectangle()
     {
-        var leftBottomRectangle = new ScaleRectangle(
+        var leftMiddleRectangle = new ScaleRectangle(
                 _canvasSymbolsVM,
                 _blockSymbolModel,
                 Cursors.SizeWE,
@@ -122,7 +122,7 @@ internal class FactoryScaleRectangles
                 null,
                 coordinateScaleRectangle.GetCoordinateLeftMiddleRectangle);
 
-        return leftBottomRectangle;
+        return leftMiddleRectangle;
     }
 
     private ScaleRectangle CreateLeftTopRectangle()

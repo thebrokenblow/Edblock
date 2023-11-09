@@ -37,7 +37,6 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
                 SetCurrentRedrawLine(ScalePartBlockSymbolVM.ScalingBlockSymbol);
                 RedrawLine();
                 SizeBlockSymbol.SetSize(ScalePartBlockSymbolVM, this, ScalePartBlockSymbolVM?.SetWidthBlockSymbol, ScalePartBlockSymbolVM!.ScalingBlockSymbol.SetWidth);
-                Cursor = ScalePartBlockSymbolVM.CursorWhenScaling;
                 ScalePartBlockSymbolVM.ScalingBlockSymbol.TextField.Cursor = ScalePartBlockSymbolVM.CursorWhenScaling;
             }
 
@@ -63,7 +62,6 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
                 SetCurrentRedrawLine(ScalePartBlockSymbolVM.ScalingBlockSymbol);
                 RedrawLine();
                 SizeBlockSymbol.SetSize(ScalePartBlockSymbolVM, this, ScalePartBlockSymbolVM?.SetHeigthBlockSymbol, ScalePartBlockSymbolVM!.ScalingBlockSymbol.SetHeight);
-                Cursor = ScalePartBlockSymbolVM.CursorWhenScaling;
                 ScalePartBlockSymbolVM.ScalingBlockSymbol.TextField.Cursor = ScalePartBlockSymbolVM.CursorWhenScaling;
             }
         }
@@ -101,7 +99,7 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
         MouseMoveCanvasSymbols = new(RedrawLine);
         BlockSymbolByLineSymbol = new();
         MouseUpCanvasSymbols = new(FinishRedrawingLine);
-        ClickSymbol = new(CreateSymbol);
+        ClickSymbol = new(CreateBlockSymbol);
         MouseMoveSymbol = new(MoveSymbol);
         ClickCanvasSymbols = new(ClickCanvas);
         factoryBlockSymbol = new(this);
@@ -118,7 +116,7 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
         }
     }
 
-    public void CreateSymbol(string nameBlockSymbol)
+    public void CreateBlockSymbol(string nameBlockSymbol)
     {
         var currentSymbol = factoryBlockSymbol.Create(nameBlockSymbol);
 
@@ -142,7 +140,7 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
         DraggableSymbol = currentSymbol;
         SetCurrentRedrawLine(currentSymbol);
     }
-    public void RemoveSymbol()
+    public void FinishMoving()
     {
         DraggableSymbol = null;
         ScalePartBlockSymbolVM = null;
