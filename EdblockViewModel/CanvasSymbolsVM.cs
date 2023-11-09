@@ -40,6 +40,7 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
                 Cursor = ScalePartBlockSymbolVM.CursorWhenScaling;
                 ScalePartBlockSymbolVM.ScalingBlockSymbol.TextField.Cursor = ScalePartBlockSymbolVM.CursorWhenScaling;
             }
+
         }
     }
 
