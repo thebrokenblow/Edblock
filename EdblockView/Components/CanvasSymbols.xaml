@@ -27,8 +27,8 @@
                         <Canvas Cursor="{Binding Cursor}" Focusable="True" ClipToBounds="True" IsItemsHost="True">
                             <i:Interaction.Behaviors>
                                 <edblockViewModel:MouseBehaviourVM 
-                                MouseX="{Binding X, Mode=OneWayToSource}" 
-                                MouseY="{Binding Y, Mode=OneWayToSource}" />
+                                MouseX="{Binding XCoordinate, Mode=OneWayToSource}" 
+                                MouseY="{Binding YCoordinate, Mode=OneWayToSource}" />
                             </i:Interaction.Behaviors>
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="MouseLeftButtonDown">

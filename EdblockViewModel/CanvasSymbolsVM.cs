@@ -1,5 +1,4 @@
-﻿using EdblockModel;
-using System.Windows;
+﻿using System.Windows;
 using Prism.Commands;
 using System.Windows.Input;
 using System.ComponentModel;
@@ -18,54 +17,57 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
 {
     public Rect Grid { get; init; }
 
-    private int x;
-    public int X
+    private int xCoordinate;
+    private int previousXCoordinate;
+    public int XCoordinate
     {
-        get => x;
+        get => xCoordinate;
         set
         {
-            CoordinateBlockSymbol.SetXCoordinate(DraggableSymbol, value, x);
-            x = CanvasSymbols.СorrectionCoordinateSymbol(value);
-
-            if (CurrentDrawnLineSymbol != null)
-            {
-                CurrentDrawnLineSymbol.ChangeCoordination(x, y);
-            }
-
-            if (ScalePartBlockSymbolVM != null)
-            {
-                SetCurrentRedrawLine(ScalePartBlockSymbolVM.ScalingBlockSymbol);
-                RedrawLine();
-                SizeBlockSymbol.SetSize(ScalePartBlockSymbolVM, this, ScalePartBlockSymbolVM?.SetWidthBlockSymbol, ScalePartBlockSymbolVM!.ScalingBlockSymbol.SetWidth);
-                ScalePartBlockSymbolVM.ScalingBlockSymbol.TextField.Cursor = ScalePartBlockSymbolVM.CursorWhenScaling;
-            }
-
+            xCoordinate = RoundCoordinate(value);
+            SetCoordinateBlockSymbol((xCoordinate, yCoordinate), (previousXCoordinate, previousYCoordinate));
+            previousXCoordinate = xCoordinate;
+            CurrentDrawnLineSymbol?.ChangeCoordination(xCoordinate, yCoordinate);
         }
     }
 
-    private int y;
-    public int Y
+    private void SetCoordinateBlockSymbol((int x, int y) currentCoordinate, (int x, int y) previousCoordinate)
     {
-        get => y;
-        set
+        if (DraggableSymbol == null)
         {
-            CoordinateBlockSymbol.SetYCoordinate(DraggableSymbol, value, y);
-            y = CanvasSymbols.СorrectionCoordinateSymbol(value);
+            return;
+        }
 
-            if (CurrentDrawnLineSymbol != null)
-            {
-                CurrentDrawnLineSymbol.ChangeCoordination(x, y);
-            }
+        int roundedXCoordinate = RoundCoordinate(currentCoordinate.x);
+        int roundedYCoordinate = RoundCoordinate(currentCoordinate.y);
 
-            if (ScalePartBlockSymbolVM != null)
-            {
-                SetCurrentRedrawLine(ScalePartBlockSymbolVM.ScalingBlockSymbol);
-                RedrawLine();
-                SizeBlockSymbol.SetSize(ScalePartBlockSymbolVM, this, ScalePartBlockSymbolVM?.SetHeigthBlockSymbol, ScalePartBlockSymbolVM!.ScalingBlockSymbol.SetHeight);
-                ScalePartBlockSymbolVM.ScalingBlockSymbol.TextField.Cursor = ScalePartBlockSymbolVM.CursorWhenScaling;
-            }
+        if (DraggableSymbol.XCoordinate == 0 && DraggableSymbol.YCoordinate == 0)
+        {
+            DraggableSymbol.XCoordinate = roundedXCoordinate - DraggableSymbol.Width / 2;
+            DraggableSymbol.YCoordinate = roundedYCoordinate - DraggableSymbol.Height / 2;
+        }
+        else
+        {
+            DraggableSymbol.XCoordinate = roundedXCoordinate - (previousCoordinate.x - DraggableSymbol.XCoordinate);
+            DraggableSymbol.YCoordinate = roundedYCoordinate - (previousCoordinate.y - DraggableSymbol.YCoordinate);
         }
     }
+
+    private int yCoordinate;
+    private int previousYCoordinate;
+    public int YCoordinate
+    {
+        get => yCoordinate;
+        set
+        {
+           
+            yCoordinate = RoundCoordinate(value);
+            SetCoordinateBlockSymbol((xCoordinate, yCoordinate), (previousXCoordinate, previousYCoordinate));
+            previousYCoordinate = yCoordinate;
+            CurrentDrawnLineSymbol?.ChangeCoordination(xCoordinate, yCoordinate);
+        }
+    }
+
 
     private Cursor cursor = Cursors.Arrow;
     public Cursor Cursor
@@ -78,7 +80,7 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
             OnPropertyChanged();
         }
     }
-   
+
     public ObservableCollection<SymbolVM> Symbols { get; init; }
     public Dictionary<BlockSymbolVM, List<DrawnLineSymbolVM?>> BlockSymbolByLineSymbol { get; init; }
     public DelegateCommand MouseMoveCanvasSymbols { get; init; }
@@ -93,6 +95,7 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
     private List<DrawnLineSymbolVM?>? CurrentRedrawLines { get; set; }
     private readonly FactoryBlockSymbol factoryBlockSymbol;
     private RedrawLineSymbol? redrawLineSymbol;
+    private const int lengthGridCell = 20;
     public CanvasSymbolsVM()
     {
         Symbols = new();
@@ -103,8 +106,7 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
         MouseMoveSymbol = new(MoveSymbol);
         ClickCanvasSymbols = new(ClickCanvas);
         factoryBlockSymbol = new(this);
-        var lengthGrid = CanvasSymbols.LengthGrid;
-        Grid = new Rect(-lengthGrid, -lengthGrid, lengthGrid, lengthGrid);
+        Grid = new Rect(-lengthGridCell, -lengthGridCell, lengthGridCell, lengthGridCell);
     }
 
     public void DeleteCurrentLine()
@@ -133,6 +135,7 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
         {
             ConnectionPoint.SetStateDisplay(currentSymbol.ConnectionPoints, false);
             ScaleRectangle.SetStateDisplay(currentSymbol.ScaleRectangles, false);
+
             currentSymbol.TextField.Cursor = Cursors.SizeAll;
             Cursor = Cursors.SizeAll;
         }
@@ -140,11 +143,14 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
         DraggableSymbol = currentSymbol;
         SetCurrentRedrawLine(currentSymbol);
     }
-    public void FinishMoving()
+    public void FinishMovingBlockSymbol()
     {
         DraggableSymbol = null;
         ScalePartBlockSymbolVM = null;
 
+        previousXCoordinate = 0;
+        previousYCoordinate = 0;
+        
         Cursor = Cursors.Arrow;
     }
 
@@ -163,6 +169,12 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
     public void OnPropertyChanged([CallerMemberName] string prop = "")
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
+    }
+
+    private int RoundCoordinate(int coordinate) //Округление координат, чтобы символ перемещался по сетке
+    {
+        int roundedCoordinate = coordinate - coordinate % (lengthGridCell / 2);
+        return roundedCoordinate;
     }
 
     private void SetCurrentRedrawLine(BlockSymbolVM currentSymbol)

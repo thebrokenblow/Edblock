@@ -12,7 +12,7 @@ public class EdblockVM
     {
         CanvasSymbolsVM = canvasSymbolsVM;
         ClickEsc = new(CanvasSymbolsVM.DeleteCurrentLine);
-        MouseUpSymbol = new(CanvasSymbolsVM.FinishMoving);
+        MouseUpSymbol = new(CanvasSymbolsVM.FinishMovingBlockSymbol);
         ClickSymbol = new(CanvasSymbolsVM.CreateBlockSymbol);
     }
 }

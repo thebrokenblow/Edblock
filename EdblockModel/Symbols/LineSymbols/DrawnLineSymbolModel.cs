@@ -7,7 +7,7 @@ public class DrawnLineSymbolModel
 {
     public List<LineSymbolModel> LinesSymbols { get; set; } = new();
     private readonly PositionConnectionPoint _positionConnectionPoint;
-    private readonly int offsetLine = CanvasSymbols.LengthGrid / 2;
+    private readonly int offsetLine = 10;
 
     public DrawnLineSymbolModel(PositionConnectionPoint positionConnectionPoint)
     {

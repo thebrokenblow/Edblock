@@ -1,11 +1,10 @@
 ﻿namespace EdblockModel;
 
 public static class CanvasSymbols
-{
-    public const int LengthGrid = 20;
+{ 
 
     public static int СorrectionCoordinateSymbol(int coordinate) =>
-        coordinate - coordinate % (LengthGrid / 2);
+        coordinate - coordinate % (10);
 
     public static int GetCoordinateSymbol(int coordinateSymbol, int currentCoordinateCursor, int previousCoordinateCursor, int sizeSymbol)
     {
