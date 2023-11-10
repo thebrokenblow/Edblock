@@ -25,31 +25,11 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
         set
         {
             xCoordinate = RoundCoordinate(value);
-            SetCoordinateBlockSymbol((xCoordinate, yCoordinate), (previousXCoordinate, previousYCoordinate));
-            previousXCoordinate = xCoordinate;
+
+            DraggableSymbol?.SetCoordinate((xCoordinate, yCoordinate), (previousXCoordinate, previousYCoordinate));
             CurrentDrawnLineSymbol?.ChangeCoordination(xCoordinate, yCoordinate);
-        }
-    }
 
-    private void SetCoordinateBlockSymbol((int x, int y) currentCoordinate, (int x, int y) previousCoordinate)
-    {
-        if (DraggableSymbol == null)
-        {
-            return;
-        }
-
-        int roundedXCoordinate = RoundCoordinate(currentCoordinate.x);
-        int roundedYCoordinate = RoundCoordinate(currentCoordinate.y);
-
-        if (DraggableSymbol.XCoordinate == 0 && DraggableSymbol.YCoordinate == 0)
-        {
-            DraggableSymbol.XCoordinate = roundedXCoordinate - DraggableSymbol.Width / 2;
-            DraggableSymbol.YCoordinate = roundedYCoordinate - DraggableSymbol.Height / 2;
-        }
-        else
-        {
-            DraggableSymbol.XCoordinate = roundedXCoordinate - (previousCoordinate.x - DraggableSymbol.XCoordinate);
-            DraggableSymbol.YCoordinate = roundedYCoordinate - (previousCoordinate.y - DraggableSymbol.YCoordinate);
+            previousXCoordinate = xCoordinate;
         }
     }
 
@@ -60,14 +40,14 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
         get => yCoordinate;
         set
         {
-           
             yCoordinate = RoundCoordinate(value);
-            SetCoordinateBlockSymbol((xCoordinate, yCoordinate), (previousXCoordinate, previousYCoordinate));
-            previousYCoordinate = yCoordinate;
+
+            DraggableSymbol?.SetCoordinate((xCoordinate, yCoordinate), (previousXCoordinate, previousYCoordinate));
             CurrentDrawnLineSymbol?.ChangeCoordination(xCoordinate, yCoordinate);
+
+            previousYCoordinate = yCoordinate;
         }
     }
-
 
     private Cursor cursor = Cursors.Arrow;
     public Cursor Cursor
@@ -75,7 +55,6 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
         get => cursor;
         set
         {
-
             cursor = value;
             OnPropertyChanged();
         }
@@ -143,6 +122,7 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
         DraggableSymbol = currentSymbol;
         SetCurrentRedrawLine(currentSymbol);
     }
+
     public void FinishMovingBlockSymbol()
     {
         DraggableSymbol = null;
@@ -171,7 +151,7 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
     }
 
-    private int RoundCoordinate(int coordinate) //Округление координат, чтобы символ перемещался по сетке
+    public static int RoundCoordinate(int coordinate) //Округление координат, чтобы символ перемещался по сетке
     {
         int roundedCoordinate = coordinate - coordinate % (lengthGridCell / 2);
         return roundedCoordinate;

@@ -105,6 +105,23 @@ public abstract class BlockSymbolVM : SymbolVM
     public abstract void SetWidth(int width);
     public abstract void SetHeight(int height);
 
+    public void SetCoordinate((int x, int y) currentCoordinate, (int x, int y) previousCoordinate)
+    {
+        int roundedXCoordinate = CanvasSymbolsVM.RoundCoordinate(currentCoordinate.x);
+        int roundedYCoordinate = CanvasSymbolsVM.RoundCoordinate(currentCoordinate.y);
+
+        if (XCoordinate == 0 && YCoordinate == 0)
+        {
+            XCoordinate = roundedXCoordinate - Width / 2;
+            YCoordinate = roundedYCoordinate - Height / 2;
+        }
+        else
+        {
+            XCoordinate = roundedXCoordinate - (previousCoordinate.x - XCoordinate);
+            YCoordinate = roundedYCoordinate - (previousCoordinate.y - YCoordinate);
+        }
+    }
+
     public (int x, int y) GetBorderCoordinate(PositionConnectionPoint positionConnectionPoint)
     {
         return borderCoordinateByPositionCP[positionConnectionPoint].Invoke();

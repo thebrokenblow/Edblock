@@ -22,8 +22,8 @@ public class CoordinateLineModel
 
         var startCoordinate = startCoordinateByPosition[positionConnectionPoint].Invoke((x, y));
        
-        startCoordinate.x = CanvasSymbols.СorrectionCoordinateSymbol(startCoordinate.x);
-        startCoordinate.y = CanvasSymbols.СorrectionCoordinateSymbol(startCoordinate.y);
+        startCoordinate.x -= startCoordinate.x % 10;
+        startCoordinate.y -= startCoordinate.y % 10;
 
         return startCoordinate;
     }
