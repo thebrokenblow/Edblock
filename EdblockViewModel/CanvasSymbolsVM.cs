@@ -28,16 +28,9 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
 
             MovableSymbol?.SetCoordinate((xCoordinate, yCoordinate), (previousXCoordinate, previousYCoordinate));
             CurrentDrawnLineSymbol?.ChangeCoordination(xCoordinate, yCoordinate);
+            ScalePartBlockSymbolVM?.SetWidthBlockSymbol(this);
 
             previousXCoordinate = xCoordinate;
-
-            RedrawLine();
-            if (ScalePartBlockSymbolVM != null)
-            {
-                SizeBlockSymbol.SetSize(ScalePartBlockSymbolVM, this, ScalePartBlockSymbolVM?.SetWidthBlockSymbol, ScalePartBlockSymbolVM!.ScalingBlockSymbol.SetWidth);
-                ScalePartBlockSymbolVM.ScalingBlockSymbol.TextField.Cursor = ScalePartBlockSymbolVM.CursorWhenScaling;
-                Cursor = ScalePartBlockSymbolVM.CursorWhenScaling;
-            }
         }
     }
 
@@ -52,16 +45,9 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
 
             MovableSymbol?.SetCoordinate((xCoordinate, yCoordinate), (previousXCoordinate, previousYCoordinate));
             CurrentDrawnLineSymbol?.ChangeCoordination(xCoordinate, yCoordinate);
+            ScalePartBlockSymbolVM?.SetHeightBlockSymbol(this);
 
             previousYCoordinate = yCoordinate;
-
-            RedrawLine();
-            if (ScalePartBlockSymbolVM != null)
-            {
-                SizeBlockSymbol.SetSize(ScalePartBlockSymbolVM, this, ScalePartBlockSymbolVM?.SetHeigthBlockSymbol, ScalePartBlockSymbolVM!.ScalingBlockSymbol.SetHeight);
-                ScalePartBlockSymbolVM.ScalingBlockSymbol.TextField.Cursor = ScalePartBlockSymbolVM.CursorWhenScaling;
-                Cursor = ScalePartBlockSymbolVM.CursorWhenScaling;
-            }
         }
     }
 
@@ -136,6 +122,7 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
         }
 
         MovableSymbol = currentSymbol;
+        SetCurrentRedrawLines(currentSymbol);
         RedrawLine();
     }
 
@@ -170,6 +157,14 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
         return roundedCoordinate;
     }
 
+    public void SetCurrentRedrawLines(BlockSymbolVM blockSymbolVM)
+    {
+        if (BlockSymbolByLineSymbol.ContainsKey(blockSymbolVM))
+        {
+            CurrentRedrawLines = BlockSymbolByLineSymbol[blockSymbolVM];
+        }
+    }
+
     private void FinishRedrawingLine()
     {
         CurrentRedrawLines = null;
@@ -177,16 +172,6 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
 
     private void RedrawLine()
     {
-        if (MovableSymbol == null)
-        {
-            return;    
-        }
-
-        if (BlockSymbolByLineSymbol.ContainsKey(MovableSymbol))
-        {
-            CurrentRedrawLines = BlockSymbolByLineSymbol[MovableSymbol];
-        }
-
         if (CurrentRedrawLines == null)
         {
             return;
