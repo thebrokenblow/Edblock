@@ -34,7 +34,7 @@ public partial class CanvasSymbols : UserControl
         var scrollViewer = (ScrollViewer)sender;
         var canvasSymbols = (Canvas)scrollViewer.Content;
 
-        if (CanvasSymbolsVM?.DraggableSymbol == null)
+        if (CanvasSymbolsVM?.MovableSymbol == null)
         {
             return;
         }

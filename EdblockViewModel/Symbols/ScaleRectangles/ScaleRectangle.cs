@@ -121,6 +121,5 @@ public class ScaleRectangle : INotifyPropertyChanged
                                          _blockSymbolVM.Height,
                                          _blockSymbolVM.XCoordinate, 
                                          _blockSymbolVM.YCoordinate);
-        _canvasSymbolsVM.Cursor = _cursorWhenScaling;
     }
 }

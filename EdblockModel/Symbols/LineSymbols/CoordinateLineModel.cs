@@ -17,8 +17,8 @@ public class CoordinateLineModel
                                                     (int x, int y) coordinateConnectionPoint,
                                                     PositionConnectionPoint positionConnectionPoint)
     {
-        int x = coordinateConnectionPoint.x + blockSymbolModel.X;
-        int y = coordinateConnectionPoint.y + blockSymbolModel.Y;
+        int x = coordinateConnectionPoint.x + blockSymbolModel.XCoordinate;
+        int y = coordinateConnectionPoint.y + blockSymbolModel.YCoordinate;
 
         var startCoordinate = startCoordinateByPosition[positionConnectionPoint].Invoke((x, y));
        

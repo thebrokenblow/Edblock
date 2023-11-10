@@ -120,6 +120,9 @@ public abstract class BlockSymbolVM : SymbolVM
             XCoordinate = roundedXCoordinate - (previousCoordinate.x - XCoordinate);
             YCoordinate = roundedYCoordinate - (previousCoordinate.y - YCoordinate);
         }
+
+        BlockSymbolModel.XCoordinate = XCoordinate;
+        BlockSymbolModel.YCoordinate = YCoordinate;
     }
 
     public (int x, int y) GetBorderCoordinate(PositionConnectionPoint positionConnectionPoint)
@@ -130,7 +133,7 @@ public abstract class BlockSymbolVM : SymbolVM
     public void ShowStroke()
     {
         // Условие истино, когда символ не перемещается и не масштабируется (просто навёл курсор)
-        if (_canvasSymbolsVM.DraggableSymbol == null && _canvasSymbolsVM.ScalePartBlockSymbolVM == null)
+        if (_canvasSymbolsVM.MovableSymbol == null && _canvasSymbolsVM.ScalePartBlockSymbolVM == null)
         {
             ConnectionPoint.SetStateDisplay(ConnectionPoints, true);
             ScaleRectangle.SetStateDisplay(ScaleRectangles, true);
