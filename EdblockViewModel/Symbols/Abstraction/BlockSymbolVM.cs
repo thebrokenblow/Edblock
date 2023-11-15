@@ -135,7 +135,7 @@ public abstract class BlockSymbolVM : SymbolVM
         // Условие истино, когда символ не перемещается и не масштабируется (просто навёл курсор)
         if (_canvasSymbolsVM.MovableSymbol == null && _canvasSymbolsVM.ScalePartBlockSymbolVM == null)
         {
-            ConnectionPoint.SetStateDisplay(ConnectionPoints, true);
+            ConnectionPoint.SetDisplayConnectionPoints(ConnectionPoints, true);
             ScaleRectangle.SetStateDisplay(ScaleRectangles, true);
             TextField.Cursor = Cursors.SizeAll;
         }
@@ -143,7 +143,7 @@ public abstract class BlockSymbolVM : SymbolVM
 
     public void HideStroke()
     {
-        ConnectionPoint.SetStateDisplay(ConnectionPoints, false);
+        ConnectionPoint.SetDisplayConnectionPoints(ConnectionPoints, false);
         ScaleRectangle.SetStateDisplay(ScaleRectangles, false);
     }
 

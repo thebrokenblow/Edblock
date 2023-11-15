@@ -33,13 +33,13 @@ public class ScaleRectangle : INotifyPropertyChanged
         }
     }
 
-    private bool isShowScaleRectangle = false;
-    public bool IsShowScaleRectangle
+    private bool isShow = false;
+    public bool IsShow
     {
-        get => isShowScaleRectangle;
+        get => isShow;
         set
         {
-            isShowScaleRectangle = value;
+            isShow = value;
             OnPropertyChanged();
         }
     }
@@ -50,7 +50,7 @@ public class ScaleRectangle : INotifyPropertyChanged
     public event PropertyChangedEventHandler? PropertyChanged;
     private readonly CanvasSymbolsVM _canvasSymbolsVM;
     private readonly BlockSymbolVM _blockSymbolVM;
-    private readonly Cursor _cursorWhenScaling;
+    private readonly Cursor _cursorScaling;
     private readonly Func<(int, int)> _getCoordinateScaleRectangle;
     private readonly Func<ScalePartBlockSymbolVM, CanvasSymbolsVM, int>? _getWidthSymbol;
     private readonly Func<ScalePartBlockSymbolVM, CanvasSymbolsVM, int>? _getHeightSymbol;
@@ -58,14 +58,14 @@ public class ScaleRectangle : INotifyPropertyChanged
     public ScaleRectangle(
         CanvasSymbolsVM canvasSymbolsVM, 
         BlockSymbolVM blockSymbolVM,
-        Cursor cursorWhenScaling,
+        Cursor cursorScaling,
         Func<ScalePartBlockSymbolVM, CanvasSymbolsVM, int>? getWidthSymbol,
         Func<ScalePartBlockSymbolVM, CanvasSymbolsVM, int>? getHeightSymbol,
         Func<(int, int)> getCoordinateScaleRectangle
         )
     {
         _blockSymbolVM = blockSymbolVM;
-        _cursorWhenScaling = cursorWhenScaling;
+        _cursorScaling = cursorScaling;
         _canvasSymbolsVM = canvasSymbolsVM;
         _getWidthSymbol = getWidthSymbol;
         _getHeightSymbol = getHeightSymbol;
@@ -87,7 +87,7 @@ public class ScaleRectangle : INotifyPropertyChanged
     {
         foreach (var scaleRectangle in scaleRectangles)
         {
-            scaleRectangle.IsShowScaleRectangle = isShowScaleRectangle;
+            scaleRectangle.IsShow = isShowScaleRectangle;
         }
     }
 
@@ -100,7 +100,7 @@ public class ScaleRectangle : INotifyPropertyChanged
     {
         if (_canvasSymbolsVM.ScalePartBlockSymbolVM == null)
         {
-            _canvasSymbolsVM.Cursor = _cursorWhenScaling;
+            _canvasSymbolsVM.Cursor = _cursorScaling;
             SetStateDisplay(_blockSymbolVM.ScaleRectangles, true);
         }
     }
@@ -113,6 +113,6 @@ public class ScaleRectangle : INotifyPropertyChanged
 
     private void SaveScaleRectangle()
     {
-        _canvasSymbolsVM.ScalePartBlockSymbolVM = new(_blockSymbolVM, _cursorWhenScaling, _getWidthSymbol, _getHeightSymbol);
+        _canvasSymbolsVM.ScalePartBlockSymbolVM = new(_blockSymbolVM, _cursorScaling, _getWidthSymbol, _getHeightSymbol);
     }
 }

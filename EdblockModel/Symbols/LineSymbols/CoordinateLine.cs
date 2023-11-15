@@ -1,4 +1,4 @@
-﻿using EdblockViewModel.Symbols.LineSymbols.DecoratorLineSymbols;
+﻿using EdblockModel.Symbols.LineSymbols.DecoratorLineSymbols;
 
 namespace EdblockViewModel.Symbols.LineSymbols;
 

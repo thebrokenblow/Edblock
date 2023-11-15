@@ -25,10 +25,10 @@
         <Setter Property="Height" Value="8"/>
         <Setter Property="StrokeThickness" Value="1.5" />
         <Style.Triggers>
-            <DataTrigger Binding="{Binding IsShowConnectionPoints}" Value="True">
+            <DataTrigger Binding="{Binding IsShow}" Value="True">
                 <Setter Property="Fill" Value="#777777"/>
             </DataTrigger>
-            <DataTrigger Binding="{Binding IsSelectConnectionPoint}" Value="True">
+            <DataTrigger Binding="{Binding IsSelect}" Value="True">
                 <Setter Property="Stroke" Value="#00FF00"/>
             </DataTrigger>
         </Style.Triggers>
@@ -38,7 +38,7 @@
         <Setter Property="BorderBrush" Value="#00FFFFFF" />
         <Setter Property="BorderThickness" Value="2" />
         <Style.Triggers>
-            <DataTrigger Binding="{Binding IsShowScaleRectangle}" Value="True">
+            <DataTrigger Binding="{Binding IsShow}" Value="True">
                 <Setter Property="BorderBrush" Value="#FF888888"/>
             </DataTrigger>
         </Style.Triggers>
@@ -49,7 +49,7 @@
         <Setter Property="Height" Value="4" />
         <Setter Property="Fill" Value="#00FFFFFF" />
         <Style.Triggers>
-            <DataTrigger Binding="{Binding IsShowScaleRectangle}" Value="True">
+            <DataTrigger Binding="{Binding IsShow}" Value="True">
                 <Setter Property="Fill" Value="White"/>
             </DataTrigger>
         </Style.Triggers>

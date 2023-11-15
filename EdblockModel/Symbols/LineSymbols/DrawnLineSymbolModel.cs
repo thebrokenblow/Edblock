@@ -5,7 +5,7 @@ namespace EdblockModel.Symbols.LineSymbols;
 
 public class DrawnLineSymbolModel
 {
-    public List<LineSymbolModel> LinesSymbols { get; set; } = new();
+    public List<LineSymbolModel> LinesSymbolModel { get; set; } = new();
     private readonly PositionConnectionPoint _positionConnectionPoint;
     private readonly int offsetLine = 10;
 
@@ -29,38 +29,38 @@ public class DrawnLineSymbolModel
 
     public void ChangeCoordinateLine(int currentX, int currentY)
     {
-        var lastLineSymbol = LinesSymbols[^1];
+        var lastLineSymbol = LinesSymbolModel[^1];
 
         if (_positionConnectionPoint == PositionConnectionPoint.Bottom ||
             _positionConnectionPoint == PositionConnectionPoint.Top)
         {
-            CoordinateLineModel.ChangeCoordinatesVerticalLines(LinesSymbols, lastLineSymbol, currentX, currentY);
+            CoordinateLineModel.ChangeCoordinatesVerticalLines(LinesSymbolModel, lastLineSymbol, currentX, currentY);
         }
         else
         {
-            CoordinateLineModel.ChangeCoordinatesHorizontalLines(LinesSymbols, lastLineSymbol, currentX, currentY);
+            CoordinateLineModel.ChangeCoordinatesHorizontalLines(LinesSymbolModel, lastLineSymbol, currentX, currentY);
         }
     }
 
     public void AddFirstLine((int x, int y) coordinateConnectionPoint, PositionConnectionPoint positionConnectionPoint, BlockSymbolModel blockSymbolModel)
     {
         var lineSymbolModel = FactoryLineSymbolModel.CreateFirstLine(coordinateConnectionPoint, positionConnectionPoint, blockSymbolModel);
-        LinesSymbols.Add(lineSymbolModel);
+        LinesSymbolModel.Add(lineSymbolModel);
     }
 
     public LineSymbolModel GetNewLine()
     {
-        var lastLineSymbol = LinesSymbols[^1];
+        var lastLineSymbol = LinesSymbolModel[^1];
         var newLineSymbolModel = FactoryLineSymbolModel.CreateNewLine(lastLineSymbol);
 
-        LinesSymbols.Add(newLineSymbolModel);
+        LinesSymbolModel.Add(newLineSymbolModel);
 
         return newLineSymbolModel;
     }
 
     private (int x, int y) HorizontalRounding((int x, int y) startCoordinate, (int x, int y) currentCoordinate)
     {
-        if (LinesSymbols.Count % 2 == 1)
+        if (LinesSymbolModel.Count % 2 == 1)
         {
             if (startCoordinate.y > currentCoordinate.y)
             {
@@ -80,7 +80,7 @@ public class DrawnLineSymbolModel
 
     private (int x, int y) VerticallyRounding((int x, int y) startCoordinate, (int x, int y) currentCoordinate)
     {
-        if (LinesSymbols.Count % 2 == 1)
+        if (LinesSymbolModel.Count % 2 == 1)
         {
             if (startCoordinate.x - offsetLine > currentCoordinate.x)
             {

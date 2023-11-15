@@ -114,7 +114,7 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
     {
         if (!currentSymbol.TextField.Focus)
         {
-            ConnectionPoint.SetStateDisplay(currentSymbol.ConnectionPoints, false);
+            ConnectionPoint.SetDisplayConnectionPoints(currentSymbol.ConnectionPoints, false);
             ScaleRectangle.SetStateDisplay(currentSymbol.ScaleRectangles, false);
 
             currentSymbol.TextField.Cursor = Cursors.SizeAll;

@@ -1,4 +1,4 @@
-﻿namespace EdblockViewModel.Symbols.LineSymbols.DecoratorLineSymbols;
+﻿namespace EdblockModel.Symbols.LineSymbols.DecoratorLineSymbols;
 
 public class InversionYCoordinateDecorator : ICoordinateDecorator
 {
