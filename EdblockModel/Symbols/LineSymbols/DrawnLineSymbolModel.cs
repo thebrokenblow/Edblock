@@ -6,18 +6,19 @@ namespace EdblockModel.Symbols.LineSymbols;
 public class DrawnLineSymbolModel
 {
     public List<LineSymbolModel> LinesSymbolModel { get; set; } = new();
-    private readonly PositionConnectionPoint _positionConnectionPoint;
+    public PositionConnectionPoint OutgoingConnectionPoint { get; init; }
+    public PositionConnectionPoint IncomingConnectionPoint { get; set; }
     private readonly int offsetLine = 10;
 
     public DrawnLineSymbolModel(PositionConnectionPoint positionConnectionPoint)
     {
-        _positionConnectionPoint = positionConnectionPoint;
+        OutgoingConnectionPoint = positionConnectionPoint;
     }
 
     public (int x, int y) RoundingCoordinatesLines((int x, int y) startCoordinate, (int x, int y) currentCoordinate)
     {
-        if (_positionConnectionPoint == PositionConnectionPoint.Bottom || 
-            _positionConnectionPoint == PositionConnectionPoint.Top)
+        if (OutgoingConnectionPoint == PositionConnectionPoint.Bottom || 
+            OutgoingConnectionPoint == PositionConnectionPoint.Top)
         {
             return HorizontalRounding(startCoordinate, currentCoordinate);
         }
@@ -31,8 +32,8 @@ public class DrawnLineSymbolModel
     {
         var lastLineSymbol = LinesSymbolModel[^1];
 
-        if (_positionConnectionPoint == PositionConnectionPoint.Bottom ||
-            _positionConnectionPoint == PositionConnectionPoint.Top)
+        if (OutgoingConnectionPoint == PositionConnectionPoint.Bottom ||
+            OutgoingConnectionPoint == PositionConnectionPoint.Top)
         {
             CoordinateLineModel.ChangeCoordinatesVerticalLines(LinesSymbolModel, lastLineSymbol, currentX, currentY);
         }

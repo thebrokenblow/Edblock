@@ -8,6 +8,6 @@ public class CoordinateDecorator : ICoordinateDecorator
     public CoordinateDecorator() => 
         (X, Y) = (0, 0);
 
-    public CoordinateDecorator((int x, int y) borderCoordinateSymbol) => 
-        (X, Y) = (borderCoordinateSymbol.x, borderCoordinateSymbol.y);
+    public CoordinateDecorator((int x, int y) borderCoordinateBlockSymbol) => 
+        (X, Y) = (borderCoordinateBlockSymbol.x, borderCoordinateBlockSymbol.y);
 }

@@ -10,7 +10,7 @@ namespace EdblockViewModel.Symbols.LineSymbols;
 public class DrawnLineSymbolVM : SymbolVM
 {
     public BlockSymbolVM? SymbolOutgoingLine { get; set; }
-    public BlockSymbolVM? SymbolaIncomingLine { get; set; }
+    public BlockSymbolVM? SymbolIncomingLine { get; set; }
     public DrawnLineSymbolModel DrawnLineSymbolModel { get; init; }
     public ObservableCollection<LineSymbolVM> LineSymbols { get; init; } = new();
     public ArrowSymbol ArrowSymbol { get; set; } = new();

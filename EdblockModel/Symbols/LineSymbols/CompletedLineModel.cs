@@ -16,7 +16,6 @@ public class CompletedLineModel
     public void Complete()
     {
         var lastLine = _drawnLineSymbolModel.LinesSymbolModel[^1];
-
         ICoordinateDecorator coordinateLine = new CoordinateDecorator((lastLine.X2, lastLine.Y2));
         ICoordinateDecorator coordinateBlockSymbol = new CoordinateDecorator((_finalCoordinate.x, _finalCoordinate.y));
 
@@ -56,82 +55,6 @@ public class CompletedLineModel
 
             _drawnLineSymbolModel.LinesSymbolModel.Add(firstLine);
             _drawnLineSymbolModel.LinesSymbolModel.Add(secondLine);
-
-        }
-    }
-
-    private void FinishDrawingVerticalToVerticalLines2(LineSymbolModel lastLine, (int x, int y) finalCoordinate)
-    {
-        lastLine.Y2 = finalCoordinate.y;
-
-        var firstLine = new LineSymbolModel
-        {
-            X1 = lastLine.X2,
-            Y1 = lastLine.Y2,
-            X2 = finalCoordinate.x,
-            Y2 = lastLine.Y2
-        };
-    }
-
-    private void FinishDrawingHorizontalToVerticalLines(LineSymbolModel lastLine, (int x, int y) finalCoordinate)
-    {
-        lastLine.Y2 = finalCoordinate.y;
-
-        var firstLine = new LineSymbolModel
-        {
-            X1 = lastLine.X2,
-            Y1 = finalCoordinate.y,
-            X2 = finalCoordinate.x,
-            Y2 = finalCoordinate.y
-        };
-    }
-
-    private void FinishDrawingVerticalToHorizontalLines(LineSymbolModel lastLine, (int x, int y) finalCoordinate)
-    {
-        lastLine.X2 = finalCoordinate.x;
-
-        var firstLine = new LineSymbolModel
-        {
-            X1 = finalCoordinate.x,
-            Y1 = lastLine.Y2,
-            X2 = finalCoordinate.x,
-            Y2 = finalCoordinate.y
-        };
-    }
-
-    private void FinishDrawingHorizontalToVerticalLines2(LineSymbolModel lastLine, (int x, int y) finalCoordinate)
-    {
-        if (lastLine.Y2 == finalCoordinate.y)
-        {
-            lastLine.X2 = finalCoordinate.x;
-        }
-        else
-        {
-            var secondLine = _drawnLineSymbolModel.LinesSymbolModel[^2];
-
-            secondLine.Y2 = finalCoordinate.y;
-
-            lastLine.Y1 = finalCoordinate.y;
-            lastLine.Y2 = finalCoordinate.y;
-            lastLine.X2 = finalCoordinate.x;
-        }
-    }
-
-    private void FinishDrawingVerticalToHorizontalLines2(LineSymbolModel lastLine, (int x, int y) finalCoordinate)
-    {
-        if (lastLine.X2 == finalCoordinate.x)
-        {
-            lastLine.Y2 = finalCoordinate.y;
-        }
-        else
-        {
-            var secondLine = _drawnLineSymbolModel.LinesSymbolModel[^2];
-
-            secondLine.X2 = finalCoordinate.x;
-
-            lastLine.X1 = finalCoordinate.x;
-            lastLine.X2 = finalCoordinate.x;
-            lastLine.Y2 = finalCoordinate.y;
         }
     }
 }

@@ -21,7 +21,7 @@ internal class RedrawLineBottomTop
         _drawnLineSymbolVM = drawnLineSymbolVM;
         _positionOutgoing = drawnLineSymbolVM.PositionOutgoingConnectionPoint;
         _positionIncoming = drawnLineSymbolVM.PositionIncomingConnectionPoint;
-        _symbolaIncomingLine = drawnLineSymbolVM.SymbolaIncomingLine;
+        _symbolaIncomingLine = drawnLineSymbolVM.SymbolIncomingLine;
         _symbolOutgoingLine = drawnLineSymbolVM.SymbolOutgoingLine;
         CoordinatesLines = new();
         DecoratedCoordinatesLines = new();

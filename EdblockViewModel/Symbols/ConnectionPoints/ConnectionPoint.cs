@@ -102,7 +102,7 @@ public class ConnectionPoint : INotifyPropertyChanged
 
     public void TrackStageDrawLine(ConnectionPoint connectionPoint)
     {
-        if (_canvasSymbolsVM.CurrentDrawnLineSymbol == null)
+        if (_canvasSymbolsVM.DrawnLineSymbol == null)
         {
             StarDrawLine(connectionPoint);
         }
@@ -146,28 +146,32 @@ public class ConnectionPoint : INotifyPropertyChanged
         drawnLineSymbolModel.AddFirstLine(coordinateConnectionPoint, positionConnectionPoint, blockSymbolModel);
 
         var drawnLineSymbolVM = new DrawnLineSymbolVM(positionConnectionPoint, drawnLineSymbolModel);
-        _canvasSymbolsVM.CurrentDrawnLineSymbol = drawnLineSymbolVM;
+        _canvasSymbolsVM.DrawnLineSymbol = drawnLineSymbolVM;
         _canvasSymbolsVM.Symbols.Add(drawnLineSymbolVM);
 
-        _canvasSymbolsVM.CurrentDrawnLineSymbol.SymbolOutgoingLine = connectionPoint.BlockSymbolVM;
+        _canvasSymbolsVM.DrawnLineSymbol.SymbolOutgoingLine = connectionPoint.BlockSymbolVM;
     }
 
     private void EndDrawLine(ConnectionPoint connectionPoint)
     {
+        var drawnLineSymbolVM = _canvasSymbolsVM.DrawnLineSymbol;
+        var drawnLineSymbolModel = drawnLineSymbolVM!.DrawnLineSymbolModel;
+        drawnLineSymbolModel.IncomingConnectionPoint = PositionConnectionPoint;
+
         var symbolaIncomingLine = connectionPoint.BlockSymbolVM;
         var incomingPositionConnectionPoint = connectionPoint.PositionConnectionPoint;
         var finalCoordinate = symbolaIncomingLine.GetBorderCoordinate(incomingPositionConnectionPoint);
 
-        completedLineModel ??= new(_canvasSymbolsVM.CurrentDrawnLineSymbol!.DrawnLineSymbolModel, finalCoordinate);
+        completedLineModel ??= new(drawnLineSymbolModel, finalCoordinate);
         completedLineModel.Complete();
 
-        _canvasSymbolsVM.CurrentDrawnLineSymbol!.ArrowSymbol.ChangeOrientationArrow(finalCoordinate, incomingPositionConnectionPoint);
-        _canvasSymbolsVM.CurrentDrawnLineSymbol!.SymbolaIncomingLine = connectionPoint.BlockSymbolVM;
+        drawnLineSymbolVM.ArrowSymbol.ChangeOrientationArrow(finalCoordinate, incomingPositionConnectionPoint);
+        drawnLineSymbolVM.SymbolIncomingLine = symbolaIncomingLine;
 
-        AddBlockToLine(_canvasSymbolsVM.CurrentDrawnLineSymbol!.SymbolaIncomingLine);
-        AddBlockToLine(_canvasSymbolsVM.CurrentDrawnLineSymbol!.SymbolOutgoingLine);
+        AddBlockToLine(drawnLineSymbolVM.SymbolIncomingLine);
+        AddBlockToLine(drawnLineSymbolVM.SymbolOutgoingLine);
 
-        _canvasSymbolsVM.CurrentDrawnLineSymbol = null;
+        _canvasSymbolsVM.DrawnLineSymbol = null;
     }
 
     private void AddBlockToLine(BlockSymbolVM? blockSymbol)
@@ -180,13 +184,13 @@ public class ConnectionPoint : INotifyPropertyChanged
         if (_canvasSymbolsVM.BlockSymbolByLineSymbol.ContainsKey(blockSymbol))
         {
             var drawnLinesSymbolVM = _canvasSymbolsVM.BlockSymbolByLineSymbol[blockSymbol];
-            drawnLinesSymbolVM.Add(_canvasSymbolsVM.CurrentDrawnLineSymbol);
+            drawnLinesSymbolVM.Add(_canvasSymbolsVM.DrawnLineSymbol);
         }
         else
         {
             var drawnLinesSymbolVM = new List<DrawnLineSymbolVM?>
             {
-                _canvasSymbolsVM.CurrentDrawnLineSymbol
+                _canvasSymbolsVM.DrawnLineSymbol
             };
             _canvasSymbolsVM.BlockSymbolByLineSymbol.Add(blockSymbol, drawnLinesSymbolVM);
         }

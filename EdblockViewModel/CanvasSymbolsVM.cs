@@ -27,7 +27,7 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
             xCoordinate = RoundCoordinate(value);
 
             MovableSymbol?.SetCoordinate((xCoordinate, yCoordinate), (previousXCoordinate, previousYCoordinate));
-            CurrentDrawnLineSymbol?.ChangeCoordination(xCoordinate, yCoordinate);
+            DrawnLineSymbol?.ChangeCoordination(xCoordinate, yCoordinate);
             ScalePartBlockSymbolVM?.SetWidthBlockSymbol(this);
 
             previousXCoordinate = xCoordinate;
@@ -44,7 +44,7 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
             yCoordinate = RoundCoordinate(value);
 
             MovableSymbol?.SetCoordinate((xCoordinate, yCoordinate), (previousXCoordinate, previousYCoordinate));
-            CurrentDrawnLineSymbol?.ChangeCoordination(xCoordinate, yCoordinate);
+            DrawnLineSymbol?.ChangeCoordination(xCoordinate, yCoordinate);
             ScalePartBlockSymbolVM?.SetHeightBlockSymbol(this);
 
             previousYCoordinate = yCoordinate;
@@ -72,7 +72,7 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
     public event PropertyChangedEventHandler? PropertyChanged;
     public BlockSymbolVM? MovableSymbol { get; set; }
     public ScalePartBlockSymbolVM? ScalePartBlockSymbolVM { get; set; }
-    public DrawnLineSymbolVM? CurrentDrawnLineSymbol { get; set; }
+    public DrawnLineSymbolVM? DrawnLineSymbol { get; set; }
     private List<DrawnLineSymbolVM?>? CurrentRedrawLines { get; set; }
     private readonly FactoryBlockSymbol factoryBlockSymbol;
     private RedrawLineSymbol? redrawLineSymbol;
@@ -92,10 +92,10 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
 
     public void DeleteCurrentLine()
     {
-        if (CurrentDrawnLineSymbol != null)
+        if (DrawnLineSymbol != null)
         {
-            Symbols.Remove(CurrentDrawnLineSymbol);
-            CurrentDrawnLineSymbol = null;
+            Symbols.Remove(DrawnLineSymbol);
+            DrawnLineSymbol = null;
         }
     }
 
@@ -136,12 +136,12 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
 
     public void ClickCanvas()
     {
-        if (CurrentDrawnLineSymbol != null && CurrentDrawnLineSymbol?.LineSymbols.Count > 1)
+        if (DrawnLineSymbol != null && DrawnLineSymbol?.LineSymbols.Count > 1)
         {
-            var newLineSymbolModel = CurrentDrawnLineSymbol.DrawnLineSymbolModel.GetNewLine();
+            var newLineSymbolModel = DrawnLineSymbol.DrawnLineSymbolModel.GetNewLine();
             var newLineSymbol = FactoryLineSymbol.CreateNewLine(newLineSymbolModel);
 
-            CurrentDrawnLineSymbol.LineSymbols.Add(newLineSymbol);
+            DrawnLineSymbol.LineSymbols.Add(newLineSymbol);
         }
         TextField.ChangeFocus(Symbols);
     }
