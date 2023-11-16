@@ -47,6 +47,17 @@ public class DrawnLineSymbolVM : SymbolVM
         }
     }
 
+    public void RedrawLines(List<LineSymbolModel> linesSymbolModel)
+    {
+        LineSymbols.Clear();
+
+        foreach (var lineSymbolModel in linesSymbolModel)
+        {
+            var lineSymbolVM = FactoryLineSymbol.CreateLineByLineModel(lineSymbolModel);
+            LineSymbols.Add(lineSymbolVM);
+        }
+    }
+
     private void AddMissingLines(List<LineSymbolModel> linesSymbolModel)
     {
         foreach (var lineSymbolModel in linesSymbolModel)
