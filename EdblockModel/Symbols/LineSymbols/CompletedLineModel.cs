@@ -23,18 +23,111 @@ public class CompletedLineModel
         {
             if (incomingPosition == PositionConnectionPoint.Top || incomingPosition == PositionConnectionPoint.Bottom)
             {
-                CompleteParallel(linesSymbolModel, _finalCoordinate);
+                var lastLine = linesSymbolModel[^1];
+                ILineCoordinateDecorator coordinateLineDecorator = new LineCoordinateDecorator((lastLine.X2, lastLine.Y2), _finalCoordinate);
+
+                CompleteParallel2(linesSymbolModel, _finalCoordinate, coordinateLineDecorator);
+            }
+        }
+        else if (outgoingPosition == PositionConnectionPoint.Left || outgoingPosition == PositionConnectionPoint.Right)
+        {
+            if (incomingPosition == PositionConnectionPoint.Left || incomingPosition == PositionConnectionPoint.Right)
+            {
+                var lastLine = linesSymbolModel[^1];
+                var build = new BuildLineCoordinateDecorato().SetSwapFinalCoordinate();
+                ILineCoordinateDecorator coordinateLineDecorator = new LineCoordinateDecorator((lastLine.X2, lastLine.Y2), _finalCoordinate);
+                coordinateLineDecorator = build.Build(coordinateLineDecorator);
+                CompleteParallel2(linesSymbolModel, _finalCoordinate, coordinateLineDecorator);
             }
         }
 
         return linesSymbolModel;
     }
 
-    private List<LineSymbolModel> CompleteParallel(List<LineSymbolModel> linesSymbolModel, (int x, int y) finalCoordinate)
+    interface ILineCoordinateDecorator
+    {
+        public int X2 { get; set; }
+        public int Y2 { get; set; }
+        public int FinalCoordinateX { get; set; }
+        public int FinalCoordinateY { get; set; }
+    }
+
+    class LineCoordinateDecorator : ILineCoordinateDecorator
+    {
+        public int X2 { get; set; }
+        public int Y2 { get; set; }
+        public int FinalCoordinateX { get; set; }
+        public int FinalCoordinateY { get; set; }
+
+        public LineCoordinateDecorator((int x, int y) lineCoordinate, (int x, int y) finalCoordinate)
+        {
+            X2 = lineCoordinate.x;
+            Y2 = lineCoordinate.y;
+            FinalCoordinateX = finalCoordinate.x;
+            FinalCoordinateY = finalCoordinate.y;
+        }
+    }
+
+    class SwapFinalCoordinate : ILineCoordinateDecorator
+    {
+        public int X2
+        {
+            get => _lineCoordinateDecorator.FinalCoordinateX;
+            set => _lineCoordinateDecorator.FinalCoordinateX = value;
+        }
+
+        public int Y2
+        {
+            get => _lineCoordinateDecorator.FinalCoordinateY;
+            set => _lineCoordinateDecorator.FinalCoordinateY = value;
+        }
+
+        public int FinalCoordinateX
+        {
+            get => _lineCoordinateDecorator.X2;
+            set => _lineCoordinateDecorator.X2 = value;
+        }
+
+        public int FinalCoordinateY
+        {
+            get => _lineCoordinateDecorator.Y2;
+            set => _lineCoordinateDecorator.Y2 = value;
+        }
+
+        ILineCoordinateDecorator _lineCoordinateDecorator;
+        public SwapFinalCoordinate(ILineCoordinateDecorator lineCoordinateDecorator)
+        {
+            _lineCoordinateDecorator = lineCoordinateDecorator;
+        }
+    }
+
+    class BuildLineCoordinateDecorato
+    {
+        private bool IsSetSwapFinalCoordinate = false;
+
+        public BuildLineCoordinateDecorato SetSwapFinalCoordinate()
+        {
+            IsSetSwapFinalCoordinate = true;
+
+            return this;
+        }
+
+        public ILineCoordinateDecorator Build(ILineCoordinateDecorator coordinateDecorator)
+        {
+            if (IsSetSwapFinalCoordinate)
+            {
+                coordinateDecorator = new SwapFinalCoordinate(coordinateDecorator);
+            }
+
+            return coordinateDecorator;
+        }
+    }
+
+    private List<LineSymbolModel> CompleteParallel2(List<LineSymbolModel> linesSymbolModel, (int x, int y) finalCoordinate, ILineCoordinateDecorator lineCoordinateDecorator)
     {
         var lastLine = linesSymbolModel[^1];
 
-        if (lastLine.X2 == finalCoordinate.x)
+        if (lastLine.X2 == finalCoordinate.x || lastLine.Y2 == finalCoordinate.y)
         {
             lastLine.X2 = finalCoordinate.x;
             lastLine.Y2 = finalCoordinate.y;
@@ -45,14 +138,14 @@ public class CompletedLineModel
             {
                 X1 = lastLine.X2,
                 Y1 = lastLine.Y2,
-                X2 = finalCoordinate.x,
-                Y2 = lastLine.Y2
+                X2 = lineCoordinateDecorator.FinalCoordinateX,
+                Y2 = lineCoordinateDecorator.Y2,
             };
 
             var secondLine = new LineSymbolModel
             {
-                X1 = finalCoordinate.x,
-                Y1 = lastLine.Y2,
+                X1 = lineCoordinateDecorator.FinalCoordinateX,
+                Y1 = lineCoordinateDecorator.Y2,
                 X2 = finalCoordinate.x,
                 Y2 = finalCoordinate.y,
             };
@@ -62,62 +155,5 @@ public class CompletedLineModel
         }
 
         return linesSymbolModel;
-    }
-
-    //private void FinishDrawingParallelBorders(LineSymbolModel lastLineSymbolModel, ICoordinateDecorator coordinateLine, ICoordinateDecorator coordinateBlockSymbol)
-    //{
-    //    if (coordinateLine.X == coordinateBlockSymbol.X)
-    //    {
-    //        lastLineSymbolModel.X2 = coordinateLine.X;
-    //        lastLineSymbolModel.Y2 = coordinateLine.Y;
-    //    }
-    //    else
-    //    {
-    //        var firstLine = new LineSymbolModel
-    //        {
-    //            X1 = lastLineSymbolModel.X2,
-    //            Y1 = lastLineSymbolModel.Y2,
-    //            X2 = coordinateBlockSymbol.X,
-    //            Y2 = coordinateBlockSymbol.Y
-    //        };
-
-    //        var secondLine = new LineSymbolModel
-    //        {
-    //            X1 = coordinateBlockSymbol.X,
-    //            Y1 = lastLineSymbolModel.Y2,
-    //            X2 = coordinateBlockSymbol.X,
-    //            Y2 = coordinateBlockSymbol.Y,
-    //        };
-
-    //        _drawnLineSymbolModel.LinesSymbolModel.Add(firstLine);
-    //        _drawnLineSymbolModel.LinesSymbolModel.Add(secondLine);
-    //    }
-    //}
-
-    private void FinishDrawingVerticalToVerticalLines(LineSymbolModel lastLine, (int x, int y) finalCoordinate)
-    {
-        if (lastLine.Y2 == finalCoordinate.y)
-        {
-            lastLine.X2 = finalCoordinate.x;
-            lastLine.Y2 = finalCoordinate.y;
-        }
-        else
-        {
-            var firstLine = new LineSymbolModel
-            {
-                X1 = lastLine.X2,
-                Y1 = lastLine.Y2,
-                X2 = lastLine.X2,
-                Y2 = finalCoordinate.y
-            };
-
-            var secondLine = new LineSymbolModel
-            {
-                X1 = lastLine.X2,
-                Y1 = finalCoordinate.y,
-                X2 = finalCoordinate.x,
-                Y2 = finalCoordinate.y,
-            };
-        }
     }
 }
