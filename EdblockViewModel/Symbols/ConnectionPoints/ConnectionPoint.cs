@@ -8,6 +8,7 @@ using EdblockModel.Symbols.LineSymbols;
 using EdblockViewModel.Symbols.LineSymbols;
 using EdblockViewModel.Symbols.Abstraction;
 using EdblockModel.Symbols.ConnectionPoints;
+using EdblockModel.Symbols.LineSymbols.CompletedLine;
 
 namespace EdblockViewModel.Symbols.ConnectionPoints;
 
@@ -65,7 +66,7 @@ public class ConnectionPoint : INotifyPropertyChanged
     public PositionConnectionPoint PositionConnectionPoint { get; init; }
     public event PropertyChangedEventHandler? PropertyChanged;
     private readonly CanvasSymbolsVM _canvasSymbolsVM;
-    private CompletedLineModel? completedLineModel;
+    private CompletedLine? completedLineModel;
     public ConnectionPoint(
         CanvasSymbolsVM canvasSymbolsVM, 
         BlockSymbolVM blockSymbolVM, 
