@@ -8,9 +8,11 @@ public class CompletedLine
     private readonly PositionConnectionPoint outgoingPosition;
     private readonly PositionConnectionPoint incomingPosition;
     private readonly (int x, int y) _finalCoordinate;
+    private readonly CompletedEvenLine completedEvenLine;
 
     public CompletedLine(DrawnLineSymbolModel drawnLineSymbolModel, (int x, int y) finalCoordinate)
     {
+        completedEvenLine = new(drawnLineSymbolModel, finalCoordinate);
         linesSymbolModel = drawnLineSymbolModel.LinesSymbolModel;
         outgoingPosition = drawnLineSymbolModel.OutgoingPosition;
         incomingPosition = drawnLineSymbolModel.IncomingPosition;
@@ -58,28 +60,7 @@ public class CompletedLine
         }
         else
         {
-            if (outgoingPosition == PositionConnectionPoint.Bottom || outgoingPosition == PositionConnectionPoint.Top)
-            {
-                if (incomingPosition == PositionConnectionPoint.Top || incomingPosition == PositionConnectionPoint.Bottom)
-                {
-                    FinishDrawingHorizontalToHorizontalLines2(lastLine, finalCoordinate);
-                }
-                else
-                {
-                    FinishDrawingHorizontalToVerticalLines2(lastLine, finalCoordinate);
-                }
-            }
-            else
-            {
-                if (incomingPosition == PositionConnectionPoint.Top || incomingPosition == PositionConnectionPoint.Bottom)
-                {
-                    FinishDrawingVerticalToHorizontalLines2(lastLine, finalCoordinate);
-                }
-                else
-                {
-                    FinishDrawingVerticalToVerticalLines2(lastLine, finalCoordinate);
-                }
-            }
+            return completedEvenLine.Completed();
         }
 
 
