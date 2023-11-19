@@ -19,73 +19,57 @@ internal class CompletedEvenLine
 
     public List<LineSymbolModel> Completed()
     {
+        var lastLine = linesSymbolModel[^1];
+
         if (outgoingPosition == PositionConnectionPoint.Bottom || outgoingPosition == PositionConnectionPoint.Top)
         {
             if (incomingPosition == PositionConnectionPoint.Top || incomingPosition == PositionConnectionPoint.Bottom)
             {
-                var lastLine = linesSymbolModel[^1];
                 lastLine.X2 = _finalCoordinate.x;
-                FinishLinesParallelSides(_finalCoordinate);
+                var coordinateLastLine = (lastLine.X2, lastLine.Y2);
+                FinishLastLine(coordinateLastLine);
             }
             else
             {
-                var penultimate = linesSymbolModel[^2];
-                penultimate.Y2 = _finalCoordinate.y;
-                FinishLinesNotParallelSides(_finalCoordinate);
+                var penultimateLine = linesSymbolModel[^2];
+                penultimateLine.Y2 = _finalCoordinate.y;
+
+                var coordinatePenultimateLine = (penultimateLine.X2, penultimateLine.Y2);
+                FinishLastLine(coordinatePenultimateLine, lastLine);
             }
         }
         else
         {
             if (incomingPosition == PositionConnectionPoint.Top || incomingPosition == PositionConnectionPoint.Bottom)
             {
-                var penultimate = linesSymbolModel[^2];
-                penultimate.X2 = _finalCoordinate.x;
-                FinishLinesNotParallelSides(_finalCoordinate);
+                var penultimateLine = linesSymbolModel[^2];
+                penultimateLine.X2 = _finalCoordinate.x;
+
+                var coordinatePenultimateLine = (penultimateLine.X2, penultimateLine.Y2);
+                FinishLastLine(coordinatePenultimateLine, lastLine);
             }
             else
             {
-                var lastLine = linesSymbolModel[^1];
                 lastLine.Y2 = _finalCoordinate.y;
-                FinishLinesParallelSides(_finalCoordinate);
+                var coordinateLastLine = (lastLine.X2, lastLine.Y2);
+                FinishLastLine(coordinateLastLine);
             }
         }
 
         return linesSymbolModel;
     }
 
-    private void FinishLinesParallelSides((int x, int y) finalCoordinate)
+    private void FinishLastLine((int x, int y) penultimateLineCoordinate, LineSymbolModel? lineSymbolModel = null)
     {
-        var lastLine = linesSymbolModel[^1];
-
-        var firstLine = new LineSymbolModel
+        if (lineSymbolModel == null)
         {
-            X1 = lastLine.X2,
-            Y1 = lastLine.Y2,
-            X2 = finalCoordinate.x,
-            Y2 = finalCoordinate.y
-        };
-
-        linesSymbolModel.Add(firstLine);
-    }
-
-    private void FinishLinesNotParallelSides((int x, int y) finalCoordinate)
-    {
-        var lastLine = linesSymbolModel[^1];
-
-        if (finalCoordinate.x == lastLine.X2 || finalCoordinate.y == lastLine.Y2)
-        {
-            lastLine.X2 = finalCoordinate.x;
-            lastLine.Y2 = finalCoordinate.y;
+            lineSymbolModel = new LineSymbolModel();
+            linesSymbolModel.Add(lineSymbolModel);
         }
-        else
-        {
-            var secondLine = linesSymbolModel[^2];
 
-            lastLine.X1 = secondLine.X2;
-            lastLine.Y1 = secondLine.Y2;
-
-            lastLine.X2 = finalCoordinate.x;
-            lastLine.Y2 = finalCoordinate.y;
-        }
+        lineSymbolModel.X1 = penultimateLineCoordinate.x;
+        lineSymbolModel.Y1 = penultimateLineCoordinate.y;
+        lineSymbolModel.X2 = _finalCoordinate.x;
+        lineSymbolModel.Y2 = _finalCoordinate.y;
     }
 }
