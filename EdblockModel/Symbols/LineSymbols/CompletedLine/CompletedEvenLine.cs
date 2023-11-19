@@ -19,47 +19,25 @@ internal class CompletedEvenLine
 
     public List<LineSymbolModel> Completed()
     {
-        var lastLine = linesSymbolModel[^1];
+        var lastLineModel = linesSymbolModel[^1];
+        var penultimateLineModel = linesSymbolModel[^2];
 
-        if (outgoingPosition == PositionConnectionPoint.Bottom || outgoingPosition == PositionConnectionPoint.Top)
+        if (incomingPosition == PositionConnectionPoint.Bottom || incomingPosition == PositionConnectionPoint.Top)
         {
-            if (incomingPosition == PositionConnectionPoint.Top || incomingPosition == PositionConnectionPoint.Bottom)
-            {
-                lastLine.X2 = _finalCoordinate.x;
-                var coordinateLastLine = (lastLine.X2, lastLine.Y2);
-                FinishLastLine(coordinateLastLine);
-            }
-            else
-            {
-                var penultimateLine = linesSymbolModel[^2];
-                penultimateLine.Y2 = _finalCoordinate.y;
-
-                var coordinatePenultimateLine = (penultimateLine.X2, penultimateLine.Y2);
-                FinishLastLine(coordinatePenultimateLine, lastLine);
-            }
+            penultimateLineModel.X2 = _finalCoordinate.x;
         }
         else
         {
-            if (incomingPosition == PositionConnectionPoint.Top || incomingPosition == PositionConnectionPoint.Bottom)
-            {
-                var penultimateLine = linesSymbolModel[^2];
-                penultimateLine.X2 = _finalCoordinate.x;
-
-                var coordinatePenultimateLine = (penultimateLine.X2, penultimateLine.Y2);
-                FinishLastLine(coordinatePenultimateLine, lastLine);
-            }
-            else
-            {
-                lastLine.Y2 = _finalCoordinate.y;
-                var coordinateLastLine = (lastLine.X2, lastLine.Y2);
-                FinishLastLine(coordinateLastLine);
-            }
+            penultimateLineModel.Y2 = _finalCoordinate.y;
         }
+
+        var coordinatelineSymbolModel = (penultimateLineModel.X2, penultimateLineModel.Y2);
+        FinishDrawLastLine(coordinatelineSymbolModel, lastLineModel);
 
         return linesSymbolModel;
     }
 
-    private void FinishLastLine((int x, int y) penultimateLineCoordinate, LineSymbolModel? lineSymbolModel = null)
+    private void FinishDrawLastLine((int x, int y) penultimateLineCoordinate, LineSymbolModel? lineSymbolModel = null)
     {
         if (lineSymbolModel == null)
         {
