@@ -19,79 +19,7 @@ public class CompletedLine
         _finalCoordinate = finalCoordinate;
     }
 
-    public List<LineSymbolModel> GetCompleteLines()
-    {
-        if (linesSymbolModel.Count % 2 == 1)
-        {
-            if (outgoingPosition == PositionConnectionPoint.Bottom || outgoingPosition == PositionConnectionPoint.Top)
-            {
-                if (incomingPosition == PositionConnectionPoint.Top || incomingPosition == PositionConnectionPoint.Bottom)
-                {
-                    var lastLine = linesSymbolModel[^1];
-                    ILineCoordinateDecorator coordinateLineDecorator = new LineCoordinateDecorator((lastLine.X2, lastLine.Y2), _finalCoordinate);
-                    FinishLinesParallelSides(_finalCoordinate, coordinateLineDecorator);
-                }
-                else
-                {
-                    var lastLine = linesSymbolModel[^1];
-                    ILineCoordinateDecorator coordinateLineDecorator = new LineCoordinateDecorator((lastLine.X2, lastLine.Y2), _finalCoordinate);
-                    FinishLinesNotParallelSides(coordinateLineDecorator, _finalCoordinate);
-                }
-            }
-            else
-            {
-                if (incomingPosition == PositionConnectionPoint.Top || incomingPosition == PositionConnectionPoint.Bottom)
-                {
-                    var lastLine = linesSymbolModel[^1];
-                    var build = new BuildLineCoordinateDecorato().SetSwapFinalCoordinate();
-                    ILineCoordinateDecorator coordinateLineDecorator = new LineCoordinateDecorator((lastLine.X2, lastLine.Y2), _finalCoordinate);
-                    coordinateLineDecorator = build.Build(coordinateLineDecorator);
-                    FinishLinesNotParallelSides(coordinateLineDecorator, _finalCoordinate);
-                }
-                else
-                {
-                    var lastLine = linesSymbolModel[^1];
-                    var build = new BuildLineCoordinateDecorato().SetSwapFinalCoordinate();
-                    ILineCoordinateDecorator coordinateLineDecorator = new LineCoordinateDecorator((lastLine.X2, lastLine.Y2), _finalCoordinate);
-                    coordinateLineDecorator = build.Build(coordinateLineDecorator);
-                    FinishLinesParallelSides(_finalCoordinate, coordinateLineDecorator);
-                }
-            }
-        }
-        else
-        {
-            return completedEvenLine.Completed();
-        }
-
-
-        return linesSymbolModel;
-    }
-
-    private void FinishLinesNotParallelSides(ILineCoordinateDecorator lineCoordinateDecorator, (int x, int y) finalCoordinate)
-    {
-        var lastLine = linesSymbolModel[^1];
-
-        if (lastLine.Y2 == finalCoordinate.y)
-        {
-            lastLine.Y2 = finalCoordinate.y;
-        }
-        else
-        {
-            lastLine.X2 = finalCoordinate.x;
-        }
-
-        var firstLine = new LineSymbolModel
-        {
-            X1 = lineCoordinateDecorator.LineCoordinateX,
-            Y1 = lineCoordinateDecorator.FinalCoordinateY,
-            X2 = finalCoordinate.x,
-            Y2 = finalCoordinate.y
-        };
-
-        linesSymbolModel.Add(firstLine);
-    }
-
-    private List<LineSymbolModel> FinishLinesParallelSides((int x, int y) finalCoordinate, ILineCoordinateDecorator lineCoordinateDecorator)
+    private void FinishDrawingHorizontalToHorizontalLines((int x, int y) cordinatePenultimateLine, (int x, int y) finalCoordinate)
     {
         var lastLine = linesSymbolModel[^1];
 
@@ -106,21 +34,72 @@ public class CompletedLine
             {
                 X1 = lastLine.X2,
                 Y1 = lastLine.Y2,
-                X2 = lineCoordinateDecorator.FinalCoordinateX,
-                Y2 = lineCoordinateDecorator.LineCoordinateY,
+                X2 = cordinatePenultimateLine.x,
+                Y2 = cordinatePenultimateLine.y
             };
-
-            var secondLine = new LineSymbolModel
-            {
-                X1 = lineCoordinateDecorator.FinalCoordinateX,
-                Y1 = lineCoordinateDecorator.LineCoordinateY,
-                X2 = finalCoordinate.x,
-                Y2 = finalCoordinate.y,
-            };
-
             linesSymbolModel.Add(firstLine);
-            linesSymbolModel.Add(secondLine);
+
+            var coordinatelineSymbolModel = (firstLine.X2, firstLine.Y2);
+            FinishDrawLastLine(coordinatelineSymbolModel);
         }
+    }
+
+    private void FinishDrawLastLine((int x, int y) penultimateLineCoordinate, LineSymbolModel? lineSymbolModel = null)
+    {
+        if (lineSymbolModel == null)
+        {
+            lineSymbolModel = new LineSymbolModel();
+            linesSymbolModel.Add(lineSymbolModel);
+        }
+
+        lineSymbolModel.X1 = penultimateLineCoordinate.x;
+        lineSymbolModel.Y1 = penultimateLineCoordinate.y;
+        lineSymbolModel.X2 = _finalCoordinate.x;
+        lineSymbolModel.Y2 = _finalCoordinate.y;
+    }
+
+
+    public List<LineSymbolModel> GetCompleteLines()
+    {
+        var lastLine = linesSymbolModel[^1];
+
+        if (linesSymbolModel.Count % 2 == 1)
+        {
+            if (outgoingPosition == PositionConnectionPoint.Bottom ||
+                outgoingPosition == PositionConnectionPoint.Top)
+            {
+                if (incomingPosition == PositionConnectionPoint.Top || incomingPosition == PositionConnectionPoint.Bottom)
+                {
+                    var coordinatePenultimateLine = (_finalCoordinate.x, lastLine.Y2);
+                    FinishDrawingHorizontalToHorizontalLines(coordinatePenultimateLine, _finalCoordinate);
+                }
+                else
+                {
+                    lastLine.Y2 = _finalCoordinate.y;
+                    var coordinateLineSymbolModel = (lastLine.X2, lastLine.Y2);
+                    FinishDrawLastLine(coordinateLineSymbolModel);
+                }
+            }
+            else
+            {
+                if (incomingPosition == PositionConnectionPoint.Top || incomingPosition == PositionConnectionPoint.Bottom)
+                {
+                    lastLine.X2 = _finalCoordinate.x;
+                    var coordinateLineSymbolModel = (lastLine.X2, lastLine.Y2);
+                    FinishDrawLastLine(coordinateLineSymbolModel);
+                }
+                else
+                {
+                    var coordinatePenultimateLine = (lastLine.X2, _finalCoordinate.y);
+                    FinishDrawingHorizontalToHorizontalLines(coordinatePenultimateLine, _finalCoordinate);
+                }
+            }
+        }
+        else
+        {
+            return completedEvenLine.Completed();
+        }
+
 
         return linesSymbolModel;
     }
