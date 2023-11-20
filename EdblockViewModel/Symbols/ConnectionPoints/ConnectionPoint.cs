@@ -8,7 +8,6 @@ using EdblockModel.Symbols.LineSymbols;
 using EdblockViewModel.Symbols.LineSymbols;
 using EdblockViewModel.Symbols.Abstraction;
 using EdblockModel.Symbols.ConnectionPoints;
-using EdblockModel.Symbols.LineSymbols.CompletedLine;
 
 namespace EdblockViewModel.Symbols.ConnectionPoints;
 
