@@ -5,9 +5,9 @@ namespace EdblockModel.Symbols.LineSymbols;
 
 public class FactoryLineSymbolModel
 {
-    public static LineSymbolModel CreateNewLine(LineSymbolModel lineSymbolModel)
+    public static SymbolLineModel CreateNewLine(SymbolLineModel lineSymbolModel)
     {
-        var lineSymbol = new LineSymbolModel()
+        var lineSymbol = new SymbolLineModel()
         {
             X1 = lineSymbolModel.X2,
             Y1 = lineSymbolModel.Y2,
@@ -18,9 +18,9 @@ public class FactoryLineSymbolModel
         return lineSymbol;
     }
 
-    public static LineSymbolModel CreateCloneLine(LineSymbolModel lineSymbolModel)
+    public static SymbolLineModel CreateCloneLine(SymbolLineModel lineSymbolModel)
     {
-        var lineSymbol = new LineSymbolModel()
+        var lineSymbol = new SymbolLineModel()
         {
             X1 = lineSymbolModel.X1,
             Y1 = lineSymbolModel.Y1,
@@ -31,11 +31,11 @@ public class FactoryLineSymbolModel
         return lineSymbol;
     }
 
-    public static LineSymbolModel CreateFirstLine((int x, int y) coordinateConnectionPoint, PositionConnectionPoint positionConnectionPoint, BlockSymbolModel blockSymbolModel)
+    public static SymbolLineModel CreateFirstLine(PositionConnectionPoint positionConnectionPoint, BlockSymbolModel blockSymbolModel)
     {
-        var firstLineSymbolModel = new LineSymbolModel();
+        var firstLineSymbolModel = new SymbolLineModel();
 
-        (firstLineSymbolModel.X1, firstLineSymbolModel.Y1) = CoordinateLineModel.GetStartCoordinateLine(blockSymbolModel, coordinateConnectionPoint, positionConnectionPoint);
+        (firstLineSymbolModel.X1, firstLineSymbolModel.Y1) = blockSymbolModel.GetBorderCoordinate(positionConnectionPoint);
         firstLineSymbolModel.X2 = firstLineSymbolModel.X1;
         firstLineSymbolModel.Y2 = firstLineSymbolModel.Y1;
         return firstLineSymbolModel;

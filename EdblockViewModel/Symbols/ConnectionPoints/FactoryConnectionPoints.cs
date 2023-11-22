@@ -24,7 +24,7 @@ internal class FactoryConnectionPoints
             new ConnectionPoint(_canvasSymbolsVM, _blockSymbol, connectionPointModel.GetCoordinateLeft, PositionConnectionPoint.Left),
             new ConnectionPoint(_canvasSymbolsVM, _blockSymbol, connectionPointModel.GetCoordinateRight, PositionConnectionPoint.Right),
             new ConnectionPoint(_canvasSymbolsVM, _blockSymbol, connectionPointModel.GetCoordinateTop, PositionConnectionPoint.Top),
-            new ConnectionPoint(_canvasSymbolsVM, _blockSymbol, connectionPointModel.GetCoordinateBottomCP, PositionConnectionPoint.Bottom)
+            new ConnectionPoint(_canvasSymbolsVM, _blockSymbol, connectionPointModel.GetCoordinateBottom, PositionConnectionPoint.Bottom)
         };
     }
 }

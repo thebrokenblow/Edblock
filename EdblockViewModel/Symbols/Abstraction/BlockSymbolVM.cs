@@ -66,7 +66,6 @@ public abstract class BlockSymbolVM : SymbolVM
 
     private readonly CanvasSymbolsVM _canvasSymbolsVM;
     private readonly FactoryBlockSymbolModel factoryBlockSymbolModel = new();
-    private readonly Dictionary<PositionConnectionPoint, Func<(int x, int y)>> borderCoordinateByPositionCP;
 
     protected const int defaultWidth = 140;
     protected const int defaultHeigth = 60;
@@ -83,14 +82,6 @@ public abstract class BlockSymbolVM : SymbolVM
         Width = defaultWidth;
         Height = defaultHeigth;
         HexColor = BlockSymbolModel.HexColor;
-
-        borderCoordinateByPositionCP = new()
-        {
-            { PositionConnectionPoint.Top, GetTopBorderCoordinate },
-            { PositionConnectionPoint.Bottom, GetBottomBorderCoordinate },
-            { PositionConnectionPoint.Left, GetLeftBorderCoordinate },
-            { PositionConnectionPoint.Right, GetRightBorderCoordinate }
-        };
 
         var factoryConnectionPoints = new FactoryConnectionPoints(_canvasSymbolsVM, this);
         ConnectionPoints = factoryConnectionPoints.Create();
@@ -125,11 +116,6 @@ public abstract class BlockSymbolVM : SymbolVM
         BlockSymbolModel.YCoordinate = YCoordinate;
     }
 
-    public (int x, int y) GetBorderCoordinate(PositionConnectionPoint positionConnectionPoint)
-    {
-        return borderCoordinateByPositionCP[positionConnectionPoint].Invoke();
-    }
-
     public void ShowStroke()
     {
         // Условие истино, когда символ не перемещается и не масштабируется (просто навёл курсор)
@@ -158,25 +144,5 @@ public abstract class BlockSymbolVM : SymbolVM
         {
             scaleRectangle.ChangeCoordination();
         }
-    }
-
-    private (int x, int y) GetTopBorderCoordinate()
-    {
-        return (xCoordinate + width / 2, yCoordinate);
-    }
-
-    private (int x, int y) GetBottomBorderCoordinate()
-    {
-        return (xCoordinate + width / 2, yCoordinate + heigth);
-    }
-
-    private (int x, int y) GetLeftBorderCoordinate()
-    {
-        return (xCoordinate, yCoordinate + heigth / 2);
-    }
-
-    private (int x, int y) GetRightBorderCoordinate()
-    {
-        return (xCoordinate + width, yCoordinate + heigth / 2);
     }
 }

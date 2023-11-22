@@ -65,7 +65,6 @@ public class ConnectionPoint : INotifyPropertyChanged
     public PositionConnectionPoint PositionConnectionPoint { get; init; }
     public event PropertyChangedEventHandler? PropertyChanged;
     private readonly CanvasSymbolsVM _canvasSymbolsVM;
-    private CompletedLine? completedLineModel;
     public ConnectionPoint(
         CanvasSymbolsVM canvasSymbolsVM, 
         BlockSymbolVM blockSymbolVM, 
@@ -138,37 +137,42 @@ public class ConnectionPoint : INotifyPropertyChanged
 
     private void StarDrawLine(ConnectionPoint connectionPoint)
     {
-        var coordinateConnectionPoint = (connectionPoint.XCoordinate, connectionPoint.YCoordinate);
         var positionConnectionPoint = connectionPoint.PositionConnectionPoint;
         var blockSymbolModel = connectionPoint.BlockSymbolVM.BlockSymbolModel;
 
-        var drawnLineSymbolModel = new DrawnLineSymbolModel(connectionPoint.PositionConnectionPoint);
-        drawnLineSymbolModel.AddFirstLine(coordinateConnectionPoint, positionConnectionPoint, blockSymbolModel);
+        var drawnLineSymbolModel = new DrawnLineSymbolModel(blockSymbolModel, positionConnectionPoint);
+        drawnLineSymbolModel.AddFirstLine();
 
         var drawnLineSymbolVM = new DrawnLineSymbolVM(positionConnectionPoint, drawnLineSymbolModel);
-        _canvasSymbolsVM.DrawnLineSymbol = drawnLineSymbolVM;
-        _canvasSymbolsVM.Symbols.Add(drawnLineSymbolVM);
 
+        _canvasSymbolsVM.Symbols.Add(drawnLineSymbolVM);
+        _canvasSymbolsVM.DrawnLineSymbol = drawnLineSymbolVM;
         _canvasSymbolsVM.DrawnLineSymbol.SymbolOutgoingLine = connectionPoint.BlockSymbolVM;
     }
 
     private void EndDrawLine(ConnectionPoint connectionPoint)
     {
+        var symbolIncomingLineVM = connectionPoint.BlockSymbolVM;
+        var symbolIncomingLineModel = symbolIncomingLineVM.BlockSymbolModel;
+
         var drawnLineSymbolVM = _canvasSymbolsVM.DrawnLineSymbol;
+        var arrowSymbolVM = drawnLineSymbolVM!.ArrowSymbol;
         var drawnLineSymbolModel = drawnLineSymbolVM!.DrawnLineSymbolModel;
+
+        drawnLineSymbolVM.IncomingPosition = PositionConnectionPoint;
         drawnLineSymbolModel.IncomingPosition = PositionConnectionPoint;
+        
+        drawnLineSymbolVM.SymbolIncomingLine = symbolIncomingLineVM;
+        drawnLineSymbolModel.SymbolIncomingLine = symbolIncomingLineModel;
 
-        var symbolaIncomingLine = connectionPoint.BlockSymbolVM;
-        var incomingPositionConnectionPoint = connectionPoint.PositionConnectionPoint;
-        var finalCoordinate = symbolaIncomingLine.GetBorderCoordinate(incomingPositionConnectionPoint);
+        var finalLineCoordinate = symbolIncomingLineModel.GetBorderCoordinate(PositionConnectionPoint);
 
-        completedLineModel ??= new(drawnLineSymbolModel, finalCoordinate);
+        var completedLineModel = new CompletedLine(drawnLineSymbolModel, finalLineCoordinate);
         var completeLinesSymbolModel = completedLineModel.GetCompleteLines();
+
         drawnLineSymbolVM.RedrawLines(completeLinesSymbolModel);
-
-        drawnLineSymbolVM.ArrowSymbol.ChangeOrientationArrow(finalCoordinate, incomingPositionConnectionPoint);
-        drawnLineSymbolVM.SymbolIncomingLine = symbolaIncomingLine;
-
+        arrowSymbolVM.ChangeOrientationArrow(finalLineCoordinate, PositionConnectionPoint);
+        
         AddBlockToLine(drawnLineSymbolVM.SymbolIncomingLine);
         AddBlockToLine(drawnLineSymbolVM.SymbolOutgoingLine);
 

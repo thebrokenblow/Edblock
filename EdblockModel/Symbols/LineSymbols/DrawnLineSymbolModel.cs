@@ -5,13 +5,16 @@ namespace EdblockModel.Symbols.LineSymbols;
 
 public class DrawnLineSymbolModel
 {
-    public List<LineSymbolModel> LinesSymbolModel { get; set; } = new();
+    private readonly BlockSymbolModel _symbolOutgoingLine;
+    public BlockSymbolModel? SymbolIncomingLine { get; set; }
+    public List<SymbolLineModel> LinesSymbolModel { get; set; } = new();
     public PositionConnectionPoint OutgoingPosition { get; init; }
     public PositionConnectionPoint IncomingPosition { get; set; }
     private readonly int offsetLine = 10;
 
-    public DrawnLineSymbolModel(PositionConnectionPoint positionConnectionPoint)
+    public DrawnLineSymbolModel(BlockSymbolModel symbolOutgoingLine, PositionConnectionPoint positionConnectionPoint)
     {
+        _symbolOutgoingLine = symbolOutgoingLine;
         OutgoingPosition = positionConnectionPoint;
     }
 
@@ -43,13 +46,13 @@ public class DrawnLineSymbolModel
         }
     }
 
-    public void AddFirstLine((int x, int y) coordinateConnectionPoint, PositionConnectionPoint positionConnectionPoint, BlockSymbolModel blockSymbolModel)
+    public void AddFirstLine()
     {
-        var lineSymbolModel = FactoryLineSymbolModel.CreateFirstLine(coordinateConnectionPoint, positionConnectionPoint, blockSymbolModel);
+        var lineSymbolModel = FactoryLineSymbolModel.CreateFirstLine(OutgoingPosition, _symbolOutgoingLine);
         LinesSymbolModel.Add(lineSymbolModel);
     }
 
-    public LineSymbolModel GetNewLine()
+    public SymbolLineModel GetNewLine()
     {
         var lastLineSymbol = LinesSymbolModel[^1];
         var newLineSymbolModel = FactoryLineSymbolModel.CreateNewLine(lastLineSymbol);

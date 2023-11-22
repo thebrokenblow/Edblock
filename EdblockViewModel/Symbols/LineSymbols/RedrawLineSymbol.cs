@@ -14,7 +14,7 @@ internal class RedrawLineSymbol
         _drawnLineSymbolVM = drawnLineSymbolVM;
         redrawLineBottomTop = new(drawnLineSymbolVM);
         _positionOutgoing = drawnLineSymbolVM.PositionOutgoingConnectionPoint;
-        _positionIncoming = drawnLineSymbolVM.PositionIncomingConnectionPoint;  
+        _positionIncoming = drawnLineSymbolVM.IncomingPosition;  
     }
 
     public void Redraw()

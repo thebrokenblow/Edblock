@@ -15,7 +15,7 @@ public class DrawnLineSymbolVM : SymbolVM
     public ObservableCollection<LineSymbolVM> LineSymbols { get; init; } = new();
     public ArrowSymbol ArrowSymbol { get; set; } = new();
     public PositionConnectionPoint PositionOutgoingConnectionPoint { get; init; }
-    public PositionConnectionPoint PositionIncomingConnectionPoint { get; set; }
+    public PositionConnectionPoint IncomingPosition { get; set; }
 
     public DrawnLineSymbolVM(PositionConnectionPoint positionConnectionPoint, DrawnLineSymbolModel drawnLineSymbolModel)
     {
@@ -47,7 +47,7 @@ public class DrawnLineSymbolVM : SymbolVM
         }
     }
 
-    public void RedrawLines(List<LineSymbolModel> linesSymbolModel)
+    public void RedrawLines(List<SymbolLineModel> linesSymbolModel)
     {
         LineSymbols.Clear();
 
@@ -58,7 +58,7 @@ public class DrawnLineSymbolVM : SymbolVM
         }
     }
 
-    private void AddMissingLines(List<LineSymbolModel> linesSymbolModel)
+    private void AddMissingLines(List<SymbolLineModel> linesSymbolModel)
     {
         foreach (var lineSymbolModel in linesSymbolModel)
         {
@@ -67,7 +67,7 @@ public class DrawnLineSymbolVM : SymbolVM
         }
     }
 
-    private void ChangeFirstLine(List<LineSymbolModel> linesSymbolModel)
+    private void ChangeFirstLine(List<SymbolLineModel> linesSymbolModel)
     {
         var firstLineSymbolModel = linesSymbolModel[0];
 
@@ -79,7 +79,7 @@ public class DrawnLineSymbolVM : SymbolVM
         ChangeLastCoordinate(LineSymbols[0], firstLineSymbolModel);
     }
 
-    private void ChangeSecondLine(List<LineSymbolModel> linesSymbolModel)
+    private void ChangeSecondLine(List<SymbolLineModel> linesSymbolModel)
     {
         var currentLinesSymbolModel = linesSymbolModel.TakeLast(2).ToList();
 
@@ -95,7 +95,7 @@ public class DrawnLineSymbolVM : SymbolVM
         ChangeCurrentLine(linesSymbolModel);
     }
 
-    private void ChangeCurrentLine(List<LineSymbolModel> linesSymbolModel)
+    private void ChangeCurrentLine(List<SymbolLineModel> linesSymbolModel)
     {
         for (int i = linesSymbolModel.Count - 2; i < linesSymbolModel.Count; i++)
         {
@@ -103,14 +103,14 @@ public class DrawnLineSymbolVM : SymbolVM
         }
     }
 
-    private static void ChangeCoordinate(LineSymbolVM lineSymbolVM, LineSymbolModel lineSymbolModel)
+    private static void ChangeCoordinate(LineSymbolVM lineSymbolVM, SymbolLineModel lineSymbolModel)
     {
         lineSymbolVM.X1 = lineSymbolModel.X1;
         lineSymbolVM.Y1 = lineSymbolModel.Y1;
         ChangeLastCoordinate(lineSymbolVM, lineSymbolModel);
     }
 
-    private static void ChangeLastCoordinate(LineSymbolVM lineSymbolVM, LineSymbolModel lineSymbolModel)
+    private static void ChangeLastCoordinate(LineSymbolVM lineSymbolVM, SymbolLineModel lineSymbolModel)
     {
         lineSymbolVM.X2 = lineSymbolModel.X2;
         lineSymbolVM.Y2 = lineSymbolModel.Y2;
