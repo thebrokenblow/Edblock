@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors" 
              xmlns:abstraction="clr-namespace:EdblockViewModel.Symbols.Abstraction;assembly=EdblockViewModel" 
-             d:DataContext="{d:DesignInstance Type=abstraction:BlockSymbol}"
+             d:DataContext="{d:DesignInstance Type=abstraction:BlockSymbolVM}"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <TextBox Text="Действие" Style="{StaticResource TextFrameSymbol}" Width="{Binding TextField.Width}" Height="{Binding TextField.Height}">

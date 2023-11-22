@@ -3,7 +3,7 @@ using System.Windows.Media;
 using System.Collections.Generic;
 using EdblockModel.Symbols.LineSymbols;
 using EdblockViewModel.Symbols.Abstraction;
-using EdblockModel.Symbols.ConnectionPoints;
+using EdblockModel.Symbols.Enum;
 
 namespace EdblockViewModel.Symbols.LineSymbols;
 

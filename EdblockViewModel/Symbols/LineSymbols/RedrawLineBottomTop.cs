@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using EdblockViewModel.Symbols.Abstraction;
-using EdblockModel.Symbols.ConnectionPoints;
 using EdblockModel.Symbols.LineSymbols.DecoratorLineSymbols;
+using EdblockModel.Symbols.Enum;
 
 namespace EdblockViewModel.Symbols.LineSymbols;
 

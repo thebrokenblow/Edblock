@@ -7,7 +7,7 @@ using System.Runtime.CompilerServices;
 using EdblockModel.Symbols.LineSymbols;
 using EdblockViewModel.Symbols.LineSymbols;
 using EdblockViewModel.Symbols.Abstraction;
-using EdblockModel.Symbols.ConnectionPoints;
+using EdblockModel.Symbols.Enum;
 
 namespace EdblockViewModel.Symbols.ConnectionPoints;
 
@@ -59,7 +59,7 @@ public class ConnectionPoint : INotifyPropertyChanged
 
     public DelegateCommand EnterCursor { get; init; }
     public DelegateCommand LeaveCursor { get; init; }
-    public DelegateCommand<ConnectionPoint> ClickConnectionPoint { get; init; }
+    public DelegateCommand ClickConnectionPoint { get; init; }
     public BlockSymbolVM BlockSymbolVM { get; init; }
     public Func<(int, int)> GetCoordinate { get; init; }
     public PositionConnectionPoint PositionConnectionPoint { get; init; }
@@ -99,15 +99,15 @@ public class ConnectionPoint : INotifyPropertyChanged
         SetDisplayConnectionPoint(Cursors.Arrow, false, false);
     }
 
-    public void TrackStageDrawLine(ConnectionPoint connectionPoint)
+    public void TrackStageDrawLine()
     {
         if (_canvasSymbolsVM.DrawnLineSymbol == null)
         {
-            StarDrawLine(connectionPoint);
+            StarDrawLine();
         }
         else
         {
-            EndDrawLine(connectionPoint);
+            EndDrawLine();
         }
     }
 
@@ -135,10 +135,10 @@ public class ConnectionPoint : INotifyPropertyChanged
         }
     }
 
-    private void StarDrawLine(ConnectionPoint connectionPoint)
+    private void StarDrawLine()
     {
-        var positionConnectionPoint = connectionPoint.PositionConnectionPoint;
-        var blockSymbolModel = connectionPoint.BlockSymbolVM.BlockSymbolModel;
+        var positionConnectionPoint = PositionConnectionPoint;
+        var blockSymbolModel = BlockSymbolVM.BlockSymbolModel;
 
         var drawnLineSymbolModel = new DrawnLineSymbolModel(blockSymbolModel, positionConnectionPoint);
         drawnLineSymbolModel.AddFirstLine();
@@ -147,12 +147,12 @@ public class ConnectionPoint : INotifyPropertyChanged
 
         _canvasSymbolsVM.Symbols.Add(drawnLineSymbolVM);
         _canvasSymbolsVM.DrawnLineSymbol = drawnLineSymbolVM;
-        _canvasSymbolsVM.DrawnLineSymbol.SymbolOutgoingLine = connectionPoint.BlockSymbolVM;
+        _canvasSymbolsVM.DrawnLineSymbol.SymbolOutgoingLine = BlockSymbolVM;
     }
 
-    private void EndDrawLine(ConnectionPoint connectionPoint)
+    private void EndDrawLine()
     {
-        var symbolIncomingLineVM = connectionPoint.BlockSymbolVM;
+        var symbolIncomingLineVM = BlockSymbolVM;
         var symbolIncomingLineModel = symbolIncomingLineVM.BlockSymbolModel;
 
         var drawnLineSymbolVM = _canvasSymbolsVM.DrawnLineSymbol;

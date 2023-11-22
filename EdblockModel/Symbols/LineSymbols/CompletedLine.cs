@@ -1,4 +1,4 @@
-﻿using EdblockModel.Symbols.ConnectionPoints;
+﻿using EdblockModel.Symbols.Enum;
 
 namespace EdblockModel.Symbols.LineSymbols;
 
@@ -6,7 +6,6 @@ public class CompletedLine
 {
     private readonly List<SymbolLineModel> symbolLines;
     private readonly SymbolLineModel lastSymbolLine;
-    private readonly SymbolLineModel penultimateSymbolLine;
     private readonly PositionConnectionPoint outgoingPosition;
     private readonly PositionConnectionPoint incomingPosition;
     private readonly (int x, int y) _finalCoordinate;
@@ -20,14 +19,12 @@ public class CompletedLine
         _finalCoordinate = finalCoordinate;
 
         lastSymbolLine = symbolLines[^1];
-        penultimateSymbolLine = symbolLines[^2];
     }
 
     public List<SymbolLineModel> GetCompleteLines()
     {
         if (symbolLines.Count % 2 == 1)
         {
-
             FinishDrawingOddLines();
         }
         else
@@ -74,7 +71,6 @@ public class CompletedLine
 
     public List<SymbolLineModel> FinishDrawingEvenLines()
     {
-
         if (outgoingPosition == PositionConnectionPoint.Bottom || outgoingPosition == PositionConnectionPoint.Top)
         {
             if (incomingPosition == PositionConnectionPoint.Top || incomingPosition == PositionConnectionPoint.Bottom)
@@ -83,6 +79,7 @@ public class CompletedLine
             }
             else
             {
+                var penultimateSymbolLine = symbolLines[^2];
                 FinishLinesVertically(penultimateSymbolLine, lastSymbolLine);
             }
         }
@@ -90,10 +87,12 @@ public class CompletedLine
         {
             if (incomingPosition == PositionConnectionPoint.Top || incomingPosition == PositionConnectionPoint.Bottom)
             {
+                var penultimateSymbolLine = symbolLines[^2];
                 FinishLinesHorizontally(penultimateSymbolLine, lastSymbolLine);
             }
             else
             {
+                var penultimateSymbolLine = symbolLines[^2];
                 FinishLinesVertically(penultimateSymbolLine);
             }
         }

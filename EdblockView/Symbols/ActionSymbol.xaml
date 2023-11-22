@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"  
              xmlns:symbol="clr-namespace:EdblockView.Symbols" 
              xmlns:symbolVM="clr-namespace:EdblockViewModel.Symbols.Abstraction;assembly=EdblockViewModel" 
-             d:DataContext="{d:DesignInstance Type=symbolVM:BlockSymbol}"
+             d:DataContext="{d:DesignInstance Type=symbolVM:BlockSymbolVM}"
              mc:Ignorable="d" 
              d:DesignHeight="60" d:DesignWidth="140">
     <Canvas 

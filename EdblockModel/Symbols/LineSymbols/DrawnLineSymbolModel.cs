@@ -1,5 +1,5 @@
-﻿using EdblockModel.Symbols.Abstraction;
-using EdblockModel.Symbols.ConnectionPoints;
+﻿using EdblockModel.Symbols.Enum;
+using EdblockModel.Symbols.Abstraction;
 
 namespace EdblockModel.Symbols.LineSymbols;
 

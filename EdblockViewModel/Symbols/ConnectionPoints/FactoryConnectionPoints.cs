@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using EdblockModel.Symbols.Enum;
+using System.Collections.Generic;
 using EdblockViewModel.Symbols.Abstraction;
-using EdblockModel.Symbols.ConnectionPoints;
 
 namespace EdblockViewModel.Symbols.ConnectionPoints;
 
@@ -8,23 +8,42 @@ internal class FactoryConnectionPoints
 {
     private readonly CanvasSymbolsVM _canvasSymbolsVM;
     private readonly BlockSymbolVM _blockSymbol;
-    private readonly ConnectionPointModel connectionPointModel;
+    private readonly CoordinateConnectionPoint coordinateConnectionPoint;
 
     public FactoryConnectionPoints(CanvasSymbolsVM canvasSymbolsVM, BlockSymbolVM blockSymbol)
     {
         _canvasSymbolsVM = canvasSymbolsVM;
         _blockSymbol = blockSymbol;
-        connectionPointModel = new(_blockSymbol.BlockSymbolModel);
+        coordinateConnectionPoint = new(_blockSymbol);
     }
 
     public List<ConnectionPoint> Create()
     {
         return new List<ConnectionPoint>()
         {
-            new ConnectionPoint(_canvasSymbolsVM, _blockSymbol, connectionPointModel.GetCoordinateLeft, PositionConnectionPoint.Left),
-            new ConnectionPoint(_canvasSymbolsVM, _blockSymbol, connectionPointModel.GetCoordinateRight, PositionConnectionPoint.Right),
-            new ConnectionPoint(_canvasSymbolsVM, _blockSymbol, connectionPointModel.GetCoordinateTop, PositionConnectionPoint.Top),
-            new ConnectionPoint(_canvasSymbolsVM, _blockSymbol, connectionPointModel.GetCoordinateBottom, PositionConnectionPoint.Bottom)
+            new ConnectionPoint(
+                _canvasSymbolsVM, 
+                _blockSymbol, 
+                coordinateConnectionPoint.GetCoordinateLeft, 
+                PositionConnectionPoint.Left),
+
+            new ConnectionPoint(
+                _canvasSymbolsVM, 
+                _blockSymbol, 
+                coordinateConnectionPoint.GetCoordinateRight, 
+                PositionConnectionPoint.Right),
+
+            new ConnectionPoint(
+                _canvasSymbolsVM, 
+                _blockSymbol, 
+                coordinateConnectionPoint.GetCoordinateTop, 
+                PositionConnectionPoint.Top),
+
+            new ConnectionPoint(
+                _canvasSymbolsVM, 
+                _blockSymbol, 
+                coordinateConnectionPoint.GetCoordinateBottom, 
+                PositionConnectionPoint.Bottom)
         };
     }
 }

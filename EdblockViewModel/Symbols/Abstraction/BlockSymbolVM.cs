@@ -4,7 +4,6 @@ using System.Windows.Input;
 using EdblockModel.Symbols;
 using System.Collections.Generic;
 using EdblockModel.Symbols.Abstraction;
-using EdblockModel.Symbols.ConnectionPoints;
 using EdblockViewModel.Symbols.ScaleRectangles;
 using EdblockViewModel.Symbols.ConnectionPoints;
 
