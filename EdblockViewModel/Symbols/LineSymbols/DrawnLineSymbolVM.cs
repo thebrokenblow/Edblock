@@ -1,9 +1,9 @@
 ﻿using System.Linq;
+using EdblockModel.Symbols.Enum;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using EdblockModel.Symbols.LineSymbols;
 using EdblockViewModel.Symbols.Abstraction;
-using EdblockModel.Symbols.Enum;
 
 namespace EdblockViewModel.Symbols.LineSymbols;
 
@@ -14,13 +14,13 @@ public class DrawnLineSymbolVM : SymbolVM
     public DrawnLineSymbolModel DrawnLineSymbolModel { get; init; }
     public ObservableCollection<LineSymbolVM> LineSymbols { get; init; } = new();
     public ArrowSymbol ArrowSymbol { get; set; } = new();
-    public PositionConnectionPoint PositionOutgoingConnectionPoint { get; init; }
+    public PositionConnectionPoint OutgoingPosition { get; init; }
     public PositionConnectionPoint IncomingPosition { get; set; }
 
     public DrawnLineSymbolVM(PositionConnectionPoint positionConnectionPoint, DrawnLineSymbolModel drawnLineSymbolModel)
     {
         DrawnLineSymbolModel = drawnLineSymbolModel;
-        PositionOutgoingConnectionPoint = positionConnectionPoint;
+        OutgoingPosition = positionConnectionPoint;
     }
 
     public void ChangeCoordination(int currentX, int currentY)
@@ -30,7 +30,7 @@ public class DrawnLineSymbolVM : SymbolVM
         var startCoordinate = CoordinateLineModel.GetStartCoordinate(DrawnLineSymbolModel.LinesSymbolModel);
 
         (currentX, currentY) = DrawnLineSymbolModel.RoundingCoordinatesLines(startCoordinate, (currentX, currentY));
-        ArrowSymbol.ChangeOrientationArrow(startCoordinate, (currentX, currentY), PositionOutgoingConnectionPoint);
+        ArrowSymbol.ChangeOrientationArrow(startCoordinate, (currentX, currentY), OutgoingPosition);
         DrawnLineSymbolModel.ChangeCoordinateLine(currentX, currentY);
 
         if (LineSymbols.Count == 0)
@@ -47,7 +47,7 @@ public class DrawnLineSymbolVM : SymbolVM
         }
     }
 
-    public void RedrawLines(List<SymbolLineModel> linesSymbolModel)
+    public void RedrawLines(List<LineSymbolModel> linesSymbolModel)
     {
         LineSymbols.Clear();
 
@@ -56,9 +56,14 @@ public class DrawnLineSymbolVM : SymbolVM
             var lineSymbolVM = FactoryLineSymbol.CreateLineByLineModel(lineSymbolModel);
             LineSymbols.Add(lineSymbolVM);
         }
+
+        var lastLine = linesSymbolModel[^1];
+        var coordinateLastLine = (lastLine.X2, lastLine.Y2);
+        ArrowSymbol.ChangeOrientationArrow(coordinateLastLine, IncomingPosition);
+
     }
 
-    private void AddMissingLines(List<SymbolLineModel> linesSymbolModel)
+    private void AddMissingLines(List<LineSymbolModel> linesSymbolModel)
     {
         foreach (var lineSymbolModel in linesSymbolModel)
         {
@@ -67,7 +72,7 @@ public class DrawnLineSymbolVM : SymbolVM
         }
     }
 
-    private void ChangeFirstLine(List<SymbolLineModel> linesSymbolModel)
+    private void ChangeFirstLine(List<LineSymbolModel> linesSymbolModel)
     {
         var firstLineSymbolModel = linesSymbolModel[0];
 
@@ -79,7 +84,7 @@ public class DrawnLineSymbolVM : SymbolVM
         ChangeLastCoordinate(LineSymbols[0], firstLineSymbolModel);
     }
 
-    private void ChangeSecondLine(List<SymbolLineModel> linesSymbolModel)
+    private void ChangeSecondLine(List<LineSymbolModel> linesSymbolModel)
     {
         var currentLinesSymbolModel = linesSymbolModel.TakeLast(2).ToList();
 
@@ -95,7 +100,7 @@ public class DrawnLineSymbolVM : SymbolVM
         ChangeCurrentLine(linesSymbolModel);
     }
 
-    private void ChangeCurrentLine(List<SymbolLineModel> linesSymbolModel)
+    private void ChangeCurrentLine(List<LineSymbolModel> linesSymbolModel)
     {
         for (int i = linesSymbolModel.Count - 2; i < linesSymbolModel.Count; i++)
         {
@@ -103,14 +108,14 @@ public class DrawnLineSymbolVM : SymbolVM
         }
     }
 
-    private static void ChangeCoordinate(LineSymbolVM lineSymbolVM, SymbolLineModel lineSymbolModel)
+    private static void ChangeCoordinate(LineSymbolVM lineSymbolVM, LineSymbolModel lineSymbolModel)
     {
         lineSymbolVM.X1 = lineSymbolModel.X1;
         lineSymbolVM.Y1 = lineSymbolModel.Y1;
         ChangeLastCoordinate(lineSymbolVM, lineSymbolModel);
     }
 
-    private static void ChangeLastCoordinate(LineSymbolVM lineSymbolVM, SymbolLineModel lineSymbolModel)
+    private static void ChangeLastCoordinate(LineSymbolVM lineSymbolVM, LineSymbolModel lineSymbolModel)
     {
         lineSymbolVM.X2 = lineSymbolModel.X2;
         lineSymbolVM.Y2 = lineSymbolModel.Y2;

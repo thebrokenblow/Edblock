@@ -4,8 +4,8 @@ namespace EdblockModel.Symbols.LineSymbols;
 
 public class CompletedLine
 {
-    private readonly List<SymbolLineModel> symbolLines;
-    private readonly SymbolLineModel lastSymbolLine;
+    private readonly List<LineSymbolModel> symbolLines;
+    private readonly LineSymbolModel lastSymbolLine;
     private readonly PositionConnectionPoint outgoingPosition;
     private readonly PositionConnectionPoint incomingPosition;
     private readonly (int x, int y) _finalCoordinate;
@@ -21,7 +21,7 @@ public class CompletedLine
         lastSymbolLine = symbolLines[^1];
     }
 
-    public List<SymbolLineModel> GetCompleteLines()
+    public List<LineSymbolModel> GetCompleteLines()
     {
         if (symbolLines.Count % 2 == 1)
         {
@@ -35,7 +35,7 @@ public class CompletedLine
         return symbolLines;
     }
 
-    public List<SymbolLineModel> FinishDrawingOddLines()
+    public List<LineSymbolModel> FinishDrawingOddLines()
     {
         if (outgoingPosition == PositionConnectionPoint.Bottom || outgoingPosition == PositionConnectionPoint.Top)
         {
@@ -69,7 +69,7 @@ public class CompletedLine
         return symbolLines;
     }
 
-    public List<SymbolLineModel> FinishDrawingEvenLines()
+    public List<LineSymbolModel> FinishDrawingEvenLines()
     {
         if (outgoingPosition == PositionConnectionPoint.Bottom || outgoingPosition == PositionConnectionPoint.Top)
         {
@@ -100,14 +100,14 @@ public class CompletedLine
         return symbolLines;
     }
 
-    private void FinishLinesHorizontally(SymbolLineModel penultimateLine, SymbolLineModel? lastLineSymbol = null)
+    private void FinishLinesHorizontally(LineSymbolModel penultimateLine, LineSymbolModel? lastLineSymbol = null)
     {
         penultimateLine.X2 = _finalCoordinate.x;
         var coordinatePenultimateLine = (penultimateLine.X2, penultimateLine.Y2);
         FinishDrawLastLine(coordinatePenultimateLine, lastLineSymbol);
     }
 
-    private void FinishLinesVertically(SymbolLineModel penultimateLine, SymbolLineModel? lastLineSymbol = null)
+    private void FinishLinesVertically(LineSymbolModel penultimateLine, LineSymbolModel? lastLineSymbol = null)
     {
         penultimateLine.Y2 = _finalCoordinate.y;
         var coordinatePenultimateLine = (penultimateLine.X2, penultimateLine.Y2);
@@ -123,7 +123,7 @@ public class CompletedLine
         }
         else
         {
-            var firstLine = new SymbolLineModel
+            var firstLine = new LineSymbolModel
             {
                 X1 = lastSymbolLine.X2,
                 Y1 = lastSymbolLine.Y2,
@@ -138,11 +138,11 @@ public class CompletedLine
         }
     }
 
-    private void FinishDrawLastLine((int x, int y) penultimateLineCoordinate, SymbolLineModel? lineSymbolModel = null)
+    private void FinishDrawLastLine((int x, int y) penultimateLineCoordinate, LineSymbolModel? lineSymbolModel = null)
     {
         if (lineSymbolModel == null)
         {
-            lineSymbolModel = new SymbolLineModel();
+            lineSymbolModel = new LineSymbolModel();
             symbolLines.Add(lineSymbolModel);
         }
 

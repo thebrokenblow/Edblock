@@ -10,6 +10,7 @@ using EdblockViewModel.Symbols.LineSymbols;
 using EdblockViewModel.Symbols.Abstraction;
 using EdblockViewModel.Symbols.ScaleRectangles;
 using EdblockViewModel.Symbols.ConnectionPoints;
+using EdblockModel.Symbols.LineSymbols;
 
 namespace EdblockViewModel;
 
@@ -75,7 +76,7 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
     public DrawnLineSymbolVM? DrawnLineSymbol { get; set; }
     private List<DrawnLineSymbolVM?>? CurrentRedrawLines { get; set; }
     private readonly FactoryBlockSymbol factoryBlockSymbol;
-    private RedrawLineSymbol? redrawLineSymbol;
+    private RedrawnLine? redrawLineSymbol;
     private const int lengthGridCell = 20;
     public CanvasSymbolsVM()
     {
@@ -181,8 +182,9 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
         {
             if (currentRedrawLine != null)
             {
-                redrawLineSymbol = new(currentRedrawLine);
-                redrawLineSymbol.Redraw();
+                redrawLineSymbol = new(currentRedrawLine.DrawnLineSymbolModel);
+                var list = redrawLineSymbol.Redraw();
+                currentRedrawLine.RedrawLines(list);
             }
         }
     }

@@ -156,7 +156,6 @@ public class ConnectionPoint : INotifyPropertyChanged
         var symbolIncomingLineModel = symbolIncomingLineVM.BlockSymbolModel;
 
         var drawnLineSymbolVM = _canvasSymbolsVM.DrawnLineSymbol;
-        var arrowSymbolVM = drawnLineSymbolVM!.ArrowSymbol;
         var drawnLineSymbolModel = drawnLineSymbolVM!.DrawnLineSymbolModel;
 
         drawnLineSymbolVM.IncomingPosition = PositionConnectionPoint;
@@ -171,7 +170,6 @@ public class ConnectionPoint : INotifyPropertyChanged
         var completeLinesSymbolModel = completedLineModel.GetCompleteLines();
 
         drawnLineSymbolVM.RedrawLines(completeLinesSymbolModel);
-        arrowSymbolVM.ChangeOrientationArrow(finalLineCoordinate, PositionConnectionPoint);
         
         AddBlockToLine(drawnLineSymbolVM.SymbolIncomingLine);
         AddBlockToLine(drawnLineSymbolVM.SymbolOutgoingLine);

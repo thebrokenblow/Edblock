@@ -1,6 +1,6 @@
 ﻿namespace EdblockModel.Symbols.LineSymbols;
 
-public class SymbolLineModel
+public class LineSymbolModel
 {
     public int X1 { get; set; }
 

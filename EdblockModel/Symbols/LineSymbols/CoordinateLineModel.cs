@@ -2,7 +2,7 @@
 
 public class CoordinateLineModel
 {
-    public static (int, int) GetStartCoordinate(List<SymbolLineModel> linesSymbols) //Получение начальных координат в зависимости от уже нарисованных линий
+    public static (int, int) GetStartCoordinate(List<LineSymbolModel> linesSymbols) //Получение начальных координат в зависимости от уже нарисованных линий
     {
         if (linesSymbols.Count == 1 || linesSymbols.Count == 2)
         {
@@ -24,7 +24,7 @@ public class CoordinateLineModel
         }
     }
 
-    public static void ChangeCoordinatesVerticalLines(List<SymbolLineModel> linesSymbols, SymbolLineModel lastLineSymbol, int currentX, int currentY)
+    public static void ChangeCoordinatesVerticalLines(List<LineSymbolModel> linesSymbols, LineSymbolModel lastLineSymbol, int currentX, int currentY)
     {
         if (linesSymbols.Count % 2 == 0)
         {
@@ -47,7 +47,7 @@ public class CoordinateLineModel
         }
     }
 
-    public static void ChangeCoordinatesHorizontalLines(List<SymbolLineModel> linesSymbols, SymbolLineModel lastLineSymbol, int currentX, int currentY)
+    public static void ChangeCoordinatesHorizontalLines(List<LineSymbolModel> linesSymbols, LineSymbolModel lastLineSymbol, int currentX, int currentY)
     {
         if (linesSymbols.Count % 2 == 0)
         {
@@ -70,7 +70,7 @@ public class CoordinateLineModel
         }
     }
 
-    private static void RemoveNewLine(List<SymbolLineModel> linesSymbols, SymbolLineModel lastLineSymbol, int coordinateLastLine, int coordinatePenultimateLine)
+    private static void RemoveNewLine(List<LineSymbolModel> linesSymbols, LineSymbolModel lastLineSymbol, int coordinateLastLine, int coordinatePenultimateLine)
     {
         if (coordinateLastLine == coordinatePenultimateLine)
         {
@@ -78,7 +78,7 @@ public class CoordinateLineModel
         }
     }
 
-    private static void AddNewLine(List<SymbolLineModel> linesSymbols, SymbolLineModel lastLineSymbol, int coordinateCurrentLine, int coordinate)
+    private static void AddNewLine(List<LineSymbolModel> linesSymbols, LineSymbolModel lastLineSymbol, int coordinateCurrentLine, int coordinate)
     {
         if (coordinateCurrentLine != coordinate)
         {

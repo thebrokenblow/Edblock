@@ -10,6 +10,7 @@ internal class CoordinateScaleRectangleVM
     internal CoordinateScaleRectangleVM(BlockSymbolVM blockSymbolVM) =>
         _blockSymbolVM = blockSymbolVM;
 
+    //TODO: Поправить координаты так как они не привязаны к размерам ScaleRectangle
     internal (int, int) GetCoordinateLeftTopRectangle()
     {
         return (-positionOffset, -positionOffset);
