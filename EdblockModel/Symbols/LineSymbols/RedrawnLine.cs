@@ -30,27 +30,26 @@ public class RedrawnLine
         symbolLinesModel = drawnLineSymbolModel.LinesSymbolModel;
     }
 
-    public List<LineSymbolModel>? Redraw()
+    public List<LineSymbolModel>? GetRedrawLine()
     {
         if (_symbolaIncomingLine == null)
         {
             return null;
         }
 
-        var widthlOutgoingSymbol = _symb
-            olOutgoingLine.Width;
+        var widthlOutgoingSymbol = _symbolOutgoingLine.Width;
         var widthlIncomingSymbol = _symbolaIncomingLine.Width;
 
         var borderCoordinateOutgoingSymbol = _symbolOutgoingLine.GetBorderCoordinate(_positionOutgoing);
         var borderCoordinateIncomingSymbol = _symbolaIncomingLine.GetBorderCoordinate(_positionIncoming);
 
-        if (_positionOutgoing == PositionConnectionPoint.Top && _positionIncoming == PositionConnectionPoint.Bottom)
+        if (_positionOutgoing == PositionConnectionPoint.Bottom && _positionIncoming == PositionConnectionPoint.Top)
         {
             if (borderCoordinateOutgoingSymbol.x == borderCoordinateIncomingSymbol.x)
             {
                 SetCoordnateOneLine(borderCoordinateOutgoingSymbol, borderCoordinateIncomingSymbol);
             }
-            else if (borderCoordinateOutgoingSymbol.y > borderCoordinateIncomingSymbol.y)
+            else if (borderCoordinateOutgoingSymbol.y < borderCoordinateIncomingSymbol.y)
             {
                 var buildCoordinateDecorator = new BuilderCoordinateDecorator();
                 var coordinateDecoratorSymbolOutgoing = buildCoordinateDecorator.Build(new CoordinateDecorator(borderCoordinateOutgoingSymbol));
@@ -60,7 +59,7 @@ public class RedrawnLine
             }
             else
             {
-                var buildCoordinateDecorator = new BuilderCoordinateDecorator().SetInversionYCoordinate();
+                var buildCoordinateDecorator = new BuilderCoordinateDecorator();
                 var coordinateDecoratorSymbolOutgoing = buildCoordinateDecorator.Build(new CoordinateDecorator(borderCoordinateOutgoingSymbol));
                 var coordinateDecoratorSymbolIncoming = buildCoordinateDecorator.Build(new CoordinateDecorator(borderCoordinateIncomingSymbol));
 

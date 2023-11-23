@@ -7,8 +7,11 @@ internal class ScaleBlockSymbolVM
         int widthBlockSymbol = scalePartBlockSymbolVM.InitialWidthBlockSymbol + 
             (scalePartBlockSymbolVM.InitialXCoordinateBlockSymbol - canvasSymbolsVM.XCoordinate);
 
-        scalePartBlockSymbolVM.ScalingBlockSymbol.XCoordinate = scalePartBlockSymbolVM.InitialXCoordinateBlockSymbol - 
-            (widthBlockSymbol - scalePartBlockSymbolVM.InitialWidthBlockSymbol);
+        if (widthBlockSymbol >= scalePartBlockSymbolVM.ScalingBlockSymbol.BlockSymbolModel.MinWidth)
+        {
+            scalePartBlockSymbolVM.ScalingBlockSymbol.XCoordinate = scalePartBlockSymbolVM.InitialXCoordinateBlockSymbol -
+                (widthBlockSymbol - scalePartBlockSymbolVM.InitialWidthBlockSymbol);
+        }
 
         return widthBlockSymbol;
     }
@@ -32,8 +35,11 @@ internal class ScaleBlockSymbolVM
         int heigthBlockSymbol = scalePartBlockSymbolVM.InitialHeigthBlockSymbol +
             (scalePartBlockSymbolVM.InitialYCoordinateBlockSymbol - canvasSymbolsVM.YCoordinate);
 
-        scalePartBlockSymbolVM.ScalingBlockSymbol.YCoordinate = scalePartBlockSymbolVM.InitialYCoordinateBlockSymbol - 
-            (heigthBlockSymbol - scalePartBlockSymbolVM.InitialHeigthBlockSymbol);
+        if (heigthBlockSymbol >= scalePartBlockSymbolVM.ScalingBlockSymbol.BlockSymbolModel.MinHeight)
+        {
+            scalePartBlockSymbolVM.ScalingBlockSymbol.YCoordinate = scalePartBlockSymbolVM.InitialYCoordinateBlockSymbol - 
+                (heigthBlockSymbol - scalePartBlockSymbolVM.InitialHeigthBlockSymbol);
+        }
 
         return heigthBlockSymbol;
     }

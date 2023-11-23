@@ -183,7 +183,7 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
             if (currentRedrawLine != null)
             {
                 redrawLineSymbol = new(currentRedrawLine.DrawnLineSymbolModel);
-                var list = redrawLineSymbol.Redraw();
+                var list = redrawLineSymbol.GetRedrawLine();
                 currentRedrawLine.RedrawLines(list);
             }
         }

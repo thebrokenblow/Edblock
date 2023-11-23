@@ -42,6 +42,7 @@ public class ScalePartBlockSymbolVM
         }
 
         int width = _getWidthBlockSymbol.Invoke(this, canvasSymbolsVM);
+
         ScalingBlockSymbol.SetWidth(width);
 
         ScalingBlockSymbol.TextField.Cursor = _cursorWhenScaling;
