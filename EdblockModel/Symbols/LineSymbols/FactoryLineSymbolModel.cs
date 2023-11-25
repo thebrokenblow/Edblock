@@ -30,14 +30,4 @@ public class FactoryLineSymbolModel
 
         return lineSymbol;
     }
-
-    public static LineSymbolModel CreateFirstLine(BlockSymbolModel blockSymbolModel, PositionConnectionPoint positionConnectionPoint)
-    {
-        var firstLineSymbolModel = new LineSymbolModel();
-
-        (firstLineSymbolModel.X1, firstLineSymbolModel.Y1) = blockSymbolModel.GetBorderCoordinate(positionConnectionPoint);
-        (firstLineSymbolModel.X2, firstLineSymbolModel.Y2) = (firstLineSymbolModel.X1, firstLineSymbolModel.Y1);
-
-        return firstLineSymbolModel;
-    }
 }
