@@ -52,15 +52,15 @@ public class ScaleRectangle : INotifyPropertyChanged
     private readonly BlockSymbolVM _blockSymbolVM;
     private readonly Cursor _cursorScaling;
     private readonly Func<(int, int)> _getCoordinateScaleRectangle;
-    private readonly Func<ScalePartBlockSymbolVM, CanvasSymbolsVM, int>? _getWidthSymbol;
-    private readonly Func<ScalePartBlockSymbolVM, CanvasSymbolsVM, int>? _getHeightSymbol;
+    private readonly Func<ScalePartBlockSymbol, CanvasSymbolsVM, int>? _getWidthSymbol;
+    private readonly Func<ScalePartBlockSymbol, CanvasSymbolsVM, int>? _getHeightSymbol;
 
     public ScaleRectangle(
         CanvasSymbolsVM canvasSymbolsVM, 
         BlockSymbolVM blockSymbolVM,
         Cursor cursorScaling,
-        Func<ScalePartBlockSymbolVM, CanvasSymbolsVM, int>? getWidthSymbol,
-        Func<ScalePartBlockSymbolVM, CanvasSymbolsVM, int>? getHeightSymbol,
+        Func<ScalePartBlockSymbol, CanvasSymbolsVM, int>? getWidthSymbol,
+        Func<ScalePartBlockSymbol, CanvasSymbolsVM, int>? getHeightSymbol,
         Func<(int, int)> getCoordinateScaleRectangle
         )
     {

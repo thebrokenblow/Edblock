@@ -10,11 +10,15 @@ public abstract class BlockSymbolModel : SymbolModel
     public int YCoordinate { get; set; }
     public int MinWidth { get; } = 40;
     public int MinHeight { get; } = 20;
+    public abstract void SetWidth(int width);
+    public abstract void SetHeight(int height);
+    public abstract int GetTextFieldWidth(int width);
+    public abstract int GetTextFieldHeight(int height);
 
-    private readonly Dictionary<PositionConnectionPoint, Func<(int x, int y)>> borderCoordinateByPositionCP;
+    private readonly Dictionary<PositionConnectionPoint, Func<(int x, int y)>> borderCoordinateByPosition;
     public BlockSymbolModel()
     {
-        borderCoordinateByPositionCP = new()
+        borderCoordinateByPosition = new()
         {
             { PositionConnectionPoint.Top, GetTopBorderCoordinate },
             { PositionConnectionPoint.Bottom, GetBottomBorderCoordinate },
@@ -22,14 +26,10 @@ public abstract class BlockSymbolModel : SymbolModel
             { PositionConnectionPoint.Right, GetRightBorderCoordinate }
         };
     }
-    public abstract void SetWidth(int width);
-    public abstract void SetHeight(int height);
-    public abstract int GetTextFieldWidth(int width);
-    public abstract int GetTextFieldHeight(int height);
 
     public (int x, int y) GetBorderCoordinate(PositionConnectionPoint positionConnectionPoint)
     {
-        return borderCoordinateByPositionCP[positionConnectionPoint].Invoke();
+        return borderCoordinateByPosition[positionConnectionPoint].Invoke();
     }
 
     private (int x, int y) GetTopBorderCoordinate()

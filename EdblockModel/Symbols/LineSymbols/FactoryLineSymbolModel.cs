@@ -5,7 +5,7 @@ namespace EdblockModel.Symbols.LineSymbols;
 
 public class FactoryLineSymbolModel
 {
-    public static LineSymbolModel CreateNewLine(LineSymbolModel lineSymbolModel)
+    public static LineSymbolModel CreateSecondLine(LineSymbolModel lineSymbolModel)
     {
         var lineSymbol = new LineSymbolModel()
         {
@@ -31,13 +31,13 @@ public class FactoryLineSymbolModel
         return lineSymbol;
     }
 
-    public static LineSymbolModel CreateFirstLine(PositionConnectionPoint positionConnectionPoint, BlockSymbolModel blockSymbolModel)
+    public static LineSymbolModel CreateFirstLine(BlockSymbolModel blockSymbolModel, PositionConnectionPoint positionConnectionPoint)
     {
         var firstLineSymbolModel = new LineSymbolModel();
 
         (firstLineSymbolModel.X1, firstLineSymbolModel.Y1) = blockSymbolModel.GetBorderCoordinate(positionConnectionPoint);
-        firstLineSymbolModel.X2 = firstLineSymbolModel.X1;
-        firstLineSymbolModel.Y2 = firstLineSymbolModel.Y1;
+        (firstLineSymbolModel.X2, firstLineSymbolModel.Y2) = (firstLineSymbolModel.X1, firstLineSymbolModel.Y1);
+
         return firstLineSymbolModel;
     }
 }

@@ -48,14 +48,23 @@ public class DrawnLineSymbolModel
 
     public void AddFirstLine()
     {
-        var lineSymbolModel = FactoryLineSymbolModel.CreateFirstLine(OutgoingPosition, SymbolOutgoingLine);
-        LinesSymbolModel.Add(lineSymbolModel);
+        var (x, y) = SymbolOutgoingLine.GetBorderCoordinate(OutgoingPosition);
+
+        var firstLineSymbolModel = new LineSymbolModel
+        {
+            X1 = x,
+            Y1 = y,
+            X2 = x,
+            Y2 = y,
+        };
+
+        LinesSymbolModel.Add(firstLineSymbolModel);
     }
 
     public LineSymbolModel GetNewLine()
     {
         var lastLineSymbol = LinesSymbolModel[^1];
-        var newLineSymbolModel = FactoryLineSymbolModel.CreateNewLine(lastLineSymbol);
+        var newLineSymbolModel = FactoryLineSymbolModel.CreateSecondLine(lastLineSymbol);
 
         LinesSymbolModel.Add(newLineSymbolModel);
 

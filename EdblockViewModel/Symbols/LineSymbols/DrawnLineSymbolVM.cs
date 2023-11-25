@@ -29,25 +29,16 @@ public class DrawnLineSymbolVM : SymbolVM
 
         var startCoordinate = CoordinateLineModel.GetStartCoordinate(DrawnLineSymbolModel.LinesSymbolModel);
 
-        (currentX, currentY) = DrawnLineSymbolModel.RoundingCoordinatesLines(startCoordinate, (currentX, currentY));
+        var currentCoordinte = (currentX, currentY);
+        (currentX, currentY) = DrawnLineSymbolModel.RoundingCoordinatesLines(startCoordinate, currentCoordinte);
+
         ArrowSymbol.ChangeOrientationArrow(startCoordinate, (currentX, currentY), OutgoingPosition);
         DrawnLineSymbolModel.ChangeCoordinateLine(currentX, currentY);
 
-        if (LineSymbols.Count == 0)
-        {
-            AddMissingLines(linesSymbolModel);
-        }
-        else if (linesSymbolModel.Count == 1)
-        {
-            ChangeFirstLine(linesSymbolModel);
-        }
-        else
-        {
-            ChangeSecondLine(linesSymbolModel);
-        }
+        RedrawPartLines(linesSymbolModel);
     }
 
-    public void RedrawLines(List<LineSymbolModel> linesSymbolModel)
+    public void RedrawAllLines(List<LineSymbolModel> linesSymbolModel)
     {
         LineSymbols.Clear();
 
@@ -61,6 +52,22 @@ public class DrawnLineSymbolVM : SymbolVM
         var coordinateLastLine = (lastLine.X2, lastLine.Y2);
         ArrowSymbol.ChangeOrientationArrow(coordinateLastLine, IncomingPosition);
 
+    }
+
+    private void RedrawPartLines(List<LineSymbolModel> linesSymbolModel)
+    {
+        if (LineSymbols.Count == 0)
+        {
+            AddMissingLines(linesSymbolModel);
+        }
+        else if (linesSymbolModel.Count == 1)
+        {
+            ChangeFirstLine(linesSymbolModel);
+        }
+        else
+        {
+            ChangeSecondLine(linesSymbolModel);
+        }
     }
 
     private void AddMissingLines(List<LineSymbolModel> linesSymbolModel)

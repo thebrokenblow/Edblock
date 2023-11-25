@@ -72,7 +72,7 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
     public DelegateCommand<BlockSymbolVM> MouseMoveSymbol { get; init; }
     public event PropertyChangedEventHandler? PropertyChanged;
     public BlockSymbolVM? MovableSymbol { get; set; }
-    public ScalePartBlockSymbolVM? ScalePartBlockSymbolVM { get; set; }
+    public ScalePartBlockSymbol? ScalePartBlockSymbolVM { get; set; }
     public DrawnLineSymbolVM? DrawnLineSymbol { get; set; }
     private List<DrawnLineSymbolVM?>? CurrentRedrawLines { get; set; }
     private readonly FactoryBlockSymbol factoryBlockSymbol;
@@ -184,7 +184,7 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
             {
                 redrawLineSymbol = new(currentRedrawLine.DrawnLineSymbolModel);
                 var list = redrawLineSymbol.GetRedrawLine();
-                currentRedrawLine.RedrawLines(list);
+                currentRedrawLine.RedrawAllLines(list);
             }
         }
     }

@@ -152,8 +152,7 @@ public class ConnectionPoint : INotifyPropertyChanged
 
     private void EndDrawLine()
     {
-        var symbolIncomingLineVM = BlockSymbolVM;
-        var symbolIncomingLineModel = symbolIncomingLineVM.BlockSymbolModel;
+        var symbolIncomingLineModel = BlockSymbolVM.BlockSymbolModel;
 
         var drawnLineSymbolVM = _canvasSymbolsVM.DrawnLineSymbol;
         var drawnLineSymbolModel = drawnLineSymbolVM!.DrawnLineSymbolModel;
@@ -161,7 +160,7 @@ public class ConnectionPoint : INotifyPropertyChanged
         drawnLineSymbolVM.IncomingPosition = PositionConnectionPoint;
         drawnLineSymbolModel.IncomingPosition = PositionConnectionPoint;
         
-        drawnLineSymbolVM.SymbolIncomingLine = symbolIncomingLineVM;
+        drawnLineSymbolVM.SymbolIncomingLine = BlockSymbolVM;
         drawnLineSymbolModel.SymbolIncomingLine = symbolIncomingLineModel;
 
         var finalLineCoordinate = symbolIncomingLineModel.GetBorderCoordinate(PositionConnectionPoint);
@@ -169,7 +168,7 @@ public class ConnectionPoint : INotifyPropertyChanged
         var completedLineModel = new CompletedLine(drawnLineSymbolModel, finalLineCoordinate);
         var completeLinesSymbolModel = completedLineModel.GetCompleteLines();
 
-        drawnLineSymbolVM.RedrawLines(completeLinesSymbolModel);
+        drawnLineSymbolVM.RedrawAllLines(completeLinesSymbolModel);
         
         AddBlockToLine(drawnLineSymbolVM.SymbolIncomingLine);
         AddBlockToLine(drawnLineSymbolVM.SymbolOutgoingLine);
