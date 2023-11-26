@@ -23,17 +23,15 @@ public class DrawnLineSymbolVM : SymbolVM
         OutgoingPosition = positionConnectionPoint;
     }
 
-    public void ChangeCoordination(int currentX, int currentY)
+    public void ChangeCoordination((int, int) currentCoordinte)
     {
         var linesSymbolModel = DrawnLineSymbolModel.LinesSymbolModel;
+        var startCoordinate = DrawnLineSymbolModel.CoordinateLineModel.GetStartCoordinate();
 
-        var startCoordinate = CoordinateLineModel.GetStartCoordinate(DrawnLineSymbolModel.LinesSymbolModel);
+        currentCoordinte = DrawnLineSymbolModel.RoundingCoordinatesLines(startCoordinate, currentCoordinte);
 
-        var currentCoordinte = (currentX, currentY);
-        (currentX, currentY) = DrawnLineSymbolModel.RoundingCoordinatesLines(startCoordinate, currentCoordinte);
-
-        ArrowSymbol.ChangeOrientationArrow(startCoordinate, (currentX, currentY), OutgoingPosition);
-        DrawnLineSymbolModel.ChangeCoordinateLine(currentX, currentY);
+        ArrowSymbol.ChangeOrientationArrow(startCoordinate, currentCoordinte, OutgoingPosition);
+        DrawnLineSymbolModel.ChangeCoordinateLine(currentCoordinte);
 
         RedrawPartLines(linesSymbolModel);
     }

@@ -4,7 +4,7 @@ namespace EdblockViewModel.Symbols.LineSymbols;
 
 public class FactoryLineSymbol
 {
-    public static LineSymbolVM CreateNewLine(LineSymbolModel lineSymbolModel)
+    public static LineSymbolVM CreateLine(LineSymbolModel lineSymbolModel)
     {
         var lineSymbol = new LineSymbolVM
         {

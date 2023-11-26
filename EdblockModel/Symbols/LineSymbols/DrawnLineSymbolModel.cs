@@ -7,21 +7,23 @@ public class DrawnLineSymbolModel
 {
     public BlockSymbolModel SymbolOutgoingLine { get; set; }
     public BlockSymbolModel? SymbolIncomingLine { get; set; }
-    public List<LineSymbolModel> LinesSymbolModel { get; set; } = new();
+    public List<LineSymbolModel> LinesSymbolModel { get; set; }
+    public CoordinateLineModel CoordinateLineModel { get; set; }
     public PositionConnectionPoint OutgoingPosition { get; init; }
     public PositionConnectionPoint IncomingPosition { get; set; }
     private readonly int offsetLine = 10;
 
     public DrawnLineSymbolModel(BlockSymbolModel symbolOutgoingLine, PositionConnectionPoint positionConnectionPoint)
     {
+        LinesSymbolModel = new();
+        CoordinateLineModel = new(LinesSymbolModel);
         SymbolOutgoingLine = symbolOutgoingLine;
         OutgoingPosition = positionConnectionPoint;
     }
 
     public (int x, int y) RoundingCoordinatesLines((int x, int y) startCoordinate, (int x, int y) currentCoordinate)
     {
-        if (OutgoingPosition == PositionConnectionPoint.Bottom || 
-            OutgoingPosition == PositionConnectionPoint.Top)
+        if (OutgoingPosition == PositionConnectionPoint.Bottom || OutgoingPosition == PositionConnectionPoint.Top)
         {
             return HorizontalRounding(startCoordinate, currentCoordinate);
         }
@@ -31,18 +33,15 @@ public class DrawnLineSymbolModel
         }
     }
 
-    public void ChangeCoordinateLine(int currentX, int currentY)
+    public void ChangeCoordinateLine((int x, int y) currentCoordinte)
     {
-        var lastLineSymbol = LinesSymbolModel[^1];
-
-        if (OutgoingPosition == PositionConnectionPoint.Bottom ||
-            OutgoingPosition == PositionConnectionPoint.Top)
+        if (OutgoingPosition == PositionConnectionPoint.Bottom || OutgoingPosition == PositionConnectionPoint.Top)
         {
-            CoordinateLineModel.ChangeCoordinatesVerticalLines(LinesSymbolModel, lastLineSymbol, currentX, currentY);
+            CoordinateLineModel.ChangeCoordinatesVerticalLines(currentCoordinte);
         }
         else
         {
-            CoordinateLineModel.ChangeCoordinatesHorizontalLines(LinesSymbolModel, lastLineSymbol, currentX, currentY);
+            CoordinateLineModel.ChangeCoordinatesHorizontalLines(currentCoordinte);
         }
     }
 
@@ -64,7 +63,7 @@ public class DrawnLineSymbolModel
     public LineSymbolModel GetNewLine()
     {
         var lastLineSymbol = LinesSymbolModel[^1];
-        var newLineSymbolModel = FactoryLineSymbolModel.CreateSecondLine(lastLineSymbol);
+        var newLineSymbolModel = FactoryLineSymbolModel.CreateLineByPreviousLine(lastLineSymbol);
 
         LinesSymbolModel.Add(newLineSymbolModel);
 

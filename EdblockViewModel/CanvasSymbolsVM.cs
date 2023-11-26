@@ -27,8 +27,11 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
         {
             xCoordinate = RoundCoordinate(value);
 
-            MovableSymbol?.SetCoordinate((xCoordinate, yCoordinate), (previousXCoordinate, previousYCoordinate));
-            DrawnLineSymbol?.ChangeCoordination(xCoordinate, yCoordinate);
+            var currentCoordinate = (xCoordinate, yCoordinate);
+            var previousCoordinate = (previousXCoordinate, previousYCoordinate);
+
+            MovableSymbol?.SetCoordinate(currentCoordinate, previousCoordinate);
+            DrawnLineSymbol?.ChangeCoordination(currentCoordinate);
             ScalePartBlockSymbolVM?.SetWidthBlockSymbol(this);
 
             previousXCoordinate = xCoordinate;
@@ -44,8 +47,11 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
         {
             yCoordinate = RoundCoordinate(value);
 
-            MovableSymbol?.SetCoordinate((xCoordinate, yCoordinate), (previousXCoordinate, previousYCoordinate));
-            DrawnLineSymbol?.ChangeCoordination(xCoordinate, yCoordinate);
+            var currentCoordinate = (xCoordinate, yCoordinate);
+            var previousCoordinate = (previousXCoordinate, previousYCoordinate);
+
+            MovableSymbol?.SetCoordinate(currentCoordinate, previousCoordinate);
+            DrawnLineSymbol?.ChangeCoordination(currentCoordinate);
             ScalePartBlockSymbolVM?.SetHeightBlockSymbol(this);
 
             previousYCoordinate = yCoordinate;
@@ -140,7 +146,7 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
         if (DrawnLineSymbol != null && DrawnLineSymbol?.LineSymbols.Count > 1)
         {
             var newLineSymbolModel = DrawnLineSymbol.DrawnLineSymbolModel.GetNewLine();
-            var newLineSymbol = FactoryLineSymbol.CreateNewLine(newLineSymbolModel);
+            var newLineSymbol = FactoryLineSymbol.CreateLine(newLineSymbolModel);
 
             DrawnLineSymbol.LineSymbols.Add(newLineSymbol);
         }
