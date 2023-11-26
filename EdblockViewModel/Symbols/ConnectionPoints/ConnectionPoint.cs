@@ -165,7 +165,7 @@ public class ConnectionPoint : INotifyPropertyChanged
 
         var finalLineCoordinate = symbolIncomingLineModel.GetBorderCoordinate(PositionConnectionPoint);
 
-        var completedLineModel = new CompletedLine(drawnLineSymbolModel, finalLineCoordinate);
+        var completedLineModel = new CompletedLineModel(drawnLineSymbolModel, finalLineCoordinate);
         var completeLinesSymbolModel = completedLineModel.GetCompleteLines();
 
         drawnLineSymbolVM.RedrawAllLines(completeLinesSymbolModel);
