@@ -1,4 +1,5 @@
 ﻿using EdblockModel.Symbols.Enum;
+using System.Threading.Tasks;
 
 namespace EdblockModel.Symbols.LineSymbols;
 
@@ -25,38 +26,24 @@ public class CompletedLineModel
         {
             if (outgoingPosition == PositionConnectionPoint.Bottom || outgoingPosition == PositionConnectionPoint.Top)
             {
-                if (incomingPosition == PositionConnectionPoint.Top)
+                if (incomingPosition == PositionConnectionPoint.Top || incomingPosition == PositionConnectionPoint.Bottom)
                 {
                     FinishDrawingHorizontalToHorizontalLines(lastLine, _finalCoordinate);
                 }
-                else if (incomingPosition == PositionConnectionPoint.Bottom)
+                else
                 {
-                    FinishDrawingHorizontalToHorizontalLines(lastLine, _finalCoordinate);
-                }
-                else if (incomingPosition == PositionConnectionPoint.Left)
-                {
-                    FinishDrawingHorizontalToVerticalLines(lastLine, _finalCoordinate);
-                }
-                else if (incomingPosition == PositionConnectionPoint.Right)
-                {
-                    FinishDrawingHorizontalToVerticalLines(lastLine, _finalCoordinate);
+                    lastLine.Y2 = _finalCoordinate.y;
+                    FinishLineNotParallelSide(lastLine, _finalCoordinate);
                 }
             }
-            else if (outgoingPosition == PositionConnectionPoint.Left || outgoingPosition == PositionConnectionPoint.Right)
+            else
             {
-                if (incomingPosition == PositionConnectionPoint.Top)
+                if (incomingPosition == PositionConnectionPoint.Top || incomingPosition == PositionConnectionPoint.Bottom)
                 {
-                    FinishDrawingVerticalToHorizontalLines(lastLine, _finalCoordinate);
+                    lastLine.X2 = _finalCoordinate.x;
+                    FinishLineNotParallelSide(lastLine, _finalCoordinate);
                 }
-                else if (incomingPosition == PositionConnectionPoint.Bottom)
-                {;
-                    FinishDrawingVerticalToHorizontalLines(lastLine, _finalCoordinate);
-                }
-                else if (incomingPosition == PositionConnectionPoint.Left)
-                {
-                    FinishDrawingVerticalToVerticalLines(lastLine, _finalCoordinate);
-                }
-                else if (incomingPosition == PositionConnectionPoint.Right)
+                else
                 {
                     FinishDrawingVerticalToVerticalLines(lastLine, _finalCoordinate);
                 }
@@ -66,99 +53,37 @@ public class CompletedLineModel
         {
             if (outgoingPosition == PositionConnectionPoint.Bottom || outgoingPosition == PositionConnectionPoint.Top)
             {
-                if (incomingPosition == PositionConnectionPoint.Top)
+                if (incomingPosition == PositionConnectionPoint.Top || incomingPosition == PositionConnectionPoint.Bottom)
                 {
-                    FinishDrawingHorizontalToHorizontalLines2(lastLine, _finalCoordinate);
+                    lastLine.X2 = _finalCoordinate.x;
+                    FinishLineNotParallelSide(lastLine, _finalCoordinate);
                 }
-                else if (incomingPosition == PositionConnectionPoint.Bottom)
-                {
-                    FinishDrawingHorizontalToHorizontalLines2(lastLine, _finalCoordinate);
-                }
-                else if (incomingPosition == PositionConnectionPoint.Left)
-                {
-                    FinishDrawingHorizontalToVerticalLines2(lastLine, _finalCoordinate);
-                }
-                else if (incomingPosition == PositionConnectionPoint.Right)
+                else
                 {
                     FinishDrawingHorizontalToVerticalLines2(lastLine, _finalCoordinate);
                 }
             }
-            else if (outgoingPosition == PositionConnectionPoint.Left || outgoingPosition == PositionConnectionPoint.Right)
+            else
             {
-                if (incomingPosition == PositionConnectionPoint.Top)
+                if (incomingPosition == PositionConnectionPoint.Top || incomingPosition == PositionConnectionPoint.Bottom)
                 {
                     FinishDrawingVerticalToHorizontalLines2(lastLine, _finalCoordinate);
                 }
-                else if (incomingPosition == PositionConnectionPoint.Bottom)
+                else
                 {
-                    FinishDrawingVerticalToHorizontalLines2(lastLine, _finalCoordinate);
-                }
-                else if (incomingPosition == PositionConnectionPoint.Left)
-                {
-                    FinishDrawingVerticalToVerticalLines2(lastLine, _finalCoordinate);
-                }
-                else if (incomingPosition == PositionConnectionPoint.Right)
-                {
-                    FinishDrawingVerticalToVerticalLines2(lastLine, _finalCoordinate);
+                    lastLine.Y2 = _finalCoordinate.y;
+                    FinishLineNotParallelSide(lastLine, _finalCoordinate);
                 }
             }
         }
 
         return linesSymbolModel;
     }
-
-    private void FinishDrawingHorizontalToHorizontalLines(LineSymbolModel lastLine, (int x, int y) finalCoordinate)
+    private void FinishLineNotParallelSide(LineSymbolModel lastLine, (int x, int y) finalCoordinate)
     {
-        if (lastLine.X2 == finalCoordinate.x)
-        {
-            lastLine.X2 = finalCoordinate.x;
-            lastLine.Y2 = finalCoordinate.y;
-        }
-        else
-        {
-            var firstLine = new LineSymbolModel
-            {
-                X1 = lastLine.X2,
-                Y1 = lastLine.Y2,
-                X2 = finalCoordinate.x,
-                Y2 = lastLine.Y2
-            };
-
-            var secondLine = new LineSymbolModel
-            {
-                X1 = finalCoordinate.x,
-                Y1 = lastLine.Y2,
-                X2 = finalCoordinate.x,
-                Y2 = finalCoordinate.y,
-            };
-
-            linesSymbolModel.Add(firstLine);
-            linesSymbolModel.Add(secondLine);
-        }
-    }
-
-    private void FinishDrawingHorizontalToVerticalLines(LineSymbolModel lastLine, (int x, int y) finalCoordinate)
-    {
-        lastLine.Y2 = finalCoordinate.y;
-
         var firstLine = new LineSymbolModel
         {
             X1 = lastLine.X2,
-            Y1 = finalCoordinate.y,
-            X2 = finalCoordinate.x,
-            Y2 = finalCoordinate.y
-        };
-
-        linesSymbolModel.Add(firstLine);
-    }
-
-    private void FinishDrawingVerticalToHorizontalLines(LineSymbolModel lastLine, (int x, int y) finalCoordinate)
-    {
-        lastLine.X2 = finalCoordinate.x;
-
-        var firstLine = new LineSymbolModel
-        {
-            X1 = finalCoordinate.x,
             Y1 = lastLine.Y2,
             X2 = finalCoordinate.x,
             Y2 = finalCoordinate.y
@@ -197,19 +122,34 @@ public class CompletedLineModel
         }
     }
 
-    private void FinishDrawingHorizontalToHorizontalLines2(LineSymbolModel lastLine, (int x, int y) finalCoordinate)
+    private void FinishDrawingHorizontalToHorizontalLines(LineSymbolModel lastLine, (int x, int y) finalCoordinate)
     {
-        lastLine.X2 = finalCoordinate.x;
-
-        var firstLine = new LineSymbolModel
+        if (lastLine.X2 == finalCoordinate.x)
         {
-            X1 = finalCoordinate.x,
-            Y1 = lastLine.Y2,
-            Y2 = finalCoordinate.y,
-            X2 = finalCoordinate.x
-        };
+            lastLine.X2 = finalCoordinate.x;
+            lastLine.Y2 = finalCoordinate.y;
+        }
+        else
+        {
+            var firstLine = new LineSymbolModel
+            {
+                X1 = lastLine.X2,
+                Y1 = lastLine.Y2,
+                X2 = finalCoordinate.x,
+                Y2 = lastLine.Y2
+            };
 
-        linesSymbolModel.Add(firstLine);
+            var secondLine = new LineSymbolModel
+            {
+                X1 = finalCoordinate.x,
+                Y1 = lastLine.Y2,
+                X2 = finalCoordinate.x,
+                Y2 = finalCoordinate.y,
+            };
+
+            linesSymbolModel.Add(firstLine);
+            linesSymbolModel.Add(secondLine);
+        }
     }
 
     private void FinishDrawingHorizontalToVerticalLines2(LineSymbolModel lastLine, (int x, int y) finalCoordinate)
@@ -226,9 +166,11 @@ public class CompletedLineModel
 
             lastLine.Y1 = finalCoordinate.y;
             lastLine.Y2 = finalCoordinate.y;
+
             lastLine.X2 = finalCoordinate.x;
         }
     }
+
     private void FinishDrawingVerticalToHorizontalLines2(LineSymbolModel lastLine, (int x, int y) finalCoordinate)
     {
         if (finalCoordinate.x == lastLine.X2)
@@ -243,22 +185,8 @@ public class CompletedLineModel
 
             lastLine.X1 = finalCoordinate.x;
             lastLine.X2 = finalCoordinate.x;
+
             lastLine.Y2 = finalCoordinate.y;
         }
-    }
-
-    private void FinishDrawingVerticalToVerticalLines2(LineSymbolModel lastLine, (int x, int y) finalCoordinate)
-    {
-        lastLine.Y2 = finalCoordinate.y;
-
-        var firstLine = new LineSymbolModel
-        {
-            X1 = lastLine.X2,
-            Y1 = lastLine.Y2,
-            X2 = finalCoordinate.x,
-            Y2 = lastLine.Y2
-        };
-
-        linesSymbolModel.Add(firstLine);
     }
 }
