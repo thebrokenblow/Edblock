@@ -28,7 +28,7 @@ public class DrawnLineSymbolVM : SymbolVM
         var linesSymbolModel = DrawnLineSymbolModel.LinesSymbolModel;
         var startCoordinate = DrawnLineSymbolModel.CoordinateLineModel.GetStartCoordinate();
 
-        currentCoordinte = DrawnLineSymbolModel.RoundingCoordinatesLines(startCoordinate, currentCoordinte);
+        //currentCoordinte = DrawnLineSymbolModel.RoundingCoordinatesLines(startCoordinate, currentCoordinte);
 
         ArrowSymbol.ChangeOrientationArrow(startCoordinate, currentCoordinte, OutgoingPosition);
         DrawnLineSymbolModel.ChangeCoordinateLine(currentCoordinte);
