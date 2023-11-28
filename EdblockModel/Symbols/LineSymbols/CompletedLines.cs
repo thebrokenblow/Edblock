@@ -89,7 +89,6 @@ public class CompletedLine
         }
     }
 
-
     private void FinishDrawingLinesVerticalSides(LineSymbolModel lastLine)
     {
         lastLine.X2 = _finalCoordinate.x;
@@ -109,7 +108,7 @@ public class CompletedLine
         if (lastLine.X2 == _finalCoordinate.x || lastLine.Y2 == _finalCoordinate.y)
         {
             var startCoordinateLastLine = (lastLine.X1, lastLine.Y1);
-            FinishDrawingLastLines(startCoordinateLastLine);
+            FinishDrawingLastLines(lastLine, startCoordinateLastLine);
         }
         else
         {
@@ -126,7 +125,7 @@ public class CompletedLine
         if (lastLine.X2 == _finalCoordinate.x || lastLine.Y2 == _finalCoordinate.y)
         {
             var startCoordinateLastLine = (lastLine.X1, lastLine.Y1);
-            FinishDrawingLastLines(startCoordinateLastLine);
+            FinishDrawingLastLines(lastLine, startCoordinateLastLine);
         }
         else
         {
@@ -135,14 +134,12 @@ public class CompletedLine
             penultimateLine.Y2 = coordinatePenultimateLine.y2;
             penultimateLine.X2 = coordinatePenultimateLine.x2;
 
-            FinishDrawingLastLines(coordinatePenultimateLine);
+            FinishDrawingLastLines(lastLine, coordinatePenultimateLine);
         }
     }
 
-    private void FinishDrawingLastLines((int x1, int y1) startLineCoordinate)
+    private void FinishDrawingLastLines(LineSymbolModel lastLine, (int x1, int y1) startLineCoordinate)
     {
-        var lastLine = linesSymbolModel[^1];
-
         lastLine.X1 = startLineCoordinate.x1;
         lastLine.Y1 = startLineCoordinate.y1;
 
