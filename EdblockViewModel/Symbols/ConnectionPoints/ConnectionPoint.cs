@@ -2,12 +2,12 @@
 using Prism.Commands;
 using System.Windows.Input;
 using System.ComponentModel;
+using EdblockModel.Symbols.Enum;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using EdblockModel.Symbols.LineSymbols;
 using EdblockViewModel.Symbols.LineSymbols;
 using EdblockViewModel.Symbols.Abstraction;
-using EdblockModel.Symbols.Enum;
 
 namespace EdblockViewModel.Symbols.ConnectionPoints;
 
@@ -165,7 +165,7 @@ public class ConnectionPoint : INotifyPropertyChanged
 
         var finalLineCoordinate = symbolIncomingLineModel.GetBorderCoordinate(PositionConnectionPoint);
 
-        var completedLineModel = new CompletedLineModel(drawnLineSymbolModel, finalLineCoordinate);
+        var completedLineModel = new CompletedLine(drawnLineSymbolModel, finalLineCoordinate);
         var completeLinesSymbolModel = completedLineModel.GetCompleteLines();
 
         drawnLineSymbolVM.RedrawAllLines(completeLinesSymbolModel);
