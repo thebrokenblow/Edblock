@@ -6,37 +6,33 @@ namespace EdblockModel.Symbols.LineSymbols.RedrawLine;
 
 internal class RedrawnLineIdenticalSides
 {
-    private readonly List<CoordinateLine> _coordinatesLines;
-    private readonly List<CoordinateLine> decoratedCoordinatesLines;
-    private readonly List<LineSymbolModel> _linesSymbolModel;
+    private readonly RedrawnLine _redrawLine;
+    private readonly List<CoordinateLine> _decoratedCoordinatesLines;
     private readonly PositionConnectionPoint _positionOutgoing;
     private readonly PositionConnectionPoint _positionIncoming;
     private readonly int _baseLineOffset;
     private const int linesIdenticalSides = 3;
 
-    public RedrawnLineIdenticalSides(DrawnLineSymbolModel drawnLineSymbolModel, List<CoordinateLine> coordinatesLines, int baseLineOffset)
+    public RedrawnLineIdenticalSides(DrawnLineSymbolModel drawnLineSymbolModel, RedrawnLine redrawLine, int baseLineOffset)
     {
-        _coordinatesLines = coordinatesLines;
-
         _positionOutgoing = drawnLineSymbolModel.OutgoingPosition;
         _positionIncoming = drawnLineSymbolModel.IncomingPosition;
 
-        _linesSymbolModel = drawnLineSymbolModel.LinesSymbolModel;
-
-        decoratedCoordinatesLines = new();
+        _redrawLine = redrawLine;
+        _decoratedCoordinatesLines = redrawLine.DecoratedCoordinatesLines;
 
         _baseLineOffset = baseLineOffset;
     }
 
-    public List<LineSymbolModel>? GetRedrawLine((int x, int y) borderCoordinateOutgoingSymbol, (int x, int y) borderCoordinateIncomingSymbol)
+    public void RedrawLine((int x, int y) borderCoordinateOutgoingSymbol, (int x, int y) borderCoordinateIncomingSymbol)
     {
         var coordinateSymbolOutgoing = new CoordinateDecorator(borderCoordinateOutgoingSymbol);
         var coordinateSymbolIncoming = new CoordinateDecorator(borderCoordinateIncomingSymbol);
 
         if (_positionOutgoing == PositionConnectionPoint.Top && _positionIncoming == PositionConnectionPoint.Top)
         {
-            RedrawnLine.ChangeCountLinesModel(_linesSymbolModel, linesIdenticalSides);
-            RedrawnLine.ChangeCountDecoratedLines(_coordinatesLines, decoratedCoordinatesLines, linesIdenticalSides);
+            _redrawLine.ChangeCountLinesModel(linesIdenticalSides);
+            _redrawLine.ChangeCountDecoratedLines(linesIdenticalSides);
 
             if (borderCoordinateIncomingSymbol.y <= borderCoordinateOutgoingSymbol.y)
             {
@@ -53,8 +49,8 @@ internal class RedrawnLineIdenticalSides
             var coordinateDecoratorSymbolOutgoing = buildCoordinateDecorator.Build(coordinateSymbolOutgoing);
             var coordinateDecoratorSymbolIncoming = buildCoordinateDecorator.Build(coordinateSymbolIncoming);
 
-            RedrawnLine.ChangeCountLinesModel(_linesSymbolModel, linesIdenticalSides);
-            RedrawnLine.ChangeCountDecoratedLines(_coordinatesLines, decoratedCoordinatesLines, linesIdenticalSides);
+            _redrawLine.ChangeCountLinesModel(linesIdenticalSides);
+            _redrawLine.ChangeCountDecoratedLines(linesIdenticalSides);
 
             if (borderCoordinateIncomingSymbol.y <= borderCoordinateOutgoingSymbol.y)
             {
@@ -64,29 +60,26 @@ internal class RedrawnLineIdenticalSides
             {
                 SetCoordinatesIdenticalSides(coordinateDecoratorSymbolOutgoing, coordinateDecoratorSymbolIncoming, coordinateSymbolIncoming.Y);
             }
-
         }
-
-        return _linesSymbolModel;
     }
 
     private void SetCoordinatesIdenticalSides(ICoordinateDecorator coordinateSymbolOutgoing, ICoordinateDecorator coordinateSymbolIncoming, int coordinateUnmovableSymbol)
     {
-        var firstLine = decoratedCoordinatesLines[0];
+        var firstLine = _decoratedCoordinatesLines[0];
 
         firstLine.FirstCoordinate.X = coordinateSymbolOutgoing.X;
         firstLine.FirstCoordinate.Y = coordinateSymbolOutgoing.Y;
         firstLine.SecondCoordinate.X = coordinateSymbolOutgoing.X;
         firstLine.SecondCoordinate.Y = coordinateUnmovableSymbol - _baseLineOffset;
 
-        var secondLine = decoratedCoordinatesLines[1];
+        var secondLine = _decoratedCoordinatesLines[1];
 
         secondLine.FirstCoordinate.X = firstLine.SecondCoordinate.X;
         secondLine.FirstCoordinate.Y = firstLine.SecondCoordinate.Y;
         secondLine.SecondCoordinate.X = coordinateSymbolIncoming.X;
         secondLine.SecondCoordinate.Y = firstLine.SecondCoordinate.Y;
 
-        var thirdLine = decoratedCoordinatesLines[2];
+        var thirdLine = _decoratedCoordinatesLines[2];
 
         thirdLine.FirstCoordinate.X = secondLine.SecondCoordinate.X;
         thirdLine.FirstCoordinate.Y = secondLine.SecondCoordinate.Y;

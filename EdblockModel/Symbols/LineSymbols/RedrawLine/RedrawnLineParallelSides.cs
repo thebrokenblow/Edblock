@@ -7,9 +7,8 @@ namespace EdblockModel.Symbols.LineSymbols.RedrawLine;
 
 internal class RedrawnLineParallelSides
 {
-    private readonly BlockSymbolModel _symbolOutgoingLine;
     private readonly BlockSymbolModel? _symbolaIncomingLine;
-    private readonly List<CoordinateLine> _coordinatesLines;
+    private readonly RedrawnLine _redrawLine;
     private readonly List<CoordinateLine> _decoratedCoordinatesLines;
     private readonly List<LineSymbolModel> _linesSymbolModel;
     private readonly PositionConnectionPoint _positionOutgoing;
@@ -17,26 +16,25 @@ internal class RedrawnLineParallelSides
     private readonly int _baseLineOffset;
     private const int linesSamePositions = 1;
     private const int linesOneDifferentPositions = 3;
-    private const int lLinesTwoDifferentPositions = 5;
+    private const int linesTwoDifferentPositions = 5;
 
-    public RedrawnLineParallelSides(DrawnLineSymbolModel drawnLineSymbolModel, List<CoordinateLine> coordinatesLines, int baseLineOffset)
+    public RedrawnLineParallelSides(DrawnLineSymbolModel drawnLineSymbolModel, RedrawnLine redrawLine, int baseLineOffset)
     {
-        _symbolOutgoingLine = drawnLineSymbolModel.SymbolOutgoingLine;
         _symbolaIncomingLine = drawnLineSymbolModel.SymbolIncomingLine;
 
-        _coordinatesLines = coordinatesLines;
 
         _positionOutgoing = drawnLineSymbolModel.OutgoingPosition;
         _positionIncoming = drawnLineSymbolModel.IncomingPosition;
 
         _linesSymbolModel = drawnLineSymbolModel.LinesSymbolModel;
 
-        _decoratedCoordinatesLines = new();
+        _redrawLine = redrawLine;
+        _decoratedCoordinatesLines = redrawLine.DecoratedCoordinatesLines;
 
         _baseLineOffset = baseLineOffset;
     }
 
-    public List<LineSymbolModel>? GetRedrawLine((int x, int y) borderCoordinateOutgoingSymbol, (int x, int y) borderCoordinateIncomingSymbol)
+    public void RedrawLine((int x, int y) borderCoordinateOutgoingSymbol, (int x, int y) borderCoordinateIncomingSymbol)
     {
         var widthlIncomingSymbol = _symbolaIncomingLine!.Width;
 
@@ -46,21 +44,21 @@ internal class RedrawnLineParallelSides
             var coordinateSymbolIncoming = new CoordinateDecorator(borderCoordinateIncomingSymbol);
 
             if (borderCoordinateOutgoingSymbol.x == borderCoordinateIncomingSymbol.x && borderCoordinateOutgoingSymbol.y < borderCoordinateIncomingSymbol.y)
-            { 
-                RedrawnLine.ChangeCountLinesModel(_linesSymbolModel, linesSamePositions);
-                RedrawnLine.ChangeCountDecoratedLines(_coordinatesLines, _decoratedCoordinatesLines, linesOneDifferentPositions);
+            {
+                _redrawLine.ChangeCountLinesModel(linesSamePositions);
+                _redrawLine.ChangeCountDecoratedLines(linesSamePositions);
                 SetCoordinatesSamePositions(borderCoordinateOutgoingSymbol, borderCoordinateIncomingSymbol);
             }
             else if (borderCoordinateOutgoingSymbol.y < borderCoordinateIncomingSymbol.y)
             {
-                RedrawnLine.ChangeCountLinesModel(_linesSymbolModel, linesOneDifferentPositions);
-                RedrawnLine.ChangeCountDecoratedLines(_coordinatesLines, _decoratedCoordinatesLines, linesOneDifferentPositions);
+                _redrawLine.ChangeCountLinesModel(linesOneDifferentPositions);
+                _redrawLine.ChangeCountDecoratedLines(linesOneDifferentPositions);
                 SetCoordinatesOneDifferentPositions(coordinateSymbolOutgoing, coordinateSymbolIncoming);
             }
             else
             {
-                RedrawnLine.ChangeCountLinesModel(_linesSymbolModel, lLinesTwoDifferentPositions);
-                RedrawnLine.ChangeCountDecoratedLines(_coordinatesLines, _decoratedCoordinatesLines, lLinesTwoDifferentPositions);
+                _redrawLine.ChangeCountLinesModel(linesTwoDifferentPositions);
+                _redrawLine.ChangeCountDecoratedLines(linesTwoDifferentPositions);
                 SetCoordinatesTwoDifferentPositions(coordinateSymbolOutgoing, coordinateSymbolIncoming, widthlIncomingSymbol);
             }
         }
@@ -71,27 +69,25 @@ internal class RedrawnLineParallelSides
 
             if (borderCoordinateOutgoingSymbol.x == borderCoordinateIncomingSymbol.x && borderCoordinateOutgoingSymbol.y > borderCoordinateIncomingSymbol.y)
             {
-                RedrawnLine.ChangeCountLinesModel(_linesSymbolModel, linesSamePositions);
-                RedrawnLine.ChangeCountDecoratedLines(_coordinatesLines, _decoratedCoordinatesLines, linesOneDifferentPositions);
+                _redrawLine.ChangeCountLinesModel(linesSamePositions);
+                _redrawLine.ChangeCountDecoratedLines(linesSamePositions);
                 SetCoordinatesSamePositions(borderCoordinateOutgoingSymbol, borderCoordinateIncomingSymbol);
             }
             else if (borderCoordinateOutgoingSymbol.y > borderCoordinateIncomingSymbol.y)
             {
-                RedrawnLine.ChangeCountLinesModel(_linesSymbolModel, linesOneDifferentPositions);
-                RedrawnLine.ChangeCountDecoratedLines(_coordinatesLines, _decoratedCoordinatesLines, linesOneDifferentPositions);
+                _redrawLine.ChangeCountLinesModel(linesOneDifferentPositions);
+                _redrawLine.ChangeCountDecoratedLines(linesOneDifferentPositions);
                 SetCoordinatesOneDifferentPositions(coordinateSymbolOutgoing, coordinateSymbolIncoming);
             }
             else
             {
                 var buildCoordinateDecorator = new BuilderCoordinateDecorator().SetInversionYCoordinate();
 
-                RedrawnLine.ChangeCountLinesModel(_linesSymbolModel, lLinesTwoDifferentPositions);
-                RedrawnLine.ChangeCountDecoratedLines(_coordinatesLines, _decoratedCoordinatesLines, lLinesTwoDifferentPositions, buildCoordinateDecorator);
+                _redrawLine.ChangeCountLinesModel(linesTwoDifferentPositions);
+                _redrawLine.ChangeCountDecoratedLines(linesTwoDifferentPositions, buildCoordinateDecorator);
                 SetCoordinatesTwoDifferentPositions(coordinateSymbolOutgoing, coordinateSymbolIncoming, widthlIncomingSymbol);
             }
         }
-
-        return _linesSymbolModel;
     }
 
     private void SetCoordinatesSamePositions((int x, int y) coordinateSymbolOutgoing, (int x, int y) coordinateSymbolaIncoming)

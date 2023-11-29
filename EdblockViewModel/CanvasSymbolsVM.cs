@@ -82,7 +82,7 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
     public DrawnLineSymbolVM? DrawnLineSymbol { get; set; }
     private List<DrawnLineSymbolVM?>? CurrentRedrawLines { get; set; }
     private readonly FactoryBlockSymbol factoryBlockSymbol;
-    private RedrawnLine? redrawLineSymbol;
+    private RedrawnLine? redrawLineSymbolVM;
     private const int lengthGridCell = 20;
     public CanvasSymbolsVM()
     {
@@ -186,11 +186,12 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
 
         foreach (var currentRedrawLine in CurrentRedrawLines)
         {
-            if (currentRedrawLine != null)
+            if (currentRedrawLine is not null)
             {
-                redrawLineSymbol = new(currentRedrawLine.DrawnLineSymbolModel);
-                var list = redrawLineSymbol.GetRedrawLine();
-                currentRedrawLine.RedrawAllLines(list);
+                var drawnLineSymbolModel = currentRedrawLine.DrawnLineSymbolModel;
+                redrawLineSymbolVM = new (drawnLineSymbolModel);
+                var redrawnLinesModel = redrawLineSymbolVM.GetRedrawLine();
+                currentRedrawLine.RedrawAllLines(redrawnLinesModel);
             }
         }
     }
