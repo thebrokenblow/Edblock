@@ -54,17 +54,21 @@ internal class RedrawnLineIdenticalSides
 
         if (borderCoordinateIncomingSymbol.y <= borderCoordinateOutgoingSymbol.y)
         {
-            var firstCoordinateLine = (coordinateSymbolOutgoing.X, coordinateSymbolIncoming.Y - _baseLineOffset);
-            var secondCoordinateLine = (coordinateSymbolIncoming.X, coordinateSymbolIncoming.Y - _baseLineOffset);
+            var lineCoordinateIncrement = coordinateSymbolIncoming.Y - _baseLineOffset;
 
-            SetCoordinatesIdenticalSides(coordinateSymbolOutgoing, coordinateSymbolIncoming, firstCoordinateLine, secondCoordinateLine);
+            var firstCoordinateLineIncrement = (coordinateSymbolOutgoing.X, lineCoordinateIncrement);
+            var secondCoordinateLineIncrement = (coordinateSymbolIncoming.X, lineCoordinateIncrement);
+
+            SetCoordinatesIdenticalSides(coordinateSymbolOutgoing, coordinateSymbolIncoming, firstCoordinateLineIncrement, secondCoordinateLineIncrement);
         }
         else
         {
-            var firstCoordinateLine = (coordinateSymbolOutgoing.X, coordinateSymbolOutgoing.Y - _baseLineOffset);
-            var secondCoordinateLine = (coordinateSymbolIncoming.X, coordinateSymbolOutgoing.Y - _baseLineOffset);
+            var lineCoordinateIncrement = coordinateSymbolOutgoing.Y - _baseLineOffset;
 
-            SetCoordinatesIdenticalSides(coordinateSymbolOutgoing, coordinateSymbolIncoming, firstCoordinateLine, secondCoordinateLine);
+            var firstCoordinateLineIncrement = (coordinateSymbolOutgoing.X, lineCoordinateIncrement);
+            var secondCoordinateLineIncrement = (coordinateSymbolIncoming.X, lineCoordinateIncrement);
+
+            SetCoordinatesIdenticalSides(coordinateSymbolOutgoing, coordinateSymbolIncoming, firstCoordinateLineIncrement, secondCoordinateLineIncrement);
         }
     }
 
@@ -178,6 +182,7 @@ internal class RedrawnLineIdenticalSides
 
         thirdLine.FirstCoordinate.X = secondLine.SecondCoordinate.X;
         thirdLine.FirstCoordinate.Y = secondLine.SecondCoordinate.Y;
+
         thirdLine.SecondCoordinate.X = coordinateSymbolIncoming.X;
         thirdLine.SecondCoordinate.Y = coordinateSymbolIncoming.Y;
     }
