@@ -60,8 +60,8 @@ internal class RedrawnLineParallelSides
         }
         else if (_positionOutgoing == PositionConnectionPoint.Top && _positionIncoming == PositionConnectionPoint.Bottom)
         {
-            var coordinateSymbolOutgoing = new CoordinateDecorator(borderCoordinateOutgoingSymbol);
-            var coordinateSymbolIncoming = new CoordinateDecorator(borderCoordinateIncomingSymbol);
+            ICoordinateDecorator coordinateSymbolOutgoing = new CoordinateDecorator(borderCoordinateOutgoingSymbol);
+            ICoordinateDecorator coordinateSymbolIncoming = new CoordinateDecorator(borderCoordinateIncomingSymbol);
 
             if (borderCoordinateOutgoingSymbol.x == borderCoordinateIncomingSymbol.x && borderCoordinateOutgoingSymbol.y > borderCoordinateIncomingSymbol.y)
             {
@@ -78,6 +78,8 @@ internal class RedrawnLineParallelSides
             else
             {
                 var buildCoordinateDecorator = new BuilderCoordinateDecorator().SetInversionYCoordinate();
+                coordinateSymbolOutgoing = buildCoordinateDecorator.Build(new CoordinateDecorator(borderCoordinateOutgoingSymbol));
+                coordinateSymbolIncoming = buildCoordinateDecorator.Build(new CoordinateDecorator(borderCoordinateIncomingSymbol));
 
                 _redrawLine.ChangeCountLinesModel(linesTwoDifferentPositions);
                 _redrawLine.ChangeCountDecoratedLines(linesTwoDifferentPositions, buildCoordinateDecorator);
