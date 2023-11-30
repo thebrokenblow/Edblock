@@ -86,15 +86,19 @@ internal class RedrawnLineIdenticalSides
 
         if (borderCoordinateIncomingSymbol.y >= borderCoordinateOutgoingSymbol.y)
         {
-            var firstCoordinateLine = (coordinateSymbolOutgoing.X, coordinateSymbolIncoming.Y - _baseLineOffset);
-            var secondCoordinateLine = (coordinateSymbolIncoming.X, coordinateSymbolIncoming.Y - _baseLineOffset);
+            var lineCoordinateIncrement = coordinateSymbolIncoming.Y - _baseLineOffset;
+
+            var firstCoordinateLine = (coordinateSymbolOutgoing.X, lineCoordinateIncrement);
+            var secondCoordinateLine = (coordinateSymbolIncoming.X, lineCoordinateIncrement);
 
             SetCoordinatesIdenticalSides(coordinateSymbolOutgoing, coordinateSymbolIncoming, firstCoordinateLine, secondCoordinateLine);
         }
         else
         {
-            var firstCoordinateLine = (coordinateSymbolOutgoing.X, coordinateSymbolOutgoing.Y - _baseLineOffset);
-            var secondCoordinateLine = (coordinateSymbolIncoming.X, coordinateSymbolOutgoing.Y - _baseLineOffset);
+            var lineCoordinateIncrement = coordinateSymbolOutgoing.Y - _baseLineOffset;
+
+            var firstCoordinateLine = (coordinateSymbolOutgoing.X, lineCoordinateIncrement);
+            var secondCoordinateLine = (coordinateSymbolIncoming.X, lineCoordinateIncrement);
 
             SetCoordinatesIdenticalSides(coordinateSymbolOutgoing, coordinateSymbolIncoming, firstCoordinateLine, secondCoordinateLine);
         }
@@ -115,15 +119,19 @@ internal class RedrawnLineIdenticalSides
 
         if (borderCoordinateIncomingSymbol.x <= borderCoordinateOutgoingSymbol.x)
         {
-            var firstCoordinateLine = (coordinateSymbolOutgoing.X + _baseLineOffset, coordinateSymbolOutgoing.Y);
-            var secondCoordinateLine = (coordinateSymbolOutgoing.X + _baseLineOffset, coordinateSymbolIncoming.Y);
+            var lineCoordinateIncrement = coordinateSymbolOutgoing.X + _baseLineOffset;
+
+            var firstCoordinateLine = (lineCoordinateIncrement, coordinateSymbolOutgoing.Y);
+            var secondCoordinateLine = (lineCoordinateIncrement, coordinateSymbolIncoming.Y);
 
             SetCoordinatesIdenticalSides(coordinateSymbolOutgoing, coordinateSymbolIncoming, firstCoordinateLine, secondCoordinateLine);
         }
         else
         {
-            var firstCoordinateLine = (coordinateSymbolIncoming.X + _baseLineOffset, coordinateSymbolOutgoing.Y);
-            var secondCoordinateLine = (coordinateSymbolIncoming.X + _baseLineOffset, coordinateSymbolIncoming.Y);
+            var lineCoordinateIncrement = coordinateSymbolIncoming.X + _baseLineOffset;
+
+            var firstCoordinateLine = (lineCoordinateIncrement, coordinateSymbolOutgoing.Y);
+            var secondCoordinateLine = (lineCoordinateIncrement, coordinateSymbolIncoming.Y);
 
             SetCoordinatesIdenticalSides(coordinateSymbolOutgoing, coordinateSymbolIncoming, firstCoordinateLine, secondCoordinateLine);
         }
@@ -144,15 +152,19 @@ internal class RedrawnLineIdenticalSides
 
         if (borderCoordinateIncomingSymbol.x >= borderCoordinateOutgoingSymbol.x)
         {
-            var firstCoordinateLine = (coordinateSymbolOutgoing.X + _baseLineOffset, coordinateSymbolOutgoing.Y);
-            var secondCoordinateLine = (coordinateSymbolOutgoing.X + _baseLineOffset, coordinateSymbolIncoming.Y);
+            var lineCoordinateIncrement = coordinateSymbolOutgoing.X + _baseLineOffset;
+
+            var firstCoordinateLine = (lineCoordinateIncrement, coordinateSymbolOutgoing.Y);
+            var secondCoordinateLine = (lineCoordinateIncrement, coordinateSymbolIncoming.Y);
 
             SetCoordinatesIdenticalSides(coordinateSymbolOutgoing, coordinateSymbolIncoming, firstCoordinateLine, secondCoordinateLine);
         }
         else
         {
-            var firstCoordinateLine = (coordinateSymbolIncoming.X + _baseLineOffset, coordinateSymbolOutgoing.Y);
-            var secondCoordinateLine = (coordinateSymbolIncoming.X + _baseLineOffset, coordinateSymbolIncoming.Y);
+            var lineCoordinateIncrement = coordinateSymbolIncoming.X + _baseLineOffset;
+
+            var firstCoordinateLine = (lineCoordinateIncrement, coordinateSymbolOutgoing.Y);
+            var secondCoordinateLine = (lineCoordinateIncrement, coordinateSymbolIncoming.Y);
 
             SetCoordinatesIdenticalSides(coordinateSymbolOutgoing, coordinateSymbolIncoming, firstCoordinateLine, secondCoordinateLine);
         }
