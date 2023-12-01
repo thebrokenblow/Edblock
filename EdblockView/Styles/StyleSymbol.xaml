@@ -62,7 +62,7 @@
         <Setter Property="Y2" Value="{Binding Y2}" />
         <Setter Property="Stroke" Value="Black" />
         <Style.Triggers>
-            <DataTrigger Binding="{Binding IsHighlight}" Value="True">
+            <DataTrigger Binding="{Binding IsHighlighted}" Value="True">
                 <Setter Property="Stroke" Value="#00FF00"/>
             </DataTrigger>
         </Style.Triggers>
@@ -71,7 +71,7 @@
     <Style x:Key="ArrowSymbol" TargetType="Polygon">
         <Setter Property="Fill" Value="Black" />
         <Style.Triggers>
-            <DataTrigger Binding="{Binding IsHighlight}" Value="True">
+            <DataTrigger Binding="{Binding IsHighlighted}" Value="True">
                 <Setter Property="Fill" Value="#00FF00"/>
             </DataTrigger>
         </Style.Triggers>

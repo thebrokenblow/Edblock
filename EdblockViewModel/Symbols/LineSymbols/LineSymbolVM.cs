@@ -49,13 +49,13 @@ public class LineSymbolVM : SymbolVM
         }
     }
 
-    private bool isHighlight;
-    public bool IsHighlight
+    private bool isHighlighted;
+    public bool IsHighlighted
     {
-        get => isHighlight;
+        get => isHighlighted;
         set
         {
-            isHighlight = value;
+            isHighlighted = value;
             OnPropertyChanged();
         }
     }

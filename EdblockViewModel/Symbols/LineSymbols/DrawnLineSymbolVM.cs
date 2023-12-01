@@ -75,6 +75,7 @@ public class DrawnLineSymbolVM : SymbolVM
         var startCoordinate = DrawnLineSymbolModel.CoordinateLineModel.GetStartCoordinate();
 
         //currentCoordinte = DrawnLineSymbolModel.RoundingCoordinatesLines(startCoordinate, currentCoordinte);
+
         ArrowSymbol.ChangeOrientationArrow(startCoordinate, currentCoordinte, OutgoingPosition);
         DrawnLineSymbolModel.ChangeCoordinateLine(currentCoordinte);
 
@@ -106,7 +107,7 @@ public class DrawnLineSymbolVM : SymbolVM
 
         foreach (var lineSymbol in LinesSymbol)
         {
-            lineSymbol.IsHighlight = true;
+            lineSymbol.IsHighlighted = true;
         }
 
         ArrowSymbol.IsHighlight = true;
@@ -116,7 +117,7 @@ public class DrawnLineSymbolVM : SymbolVM
     {
         foreach (var lineSymbol in LinesSymbol)
         {
-            lineSymbol.IsHighlight = false;
+            lineSymbol.IsHighlighted = false;
         }
 
         ArrowSymbol.IsHighlight = false;
@@ -169,7 +170,9 @@ public class DrawnLineSymbolVM : SymbolVM
         }
         else if (LinesSymbol.Count < linesSymbolModel.Count)
         {
-            LinesSymbol.Add(FactoryLineSymbol.CreateLineByLineModel(currentLinesSymbolModel[1]));
+            var secondLineModel = currentLinesSymbolModel[1];
+            var secondLineVM = FactoryLineSymbol.CreateLineByLineModel(secondLineModel);
+            LinesSymbol.Add(secondLineVM);
         }
 
         ChangeCurrentLine(linesSymbolModel);
