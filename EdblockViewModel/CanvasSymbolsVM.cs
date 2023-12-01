@@ -143,12 +143,12 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
 
     public void ClickCanvas()
     {
-        if (DrawnLineSymbol != null && DrawnLineSymbol?.LineSymbols.Count > 1)
+        if (DrawnLineSymbol != null && DrawnLineSymbol?.LinesSymbol.Count > 1)
         {
             var newLineSymbolModel = DrawnLineSymbol.DrawnLineSymbolModel.GetNewLine();
             var newLineSymbol = FactoryLineSymbol.CreateLine(newLineSymbolModel);
 
-            DrawnLineSymbol.LineSymbols.Add(newLineSymbol);
+            DrawnLineSymbol.LinesSymbol.Add(newLineSymbol);
         }
         TextField.ChangeFocus(Symbols);
     }

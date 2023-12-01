@@ -1,4 +1,6 @@
 ﻿using System.Linq;
+using System.Windows;
+using Prism.Commands;
 using EdblockModel.Symbols.Enum;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -12,15 +14,59 @@ public class DrawnLineSymbolVM : SymbolVM
     public BlockSymbolVM? SymbolOutgoingLine { get; set; }
     public BlockSymbolVM? SymbolIncomingLine { get; set; }
     public DrawnLineSymbolModel DrawnLineSymbolModel { get; init; }
-    public ObservableCollection<LineSymbolVM> LineSymbols { get; init; } = new();
+    public ObservableCollection<LineSymbolVM> LinesSymbol { get; init; } = new();
     public ArrowSymbol ArrowSymbol { get; set; } = new();
+    public DelegateCommand EnterCursor { get; init; }
+    public DelegateCommand LeaveCursor { get; init; }
     public PositionConnectionPoint OutgoingPosition { get; init; }
     public PositionConnectionPoint IncomingPosition { get; set; }
 
-    public DrawnLineSymbolVM(PositionConnectionPoint positionConnectionPoint, DrawnLineSymbolModel drawnLineSymbolModel)
+    private Visibility visibilityTextField;
+    public Visibility VisibilityTextField 
     {
+        get => visibilityTextField;
+        set
+        {
+            visibilityTextField = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private int topCoordinate;
+    public int TopCoordinate
+    {
+        get => topCoordinate;
+        set
+        {
+            topCoordinate = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private int leftCoordinate;
+    public int LeftCoordinate
+    {
+        get => leftCoordinate;
+        set
+        {
+            leftCoordinate = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private readonly CanvasSymbolsVM _canvasSymbolsVM;
+
+    public DrawnLineSymbolVM(PositionConnectionPoint positionConnectionPoint, DrawnLineSymbolModel drawnLineSymbolModel, CanvasSymbolsVM canvasSymbolsVM)
+    {
+        EnterCursor = new(SetHighlightColorLines);
+        LeaveCursor = new(SetDefaultColorLines);
+
         DrawnLineSymbolModel = drawnLineSymbolModel;
         OutgoingPosition = positionConnectionPoint;
+
+        _canvasSymbolsVM = canvasSymbolsVM;
+
+        RedrawAllLines(drawnLineSymbolModel.LinesSymbolModel);
     }
 
     public void ChangeCoordination((int, int) currentCoordinte)
@@ -29,7 +75,6 @@ public class DrawnLineSymbolVM : SymbolVM
         var startCoordinate = DrawnLineSymbolModel.CoordinateLineModel.GetStartCoordinate();
 
         //currentCoordinte = DrawnLineSymbolModel.RoundingCoordinatesLines(startCoordinate, currentCoordinte);
-
         ArrowSymbol.ChangeOrientationArrow(startCoordinate, currentCoordinte, OutgoingPosition);
         DrawnLineSymbolModel.ChangeCoordinateLine(currentCoordinte);
 
@@ -38,12 +83,12 @@ public class DrawnLineSymbolVM : SymbolVM
 
     public void RedrawAllLines(List<LineSymbolModel> linesSymbolModel)
     {
-        LineSymbols.Clear();
+        LinesSymbol.Clear();
 
         foreach (var lineSymbolModel in linesSymbolModel)
         {
             var lineSymbolVM = FactoryLineSymbol.CreateLineByLineModel(lineSymbolModel);
-            LineSymbols.Add(lineSymbolVM);
+            LinesSymbol.Add(lineSymbolVM);
         }
 
         var lastLine = linesSymbolModel[^1];
@@ -52,9 +97,34 @@ public class DrawnLineSymbolVM : SymbolVM
 
     }
 
+    private void SetHighlightColorLines()
+    {
+        if (_canvasSymbolsVM.DrawnLineSymbol != null)
+        {
+            return;
+        }
+
+        foreach (var lineSymbol in LinesSymbol)
+        {
+            lineSymbol.IsHighlight = true;
+        }
+
+        ArrowSymbol.IsHighlight = true;
+    }
+
+    private void SetDefaultColorLines()
+    {
+        foreach (var lineSymbol in LinesSymbol)
+        {
+            lineSymbol.IsHighlight = false;
+        }
+
+        ArrowSymbol.IsHighlight = false;
+    }
+
     private void RedrawPartLines(List<LineSymbolModel> linesSymbolModel)
     {
-        if (LineSymbols.Count == 0)
+        if (LinesSymbol.Count == 0)
         {
             AddMissingLines(linesSymbolModel);
         }
@@ -73,7 +143,7 @@ public class DrawnLineSymbolVM : SymbolVM
         foreach (var lineSymbolModel in linesSymbolModel)
         {
             var lineSymbolVM = FactoryLineSymbol.CreateLineByLineModel(lineSymbolModel);
-            LineSymbols.Add(lineSymbolVM);
+            LinesSymbol.Add(lineSymbolVM);
         }
     }
 
@@ -81,25 +151,25 @@ public class DrawnLineSymbolVM : SymbolVM
     {
         var firstLineSymbolModel = linesSymbolModel[0];
 
-        if (LineSymbols.Count > linesSymbolModel.Count)
+        if (LinesSymbol.Count > linesSymbolModel.Count)
         {
-            LineSymbols.RemoveAt(1);
+            LinesSymbol.RemoveAt(1);
         }
 
-        ChangeLastCoordinate(LineSymbols[0], firstLineSymbolModel);
+        ChangeLastCoordinate(LinesSymbol[0], firstLineSymbolModel);
     }
 
     private void ChangeSecondLine(List<LineSymbolModel> linesSymbolModel)
     {
         var currentLinesSymbolModel = linesSymbolModel.TakeLast(2).ToList();
 
-        if (LineSymbols.Count > linesSymbolModel.Count)
+        if (LinesSymbol.Count > linesSymbolModel.Count)
         {
-            LineSymbols.RemoveAt(LineSymbols.Count - 1);
+            LinesSymbol.RemoveAt(LinesSymbol.Count - 1);
         }
-        else if (LineSymbols.Count < linesSymbolModel.Count)
+        else if (LinesSymbol.Count < linesSymbolModel.Count)
         {
-            LineSymbols.Add(FactoryLineSymbol.CreateLineByLineModel(currentLinesSymbolModel[1]));
+            LinesSymbol.Add(FactoryLineSymbol.CreateLineByLineModel(currentLinesSymbolModel[1]));
         }
 
         ChangeCurrentLine(linesSymbolModel);
@@ -109,7 +179,7 @@ public class DrawnLineSymbolVM : SymbolVM
     {
         for (int i = linesSymbolModel.Count - 2; i < linesSymbolModel.Count; i++)
         {
-            ChangeCoordinate(LineSymbols[i], linesSymbolModel[i]);
+            ChangeCoordinate(LinesSymbol[i], linesSymbolModel[i]);
         }
     }
 

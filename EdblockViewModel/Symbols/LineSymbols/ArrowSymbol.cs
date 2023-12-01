@@ -1,9 +1,9 @@
 ﻿using System.Windows;
 using System.Windows.Media;
+using EdblockModel.Symbols.Enum;
 using System.Collections.Generic;
 using EdblockModel.Symbols.LineSymbols;
 using EdblockViewModel.Symbols.Abstraction;
-using EdblockModel.Symbols.Enum;
 
 namespace EdblockViewModel.Symbols.LineSymbols;
 
@@ -16,6 +16,18 @@ public class ArrowSymbol : SymbolVM
         set
         {
             pointArrowSymbol = value;
+            OnPropertyChanged();
+        }
+    }
+
+
+    private bool isHighlight;
+    public bool IsHighlight
+    {
+        get => isHighlight;
+        set
+        {
+            isHighlight = value;
             OnPropertyChanged();
         }
     }

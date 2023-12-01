@@ -143,7 +143,7 @@ public class ConnectionPoint : INotifyPropertyChanged
         var drawnLineSymbolModel = new DrawnLineSymbolModel(blockSymbolModel, positionConnectionPoint);
         drawnLineSymbolModel.AddFirstLine();
 
-        var drawnLineSymbolVM = new DrawnLineSymbolVM(positionConnectionPoint, drawnLineSymbolModel);
+        var drawnLineSymbolVM = new DrawnLineSymbolVM(positionConnectionPoint, drawnLineSymbolModel, _canvasSymbolsVM);
 
         _canvasSymbolsVM.Symbols.Add(drawnLineSymbolVM);
         _canvasSymbolsVM.DrawnLineSymbol = drawnLineSymbolVM;

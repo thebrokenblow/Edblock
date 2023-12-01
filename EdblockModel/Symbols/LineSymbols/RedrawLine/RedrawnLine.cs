@@ -17,7 +17,7 @@ public class RedrawnLine
     private readonly List<LineSymbolModel> _linesSymbolModel;
     private readonly PositionConnectionPoint _positionOutgoing;
     private readonly PositionConnectionPoint _positionIncoming;
-    private const int baseLineOffset = 20;
+    private const int baseLineOffset = 40;
 
     public RedrawnLine(DrawnLineSymbolModel drawnLineSymbolModel)
     {

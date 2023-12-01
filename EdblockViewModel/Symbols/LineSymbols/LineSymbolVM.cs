@@ -48,4 +48,15 @@ public class LineSymbolVM : SymbolVM
             OnPropertyChanged();
         }
     }
+
+    private bool isHighlight;
+    public bool IsHighlight
+    {
+        get => isHighlight;
+        set
+        {
+            isHighlight = value;
+            OnPropertyChanged();
+        }
+    }
 }

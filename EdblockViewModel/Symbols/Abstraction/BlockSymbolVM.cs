@@ -80,7 +80,7 @@ public abstract class BlockSymbolVM : SymbolVM
 
         Width = defaultWidth;
         Height = defaultHeigth;
-        HexColor = BlockSymbolModel.HexColor;
+        Color = BlockSymbolModel.HexColor;
 
         var factoryConnectionPoints = new FactoryConnectionPoints(_canvasSymbolsVM, this);
         ConnectionPoints = factoryConnectionPoints.Create();
