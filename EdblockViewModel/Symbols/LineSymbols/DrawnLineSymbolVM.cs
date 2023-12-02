@@ -80,7 +80,7 @@ public class DrawnLineSymbolVM : SymbolVM
         var linesSymbolModel = DrawnLineSymbolModel.LinesSymbolModel;
         var startCoordinate = DrawnLineSymbolModel.CoordinateLineModel.GetStartCoordinate();
 
-        //currentCoordinte = DrawnLineSymbolModel.RoundingCoordinatesLines(startCoordinate, currentCoordinte);
+        currentCoordinte = DrawnLineSymbolModel.RoundingCoordinatesLines(startCoordinate, currentCoordinte);
 
         ArrowSymbol.ChangeOrientationArrow(startCoordinate, currentCoordinte, OutgoingPosition);
         DrawnLineSymbolModel.ChangeCoordinateLine(currentCoordinte);
@@ -127,27 +127,30 @@ public class DrawnLineSymbolVM : SymbolVM
 
     private void SetHighlightColorLines()
     {
-        if (_canvasSymbolsVM.DrawnLineSymbol != null)
+        var movableSymbol = _canvasSymbolsVM.MovableSymbol;
+        var drawnLineSymbol = _canvasSymbolsVM.DrawnLineSymbol;
+
+        if (movableSymbol != null || drawnLineSymbol != null)
         {
             return;
         }
 
-        foreach (var lineSymbol in LinesSymbol)
-        {
-            lineSymbol.IsHighlighted = true;
-        }
-
-        ArrowSymbol.IsHighlighted = true;
+        SetHighlightStatus(true);
     }
 
     private void SetDefaultColorLines()
     {
+        SetHighlightStatus(false);
+    }
+
+    private void SetHighlightStatus(bool status)
+    {
         foreach (var lineSymbol in LinesSymbol)
         {
-            lineSymbol.IsHighlighted = false;
+            lineSymbol.IsHighlighted = status;
         }
 
-        ArrowSymbol.IsHighlighted = false;
+        ArrowSymbol.IsHighlighted = status;
     }
 
     private void RedrawPartLines(List<LineSymbolModel> linesSymbolModel)

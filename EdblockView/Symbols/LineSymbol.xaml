@@ -26,8 +26,7 @@
         <Polygon DataContext="{Binding ArrowSymbol}" Points="{Binding PointArrowSymbol}" Style="{StaticResource ArrowSymbol}"/>
         
         <Canvas>
-            <TextBox
-                x:Name="text" Text="Да" Style="{StaticResource TextFieldLine}">
+            <TextBox Style="{StaticResource TextFieldLine}">
                 <i:Interaction.Behaviors>
                     <edblockVM:ReadOnlyPropertyToVMBindingBehavior 
                         ModelProperty="{Binding WidthTextField}" 
