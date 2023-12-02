@@ -191,7 +191,8 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
                 var drawnLineSymbolModel = currentRedrawLine.DrawnLineSymbolModel;
                 redrawLineSymbolVM = new (drawnLineSymbolModel);
                 var redrawnLinesModel = redrawLineSymbolVM.GetRedrawLine();
-                currentRedrawLine.RedrawAllLines(redrawnLinesModel);
+                drawnLineSymbolModel.LinesSymbolModel = redrawnLinesModel;
+                currentRedrawLine.RedrawAllLines();
             }
         }
     }

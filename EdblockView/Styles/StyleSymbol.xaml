@@ -77,4 +77,13 @@
         </Style.Triggers>
     </Style>
 
+    <Style x:Key="TextFieldLine" TargetType="TextBox">
+        <Setter Property="Canvas.Left" Value="{Binding LeftCoordinateTextField}" />
+        <Setter Property="Canvas.Top" Value="{Binding TopCoordinateTextField}" />
+        <Setter Property="Text" Value="Да" />
+        <Setter Property="Height" Value="{Binding HeightTextField}" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+    </Style>
+
 </ResourceDictionary>

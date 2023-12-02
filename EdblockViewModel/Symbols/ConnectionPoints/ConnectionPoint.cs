@@ -168,7 +168,9 @@ public class ConnectionPoint : INotifyPropertyChanged
         var completedLineModel = new CompletedLine(drawnLineSymbolModel, finalLineCoordinate);
         var completeLinesSymbolModel = completedLineModel.GetCompleteLines();
 
-        drawnLineSymbolVM.RedrawAllLines(completeLinesSymbolModel);
+        drawnLineSymbolModel.LinesSymbolModel = completeLinesSymbolModel;
+
+        drawnLineSymbolVM.RedrawAllLines();
         
         AddBlockToLine(drawnLineSymbolVM.SymbolIncomingLine);
         AddBlockToLine(drawnLineSymbolVM.SymbolOutgoingLine);

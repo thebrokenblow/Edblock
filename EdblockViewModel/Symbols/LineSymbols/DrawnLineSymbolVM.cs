@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using System.Windows;
 using Prism.Commands;
 using EdblockModel.Symbols.Enum;
 using System.Collections.Generic;
@@ -13,43 +12,50 @@ public class DrawnLineSymbolVM : SymbolVM
 {
     public BlockSymbolVM? SymbolOutgoingLine { get; set; }
     public BlockSymbolVM? SymbolIncomingLine { get; set; }
-    public DrawnLineSymbolModel DrawnLineSymbolModel { get; init; }
+    public DrawnLineSymbolModel DrawnLineSymbolModel { get; set; }
     public ObservableCollection<LineSymbolVM> LinesSymbol { get; init; } = new();
     public ArrowSymbol ArrowSymbol { get; set; } = new();
     public DelegateCommand EnterCursor { get; init; }
     public DelegateCommand LeaveCursor { get; init; }
     public PositionConnectionPoint OutgoingPosition { get; init; }
     public PositionConnectionPoint IncomingPosition { get; set; }
-
-    private Visibility visibilityTextField;
-    public Visibility VisibilityTextField 
+    
+    private const int heightTextField = 20;
+    public int HeightTextField 
     {
-        get => visibilityTextField;
+        get => heightTextField;
+    }
+
+    private double widthTextField = 20;
+    public double WidthTextField
+    {
+        get => widthTextField;
         set
         {
-            visibilityTextField = value;
+            widthTextField = value;
+
+            SetCoordinateTextField();
+        }
+    }
+
+    private double topCoordinateTextField;
+    public double TopCoordinateTextField
+    {
+        get => topCoordinateTextField;
+        set
+        {
+            topCoordinateTextField = value;
             OnPropertyChanged();
         }
     }
 
-    private int topCoordinate;
-    public int TopCoordinate
+    private double leftCoordinateTextField;
+    public double LeftCoordinateTextField
     {
-        get => topCoordinate;
+        get => leftCoordinateTextField;
         set
         {
-            topCoordinate = value;
-            OnPropertyChanged();
-        }
-    }
-
-    private int leftCoordinate;
-    public int LeftCoordinate
-    {
-        get => leftCoordinate;
-        set
-        {
-            leftCoordinate = value;
+            leftCoordinateTextField = value;
             OnPropertyChanged();
         }
     }
@@ -66,7 +72,7 @@ public class DrawnLineSymbolVM : SymbolVM
 
         _canvasSymbolsVM = canvasSymbolsVM;
 
-        RedrawAllLines(drawnLineSymbolModel.LinesSymbolModel);
+        RedrawAllLines();
     }
 
     public void ChangeCoordination((int, int) currentCoordinte)
@@ -82,17 +88,38 @@ public class DrawnLineSymbolVM : SymbolVM
         RedrawPartLines(linesSymbolModel);
     }
 
-    public void RedrawAllLines(List<LineSymbolModel> linesSymbolModel)
+    private void SetCoordinateTextField()
+    {
+        var linesSymbol = DrawnLineSymbolModel.LinesSymbolModel;
+        var firstLineSymbol = linesSymbol[0];
+
+        LeftCoordinateTextField = firstLineSymbol.X1;
+        TopCoordinateTextField = firstLineSymbol.Y1;
+
+        if (OutgoingPosition != PositionConnectionPoint.Bottom)
+        {
+            TopCoordinateTextField -= heightTextField;
+        }
+
+        if (OutgoingPosition == PositionConnectionPoint.Left)
+        {
+            LeftCoordinateTextField -= widthTextField;
+        }
+    }
+
+    public void RedrawAllLines()
     {
         LinesSymbol.Clear();
 
-        foreach (var lineSymbolModel in linesSymbolModel)
+        foreach (var lineSymbolModel in DrawnLineSymbolModel.LinesSymbolModel)
         {
             var lineSymbolVM = FactoryLineSymbol.CreateLineByLineModel(lineSymbolModel);
             LinesSymbol.Add(lineSymbolVM);
         }
 
-        var lastLine = linesSymbolModel[^1];
+        SetCoordinateTextField();
+
+        var lastLine = DrawnLineSymbolModel.LinesSymbolModel[^1];
         var coordinateLastLine = (lastLine.X2, lastLine.Y2);
         ArrowSymbol.ChangeOrientationArrow(coordinateLastLine, IncomingPosition);
 
@@ -110,7 +137,7 @@ public class DrawnLineSymbolVM : SymbolVM
             lineSymbol.IsHighlighted = true;
         }
 
-        ArrowSymbol.IsHighlight = true;
+        ArrowSymbol.IsHighlighted = true;
     }
 
     private void SetDefaultColorLines()
@@ -120,7 +147,7 @@ public class DrawnLineSymbolVM : SymbolVM
             lineSymbol.IsHighlighted = false;
         }
 
-        ArrowSymbol.IsHighlight = false;
+        ArrowSymbol.IsHighlighted = false;
     }
 
     private void RedrawPartLines(List<LineSymbolModel> linesSymbolModel)
