@@ -2,7 +2,6 @@
 using EdblockModel.Symbols.Enum;
 using EdblockModel.Symbols.LineSymbols.DecoratorLineSymbols;
 using EdblockViewModel.Symbols.LineSymbols;
-using System.Collections.Generic;
 
 namespace EdblockModel.Symbols.LineSymbols.RedrawLine;
 
@@ -49,13 +48,14 @@ internal class RedrawnLineNoParallelSides
             coordinateSymbolIncoming = builderCoordinateDecorator.Build(coordinateSymbolIncoming);
         }
 
-        if ((_positionOutgoing == PositionConnectionPoint.Bottom || _positionOutgoing == PositionConnectionPoint.Top) && 
-            (_positionIncoming == PositionConnectionPoint.Right || _positionIncoming == PositionConnectionPoint.Left))
+        if (_positionOutgoing == PositionConnectionPoint.Top && _positionIncoming == PositionConnectionPoint.Right)
         {
-            if (borderCoordinateOutgoingSymbol.y > borderCoordinateIncomingSymbol.y)
+            if (borderCoordinateOutgoingSymbol.y < borderCoordinateIncomingSymbol.y)
             {
+                int horizontalOffsetLine = _symbolOutgoingLine.XCoordinate - _baseLineOffset;
+
                 _redrawLine.ChangeCountDecoratedLines(4, builderCoordinateDecorator);
-                SetCoordinateLine1(coordinateSymbolOutgoing, coordinateSymbolIncoming);
+                SetCoordinateLine1(coordinateSymbolOutgoing, coordinateSymbolIncoming, horizontalOffsetLine);
             }
             else
             {
@@ -64,13 +64,116 @@ internal class RedrawnLineNoParallelSides
             }
         }
 
-        if ((_positionOutgoing == PositionConnectionPoint.Right || _positionOutgoing == PositionConnectionPoint.Left) && 
-            (_positionIncoming == PositionConnectionPoint.Bottom || _positionIncoming == PositionConnectionPoint.Top))
+        if (_positionOutgoing == PositionConnectionPoint.Right && _positionIncoming == PositionConnectionPoint.Top)
+        {
+            if (borderCoordinateOutgoingSymbol.y > borderCoordinateIncomingSymbol.y)
+            {
+                int horizontalOffsetLine = _symbolOutgoingLine.XCoordinate + _symbolOutgoingLine.Width + _baseLineOffset;
+
+                _redrawLine.ChangeCountDecoratedLines(4, builderCoordinateDecorator);
+                SetCoordinateLine1(coordinateSymbolIncoming, coordinateSymbolOutgoing, horizontalOffsetLine);
+            }
+            else
+            {
+                _redrawLine.ChangeCountDecoratedLines(2, builderCoordinateDecorator);
+                SetCoordinateLine(coordinateSymbolIncoming, coordinateSymbolOutgoing);
+            }
+
+            _redrawLine.ReverseCoordinateLine();
+        }
+
+        if (_positionOutgoing == PositionConnectionPoint.Top && _positionIncoming == PositionConnectionPoint.Left)
         {
             if (borderCoordinateOutgoingSymbol.y < borderCoordinateIncomingSymbol.y)
             {
+                int horizontalOffsetLine = _symbolOutgoingLine.XCoordinate + _symbolOutgoingLine.Width + _baseLineOffset;
+
                 _redrawLine.ChangeCountDecoratedLines(4, builderCoordinateDecorator);
-                SetCoordinateLine1(coordinateSymbolIncoming, coordinateSymbolOutgoing);
+                SetCoordinateLine1(coordinateSymbolOutgoing, coordinateSymbolIncoming, horizontalOffsetLine);
+            }
+            else
+            {
+                _redrawLine.ChangeCountDecoratedLines(2, builderCoordinateDecorator);
+                SetCoordinateLine(coordinateSymbolOutgoing, coordinateSymbolIncoming);
+            }
+        }
+
+        if (_positionOutgoing == PositionConnectionPoint.Left && _positionIncoming == PositionConnectionPoint.Top)
+        {
+            if (borderCoordinateOutgoingSymbol.y > borderCoordinateIncomingSymbol.y)
+            {
+                int horizontalOffsetLine = _symbolOutgoingLine.XCoordinate - _baseLineOffset;
+
+                _redrawLine.ChangeCountDecoratedLines(4, builderCoordinateDecorator);
+                SetCoordinateLine1(coordinateSymbolIncoming, coordinateSymbolOutgoing, horizontalOffsetLine);
+            }
+            else
+            {
+                _redrawLine.ChangeCountDecoratedLines(2, builderCoordinateDecorator);
+                SetCoordinateLine(coordinateSymbolIncoming, coordinateSymbolOutgoing);
+            }
+
+            _redrawLine.ReverseCoordinateLine();
+        }
+
+        if (_positionOutgoing == PositionConnectionPoint.Bottom && _positionIncoming == PositionConnectionPoint.Right)
+        {
+            if (borderCoordinateOutgoingSymbol.y > borderCoordinateIncomingSymbol.y)
+            {
+                int horizontalOffsetLine = _symbolOutgoingLine.XCoordinate - _baseLineOffset;
+
+                _redrawLine.ChangeCountDecoratedLines(4, builderCoordinateDecorator);
+                SetCoordinateLine1(coordinateSymbolOutgoing, coordinateSymbolIncoming, horizontalOffsetLine);
+            }
+            else
+            {
+                _redrawLine.ChangeCountDecoratedLines(2, builderCoordinateDecorator);
+                SetCoordinateLine(coordinateSymbolOutgoing, coordinateSymbolIncoming);
+            }
+        }
+
+        if (_positionOutgoing == PositionConnectionPoint.Right && _positionIncoming == PositionConnectionPoint.Bottom)
+        {
+            if (borderCoordinateOutgoingSymbol.y < borderCoordinateIncomingSymbol.y)
+            {
+                int horizontalOffsetLine = _symbolOutgoingLine.XCoordinate + _symbolOutgoingLine.Width + _baseLineOffset;
+
+                _redrawLine.ChangeCountDecoratedLines(4, builderCoordinateDecorator);
+                SetCoordinateLine1(coordinateSymbolIncoming, coordinateSymbolOutgoing, horizontalOffsetLine);
+            }
+            else
+            {
+                _redrawLine.ChangeCountDecoratedLines(2, builderCoordinateDecorator);
+                SetCoordinateLine(coordinateSymbolIncoming, coordinateSymbolOutgoing);
+            }
+
+            _redrawLine.ReverseCoordinateLine();
+        }
+
+        if (_positionOutgoing == PositionConnectionPoint.Bottom && _positionIncoming == PositionConnectionPoint.Left)
+        {
+            if (borderCoordinateOutgoingSymbol.y > borderCoordinateIncomingSymbol.y)
+            {
+                int horizontalOffsetLine = _symbolOutgoingLine.XCoordinate + _symbolOutgoingLine.Width + _baseLineOffset;
+
+                _redrawLine.ChangeCountDecoratedLines(4, builderCoordinateDecorator);
+                SetCoordinateLine1(coordinateSymbolOutgoing, coordinateSymbolIncoming, horizontalOffsetLine);
+            }
+            else
+            {
+                _redrawLine.ChangeCountDecoratedLines(2, builderCoordinateDecorator);
+                SetCoordinateLine(coordinateSymbolOutgoing, coordinateSymbolIncoming);
+            }
+        }
+
+        if (_positionOutgoing == PositionConnectionPoint.Left && _positionIncoming == PositionConnectionPoint.Bottom)
+        {
+            if (borderCoordinateOutgoingSymbol.y < borderCoordinateIncomingSymbol.y)
+            {
+                int horizontalOffsetLine = _symbolOutgoingLine.XCoordinate - _baseLineOffset;
+
+                _redrawLine.ChangeCountDecoratedLines(4, builderCoordinateDecorator);
+                SetCoordinateLine1(coordinateSymbolIncoming, coordinateSymbolOutgoing, horizontalOffsetLine);
             }
             else
             {
@@ -101,10 +204,8 @@ internal class RedrawnLineNoParallelSides
         secondLine.SecondCoordinate.Y = coordinateSymbolIncoming.Y;
     }
 
-    private void SetCoordinateLine1(ICoordinateDecorator coordinateSymbolOutgoing, ICoordinateDecorator coordinateSymbolIncoming)
+    private void SetCoordinateLine1(ICoordinateDecorator coordinateSymbolOutgoing, ICoordinateDecorator coordinateSymbolIncoming, int horizontalOffsetLine)
     {
-        int horizontalOffsetLine = _symbolOutgoingLine.XCoordinate + _symbolOutgoingLine.Width + _baseLineOffset;
-
         var firstLine = _decoratedCoordinatesLines[0];
 
         firstLine.FirstCoordinate.X = coordinateSymbolOutgoing.X;
