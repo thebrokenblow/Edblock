@@ -1,11 +1,17 @@
 ﻿using EdblockViewModel.Symbols.LineSymbols;
 using EdblockModel.Symbols.LineSymbols.DecoratorLineSymbols;
+using EdblockModel.Symbols.Abstraction;
+using EdblockModel.Symbols.Enum;
 
 namespace EdblockModel.Symbols.LineSymbols.RedrawLine;
 
 public class RedrawnLine
 {
     public List<CoordinateLine> DecoratedCoordinatesLines { get; set; }
+    private readonly BlockSymbolModel _symbolOutgoingLine;
+    private readonly BlockSymbolModel? _symbolIncomingLine;
+    private readonly PositionConnectionPoint _positionOutgoing;
+    private readonly PositionConnectionPoint _positionIncoming;
     private List<CoordinateLine> coordinatesLines;
     private readonly RedrawnLineParallelSides redrawnParallelSides;
     private readonly RedrawnLineIdenticalSides redrawnLineIdenticalSides;
@@ -18,6 +24,12 @@ public class RedrawnLine
         coordinatesLines = new();
         DecoratedCoordinatesLines = new();
 
+        _symbolOutgoingLine = drawnLineSymbolModel.SymbolOutgoingLine;
+        _symbolIncomingLine = drawnLineSymbolModel.SymbolIncomingLine;
+
+        _positionOutgoing = drawnLineSymbolModel.OutgoingPosition;
+        _positionIncoming = drawnLineSymbolModel.IncomingPosition;
+
         redrawnParallelSides = new(drawnLineSymbolModel, this, baseLineOffset);
         redrawnLineIdenticalSides = new(drawnLineSymbolModel, this, baseLineOffset);
         redrawnLineNoParallelSides = new(drawnLineSymbolModel, this, baseLineOffset);
@@ -27,9 +39,12 @@ public class RedrawnLine
 
     public List<LineSymbolModel> GetRedrawLine()
     {
+        var borderCoordinateOutgoingSymbol = _symbolOutgoingLine.GetBorderCoordinate(_positionOutgoing);
+        var borderCoordinateIncomingSymbol = _symbolIncomingLine!.GetBorderCoordinate(_positionIncoming);
+
         redrawnParallelSides.RedrawLine();
         redrawnLineIdenticalSides.RedrawLine();
-        redrawnLineNoParallelSides.RedrawLines();
+        redrawnLineNoParallelSides.RedrawLine(borderCoordinateOutgoingSymbol, borderCoordinateIncomingSymbol);
 
         SetCoordinateLineModel();
 
