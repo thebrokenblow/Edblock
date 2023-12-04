@@ -7,8 +7,9 @@ namespace EdblockModel.Symbols.LineSymbols.RedrawLine;
 
 internal class RedrawnLineParallelSides
 {
-    private readonly BlockSymbolModel? _symbolaIncomingLine;
     private readonly RedrawnLine _redrawLine;
+    private readonly BlockSymbolModel _symbolOutgoingLine;
+    private readonly BlockSymbolModel? _symbolaIncomingLine;
     private readonly List<CoordinateLine> _decoratedCoordinatesLines;
     private readonly PositionConnectionPoint _positionOutgoing;
     private readonly PositionConnectionPoint _positionIncoming;
@@ -19,6 +20,7 @@ internal class RedrawnLineParallelSides
 
     public RedrawnLineParallelSides(DrawnLineSymbolModel drawnLineSymbolModel, RedrawnLine redrawLine, int baseLineOffset)
     {
+        _symbolOutgoingLine = drawnLineSymbolModel.SymbolOutgoingLine;
         _symbolaIncomingLine = drawnLineSymbolModel.SymbolIncomingLine;
 
         _positionOutgoing = drawnLineSymbolModel.OutgoingPosition;
@@ -30,10 +32,13 @@ internal class RedrawnLineParallelSides
         _baseLineOffset = baseLineOffset;
     }
 
-    public void RedrawLine((int x, int y) coordinateSymbolOutgoing1, (int x, int y) coordinateSymbolIncoming1)
+    public void RedrawLine()
     {
-        ICoordinateDecorator coordinateSymbolOutgoing = new CoordinateDecorator(coordinateSymbolOutgoing1);
-        ICoordinateDecorator coordinateSymbolIncoming = new CoordinateDecorator(coordinateSymbolIncoming1);
+        var borderCoordinateOutgoingSymbol = _symbolOutgoingLine.GetBorderCoordinate(_positionOutgoing);
+        var borderCoordinateIncomingSymbol = _symbolaIncomingLine!.GetBorderCoordinate(_positionIncoming);
+
+        ICoordinateDecorator coordinateSymbolOutgoing = new CoordinateDecorator(borderCoordinateOutgoingSymbol);
+        ICoordinateDecorator coordinateSymbolIncoming = new CoordinateDecorator(borderCoordinateIncomingSymbol);
 
         if (_positionOutgoing == PositionConnectionPoint.Bottom && _positionIncoming == PositionConnectionPoint.Top)
         {
@@ -59,19 +64,16 @@ internal class RedrawnLineParallelSides
 
         if (coordinateSymbolOutgoing.X == coordinateSymbolIncoming.X && coordinateSymbolOutgoing.Y < coordinateSymbolIncoming.Y)
         {
-            _redrawLine.ChangeCountLinesModel(linesSamePositions);
             _redrawLine.ChangeCountDecoratedLines(linesSamePositions);
             SetCoordinatesLastLine(coordinateSymbolOutgoing, coordinateSymbolIncoming);
         }
         else if (coordinateSymbolOutgoing.Y < coordinateSymbolIncoming.Y)
         {
-            _redrawLine.ChangeCountLinesModel(linesOneDifferentPositions);
             _redrawLine.ChangeCountDecoratedLines(linesOneDifferentPositions);
             SetCoordinatesOneDifferentPositions(coordinateSymbolOutgoing, coordinateSymbolIncoming);
         }
         else
         {
-            _redrawLine.ChangeCountLinesModel(linesTwoDifferentPositions);
             _redrawLine.ChangeCountDecoratedLines(linesTwoDifferentPositions);
             SetCoordinatesTwoDifferentPositions(coordinateSymbolOutgoing, coordinateSymbolIncoming, widthlIncomingSymbol);
         }
@@ -83,13 +85,11 @@ internal class RedrawnLineParallelSides
 
         if (coordinateSymbolOutgoing.X == coordinateSymbolIncoming.X && coordinateSymbolOutgoing.Y > coordinateSymbolIncoming.Y)
         {
-            _redrawLine.ChangeCountLinesModel(linesSamePositions);
             _redrawLine.ChangeCountDecoratedLines(linesSamePositions);
             SetCoordinatesLastLine(coordinateSymbolOutgoing, coordinateSymbolIncoming);
         }
         else if (coordinateSymbolOutgoing.Y > coordinateSymbolIncoming.Y)
         {
-            _redrawLine.ChangeCountLinesModel(linesOneDifferentPositions);
             _redrawLine.ChangeCountDecoratedLines(linesOneDifferentPositions);
             SetCoordinatesOneDifferentPositions(coordinateSymbolOutgoing, coordinateSymbolIncoming);
         }
@@ -99,7 +99,6 @@ internal class RedrawnLineParallelSides
             coordinateSymbolOutgoing = buildCoordinateDecorator.Build(coordinateSymbolOutgoing);
             coordinateSymbolIncoming = buildCoordinateDecorator.Build(coordinateSymbolIncoming);
 
-            _redrawLine.ChangeCountLinesModel(linesTwoDifferentPositions);
             _redrawLine.ChangeCountDecoratedLines(linesTwoDifferentPositions, buildCoordinateDecorator);
             SetCoordinatesTwoDifferentPositions(coordinateSymbolOutgoing, coordinateSymbolIncoming, widthlIncomingSymbol);
         }
@@ -109,7 +108,6 @@ internal class RedrawnLineParallelSides
     {
         if (coordinateSymbolOutgoing.Y == coordinateSymbolIncoming.Y && coordinateSymbolOutgoing.X == coordinateSymbolIncoming.X)
         {
-            _redrawLine.ChangeCountLinesModel(linesSamePositions);
             _redrawLine.ChangeCountDecoratedLines(linesSamePositions);
             SetCoordinatesLastLine(coordinateSymbolOutgoing, coordinateSymbolIncoming);
         }
@@ -120,7 +118,6 @@ internal class RedrawnLineParallelSides
             coordinateSymbolOutgoing = buildCoordinateDecorator.Build(coordinateSymbolOutgoing);
             coordinateSymbolIncoming = buildCoordinateDecorator.Build(coordinateSymbolIncoming);
 
-            _redrawLine.ChangeCountLinesModel(linesTwoDifferentPositions);
             _redrawLine.ChangeCountDecoratedLines(linesTwoDifferentPositions, buildCoordinateDecorator);
 
             SetCoordinatesTwoDifferentPositions(coordinateSymbolOutgoing, coordinateSymbolIncoming, _symbolaIncomingLine!.Height);
@@ -132,7 +129,6 @@ internal class RedrawnLineParallelSides
             coordinateSymbolOutgoing = buildCoordinateDecorator.Build(coordinateSymbolOutgoing);
             coordinateSymbolIncoming = buildCoordinateDecorator.Build(coordinateSymbolIncoming);
 
-            _redrawLine.ChangeCountLinesModel(linesOneDifferentPositions);
             _redrawLine.ChangeCountDecoratedLines(linesOneDifferentPositions, buildCoordinateDecorator);
 
             SetCoordinatesOneDifferentPositions(coordinateSymbolOutgoing, coordinateSymbolIncoming);
@@ -143,7 +139,6 @@ internal class RedrawnLineParallelSides
     {
         if (coordinateSymbolOutgoing.Y == coordinateSymbolIncoming.Y && coordinateSymbolOutgoing.X == coordinateSymbolIncoming.X)
         {
-            _redrawLine.ChangeCountLinesModel(linesSamePositions);
             _redrawLine.ChangeCountDecoratedLines(linesSamePositions);
             SetCoordinatesLastLine(coordinateSymbolOutgoing, coordinateSymbolIncoming);
         }
@@ -154,7 +149,6 @@ internal class RedrawnLineParallelSides
             coordinateSymbolOutgoing = buildCoordinateDecorator.Build(coordinateSymbolOutgoing);
             coordinateSymbolIncoming = buildCoordinateDecorator.Build(coordinateSymbolIncoming);
 
-            _redrawLine.ChangeCountLinesModel(linesTwoDifferentPositions);
             _redrawLine.ChangeCountDecoratedLines(linesTwoDifferentPositions, buildCoordinateDecorator);
 
             SetCoordinatesTwoDifferentPositions(coordinateSymbolOutgoing, coordinateSymbolIncoming, _symbolaIncomingLine!.Height);
@@ -166,7 +160,6 @@ internal class RedrawnLineParallelSides
             coordinateSymbolOutgoing = buildCoordinateDecorator.Build(coordinateSymbolOutgoing);
             coordinateSymbolIncoming = buildCoordinateDecorator.Build(coordinateSymbolIncoming);
 
-            _redrawLine.ChangeCountLinesModel(linesOneDifferentPositions);
             _redrawLine.ChangeCountDecoratedLines(linesOneDifferentPositions, buildCoordinateDecorator);
 
             SetCoordinatesOneDifferentPositions(coordinateSymbolOutgoing, coordinateSymbolIncoming);

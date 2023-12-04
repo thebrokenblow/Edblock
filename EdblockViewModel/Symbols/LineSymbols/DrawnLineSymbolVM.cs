@@ -17,9 +17,10 @@ public class DrawnLineSymbolVM : SymbolVM
     public ArrowSymbol ArrowSymbol { get; set; } = new();
     public DelegateCommand EnterCursor { get; init; }
     public DelegateCommand LeaveCursor { get; init; }
+    public DelegateCommand ClickOnLine { get; init; }
     public PositionConnectionPoint OutgoingPosition { get; init; }
     public PositionConnectionPoint IncomingPosition { get; set; }
-    
+
     private const int heightTextField = 20;
     public int HeightTextField 
     {
@@ -66,6 +67,7 @@ public class DrawnLineSymbolVM : SymbolVM
     {
         EnterCursor = new(SetHighlightColorLines);
         LeaveCursor = new(SetDefaultColorLines);
+        ClickOnLine = new(SelectLine);
 
         DrawnLineSymbolModel = drawnLineSymbolModel;
         OutgoingPosition = positionConnectionPoint;
@@ -73,6 +75,12 @@ public class DrawnLineSymbolVM : SymbolVM
         _canvasSymbolsVM = canvasSymbolsVM;
 
         RedrawAllLines();
+    }
+
+    private void SelectLine()
+    {
+        SetHighlightColorLines();
+        _canvasSymbolsVM.SelectDrawnLineSymbol = this;
     }
 
     public void ChangeCoordination((int, int) currentCoordinte)
@@ -130,15 +138,13 @@ public class DrawnLineSymbolVM : SymbolVM
         var movableSymbol = _canvasSymbolsVM.MovableSymbol;
         var drawnLineSymbol = _canvasSymbolsVM.DrawnLineSymbol;
 
-        if (movableSymbol != null || drawnLineSymbol != null)
+        if (movableSymbol == null && drawnLineSymbol == null)
         {
-            return;
+            SetHighlightStatus(true);
         }
-
-        SetHighlightStatus(true);
     }
 
-    private void SetDefaultColorLines()
+    public void SetDefaultColorLines()
     {
         SetHighlightStatus(false);
     }

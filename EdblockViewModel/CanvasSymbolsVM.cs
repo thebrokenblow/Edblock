@@ -81,6 +81,8 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
     public ScalePartBlockSymbol? ScalePartBlockSymbolVM { get; set; }
     public DrawnLineSymbolVM? DrawnLineSymbol { get; set; }
     private List<DrawnLineSymbolVM?>? CurrentRedrawLines { get; set; }
+    public DrawnLineSymbolVM? SelectDrawnLineSymbol { get; set; }
+
     private readonly FactoryBlockSymbol factoryBlockSymbol;
     private RedrawnLine? redrawLineSymbolVM;
     private const int lengthGridCell = 20;
@@ -92,7 +94,7 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
         MouseUpCanvasSymbols = new(FinishRedrawingLine);
         ClickSymbol = new(CreateBlockSymbol);
         MouseMoveSymbol = new(MoveSymbol);
-        ClickCanvasSymbols = new(ClickCanvas);
+        ClickCanvasSymbols = new(ClickOnCanvas);
         factoryBlockSymbol = new(this);
         Grid = new Rect(-lengthGridCell, -lengthGridCell, lengthGridCell, lengthGridCell);
     }
@@ -141,16 +143,29 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
         Cursor = Cursors.Arrow;
     }
 
-    public void ClickCanvas()
+    public void ClickOnCanvas()
     {
-        if (DrawnLineSymbol != null && DrawnLineSymbol?.LinesSymbol.Count > 1)
-        {
-            var newLineSymbolModel = DrawnLineSymbol.DrawnLineSymbolModel.GetNewLine();
-            var newLineSymbol = FactoryLineSymbol.CreateLine(newLineSymbolModel);
-
-            DrawnLineSymbol.LinesSymbol.Add(newLineSymbol);
-        }
+        AddLineSymbol();
         TextField.ChangeFocus(Symbols);
+    }
+
+    private void AddLineSymbol()
+    {
+        if (DrawnLineSymbol == null)
+        {
+            return;
+        }
+
+        var linesSymbol = DrawnLineSymbol.LinesSymbol;
+
+        if (linesSymbol.Count > 1)
+        {
+            var drawnLineSymbolModel = DrawnLineSymbol.DrawnLineSymbolModel;
+            var currentLineSymbolModel = drawnLineSymbolModel.GetNewLine();
+            var currentLineSymbolVM = FactoryLineSymbol.CreateLine(currentLineSymbolModel);
+
+            DrawnLineSymbol.LinesSymbol.Add(currentLineSymbolVM);
+        }
     }
 
     public void OnPropertyChanged([CallerMemberName] string prop = "")

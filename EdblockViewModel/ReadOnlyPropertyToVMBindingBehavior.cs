@@ -17,7 +17,7 @@ public class ReadOnlyPropertyToVMBindingBehavior : Behavior<UIElement>
 
     public object ModelProperty
     {
-        get { return (object)GetValue(ModelPropertyProperty); }
+        get { return GetValue(ModelPropertyProperty); }
         set { SetValue(ModelPropertyProperty, value); }
     }
 

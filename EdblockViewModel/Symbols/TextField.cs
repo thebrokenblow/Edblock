@@ -1,10 +1,9 @@
 ﻿using Prism.Commands;
 using System.Windows.Input;
 using System.ComponentModel;
+using System.Collections.ObjectModel;
 using System.Runtime.CompilerServices;
 using EdblockViewModel.Symbols.Abstraction;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 
 namespace EdblockViewModel.Symbols;
 
@@ -59,19 +58,15 @@ public class TextField : INotifyPropertyChanged
 
     public DelegateCommand<BlockSymbolVM> DoubleClickedTextField { get; init; }
     public DelegateCommand<BlockSymbolVM> MouseMoveSymbol { get; init; }
+    public event PropertyChangedEventHandler? PropertyChanged;
+
     private readonly CanvasSymbolsVM _canvasSymbolsVM;
+    
     public TextField(CanvasSymbolsVM canvasSymbolsVM)
     {
         _canvasSymbolsVM = canvasSymbolsVM;
         MouseMoveSymbol = new(canvasSymbolsVM.MoveSymbol);
         DoubleClickedTextField = new(AddFocus);
-    }
-
-    private void AddFocus(BlockSymbolVM symbolViewModel)
-    {
-        _canvasSymbolsVM.Cursor = Cursors.IBeam;
-        symbolViewModel.TextField.Cursor = Cursors.IBeam;
-        symbolViewModel.TextField.Focus = true;
     }
 
     public static void ChangeFocus(ObservableCollection<SymbolVM> Symbols)
@@ -80,17 +75,24 @@ public class TextField : INotifyPropertyChanged
         {
             if (symbol is BlockSymbolVM blockSymbol)
             {
-                if (blockSymbol.TextField.Focus)
+                var textFieldSymbol = blockSymbol.TextField;
+                if (textFieldSymbol.Focus)
                 {
-                    blockSymbol.TextField.Focus = false;
+                    textFieldSymbol.Focus = false;
                 }
             }
         }
     }
 
-    public event PropertyChangedEventHandler? PropertyChanged;
     public void OnPropertyChanged([CallerMemberName] string prop = "")
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
+    }
+
+    private void AddFocus(BlockSymbolVM symbolViewModel)
+    {
+        _canvasSymbolsVM.Cursor = Cursors.IBeam;
+        symbolViewModel.TextField.Cursor = Cursors.IBeam;
+        symbolViewModel.TextField.Focus = true;
     }
 }
