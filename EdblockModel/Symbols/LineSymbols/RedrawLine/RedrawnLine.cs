@@ -44,11 +44,30 @@ public class RedrawnLine
 
         redrawnParallelSides.RedrawLine();
         redrawnLineIdenticalSides.RedrawLine();
-        redrawnLineNoParallelSides.RedrawLine(borderCoordinateOutgoingSymbol, borderCoordinateIncomingSymbol);
+
+        if (IsNotParallel())
+        {
+            redrawnLineNoParallelSides.RedrawLine(borderCoordinateOutgoingSymbol, borderCoordinateIncomingSymbol);
+        }
 
         SetCoordinateLineModel();
 
         return _linesSymbolModel;
+    }
+
+    private bool IsNotParallel()
+    {
+        bool isNotParallel = 
+            (_positionOutgoing == PositionConnectionPoint.Top && _positionIncoming == PositionConnectionPoint.Right) ||
+            (_positionOutgoing == PositionConnectionPoint.Top && _positionIncoming == PositionConnectionPoint.Left) ||
+            (_positionOutgoing == PositionConnectionPoint.Right && _positionIncoming == PositionConnectionPoint.Top) ||
+            (_positionOutgoing == PositionConnectionPoint.Right && _positionIncoming == PositionConnectionPoint.Bottom) ||
+            (_positionOutgoing == PositionConnectionPoint.Bottom && _positionIncoming == PositionConnectionPoint.Left) ||
+            (_positionOutgoing == PositionConnectionPoint.Bottom && _positionIncoming == PositionConnectionPoint.Right) ||
+            (_positionOutgoing == PositionConnectionPoint.Left && _positionIncoming == PositionConnectionPoint.Top) ||
+            (_positionOutgoing == PositionConnectionPoint.Left && _positionIncoming == PositionConnectionPoint.Bottom);
+
+        return isNotParallel;
     }
 
     public void ReverseCoordinateLine()

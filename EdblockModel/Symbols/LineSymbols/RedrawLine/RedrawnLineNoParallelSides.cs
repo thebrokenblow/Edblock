@@ -49,20 +49,20 @@ internal class RedrawnLineNoParallelSides
         int horizontalOffsetLine = GetHorizontalOffsetLine();
 
         if ((_positionOutgoing == PositionConnectionPoint.Top && _positionIncoming == PositionConnectionPoint.Right) ||
-            (_positionOutgoing == PositionConnectionPoint.Bottom && _positionIncoming == PositionConnectionPoint.Right) ||
             (_positionOutgoing == PositionConnectionPoint.Top && _positionIncoming == PositionConnectionPoint.Left) ||
-            (_positionOutgoing == PositionConnectionPoint.Bottom && _positionIncoming == PositionConnectionPoint.Left))
+            (_positionOutgoing == PositionConnectionPoint.Bottom && _positionIncoming == PositionConnectionPoint.Left) ||
+            (_positionOutgoing == PositionConnectionPoint.Bottom && _positionIncoming == PositionConnectionPoint.Right))
         {
-            RedrawTopToRightSides(coordinateSymbolOutgoing, coordinateSymbolIncoming, horizontalOffsetLine);
+            ChangeLines(coordinateSymbolOutgoing, coordinateSymbolIncoming, horizontalOffsetLine);
         }
         else
-        {
-            RedrawTopToRightSides(coordinateSymbolIncoming, coordinateSymbolOutgoing, horizontalOffsetLine);
+        { 
+            ChangeLines(coordinateSymbolIncoming, coordinateSymbolOutgoing, horizontalOffsetLine);
             _redrawLine.ReverseCoordinateLine();
         }
     }
 
-    private void RedrawTopToRightSides(ICoordinateDecorator coordinateSymbolOutgoing, ICoordinateDecorator coordinateSymbolIncoming, int horizontalOffsetLine)
+    private void ChangeLines(ICoordinateDecorator coordinateSymbolOutgoing, ICoordinateDecorator coordinateSymbolIncoming, int horizontalOffsetLine)
     {
         if (coordinateSymbolOutgoing.Y < coordinateSymbolIncoming.Y)
         {
