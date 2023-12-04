@@ -29,7 +29,7 @@ public class RedrawnLine
     {
         redrawnParallelSides.RedrawLine();
         redrawnLineIdenticalSides.RedrawLine();
-        redrawnLineNoParallelSides.RedrawLine();
+        redrawnLineNoParallelSides.RedrawLines();
 
         SetCoordinateLineModel();
 

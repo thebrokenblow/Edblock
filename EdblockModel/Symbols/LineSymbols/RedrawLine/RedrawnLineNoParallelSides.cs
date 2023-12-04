@@ -38,12 +38,10 @@ internal class RedrawnLineNoParallelSides
         _baseLineOffset = baseLineOffset;
     }
 
-    private void RedrawTopToRightSides(ICoordinateDecorator coordinateSymbolOutgoing, ICoordinateDecorator coordinateSymbolIncoming)
+    private void RedrawTopToRightSides(ICoordinateDecorator coordinateSymbolOutgoing, ICoordinateDecorator coordinateSymbolIncoming, int horizontalOffsetLine)
     {
         if (coordinateSymbolOutgoing.Y < coordinateSymbolIncoming.Y)
         {
-            int horizontalOffsetLine = _symbolOutgoingLine.XCoordinate - _baseLineOffset;
-
             _redrawLine.ChangeCountDecoratedLines(4, builderCoordinateDecorator);
             SetCoordinateLine1(coordinateSymbolOutgoing, coordinateSymbolIncoming, horizontalOffsetLine);
         }
@@ -54,127 +52,7 @@ internal class RedrawnLineNoParallelSides
         }
     }
 
-    private void RedrawLeftToTopSides(ICoordinateDecorator coordinateSymbolOutgoing, ICoordinateDecorator coordinateSymbolIncoming)
-    {
-        if (coordinateSymbolOutgoing.Y > coordinateSymbolIncoming.Y)
-        {
-            int horizontalOffsetLine = _symbolOutgoingLine.XCoordinate - _baseLineOffset;
-
-            _redrawLine.ChangeCountDecoratedLines(4, builderCoordinateDecorator);
-            SetCoordinateLine1(coordinateSymbolIncoming, coordinateSymbolOutgoing, horizontalOffsetLine);
-        }
-        else
-        {
-            _redrawLine.ChangeCountDecoratedLines(2, builderCoordinateDecorator);
-            SetCoordinateLine(coordinateSymbolIncoming, coordinateSymbolOutgoing);
-        }
-
-        _redrawLine.ReverseCoordinateLine();
-    }
-
-    private void RedrawRightToTopSides(ICoordinateDecorator coordinateSymbolOutgoing, ICoordinateDecorator coordinateSymbolIncoming)
-    {
-        if (coordinateSymbolOutgoing.Y > coordinateSymbolIncoming.Y)
-        {
-            int horizontalOffsetLine = _symbolOutgoingLine.XCoordinate + _symbolOutgoingLine.Width + _baseLineOffset;
-
-            _redrawLine.ChangeCountDecoratedLines(4, builderCoordinateDecorator);
-            SetCoordinateLine1(coordinateSymbolIncoming, coordinateSymbolOutgoing, horizontalOffsetLine);
-        }
-        else
-        {
-            _redrawLine.ChangeCountDecoratedLines(2, builderCoordinateDecorator);
-            SetCoordinateLine(coordinateSymbolIncoming, coordinateSymbolOutgoing);
-        }
-
-        _redrawLine.ReverseCoordinateLine();
-    }
-
-    private void RedrawTopToLeftSides(ICoordinateDecorator coordinateSymbolOutgoing, ICoordinateDecorator coordinateSymbolIncoming)
-    {
-        if (coordinateSymbolOutgoing.Y < coordinateSymbolIncoming.Y)
-        {
-            int horizontalOffsetLine = _symbolOutgoingLine.XCoordinate + _symbolOutgoingLine.Width + _baseLineOffset;
-
-            _redrawLine.ChangeCountDecoratedLines(4, builderCoordinateDecorator);
-            SetCoordinateLine1(coordinateSymbolOutgoing, coordinateSymbolIncoming, horizontalOffsetLine);
-        }
-        else
-        {
-            _redrawLine.ChangeCountDecoratedLines(2, builderCoordinateDecorator);
-            SetCoordinateLine(coordinateSymbolOutgoing, coordinateSymbolIncoming);
-        }
-    }
-
-    private void RedrawBottomToRightSides(ICoordinateDecorator coordinateSymbolOutgoing, ICoordinateDecorator coordinateSymbolIncoming)
-    {
-        if (coordinateSymbolOutgoing.Y < coordinateSymbolIncoming.Y)
-        {
-            int horizontalOffsetLine = _symbolOutgoingLine.XCoordinate - _baseLineOffset;
-
-            _redrawLine.ChangeCountDecoratedLines(4, builderCoordinateDecorator);
-            SetCoordinateLine1(coordinateSymbolOutgoing, coordinateSymbolIncoming, horizontalOffsetLine);
-        }
-        else
-        {
-            _redrawLine.ChangeCountDecoratedLines(2, builderCoordinateDecorator);
-            SetCoordinateLine(coordinateSymbolOutgoing, coordinateSymbolIncoming);
-        }
-    }
-
-    private void RedrawRightToBottomSides(ICoordinateDecorator coordinateSymbolOutgoing, ICoordinateDecorator coordinateSymbolIncoming)
-    {
-        if (coordinateSymbolOutgoing.Y > coordinateSymbolIncoming.Y)
-        {
-            int horizontalOffsetLine = _symbolOutgoingLine.XCoordinate + _symbolOutgoingLine.Width + _baseLineOffset;
-
-            _redrawLine.ChangeCountDecoratedLines(4, builderCoordinateDecorator);
-            SetCoordinateLine1(coordinateSymbolIncoming, coordinateSymbolOutgoing, horizontalOffsetLine);
-        }
-        else
-        {
-            _redrawLine.ChangeCountDecoratedLines(2, builderCoordinateDecorator);
-            SetCoordinateLine(coordinateSymbolIncoming, coordinateSymbolOutgoing);
-        }
-
-        _redrawLine.ReverseCoordinateLine();
-    }
-
-    private void RedrawBottomToLeftSides(ICoordinateDecorator coordinateSymbolOutgoing, ICoordinateDecorator coordinateSymbolIncoming)
-    {
-        if (coordinateSymbolOutgoing.Y < coordinateSymbolIncoming.Y)
-        {
-            int horizontalOffsetLine = _symbolOutgoingLine.XCoordinate + _symbolOutgoingLine.Width + _baseLineOffset;
-
-            _redrawLine.ChangeCountDecoratedLines(4, builderCoordinateDecorator);
-            SetCoordinateLine1(coordinateSymbolOutgoing, coordinateSymbolIncoming, horizontalOffsetLine);
-        }
-        else
-        {
-            _redrawLine.ChangeCountDecoratedLines(2, builderCoordinateDecorator);
-            SetCoordinateLine(coordinateSymbolOutgoing, coordinateSymbolIncoming);
-        }
-    }
-
-    private void RedrawLeftToBottomSides(ICoordinateDecorator coordinateSymbolOutgoing, ICoordinateDecorator coordinateSymbolIncoming)
-    {
-        if (coordinateSymbolOutgoing.Y > coordinateSymbolIncoming.Y)
-        {
-            int horizontalOffsetLine = _symbolOutgoingLine.XCoordinate - _baseLineOffset;
-
-            _redrawLine.ChangeCountDecoratedLines(4, builderCoordinateDecorator);
-            SetCoordinateLine1(coordinateSymbolIncoming, coordinateSymbolOutgoing, horizontalOffsetLine);
-        }
-        else
-        {
-            _redrawLine.ChangeCountDecoratedLines(2, builderCoordinateDecorator);
-            SetCoordinateLine(coordinateSymbolIncoming, coordinateSymbolOutgoing);
-        }
-
-        _redrawLine.ReverseCoordinateLine();
-    }
-
-    public void RedrawLine()
+    public void RedrawLines()
     {
         var borderCoordinateOutgoingSymbol = _symbolOutgoingLine.GetBorderCoordinate(_positionOutgoing);
         var borderCoordinateIncomingSymbol = _symbolaIncomingLine!.GetBorderCoordinate(_positionIncoming);
@@ -185,37 +63,59 @@ internal class RedrawnLineNoParallelSides
         coordinateSymbolOutgoing = builderCoordinateDecorator.Build(coordinateSymbolOutgoing);
         coordinateSymbolIncoming = builderCoordinateDecorator.Build(coordinateSymbolIncoming);
 
+        int horizontalOffsetLine = _symbolOutgoingLine.XCoordinate;
+
         if (_positionOutgoing == PositionConnectionPoint.Top && _positionIncoming == PositionConnectionPoint.Right)
         {
-            RedrawTopToRightSides(coordinateSymbolOutgoing, coordinateSymbolIncoming);
+            horizontalOffsetLine -= _baseLineOffset;
+
+            RedrawTopToRightSides(coordinateSymbolOutgoing, coordinateSymbolIncoming, horizontalOffsetLine);
         }
         else if (_positionOutgoing == PositionConnectionPoint.Right && _positionIncoming == PositionConnectionPoint.Top)
         {
-            RedrawRightToTopSides(coordinateSymbolOutgoing, coordinateSymbolIncoming);
+            horizontalOffsetLine += _symbolOutgoingLine.Width + _baseLineOffset;
+
+            RedrawTopToRightSides(coordinateSymbolIncoming, coordinateSymbolOutgoing, horizontalOffsetLine);
+            _redrawLine.ReverseCoordinateLine();
         }
         else if (_positionOutgoing == PositionConnectionPoint.Left && _positionIncoming == PositionConnectionPoint.Top)
         {
-            RedrawLeftToTopSides(coordinateSymbolOutgoing, coordinateSymbolIncoming);
+            horizontalOffsetLine -= _baseLineOffset;
+
+            RedrawTopToRightSides(coordinateSymbolIncoming, coordinateSymbolOutgoing, horizontalOffsetLine);
+            _redrawLine.ReverseCoordinateLine();
         }
         else if (_positionOutgoing == PositionConnectionPoint.Top && _positionIncoming == PositionConnectionPoint.Left)
         {
-            RedrawTopToLeftSides(coordinateSymbolOutgoing, coordinateSymbolIncoming);
+            horizontalOffsetLine += _symbolOutgoingLine.Width + _baseLineOffset;
+
+            RedrawTopToRightSides(coordinateSymbolOutgoing, coordinateSymbolIncoming, horizontalOffsetLine);
         }
         else if (_positionOutgoing == PositionConnectionPoint.Bottom && _positionIncoming == PositionConnectionPoint.Right)
         {
-            RedrawBottomToRightSides(coordinateSymbolOutgoing, coordinateSymbolIncoming);
+            horizontalOffsetLine -= _baseLineOffset;
+
+            RedrawTopToRightSides(coordinateSymbolOutgoing, coordinateSymbolIncoming, horizontalOffsetLine);
         }
         else if (_positionOutgoing == PositionConnectionPoint.Bottom && _positionIncoming == PositionConnectionPoint.Left)
         {
-            RedrawBottomToLeftSides(coordinateSymbolOutgoing, coordinateSymbolIncoming);
+            horizontalOffsetLine += _symbolOutgoingLine.Width + _baseLineOffset;
+
+            RedrawTopToRightSides(coordinateSymbolOutgoing, coordinateSymbolIncoming, horizontalOffsetLine);
         }
         else if (_positionOutgoing == PositionConnectionPoint.Right && _positionIncoming == PositionConnectionPoint.Bottom)
         {
-            RedrawRightToBottomSides(coordinateSymbolOutgoing, coordinateSymbolIncoming);
+            horizontalOffsetLine += _symbolOutgoingLine.Width + _baseLineOffset;
+
+            RedrawTopToRightSides(coordinateSymbolIncoming, coordinateSymbolOutgoing, horizontalOffsetLine);
+            _redrawLine.ReverseCoordinateLine();
         }
         else if (_positionOutgoing == PositionConnectionPoint.Left && _positionIncoming == PositionConnectionPoint.Bottom)
         {
-            RedrawLeftToBottomSides(coordinateSymbolOutgoing, coordinateSymbolIncoming);
+            horizontalOffsetLine -= _baseLineOffset;
+
+            RedrawTopToRightSides(coordinateSymbolIncoming, coordinateSymbolOutgoing, horizontalOffsetLine);
+            _redrawLine.ReverseCoordinateLine();
         }
     }
 
