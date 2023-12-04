@@ -39,38 +39,46 @@ internal class RedrawnLineNoParallelSides
         ICoordinateDecorator coordinateSymbolOutgoing = new CoordinateDecorator(borderCoordinateOutgoingSymbol);
         ICoordinateDecorator coordinateSymbolIncoming = new CoordinateDecorator(borderCoordinateIncomingSymbol);
 
-        if (_positionOutgoing == PositionConnectionPoint.Top && _positionIncoming == PositionConnectionPoint.Right)
+        var builderCoordinateDecorator = new BuilderCoordinateDecorator();
+
+        if (_positionIncoming == PositionConnectionPoint.Bottom || _positionOutgoing == PositionConnectionPoint.Bottom)
         {
-            if (borderCoordinateOutgoingSymbol.y < borderCoordinateIncomingSymbol.y)
+            builderCoordinateDecorator = builderCoordinateDecorator.SetInversionYCoordinate();
+
+            coordinateSymbolOutgoing = builderCoordinateDecorator.Build(coordinateSymbolOutgoing);
+            coordinateSymbolIncoming = builderCoordinateDecorator.Build(coordinateSymbolIncoming);
+        }
+
+        if ((_positionOutgoing == PositionConnectionPoint.Bottom || _positionOutgoing == PositionConnectionPoint.Top) && 
+            (_positionIncoming == PositionConnectionPoint.Right || _positionIncoming == PositionConnectionPoint.Left))
+        {
+            if (borderCoordinateOutgoingSymbol.y > borderCoordinateIncomingSymbol.y)
             {
-                _redrawLine.ChangeCountDecoratedLines(4);
+                _redrawLine.ChangeCountDecoratedLines(4, builderCoordinateDecorator);
                 SetCoordinateLine1(coordinateSymbolOutgoing, coordinateSymbolIncoming);
             }
             else
             {
-                _redrawLine.ChangeCountDecoratedLines(2);
+                _redrawLine.ChangeCountDecoratedLines(2, builderCoordinateDecorator);
                 SetCoordinateLine(coordinateSymbolOutgoing, coordinateSymbolIncoming);
             }
-
-            _redrawLine.SetCoordinateLineModel();
-
         }
 
-        if (_positionOutgoing == PositionConnectionPoint.Right && _positionIncoming == PositionConnectionPoint.Top)
+        if ((_positionOutgoing == PositionConnectionPoint.Right || _positionOutgoing == PositionConnectionPoint.Left) && 
+            (_positionIncoming == PositionConnectionPoint.Bottom || _positionIncoming == PositionConnectionPoint.Top))
         {
-            if (borderCoordinateOutgoingSymbol.y > borderCoordinateIncomingSymbol.y)
+            if (borderCoordinateOutgoingSymbol.y < borderCoordinateIncomingSymbol.y)
             {
-                _redrawLine.ChangeCountDecoratedLines(4);
+                _redrawLine.ChangeCountDecoratedLines(4, builderCoordinateDecorator);
                 SetCoordinateLine1(coordinateSymbolIncoming, coordinateSymbolOutgoing);
             }
             else
             {
-                _redrawLine.ChangeCountDecoratedLines(2);
+                _redrawLine.ChangeCountDecoratedLines(2, builderCoordinateDecorator);
                 SetCoordinateLine(coordinateSymbolIncoming, coordinateSymbolOutgoing);
             }
 
-            _redrawLine.Reverse();
-            _redrawLine.SetCoordinateLineModel();
+            _redrawLine.ReverseCoordinateLine();
         }
     }
 

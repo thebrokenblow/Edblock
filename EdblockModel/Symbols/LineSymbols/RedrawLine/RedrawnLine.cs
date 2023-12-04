@@ -31,33 +31,16 @@ public class RedrawnLine
         redrawnLineIdenticalSides.RedrawLine();
         redrawnLineNoParallelSides.RedrawLine();
 
+        SetCoordinateLineModel();
+
         return _linesSymbolModel;
     }
 
-    public void SetReverseCoordinateLineModel()
+    public void ReverseCoordinateLine()
     {
-        var countDecoratedCoordinatesLines = DecoratedCoordinatesLines.Count;
-        ChangeCountLinesModel(countDecoratedCoordinatesLines);
-
-        for (int i = 0; i < coordinatesLines.Count; i++)
+        foreach (var coordinatsLine in coordinatesLines)
         {
-            var lineSymbol = _linesSymbolModel[i];
-
-            lineSymbol.X1 = coordinatesLines[i].SecondCoordinate.X;
-            lineSymbol.Y1 = coordinatesLines[i].SecondCoordinate.Y;
-
-            lineSymbol.X2 = coordinatesLines[i].FirstCoordinate.X;
-            lineSymbol.Y2 = coordinatesLines[i].FirstCoordinate.Y;
-        }
-
-        _linesSymbolModel = Enumerable.Reverse(_linesSymbolModel).ToList();
-    }
-
-    public void Reverse()
-    {
-        foreach (var item in coordinatesLines)
-        {
-            (item.FirstCoordinate, item.SecondCoordinate) = (item.SecondCoordinate, item.FirstCoordinate);
+            (coordinatsLine.FirstCoordinate, coordinatsLine.SecondCoordinate) = (coordinatsLine.SecondCoordinate, coordinatsLine.FirstCoordinate);
         }
 
         coordinatesLines = Enumerable.Reverse(coordinatesLines).ToList();
