@@ -79,6 +79,13 @@ public class DrawnLineSymbolVM : SymbolVM
 
     private void SelectLine()
     {
+        if (_canvasSymbolsVM.SelectDrawnLineSymbol != null)
+        {
+            var selectDrawnLineSymbol = _canvasSymbolsVM.SelectDrawnLineSymbol;
+            _canvasSymbolsVM.SelectDrawnLineSymbol = null;
+            selectDrawnLineSymbol.SetDefaultColorLines();
+        }
+
         SetHighlightColorLines();
         _canvasSymbolsVM.SelectDrawnLineSymbol = this;
     }
@@ -146,7 +153,7 @@ public class DrawnLineSymbolVM : SymbolVM
 
     public void SetDefaultColorLines()
     {
-        if (_canvasSymbolsVM.SelectDrawnLineSymbol == null)
+        if (_canvasSymbolsVM.SelectDrawnLineSymbol != this)
         {
             SetHighlightStatus(false);
         }
