@@ -14,6 +14,7 @@ public class DrawnLineSymbolVM : SymbolVM
     public BlockSymbolVM? SymbolIncomingLine { get; set; }
     public DrawnLineSymbolModel DrawnLineSymbolModel { get; set; }
     public ObservableCollection<LineSymbolVM> LinesSymbol { get; init; } = new();
+    public ObservableCollection<MovableRectangleLine> MovableRectanglesLine { get; init; } = new();
     public ArrowSymbol ArrowSymbol { get; set; } = new();
     public DelegateCommand EnterCursor { get; init; }
     public DelegateCommand LeaveCursor { get; init; }
@@ -77,6 +78,34 @@ public class DrawnLineSymbolVM : SymbolVM
         RedrawAllLines();
     }
 
+    private void RedrawMovableRectanglesLine()
+    {
+        for (int i = 1; i < LinesSymbol.Count - 1; i++)
+        {
+            var lineSymbolVM = LinesSymbol[i];
+
+            var movableRectangleLine = new MovableRectangleLine(this, lineSymbolVM);
+
+            MovableRectanglesLine.Add(movableRectangleLine);
+        }
+    }
+
+    private void ShowMovableRectanglesLine()
+    {
+        foreach (var movableRectangleLine in MovableRectanglesLine)
+        {
+            movableRectangleLine.IsShow = true;
+        }
+    }
+
+    private void HideMovableRectanglesLine()
+    {
+        foreach (var movableRectangleLine in MovableRectanglesLine)
+        {
+            movableRectangleLine.IsShow = false;
+        }
+    }
+
     private void SelectLine()
     {
         if (_canvasSymbolsVM.SelectDrawnLineSymbol != null)
@@ -87,6 +116,7 @@ public class DrawnLineSymbolVM : SymbolVM
         }
 
         SetHighlightColorLines();
+        ShowMovableRectanglesLine();
         _canvasSymbolsVM.SelectDrawnLineSymbol = this;
     }
 
@@ -125,6 +155,7 @@ public class DrawnLineSymbolVM : SymbolVM
     public void RedrawAllLines()
     {
         LinesSymbol.Clear();
+        MovableRectanglesLine.Clear();
 
         foreach (var lineSymbolModel in DrawnLineSymbolModel.LinesSymbolModel)
         {
@@ -138,6 +169,7 @@ public class DrawnLineSymbolVM : SymbolVM
         var coordinateLastLine = (lastLine.X2, lastLine.Y2);
         ArrowSymbol.ChangeOrientationArrow(coordinateLastLine, IncomingPosition);
 
+        RedrawMovableRectanglesLine();
     }
 
     private void SetHighlightColorLines()
@@ -156,6 +188,7 @@ public class DrawnLineSymbolVM : SymbolVM
         if (_canvasSymbolsVM.SelectDrawnLineSymbol != this)
         {
             SetHighlightStatus(false);
+            HideMovableRectanglesLine();
         }
     }
 

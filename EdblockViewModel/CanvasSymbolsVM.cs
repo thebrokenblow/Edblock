@@ -114,6 +114,15 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
         }
     }
 
+    private void RemoveLineFromCollections(ref DrawnLineSymbolVM? drawnLineSymbolVM)
+    {
+        if (drawnLineSymbolVM != null)
+        {
+            Symbols.Remove(drawnLineSymbolVM);
+            drawnLineSymbolVM = null;
+        }
+    }
+
     public void CreateBlockSymbol(string nameBlockSymbol)
     {
         var currentSymbol = factoryBlockSymbol.Create(nameBlockSymbol);
@@ -152,14 +161,18 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
     public void ClickOnCanvas()
     {
         AddLineSymbol();
+        RemoveSelectDrawnLine();
+        TextField.ChangeFocus(Symbols);
+    }
 
+    private void RemoveSelectDrawnLine()
+    {
         if (SelectDrawnLineSymbol != null)
         {
             var selectDrawnLineSymbol = SelectDrawnLineSymbol;
             SelectDrawnLineSymbol = null;
             selectDrawnLineSymbol.SetDefaultColorLines();
         }
-        TextField.ChangeFocus(Symbols);
     }
 
     private void AddLineSymbol()

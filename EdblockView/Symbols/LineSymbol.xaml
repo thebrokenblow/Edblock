@@ -6,6 +6,7 @@
              xmlns:symbolsLineVM="clr-namespace:EdblockViewModel.Symbols.LineSymbols;assembly=EdblockViewModel" 
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors" 
              xmlns:edblockVM="clr-namespace:EdblockView;assembly=EdblockViewModel"
+             xmlns:symbols="clr-namespace:EdblockView.Symbols"
              d:DataContext="{d:DesignInstance Type=symbolsLineVM:DrawnLineSymbolVM}"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
@@ -22,7 +23,32 @@
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
         </ItemsControl>
-   
+
+        <ItemsControl ItemsSource="{Binding MovableRectanglesLine}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Rectangle Width="4" Height="4" Fill="Black">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="MouseRightButtonDown">
+                                <i:InvokeCommandAction Command="{Binding Click}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </Rectangle>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Canvas />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemContainerStyle>
+                <Style TargetType="FrameworkElement">
+                    <Setter Property="Canvas.Left" Value="{Binding XCoordinate}" />
+                    <Setter Property="Canvas.Top" Value="{Binding YCoordinate}" />
+                </Style>
+            </ItemsControl.ItemContainerStyle>
+        </ItemsControl>
+
         <Polygon DataContext="{Binding ArrowSymbol}" Points="{Binding PointArrowSymbol}" Style="{StaticResource ArrowSymbol}"/>
         
         <Canvas>
