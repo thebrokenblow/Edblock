@@ -1,7 +1,6 @@
-﻿using EdblockViewModel.Symbols.LineSymbols;
-using EdblockModel.Symbols.LineSymbols.DecoratorLineSymbols;
+﻿using EdblockModel.Symbols.Enum;
 using EdblockModel.Symbols.Abstraction;
-using EdblockModel.Symbols.Enum;
+using EdblockModel.Symbols.LineSymbols.DecoratorLineSymbols;
 
 namespace EdblockModel.Symbols.LineSymbols.RedrawLine;
 
@@ -14,7 +13,6 @@ public class RedrawnLine
     private readonly PositionConnectionPoint _positionIncoming;
     private List<CoordinateLine> coordinatesLines;
     private readonly RedrawnLineParallelSides redrawnParallelSides;
-    private readonly RedrawnLineIdenticalSides redrawnLineIdenticalSides;
     private readonly RedrawnLineNoParallelSides redrawnLineNoParallelSides;
     private List<LineSymbolModel> _linesSymbolModel;
     private const int baseLineOffset = 20;
@@ -31,7 +29,6 @@ public class RedrawnLine
         _positionIncoming = drawnLineSymbolModel.IncomingPosition;
 
         redrawnParallelSides = new(drawnLineSymbolModel, this, baseLineOffset);
-        redrawnLineIdenticalSides = new(drawnLineSymbolModel, this, baseLineOffset);
         redrawnLineNoParallelSides = new(drawnLineSymbolModel, this, baseLineOffset);
 
         _linesSymbolModel = drawnLineSymbolModel.LinesSymbolModel;
@@ -43,7 +40,6 @@ public class RedrawnLine
         var borderCoordinateIncomingSymbol = _symbolIncomingLine!.GetBorderCoordinate(_positionIncoming);
 
         redrawnParallelSides.RedrawLine();
-        redrawnLineIdenticalSides.RedrawLine();
 
         if (IsNotParallel())
         {

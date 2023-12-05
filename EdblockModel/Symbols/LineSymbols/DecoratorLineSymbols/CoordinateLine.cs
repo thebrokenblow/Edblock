@@ -1,6 +1,4 @@
-﻿using EdblockModel.Symbols.LineSymbols.DecoratorLineSymbols;
-
-namespace EdblockViewModel.Symbols.LineSymbols;
+﻿namespace EdblockModel.Symbols.LineSymbols.DecoratorLineSymbols;
 
 public class CoordinateLine
 {

@@ -3,6 +3,7 @@
 public class CoordinateLineModel
 {
     private readonly List<LineSymbolModel> _lineSymbolModel;
+
     public CoordinateLineModel(List<LineSymbolModel> lineSymbolModel)
     {
         _lineSymbolModel = lineSymbolModel;
