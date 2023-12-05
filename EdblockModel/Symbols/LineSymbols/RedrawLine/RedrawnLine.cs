@@ -14,7 +14,7 @@ public class RedrawnLine
     private List<CoordinateLine> _coordinatesLines;
     private readonly RedrawnLineParallelSides redrawnParallelSides;
     private readonly RedrawnLineNoParallelSides redrawnLineNoParallelSides;
-    private List<LineSymbolModel> _linesSymbolModel;
+    private readonly List<LineSymbolModel> _linesSymbolModel;
     private const int baseLineOffset = 20;
 
     public RedrawnLine(DrawnLineSymbolModel drawnLineSymbolModel)
@@ -39,9 +39,11 @@ public class RedrawnLine
         var borderCoordinateOutgoingSymbol = _symbolOutgoingLine.GetBorderCoordinate(_positionOutgoing);
         var borderCoordinateIncomingSymbol = _symbolIncomingLine!.GetBorderCoordinate(_positionIncoming);
 
-        redrawnParallelSides.RedrawLine(borderCoordinateOutgoingSymbol, borderCoordinateIncomingSymbol);
-
-        if (IsNotParallel())
+        if (IsParallel())
+        {
+            redrawnParallelSides.RedrawLine(borderCoordinateOutgoingSymbol, borderCoordinateIncomingSymbol);
+        }
+        else
         {
             redrawnLineNoParallelSides.RedrawLine(borderCoordinateOutgoingSymbol, borderCoordinateIncomingSymbol);
         }
@@ -49,62 +51,6 @@ public class RedrawnLine
         SetCoordinateLineModel();
 
         return _linesSymbolModel;
-    }
-
-    private bool IsNotParallel()
-    {
-        bool isNotParallel = 
-            (_positionOutgoing == PositionConnectionPoint.Top && _positionIncoming == PositionConnectionPoint.Right) ||
-            (_positionOutgoing == PositionConnectionPoint.Top && _positionIncoming == PositionConnectionPoint.Left) ||
-            (_positionOutgoing == PositionConnectionPoint.Right && _positionIncoming == PositionConnectionPoint.Top) ||
-            (_positionOutgoing == PositionConnectionPoint.Right && _positionIncoming == PositionConnectionPoint.Bottom) ||
-            (_positionOutgoing == PositionConnectionPoint.Bottom && _positionIncoming == PositionConnectionPoint.Left) ||
-            (_positionOutgoing == PositionConnectionPoint.Bottom && _positionIncoming == PositionConnectionPoint.Right) ||
-            (_positionOutgoing == PositionConnectionPoint.Left && _positionIncoming == PositionConnectionPoint.Top) ||
-            (_positionOutgoing == PositionConnectionPoint.Left && _positionIncoming == PositionConnectionPoint.Bottom);
-
-        return isNotParallel;
-    }
-
-    public void ReverseCoordinateLine()
-    {
-        foreach (var coordinatsLine in _coordinatesLines)
-        {
-            (coordinatsLine.CoordinateSymbolOutgoing, coordinatsLine.CoordinateSymbolIncoming) = 
-                (coordinatsLine.CoordinateSymbolIncoming, coordinatsLine.CoordinateSymbolOutgoing);
-        }
-
-        _coordinatesLines = Enumerable.Reverse(_coordinatesLines).ToList();
-    }
-
-    public void SetCoordinateLineModel()
-    {
-        for (int i = 0; i < _coordinatesLines.Count; i++)
-        {
-            _linesSymbolModel[i].X1 = _coordinatesLines[i].CoordinateSymbolOutgoing.X;
-            _linesSymbolModel[i].Y1 = _coordinatesLines[i].CoordinateSymbolOutgoing.Y;
-
-            _linesSymbolModel[i].X2 = _coordinatesLines[i].CoordinateSymbolIncoming.X;
-            _linesSymbolModel[i].Y2 = _coordinatesLines[i].CoordinateSymbolIncoming.Y;
-        }
-    }
-
-    public static (ICoordinateDecorator, ICoordinateDecorator) SetBuilderCoordinate(
-        ICoordinateDecorator coordinateSymbolOutgoing, 
-        ICoordinateDecorator coordinateSymbolIncoming, 
-        BuilderCoordinateDecorator? builderCoordinateDecorator = null)
-    {
-        if (builderCoordinateDecorator == null)
-        {
-            return (coordinateSymbolOutgoing, coordinateSymbolIncoming);
-        }
-        else
-        {
-            coordinateSymbolOutgoing = builderCoordinateDecorator.Build(coordinateSymbolOutgoing);
-            coordinateSymbolIncoming = builderCoordinateDecorator.Build(coordinateSymbolIncoming);
-
-            return (coordinateSymbolOutgoing, coordinateSymbolIncoming);
-        }
     }
 
     public void ChangeCountLines(int currentCountLines, BuilderCoordinateDecorator? builderCoordinateDecorator = null)
@@ -125,7 +71,7 @@ public class RedrawnLine
 
             var coordinateLine = new CoordinateLine(coordinateSymbolOutgoing, coordinateSymbolIncoming);
 
-            (coordinateSymbolOutgoing, coordinateSymbolIncoming) = 
+            (coordinateSymbolOutgoing, coordinateSymbolIncoming) =
                 SetBuilderCoordinate(coordinateSymbolOutgoing, coordinateSymbolIncoming, builderCoordinateDecorator);
 
             var decoratedCoordinateLine = new CoordinateLine(coordinateSymbolOutgoing, coordinateSymbolIncoming);
@@ -135,6 +81,62 @@ public class RedrawnLine
             _linesSymbolModel.Add(lineSymbol);
             _coordinatesLines.Add(coordinateLine);
             DecoratedCoordinatesLines.Add(decoratedCoordinateLine);
+        }
+    }
+
+    public static (ICoordinateDecorator, ICoordinateDecorator) SetBuilderCoordinate(
+    ICoordinateDecorator coordinateSymbolOutgoing,
+    ICoordinateDecorator coordinateSymbolIncoming,
+    BuilderCoordinateDecorator? builderCoordinateDecorator = null)
+    {
+        if (builderCoordinateDecorator == null)
+        {
+            return (coordinateSymbolOutgoing, coordinateSymbolIncoming);
+        }
+        else
+        {
+            coordinateSymbolOutgoing = builderCoordinateDecorator.Build(coordinateSymbolOutgoing);
+            coordinateSymbolIncoming = builderCoordinateDecorator.Build(coordinateSymbolIncoming);
+
+            return (coordinateSymbolOutgoing, coordinateSymbolIncoming);
+        }
+    }
+
+    public void ReverseCoordinateLine()
+    {
+        foreach (var coordinatsLine in _coordinatesLines)
+        {
+            (coordinatsLine.CoordinateSymbolOutgoing, coordinatsLine.CoordinateSymbolIncoming) =
+                (coordinatsLine.CoordinateSymbolIncoming, coordinatsLine.CoordinateSymbolOutgoing);
+        }
+
+        _coordinatesLines = Enumerable.Reverse(_coordinatesLines).ToList();
+    }
+
+    private bool IsParallel()
+    {
+        bool istParallel = 
+            (_positionOutgoing == PositionConnectionPoint.Bottom && _positionIncoming == PositionConnectionPoint.Top) ||
+            (_positionOutgoing == PositionConnectionPoint.Top && _positionIncoming == PositionConnectionPoint.Bottom) ||
+            (_positionOutgoing == PositionConnectionPoint.Right && _positionIncoming == PositionConnectionPoint.Left) ||
+            (_positionOutgoing == PositionConnectionPoint.Left && _positionIncoming == PositionConnectionPoint.Right) ||
+            (_positionOutgoing == PositionConnectionPoint.Left && _positionIncoming == PositionConnectionPoint.Left) ||
+            (_positionOutgoing == PositionConnectionPoint.Right && _positionIncoming == PositionConnectionPoint.Right) ||
+            (_positionOutgoing == PositionConnectionPoint.Top && _positionIncoming == PositionConnectionPoint.Top) ||
+            (_positionOutgoing == PositionConnectionPoint.Bottom && _positionIncoming == PositionConnectionPoint.Bottom);
+
+        return istParallel;
+    }
+
+    private void SetCoordinateLineModel()
+    {
+        for (int i = 0; i < _coordinatesLines.Count; i++)
+        {
+            _linesSymbolModel[i].X1 = _coordinatesLines[i].CoordinateSymbolOutgoing.X;
+            _linesSymbolModel[i].Y1 = _coordinatesLines[i].CoordinateSymbolOutgoing.Y;
+
+            _linesSymbolModel[i].X2 = _coordinatesLines[i].CoordinateSymbolIncoming.X;
+            _linesSymbolModel[i].Y2 = _coordinatesLines[i].CoordinateSymbolIncoming.Y;
         }
     }
 }
