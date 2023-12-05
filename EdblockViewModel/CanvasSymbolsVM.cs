@@ -99,12 +99,18 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
         Grid = new Rect(-lengthGridCell, -lengthGridCell, lengthGridCell, lengthGridCell);
     }
 
-    public void DeleteCurrentLine()
+    public void DeleteLine()
     {
         if (DrawnLineSymbol != null)
         {
             Symbols.Remove(DrawnLineSymbol);
             DrawnLineSymbol = null;
+        }
+
+        if (SelectDrawnLineSymbol != null)
+        {
+            Symbols.Remove(SelectDrawnLineSymbol);
+            SelectDrawnLineSymbol = null;
         }
     }
 
@@ -146,6 +152,13 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
     public void ClickOnCanvas()
     {
         AddLineSymbol();
+
+        if (SelectDrawnLineSymbol != null)
+        {
+            var selectDrawnLineSymbol = SelectDrawnLineSymbol;
+            SelectDrawnLineSymbol = null;
+            selectDrawnLineSymbol.SetDefaultColorLines();
+        }
         TextField.ChangeFocus(Symbols);
     }
 

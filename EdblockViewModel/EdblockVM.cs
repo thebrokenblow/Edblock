@@ -11,7 +11,7 @@ public class EdblockVM
     public EdblockVM(CanvasSymbolsVM canvasSymbolsVM)
     {
         CanvasSymbolsVM = canvasSymbolsVM;
-        ClickEsc = new(CanvasSymbolsVM.DeleteCurrentLine);
+        ClickEsc = new(CanvasSymbolsVM.DeleteLine);
         MouseUpSymbol = new(CanvasSymbolsVM.FinishMovingBlockSymbol);
         ClickSymbol = new(CanvasSymbolsVM.CreateBlockSymbol);
     }

@@ -63,14 +63,14 @@ public class DrawnLineSymbolVM : SymbolVM
 
     private readonly CanvasSymbolsVM _canvasSymbolsVM;
 
-    public DrawnLineSymbolVM(PositionConnectionPoint positionConnectionPoint, DrawnLineSymbolModel drawnLineSymbolModel, CanvasSymbolsVM canvasSymbolsVM)
+    public DrawnLineSymbolVM(DrawnLineSymbolModel drawnLineSymbolModel, CanvasSymbolsVM canvasSymbolsVM, PositionConnectionPoint outgoingPosition)
     {
         EnterCursor = new(SetHighlightColorLines);
         LeaveCursor = new(SetDefaultColorLines);
         ClickOnLine = new(SelectLine);
 
         DrawnLineSymbolModel = drawnLineSymbolModel;
-        OutgoingPosition = positionConnectionPoint;
+        OutgoingPosition = outgoingPosition;
 
         _canvasSymbolsVM = canvasSymbolsVM;
 
@@ -146,7 +146,10 @@ public class DrawnLineSymbolVM : SymbolVM
 
     public void SetDefaultColorLines()
     {
-        SetHighlightStatus(false);
+        if (_canvasSymbolsVM.SelectDrawnLineSymbol == null)
+        {
+            SetHighlightStatus(false);
+        }
     }
 
     private void SetHighlightStatus(bool status)

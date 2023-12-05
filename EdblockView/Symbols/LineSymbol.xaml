@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:symbolsLineVM="clr-namespace:EdblockViewModel.Symbols.LineSymbols;assembly=EdblockViewModel" 
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors" 
-             xmlns:edblockVM="clr-namespace:EdblockView;assembly=EdblockViewModel" xmlns:edblockviewmodel="clr-namespace:EdblockViewModel;assembly=EdblockViewModel"
+             xmlns:edblockVM="clr-namespace:EdblockView;assembly=EdblockViewModel"
              d:DataContext="{d:DesignInstance Type=symbolsLineVM:DrawnLineSymbolVM}"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
@@ -42,7 +42,7 @@
             <i:EventTrigger EventName="MouseLeave">
                 <i:InvokeCommandAction Command="{Binding LeaveCursor}" />
             </i:EventTrigger>
-            <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+            <i:EventTrigger EventName="MouseRightButtonDown">
                 <i:InvokeCommandAction Command="{Binding ClickOnLine}" />
             </i:EventTrigger>
         </i:Interaction.Triggers>

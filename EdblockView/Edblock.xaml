@@ -11,7 +11,7 @@
         mc:Ignorable="d"
         Title="Edblock" Height="600" Width="1200">
     <Window.InputBindings>
-        <KeyBinding Command="{Binding ClickEsc}" Key="Esc"/>
+        <KeyBinding Command="{Binding ClickEsc}" Key="Delete"/>
     </Window.InputBindings>
     <Grid>
         <Grid.ColumnDefinitions>
