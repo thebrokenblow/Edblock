@@ -110,9 +110,7 @@ public class DrawnLineSymbolVM : SymbolVM
     {
         if (_canvasSymbolsVM.SelectDrawnLineSymbol != null)
         {
-            var selectDrawnLineSymbol = _canvasSymbolsVM.SelectDrawnLineSymbol;
-            _canvasSymbolsVM.SelectDrawnLineSymbol = null;
-            selectDrawnLineSymbol.SetDefaultColorLines();
+            _canvasSymbolsVM.SelectDrawnLineSymbol.SetDefaultColorLines();
         }
 
         SetHighlightColorLines();

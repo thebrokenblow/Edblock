@@ -169,9 +169,8 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
     {
         if (SelectDrawnLineSymbol != null)
         {
-            var selectDrawnLineSymbol = SelectDrawnLineSymbol;
+            SelectDrawnLineSymbol.SetDefaultColorLines();
             SelectDrawnLineSymbol = null;
-            selectDrawnLineSymbol.SetDefaultColorLines();
         }
     }
 
