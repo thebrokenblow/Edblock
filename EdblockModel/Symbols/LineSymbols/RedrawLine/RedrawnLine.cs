@@ -11,7 +11,7 @@ public class RedrawnLine
     private readonly BlockSymbolModel? _symbolIncomingLine;
     private readonly PositionConnectionPoint _positionOutgoing;
     private readonly PositionConnectionPoint _positionIncoming;
-    private List<CoordinateLine> coordinatesLines;
+    private List<CoordinateLine> _coordinatesLines;
     private readonly RedrawnLineParallelSides redrawnParallelSides;
     private readonly RedrawnLineNoParallelSides redrawnLineNoParallelSides;
     private List<LineSymbolModel> _linesSymbolModel;
@@ -19,7 +19,7 @@ public class RedrawnLine
 
     public RedrawnLine(DrawnLineSymbolModel drawnLineSymbolModel)
     {
-        coordinatesLines = new();
+        _coordinatesLines = new();
         DecoratedCoordinatesLines = new();
 
         _symbolOutgoingLine = drawnLineSymbolModel.SymbolOutgoingLine;
@@ -68,72 +68,72 @@ public class RedrawnLine
 
     public void ReverseCoordinateLine()
     {
-        foreach (var coordinatsLine in coordinatesLines)
+        foreach (var coordinatsLine in _coordinatesLines)
         {
-            (coordinatsLine.FirstCoordinate, coordinatsLine.SecondCoordinate) = (coordinatsLine.SecondCoordinate, coordinatsLine.FirstCoordinate);
+            (coordinatsLine.CoordinateSymbolOutgoing, coordinatsLine.CoordinateSymbolIncoming) = 
+                (coordinatsLine.CoordinateSymbolIncoming, coordinatsLine.CoordinateSymbolOutgoing);
         }
 
-        coordinatesLines = Enumerable.Reverse(coordinatesLines).ToList();
+        _coordinatesLines = Enumerable.Reverse(_coordinatesLines).ToList();
     }
 
     public void SetCoordinateLineModel()
     {
-        var countDecoratedCoordinatesLines = DecoratedCoordinatesLines.Count;
-        ChangeCountLinesModel(countDecoratedCoordinatesLines);
-
-        for (int i = 0; i < coordinatesLines.Count; i++)
+        for (int i = 0; i < _coordinatesLines.Count; i++)
         {
-            var lineSymbol = _linesSymbolModel[i];
+            _linesSymbolModel[i].X1 = _coordinatesLines[i].CoordinateSymbolOutgoing.X;
+            _linesSymbolModel[i].Y1 = _coordinatesLines[i].CoordinateSymbolOutgoing.Y;
 
-            lineSymbol.X1 = coordinatesLines[i].FirstCoordinate.X;
-            lineSymbol.Y1 = coordinatesLines[i].FirstCoordinate.Y;
-
-            lineSymbol.X2 = coordinatesLines[i].SecondCoordinate.X;
-            lineSymbol.Y2 = coordinatesLines[i].SecondCoordinate.Y;
+            _linesSymbolModel[i].X2 = _coordinatesLines[i].CoordinateSymbolIncoming.X;
+            _linesSymbolModel[i].Y2 = _coordinatesLines[i].CoordinateSymbolIncoming.Y;
         }
     }
 
-    private void ChangeCountLinesModel(int currentCountLines)
+    public static (ICoordinateDecorator, ICoordinateDecorator) SetBuilderCoordinate(
+        ICoordinateDecorator coordinateSymbolOutgoing, 
+        ICoordinateDecorator coordinateSymbolIncoming, 
+        BuilderCoordinateDecorator? builderCoordinateDecorator = null)
     {
-        if (_linesSymbolModel.Count == currentCountLines)
+        if (builderCoordinateDecorator == null)
         {
-            return;
+            return (coordinateSymbolOutgoing, coordinateSymbolIncoming);
         }
-
-        _linesSymbolModel.Clear();
-
-        for (int i = 0; i < currentCountLines; i++)
+        else
         {
-            var lineSymbol = new LineSymbolModel();
-            _linesSymbolModel.Add(lineSymbol);
+            coordinateSymbolOutgoing = builderCoordinateDecorator.Build(coordinateSymbolOutgoing);
+            coordinateSymbolIncoming = builderCoordinateDecorator.Build(coordinateSymbolIncoming);
+
+            return (coordinateSymbolOutgoing, coordinateSymbolIncoming);
         }
     }
 
-    public void ChangeCountDecoratedLines(int currentCountLines, BuilderCoordinateDecorator? builderCoordinateDecorator = null)
+    public void ChangeCountLines(int currentCountLines, BuilderCoordinateDecorator? builderCoordinateDecorator = null)
     {
         if (DecoratedCoordinatesLines.Count == currentCountLines)
         {
             return;
         }
 
+        _linesSymbolModel.Clear();
+        _coordinatesLines.Clear();
         DecoratedCoordinatesLines.Clear();
 
         for (int i = 0; i < currentCountLines; i++)
         {
-            ICoordinateDecorator firstLineCoordinate = new CoordinateDecorator();
-            ICoordinateDecorator secondCoordinate = new CoordinateDecorator();
+            ICoordinateDecorator coordinateSymbolOutgoing = new CoordinateDecorator();
+            ICoordinateDecorator coordinateSymbolIncoming = new CoordinateDecorator();
 
-            var coordinateLine = new CoordinateLine(firstLineCoordinate, secondCoordinate);
+            var coordinateLine = new CoordinateLine(coordinateSymbolOutgoing, coordinateSymbolIncoming);
 
-            coordinatesLines.Add(coordinateLine);
+            (coordinateSymbolOutgoing, coordinateSymbolIncoming) = 
+                SetBuilderCoordinate(coordinateSymbolOutgoing, coordinateSymbolIncoming, builderCoordinateDecorator);
 
-            if (builderCoordinateDecorator is not null)
-            {
-                firstLineCoordinate = builderCoordinateDecorator.Build(firstLineCoordinate);
-                secondCoordinate = builderCoordinateDecorator.Build(secondCoordinate);
-            }
+            var decoratedCoordinateLine = new CoordinateLine(coordinateSymbolOutgoing, coordinateSymbolIncoming);
 
-            var decoratedCoordinateLine = new CoordinateLine(firstLineCoordinate, secondCoordinate);
+            var lineSymbol = new LineSymbolModel();
+
+            _linesSymbolModel.Add(lineSymbol);
+            _coordinatesLines.Add(coordinateLine);
             DecoratedCoordinatesLines.Add(decoratedCoordinateLine);
         }
     }

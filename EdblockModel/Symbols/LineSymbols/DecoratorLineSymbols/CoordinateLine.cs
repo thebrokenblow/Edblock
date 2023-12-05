@@ -2,12 +2,12 @@
 
 public class CoordinateLine
 {
-    public ICoordinateDecorator FirstCoordinate { get; set; }
-    public ICoordinateDecorator SecondCoordinate { get; set; }
+    public ICoordinateDecorator CoordinateSymbolOutgoing { get; set; }
+    public ICoordinateDecorator CoordinateSymbolIncoming { get; set; }
 
-    public CoordinateLine(ICoordinateDecorator firstCoordinate, ICoordinateDecorator secondCoordinate)
+    public CoordinateLine(ICoordinateDecorator coordinateSymbolOutgoing, ICoordinateDecorator coordinateSymbolIncoming)
     {
-        FirstCoordinate = firstCoordinate;
-        SecondCoordinate = secondCoordinate;
+        CoordinateSymbolOutgoing = coordinateSymbolOutgoing;
+        CoordinateSymbolIncoming = coordinateSymbolIncoming;
     }
 }
