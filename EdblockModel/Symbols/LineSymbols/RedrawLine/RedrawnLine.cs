@@ -39,7 +39,7 @@ public class RedrawnLine
         var borderCoordinateOutgoingSymbol = _symbolOutgoingLine.GetBorderCoordinate(_positionOutgoing);
         var borderCoordinateIncomingSymbol = _symbolIncomingLine!.GetBorderCoordinate(_positionIncoming);
 
-        redrawnParallelSides.RedrawLine();
+        redrawnParallelSides.RedrawLine(borderCoordinateOutgoingSymbol, borderCoordinateIncomingSymbol);
 
         if (IsNotParallel())
         {
