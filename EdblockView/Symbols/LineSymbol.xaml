@@ -13,16 +13,7 @@
         <ItemsControl ItemsSource="{Binding LinesSymbol}">
             <ItemsControl.Resources>
                 <DataTemplate DataType="{x:Type symbolsLineVM:LineSymbolVM}">
-                    <Line Style="{StaticResource LineSymbol}">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="MouseDown">
-                                <i:InvokeCommandAction Command="{Binding ButtonDown}"/>
-                            </i:EventTrigger>
-                            <i:EventTrigger EventName="PreviewMouseRightButtonUp">
-                                <i:InvokeCommandAction Command="{Binding ButtonUp}"/>
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                    </Line>
+                    <Line Style="{StaticResource LineSymbol}"/>
                 </DataTemplate>
             </ItemsControl.Resources>
             <ItemsControl.ItemsPanel>
@@ -38,14 +29,8 @@
                     <Border Style="{StaticResource BorderMovableRectangleLine}">
                         <Rectangle Style="{StaticResource MovableRectangleLine}">
                             <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="MouseMove">
-                                    <i:InvokeCommandAction Command="{Binding MouseMove}"/>
-                                </i:EventTrigger>
-                                <i:EventTrigger EventName="PreviewMouseRightButtonDown">
+                                <i:EventTrigger EventName="MouseRightButtonDown">
                                     <i:InvokeCommandAction Command="{Binding ButtonDown}"/>
-                                </i:EventTrigger>
-                                <i:EventTrigger EventName="MouseRightButtonUp">
-                                    <i:InvokeCommandAction Command="{Binding ButtonUp}"/>
                                 </i:EventTrigger>
                                 <i:EventTrigger EventName="MouseEnter">
                                     <i:InvokeCommandAction Command="{Binding MouseEnter}"/>

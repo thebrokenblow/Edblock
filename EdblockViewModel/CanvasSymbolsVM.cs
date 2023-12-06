@@ -210,7 +210,9 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
 
     private void FinishRedrawingLine()
     {
+        MovableRectangleLine = null;
         CurrentRedrawLines = null;
+        Cursor = Cursors.Arrow;
     }
 
     private void RedrawLine()

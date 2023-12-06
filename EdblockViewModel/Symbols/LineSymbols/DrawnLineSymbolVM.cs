@@ -126,6 +126,7 @@ public class DrawnLineSymbolVM : SymbolVM
             }
 
             SetHighlightColorLines();
+            ShowMovableRectanglesLine();
             CanvasSymbolsVM.SelectDrawnLineSymbol = this;
         }
     }
@@ -189,7 +190,6 @@ public class DrawnLineSymbolVM : SymbolVM
 
         if (movableSymbol == null && drawnLineSymbol == null)
         {
-            ShowMovableRectanglesLine();
             SetHighlightStatus(true);
         }
     }

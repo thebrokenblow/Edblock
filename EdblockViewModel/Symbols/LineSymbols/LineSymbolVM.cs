@@ -61,23 +61,4 @@ public class LineSymbolVM : SymbolVM
             OnPropertyChanged();
         }
     }
-
-    public DelegateCommand ButtonDown { get; init; }
-    public DelegateCommand ButtonUp { get; init; }
-
-    public LineSymbolVM()
-    {
-        ButtonDown = new(test1);
-        ButtonUp = new(test2);
-    }
-
-    private void test1()
-    {
-        
-    }
-
-    private void test2()
-    {
-        
-    }
 }

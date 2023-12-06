@@ -60,9 +60,7 @@ public class MovableRectangleLine : INotifyPropertyChanged
 
     public event PropertyChangedEventHandler? PropertyChanged;
 
-    public DelegateCommand MouseMove { get; init; }
     public DelegateCommand ButtonDown { get; init; }
-    public DelegateCommand ButtonUp { get; init; }
     public DelegateCommand MouseEnter { get; init; }
     public DelegateCommand MouseLeave { get; init; }
 
@@ -77,7 +75,6 @@ public class MovableRectangleLine : INotifyPropertyChanged
         _lineSymbolVM = lineSymbolVM;
 
         ButtonDown = new(SetMovableRectangleLine);
-        ButtonUp = new(FinishChangeCoordinate);
         MouseEnter = new(SetCursor);
         MouseLeave = new(SetBaseCursorCursor);
 
@@ -94,24 +91,24 @@ public class MovableRectangleLine : INotifyPropertyChanged
         _canvasSymbolsVM.MovableRectangleLine = this;
     }
 
-    private void FinishChangeCoordinate()
-    {
-        _canvasSymbolsVM.MovableRectangleLine = null;
-    }
-
     private void SetCursor()
     {
-        _canvasSymbolsVM.Cursor = Cursors.SizeNS;
-
-        if (_lineSymbolVM.X1 == _lineSymbolVM.X2)
+        if (_lineSymbolVM.X1 == _lineSymbolVM.X2 && _canvasSymbolsVM.Cursor == Cursors.Arrow)
         {
             _canvasSymbolsVM.Cursor = Cursors.SizeWE;
+        }
+
+        if (_lineSymbolVM.Y1 == _lineSymbolVM.Y2 && _canvasSymbolsVM.Cursor == Cursors.Arrow)
+        {
+            _canvasSymbolsVM.Cursor = Cursors.SizeNS;
         }
     }
 
     private void SetBaseCursorCursor()
     {
-        if (_canvasSymbolsVM.MovableRectangleLine == null)
+        var currentMovableRectangleLine = _canvasSymbolsVM.MovableRectangleLine;
+
+        if (currentMovableRectangleLine == null)
         {
             _canvasSymbolsVM.Cursor = Cursors.Arrow;
         }

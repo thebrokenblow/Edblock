@@ -88,11 +88,12 @@
     </Style>
 
     <Style x:Key="BorderMovableRectangleLine" TargetType="Border">
-        <Setter Property="BorderBrush" Value="#00FFFFFF" />
+        <Setter Property="Visibility" Value="Hidden" />
+        <Setter Property="BorderBrush" Value="#FF888888" />
         <Setter Property="BorderThickness" Value="{Binding BorderThickness}" />
         <Style.Triggers>
             <DataTrigger Binding="{Binding IsShow}" Value="True">
-                <Setter Property="BorderBrush" Value="#FF888888"/>
+                <Setter Property="Visibility" Value="Visible"/>
             </DataTrigger>
         </Style.Triggers>
     </Style>
@@ -100,10 +101,11 @@
     <Style x:Key="MovableRectangleLine" TargetType="Rectangle">
         <Setter Property="Width" Value="{Binding Width}" />
         <Setter Property="Height" Value="{Binding Height}" />
-        <Setter Property="Fill" Value="Transparent" />
+        <Setter Property="Fill" Value="White" />
+        <Setter Property="Visibility" Value="Hidden" />
         <Style.Triggers>
             <DataTrigger Binding="{Binding IsShow}" Value="True">
-                <Setter Property="Fill" Value="White"/>
+                <Setter Property="Visibility" Value="Visible"/>
             </DataTrigger>
         </Style.Triggers>
     </Style>
