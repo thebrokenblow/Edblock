@@ -6,7 +6,6 @@
              xmlns:symbolsLineVM="clr-namespace:EdblockViewModel.Symbols.LineSymbols;assembly=EdblockViewModel" 
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors" 
              xmlns:edblockVM="clr-namespace:EdblockView;assembly=EdblockViewModel"
-             xmlns:symbols="clr-namespace:EdblockView.Symbols"
              d:DataContext="{d:DesignInstance Type=symbolsLineVM:DrawnLineSymbolVM}"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
@@ -27,13 +26,15 @@
         <ItemsControl ItemsSource="{Binding MovableRectanglesLine}">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Rectangle Width="4" Height="4" Fill="Black">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="MouseRightButtonDown">
-                                <i:InvokeCommandAction Command="{Binding Click}"/>
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                    </Rectangle>
+                    <Border Style="{StaticResource BorderMovableRectangleLine}">
+                        <Rectangle Style="{StaticResource MovableRectangleLine}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="MouseRightButtonDown">
+                                    <i:InvokeCommandAction Command="{Binding Click}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </Rectangle>
+                    </Border>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
             <ItemsControl.ItemsPanel>
@@ -68,7 +69,7 @@
             <i:EventTrigger EventName="MouseLeave">
                 <i:InvokeCommandAction Command="{Binding LeaveCursor}" />
             </i:EventTrigger>
-            <i:EventTrigger EventName="MouseRightButtonDown">
+            <i:EventTrigger EventName="MouseRightButtonUp">
                 <i:InvokeCommandAction Command="{Binding ClickOnLine}" />
             </i:EventTrigger>
         </i:Interaction.Triggers>

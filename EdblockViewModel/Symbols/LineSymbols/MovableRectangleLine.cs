@@ -6,8 +6,26 @@ namespace EdblockViewModel.Symbols.LineSymbols;
 
 public class MovableRectangleLine : INotifyPropertyChanged
 {
-    private int xCoordinate;
-    public int XCoordinate
+    private const double width = 4;
+    public double Width
+    {
+        get => width;
+    }
+
+    private const double height = 4;
+    public double Height 
+    {
+        get => height; 
+    }
+
+    private const double borderThickness = 1;
+    public double BorderThickness 
+    {
+        get => borderThickness;
+    }
+
+    private double xCoordinate;
+    public double XCoordinate
     {
         get => xCoordinate;
         set
@@ -17,8 +35,8 @@ public class MovableRectangleLine : INotifyPropertyChanged
         }
     }
 
-    private int yCoordinate;
-    public int YCoordinate
+    private double yCoordinate;
+    public double YCoordinate
     {
         get => yCoordinate;
         set
@@ -28,7 +46,7 @@ public class MovableRectangleLine : INotifyPropertyChanged
         }
     }
 
-    private bool isShow = false;
+    private bool isShow = true;
     public bool IsShow
     {
         get => isShow;
@@ -48,27 +66,48 @@ public class MovableRectangleLine : INotifyPropertyChanged
     {
         _drawnLineSymbolVM = drawnLineSymbolVM;
         _lineSymbolVM = lineSymbolVM;
+
+        Click = new(ChangeCoordinate);
+
         SetCoordinate();
-        Click = new(Click1);
     }
 
-    public void Click1()
+    public void ChangeCoordinate()
     {
-        
+        int index = _drawnLineSymbolVM.LinesSymbol.IndexOf(_lineSymbolVM);
+        SetCoordinate();
+        _drawnLineSymbolVM.CanvasSymbolsVM.Redraw(index);
     }
 
     private void SetCoordinate()
     {
+        double yMiddleCoordinate = GetMiddleCoordinateLine(_lineSymbolVM.Y1, _lineSymbolVM.Y2);
+        double yCoordinate = GetCoordinateMovableRectangle(yMiddleCoordinate, Height);
+        double xCoordinate = GetCoordinateMovableRectangle(_lineSymbolVM.X2, Width);
+
         if (_lineSymbolVM.Y1 == _lineSymbolVM.Y2)
         {
-            YCoordinate = _lineSymbolVM.Y2;
-            XCoordinate = _lineSymbolVM.X1 + (_lineSymbolVM.X2 - _lineSymbolVM.X1) / 2;
+            yCoordinate = GetCoordinateMovableRectangle(_lineSymbolVM.Y2, Height);
+            double xMiddleCoordinate = GetMiddleCoordinateLine(_lineSymbolVM.X1, _lineSymbolVM.X2);
+            xCoordinate = GetCoordinateMovableRectangle(xMiddleCoordinate, Width);
         }
-        else
-        {
-            YCoordinate = _lineSymbolVM.Y1 + (_lineSymbolVM.Y2 - _lineSymbolVM.Y1) / 2;
-            XCoordinate = _lineSymbolVM.X2;
-        }
+
+        YCoordinate = yCoordinate;
+        XCoordinate = xCoordinate;
+    }
+
+    private double GetMiddleCoordinateLine(double firstCoordinate, double secondCoordinate)
+    {
+        double middleCoordinate = firstCoordinate + (secondCoordinate - firstCoordinate) / 2;
+
+        return middleCoordinate;
+    }
+
+    private double GetCoordinateMovableRectangle(double coordinateLine, double sizeMovableRectangle)
+    {
+        double coordinate = coordinateLine - sizeMovableRectangle / 2 - BorderThickness;
+
+        return coordinate;
     }
 
     public void OnPropertyChanged([CallerMemberName] string prop = "")

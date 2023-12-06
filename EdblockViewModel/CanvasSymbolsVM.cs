@@ -11,6 +11,7 @@ using EdblockViewModel.Symbols.Abstraction;
 using EdblockViewModel.Symbols.ScaleRectangles;
 using EdblockViewModel.Symbols.ConnectionPoints;
 using EdblockModel.Symbols.LineSymbols.RedrawLine;
+using System;
 
 namespace EdblockViewModel;
 
@@ -47,6 +48,21 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
         {
             yCoordinate = RoundCoordinate(value);
 
+            if (SelectDrawnLineSymbol != null)
+            {
+                //var previousLineSymbol = SelectDrawnLineSymbol.LinesSymbol[index - 1];
+                //var currentLineSymbol = SelectDrawnLineSymbol.LinesSymbol[index];
+                //var nextLineSymbol = SelectDrawnLineSymbol.LinesSymbol[index + 1];
+
+                //previousLineSymbol.Y2 = yCoordinate;
+
+                //currentLineSymbol.Y1 = yCoordinate;
+                //currentLineSymbol.Y2 = yCoordinate;
+
+                //nextLineSymbol.Y1 = yCoordinate;
+
+            }
+
             var currentCoordinate = (xCoordinate, yCoordinate);
             var previousCoordinate = (previousXCoordinate, previousYCoordinate);
 
@@ -68,6 +84,7 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
             OnPropertyChanged();
         }
     }
+    private int index;
 
     public ObservableCollection<SymbolVM> Symbols { get; init; }
     public Dictionary<BlockSymbolVM, List<DrawnLineSymbolVM?>> BlockSymbolByLineSymbol { get; init; }
@@ -111,15 +128,6 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
         {
             Symbols.Remove(SelectDrawnLineSymbol);
             SelectDrawnLineSymbol = null;
-        }
-    }
-
-    private void RemoveLineFromCollections(ref DrawnLineSymbolVM? drawnLineSymbolVM)
-    {
-        if (drawnLineSymbolVM != null)
-        {
-            Symbols.Remove(drawnLineSymbolVM);
-            drawnLineSymbolVM = null;
         }
     }
 
@@ -235,5 +243,10 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
                 currentRedrawLine.RedrawAllLines();
             }
         }
+    }
+
+    internal void Redraw(int index)
+    {
+        this.index = index;
     }
 }

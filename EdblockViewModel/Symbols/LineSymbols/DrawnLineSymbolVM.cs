@@ -62,7 +62,7 @@ public class DrawnLineSymbolVM : SymbolVM
         }
     }
 
-    private readonly CanvasSymbolsVM _canvasSymbolsVM;
+    public CanvasSymbolsVM CanvasSymbolsVM { get; init; }
 
     public DrawnLineSymbolVM(DrawnLineSymbolModel drawnLineSymbolModel, CanvasSymbolsVM canvasSymbolsVM, PositionConnectionPoint outgoingPosition)
     {
@@ -73,7 +73,7 @@ public class DrawnLineSymbolVM : SymbolVM
         DrawnLineSymbolModel = drawnLineSymbolModel;
         OutgoingPosition = outgoingPosition;
 
-        _canvasSymbolsVM = canvasSymbolsVM;
+        CanvasSymbolsVM = canvasSymbolsVM;
 
         RedrawAllLines();
     }
@@ -108,14 +108,14 @@ public class DrawnLineSymbolVM : SymbolVM
 
     private void SelectLine()
     {
-        if (_canvasSymbolsVM.SelectDrawnLineSymbol != null)
+        if (CanvasSymbolsVM.SelectDrawnLineSymbol != null)
         {
-            _canvasSymbolsVM.SelectDrawnLineSymbol.SetDefaultColorLines();
+            CanvasSymbolsVM.SelectDrawnLineSymbol.SetDefaultColorLines();
         }
 
         SetHighlightColorLines();
         ShowMovableRectanglesLine();
-        _canvasSymbolsVM.SelectDrawnLineSymbol = this;
+        CanvasSymbolsVM.SelectDrawnLineSymbol = this;
     }
 
     public void ChangeCoordination((int, int) currentCoordinte)
@@ -172,8 +172,8 @@ public class DrawnLineSymbolVM : SymbolVM
 
     private void SetHighlightColorLines()
     {
-        var movableSymbol = _canvasSymbolsVM.MovableSymbol;
-        var drawnLineSymbol = _canvasSymbolsVM.DrawnLineSymbol;
+        var movableSymbol = CanvasSymbolsVM.MovableSymbol;
+        var drawnLineSymbol = CanvasSymbolsVM.DrawnLineSymbol;
 
         if (movableSymbol == null && drawnLineSymbol == null)
         {
@@ -183,7 +183,7 @@ public class DrawnLineSymbolVM : SymbolVM
 
     public void SetDefaultColorLines()
     {
-        if (_canvasSymbolsVM.SelectDrawnLineSymbol != this)
+        if (CanvasSymbolsVM.SelectDrawnLineSymbol != this)
         {
             SetHighlightStatus(false);
             HideMovableRectanglesLine();
