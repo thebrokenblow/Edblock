@@ -48,24 +48,10 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
         {
             yCoordinate = RoundCoordinate(value);
 
-            if (SelectDrawnLineSymbol != null)
-            {
-                //var previousLineSymbol = SelectDrawnLineSymbol.LinesSymbol[index - 1];
-                //var currentLineSymbol = SelectDrawnLineSymbol.LinesSymbol[index];
-                //var nextLineSymbol = SelectDrawnLineSymbol.LinesSymbol[index + 1];
-
-                //previousLineSymbol.Y2 = yCoordinate;
-
-                //currentLineSymbol.Y1 = yCoordinate;
-                //currentLineSymbol.Y2 = yCoordinate;
-
-                //nextLineSymbol.Y1 = yCoordinate;
-
-            }
-
             var currentCoordinate = (xCoordinate, yCoordinate);
             var previousCoordinate = (previousXCoordinate, previousYCoordinate);
 
+            MovableRectangleLine?.ChangeCoordinateLine(currentCoordinate);
             MovableSymbol?.SetCoordinate(currentCoordinate, previousCoordinate);
             DrawnLineSymbol?.ChangeCoordination(currentCoordinate);
             ScalePartBlockSymbolVM?.SetHeightBlockSymbol(this);
@@ -84,7 +70,6 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
             OnPropertyChanged();
         }
     }
-    private int index;
 
     public ObservableCollection<SymbolVM> Symbols { get; init; }
     public Dictionary<BlockSymbolVM, List<DrawnLineSymbolVM?>> BlockSymbolByLineSymbol { get; init; }
@@ -99,6 +84,7 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
     public DrawnLineSymbolVM? DrawnLineSymbol { get; set; }
     private List<DrawnLineSymbolVM?>? CurrentRedrawLines { get; set; }
     public DrawnLineSymbolVM? SelectDrawnLineSymbol { get; set; }
+    public MovableRectangleLine? MovableRectangleLine { get; set; }
 
     private readonly FactoryBlockSymbol factoryBlockSymbol;
     private RedrawnLine? redrawLineSymbolVM;
@@ -170,6 +156,7 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
     {
         AddLineSymbol();
         RemoveSelectDrawnLine();
+        MovableRectangleLine = null;
         TextField.ChangeFocus(Symbols);
     }
 
@@ -244,10 +231,5 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
                 currentRedrawLine.RedrawAllLines();
             }
         }
-    }
-
-    internal void Redraw(int index)
-    {
-        this.index = index;
     }
 }

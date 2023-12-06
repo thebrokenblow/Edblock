@@ -78,15 +78,23 @@ public class DrawnLineSymbolVM : SymbolVM
         RedrawAllLines();
     }
 
-    private void RedrawMovableRectanglesLine()
+    public void RedrawMovableRectanglesLine()
     {
-        for (int i = 1; i < LinesSymbol.Count - 1; i++)
+        if (MovableRectanglesLine.Count != LinesSymbol.Count - 2)
         {
-            var lineSymbolVM = LinesSymbol[i];
-
-            var movableRectangleLine = new MovableRectangleLine(this, lineSymbolVM);
-
-            MovableRectanglesLine.Add(movableRectangleLine);
+            for (int i = 1; i < LinesSymbol.Count - 1; i++)
+            {
+                var lineSymbolVM = LinesSymbol[i];
+                var movableRectangleLine = new MovableRectangleLine(this, lineSymbolVM);
+                MovableRectanglesLine.Add(movableRectangleLine);
+            }
+        }
+        else
+        {
+            foreach (var movableRectangleLine in MovableRectanglesLine)
+            {
+                movableRectangleLine.SetCoordinate();
+            }
         }
     }
 
@@ -188,7 +196,8 @@ public class DrawnLineSymbolVM : SymbolVM
 
     public void SetDefaultColorLines()
     {
-        if (CanvasSymbolsVM.SelectDrawnLineSymbol != this)
+        if (CanvasSymbolsVM.SelectDrawnLineSymbol != this && 
+            CanvasSymbolsVM.MovableRectangleLine == null)
         {
             SetHighlightStatus(false);
             HideMovableRectanglesLine();

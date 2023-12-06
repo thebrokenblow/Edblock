@@ -60,7 +60,9 @@ public class MovableRectangleLine : INotifyPropertyChanged
 
     public event PropertyChangedEventHandler? PropertyChanged;
 
-    public DelegateCommand Click { get; init; }
+    public DelegateCommand MouseMove { get; init; }
+    public DelegateCommand ButtonDown { get; init; }
+    public DelegateCommand ButtonUp { get; init; }
     public DelegateCommand MouseEnter { get; init; }
     public DelegateCommand MouseLeave { get; init; }
 
@@ -74,18 +76,27 @@ public class MovableRectangleLine : INotifyPropertyChanged
 
         _lineSymbolVM = lineSymbolVM;
 
-        Click = new(ChangeCoordinate);
+        ButtonDown = new(SetMovableRectangleLine);
+        ButtonUp = new(FinishChangeCoordinate);
         MouseEnter = new(SetCursor);
         MouseLeave = new(SetBaseCursorCursor);
 
         SetCoordinate();
     }
 
-    private void ChangeCoordinate()
+    public void OnPropertyChanged([CallerMemberName] string prop = "")
     {
-        int index = _drawnLineSymbolVM.LinesSymbol.IndexOf(_lineSymbolVM);
-        SetCoordinate();
-        _drawnLineSymbolVM.CanvasSymbolsVM.Redraw(index);
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
+    }
+
+    private void SetMovableRectangleLine()
+    {
+        _canvasSymbolsVM.MovableRectangleLine = this;
+    }
+
+    private void FinishChangeCoordinate()
+    {
+        _canvasSymbolsVM.MovableRectangleLine = null;
     }
 
     private void SetCursor()
@@ -100,10 +111,13 @@ public class MovableRectangleLine : INotifyPropertyChanged
 
     private void SetBaseCursorCursor()
     {
-        _canvasSymbolsVM.Cursor = Cursors.Arrow;
+        if (_canvasSymbolsVM.MovableRectangleLine == null)
+        {
+            _canvasSymbolsVM.Cursor = Cursors.Arrow;
+        }
     }
 
-    private void SetCoordinate()
+    public void SetCoordinate()
     {
         double yMiddleCoordinate = GetMiddleCoordinateLine(_lineSymbolVM.Y1, _lineSymbolVM.Y2);
         double yCoordinate = GetCoordinateMovableRectangle(yMiddleCoordinate, Height);
@@ -120,22 +134,48 @@ public class MovableRectangleLine : INotifyPropertyChanged
         XCoordinate = xCoordinate;
     }
 
-    private double GetMiddleCoordinateLine(double firstCoordinate, double secondCoordinate)
+    private static double GetMiddleCoordinateLine(double firstCoordinate, double secondCoordinate)
     {
         double middleCoordinate = firstCoordinate + (secondCoordinate - firstCoordinate) / 2;
 
         return middleCoordinate;
     }
 
-    private double GetCoordinateMovableRectangle(double coordinateLine, double sizeMovableRectangle)
+    private static double GetCoordinateMovableRectangle(double coordinateLine, double sizeMovableRectangle)
     {
         double coordinate = coordinateLine - sizeMovableRectangle / 2 - BorderThickness;
 
         return coordinate;
     }
 
-    public void OnPropertyChanged([CallerMemberName] string prop = "")
+    internal void ChangeCoordinateLine((int x, int y) currentCoordinate)
     {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
+        int indexCurrentLine = _drawnLineSymbolVM.LinesSymbol.IndexOf(_lineSymbolVM);
+
+        var previousLine = _drawnLineSymbolVM.LinesSymbol[indexCurrentLine - 1];
+        var nextLine = _drawnLineSymbolVM.LinesSymbol[indexCurrentLine + 1];
+
+        if (_lineSymbolVM.X1 == _lineSymbolVM.X2)
+        {
+            previousLine.X2 = currentCoordinate.x;
+
+            _lineSymbolVM.X1 = currentCoordinate.x;
+            _lineSymbolVM.X2 = currentCoordinate.x;
+
+            nextLine.X1 = currentCoordinate.x;
+        }
+        else
+        {
+            previousLine.Y2 = currentCoordinate.y;
+
+            _lineSymbolVM.Y1 = currentCoordinate.y;
+            _lineSymbolVM.Y2 = currentCoordinate.y;
+
+            nextLine.Y1 = currentCoordinate.y;
+        }
+
+        _drawnLineSymbolVM.RedrawMovableRectanglesLine();
+
+        SetCoordinate();
     }
 }
