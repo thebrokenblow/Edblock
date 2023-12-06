@@ -108,14 +108,18 @@ public class DrawnLineSymbolVM : SymbolVM
 
     private void SelectLine()
     {
-        if (CanvasSymbolsVM.SelectDrawnLineSymbol != null)
+        if (CanvasSymbolsVM.SelectDrawnLineSymbol != this)
         {
-            CanvasSymbolsVM.SelectDrawnLineSymbol.SetDefaultColorLines();
-        }
+            if (CanvasSymbolsVM.SelectDrawnLineSymbol != null)
+            {
+                var copySelectDrawnLineSymbol = CanvasSymbolsVM.SelectDrawnLineSymbol;
+                CanvasSymbolsVM.SelectDrawnLineSymbol = null;
+                copySelectDrawnLineSymbol.SetDefaultColorLines();
+            }
 
-        SetHighlightColorLines();
-        ShowMovableRectanglesLine();
-        CanvasSymbolsVM.SelectDrawnLineSymbol = this;
+            SetHighlightColorLines();
+            CanvasSymbolsVM.SelectDrawnLineSymbol = this;
+        }
     }
 
     public void ChangeCoordination((int, int) currentCoordinte)
@@ -177,6 +181,7 @@ public class DrawnLineSymbolVM : SymbolVM
 
         if (movableSymbol == null && drawnLineSymbol == null)
         {
+            ShowMovableRectanglesLine();
             SetHighlightStatus(true);
         }
     }

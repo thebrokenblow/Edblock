@@ -47,7 +47,7 @@ public class MovableRectangleLine : INotifyPropertyChanged
         }
     }
 
-    private bool isShow = true;
+    private bool isShow = false;
     public bool IsShow
     {
         get => isShow;
