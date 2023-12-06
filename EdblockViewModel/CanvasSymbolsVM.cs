@@ -177,7 +177,7 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
             return;
         }
 
-        var linesSymbol = DrawnLineSymbol.LinesSymbol;
+        var linesSymbol = DrawnLineSymbol.LinesSymbolVM;
 
         if (linesSymbol.Count > 1)
         {
@@ -185,7 +185,7 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
             var currentLineSymbolModel = drawnLineSymbolModel.GetNewLine();
             var currentLineSymbolVM = FactoryLineSymbol.CreateLine(currentLineSymbolModel);
 
-            DrawnLineSymbol.LinesSymbol.Add(currentLineSymbolVM);
+            DrawnLineSymbol.LinesSymbolVM.Add(currentLineSymbolVM);
         }
     }
 

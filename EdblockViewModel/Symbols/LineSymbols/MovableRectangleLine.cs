@@ -75,46 +75,18 @@ public class MovableRectangleLine : INotifyPropertyChanged
         _lineSymbolVM = lineSymbolVM;
 
         ButtonDown = new(SetMovableRectangleLine);
-        MouseEnter = new(SetCursor);
-        MouseLeave = new(SetBaseCursorCursor);
+        MouseEnter = new(SetDirectionMovementCursor);
+        MouseLeave = new(SetBaseCursor);
 
         SetCoordinate();
     }
 
-    public void OnPropertyChanged([CallerMemberName] string prop = "")
+    internal void OnPropertyChanged([CallerMemberName] string prop = "")
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
     }
 
-    private void SetMovableRectangleLine()
-    {
-        _canvasSymbolsVM.MovableRectangleLine = this;
-    }
-
-    private void SetCursor()
-    {
-        if (_lineSymbolVM.X1 == _lineSymbolVM.X2 && _canvasSymbolsVM.Cursor == Cursors.Arrow)
-        {
-            _canvasSymbolsVM.Cursor = Cursors.SizeWE;
-        }
-
-        if (_lineSymbolVM.Y1 == _lineSymbolVM.Y2 && _canvasSymbolsVM.Cursor == Cursors.Arrow)
-        {
-            _canvasSymbolsVM.Cursor = Cursors.SizeNS;
-        }
-    }
-
-    private void SetBaseCursorCursor()
-    {
-        var currentMovableRectangleLine = _canvasSymbolsVM.MovableRectangleLine;
-
-        if (currentMovableRectangleLine == null)
-        {
-            _canvasSymbolsVM.Cursor = Cursors.Arrow;
-        }
-    }
-
-    public void SetCoordinate()
+    internal void SetCoordinate()
     {
         double yMiddleCoordinate = GetMiddleCoordinateLine(_lineSymbolVM.Y1, _lineSymbolVM.Y2);
         double yCoordinate = GetCoordinateMovableRectangle(yMiddleCoordinate, Height);
@@ -131,26 +103,14 @@ public class MovableRectangleLine : INotifyPropertyChanged
         XCoordinate = xCoordinate;
     }
 
-    private static double GetMiddleCoordinateLine(double firstCoordinate, double secondCoordinate)
-    {
-        double middleCoordinate = firstCoordinate + (secondCoordinate - firstCoordinate) / 2;
-
-        return middleCoordinate;
-    }
-
-    private static double GetCoordinateMovableRectangle(double coordinateLine, double sizeMovableRectangle)
-    {
-        double coordinate = coordinateLine - sizeMovableRectangle / 2 - BorderThickness;
-
-        return coordinate;
-    }
-
     internal void ChangeCoordinateLine((int x, int y) currentCoordinate)
     {
-        int indexCurrentLine = _drawnLineSymbolVM.LinesSymbol.IndexOf(_lineSymbolVM);
+        var linesSymbolVM = _drawnLineSymbolVM.LinesSymbolVM;
 
-        var previousLine = _drawnLineSymbolVM.LinesSymbol[indexCurrentLine - 1];
-        var nextLine = _drawnLineSymbolVM.LinesSymbol[indexCurrentLine + 1];
+        int indexCurrentLine = linesSymbolVM.IndexOf(_lineSymbolVM);
+
+        var previousLine = linesSymbolVM[indexCurrentLine - 1];
+        var nextLine = linesSymbolVM[indexCurrentLine + 1];
 
         if (_lineSymbolVM.X1 == _lineSymbolVM.X2)
         {
@@ -174,5 +134,49 @@ public class MovableRectangleLine : INotifyPropertyChanged
         _drawnLineSymbolVM.RedrawMovableRectanglesLine();
 
         SetCoordinate();
+    }
+
+    private void SetMovableRectangleLine()
+    {
+        _canvasSymbolsVM.MovableRectangleLine = this;
+    }
+
+    private void SetDirectionMovementCursor()
+    {
+        var currentCursor = _canvasSymbolsVM.Cursor;
+
+        if (_lineSymbolVM.X1 == _lineSymbolVM.X2 && currentCursor == Cursors.Arrow)
+        {
+            _canvasSymbolsVM.Cursor = Cursors.SizeWE;
+        }
+
+        if (_lineSymbolVM.Y1 == _lineSymbolVM.Y2 && currentCursor == Cursors.Arrow)
+        {
+            _canvasSymbolsVM.Cursor = Cursors.SizeNS;
+        }
+    }
+
+    private void SetBaseCursor()
+    {
+        var currentMovableRectangleLine = _canvasSymbolsVM.MovableRectangleLine;
+
+        if (currentMovableRectangleLine == null)
+        {
+            _canvasSymbolsVM.Cursor = Cursors.Arrow;
+        }
+    }
+
+    private static double GetMiddleCoordinateLine(double firstCoordinate, double secondCoordinate)
+    {
+        double middleCoordinate = firstCoordinate + (secondCoordinate - firstCoordinate) / 2;
+
+        return middleCoordinate;
+    }
+
+    private static double GetCoordinateMovableRectangle(double coordinateLine, double sizeMovableRectangle)
+    {
+        double coordinate = coordinateLine - sizeMovableRectangle / 2 - BorderThickness;
+
+        return coordinate;
     }
 }

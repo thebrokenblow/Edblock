@@ -13,7 +13,7 @@ public class DrawnLineSymbolVM : SymbolVM
     public BlockSymbolVM? SymbolOutgoingLine { get; set; }
     public BlockSymbolVM? SymbolIncomingLine { get; set; }
     public DrawnLineSymbolModel DrawnLineSymbolModel { get; set; }
-    public ObservableCollection<LineSymbolVM> LinesSymbol { get; init; } = new();
+    public ObservableCollection<LineSymbolVM> LinesSymbolVM { get; init; } = new();
     public ObservableCollection<MovableRectangleLine> MovableRectanglesLine { get; init; } = new();
     public ArrowSymbol ArrowSymbol { get; set; } = new();
     public DelegateCommand EnterCursor { get; init; }
@@ -23,7 +23,7 @@ public class DrawnLineSymbolVM : SymbolVM
     public PositionConnectionPoint IncomingPosition { get; set; }
 
     private const int heightTextField = 20;
-    public int HeightTextField 
+    public static int HeightTextField 
     {
         get => heightTextField;
     }
@@ -66,7 +66,7 @@ public class DrawnLineSymbolVM : SymbolVM
 
     public DrawnLineSymbolVM(DrawnLineSymbolModel drawnLineSymbolModel, CanvasSymbolsVM canvasSymbolsVM, PositionConnectionPoint outgoingPosition)
     {
-        EnterCursor = new(SetHighlightColorLines);
+        EnterCursor = new(SetHighlightLines);
         LeaveCursor = new(SetDefaultColorLines);
         ClickOnLine = new(SelectLine);
 
@@ -80,11 +80,11 @@ public class DrawnLineSymbolVM : SymbolVM
 
     public void RedrawMovableRectanglesLine()
     {
-        if (MovableRectanglesLine.Count != LinesSymbol.Count - 2)
+        if (MovableRectanglesLine.Count != LinesSymbolVM.Count - 2)
         {
-            for (int i = 1; i < LinesSymbol.Count - 1; i++)
+            for (int i = 1; i < LinesSymbolVM.Count - 1; i++)
             {
-                var lineSymbolVM = LinesSymbol[i];
+                var lineSymbolVM = LinesSymbolVM[i];
                 var movableRectangleLine = new MovableRectangleLine(this, lineSymbolVM);
                 MovableRectanglesLine.Add(movableRectangleLine);
             }
@@ -98,36 +98,15 @@ public class DrawnLineSymbolVM : SymbolVM
         }
     }
 
-    private void ShowMovableRectanglesLine()
+    public void SetDefaultColorLines()
     {
-        foreach (var movableRectangleLine in MovableRectanglesLine)
-        {
-            movableRectangleLine.IsShow = true;
-        }
-    }
+        var selectDrawnLineSymbol = CanvasSymbolsVM.SelectDrawnLineSymbol;
+        var movableRectangleLine = CanvasSymbolsVM.MovableRectangleLine;
 
-    private void HideMovableRectanglesLine()
-    {
-        foreach (var movableRectangleLine in MovableRectanglesLine)
+        if (selectDrawnLineSymbol != this && movableRectangleLine == null)
         {
-            movableRectangleLine.IsShow = false;
-        }
-    }
-
-    private void SelectLine()
-    {
-        if (CanvasSymbolsVM.SelectDrawnLineSymbol != this)
-        {
-            if (CanvasSymbolsVM.SelectDrawnLineSymbol != null)
-            {
-                var copySelectDrawnLineSymbol = CanvasSymbolsVM.SelectDrawnLineSymbol;
-                CanvasSymbolsVM.SelectDrawnLineSymbol = null;
-                copySelectDrawnLineSymbol.SetDefaultColorLines();
-            }
-
-            SetHighlightColorLines();
-            ShowMovableRectanglesLine();
-            CanvasSymbolsVM.SelectDrawnLineSymbol = this;
+            SetHighlightStatus(false);
+            HideMovableRectanglesLine();
         }
     }
 
@@ -144,13 +123,68 @@ public class DrawnLineSymbolVM : SymbolVM
         RedrawPartLines(linesSymbolModel);
     }
 
+    public void RedrawAllLines()
+    {
+        LinesSymbolVM.Clear();
+        MovableRectanglesLine.Clear();
+
+        var linesSymbolModel = DrawnLineSymbolModel.LinesSymbolModel;
+
+        foreach (var lineSymbolModel in linesSymbolModel)
+        {
+            var lineSymbolVM = FactoryLineSymbol.CreateLineByLineModel(lineSymbolModel);
+            LinesSymbolVM.Add(lineSymbolVM);
+        }
+
+        SetCoordinateTextField();
+
+        var lastLine = linesSymbolModel[^1];
+        var coordinateLastLine = (lastLine.X2, lastLine.Y2);
+        ArrowSymbol.ChangeOrientationArrow(coordinateLastLine, IncomingPosition);
+
+        RedrawMovableRectanglesLine();
+    }
+
+    private void ShowMovableRectanglesLine()
+    {
+        SetDisplateMovableRectanglesStatus(true);
+    }
+
+    private void HideMovableRectanglesLine()
+    {
+        SetDisplateMovableRectanglesStatus(false);
+    }
+
+    private void SetDisplateMovableRectanglesStatus(bool displayStatus)
+    {
+        foreach (var movableRectangleLine in MovableRectanglesLine)
+        {
+            movableRectangleLine.IsShow = displayStatus;
+        }
+    }
+
+    private void SelectLine()
+    {
+        var selectDrawnLineSymbol = CanvasSymbolsVM.SelectDrawnLineSymbol;
+
+        if (selectDrawnLineSymbol != this && selectDrawnLineSymbol != null)
+        {
+            CanvasSymbolsVM.SelectDrawnLineSymbol = null;
+            selectDrawnLineSymbol.SetDefaultColorLines();
+        }
+
+        SetHighlightLines();
+        ShowMovableRectanglesLine();
+        CanvasSymbolsVM.SelectDrawnLineSymbol = this;
+    }
+
     private void SetCoordinateTextField()
     {
-        var linesSymbol = DrawnLineSymbolModel.LinesSymbolModel;
-        var firstLineSymbol = linesSymbol[0];
+        var linesSymbolModel = DrawnLineSymbolModel.LinesSymbolModel;
+        var firstLineSymbolModel = linesSymbolModel[0];
 
-        LeftCoordinateTextField = firstLineSymbol.X1;
-        TopCoordinateTextField = firstLineSymbol.Y1;
+        LeftCoordinateTextField = firstLineSymbolModel.X1;
+        TopCoordinateTextField = firstLineSymbolModel.Y1;
 
         if (OutgoingPosition != PositionConnectionPoint.Bottom)
         {
@@ -163,27 +197,7 @@ public class DrawnLineSymbolVM : SymbolVM
         }
     }
 
-    public void RedrawAllLines()
-    {
-        LinesSymbol.Clear();
-        MovableRectanglesLine.Clear();
-
-        foreach (var lineSymbolModel in DrawnLineSymbolModel.LinesSymbolModel)
-        {
-            var lineSymbolVM = FactoryLineSymbol.CreateLineByLineModel(lineSymbolModel);
-            LinesSymbol.Add(lineSymbolVM);
-        }
-
-        SetCoordinateTextField();
-
-        var lastLine = DrawnLineSymbolModel.LinesSymbolModel[^1];
-        var coordinateLastLine = (lastLine.X2, lastLine.Y2);
-        ArrowSymbol.ChangeOrientationArrow(coordinateLastLine, IncomingPosition);
-
-        RedrawMovableRectanglesLine();
-    }
-
-    private void SetHighlightColorLines()
+    private void SetHighlightLines()
     {
         var movableSymbol = CanvasSymbolsVM.MovableSymbol;
         var drawnLineSymbol = CanvasSymbolsVM.DrawnLineSymbol;
@@ -194,19 +208,9 @@ public class DrawnLineSymbolVM : SymbolVM
         }
     }
 
-    public void SetDefaultColorLines()
-    {
-        if (CanvasSymbolsVM.SelectDrawnLineSymbol != this && 
-            CanvasSymbolsVM.MovableRectangleLine == null)
-        {
-            SetHighlightStatus(false);
-            HideMovableRectanglesLine();
-        }
-    }
-
     private void SetHighlightStatus(bool status)
     {
-        foreach (var lineSymbol in LinesSymbol)
+        foreach (var lineSymbol in LinesSymbolVM)
         {
             lineSymbol.IsHighlighted = status;
         }
@@ -216,7 +220,7 @@ public class DrawnLineSymbolVM : SymbolVM
 
     private void RedrawPartLines(List<LineSymbolModel> linesSymbolModel)
     {
-        if (LinesSymbol.Count == 0)
+        if (LinesSymbolVM.Count == 0)
         {
             AddMissingLines(linesSymbolModel);
         }
@@ -235,7 +239,7 @@ public class DrawnLineSymbolVM : SymbolVM
         foreach (var lineSymbolModel in linesSymbolModel)
         {
             var lineSymbolVM = FactoryLineSymbol.CreateLineByLineModel(lineSymbolModel);
-            LinesSymbol.Add(lineSymbolVM);
+            LinesSymbolVM.Add(lineSymbolVM);
         }
     }
 
@@ -243,27 +247,33 @@ public class DrawnLineSymbolVM : SymbolVM
     {
         var firstLineSymbolModel = linesSymbolModel[0];
 
-        if (LinesSymbol.Count > linesSymbolModel.Count)
+        var countLinesVM = LinesSymbolVM.Count;
+        var countLinesModel = linesSymbolModel.Count;
+
+        if (countLinesVM > countLinesModel)
         {
-            LinesSymbol.RemoveAt(1);
+            LinesSymbolVM.RemoveAt(1);
         }
 
-        ChangeLastCoordinate(LinesSymbol[0], firstLineSymbolModel);
+        ChangeLastCoordinate(LinesSymbolVM[0], firstLineSymbolModel);
     }
 
     private void ChangeSecondLine(List<LineSymbolModel> linesSymbolModel)
     {
         var currentLinesSymbolModel = linesSymbolModel.TakeLast(2).ToList();
 
-        if (LinesSymbol.Count > linesSymbolModel.Count)
+        var countLinesVM = LinesSymbolVM.Count;
+        var countLinesModel = linesSymbolModel.Count;
+
+        if (countLinesVM > countLinesModel)
         {
-            LinesSymbol.RemoveAt(LinesSymbol.Count - 1);
+            LinesSymbolVM.RemoveAt(countLinesVM - 1);
         }
-        else if (LinesSymbol.Count < linesSymbolModel.Count)
+        else if (countLinesVM < countLinesModel)
         {
             var secondLineModel = currentLinesSymbolModel[1];
             var secondLineVM = FactoryLineSymbol.CreateLineByLineModel(secondLineModel);
-            LinesSymbol.Add(secondLineVM);
+            LinesSymbolVM.Add(secondLineVM);
         }
 
         ChangeCurrentLine(linesSymbolModel);
@@ -271,13 +281,15 @@ public class DrawnLineSymbolVM : SymbolVM
 
     private void ChangeCurrentLine(List<LineSymbolModel> linesSymbolModel)
     {
-        for (int i = linesSymbolModel.Count - 2; i < linesSymbolModel.Count; i++)
+        var countLinesSymbolModel = linesSymbolModel.Count;
+
+        for (int i = countLinesSymbolModel - 2; i < countLinesSymbolModel; i++)
         {
-            ChangeCoordinate(LinesSymbol[i], linesSymbolModel[i]);
+            ChangeCurrentCoordinate(LinesSymbolVM[i], linesSymbolModel[i]);
         }
     }
 
-    private static void ChangeCoordinate(LineSymbolVM lineSymbolVM, LineSymbolModel lineSymbolModel)
+    private static void ChangeCurrentCoordinate(LineSymbolVM lineSymbolVM, LineSymbolModel lineSymbolModel)
     {
         lineSymbolVM.X1 = lineSymbolModel.X1;
         lineSymbolVM.Y1 = lineSymbolModel.Y1;
