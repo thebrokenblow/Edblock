@@ -32,6 +32,12 @@
                                 <i:EventTrigger EventName="MouseRightButtonDown">
                                     <i:InvokeCommandAction Command="{Binding Click}"/>
                                 </i:EventTrigger>
+                                <i:EventTrigger EventName="MouseEnter">
+                                    <i:InvokeCommandAction Command="{Binding MouseEnter}"/>
+                                </i:EventTrigger>
+                                <i:EventTrigger EventName="MouseLeave">
+                                    <i:InvokeCommandAction Command="{Binding MouseLeave}"/>
+                                </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </Rectangle>
                     </Border>

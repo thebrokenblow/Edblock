@@ -1,4 +1,5 @@
 ﻿using Prism.Commands;
+using System.Windows.Input;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
@@ -7,19 +8,19 @@ namespace EdblockViewModel.Symbols.LineSymbols;
 public class MovableRectangleLine : INotifyPropertyChanged
 {
     private const double width = 4;
-    public double Width
+    public static double Width
     {
         get => width;
     }
 
     private const double height = 4;
-    public double Height 
+    public static double Height 
     {
         get => height; 
     }
 
     private const double borderThickness = 1;
-    public double BorderThickness 
+    public static double BorderThickness 
     {
         get => borderThickness;
     }
@@ -60,23 +61,46 @@ public class MovableRectangleLine : INotifyPropertyChanged
     public event PropertyChangedEventHandler? PropertyChanged;
 
     public DelegateCommand Click { get; init; }
+    public DelegateCommand MouseEnter { get; init; }
+    public DelegateCommand MouseLeave { get; init; }
+
     private readonly DrawnLineSymbolVM _drawnLineSymbolVM;
+    private readonly CanvasSymbolsVM _canvasSymbolsVM;
     private readonly LineSymbolVM _lineSymbolVM;
     public MovableRectangleLine(DrawnLineSymbolVM drawnLineSymbolVM, LineSymbolVM lineSymbolVM)
     {
         _drawnLineSymbolVM = drawnLineSymbolVM;
+        _canvasSymbolsVM = drawnLineSymbolVM.CanvasSymbolsVM;
+
         _lineSymbolVM = lineSymbolVM;
 
         Click = new(ChangeCoordinate);
+        MouseEnter = new(SetCursor);
+        MouseLeave = new(SetBaseCursorCursor);
 
         SetCoordinate();
     }
 
-    public void ChangeCoordinate()
+    private void ChangeCoordinate()
     {
         int index = _drawnLineSymbolVM.LinesSymbol.IndexOf(_lineSymbolVM);
         SetCoordinate();
         _drawnLineSymbolVM.CanvasSymbolsVM.Redraw(index);
+    }
+
+    private void SetCursor()
+    {
+        _canvasSymbolsVM.Cursor = Cursors.SizeNS;
+
+        if (_lineSymbolVM.X1 == _lineSymbolVM.X2)
+        {
+            _canvasSymbolsVM.Cursor = Cursors.SizeWE;
+        }
+    }
+
+    private void SetBaseCursorCursor()
+    {
+        _canvasSymbolsVM.Cursor = Cursors.Arrow;
     }
 
     private void SetCoordinate()
