@@ -4,7 +4,7 @@ namespace EdblockModel.Symbols;
 
 public class ActionSymbolModel : BlockSymbolModel
 {
-    public ActionSymbolModel()
+    public ActionSymbolModel(string id) : base(id)
     {
         HexColor = "#FF52C0AA";
     }

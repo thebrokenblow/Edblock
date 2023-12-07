@@ -8,6 +8,7 @@ using System.Runtime.CompilerServices;
 using EdblockModel.Symbols.LineSymbols;
 using EdblockViewModel.Symbols.LineSymbols;
 using EdblockViewModel.Symbols.Abstraction;
+using EdblockModel;
 
 namespace EdblockViewModel.Symbols.ConnectionPoints;
 
@@ -145,6 +146,7 @@ public class ConnectionPoint : INotifyPropertyChanged
 
         var drawnLineSymbolVM = new DrawnLineSymbolVM(drawnLineSymbolModel, _canvasSymbolsVM, positionConnectionPoint);
 
+        _canvasSymbolsVM.SerializableSymbols.LinesSymbolModel.Add(drawnLineSymbolModel);
         _canvasSymbolsVM.Symbols.Add(drawnLineSymbolVM);
         _canvasSymbolsVM.DrawnLineSymbol = drawnLineSymbolVM;
         _canvasSymbolsVM.DrawnLineSymbol.SymbolOutgoingLine = BlockSymbolVM;

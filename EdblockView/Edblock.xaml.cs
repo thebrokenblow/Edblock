@@ -8,12 +8,17 @@ namespace EdblockView;
 /// </summary>
 public partial class Edblock : Window
 {
+    private CanvasSymbolsVM canvasSymbolsVM = new();
     public Edblock()
     {
         InitializeComponent();
-        var canvasSymbolsVM = new CanvasSymbolsVM();
         var edblockVM = new EdblockVM(canvasSymbolsVM);
         CanvasSymbols.CanvasSymbolsVM = canvasSymbolsVM;
         DataContext = edblockVM;
+    }
+
+    private void Button_Click(object sender, RoutedEventArgs e)
+    {
+        canvasSymbolsVM.SaveProject();
     }
 }

@@ -1,4 +1,5 @@
 ﻿using EdblockModel.Symbols.Enum;
+using System.Text.Json.Serialization;
 using EdblockModel.Symbols.Abstraction;
 
 namespace EdblockModel.Symbols.LineSymbols;
@@ -8,8 +9,11 @@ public class DrawnLineSymbolModel
     public BlockSymbolModel SymbolOutgoingLine { get; set; }
     public BlockSymbolModel? SymbolIncomingLine { get; set; }
     public List<LineSymbolModel> LinesSymbolModel { get; set; }
+    [JsonIgnore]
     public CoordinateLineModel CoordinateLineModel { get; set; }
+    [JsonIgnore]
     public PositionConnectionPoint OutgoingPosition { get; init; }
+    [JsonIgnore]
     public PositionConnectionPoint IncomingPosition { get; set; }
     private readonly int offsetLine = 10;
 

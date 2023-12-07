@@ -21,6 +21,7 @@
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Column="0">
             <symbolsUI:ActionSymbolUI Margin="0 10 0 0"/>
+            <Button Height="30" Width="150" Content="Сохранить" Click="Button_Click"/>
         </StackPanel>
         <components:CanvasSymbols x:Name="CanvasSymbols" Grid.Column="1"/>
         <i:Interaction.Triggers>

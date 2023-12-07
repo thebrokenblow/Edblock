@@ -6,11 +6,14 @@ public class FactoryBlockSymbolModel
 {
     private readonly Dictionary<string, Func<string, BlockSymbolModel>> instanceSymbolByName = new()
     {
-        { "ActionSymbol", x => new ActionSymbolModel() }
+        { "ActionSymbol", x => new ActionSymbolModel(_id) }
     };
 
-    public BlockSymbolModel Create(string nameBlockSymbol)
+    private static string _id;
+
+    public BlockSymbolModel Create(string nameBlockSymbol, string id)
     {
+        _id = id;
         return instanceSymbolByName[nameBlockSymbol].Invoke(nameBlockSymbol);
     }
 }

@@ -11,6 +11,7 @@ using EdblockViewModel.Symbols.Abstraction;
 using EdblockViewModel.Symbols.ScaleRectangles;
 using EdblockViewModel.Symbols.ConnectionPoints;
 using EdblockModel.Symbols.LineSymbols.RedrawLine;
+using EdblockModel;
 using System;
 
 namespace EdblockViewModel;
@@ -78,13 +79,15 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
     public DelegateCommand ClickCanvasSymbols { get; init; }
     public DelegateCommand<string> ClickSymbol { get; init; }
     public DelegateCommand<BlockSymbolVM> MouseMoveSymbol { get; init; }
-    public event PropertyChangedEventHandler? PropertyChanged;
     public BlockSymbolVM? MovableSymbol { get; set; }
     public ScalePartBlockSymbol? ScalePartBlockSymbolVM { get; set; }
     public DrawnLineSymbolVM? DrawnLineSymbol { get; set; }
     private List<DrawnLineSymbolVM?>? CurrentRedrawLines { get; set; }
     public DrawnLineSymbolVM? SelectDrawnLineSymbol { get; set; }
     public MovableRectangleLine? MovableRectangleLine { get; set; }
+    public event PropertyChangedEventHandler? PropertyChanged;
+
+    public SerializableSymbols SerializableSymbols { get; set; }
 
     private readonly FactoryBlockSymbol factoryBlockSymbol;
     private RedrawnLine? redrawLineSymbolVM;
@@ -92,6 +95,7 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
     public CanvasSymbolsVM()
     {
         Symbols = new();
+        SerializableSymbols = new();
         MouseMoveCanvasSymbols = new(RedrawLine);
         BlockSymbolByLineSymbol = new();
         MouseUpCanvasSymbols = new(FinishRedrawingLine);
@@ -125,6 +129,7 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
         Cursor = Cursors.SizeAll;
 
         MovableSymbol = currentSymbol;
+        SerializableSymbols.BlocksSymbolModel.Add(currentSymbol.BlockSymbolModel);
         Symbols.Add(currentSymbol);
     }
 
@@ -233,5 +238,10 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
                 currentRedrawLine.RedrawAllLines();
             }
         }
+    }
+
+    public void SaveProject()
+    {
+        SerializableSymbols.SaveProject();
     }
 }
