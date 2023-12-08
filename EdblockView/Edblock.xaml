@@ -61,15 +61,8 @@
         <components:CanvasSymbols 
             x:Name="CanvasSymbols" 
             Grid.Row="1"
-            Background="Red"
-            Grid.Column="1" >
-            <i:Interaction.Triggers>
-                <i:EventTrigger EventName="MouseLeftButtonUp">
-                    <i:InvokeCommandAction Command="{Binding MouseUpSymbol}"/>
-                </i:EventTrigger>
-            </i:Interaction.Triggers>
-        </components:CanvasSymbols>
-
+            Grid.Column="1" />
+        
         <Grid 
             x:Name="GridMenu" 
             Width="360" 

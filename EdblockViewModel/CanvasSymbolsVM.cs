@@ -166,10 +166,6 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
 
     public void FinishMovingBlockSymbol()
     {
-        MovableSymbol = null;
-        ScalePartBlockSymbolVM = null;
-        
-        Cursor = Cursors.Arrow;
     }
 
     public void ClickOnCanvas()
@@ -232,6 +228,11 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
     {
         MovableRectangleLine = null;
         CurrentRedrawLines = null;
+        Cursor = Cursors.Arrow;
+
+        MovableSymbol = null;
+        ScalePartBlockSymbolVM = null;
+
         Cursor = Cursors.Arrow;
     }
 

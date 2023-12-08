@@ -15,7 +15,6 @@ public partial class Edblock : Window
 
         var canvasSymbolsVM = new CanvasSymbolsVM();
         CanvasSymbols.CanvasSymbolsVM = canvasSymbolsVM;
-
         var edblockVM = new EdblockVM(canvasSymbolsVM);
         DataContext = edblockVM;
     }
