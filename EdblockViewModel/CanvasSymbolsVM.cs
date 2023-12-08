@@ -1,5 +1,4 @@
-﻿using System;
-using EdblockModel;
+﻿using EdblockModel;
 using System.Windows;
 using Prism.Commands;
 using System.Windows.Input;
@@ -32,9 +31,10 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
             var currentCoordinate = (xCoordinate, yCoordinate);
             var previousCoordinate = (previousXCoordinate, previousYCoordinate);
 
-            MovableSymbol?.SetCoordinate(currentCoordinate, previousCoordinate);
-            DrawnLineSymbol?.ChangeCoordination(currentCoordinate);
             ScalePartBlockSymbolVM?.SetWidthBlockSymbol(this);
+            DrawnLineSymbol?.ChangeCoordination(currentCoordinate);
+            MovableRectangleLine?.ChangeCoordinateLine(currentCoordinate);
+            MovableSymbol?.SetCoordinate(currentCoordinate, previousCoordinate);
 
             previousXCoordinate = xCoordinate;
         }
@@ -52,16 +52,16 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
             var currentCoordinate = (xCoordinate, yCoordinate);
             var previousCoordinate = (previousXCoordinate, previousYCoordinate);
 
+            ScalePartBlockSymbolVM?.SetHeightBlockSymbol(this);
+            DrawnLineSymbol?.ChangeCoordination(currentCoordinate);
             MovableRectangleLine?.ChangeCoordinateLine(currentCoordinate);
             MovableSymbol?.SetCoordinate(currentCoordinate, previousCoordinate);
-            DrawnLineSymbol?.ChangeCoordination(currentCoordinate);
-            ScalePartBlockSymbolVM?.SetHeightBlockSymbol(this);
 
             previousYCoordinate = yCoordinate;
         }
     }
 
-    private Cursor cursor = Cursors.Arrow;
+    private Cursor cursor;
     public Cursor Cursor
     {
         get => cursor;
@@ -96,13 +96,16 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
     {
         Symbols = new();
         SerializableSymbols = new();
-        MouseMoveCanvasSymbols = new(RedrawLine);
         BlockSymbolByLineSymbol = new();
-        MouseUpCanvasSymbols = new(FinishRedrawingLine);
+
+        MouseMoveCanvasSymbols = new(RedrawLine);
+        MouseUpCanvasSymbols = new(SetDefaultValue);
         ClickSymbol = new(CreateBlockSymbol);
         MouseMoveSymbol = new(MoveSymbol);
         ClickCanvasSymbols = new(ClickOnCanvas);
         factoryBlockSymbol = new(this);
+
+        cursor = Cursors.Arrow;
         Grid = new Rect(-lengthGridCell, -lengthGridCell, lengthGridCell, lengthGridCell);
     }
 
@@ -164,15 +167,10 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
         RedrawLine();
     }
 
-    public void FinishMovingBlockSymbol()
-    {
-    }
-
     public void ClickOnCanvas()
     {
         AddLineSymbol();
         RemoveSelectDrawnLine();
-        MovableRectangleLine = null;
         TextField.ChangeFocus(Symbols);
     }
 
@@ -184,6 +182,16 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
             SelectDrawnLineSymbol = null;
             copySelectDrawnLineSymbol.SetDefaultColorLines();
         }
+    }
+
+    private void SetDefaultValue()
+    {
+        Cursor = Cursors.Arrow;
+
+        MovableSymbol = null;
+        CurrentRedrawLines = null;
+        MovableRectangleLine = null;
+        ScalePartBlockSymbolVM = null;
     }
 
     private void AddLineSymbol()
@@ -224,18 +232,6 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
         }
     }
 
-    private void FinishRedrawingLine()
-    {
-        MovableRectangleLine = null;
-        CurrentRedrawLines = null;
-        Cursor = Cursors.Arrow;
-
-        MovableSymbol = null;
-        ScalePartBlockSymbolVM = null;
-
-        Cursor = Cursors.Arrow;
-    }
-
     private void RedrawLine()
     {
         if (CurrentRedrawLines == null)
@@ -248,34 +244,11 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
             if (currentRedrawLine is not null)
             {
                 var drawnLineSymbolModel = currentRedrawLine.DrawnLineSymbolModel;
-                redrawLineSymbolVM = new (drawnLineSymbolModel);
+                redrawLineSymbolVM = new(drawnLineSymbolModel);
                 var redrawnLinesModel = redrawLineSymbolVM.GetRedrawLine();
                 drawnLineSymbolModel.LinesSymbolModel = redrawnLinesModel;
                 currentRedrawLine.RedrawAllLines();
             }
         }
-    }
-
-    public void SaveProject()
-    {
-        SerializableSymbols.SaveProject();
-    }
-
-    public void UploadProject()
-    {
-        SerializableSymbols.UploadProject();
-
-        //foreach(var symbolModel in symbolsModel)
-        //{
-        //    var symbolVM = factoryBlockSymbol.CreateByModel(symbolModel);
-
-        //    symbolVM.XCoordinate = symbolModel.XCoordinate;
-        //    symbolVM.YCoordinate = symbolModel.YCoordinate;
-
-        //    symbolVM.Width = symbolModel.Width;
-        //    symbolVM.Height = symbolModel.Height;
-
-        //    Symbols.Add(symbolVM);
-        //}
     }
 }
