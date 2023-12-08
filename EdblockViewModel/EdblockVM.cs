@@ -4,15 +4,18 @@ namespace EdblockViewModel;
 
 public class EdblockVM
 {
-    public CanvasSymbolsVM CanvasSymbolsVM { get; init; }
     public DelegateCommand ClickEsc { get; init; }
     public DelegateCommand MouseUpSymbol { get; init; }
     public DelegateCommand<string> ClickSymbol { get; init; }
     public EdblockVM(CanvasSymbolsVM canvasSymbolsVM)
     {
-        CanvasSymbolsVM = canvasSymbolsVM;
-        ClickEsc = new(CanvasSymbolsVM.DeleteLine);
-        MouseUpSymbol = new(CanvasSymbolsVM.FinishMovingBlockSymbol);
-        ClickSymbol = new(CanvasSymbolsVM.CreateBlockSymbol);
+        ClickEsc = new(canvasSymbolsVM.DeleteLine);
+        MouseUpSymbol = new(Get);
+        ClickSymbol = new(canvasSymbolsVM.CreateBlockSymbol);
+    }
+
+    private void Get()
+    {
+        
     }
 }

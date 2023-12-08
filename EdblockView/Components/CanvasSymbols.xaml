@@ -53,7 +53,7 @@
                                                 <RectangleGeometry Rect="0,0,50,50"/>
                                             </GeometryDrawing.Geometry>
                                             <GeometryDrawing.Pen>
-                                                <Pen Brush="#ececec" Thickness="1"/>
+                                                <Pen Brush="Black" Thickness="1"/>
                                             </GeometryDrawing.Pen>
                                         </GeometryDrawing>
                                     </DrawingBrush.Drawing>

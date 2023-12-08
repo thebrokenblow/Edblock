@@ -5,30 +5,120 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
         xmlns:components="clr-namespace:EdblockView.Components" 
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors" 
-        xmlns:symbolsUI="clr-namespace:EdblockView.SymbolsUI"
-        xmlns:edblockviewmodel="clr-namespace:EdblockViewModel;assembly=EdblockViewModel" 
-        d:DataContext="{d:DesignInstance Type=edblockviewmodel:EdblockVM}"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
+        xmlns:symbol="clr-namespace:EdblockView.SymbolsUI"
+        xmlns:edblockViewModel="clr-namespace:EdblockViewModel;assembly=EdblockViewModel" 
+        d:DataContext="{d:DesignInstance Type=edblockViewModel:EdblockVM}"
         mc:Ignorable="d"
         Title="Edblock" Height="600" Width="1200">
+    
     <Window.InputBindings>
         <KeyBinding Command="{Binding ClickEsc}" Key="Delete"/>
     </Window.InputBindings>
-    <Grid>
+
+    <Window.Triggers>
+        <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="ButtonClose">
+            <BeginStoryboard x:Name="CloseMenu_BeginStoryboard" Storyboard="{StaticResource CloseMenu}"/>
+        </EventTrigger>
+        <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="ButtonOpen">
+            <BeginStoryboard Storyboard="{StaticResource OpenMenu}"/>
+        </EventTrigger>
+    </Window.Triggers>
+
+    <Grid Background="#f5f5f5">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="160"/>
+            <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="10"/>
         </Grid.ColumnDefinitions>
-        <StackPanel Grid.Column="0">
-            <symbolsUI:ActionSymbolUI Margin="0 10 0 0"/>
-            <Button Height="30" Width="150" Content="Сохранить" Click="Button_Click"/>
-            <Button Height="30" Width="150" Content="Загрузить" Click="Button_Click_1"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <components:TopSettingsPanel 
+            Grid.Row="0"
+            Grid.Column="2"/>
+
+        <StackPanel 
+            Background="#f5f5f5"
+            Width="50"
+            Grid.Row="1"
+            Grid.Column="0"
+            HorizontalAlignment="Left">
+            <Button 
+                x:Name="ButtonOpen"
+                Width="50"
+                Style="{StaticResource ButtonOpenClose}">
+                <materialDesign:PackIcon 
+                    Kind="FlowchartOutline"
+                    Foreground="#212121"
+                    Width="30" 
+                    Height="30">
+                </materialDesign:PackIcon>
+            </Button>
         </StackPanel>
-        <components:CanvasSymbols x:Name="CanvasSymbols" Grid.Column="1"/>
-        <i:Interaction.Triggers>
-            <i:EventTrigger EventName="PreviewMouseLeftButtonUp">
-                <i:InvokeCommandAction Command="{Binding MouseUpSymbol}"/>
-            </i:EventTrigger>
-        </i:Interaction.Triggers>
+
+        <components:CanvasSymbols 
+            x:Name="CanvasSymbols" 
+            Grid.Row="1"
+            Background="Red"
+            Grid.Column="1" >
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="MouseLeftButtonUp">
+                    <i:InvokeCommandAction Command="{Binding MouseUpSymbol}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </components:CanvasSymbols>
+
+        <Grid 
+            x:Name="GridMenu" 
+            Width="360" 
+            HorizontalAlignment="Left" 
+            Margin="-360 0 0 0" 
+            Grid.Row="1" 
+            RenderTransformOrigin="0.5,0.5" 
+            Background="#f5f5f5">
+            <Grid.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Grid.RenderTransform>
+            <ScrollViewer>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="75"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="160"/>
+                        <ColumnDefinition Width="190"/>
+                    </Grid.ColumnDefinitions>
+
+                    <symbol:ActionSymbolUI
+                        Grid.Column="0" 
+                        Grid.Row="0" />
+                    
+                    <Label 
+                        Style="{StaticResource LabelSymbolMenu}"
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        Content="Действие (1)" />
+                </Grid>
+            </ScrollViewer>
+            
+            <Button 
+                Style="{StaticResource ButtonOpenClose}"
+                x:Name="ButtonClose" 
+                Margin="10 0" >
+                <materialDesign:PackIcon 
+                    Width="20" 
+                    Height="20"
+                    Foreground="#212121"
+                    Kind="Close" />
+            </Button>
+            
+        </Grid>
     </Grid>
 </Window>

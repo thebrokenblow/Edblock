@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using EdblockViewModel;
+using EdblockView.Components;
 
 namespace EdblockView;
 
@@ -8,22 +9,14 @@ namespace EdblockView;
 /// </summary>
 public partial class Edblock : Window
 {
-    private CanvasSymbolsVM canvasSymbolsVM = new();
     public Edblock()
     {
         InitializeComponent();
-        var edblockVM = new EdblockVM(canvasSymbolsVM);
+
+        var canvasSymbolsVM = new CanvasSymbolsVM();
         CanvasSymbols.CanvasSymbolsVM = canvasSymbolsVM;
+
+        var edblockVM = new EdblockVM(canvasSymbolsVM);
         DataContext = edblockVM;
-    }
-
-    private void Button_Click(object sender, RoutedEventArgs e)
-    {
-        canvasSymbolsVM.SaveProject();
-    }
-
-    private void Button_Click_1(object sender, RoutedEventArgs e)
-    {
-        canvasSymbolsVM.UploadProject();
     }
 }

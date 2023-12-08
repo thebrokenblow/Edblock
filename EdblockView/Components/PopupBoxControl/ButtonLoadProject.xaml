@@ -1,0 +1,21 @@
+﻿<UserControl x:Class="EdblockView.Components.PopupBoxControl.ButtonLoadProject"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
+             mc:Ignorable="d" 
+             d:DesignHeight="40" d:DesignWidth="245">
+    <DockPanel>
+        <materialDesign:PackIcon
+            DockPanel.Dock="Left"
+            Style="{StaticResource IconSettingsMenu}"
+            Kind="upload" />
+
+        <Button 
+            Margin="20 0 0 0"
+            DockPanel.Dock="Right"
+            Style="{StaticResource ButtonSettingsMenu}"
+            Content="Загрузить проект" />
+    </DockPanel>
+</UserControl>

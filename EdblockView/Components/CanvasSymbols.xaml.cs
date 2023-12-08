@@ -1,7 +1,6 @@
 ﻿using EdblockViewModel;
 using System.Windows.Input;
 using System.Windows.Controls;
-using EdblockViewModel.Symbols.Abstraction;
 
 namespace EdblockView.Components;
 
