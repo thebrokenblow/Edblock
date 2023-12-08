@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using System;
+using EdblockModel;
+using System.Windows;
 using Prism.Commands;
 using System.Windows.Input;
 using System.ComponentModel;
@@ -11,8 +13,6 @@ using EdblockViewModel.Symbols.Abstraction;
 using EdblockViewModel.Symbols.ScaleRectangles;
 using EdblockViewModel.Symbols.ConnectionPoints;
 using EdblockModel.Symbols.LineSymbols.RedrawLine;
-using EdblockModel;
-using System;
 
 namespace EdblockViewModel;
 
@@ -111,11 +111,26 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
         if (DrawnLineSymbol != null)
         {
             Symbols.Remove(DrawnLineSymbol);
+
+            DrawnLineSymbol.OutgoingConnectionPoint.IsHasConnectingLine = false;
+
             DrawnLineSymbol = null;
         }
 
         if (SelectDrawnLineSymbol != null)
         {
+            var symbolIncomingLine = SelectDrawnLineSymbol.SymbolIncomingLine;
+            var symbolOutgoingLine = SelectDrawnLineSymbol.SymbolOutgoingLine;
+
+            if (symbolIncomingLine != null && symbolOutgoingLine != null)
+            {
+                BlockSymbolByLineSymbol[symbolIncomingLine].Remove(SelectDrawnLineSymbol);
+                BlockSymbolByLineSymbol[symbolOutgoingLine].Remove(SelectDrawnLineSymbol);
+            }
+
+            SelectDrawnLineSymbol.OutgoingConnectionPoint.IsHasConnectingLine = false;
+            SelectDrawnLineSymbol.IncomingConnectionPoint!.IsHasConnectingLine = false;
+
             Symbols.Remove(SelectDrawnLineSymbol);
             SelectDrawnLineSymbol = null;
         }
@@ -243,5 +258,23 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
     public void SaveProject()
     {
         SerializableSymbols.SaveProject();
+    }
+
+    public void UploadProject()
+    {
+        SerializableSymbols.UploadProject();
+
+        //foreach(var symbolModel in symbolsModel)
+        //{
+        //    var symbolVM = factoryBlockSymbol.CreateByModel(symbolModel);
+
+        //    symbolVM.XCoordinate = symbolModel.XCoordinate;
+        //    symbolVM.YCoordinate = symbolModel.YCoordinate;
+
+        //    symbolVM.Width = symbolModel.Width;
+        //    symbolVM.Height = symbolModel.Height;
+
+        //    Symbols.Add(symbolVM);
+        //}
     }
 }

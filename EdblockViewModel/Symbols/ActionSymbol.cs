@@ -4,8 +4,10 @@ namespace EdblockViewModel.Symbols;
 
 public class ActionSymbol : BlockSymbolVM
 {
-    public ActionSymbol(string nameBlockSymbol, CanvasSymbolsVM canvasSymbolsVM) : base(nameBlockSymbol, canvasSymbolsVM)
+    private const string defaultText = "Действие";
+    public ActionSymbol(CanvasSymbolsVM canvasSymbolsVM) : base(canvasSymbolsVM)
     {
+        TextField.Text = defaultText;
         TextField.Width = Width;
         TextField.Height = Height;
     }

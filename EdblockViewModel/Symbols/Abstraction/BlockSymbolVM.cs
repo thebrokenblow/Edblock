@@ -21,6 +21,8 @@ public abstract class BlockSymbolVM : SymbolVM
         set
         {
             width = value;
+            BlockSymbolModel.Width = width;
+
             OnPropertyChanged();
         }
     }
@@ -32,6 +34,8 @@ public abstract class BlockSymbolVM : SymbolVM
         set
         {
             heigth = value;
+            BlockSymbolModel.Height = heigth;
+
             OnPropertyChanged();
         }
     }
@@ -43,6 +47,8 @@ public abstract class BlockSymbolVM : SymbolVM
         set
         {
             xCoordinate = value;
+            BlockSymbolModel.XCoordinate = xCoordinate;
+
             OnPropertyChanged();
         }
     }
@@ -54,6 +60,8 @@ public abstract class BlockSymbolVM : SymbolVM
         set
         {
             yCoordinate = value;
+            BlockSymbolModel.YCoordinate = yCoordinate;
+
             OnPropertyChanged();
         }
     }
@@ -70,17 +78,16 @@ public abstract class BlockSymbolVM : SymbolVM
 
     protected const int defaultWidth = 140;
     protected const int defaultHeigth = 60;
-    public BlockSymbolVM(string nameBlockSymbol, CanvasSymbolsVM canvasSymbolsVM)
+    public BlockSymbolVM(CanvasSymbolsVM canvasSymbolsVM)
     {
         _canvasSymbolsVM = canvasSymbolsVM;
 
-        TextField = new(canvasSymbolsVM);
-
         _id = Guid.NewGuid().ToString();
+        var nameBlockSymbol = GetType().Name?.ToString();
 
         BlockSymbolModel = _factoryBlockSymbolModel.Create(nameBlockSymbol, _id);
-        BlockSymbolModel.Width = defaultWidth;
-        BlockSymbolModel.Height = defaultHeigth;
+
+        TextField = new(canvasSymbolsVM, BlockSymbolModel);
 
         Width = defaultWidth;
         Height = defaultHeigth;
@@ -114,15 +121,16 @@ public abstract class BlockSymbolVM : SymbolVM
             XCoordinate = roundedXCoordinate - (previousCoordinate.x - XCoordinate);
             YCoordinate = roundedYCoordinate - (previousCoordinate.y - YCoordinate);
         }
-
-        BlockSymbolModel.XCoordinate = XCoordinate;
-        BlockSymbolModel.YCoordinate = YCoordinate;
     }
 
     public void ShowStroke()
     {
         // Условие истино, когда символ не перемещается и не масштабируется (просто навёл курсор)
-        if (_canvasSymbolsVM.MovableSymbol == null && _canvasSymbolsVM.ScalePartBlockSymbolVM == null)
+
+        var movableSymbol = _canvasSymbolsVM.MovableSymbol;
+        var scalePartBlockSymbolVM = _canvasSymbolsVM.ScalePartBlockSymbolVM;
+
+        if (movableSymbol == null && scalePartBlockSymbolVM == null)
         {
             ConnectionPoint.SetDisplayConnectionPoints(ConnectionPoints, true);
             ScaleRectangle.SetStateDisplay(ScaleRectangles, true);

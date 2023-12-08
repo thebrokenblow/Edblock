@@ -58,6 +58,17 @@ public class ConnectionPoint : INotifyPropertyChanged
         }
     }
 
+    private bool isHasConnectingLine = false;
+    public bool IsHasConnectingLine
+    {
+        get => isHasConnectingLine;
+        set
+        {
+            isHasConnectingLine = value;
+            OnPropertyChanged();
+        }
+    }
+
     public DelegateCommand EnterCursor { get; init; }
     public DelegateCommand LeaveCursor { get; init; }
     public DelegateCommand ClickConnectionPoint { get; init; }
@@ -138,13 +149,15 @@ public class ConnectionPoint : INotifyPropertyChanged
 
     private void StarDrawLine()
     {
+        IsHasConnectingLine = true;
+
         var positionConnectionPoint = PositionConnectionPoint;
         var blockSymbolModel = BlockSymbolVM.BlockSymbolModel;
 
         var drawnLineSymbolModel = new DrawnLineSymbolModel(blockSymbolModel, positionConnectionPoint);
         drawnLineSymbolModel.AddFirstLine();
 
-        var drawnLineSymbolVM = new DrawnLineSymbolVM(drawnLineSymbolModel, _canvasSymbolsVM, positionConnectionPoint);
+        var drawnLineSymbolVM = new DrawnLineSymbolVM(drawnLineSymbolModel, _canvasSymbolsVM, this);
 
         _canvasSymbolsVM.SerializableSymbols.LinesSymbolModel.Add(drawnLineSymbolModel);
         _canvasSymbolsVM.Symbols.Add(drawnLineSymbolVM);
@@ -154,6 +167,8 @@ public class ConnectionPoint : INotifyPropertyChanged
 
     private void EndDrawLine()
     {
+        IsHasConnectingLine = true;
+
         var symbolIncomingLineModel = BlockSymbolVM.BlockSymbolModel;
 
         var drawnLineSymbolVM = _canvasSymbolsVM.DrawnLineSymbol;
@@ -164,6 +179,8 @@ public class ConnectionPoint : INotifyPropertyChanged
         
         drawnLineSymbolVM.SymbolIncomingLine = BlockSymbolVM;
         drawnLineSymbolModel.SymbolIncomingLine = symbolIncomingLineModel;
+
+        drawnLineSymbolVM.IncomingConnectionPoint = this;
 
         var finalLineCoordinate = symbolIncomingLineModel.GetBorderCoordinate(PositionConnectionPoint);
 

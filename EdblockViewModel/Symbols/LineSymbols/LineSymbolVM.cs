@@ -1,6 +1,5 @@
-﻿using EdblockViewModel.Symbols.Abstraction;
-using Prism.Commands;
-using System.Runtime.CompilerServices;
+﻿using EdblockModel.Symbols.LineSymbols;
+using EdblockViewModel.Symbols.Abstraction;
 
 namespace EdblockViewModel.Symbols.LineSymbols;
 
@@ -13,6 +12,8 @@ public class LineSymbolVM : SymbolVM
         set
         {
             x1 = value;
+            _lineSymbolModel.X1 = x1;
+
             OnPropertyChanged();
         }
     }
@@ -24,6 +25,8 @@ public class LineSymbolVM : SymbolVM
         set
         {
             y1 = value;
+            _lineSymbolModel.Y1 = y1;
+
             OnPropertyChanged();
         }
     }
@@ -35,6 +38,8 @@ public class LineSymbolVM : SymbolVM
         set
         {
             x2 = value;
+            _lineSymbolModel.X2 = x2;
+
             OnPropertyChanged();
         }
     }
@@ -47,6 +52,8 @@ public class LineSymbolVM : SymbolVM
         set
         {
             y2 = value;
+            _lineSymbolModel.Y2 = y2;
+
             OnPropertyChanged();
         }
     }
@@ -60,5 +67,11 @@ public class LineSymbolVM : SymbolVM
             isHighlighted = value;
             OnPropertyChanged();
         }
+    }
+
+    private readonly LineSymbolModel _lineSymbolModel;
+    public LineSymbolVM(LineSymbolModel lineSymbolModel)
+    {
+        _lineSymbolModel = lineSymbolModel;
     }
 }

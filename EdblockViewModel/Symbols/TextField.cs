@@ -3,6 +3,7 @@ using System.Windows.Input;
 using System.ComponentModel;
 using System.Collections.ObjectModel;
 using System.Runtime.CompilerServices;
+using EdblockModel.Symbols.Abstraction;
 using EdblockViewModel.Symbols.Abstraction;
 
 namespace EdblockViewModel.Symbols;
@@ -56,15 +57,30 @@ public class TextField : INotifyPropertyChanged
         }
     }
 
+    private string? text;
+    public string? Text
+    {
+        get => text;
+        set
+        {
+            text = value;
+            _blockSymbolModel.Text = text;
+            OnPropertyChanged();
+        }
+    }
+
     public DelegateCommand<BlockSymbolVM> DoubleClickedTextField { get; init; }
     public DelegateCommand<BlockSymbolVM> MouseMoveSymbol { get; init; }
     public event PropertyChangedEventHandler? PropertyChanged;
 
     private readonly CanvasSymbolsVM _canvasSymbolsVM;
-    
-    public TextField(CanvasSymbolsVM canvasSymbolsVM)
+    private readonly BlockSymbolModel _blockSymbolModel;
+
+    public TextField(CanvasSymbolsVM canvasSymbolsVM, BlockSymbolModel blockSymbolModel)
     {
         _canvasSymbolsVM = canvasSymbolsVM;
+        _blockSymbolModel = blockSymbolModel;
+
         MouseMoveSymbol = new(canvasSymbolsVM.MoveSymbol);
         DoubleClickedTextField = new(AddFocus);
     }

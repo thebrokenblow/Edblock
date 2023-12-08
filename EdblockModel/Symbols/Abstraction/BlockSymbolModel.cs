@@ -3,26 +3,31 @@ using System.Text.Json.Serialization;
 
 namespace EdblockModel.Symbols.Abstraction;
 
+[Serializable]
 public abstract class BlockSymbolModel : SymbolModel
 {
-    public string Id { get; init; }
+    public string Id { get; set; }
+    public string NameOfSymbol { get; set; }
     public int Width { get; set; }
     public int Height { get; set; }
     public int XCoordinate { get; set; }
     public int YCoordinate { get; set; }
+    public string? Text { get; set; }
     [JsonIgnore]
-    public int MinWidth { get; } = 40;
+    public int MinWidth { get; set; }
     [JsonIgnore]
-    public int MinHeight { get; } = 20;
+    public int MinHeight { get; set; }
     public abstract void SetWidth(int width);
     public abstract void SetHeight(int height);
     public abstract int GetTextFieldWidth(int width);
     public abstract int GetTextFieldHeight(int height);
 
     private readonly Dictionary<PositionConnectionPoint, Func<(int x, int y)>> borderCoordinateByPosition;
-    public BlockSymbolModel(string id)
+
+    public BlockSymbolModel(string id, string nameBlockSymbol)
     {
         Id = id;
+        NameOfSymbol = nameBlockSymbol;
 
         borderCoordinateByPosition = new()
         {

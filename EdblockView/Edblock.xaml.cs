@@ -21,4 +21,9 @@ public partial class Edblock : Window
     {
         canvasSymbolsVM.SaveProject();
     }
+
+    private void Button_Click_1(object sender, RoutedEventArgs e)
+    {
+        canvasSymbolsVM.UploadProject();
+    }
 }

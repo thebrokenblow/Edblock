@@ -106,14 +106,8 @@ public class MovableRectangleLine : INotifyPropertyChanged
     internal void ChangeCoordinateLine((int x, int y) currentCoordinate)
     {
         var linesSymbolVM = _drawnLineSymbolVM.LinesSymbolVM;
-        var drawnLineSymbolModel = _drawnLineSymbolVM.DrawnLineSymbolModel;
-        var linesSymbolModel = drawnLineSymbolModel.LinesSymbolModel;
 
         int indexCurrentLine = linesSymbolVM.IndexOf(_lineSymbolVM);
-
-        var currentLineModel = linesSymbolModel[indexCurrentLine];
-        var previousLineModel = linesSymbolModel[indexCurrentLine - 1];
-        var nextLineModel = linesSymbolModel[indexCurrentLine + 1];
 
         var previousLineVM = linesSymbolVM[indexCurrentLine - 1];
         var nextLineVM = linesSymbolVM[indexCurrentLine + 1];
@@ -121,30 +115,20 @@ public class MovableRectangleLine : INotifyPropertyChanged
         if (_lineSymbolVM.X1 == _lineSymbolVM.X2)
         {
             previousLineVM.X2 = currentCoordinate.x;
-            previousLineModel.X2 = currentCoordinate.x;
 
             _lineSymbolVM.X1 = currentCoordinate.x;
             _lineSymbolVM.X2 = currentCoordinate.x;
 
-            currentLineModel.X1 = currentCoordinate.x;
-            currentLineModel.X2 = currentCoordinate.x;
-
             nextLineVM.X1 = currentCoordinate.x;
-            nextLineModel.X1 = currentCoordinate.x;
         }
         else
         {
             previousLineVM.Y2 = currentCoordinate.y;
-            previousLineModel.Y2 = currentCoordinate.y;
 
             _lineSymbolVM.Y1 = currentCoordinate.y;
             _lineSymbolVM.Y2 = currentCoordinate.y;
 
-            currentLineModel.Y1 = currentCoordinate.y;
-            currentLineModel.Y2 = currentCoordinate.y;
-
             nextLineVM.Y1 = currentCoordinate.y;
-            nextLineModel.Y1 = currentCoordinate.y;
         }
 
         _drawnLineSymbolVM.RedrawMovableRectanglesLine();

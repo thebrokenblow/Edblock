@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using EdblockModel.Symbols.LineSymbols;
 using EdblockViewModel.Symbols.Abstraction;
+using EdblockViewModel.Symbols.ConnectionPoints;
 
 namespace EdblockViewModel.Symbols.LineSymbols;
 
@@ -19,6 +20,8 @@ public class DrawnLineSymbolVM : SymbolVM
     public DelegateCommand EnterCursor { get; init; }
     public DelegateCommand LeaveCursor { get; init; }
     public DelegateCommand ClickOnLine { get; init; }
+    public ConnectionPoint OutgoingConnectionPoint { get; init; }
+    public ConnectionPoint? IncomingConnectionPoint { get; set; }
     public PositionConnectionPoint OutgoingPosition { get; init; }
     public PositionConnectionPoint IncomingPosition { get; set; }
 
@@ -64,14 +67,16 @@ public class DrawnLineSymbolVM : SymbolVM
 
     public CanvasSymbolsVM CanvasSymbolsVM { get; init; }
 
-    public DrawnLineSymbolVM(DrawnLineSymbolModel drawnLineSymbolModel, CanvasSymbolsVM canvasSymbolsVM, PositionConnectionPoint outgoingPosition)
+    public DrawnLineSymbolVM(DrawnLineSymbolModel drawnLineSymbolModel, CanvasSymbolsVM canvasSymbolsVM, ConnectionPoint outgoingConnectionPoint)
     {
         EnterCursor = new(SetHighlightLines);
         LeaveCursor = new(SetDefaultColorLines);
         ClickOnLine = new(SelectLine);
 
         DrawnLineSymbolModel = drawnLineSymbolModel;
-        OutgoingPosition = outgoingPosition;
+
+        OutgoingConnectionPoint = outgoingConnectionPoint;
+        OutgoingPosition = outgoingConnectionPoint.PositionConnectionPoint;
 
         CanvasSymbolsVM = canvasSymbolsVM;
 

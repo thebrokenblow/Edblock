@@ -1,5 +1,4 @@
-﻿using System.Collections.ObjectModel;
-using EdblockModel.Symbols.LineSymbols;
+﻿using EdblockModel.Symbols.LineSymbols;
 
 namespace EdblockViewModel.Symbols.LineSymbols;
 
@@ -7,7 +6,7 @@ public class FactoryLineSymbol
 {
     public static LineSymbolVM CreateLine(LineSymbolModel lineSymbolModel)
     {
-        var lineSymbol = new LineSymbolVM()
+        var lineSymbol = new LineSymbolVM(lineSymbolModel)
         {
             X1 = lineSymbolModel.X2,
             Y1 = lineSymbolModel.Y2,
@@ -20,7 +19,7 @@ public class FactoryLineSymbol
 
     public static LineSymbolVM CreateLineByLineModel(LineSymbolModel lineSymbolModel)
     {
-        var lineSymbol = new LineSymbolVM()
+        var lineSymbol = new LineSymbolVM(lineSymbolModel)
         {
             X1 = lineSymbolModel.X1,
             Y1 = lineSymbolModel.Y1,
