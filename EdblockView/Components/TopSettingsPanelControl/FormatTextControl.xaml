@@ -1,0 +1,41 @@
+﻿<UserControl x:Class="EdblockView.Components.TopSettingsPanelControl.FormatTextControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
+             mc:Ignorable="d" 
+             d:DesignHeight="40" d:DesignWidth="160">
+    <ListBox
+            SelectionMode="Extended"
+            Background="Transparent"
+            Style="{StaticResource MaterialDesignToolToggleFlatListBox}">
+
+        <ListBox.ItemsPanel>
+            <ItemsPanelTemplate>
+                <StackPanel Orientation="Horizontal"/>
+            </ItemsPanelTemplate>
+        </ListBox.ItemsPanel>
+
+        <ListBoxItem>
+            <materialDesign:PackIcon 
+                    Kind="FormatBold"
+                    Style="{StaticResource IconFormatText}">
+            </materialDesign:PackIcon>
+        </ListBoxItem>
+
+        <ListBoxItem>
+            <materialDesign:PackIcon 
+                    Kind="FormatItalic"
+                    Style="{StaticResource IconFormatText}">
+            </materialDesign:PackIcon>
+        </ListBoxItem>
+
+        <ListBoxItem>
+            <materialDesign:PackIcon 
+                    Kind="FormatUnderline"
+                    Style="{StaticResource IconFormatText}">
+            </materialDesign:PackIcon>
+        </ListBoxItem>
+    </ListBox>
+</UserControl>
