@@ -66,10 +66,11 @@ public abstract class BlockSymbolVM : SymbolVM
         }
     }
 
+    public DelegateCommand MouseEnter { get; set; }
+    public DelegateCommand MouseLeave { get; set; }
+
     public TextField TextField { get; init; }
     public BlockSymbolModel BlockSymbolModel { get; init; }
-    public DelegateCommand EnterCursor { get; set; }
-    public DelegateCommand LeaveCursor { get; set; }
 
     private readonly CanvasSymbolsVM _canvasSymbolsVM;
     private readonly FactoryBlockSymbolModel _factoryBlockSymbolModel = new();
@@ -99,8 +100,8 @@ public abstract class BlockSymbolVM : SymbolVM
         var factoryScaleRectangles = new FactoryScaleRectangles(_canvasSymbolsVM, this);
         ScaleRectangles = factoryScaleRectangles.Create();
 
-        EnterCursor = new(ShowStroke);
-        LeaveCursor = new(HideStroke);
+        MouseEnter = new(ShowStroke);
+        MouseLeave = new(HideStroke);
     }
 
     public abstract void SetWidth(int width);

@@ -153,7 +153,7 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
 
     public void MoveSymbol(BlockSymbolVM currentSymbol)
     {
-        if (!currentSymbol.TextField.Focus)
+        if (!currentSymbol.TextField.Focusable)
         {
             ConnectionPoint.SetDisplayConnectionPoints(currentSymbol.ConnectionPoints, false);
             ScaleRectangle.SetStateDisplay(currentSymbol.ScaleRectangles, false);

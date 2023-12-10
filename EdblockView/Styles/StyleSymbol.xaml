@@ -17,7 +17,7 @@
         <Setter Property="Width" Value="{Binding TextField.Width}" />
         <Setter Property="Height" Value="{Binding TextField.Height}" />
         <Setter Property="Cursor" Value="{Binding TextField.Cursor}" />
-        <Setter Property="Focusable" Value="{Binding TextField.Focus}" />
+        <Setter Property="Focusable" Value="{Binding TextField.Focusable}" />
         <Setter Property="TextAlignment" Value="Center" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Foreground" Value="White" />

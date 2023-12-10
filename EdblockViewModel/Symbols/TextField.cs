@@ -10,13 +10,13 @@ namespace EdblockViewModel.Symbols;
 
 public class TextField : INotifyPropertyChanged
 {
-    private bool focus = false;
-    public bool Focus
+    private bool focusable = false;
+    public bool Focusable
     {
-        get => focus;
+        get => focusable;
         set
         {
-            focus = value;
+            focusable = value;
             OnPropertyChanged();
         }
     }
@@ -33,7 +33,6 @@ public class TextField : INotifyPropertyChanged
     }
 
     private int width;
-
     public int Width
     {
         get => width;
@@ -46,7 +45,6 @@ public class TextField : INotifyPropertyChanged
 
 
     private int height;
-
     public int Height
     {
         get => height;
@@ -69,8 +67,9 @@ public class TextField : INotifyPropertyChanged
         }
     }
 
-    public DelegateCommand<BlockSymbolVM> DoubleClickedTextField { get; init; }
-    public DelegateCommand<BlockSymbolVM> MouseMoveSymbol { get; init; }
+    public DelegateCommand<BlockSymbolVM> MouseDoubleClick { get; init; }
+    public DelegateCommand<BlockSymbolVM> MouseLeftButtonDown { get; init; }
+
     public event PropertyChangedEventHandler? PropertyChanged;
 
     private readonly CanvasSymbolsVM _canvasSymbolsVM;
@@ -81,8 +80,8 @@ public class TextField : INotifyPropertyChanged
         _canvasSymbolsVM = canvasSymbolsVM;
         _blockSymbolModel = blockSymbolModel;
 
-        MouseMoveSymbol = new(canvasSymbolsVM.MoveSymbol);
-        DoubleClickedTextField = new(AddFocus);
+        MouseLeftButtonDown = new(canvasSymbolsVM.MoveSymbol);
+        MouseDoubleClick = new(AddFocus);
     }
 
     public static void ChangeFocus(ObservableCollection<SymbolVM> Symbols)
@@ -92,9 +91,9 @@ public class TextField : INotifyPropertyChanged
             if (symbol is BlockSymbolVM blockSymbol)
             {
                 var textFieldSymbol = blockSymbol.TextField;
-                if (textFieldSymbol.Focus)
+                if (textFieldSymbol.Focusable)
                 {
-                    textFieldSymbol.Focus = false;
+                    textFieldSymbol.Focusable = false;
                 }
             }
         }
@@ -109,6 +108,6 @@ public class TextField : INotifyPropertyChanged
     {
         _canvasSymbolsVM.Cursor = Cursors.IBeam;
         symbolViewModel.TextField.Cursor = Cursors.IBeam;
-        symbolViewModel.TextField.Focus = true;
+        symbolViewModel.TextField.Focusable = true;
     }
 }
