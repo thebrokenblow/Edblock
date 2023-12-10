@@ -157,12 +157,11 @@ public class ConnectionPoint : INotifyPropertyChanged
         var drawnLineSymbolModel = new DrawnLineSymbolModel(blockSymbolModel, positionConnectionPoint);
         drawnLineSymbolModel.AddFirstLine();
 
-        var drawnLineSymbolVM = new DrawnLineSymbolVM(drawnLineSymbolModel, _canvasSymbolsVM, this);
+        var drawnLineSymbolVM = new DrawnLineSymbolVM(drawnLineSymbolModel, BlockSymbolVM, _canvasSymbolsVM, this);
 
         _canvasSymbolsVM.SerializableSymbols.LinesSymbolModel.Add(drawnLineSymbolModel);
         _canvasSymbolsVM.Symbols.Add(drawnLineSymbolVM);
         _canvasSymbolsVM.DrawnLineSymbol = drawnLineSymbolVM;
-        _canvasSymbolsVM.DrawnLineSymbol.SymbolOutgoingLine = BlockSymbolVM;
     }
 
     private void EndDrawLine()

@@ -13,7 +13,7 @@ namespace EdblockViewModel.Symbols.LineSymbols;
 
 public class DrawnLineSymbolVM : SymbolVM
 {
-    public BlockSymbolVM? SymbolOutgoingLine { get; set; }
+    public BlockSymbolVM SymbolOutgoingLine { get; set; }
     public BlockSymbolVM? SymbolIncomingLine { get; set; }
     public DrawnLineSymbolModel DrawnLineSymbolModel { get; set; }
     public ObservableCollection<LineSymbolVM> LinesSymbolVM { get; init; } = new();
@@ -69,7 +69,7 @@ public class DrawnLineSymbolVM : SymbolVM
 
     public CanvasSymbolsVM CanvasSymbolsVM { get; init; }
 
-    public DrawnLineSymbolVM(DrawnLineSymbolModel drawnLineSymbolModel, CanvasSymbolsVM canvasSymbolsVM, ConnectionPoint outgoingConnectionPoint)
+    public DrawnLineSymbolVM(DrawnLineSymbolModel drawnLineSymbolModel, BlockSymbolVM symbolOutgoingLine, CanvasSymbolsVM canvasSymbolsVM, ConnectionPoint outgoingConnectionPoint)
     {
         EnterCursor = new(SetHighlightLines);
         LeaveCursor = new(SetDefaultColorLines);
@@ -77,6 +77,7 @@ public class DrawnLineSymbolVM : SymbolVM
 
         DrawnLineSymbolModel = drawnLineSymbolModel;
 
+        SymbolOutgoingLine = symbolOutgoingLine;
         OutgoingConnectionPoint = outgoingConnectionPoint;
         OutgoingPosition = outgoingConnectionPoint.PositionConnectionPoint;
 

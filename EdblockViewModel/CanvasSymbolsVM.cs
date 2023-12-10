@@ -102,7 +102,7 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
             var symbolIncomingLine = SelectDrawnLineSymbol.SymbolIncomingLine;
             var symbolOutgoingLine = SelectDrawnLineSymbol.SymbolOutgoingLine;
 
-            if (symbolIncomingLine != null && symbolOutgoingLine != null)
+            if (symbolIncomingLine != null)
             {
                 BlockByDrawnLines[symbolIncomingLine].Remove(SelectDrawnLineSymbol);
                 BlockByDrawnLines[symbolOutgoingLine].Remove(SelectDrawnLineSymbol);
