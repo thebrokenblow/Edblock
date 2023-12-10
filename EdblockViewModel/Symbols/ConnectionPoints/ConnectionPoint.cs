@@ -128,7 +128,7 @@ public class ConnectionPoint : INotifyPropertyChanged
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameProperty));
     }
 
-    public static void SetDisplayConnectionPoints(List<ConnectionPoint> connectionPoints, bool isShow)
+    public static void SetStateDisplay(List<ConnectionPoint> connectionPoints, bool isShow)
     {
         foreach (var connectionPoint in connectionPoints)
         {
@@ -140,7 +140,7 @@ public class ConnectionPoint : INotifyPropertyChanged
     {
         if (_canvasSymbolsVM.ScalePartBlockSymbolVM == null) //Код выполняется, если символ не масштабируется
         {
-            SetDisplayConnectionPoints(BlockSymbolVM.ConnectionPoints, isEnterConnectionPoint);
+            SetStateDisplay(BlockSymbolVM.ConnectionPoints, isEnterConnectionPoint);
 
             _canvasSymbolsVM.Cursor = cursorDisplaying;
             IsSelect = isSelectConnectionPoint;
@@ -204,9 +204,9 @@ public class ConnectionPoint : INotifyPropertyChanged
             return;
         }
 
-        if (_canvasSymbolsVM.BlockSymbolByLineSymbol.ContainsKey(blockSymbol))
+        if (_canvasSymbolsVM.BlockByDrawnLines.ContainsKey(blockSymbol))
         {
-            var drawnLinesSymbolVM = _canvasSymbolsVM.BlockSymbolByLineSymbol[blockSymbol];
+            var drawnLinesSymbolVM = _canvasSymbolsVM.BlockByDrawnLines[blockSymbol];
             drawnLinesSymbolVM.Add(_canvasSymbolsVM.DrawnLineSymbol);
         }
         else
@@ -215,7 +215,7 @@ public class ConnectionPoint : INotifyPropertyChanged
             {
                 _canvasSymbolsVM.DrawnLineSymbol
             };
-            _canvasSymbolsVM.BlockSymbolByLineSymbol.Add(blockSymbol, drawnLinesSymbolVM);
+            _canvasSymbolsVM.BlockByDrawnLines.Add(blockSymbol, drawnLinesSymbolVM);
         }
     }
 }
