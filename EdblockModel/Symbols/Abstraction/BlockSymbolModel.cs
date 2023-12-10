@@ -29,6 +29,9 @@ public abstract class BlockSymbolModel : SymbolModel
         Id = id;
         NameOfSymbol = nameBlockSymbol;
 
+        MinWidth = 40;
+        MinHeight = 20;
+
         borderCoordinateByPosition = new()
         {
             { PositionConnectionPoint.Top, GetTopBorderCoordinate },

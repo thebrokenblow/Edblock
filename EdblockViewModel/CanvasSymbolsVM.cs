@@ -25,16 +25,7 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
         set
         {
             xCoordinate = RoundCoordinate(value);
-
-            var currentCoordinate = (xCoordinate, yCoordinate);
-            var previousCoordinate = (previousXCoordinate, previousYCoordinate);
-
             ScalePartBlockSymbol?.SetWidthBlockSymbol(this);
-            DrawnLineSymbol?.ChangeCoordination(currentCoordinate);
-            MovableRectangleLine?.ChangeCoordinateLine(currentCoordinate);
-            MovableBlockSymbol?.SetCoordinate(currentCoordinate, previousCoordinate);
-
-            previousXCoordinate = xCoordinate;
         }
     }
 
@@ -46,16 +37,7 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
         set
         {
             yCoordinate = RoundCoordinate(value);
-
-            var currentCoordinate = (xCoordinate, yCoordinate);
-            var previousCoordinate = (previousXCoordinate, previousYCoordinate);
-
             ScalePartBlockSymbol?.SetHeightBlockSymbol(this);
-            DrawnLineSymbol?.ChangeCoordination(currentCoordinate);
-            MovableRectangleLine?.ChangeCoordinateLine(currentCoordinate);
-            MovableBlockSymbol?.SetCoordinate(currentCoordinate, previousCoordinate);
-
-            previousYCoordinate = yCoordinate;
         }
     }
 
@@ -195,6 +177,16 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
 
     private void RedrawSymbols()
     {
+        var currentCoordinate = (xCoordinate, yCoordinate);
+        var previousCoordinate = (previousXCoordinate, previousYCoordinate);
+
+        MovableBlockSymbol?.SetCoordinate(currentCoordinate, previousCoordinate);
+        DrawnLineSymbol?.ChangeCoordination(currentCoordinate);
+        MovableRectangleLine?.ChangeCoordinateLine(currentCoordinate);
+
+        previousXCoordinate = xCoordinate;
+        previousYCoordinate = yCoordinate;
+
         if (RedrawDrawnLines != null)
         {
             foreach (var redrawLine in RedrawDrawnLines)
