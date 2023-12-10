@@ -32,13 +32,13 @@
                             </i:Interaction.Behaviors>
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="MouseLeftButtonDown">
-                                    <i:InvokeCommandAction Command="{Binding MouseDown}"/>
+                                    <i:InvokeCommandAction Command="{Binding ClickCanvasSymbols}"/>
                                 </i:EventTrigger>
                                 <i:EventTrigger EventName="MouseMove">
-                                    <i:InvokeCommandAction Command="{Binding MouseMove}"/>
+                                    <i:InvokeCommandAction Command="{Binding MouseMoveCanvasSymbols}"/>
                                 </i:EventTrigger>
                                 <i:EventTrigger EventName="MouseUp">
-                                    <i:InvokeCommandAction Command="{Binding MouseUp}"/>
+                                    <i:InvokeCommandAction Command="{Binding MouseUpCanvasSymbols}"/>
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
 

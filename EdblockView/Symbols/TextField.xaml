@@ -10,13 +10,13 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <TextBox Style="{StaticResource TextField}">
         <i:Interaction.Triggers>
-            <i:EventTrigger EventName="MouseLeftButtonDown">
+            <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
                 <i:InvokeCommandAction 
-                        Command="{Binding TextField.MouseLeftButtonDown}" 
+                        Command="{Binding TextField.MouseMoveSymbol}" 
                         CommandParameter="{Binding}"/>
             </i:EventTrigger>
-            <i:EventTrigger EventName="MouseDoubleClick">
-                <i:InvokeCommandAction Command="{Binding TextField.MouseDoubleClick}" CommandParameter="{Binding}"/>
+            <i:EventTrigger EventName="PreviewMouseDoubleClick">
+                <i:InvokeCommandAction Command="{Binding TextField.DoubleClickedTextField}" CommandParameter="{Binding}"/>
             </i:EventTrigger>
             <i:EventTrigger EventName="MouseEnter">
                 <i:InvokeCommandAction Command="{Binding EnterCursor}"/>

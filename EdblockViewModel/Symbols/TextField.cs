@@ -69,9 +69,8 @@ public class TextField : INotifyPropertyChanged
         }
     }
 
-    public DelegateCommand<BlockSymbolVM> MouseLeftButtonDown { get; init; }
-    public DelegateCommand<BlockSymbolVM> MouseDoubleClick { get; init; }
-
+    public DelegateCommand<BlockSymbolVM> DoubleClickedTextField { get; init; }
+    public DelegateCommand<BlockSymbolVM> MouseMoveSymbol { get; init; }
     public event PropertyChangedEventHandler? PropertyChanged;
 
     private readonly CanvasSymbolsVM _canvasSymbolsVM;
@@ -82,8 +81,8 @@ public class TextField : INotifyPropertyChanged
         _canvasSymbolsVM = canvasSymbolsVM;
         _blockSymbolModel = blockSymbolModel;
 
-        MouseLeftButtonDown = new(canvasSymbolsVM.SetMovableSymbol);
-        MouseDoubleClick = new(AddFocus);
+        MouseMoveSymbol = new(canvasSymbolsVM.MoveSymbol);
+        DoubleClickedTextField = new(AddFocus);
     }
 
     public static void ChangeFocus(ObservableCollection<SymbolVM> Symbols)
@@ -93,7 +92,6 @@ public class TextField : INotifyPropertyChanged
             if (symbol is BlockSymbolVM blockSymbol)
             {
                 var textFieldSymbol = blockSymbol.TextField;
-
                 if (textFieldSymbol.Focus)
                 {
                     textFieldSymbol.Focus = false;
@@ -109,11 +107,8 @@ public class TextField : INotifyPropertyChanged
 
     private void AddFocus(BlockSymbolVM symbolViewModel)
     {
-        var textField = symbolViewModel.TextField;
-
-        textField.Focus = true;
-        textField.Cursor = Cursors.IBeam;
-
         _canvasSymbolsVM.Cursor = Cursors.IBeam;
+        symbolViewModel.TextField.Cursor = Cursors.IBeam;
+        symbolViewModel.TextField.Focus = true;
     }
 }

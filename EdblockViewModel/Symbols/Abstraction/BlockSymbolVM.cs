@@ -132,7 +132,7 @@ public abstract class BlockSymbolVM : SymbolVM
 
         if (movableSymbol == null && scalePartBlockSymbolVM == null)
         {
-            ConnectionPoint.SetStateDisplay(ConnectionPoints, true);
+            ConnectionPoint.SetDisplayConnectionPoints(ConnectionPoints, true);
             ScaleRectangle.SetStateDisplay(ScaleRectangles, true);
             TextField.Cursor = Cursors.SizeAll;
         }
@@ -140,7 +140,7 @@ public abstract class BlockSymbolVM : SymbolVM
 
     public void HideStroke()
     {
-        ConnectionPoint.SetStateDisplay(ConnectionPoints, false);
+        ConnectionPoint.SetDisplayConnectionPoints(ConnectionPoints, false);
         ScaleRectangle.SetStateDisplay(ScaleRectangles, false);
     }
 
