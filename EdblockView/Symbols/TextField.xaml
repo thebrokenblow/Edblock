@@ -10,7 +10,7 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <TextBox Style="{StaticResource TextField}">
         <i:Interaction.Triggers>
-            <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+            <i:EventTrigger EventName="MouseLeftButtonDown">
                 <i:InvokeCommandAction 
                         Command="{Binding TextField.MouseMoveSymbol}" 
                         CommandParameter="{Binding}"/>
