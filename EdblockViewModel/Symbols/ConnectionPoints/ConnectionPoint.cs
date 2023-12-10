@@ -204,9 +204,9 @@ public class ConnectionPoint : INotifyPropertyChanged
             return;
         }
 
-        if (_canvasSymbolsVM.BlockSymbolByLineSymbol.ContainsKey(blockSymbol))
+        if (_canvasSymbolsVM.BlockByDrawnLines.ContainsKey(blockSymbol))
         {
-            var drawnLinesSymbolVM = _canvasSymbolsVM.BlockSymbolByLineSymbol[blockSymbol];
+            var drawnLinesSymbolVM = _canvasSymbolsVM.BlockByDrawnLines[blockSymbol];
             drawnLinesSymbolVM.Add(_canvasSymbolsVM.DrawnLineSymbol);
         }
         else
@@ -215,7 +215,7 @@ public class ConnectionPoint : INotifyPropertyChanged
             {
                 _canvasSymbolsVM.DrawnLineSymbol
             };
-            _canvasSymbolsVM.BlockSymbolByLineSymbol.Add(blockSymbol, drawnLinesSymbolVM);
+            _canvasSymbolsVM.BlockByDrawnLines.Add(blockSymbol, drawnLinesSymbolVM);
         }
     }
 }

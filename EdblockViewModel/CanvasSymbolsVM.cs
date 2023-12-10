@@ -73,12 +73,15 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
     }
 
     public ObservableCollection<SymbolVM> Symbols { get; init; }
-    public Dictionary<BlockSymbolVM, List<DrawnLineSymbolVM?>> BlockSymbolByLineSymbol { get; init; }
-    public DelegateCommand MouseMoveCanvasSymbols { get; init; }
-    public DelegateCommand MouseUpCanvasSymbols { get; init; }
-    public DelegateCommand ClickCanvasSymbols { get; init; }
+    public Dictionary<BlockSymbolVM, List<DrawnLineSymbolVM?>> BlockByDrawnLines { get; init; }
+
+
+    public DelegateCommand MouseMove { get; init; }
+    public DelegateCommand MouseDown { get; init; }
+    public DelegateCommand MouseUp { get; init; }
+
+
     public DelegateCommand<string> ClickSymbol { get; init; }
-    public DelegateCommand<BlockSymbolVM> MouseMoveSymbol { get; init; }
     public BlockSymbolVM? MovableSymbol { get; set; }
     public ScalePartBlockSymbol? ScalePartBlockSymbolVM { get; set; }
     public DrawnLineSymbolVM? DrawnLineSymbol { get; set; }
@@ -96,13 +99,14 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
     {
         Symbols = new();
         SerializableSymbols = new();
-        BlockSymbolByLineSymbol = new();
+        BlockByDrawnLines = new();
 
-        MouseMoveCanvasSymbols = new(RedrawLine);
-        MouseUpCanvasSymbols = new(SetDefaultValue);
+        MouseMove = new(RedrawLine);
+        MouseDown = new(ClickOnCanvas);
+        MouseUp = new(SetDefaultValue);
+
         ClickSymbol = new(CreateBlockSymbol);
-        MouseMoveSymbol = new(MoveSymbol);
-        ClickCanvasSymbols = new(ClickOnCanvas);
+
         factoryBlockSymbol = new(this);
 
         cursor = Cursors.Arrow;
@@ -127,8 +131,8 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
 
             if (symbolIncomingLine != null && symbolOutgoingLine != null)
             {
-                BlockSymbolByLineSymbol[symbolIncomingLine].Remove(SelectDrawnLineSymbol);
-                BlockSymbolByLineSymbol[symbolOutgoingLine].Remove(SelectDrawnLineSymbol);
+                BlockByDrawnLines[symbolIncomingLine].Remove(SelectDrawnLineSymbol);
+                BlockByDrawnLines[symbolOutgoingLine].Remove(SelectDrawnLineSymbol);
             }
 
             SelectDrawnLineSymbol.OutgoingConnectionPoint.IsHasConnectingLine = false;
@@ -151,7 +155,7 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
         Symbols.Add(currentSymbol);
     }
 
-    public void MoveSymbol(BlockSymbolVM currentSymbol)
+    public void SetMovableSymbol(BlockSymbolVM currentSymbol)
     {
         if (!currentSymbol.TextField.Focusable)
         {
@@ -164,7 +168,6 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
 
         MovableSymbol = currentSymbol;
         SetCurrentRedrawLines(currentSymbol);
-        RedrawLine();
     }
 
     public void ClickOnCanvas()
@@ -226,9 +229,9 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
 
     public void SetCurrentRedrawLines(BlockSymbolVM blockSymbolVM)
     {
-        if (BlockSymbolByLineSymbol.ContainsKey(blockSymbolVM))
+        if (BlockByDrawnLines.ContainsKey(blockSymbolVM))
         {
-            CurrentRedrawLines = BlockSymbolByLineSymbol[blockSymbolVM];
+            CurrentRedrawLines = BlockByDrawnLines[blockSymbolVM];
         }
     }
 

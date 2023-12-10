@@ -80,7 +80,7 @@ public class TextField : INotifyPropertyChanged
         _canvasSymbolsVM = canvasSymbolsVM;
         _blockSymbolModel = blockSymbolModel;
 
-        MouseLeftButtonDown = new(canvasSymbolsVM.MoveSymbol);
+        MouseLeftButtonDown = new(canvasSymbolsVM.SetMovableSymbol);
         MouseDoubleClick = new(AddFocus);
     }
 

@@ -25,20 +25,22 @@
                 <ControlTemplate>
                     <ScrollViewer MouseLeave="ScrollViewer_MouseLeave" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden">
                         <Canvas Cursor="{Binding Cursor}" Focusable="True" ClipToBounds="True" IsItemsHost="True">
+                            
                             <i:Interaction.Behaviors>
                                 <edblockViewModel:MouseBehaviourVM 
                                 MouseX="{Binding XCoordinate, Mode=OneWayToSource}" 
                                 MouseY="{Binding YCoordinate, Mode=OneWayToSource}" />
                             </i:Interaction.Behaviors>
+                            
                             <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="MouseLeftButtonDown">
-                                    <i:InvokeCommandAction Command="{Binding ClickCanvasSymbols}"/>
-                                </i:EventTrigger>
                                 <i:EventTrigger EventName="MouseMove">
-                                    <i:InvokeCommandAction Command="{Binding MouseMoveCanvasSymbols}"/>
+                                    <i:InvokeCommandAction Command="{Binding MouseMove}"/>
+                                </i:EventTrigger>
+                                <i:EventTrigger EventName="MouseDown">
+                                    <i:InvokeCommandAction Command="{Binding MouseDown}"/>
                                 </i:EventTrigger>
                                 <i:EventTrigger EventName="MouseUp">
-                                    <i:InvokeCommandAction Command="{Binding MouseUpCanvasSymbols}"/>
+                                    <i:InvokeCommandAction Command="{Binding MouseUp}"/>
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
 
