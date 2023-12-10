@@ -6,6 +6,8 @@ using System.Collections.ObjectModel;
 using EdblockModel.Symbols.LineSymbols;
 using EdblockViewModel.Symbols.Abstraction;
 using EdblockViewModel.Symbols.ConnectionPoints;
+using System;
+using EdblockModel.Symbols.LineSymbols.RedrawLine;
 
 namespace EdblockViewModel.Symbols.LineSymbols;
 
@@ -204,7 +206,7 @@ public class DrawnLineSymbolVM : SymbolVM
 
     private void SetHighlightLines()
     {
-        var movableSymbol = CanvasSymbolsVM.MovableSymbol;
+        var movableSymbol = CanvasSymbolsVM.MovableBlockSymbol;
         var drawnLineSymbol = CanvasSymbolsVM.DrawnLineSymbol;
 
         if (movableSymbol == null && drawnLineSymbol == null)
@@ -305,5 +307,25 @@ public class DrawnLineSymbolVM : SymbolVM
     {
         lineSymbolVM.X2 = lineSymbolModel.X2;
         lineSymbolVM.Y2 = lineSymbolModel.Y2;
+    }
+
+    internal void Redraw()
+    {
+        var redrawLineSymbolVM = new RedrawnLine(DrawnLineSymbolModel);
+        var redrawnLinesModel = redrawLineSymbolVM.GetRedrawLine();
+        DrawnLineSymbolModel.LinesSymbolModel = redrawnLinesModel;
+
+        RedrawAllLines();
+    }
+
+    internal void AddLine()
+    {
+        if (LinesSymbolVM.Count > 1)
+        {
+            var currentLineSymbolModel = DrawnLineSymbolModel.GetNewLine();
+            var currentLineSymbolVM = FactoryLineSymbol.CreateLine(currentLineSymbolModel);
+
+            LinesSymbolVM.Add(currentLineSymbolVM);
+        }
     }
 }

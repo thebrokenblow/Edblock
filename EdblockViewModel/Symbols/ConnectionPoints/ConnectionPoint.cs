@@ -138,7 +138,7 @@ public class ConnectionPoint : INotifyPropertyChanged
 
     private void SetDisplayConnectionPoint(Cursor cursorDisplaying, bool isEnterConnectionPoint, bool isSelectConnectionPoint)
     {
-        if (_canvasSymbolsVM.ScalePartBlockSymbolVM == null) //Код выполняется, если символ не масштабируется
+        if (_canvasSymbolsVM.ScalePartBlockSymbol == null) //Код выполняется, если символ не масштабируется
         {
             SetDisplayConnectionPoints(BlockSymbolVM.ConnectionPoints, isEnterConnectionPoint);
 

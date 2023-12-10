@@ -5,6 +5,8 @@ using System.Collections.ObjectModel;
 using System.Runtime.CompilerServices;
 using EdblockModel.Symbols.Abstraction;
 using EdblockViewModel.Symbols.Abstraction;
+using EdblockViewModel.Symbols.ConnectionPoints;
+using EdblockViewModel.Symbols.ScaleRectangles;
 
 namespace EdblockViewModel.Symbols;
 
@@ -67,21 +69,26 @@ public class TextField : INotifyPropertyChanged
         }
     }
 
-    public DelegateCommand<BlockSymbolVM> MouseDoubleClick { get; init; }
-    public DelegateCommand<BlockSymbolVM> MouseLeftButtonDown { get; init; }
+    public DelegateCommand MouseDoubleClick { get; init; }
+    public DelegateCommand MouseLeftButtonDown { get; init; }
 
     public event PropertyChangedEventHandler? PropertyChanged;
 
     private readonly CanvasSymbolsVM _canvasSymbolsVM;
+    private readonly BlockSymbolVM _blockSymbolVM;
     private readonly BlockSymbolModel _blockSymbolModel;
 
-    public TextField(CanvasSymbolsVM canvasSymbolsVM, BlockSymbolModel blockSymbolModel)
+    public TextField(CanvasSymbolsVM canvasSymbolsVM, BlockSymbolVM blockSymbolVM)
     {
         _canvasSymbolsVM = canvasSymbolsVM;
-        _blockSymbolModel = blockSymbolModel;
 
-        MouseLeftButtonDown = new(canvasSymbolsVM.SetMovableSymbol);
+        _blockSymbolVM = blockSymbolVM;
+        _blockSymbolModel = blockSymbolVM.BlockSymbolModel;
+
+        Cursor = Cursors.SizeAll;
+
         MouseDoubleClick = new(AddFocus);
+        MouseLeftButtonDown = new(SetMovableSymbol);
     }
 
     public static void ChangeFocus(ObservableCollection<SymbolVM> Symbols)
@@ -104,10 +111,24 @@ public class TextField : INotifyPropertyChanged
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
     }
 
-    private void AddFocus(BlockSymbolVM symbolViewModel)
+    private void AddFocus()
     {
         _canvasSymbolsVM.Cursor = Cursors.IBeam;
-        symbolViewModel.TextField.Cursor = Cursors.IBeam;
-        symbolViewModel.TextField.Focusable = true;
+        Cursor = Cursors.IBeam;
+
+        Focusable = true;
+    }
+
+    private void SetMovableSymbol()
+    {
+        ConnectionPoint.SetDisplayConnectionPoints(_blockSymbolVM.ConnectionPoints, false);
+        ScaleRectangle.SetStateDisplay(_blockSymbolVM.ScaleRectangles, false);
+
+        Cursor = Cursors.SizeAll;
+        
+        _canvasSymbolsVM.Cursor = Cursors.SizeAll;
+
+        _canvasSymbolsVM.MovableBlockSymbol = _blockSymbolVM;
+        _canvasSymbolsVM.SetCurrentRedrawLines(_blockSymbolVM);
     }
 }

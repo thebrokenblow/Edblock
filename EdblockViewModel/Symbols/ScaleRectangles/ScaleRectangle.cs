@@ -98,7 +98,7 @@ public class ScaleRectangle : INotifyPropertyChanged
 
     private void ShowScaleRectangles()
     {
-        if (_canvasSymbolsVM.ScalePartBlockSymbolVM == null)
+        if (_canvasSymbolsVM.ScalePartBlockSymbol == null)
         {
             _canvasSymbolsVM.Cursor = _cursorScaling;
             SetStateDisplay(_blockSymbolVM.ScaleRectangles, true);
@@ -113,6 +113,6 @@ public class ScaleRectangle : INotifyPropertyChanged
 
     private void SaveScaleRectangle()
     {
-        _canvasSymbolsVM.ScalePartBlockSymbolVM = new(_blockSymbolVM, _cursorScaling, _getWidthSymbol, _getHeightSymbol);
+        _canvasSymbolsVM.ScalePartBlockSymbol = new(_blockSymbolVM, _cursorScaling, _getWidthSymbol, _getHeightSymbol);
     }
 }

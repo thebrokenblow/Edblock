@@ -4,14 +4,13 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
         xmlns:components="clr-namespace:EdblockView.Components" 
-        xmlns:i="http://schemas.microsoft.com/xaml/behaviors" 
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
         xmlns:symbol="clr-namespace:EdblockView.SymbolsUI"
         xmlns:edblockViewModel="clr-namespace:EdblockViewModel;assembly=EdblockViewModel" 
         d:DataContext="{d:DesignInstance Type=edblockViewModel:EdblockVM}"
         mc:Ignorable="d"
         Title="Edblock" Height="600" Width="1200">
-    
+
     <Window.InputBindings>
         <KeyBinding Command="{Binding ClickEsc}" Key="Delete"/>
     </Window.InputBindings>
@@ -62,7 +61,7 @@
             x:Name="CanvasSymbols" 
             Grid.Row="1"
             Grid.Column="1" />
-        
+
         <Grid 
             x:Name="GridMenu" 
             Width="360" 
@@ -92,7 +91,7 @@
                     <symbol:ActionSymbolUI
                         Grid.Column="0" 
                         Grid.Row="0" />
-                    
+
                     <Label 
                         Style="{StaticResource LabelSymbolMenu}"
                         Grid.Row="0"
@@ -100,7 +99,7 @@
                         Content="Действие (1)" />
                 </Grid>
             </ScrollViewer>
-            
+
             <Button 
                 Style="{StaticResource ButtonOpenClose}"
                 x:Name="ButtonClose" 
@@ -111,7 +110,7 @@
                     Foreground="#212121"
                     Kind="Close" />
             </Button>
-            
+
         </Grid>
     </Grid>
 </Window>

@@ -36,8 +36,8 @@
                                 <i:EventTrigger EventName="MouseMove">
                                     <i:InvokeCommandAction Command="{Binding MouseMove}"/>
                                 </i:EventTrigger>
-                                <i:EventTrigger EventName="MouseDown">
-                                    <i:InvokeCommandAction Command="{Binding MouseDown}"/>
+                                <i:EventTrigger EventName="MouseLeftButtonDown">
+                                    <i:InvokeCommandAction Command="{Binding MouseLeftButtonDown}"/>
                                 </i:EventTrigger>
                                 <i:EventTrigger EventName="MouseUp">
                                     <i:InvokeCommandAction Command="{Binding MouseUp}"/>

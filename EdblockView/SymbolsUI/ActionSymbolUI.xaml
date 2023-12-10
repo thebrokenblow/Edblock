@@ -5,13 +5,13 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors" 
              xmlns:edblockviewmodel="clr-namespace:EdblockViewModel;assembly=EdblockViewModel"
-             d:DataContext="{d:DesignInstance Type=edblockviewmodel:CanvasSymbolsVM}"
+             d:DataContext="{d:DesignInstance Type=edblockviewmodel:EdblockVM}"
              mc:Ignorable="d" 
              d:DesignHeight="60" d:DesignWidth="140">
     <Canvas Style="{StaticResource FrameSymbol}" Background="#FF52C0AA">
         <TextBlock Style="{StaticResource TextFieldUI}" Text="Действие" Width="140" Height="60">
             <i:Interaction.Triggers>
-                <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                <i:EventTrigger EventName="MouseLeftButtonDown">
                     <i:InvokeCommandAction Command="{Binding ClickSymbol}" CommandParameter="ActionSymbol"/>
                 </i:EventTrigger>
             </i:Interaction.Triggers>

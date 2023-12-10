@@ -10,8 +10,6 @@ using System.Runtime.CompilerServices;
 using EdblockViewModel.Symbols.LineSymbols;
 using EdblockViewModel.Symbols.Abstraction;
 using EdblockViewModel.Symbols.ScaleRectangles;
-using EdblockViewModel.Symbols.ConnectionPoints;
-using EdblockModel.Symbols.LineSymbols.RedrawLine;
 
 namespace EdblockViewModel;
 
@@ -31,10 +29,10 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
             var currentCoordinate = (xCoordinate, yCoordinate);
             var previousCoordinate = (previousXCoordinate, previousYCoordinate);
 
-            ScalePartBlockSymbolVM?.SetWidthBlockSymbol(this);
+            ScalePartBlockSymbol?.SetWidthBlockSymbol(this);
             DrawnLineSymbol?.ChangeCoordination(currentCoordinate);
             MovableRectangleLine?.ChangeCoordinateLine(currentCoordinate);
-            MovableSymbol?.SetCoordinate(currentCoordinate, previousCoordinate);
+            MovableBlockSymbol?.SetCoordinate(currentCoordinate, previousCoordinate);
 
             previousXCoordinate = xCoordinate;
         }
@@ -52,10 +50,10 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
             var currentCoordinate = (xCoordinate, yCoordinate);
             var previousCoordinate = (previousXCoordinate, previousYCoordinate);
 
-            ScalePartBlockSymbolVM?.SetHeightBlockSymbol(this);
+            ScalePartBlockSymbol?.SetHeightBlockSymbol(this);
             DrawnLineSymbol?.ChangeCoordination(currentCoordinate);
             MovableRectangleLine?.ChangeCoordinateLine(currentCoordinate);
-            MovableSymbol?.SetCoordinate(currentCoordinate, previousCoordinate);
+            MovableBlockSymbol?.SetCoordinate(currentCoordinate, previousCoordinate);
 
             previousYCoordinate = yCoordinate;
         }
@@ -72,42 +70,35 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
         }
     }
 
-    public ObservableCollection<SymbolVM> Symbols { get; init; }
-    public Dictionary<BlockSymbolVM, List<DrawnLineSymbolVM?>> BlockByDrawnLines { get; init; }
-
-
     public DelegateCommand MouseMove { get; init; }
-    public DelegateCommand MouseDown { get; init; }
     public DelegateCommand MouseUp { get; init; }
+    public DelegateCommand MouseLeftButtonDown { get; init; }
 
+    public ObservableCollection<SymbolVM> Symbols { get; init; }
+    public Dictionary<BlockSymbolVM, List<DrawnLineSymbolVM>> BlockByDrawnLines { get; init; }
 
-    public DelegateCommand<string> ClickSymbol { get; init; }
-    public BlockSymbolVM? MovableSymbol { get; set; }
-    public ScalePartBlockSymbol? ScalePartBlockSymbolVM { get; set; }
+    public BlockSymbolVM? MovableBlockSymbol { get; set; }
+    public ScalePartBlockSymbol? ScalePartBlockSymbol { get; set; }
+
     public DrawnLineSymbolVM? DrawnLineSymbol { get; set; }
-    private List<DrawnLineSymbolVM?>? CurrentRedrawLines { get; set; }
     public DrawnLineSymbolVM? SelectDrawnLineSymbol { get; set; }
+    private List<DrawnLineSymbolVM>? RedrawDrawnLines { get; set; }
     public MovableRectangleLine? MovableRectangleLine { get; set; }
+
     public event PropertyChangedEventHandler? PropertyChanged;
 
     public SerializableSymbols SerializableSymbols { get; set; }
 
-    private readonly FactoryBlockSymbol factoryBlockSymbol;
-    private RedrawnLine? redrawLineSymbolVM;
     private const int lengthGridCell = 20;
     public CanvasSymbolsVM()
     {
         Symbols = new();
-        SerializableSymbols = new();
         BlockByDrawnLines = new();
+        SerializableSymbols = new();
 
-        MouseMove = new(RedrawLine);
-        MouseDown = new(ClickOnCanvas);
+        MouseMove = new(RedrawSymbols);
         MouseUp = new(SetDefaultValue);
-
-        ClickSymbol = new(CreateBlockSymbol);
-
-        factoryBlockSymbol = new(this);
+        MouseLeftButtonDown = new(AddLine);
 
         cursor = Cursors.Arrow;
         Grid = new Rect(-lengthGridCell, -lengthGridCell, lengthGridCell, lengthGridCell);
@@ -143,44 +134,27 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
         }
     }
 
-    public void CreateBlockSymbol(string nameBlockSymbol)
+    public void AddBlockSymbol(BlockSymbolVM blockSymbolVM)
     {
-        var currentSymbol = factoryBlockSymbol.Create(nameBlockSymbol);
+        MovableBlockSymbol = blockSymbolVM;
 
-        currentSymbol.TextField.Cursor = Cursors.SizeAll;
-        Cursor = Cursors.SizeAll;
-
-        MovableSymbol = currentSymbol;
-        SerializableSymbols.BlocksSymbolModel.Add(currentSymbol.BlockSymbolModel);
-        Symbols.Add(currentSymbol);
+        Symbols.Add(blockSymbolVM);
+        SerializableSymbols.BlocksSymbolModel.Add(blockSymbolVM.BlockSymbolModel);
     }
 
-    public void SetMovableSymbol(BlockSymbolVM currentSymbol)
+    //TODO: Подумать над названием метода
+    public void AddLine()
     {
-        if (!currentSymbol.TextField.Focusable)
-        {
-            ConnectionPoint.SetDisplayConnectionPoints(currentSymbol.ConnectionPoints, false);
-            ScaleRectangle.SetStateDisplay(currentSymbol.ScaleRectangles, false);
+        DrawnLineSymbol?.AddLine();
 
-            currentSymbol.TextField.Cursor = Cursors.SizeAll;
-            Cursor = Cursors.SizeAll;
-        }
-
-        MovableSymbol = currentSymbol;
-        SetCurrentRedrawLines(currentSymbol);
-    }
-
-    public void ClickOnCanvas()
-    {
-        AddLineSymbol();
         RemoveSelectDrawnLine();
-        TextField.ChangeFocus(Symbols);
     }
 
     private void RemoveSelectDrawnLine()
     {
         if (SelectDrawnLineSymbol != null)
         {
+            //TODO: Плохой код
             var copySelectDrawnLineSymbol = SelectDrawnLineSymbol;
             SelectDrawnLineSymbol = null;
             copySelectDrawnLineSymbol.SetDefaultColorLines();
@@ -191,29 +165,12 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
     {
         Cursor = Cursors.Arrow;
 
-        MovableSymbol = null;
-        CurrentRedrawLines = null;
+        RedrawDrawnLines = null;
+        MovableBlockSymbol = null;
         MovableRectangleLine = null;
-        ScalePartBlockSymbolVM = null;
-    }
+        ScalePartBlockSymbol = null;
 
-    private void AddLineSymbol()
-    {
-        if (DrawnLineSymbol == null)
-        {
-            return;
-        }
-
-        var linesSymbol = DrawnLineSymbol.LinesSymbolVM;
-
-        if (linesSymbol.Count > 1)
-        {
-            var drawnLineSymbolModel = DrawnLineSymbol.DrawnLineSymbolModel;
-            var currentLineSymbolModel = drawnLineSymbolModel.GetNewLine();
-            var currentLineSymbolVM = FactoryLineSymbol.CreateLine(currentLineSymbolModel);
-
-            DrawnLineSymbol.LinesSymbolVM.Add(currentLineSymbolVM);
-        }
+        TextField.ChangeFocus(Symbols);
     }
 
     public void OnPropertyChanged([CallerMemberName] string prop = "")
@@ -221,9 +178,10 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
     }
 
-    public static int RoundCoordinate(int coordinate) //Округление координат, чтобы символ перемещался по сетке
+    private static int RoundCoordinate(int coordinate) //Округление координат, чтобы символ перемещался по сетке
     {
         int roundedCoordinate = coordinate - coordinate % (lengthGridCell / 2);
+
         return roundedCoordinate;
     }
 
@@ -231,26 +189,17 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
     {
         if (BlockByDrawnLines.ContainsKey(blockSymbolVM))
         {
-            CurrentRedrawLines = BlockByDrawnLines[blockSymbolVM];
+            RedrawDrawnLines = BlockByDrawnLines[blockSymbolVM];
         }
     }
 
-    private void RedrawLine()
+    private void RedrawSymbols()
     {
-        if (CurrentRedrawLines == null)
+        if (RedrawDrawnLines != null)
         {
-            return;
-        }
-
-        foreach (var currentRedrawLine in CurrentRedrawLines)
-        {
-            if (currentRedrawLine is not null)
+            foreach (var redrawLine in RedrawDrawnLines)
             {
-                var drawnLineSymbolModel = currentRedrawLine.DrawnLineSymbolModel;
-                redrawLineSymbolVM = new(drawnLineSymbolModel);
-                var redrawnLinesModel = redrawLineSymbolVM.GetRedrawLine();
-                drawnLineSymbolModel.LinesSymbolModel = redrawnLinesModel;
-                currentRedrawLine.RedrawAllLines();
+                redrawLine.Redraw();
             }
         }
     }

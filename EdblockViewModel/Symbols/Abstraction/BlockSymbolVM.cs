@@ -88,7 +88,7 @@ public abstract class BlockSymbolVM : SymbolVM
 
         BlockSymbolModel = _factoryBlockSymbolModel.Create(nameBlockSymbol, _id);
 
-        TextField = new(canvasSymbolsVM, BlockSymbolModel);
+        TextField = new(canvasSymbolsVM, this);
 
         Width = defaultWidth;
         Height = defaultHeigth;
@@ -109,18 +109,15 @@ public abstract class BlockSymbolVM : SymbolVM
 
     public void SetCoordinate((int x, int y) currentCoordinate, (int x, int y) previousCoordinate)
     {
-        int roundedXCoordinate = CanvasSymbolsVM.RoundCoordinate(currentCoordinate.x);
-        int roundedYCoordinate = CanvasSymbolsVM.RoundCoordinate(currentCoordinate.y);
-
         if (XCoordinate == 0 && YCoordinate == 0)
         {
-            XCoordinate = roundedXCoordinate - Width / 2;
-            YCoordinate = roundedYCoordinate - Height / 2;
+            XCoordinate = currentCoordinate.x - Width / 2;
+            YCoordinate = currentCoordinate.y - Height / 2;
         }
         else
         {
-            XCoordinate = roundedXCoordinate - (previousCoordinate.x - XCoordinate);
-            YCoordinate = roundedYCoordinate - (previousCoordinate.y - YCoordinate);
+            XCoordinate = currentCoordinate.x - (previousCoordinate.x - XCoordinate);
+            YCoordinate = currentCoordinate.y - (previousCoordinate.y - YCoordinate);
         }
     }
 
@@ -128,8 +125,8 @@ public abstract class BlockSymbolVM : SymbolVM
     {
         // Условие истино, когда символ не перемещается и не масштабируется (просто навёл курсор)
 
-        var movableSymbol = _canvasSymbolsVM.MovableSymbol;
-        var scalePartBlockSymbolVM = _canvasSymbolsVM.ScalePartBlockSymbolVM;
+        var movableSymbol = _canvasSymbolsVM.MovableBlockSymbol;
+        var scalePartBlockSymbolVM = _canvasSymbolsVM.ScalePartBlockSymbol;
 
         if (movableSymbol == null && scalePartBlockSymbolVM == null)
         {
