@@ -6,7 +6,6 @@ public class ActionSymbolModel : BlockSymbolModel
 {
     public ActionSymbolModel(string id, string nameBlockSymbol) : base(id, nameBlockSymbol)
     {
-        HexColor = "#FF52C0AA";
     }
 
     public override void SetWidth(int width)

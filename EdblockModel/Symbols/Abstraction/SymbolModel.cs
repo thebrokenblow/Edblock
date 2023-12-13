@@ -2,5 +2,5 @@
 
 public class SymbolModel
 {
-    public string? HexColor { get; set; }
+    public string? Color { get; set; }
 }

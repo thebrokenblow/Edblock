@@ -22,9 +22,9 @@
 
             <popupboxcontrol:ScaleAllSymbol />
 
-            <popupboxcontrol:ButtonSaveProject Margin="0 5"/>
+            <popupboxcontrol:ButtonSaveProject x:Name="ButtonSaveProject" Margin="0 5"/>
 
-            <popupboxcontrol:ButtonLoadProject Margin="0 5"/>
+            <popupboxcontrol:ButtonLoadProject x:Name="ButtonLoadProject" Margin="0 5"/>
 
             <popupboxcontrol:ButtonSaveImg Margin="0 5"/>
 

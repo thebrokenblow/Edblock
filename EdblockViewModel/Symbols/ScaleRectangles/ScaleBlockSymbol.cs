@@ -35,12 +35,12 @@ internal class ScaleBlockSymbol
         return widthBlockSymbol;
     }
 
-    internal static int ChangeHeigthTopPart(ScalePartBlockSymbol scalePartBlockSymbolVM, CanvasSymbolsVM canvasSymbolsVM)
+    internal static int ChangeHeigthTopPart(ScalePartBlockSymbol scalePartBlockSymbol, CanvasSymbolsVM canvasSymbolsVM)
     {
         int currentYCoordinateCursor = canvasSymbolsVM.YCoordinate;
-        int initialHeigth = scalePartBlockSymbolVM.InitialHeigthBlockSymbol;
-        int initialYCoordinate = scalePartBlockSymbolVM.InitialYCoordinateBlockSymbol;
-        int minHeight = scalePartBlockSymbolVM.ScalingBlockSymbol.BlockSymbolModel.MinHeight;
+        int initialHeigth = scalePartBlockSymbol.InitialHeigthBlockSymbol;
+        int initialYCoordinate = scalePartBlockSymbol.InitialYCoordinateBlockSymbol;
+        int minHeight = scalePartBlockSymbol.ScalingBlockSymbol.BlockSymbolModel.MinHeight;
 
         int heigthBlockSymbol = initialHeigth + (initialYCoordinate - currentYCoordinateCursor);
 
@@ -48,7 +48,7 @@ internal class ScaleBlockSymbol
         {
             int yCoordinate = initialYCoordinate - (heigthBlockSymbol - initialHeigth);
 
-            scalePartBlockSymbolVM.ScalingBlockSymbol.YCoordinate = yCoordinate;
+            scalePartBlockSymbol.ScalingBlockSymbol.YCoordinate = yCoordinate;
         }
 
         return heigthBlockSymbol;

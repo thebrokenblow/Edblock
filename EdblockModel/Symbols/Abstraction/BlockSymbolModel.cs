@@ -1,22 +1,28 @@
 ﻿using EdblockModel.Symbols.Enum;
-using System.Text.Json.Serialization;
 
 namespace EdblockModel.Symbols.Abstraction;
 
-[Serializable]
 public abstract class BlockSymbolModel : SymbolModel
 {
     public string Id { get; set; }
-    public string NameOfSymbol { get; set; }
+    public string NameSymbol { get; set; }
     public int Width { get; set; }
     public int Height { get; set; }
     public int XCoordinate { get; set; }
     public int YCoordinate { get; set; }
     public string? Text { get; set; }
-    [JsonIgnore]
-    public int MinWidth { get; set; }
-    [JsonIgnore]
-    public int MinHeight { get; set; }
+
+    private const int minWidth = 40;
+    public int MinWidth
+    {
+        get => minWidth;
+    }
+    private const int minHeight = 20;
+    public int MinHeight
+    {
+        get => minHeight;
+    }
+
     public abstract void SetWidth(int width);
     public abstract void SetHeight(int height);
     public abstract int GetTextFieldWidth(int width);
@@ -27,10 +33,7 @@ public abstract class BlockSymbolModel : SymbolModel
     public BlockSymbolModel(string id, string nameBlockSymbol)
     {
         Id = id;
-        NameOfSymbol = nameBlockSymbol;
-
-        MinWidth = 40;
-        MinHeight = 20;
+        NameSymbol = nameBlockSymbol;
 
         borderCoordinateByPosition = new()
         {

@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using EdblockViewModel;
+using System.Windows.Controls;
 
 namespace EdblockView.Components.PopupBoxControl;
 
@@ -10,5 +11,18 @@ public partial class PopupBoxMenu : UserControl
     public PopupBoxMenu()
     {
         InitializeComponent();
+    }
+
+    private CanvasSymbolsVM? canvasSymbolsVM;
+    public CanvasSymbolsVM? CanvasSymbolsVM
+    {
+        get => canvasSymbolsVM;
+        set
+        {
+            canvasSymbolsVM = value;
+
+            ButtonSaveProject.CanvasSymbolsVM = canvasSymbolsVM;
+            ButtonLoadProject.CanvasSymbolsVM = canvasSymbolsVM;
+        }
     }
 }

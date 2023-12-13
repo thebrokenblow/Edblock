@@ -10,7 +10,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <ItemsControl ItemsSource="{Binding LinesSymbolVM}">
+        <ItemsControl MouseDown="ItemsControl_MouseDown" ItemsSource="{Binding LinesSymbolVM}">
             <ItemsControl.Resources>
                 <DataTemplate DataType="{x:Type symbolsLineVM:LineSymbolVM}">
                     <Line Style="{StaticResource LineSymbol}"/>
@@ -74,9 +74,6 @@
             </i:EventTrigger>
             <i:EventTrigger EventName="MouseLeave">
                 <i:InvokeCommandAction Command="{Binding LeaveCursor}" />
-            </i:EventTrigger>
-            <i:EventTrigger EventName="MouseRightButtonUp">
-                <i:InvokeCommandAction Command="{Binding ClickOnLine}" />
             </i:EventTrigger>
         </i:Interaction.Triggers>
     </Grid>

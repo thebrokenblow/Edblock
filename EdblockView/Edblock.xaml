@@ -35,6 +35,7 @@
         </Grid.RowDefinitions>
 
         <components:TopSettingsPanel 
+            x:Name="TopSettingsPanelUI"
             Grid.Row="0"
             Grid.Column="2"/>
 

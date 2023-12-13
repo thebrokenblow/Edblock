@@ -13,6 +13,7 @@
             Kind="ContentSave" />
 
         <Button 
+            Click="SaveProject"
             DockPanel.Dock="Right"
             Margin="20 0 0 0"
             Style="{StaticResource ButtonSettingsMenu}"                

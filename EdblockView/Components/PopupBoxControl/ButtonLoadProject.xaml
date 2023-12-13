@@ -13,6 +13,7 @@
             Kind="upload" />
 
         <Button 
+            Click="LoadProject"
             Margin="20 0 0 0"
             DockPanel.Dock="Right"
             Style="{StaticResource ButtonSettingsMenu}"

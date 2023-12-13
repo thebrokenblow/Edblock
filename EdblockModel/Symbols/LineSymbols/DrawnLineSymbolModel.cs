@@ -1,28 +1,26 @@
 ﻿using EdblockModel.Symbols.Enum;
-using System.Text.Json.Serialization;
 using EdblockModel.Symbols.Abstraction;
 
 namespace EdblockModel.Symbols.LineSymbols;
 
-public class DrawnLineSymbolModel
+public class DrawnLineSymbolModel : SymbolModel
 {
     public BlockSymbolModel SymbolOutgoingLine { get; set; }
     public BlockSymbolModel? SymbolIncomingLine { get; set; }
     public List<LineSymbolModel> LinesSymbolModel { get; set; }
-    [JsonIgnore]
     public CoordinateLineModel CoordinateLineModel { get; set; }
-    [JsonIgnore]
     public PositionConnectionPoint OutgoingPosition { get; init; }
-    [JsonIgnore]
     public PositionConnectionPoint IncomingPosition { get; set; }
+
     private readonly int offsetLine = 10;
 
-    public DrawnLineSymbolModel(BlockSymbolModel symbolOutgoingLine, PositionConnectionPoint positionConnectionPoint)
+    public DrawnLineSymbolModel(BlockSymbolModel symbolOutgoingLine, PositionConnectionPoint positionConnectionPoint, string color)
     {
         LinesSymbolModel = new();
         CoordinateLineModel = new(LinesSymbolModel);
         SymbolOutgoingLine = symbolOutgoingLine;
         OutgoingPosition = positionConnectionPoint;
+        Color = color;
     }
 
     public (int x, int y) RoundingCoordinatesLines((int x, int y) startCoordinate, (int x, int y) currentCoordinate)

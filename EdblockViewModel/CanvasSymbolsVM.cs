@@ -10,6 +10,9 @@ using System.Runtime.CompilerServices;
 using EdblockViewModel.Symbols.LineSymbols;
 using EdblockViewModel.Symbols.Abstraction;
 using EdblockViewModel.Symbols.ScaleRectangles;
+using System;
+using SerializationEdblock;
+using System.Windows.Documents;
 
 namespace EdblockViewModel;
 
@@ -69,14 +72,12 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
 
     public event PropertyChangedEventHandler? PropertyChanged;
 
-    public SerializableSymbols SerializableSymbols { get; set; }
 
     private const int lengthGridCell = 20;
     public CanvasSymbolsVM()
     {
         Symbols = new();
         BlockByDrawnLines = new();
-        SerializableSymbols = new();
 
         MouseMove = new(RedrawSymbols);
         MouseUp = new(SetDefaultValue);
@@ -121,7 +122,6 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
         MovableBlockSymbol = blockSymbolVM;
 
         Symbols.Add(blockSymbolVM);
-        SerializableSymbols.BlocksSymbolModel.Add(blockSymbolVM.BlockSymbolModel);
     }
 
     //TODO: Подумать над названием метода
@@ -193,6 +193,44 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
             {
                 redrawLine.Redraw();
             }
+        }
+    }
+
+    public void SaveProject(string filePath)
+    {
+        var blockSymbols = new List<BlockSymbol>();
+
+        foreach (var symbol in Symbols)
+        {
+            if (symbol is BlockSymbolVM blockSymbolVM)
+            {
+                var blockSymbolModel = blockSymbolVM.BlockSymbolModel;
+
+                var blockSymbol = new BlockSymbol
+                {
+                    Id = blockSymbolModel.Id,
+                    NameSymbol = blockSymbolModel.NameSymbol,
+                    Width = blockSymbolModel.Width,
+                    Height = blockSymbolModel.Height,
+                    XCoordinate = blockSymbolModel.XCoordinate,
+                    YCoordinate = blockSymbolModel.YCoordinate,
+                    Text = blockSymbolModel.Text
+                };
+
+                blockSymbols.Add(blockSymbol);
+
+                SerializationProject.Write(blockSymbols, filePath);
+            }
+        }
+    }
+
+    public async void LoadProject(string filePath)
+    {
+        var blockSymbols = await SerializationProject.Read(filePath);
+
+        foreach (var blockSymbol in blockSymbols)
+        {
+            
         }
     }
 }

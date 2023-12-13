@@ -14,6 +14,17 @@ public abstract class BlockSymbolVM : SymbolVM
     public List<ConnectionPoint> ConnectionPoints { get; init; }
     public List<ScaleRectangle> ScaleRectangles { get; init; }
 
+    private string? color;
+    public override string? Color
+    {
+        get => color;
+        set
+        {
+            color = value;
+            BlockSymbolModel.Color = color;
+        } 
+    }
+
     private int width;
     public int Width
     {
@@ -92,7 +103,6 @@ public abstract class BlockSymbolVM : SymbolVM
 
         Width = defaultWidth;
         Height = defaultHeigth;
-        Color = BlockSymbolModel.HexColor;
 
         var factoryConnectionPoints = new FactoryConnectionPoints(_canvasSymbolsVM, this);
         ConnectionPoints = factoryConnectionPoints.Create();

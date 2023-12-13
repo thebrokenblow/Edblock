@@ -24,7 +24,7 @@ internal class FactoryBlockSymbol
 
     internal BlockSymbolVM CreateByModel(BlockSymbolModel symbolModel)
     {
-        var symbolVM = Create(symbolModel.NameOfSymbol);
+        var symbolVM = Create(symbolModel.NameSymbol);
 
         symbolVM.XCoordinate = symbolModel.XCoordinate;
         symbolVM.YCoordinate = symbolModel.YCoordinate;

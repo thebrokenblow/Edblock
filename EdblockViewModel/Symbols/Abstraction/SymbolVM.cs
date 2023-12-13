@@ -5,16 +5,7 @@ namespace EdblockViewModel.Symbols.Abstraction;
 
 public abstract class SymbolVM : INotifyPropertyChanged
 {
-    private string? color;
-    public string? Color 
-    {
-        get => color;
-        set
-        {
-            color = value;
-            OnPropertyChanged();
-        }
-    }
+    public abstract string? Color { get; set; }
 
     public event PropertyChangedEventHandler? PropertyChanged;
     public void OnPropertyChanged([CallerMemberName] string prop = "")

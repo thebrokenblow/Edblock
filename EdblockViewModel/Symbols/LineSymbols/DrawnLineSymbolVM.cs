@@ -6,7 +6,6 @@ using System.Collections.ObjectModel;
 using EdblockModel.Symbols.LineSymbols;
 using EdblockViewModel.Symbols.Abstraction;
 using EdblockViewModel.Symbols.ConnectionPoints;
-using System;
 using EdblockModel.Symbols.LineSymbols.RedrawLine;
 
 namespace EdblockViewModel.Symbols.LineSymbols;
@@ -21,12 +20,22 @@ public class DrawnLineSymbolVM : SymbolVM
     public ArrowSymbol ArrowSymbol { get; set; } = new();
     public DelegateCommand EnterCursor { get; init; }
     public DelegateCommand LeaveCursor { get; init; }
-    public DelegateCommand ClickOnLine { get; init; }
     public ConnectionPoint OutgoingConnectionPoint { get; init; }
     public ConnectionPoint? IncomingConnectionPoint { get; set; }
     public PositionConnectionPoint OutgoingPosition { get; init; }
     public PositionConnectionPoint IncomingPosition { get; set; }
 
+    private string? color;
+    public override string? Color
+    {
+        get => color;
+        set
+        {
+            color = value;
+            DrawnLineSymbolModel.Color = color;
+        }
+    }
+    
     private const int heightTextField = 20;
     public static int HeightTextField 
     {
@@ -71,9 +80,8 @@ public class DrawnLineSymbolVM : SymbolVM
 
     public DrawnLineSymbolVM(DrawnLineSymbolModel drawnLineSymbolModel, BlockSymbolVM symbolOutgoingLine, CanvasSymbolsVM canvasSymbolsVM, ConnectionPoint outgoingConnectionPoint)
     {
-        EnterCursor = new(SetHighlightLines);
+        EnterCursor = new(SetHighlightColorLines);
         LeaveCursor = new(SetDefaultColorLines);
-        ClickOnLine = new(SelectLine);
 
         DrawnLineSymbolModel = drawnLineSymbolModel;
 
@@ -171,7 +179,7 @@ public class DrawnLineSymbolVM : SymbolVM
         }
     }
 
-    private void SelectLine()
+    public void SelectLine()
     {
         var selectDrawnLineSymbol = CanvasSymbolsVM.SelectDrawnLineSymbol;
 
@@ -181,7 +189,7 @@ public class DrawnLineSymbolVM : SymbolVM
             selectDrawnLineSymbol.SetDefaultColorLines();
         }
 
-        SetHighlightLines();
+        SetHighlightColorLines();
         ShowMovableRectanglesLine();
         CanvasSymbolsVM.SelectDrawnLineSymbol = this;
     }
@@ -205,7 +213,7 @@ public class DrawnLineSymbolVM : SymbolVM
         }
     }
 
-    private void SetHighlightLines()
+    private void SetHighlightColorLines()
     {
         var movableSymbol = CanvasSymbolsVM.MovableBlockSymbol;
         var drawnLineSymbol = CanvasSymbolsVM.DrawnLineSymbol;
