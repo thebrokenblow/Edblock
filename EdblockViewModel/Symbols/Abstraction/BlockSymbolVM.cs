@@ -101,7 +101,7 @@ public abstract class BlockSymbolVM : SymbolVM
         TextField = new(canvasSymbolsVM, this);
 
         var factoryConnectionPoints = new FactoryConnectionPoints(_canvasSymbolsVM, this);
-        ConnectionPoints = factoryConnectionPoints.Create();
+        ConnectionPoints = factoryConnectionPoints.CreateConnectionPoints();
 
         var factoryScaleRectangles = new FactoryScaleRectangles(_canvasSymbolsVM, this);
         ScaleRectangles = factoryScaleRectangles.Create();
@@ -123,7 +123,7 @@ public abstract class BlockSymbolVM : SymbolVM
         TextField = new(canvasSymbolsVM, this);
 
         var factoryConnectionPoints = new FactoryConnectionPoints(_canvasSymbolsVM, this);
-        ConnectionPoints = factoryConnectionPoints.Create();
+        ConnectionPoints = factoryConnectionPoints.CreateConnectionPoints();
 
         var factoryScaleRectangles = new FactoryScaleRectangles(_canvasSymbolsVM, this);
         ScaleRectangles = factoryScaleRectangles.Create();

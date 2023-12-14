@@ -51,6 +51,7 @@ public class FactorySymbolSerializable
             OutgoingPosition = drawnLineSymbolModel.OutgoingPosition,
             IncomingPosition = drawnLineSymbolModel.IncomingPosition,
             LinesSymbolSerializable = linesSymbolSerializable,
+            Text = drawnLineSymbolModel.Text,
             Color = color,
         };
 

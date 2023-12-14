@@ -7,6 +7,8 @@ using EdblockModel.Symbols.LineSymbols;
 using EdblockViewModel.Symbols.Abstraction;
 using EdblockViewModel.Symbols.ConnectionPoints;
 using EdblockModel.Symbols.LineSymbols.RedrawLine;
+using System.IO.Packaging;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace EdblockViewModel.Symbols.LineSymbols;
 
@@ -24,6 +26,18 @@ public class DrawnLineSymbolVM : SymbolVM
     public ConnectionPoint? IncomingConnectionPoint { get; set; }
     public PositionConnectionPoint OutgoingPosition { get; init; }
     public PositionConnectionPoint IncomingPosition { get; set; }
+
+    private const string defaultText = "да";
+    private string? text;
+    public string? Text 
+    {
+        get => text;
+        set
+        {
+            text = value;
+            DrawnLineSymbolModel.Text = text;
+        }
+    }
 
     private const string defaultColor = "#000000";
     private string? color;
@@ -86,6 +100,7 @@ public class DrawnLineSymbolVM : SymbolVM
 
         DrawnLineSymbolModel = drawnLineSymbolModel;
 
+        Text = defaultText;
         Color = defaultColor;
 
         SymbolOutgoingLine = symbolOutgoingLine;
@@ -107,6 +122,7 @@ public class DrawnLineSymbolVM : SymbolVM
         SymbolOutgoingLine = symbolOutgoingLine;
         SymbolIncomingLine = symbolIncomingLine;
 
+        Text = defaultText;
         Color = defaultColor;
 
         SymbolOutgoingLine = symbolOutgoingLine;

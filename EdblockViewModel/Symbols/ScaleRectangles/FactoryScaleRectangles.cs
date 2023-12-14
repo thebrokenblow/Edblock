@@ -19,6 +19,8 @@ internal class FactoryScaleRectangles
 
     public List<ScaleRectangle> Create()
     {
+        //TODO: упростить код задать сущности в переменные
+
         var scaleRectangles = new List<ScaleRectangle>
         {
             CreateMiddleTopRectangle(),

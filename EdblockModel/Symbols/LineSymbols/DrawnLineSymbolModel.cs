@@ -11,6 +11,7 @@ public class DrawnLineSymbolModel : SymbolModel
     public CoordinateLineModel CoordinateLineModel { get; set; }
     public PositionConnectionPoint OutgoingPosition { get; set; }
     public PositionConnectionPoint IncomingPosition { get; set; }
+    public string? Text { get; set; }
 
     private readonly int offsetLine = 10;
 

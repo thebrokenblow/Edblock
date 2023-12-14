@@ -10,9 +10,9 @@ namespace EdblockViewModel.Symbols;
 internal class FactoryBlockSymbolVM
 {
     private readonly Dictionary<string, Func<string, BlockSymbolVM>> instanceSymbolByName;
-    private readonly Dictionary<string, Func<string, BlockSymbolVM>> instanceSymbolByName1;
+    private readonly Dictionary<string, Func<string, BlockSymbolVM>> instanceSymbolBySerializable;
 
-    private CanvasSymbolsVM _canvasSymbolsVM;
+    private readonly CanvasSymbolsVM _canvasSymbolsVM;
     private BlockSymbolModel? _blockSymbolModel;
     private string? _id;
 
@@ -20,7 +20,7 @@ internal class FactoryBlockSymbolVM
     {
         _canvasSymbolsVM = canvasSymbolsVM;
 
-        instanceSymbolByName1 = new()
+        instanceSymbolBySerializable = new()
         {
              { "ActionSymbol", _ => new ActionSymbol(_canvasSymbolsVM, _blockSymbolModel, _id) }
         };
@@ -51,7 +51,7 @@ internal class FactoryBlockSymbolVM
             throw new Exception("nameBlockSymbol is null");
         }
 
-        return instanceSymbolByName1[nameBlockSymbol].Invoke(nameBlockSymbol);
+        return instanceSymbolBySerializable[nameBlockSymbol].Invoke(nameBlockSymbol);
     }
 
     public BlockSymbolVM CreateBySerialization(BlockSymbolSerializable blockSymbolSerializable)

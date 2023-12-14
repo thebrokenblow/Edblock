@@ -11,6 +11,7 @@ using EdblockModel.Symbols.LineSymbols;
 using EdblockViewModel.Symbols.LineSymbols;
 using EdblockViewModel.Symbols.Abstraction;
 using EdblockViewModel.Symbols.ScaleRectangles;
+using EdblockViewModel.Symbols.ConnectionPoints;
 
 namespace EdblockViewModel;
 
@@ -224,23 +225,12 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
         SerializationProject.Write(projectSerializable, filePath);
     }
 
-    private static BlockSymbolVM GetSymbolById(List<BlockSymbolVM> symbolsVM, string id)
-    {
-        foreach (var item in symbolsVM)
-        {
-            if (item.Id == id)
-            {
-                return item;
-            }
-        }
-
-        throw new System.Exception("Символа с таким id нет");
-    }
+    private FactoryConnectionPoints factoryConnectionPoints;
 
     public async void LoadProject(string filePath)
     {
         var loadedProject = await SerializationProject.Read(filePath);
-        var symbolsVM = new List<BlockSymbolVM>();
+        var blockSymbolsVMById = new Dictionary<string, BlockSymbolVM>();
 
         SymbolsVM.Clear();
         BlockByDrawnLines.Clear();
@@ -248,7 +238,7 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
         foreach (var blockSymbolSerializable in loadedProject.BlocksSymbolSerializable)
         {
             var blockSymbolVM = factoryBlockSymbol.CreateBySerialization(blockSymbolSerializable);
-            symbolsVM.Add(blockSymbolVM);
+            blockSymbolsVMById.Add(blockSymbolSerializable.Id, blockSymbolVM);
             SymbolsVM.Add(blockSymbolVM);
         }
 
@@ -257,8 +247,8 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
             var symbolOutgoingLine = drawnLinesSymbolSerializable.SymbolOutgoingLine;
             var symbolIncomingLine = drawnLinesSymbolSerializable.SymbolIncomingLine;
 
-            var symbolOutgoingLineVM = GetSymbolById(symbolsVM, symbolOutgoingLine.Id);
-            var symbolIncomingLineVM = GetSymbolById(symbolsVM, symbolIncomingLine.Id);
+            var symbolOutgoingLineVM = blockSymbolsVMById[symbolOutgoingLine.Id];
+            var symbolIncomingLineVM = blockSymbolsVMById[symbolIncomingLine.Id];
 
             var linesSymbolModel = new List<LineSymbolModel>();
 
@@ -283,10 +273,15 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
                 drawnLinesSymbolSerializable.IncomingPosition,
                 drawnLinesSymbolSerializable.Color);
 
+            factoryConnectionPoints = new(this, symbolOutgoingLineVM);
+
             var drawnLineSymbolVM = new DrawnLineSymbolVM(drawnLineSymbolModel, symbolOutgoingLineVM, symbolIncomingLineVM, this)
             {
+                Text = drawnLinesSymbolSerializable.Text,
                 OutgoingPosition = drawnLinesSymbolSerializable.OutgoingPosition,
-                IncomingPosition = drawnLinesSymbolSerializable.IncomingPosition
+                IncomingPosition = drawnLinesSymbolSerializable.IncomingPosition,
+                OutgoingConnectionPoint = factoryConnectionPoints.CreateConnectionPoint(drawnLinesSymbolSerializable.OutgoingPosition),
+                IncomingConnectionPoint = factoryConnectionPoints.CreateConnectionPoint(drawnLinesSymbolSerializable.IncomingPosition),
             };
 
             drawnLineSymbolVM.RedrawAllLines();
