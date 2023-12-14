@@ -5,21 +5,42 @@ namespace EdblockModel.Symbols.LineSymbols;
 
 public class DrawnLineSymbolModel : SymbolModel
 {
-    public BlockSymbolModel SymbolOutgoingLine { get; set; }
-    public BlockSymbolModel? SymbolIncomingLine { get; set; }
     public List<LineSymbolModel> LinesSymbolModel { get; set; }
+    public BlockSymbolModel? SymbolOutgoingLine { get; set; }
+    public BlockSymbolModel? SymbolIncomingLine { get; set; }
     public CoordinateLineModel CoordinateLineModel { get; set; }
-    public PositionConnectionPoint OutgoingPosition { get; init; }
+    public PositionConnectionPoint OutgoingPosition { get; set; }
     public PositionConnectionPoint IncomingPosition { get; set; }
 
     private readonly int offsetLine = 10;
 
-    public DrawnLineSymbolModel(BlockSymbolModel symbolOutgoingLine, PositionConnectionPoint positionConnectionPoint, string color)
+    public DrawnLineSymbolModel(BlockSymbolModel symbolOutgoingLine, PositionConnectionPoint outgoingPosition, string color)
     {
         LinesSymbolModel = new();
         CoordinateLineModel = new(LinesSymbolModel);
         SymbolOutgoingLine = symbolOutgoingLine;
-        OutgoingPosition = positionConnectionPoint;
+        OutgoingPosition = outgoingPosition;
+        Color = color;
+    }
+
+    public DrawnLineSymbolModel(
+        List<LineSymbolModel> linesSymbolModel,
+        BlockSymbolModel symbolOutgoingLine, 
+        BlockSymbolModel symbolIncomingLine, 
+        PositionConnectionPoint outgoingPosition, 
+        PositionConnectionPoint incomingPosition, 
+        string color)
+    {
+        LinesSymbolModel = linesSymbolModel;
+
+        SymbolOutgoingLine = symbolOutgoingLine;
+        SymbolIncomingLine = symbolIncomingLine;
+
+        OutgoingPosition = outgoingPosition;
+        IncomingPosition = incomingPosition;
+
+        CoordinateLineModel = new(LinesSymbolModel);
+
         Color = color;
     }
 

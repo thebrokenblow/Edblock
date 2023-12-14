@@ -1,9 +1,10 @@
-﻿using EdblockModel.Symbols.LineSymbols;
-using EdblockViewModel.Symbols.Abstraction;
+﻿using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using EdblockModel.Symbols.LineSymbols;
 
 namespace EdblockViewModel.Symbols.LineSymbols;
 
-public class LineSymbolVM : SymbolVM
+public class LineSymbolVM : INotifyPropertyChanged
 {
     private int x1;
     public int X1
@@ -73,5 +74,11 @@ public class LineSymbolVM : SymbolVM
     public LineSymbolVM(LineSymbolModel lineSymbolModel)
     {
         _lineSymbolModel = lineSymbolModel;
+    }
+
+    public event PropertyChangedEventHandler? PropertyChanged;
+    public void OnPropertyChanged([CallerMemberName] string prop = "")
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
     }
 }

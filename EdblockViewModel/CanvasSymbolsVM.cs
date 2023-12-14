@@ -1,18 +1,16 @@
-﻿using EdblockModel;
-using System.Windows;
+﻿using System.Windows;
 using Prism.Commands;
 using System.Windows.Input;
+using SerializationEdblock;
 using System.ComponentModel;
 using EdblockViewModel.Symbols;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Runtime.CompilerServices;
+using EdblockModel.Symbols.LineSymbols;
 using EdblockViewModel.Symbols.LineSymbols;
 using EdblockViewModel.Symbols.Abstraction;
 using EdblockViewModel.Symbols.ScaleRectangles;
-using System;
-using SerializationEdblock;
-using System.Windows.Documents;
 
 namespace EdblockViewModel;
 
@@ -59,7 +57,7 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
     public DelegateCommand MouseUp { get; init; }
     public DelegateCommand MouseLeftButtonDown { get; init; }
 
-    public ObservableCollection<SymbolVM> Symbols { get; init; }
+    public ObservableCollection<SymbolVM> SymbolsVM { get; init; }
     public Dictionary<BlockSymbolVM, List<DrawnLineSymbolVM>> BlockByDrawnLines { get; init; }
 
     public BlockSymbolVM? MovableBlockSymbol { get; set; }
@@ -72,12 +70,13 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
 
     public event PropertyChangedEventHandler? PropertyChanged;
 
-
+    private readonly FactoryBlockSymbolVM factoryBlockSymbol;
     private const int lengthGridCell = 20;
     public CanvasSymbolsVM()
     {
-        Symbols = new();
+        SymbolsVM = new();
         BlockByDrawnLines = new();
+        factoryBlockSymbol = new(this);
 
         MouseMove = new(RedrawSymbols);
         MouseUp = new(SetDefaultValue);
@@ -91,7 +90,7 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
     {
         if (DrawnLineSymbol != null)
         {
-            Symbols.Remove(DrawnLineSymbol);
+            SymbolsVM.Remove(DrawnLineSymbol);
 
             DrawnLineSymbol.OutgoingConnectionPoint.IsHasConnectingLine = false;
 
@@ -112,7 +111,7 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
             SelectDrawnLineSymbol.OutgoingConnectionPoint.IsHasConnectingLine = false;
             SelectDrawnLineSymbol.IncomingConnectionPoint!.IsHasConnectingLine = false;
 
-            Symbols.Remove(SelectDrawnLineSymbol);
+            SymbolsVM.Remove(SelectDrawnLineSymbol);
             SelectDrawnLineSymbol = null;
         }
     }
@@ -121,7 +120,7 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
     {
         MovableBlockSymbol = blockSymbolVM;
 
-        Symbols.Add(blockSymbolVM);
+        SymbolsVM.Add(blockSymbolVM);
     }
 
     //TODO: Подумать над названием метода
@@ -152,7 +151,7 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
         MovableRectangleLine = null;
         ScalePartBlockSymbol = null;
 
-        TextField.ChangeFocus(Symbols);
+        TextField.ChangeFocus(SymbolsVM);
     }
 
     public void OnPropertyChanged([CallerMemberName] string prop = "")
@@ -198,39 +197,129 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
 
     public void SaveProject(string filePath)
     {
-        var blockSymbols = new List<BlockSymbol>();
+        var blocksSymbolSerializable = new List<BlockSymbolSerializable>();
+        var drawnLinesSymbolSerializable = new List<DrawnLineSymbolSerializable>();
 
-        foreach (var symbol in Symbols)
+        foreach (var symbol in SymbolsVM)
         {
             if (symbol is BlockSymbolVM blockSymbolVM)
             {
                 var blockSymbolModel = blockSymbolVM.BlockSymbolModel;
+                var blockSymbolSerializable = FactorySymbolSerializable.CreateBlockSymbolSerializable(blockSymbolModel);
 
-                var blockSymbol = new BlockSymbol
-                {
-                    Id = blockSymbolModel.Id,
-                    NameSymbol = blockSymbolModel.NameSymbol,
-                    Width = blockSymbolModel.Width,
-                    Height = blockSymbolModel.Height,
-                    XCoordinate = blockSymbolModel.XCoordinate,
-                    YCoordinate = blockSymbolModel.YCoordinate,
-                    Text = blockSymbolModel.Text
-                };
+                blocksSymbolSerializable.Add(blockSymbolSerializable);
+            }
 
-                blockSymbols.Add(blockSymbol);
+            if (symbol is DrawnLineSymbolVM drawnLineSymbolVM)
+            {
+                var drawnLineSymbolModel = drawnLineSymbolVM.DrawnLineSymbolModel;
+                var drawnLineSymbolSerializable = FactorySymbolSerializable.CreateDrawnLineSymbolSerializable(drawnLineSymbolModel);
 
-                SerializationProject.Write(blockSymbols, filePath);
+                drawnLinesSymbolSerializable.Add(drawnLineSymbolSerializable);
             }
         }
+
+        var projectSerializable = new ProjectSerializable(blocksSymbolSerializable, drawnLinesSymbolSerializable);
+
+        SerializationProject.Write(projectSerializable, filePath);
+    }
+
+    private static BlockSymbolVM GetSymbolById(List<BlockSymbolVM> symbolsVM, string id)
+    {
+        foreach (var item in symbolsVM)
+        {
+            if (item.Id == id)
+            {
+                return item;
+            }
+        }
+
+        throw new System.Exception("Символа с таким id нет");
     }
 
     public async void LoadProject(string filePath)
     {
-        var blockSymbols = await SerializationProject.Read(filePath);
+        var loadedProject = await SerializationProject.Read(filePath);
+        var symbolsVM = new List<BlockSymbolVM>();
 
-        foreach (var blockSymbol in blockSymbols)
+        SymbolsVM.Clear();
+        BlockByDrawnLines.Clear();
+
+        foreach (var blockSymbolSerializable in loadedProject.BlocksSymbolSerializable)
         {
-            
+            var blockSymbolVM = factoryBlockSymbol.CreateBySerialization(blockSymbolSerializable);
+            symbolsVM.Add(blockSymbolVM);
+            SymbolsVM.Add(blockSymbolVM);
+        }
+
+        foreach (var drawnLinesSymbolSerializable in loadedProject.DrawnLinesSymbolSerializable)
+        {
+            var symbolOutgoingLine = drawnLinesSymbolSerializable.SymbolOutgoingLine;
+            var symbolIncomingLine = drawnLinesSymbolSerializable.SymbolIncomingLine;
+
+            var symbolOutgoingLineVM = GetSymbolById(symbolsVM, symbolOutgoingLine.Id);
+            var symbolIncomingLineVM = GetSymbolById(symbolsVM, symbolIncomingLine.Id);
+
+            var linesSymbolModel = new List<LineSymbolModel>();
+
+            foreach (var lineSymbolSerializable in drawnLinesSymbolSerializable.LinesSymbolSerializable)
+            {
+                var lineSymbolModel = new LineSymbolModel
+                {
+                    X1 = lineSymbolSerializable.X1,
+                    Y1 = lineSymbolSerializable.Y1,
+                    X2 = lineSymbolSerializable.X2,
+                    Y2 = lineSymbolSerializable.Y2
+                };
+
+                linesSymbolModel.Add(lineSymbolModel);
+            }
+
+            var drawnLineSymbolModel = new DrawnLineSymbolModel(
+                linesSymbolModel,
+                symbolOutgoingLineVM.BlockSymbolModel,
+                symbolIncomingLineVM.BlockSymbolModel,
+                drawnLinesSymbolSerializable.OutgoingPosition,
+                drawnLinesSymbolSerializable.IncomingPosition,
+                drawnLinesSymbolSerializable.Color);
+
+            var drawnLineSymbolVM = new DrawnLineSymbolVM(drawnLineSymbolModel, symbolOutgoingLineVM, symbolIncomingLineVM, this)
+            {
+                OutgoingPosition = drawnLinesSymbolSerializable.OutgoingPosition,
+                IncomingPosition = drawnLinesSymbolSerializable.IncomingPosition
+            };
+
+            drawnLineSymbolVM.RedrawAllLines();
+
+            if (!BlockByDrawnLines.ContainsKey(symbolOutgoingLineVM))
+            {
+                var drawnsLineSymbolVM = new List<DrawnLineSymbolVM>
+                {
+                    drawnLineSymbolVM
+                };
+
+                BlockByDrawnLines.Add(symbolOutgoingLineVM, drawnsLineSymbolVM);
+            }
+            else
+            {
+                BlockByDrawnLines[symbolOutgoingLineVM].Add(drawnLineSymbolVM);
+            }
+
+            if (!BlockByDrawnLines.ContainsKey(symbolIncomingLineVM))
+            {
+                var drawnsLineSymbolVM = new List<DrawnLineSymbolVM>
+                {
+                    drawnLineSymbolVM
+                };
+
+                BlockByDrawnLines.Add(symbolIncomingLineVM, drawnsLineSymbolVM);
+            }
+            else
+            {
+                BlockByDrawnLines[symbolIncomingLineVM].Add(drawnLineSymbolVM);
+            }
+
+            SymbolsVM.Add(drawnLineSymbolVM);
         }
     }
 }

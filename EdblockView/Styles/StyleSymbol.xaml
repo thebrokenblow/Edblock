@@ -71,7 +71,7 @@
         <Setter Property="X2" Value="{Binding X2}" />
         <Setter Property="Y2" Value="{Binding Y2}" />
         <Setter Property="StrokeThickness" Value="1.25"/>
-        <Setter Property="Stroke" Value="{Binding Color}" />
+        <Setter Property="Stroke" Value="Black" />
         <Style.Triggers>
             <DataTrigger Binding="{Binding IsHighlighted}" Value="True">
                 <Setter Property="Stroke" Value="#00FF00"/>

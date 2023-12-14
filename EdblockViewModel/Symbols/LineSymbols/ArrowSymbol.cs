@@ -3,11 +3,12 @@ using System.Windows.Media;
 using EdblockModel.Symbols.Enum;
 using System.Collections.Generic;
 using EdblockModel.Symbols.LineSymbols;
-using EdblockViewModel.Symbols.Abstraction;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace EdblockViewModel.Symbols.LineSymbols;
 
-public class ArrowSymbol : SymbolVM
+public class ArrowSymbol : INotifyPropertyChanged
 {
     private PointCollection pointArrowSymbol = new();
     public PointCollection PointArrowSymbol
@@ -47,12 +48,18 @@ public class ArrowSymbol : SymbolVM
     {
         var pointArrowSymbol = new PointCollection();
 
-        foreach (var coordinate in coordinatesArrow)
+        foreach (var (x, y) in coordinatesArrow)
         {
-            var pointCoordinate = new Point(coordinate.x, coordinate.y);
+            var pointCoordinate = new Point(x, y);
             pointArrowSymbol.Add(pointCoordinate);
         }
 
         PointArrowSymbol = pointArrowSymbol;
+    }
+
+    public event PropertyChangedEventHandler? PropertyChanged;
+    public void OnPropertyChanged([CallerMemberName] string prop = "")
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
     }
 }

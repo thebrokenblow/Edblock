@@ -4,7 +4,7 @@ namespace EdblockModel.Symbols;
 
 public class FactoryBlockSymbolModel
 {
-    private readonly Dictionary<string, Func<string, BlockSymbolModel>> instanceSymbolByName = new()
+    private readonly static Dictionary<string, Func<string, BlockSymbolModel>> instanceSymbolByName = new()
     {
         { "ActionSymbol", x => new ActionSymbolModel(_id, _nameBlockSymbol) }
     };
@@ -12,7 +12,7 @@ public class FactoryBlockSymbolModel
     private static string? _id;
     private static string? _nameBlockSymbol;
 
-    public BlockSymbolModel Create(string? nameBlockSymbol, string id)
+    public static BlockSymbolModel Create(string? nameBlockSymbol, string id)
     {
         _id = id;
 

@@ -8,7 +8,6 @@ using System.Runtime.CompilerServices;
 using EdblockModel.Symbols.LineSymbols;
 using EdblockViewModel.Symbols.LineSymbols;
 using EdblockViewModel.Symbols.Abstraction;
-using EdblockModel;
 
 namespace EdblockViewModel.Symbols.ConnectionPoints;
 
@@ -154,12 +153,12 @@ public class ConnectionPoint : INotifyPropertyChanged
         var positionConnectionPoint = PositionConnectionPoint;
         var blockSymbolModel = BlockSymbolVM.BlockSymbolModel;
 
-        var drawnLineSymbolModel = new DrawnLineSymbolModel(blockSymbolModel, positionConnectionPoint);
+        var drawnLineSymbolModel = new DrawnLineSymbolModel(blockSymbolModel, positionConnectionPoint, "#000000");
         drawnLineSymbolModel.AddFirstLine();
 
         var drawnLineSymbolVM = new DrawnLineSymbolVM(drawnLineSymbolModel, BlockSymbolVM, _canvasSymbolsVM, this);
 
-        _canvasSymbolsVM.Symbols.Add(drawnLineSymbolVM);
+        _canvasSymbolsVM.SymbolsVM.Add(drawnLineSymbolVM);
         _canvasSymbolsVM.DrawnLineSymbol = drawnLineSymbolVM;
     }
 

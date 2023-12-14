@@ -13,6 +13,7 @@ public abstract class BlockSymbolVM : SymbolVM
 {
     public List<ConnectionPoint> ConnectionPoints { get; init; }
     public List<ScaleRectangle> ScaleRectangles { get; init; }
+    public string Id { get; set; }
 
     private string? color;
     public override string? Color
@@ -32,8 +33,8 @@ public abstract class BlockSymbolVM : SymbolVM
         set
         {
             width = value;
-            BlockSymbolModel.Width = width;
 
+            SetWidth(width);
             OnPropertyChanged();
         }
     }
@@ -45,8 +46,8 @@ public abstract class BlockSymbolVM : SymbolVM
         set
         {
             heigth = value;
-            BlockSymbolModel.Height = heigth;
 
+            SetHeight(heigth);
             OnPropertyChanged();
         }
     }
@@ -84,9 +85,6 @@ public abstract class BlockSymbolVM : SymbolVM
     public BlockSymbolModel BlockSymbolModel { get; init; }
 
     private readonly CanvasSymbolsVM _canvasSymbolsVM;
-    private readonly FactoryBlockSymbolModel _factoryBlockSymbolModel = new();
-
-    private readonly string _id;
 
     protected const int defaultWidth = 140;
     protected const int defaultHeigth = 60;
@@ -94,15 +92,35 @@ public abstract class BlockSymbolVM : SymbolVM
     {
         _canvasSymbolsVM = canvasSymbolsVM;
 
-        _id = Guid.NewGuid().ToString();
+        Id = Guid.NewGuid().ToString();
+
         var nameBlockSymbol = GetType().Name?.ToString();
 
-        BlockSymbolModel = _factoryBlockSymbolModel.Create(nameBlockSymbol, _id);
+        BlockSymbolModel = FactoryBlockSymbolModel.Create(nameBlockSymbol, Id);
 
         TextField = new(canvasSymbolsVM, this);
 
+        var factoryConnectionPoints = new FactoryConnectionPoints(_canvasSymbolsVM, this);
+        ConnectionPoints = factoryConnectionPoints.Create();
+
+        var factoryScaleRectangles = new FactoryScaleRectangles(_canvasSymbolsVM, this);
+        ScaleRectangles = factoryScaleRectangles.Create();
+
         Width = defaultWidth;
         Height = defaultHeigth;
+
+        MouseEnter = new(ShowStroke);
+        MouseLeave = new(HideStroke);
+    }
+
+    public BlockSymbolVM(CanvasSymbolsVM canvasSymbolsVM, BlockSymbolModel blockSymbolModel, string id)
+    {
+        Id = id;
+        BlockSymbolModel = blockSymbolModel;
+
+        _canvasSymbolsVM = canvasSymbolsVM;
+
+        TextField = new(canvasSymbolsVM, this);
 
         var factoryConnectionPoints = new FactoryConnectionPoints(_canvasSymbolsVM, this);
         ConnectionPoints = factoryConnectionPoints.Create();

@@ -20,11 +20,12 @@ public class DrawnLineSymbolVM : SymbolVM
     public ArrowSymbol ArrowSymbol { get; set; } = new();
     public DelegateCommand EnterCursor { get; init; }
     public DelegateCommand LeaveCursor { get; init; }
-    public ConnectionPoint OutgoingConnectionPoint { get; init; }
+    public ConnectionPoint? OutgoingConnectionPoint { get; init; }
     public ConnectionPoint? IncomingConnectionPoint { get; set; }
     public PositionConnectionPoint OutgoingPosition { get; init; }
     public PositionConnectionPoint IncomingPosition { get; set; }
 
+    private const string defaultColor = "#000000";
     private string? color;
     public override string? Color
     {
@@ -85,6 +86,8 @@ public class DrawnLineSymbolVM : SymbolVM
 
         DrawnLineSymbolModel = drawnLineSymbolModel;
 
+        Color = defaultColor;
+
         SymbolOutgoingLine = symbolOutgoingLine;
         OutgoingConnectionPoint = outgoingConnectionPoint;
         OutgoingPosition = outgoingConnectionPoint.PositionConnectionPoint;
@@ -93,6 +96,24 @@ public class DrawnLineSymbolVM : SymbolVM
 
         RedrawAllLines();
     }
+
+    public DrawnLineSymbolVM(DrawnLineSymbolModel drawnLineSymbolModel, BlockSymbolVM symbolOutgoingLine, BlockSymbolVM symbolIncomingLine, CanvasSymbolsVM canvasSymbolsVM)
+    {
+        EnterCursor = new(SetHighlightColorLines);
+        LeaveCursor = new(SetDefaultColorLines);
+
+        DrawnLineSymbolModel = drawnLineSymbolModel;
+
+        SymbolOutgoingLine = symbolOutgoingLine;
+        SymbolIncomingLine = symbolIncomingLine;
+
+        Color = defaultColor;
+
+        SymbolOutgoingLine = symbolOutgoingLine;
+
+        CanvasSymbolsVM = canvasSymbolsVM;
+    }
+
 
     public void RedrawMovableRectanglesLine()
     {

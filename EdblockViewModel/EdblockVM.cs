@@ -9,7 +9,7 @@ public class EdblockVM
     public DelegateCommand<string> ClickSymbol { get; init; }
 
     private readonly CanvasSymbolsVM _canvasSymbolsVM;
-    private readonly FactoryBlockSymbol _factoryBlockSymbol;
+    private readonly FactoryBlockSymbolVM _factoryBlockSymbol;
     public EdblockVM(CanvasSymbolsVM canvasSymbolsVM)
     {
         ClickEsc = new(canvasSymbolsVM.DeleteLine);

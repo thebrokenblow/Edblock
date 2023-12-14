@@ -6,7 +6,7 @@ namespace SerializationEdblock;
 
 public class SerializationProject
 {
-    public static async void Write(List<BlockSymbol> blockSymbols, string pathFile)
+    public static async void Write(ProjectSerializable projectSerializable, string pathFile)
     {
         var options = new JsonSerializerOptions
         {
@@ -15,19 +15,19 @@ public class SerializationProject
         };
 
         using var fileStream = new FileStream(pathFile, FileMode.Create);
-        await JsonSerializer.SerializeAsync(fileStream, blockSymbols, options);
+        await JsonSerializer.SerializeAsync(fileStream, projectSerializable, options);
     }
 
-    public static async Task<List<BlockSymbol>> Read(string pathFile)
+    public static async Task<ProjectSerializable> Read(string pathFile)
     {
         using var fileStream = new FileStream(pathFile, FileMode.Open);
-        var blockSymbols = await JsonSerializer.DeserializeAsync<List<BlockSymbol>>(fileStream);
+        var projectSerializable = await JsonSerializer.DeserializeAsync<ProjectSerializable>(fileStream);
 
-        if (blockSymbols == null)
+        if (projectSerializable == null)
         {
             throw new Exception("Ошибка при загрузи файла");
         }
 
-        return blockSymbols;
+        return projectSerializable;
     }
 }

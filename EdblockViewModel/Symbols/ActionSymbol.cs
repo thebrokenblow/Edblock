@@ -1,4 +1,5 @@
-﻿using EdblockViewModel.Symbols.Abstraction;
+﻿using EdblockModel.Symbols.Abstraction;
+using EdblockViewModel.Symbols.Abstraction;
 
 namespace EdblockViewModel.Symbols;
 
@@ -10,9 +11,18 @@ public class ActionSymbol : BlockSymbolVM
     {
         Color = defaultColor;
 
-        TextField.Text = defaultText;
         TextField.Width = Width;
         TextField.Height = Height;
+        TextField.Text = defaultText;
+    }
+
+    public ActionSymbol(CanvasSymbolsVM canvasSymbolsVM, BlockSymbolModel blockSymbolModel, string id) : base(canvasSymbolsVM, blockSymbolModel, id)
+    {
+        Color = defaultColor;
+
+        TextField.Width = Width;
+        TextField.Height = Height;
+        TextField.Text = defaultText;
     }
 
     public override void SetWidth(int width)
@@ -21,7 +31,6 @@ public class ActionSymbol : BlockSymbolVM
         {
             BlockSymbolModel.SetWidth(width);
 
-            Width = width;
             TextField.Width = width;
             ChangeCoordinateAuxiliaryElements();
         }
@@ -33,7 +42,6 @@ public class ActionSymbol : BlockSymbolVM
         {
             BlockSymbolModel.SetHeight(height);
 
-            Height = height;
             TextField.Height = height;
             ChangeCoordinateAuxiliaryElements();
         }
