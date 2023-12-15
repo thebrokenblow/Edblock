@@ -117,6 +117,14 @@ public class DrawnLineSymbolVM : SymbolVM
         Color = defaultColor;
     }
 
+    public DrawnLineSymbolVM(DrawnLineSymbolModel drawnLineSymbolModel)
+    {
+        EnterCursor = new(SetHighlightColorLines);
+        LeaveCursor = new(SetDefaultColorLines);
+
+        
+    }
+
     public void AddFirstLine()
     {
         DrawnLineSymbolModel.AddFirstLine();
