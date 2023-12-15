@@ -94,32 +94,21 @@ public class DrawnLineSymbolVM : SymbolVM
 
     public CanvasSymbolsVM CanvasSymbolsVM { get; init; }
 
-    public DrawnLineSymbolVM(ConnectionPoint outgoingConnectionPoint, CanvasSymbolsVM canvasSymbolsVM)
+    public DrawnLineSymbolVM(DrawnLineSymbolModel drawnLineSymbolModel, BlockSymbolVM symbolOutgoingLine, ConnectionPoint outgoingConnectionPoint, CanvasSymbolsVM canvasSymbolsVM)
     {
         EnterCursor = new(SetHighlightColorLines);
         LeaveCursor = new(SetDefaultColorLines);
 
+        DrawnLineSymbolModel = drawnLineSymbolModel;
+
         Text = defaultText;
         Color = defaultColor;
 
+        SymbolOutgoingLine = symbolOutgoingLine;
         OutgoingConnectionPoint = outgoingConnectionPoint;
         OutgoingPosition = outgoingConnectionPoint.Position;
 
         CanvasSymbolsVM = canvasSymbolsVM;
-
-        DrawnLineSymbolModel = new DrawnLineSymbolModel()
-        {
-            SymbolOutgoingLine = SymbolOutgoingLine.BlockSymbolModel,
-            SymbolIncomingLine = SymbolIncomingLine.BlockSymbolModel,
-
-            OutgoingPosition = OutgoingPosition,
-            Color = defaultColor,
-        };
-    }
-
-    public void AddFirstLine()
-    {
-        DrawnLineSymbolModel.AddFirstLine();
     }
 
     public void RedrawMovableRectanglesLine()

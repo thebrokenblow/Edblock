@@ -80,7 +80,7 @@ public abstract class BlockSymbolVM : SymbolVM
     public DelegateCommand MouseLeave { get; set; }
 
     public TextField TextField { get; init; }
-    public BlockSymbolModel? BlockSymbolModel { get; init; }
+    public BlockSymbolModel BlockSymbolModel { get; init; }
 
     private readonly CanvasSymbolsVM _canvasSymbolsVM;
 
