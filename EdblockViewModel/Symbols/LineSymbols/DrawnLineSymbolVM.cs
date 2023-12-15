@@ -12,7 +12,7 @@ namespace EdblockViewModel.Symbols.LineSymbols;
 
 public class DrawnLineSymbolVM : SymbolVM
 {
-    public BlockSymbolVM SymbolOutgoingLine { get; set; }
+    public BlockSymbolVM? SymbolOutgoingLine { get; set; }
     public BlockSymbolVM? SymbolIncomingLine { get; set; }
     public DrawnLineSymbolModel DrawnLineSymbolModel { get; set; }
     public ObservableCollection<LineSymbolVM> LinesSymbolVM { get; init; } = new();
@@ -63,7 +63,10 @@ public class DrawnLineSymbolVM : SymbolVM
         {
             widthTextField = value;
 
-            //SetCoordinateTextField();
+            if (OutgoingPosition == PositionConnectionPoint.Left)
+            {
+                SetCoordinateTextField();
+            }
         }
     }
 
@@ -167,12 +170,11 @@ public class DrawnLineSymbolVM : SymbolVM
         }
 
         SetCoordinateTextField();
+        RedrawMovableRectanglesLine();
 
         var lastLine = linesSymbolModel[^1];
         var coordinateLastLine = (lastLine.X2, lastLine.Y2);
         ArrowSymbol.ChangeOrientationArrow(coordinateLastLine, IncomingPosition);
-
-        RedrawMovableRectanglesLine();
     }
 
     private void ShowMovableRectanglesLine()

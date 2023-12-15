@@ -1,9 +1,8 @@
 ﻿using EdblockModel.Symbols.Enum;
-using EdblockModel.Symbols.Abstraction;
 
 namespace EdblockModel.Symbols.LineSymbols;
 
-public class DrawnLineSymbolModel : SymbolModel
+public class DrawnLineSymbolModel
 {
     public List<LineSymbolModel> LinesSymbolModel { get; set; }
     public BlockSymbolModel? SymbolOutgoingLine { get; set; }
@@ -11,17 +10,15 @@ public class DrawnLineSymbolModel : SymbolModel
     public CoordinateLineModel CoordinateLineModel { get; set; }
     public PositionConnectionPoint OutgoingPosition { get; set; }
     public PositionConnectionPoint IncomingPosition { get; set; }
+    public string? Color { get; set; }
     public string? Text { get; set; }
 
     private readonly int offsetLine = 10;
 
-    public DrawnLineSymbolModel(BlockSymbolModel symbolOutgoingLine, PositionConnectionPoint outgoingPosition, string? color)
+    public DrawnLineSymbolModel()
     {
         LinesSymbolModel = new();
         CoordinateLineModel = new(LinesSymbolModel);
-        SymbolOutgoingLine = symbolOutgoingLine;
-        OutgoingPosition = outgoingPosition;
-        Color = color;
     }
 
     public (int x, int y) RoundingCoordinatesLines((int x, int y) startCoordinate, (int x, int y) currentCoordinate)
@@ -50,6 +47,11 @@ public class DrawnLineSymbolModel : SymbolModel
 
     public void AddFirstLine()
     {
+        if (SymbolOutgoingLine == null)
+        {
+            return;
+        }
+
         var (x, y) = SymbolOutgoingLine.GetBorderCoordinate(OutgoingPosition);
 
         var firstLineSymbolModel = new LineSymbolModel

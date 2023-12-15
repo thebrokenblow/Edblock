@@ -1,4 +1,4 @@
-﻿using EdblockModel.Symbols.Abstraction;
+﻿using EdblockModel.Symbols;
 using EdblockModel.Symbols.LineSymbols;
 
 namespace SerializationEdblock;

@@ -1,10 +1,8 @@
-﻿using EdblockModel.Symbols.Abstraction;
-
-namespace EdblockModel.Symbols;
+﻿namespace EdblockModel.Symbols;
 
 public class ActionSymbolModel : BlockSymbolModel
 {
-    public ActionSymbolModel(string id, string nameBlockSymbol) : base(id, nameBlockSymbol)
+    public ActionSymbolModel() : base()
     {
     }
 

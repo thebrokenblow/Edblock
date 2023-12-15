@@ -10,14 +10,12 @@ internal class ProjectVM
 {
     private readonly CanvasSymbolsVM _canvasSymbolsVM;
     private readonly FactoryBlockSymbolVM _factoryBlockSymbolVM;
-    private readonly List<LineSymbolModel> _linesSymbolModel;
     private readonly Dictionary<string, BlockSymbolVM> _blockSymbolsVMById;
 
     public ProjectVM(CanvasSymbolsVM canvasSymbolsVM)
     {
         _canvasSymbolsVM = canvasSymbolsVM;
 
-        _linesSymbolModel = new();
         _blockSymbolsVMById = new();
         _factoryBlockSymbolVM = new(_canvasSymbolsVM);
     }
@@ -48,23 +46,23 @@ internal class ProjectVM
         }
     }
 
-    private void LoadLinesSymbol(DrawnLineSymbolSerializable drawnLineSymbolSerializable)
+    private static List<LineSymbolModel> LoadLinesSymbol(DrawnLineSymbolSerializable drawnLineSymbolSerializable)
     {
-        _linesSymbolModel.Clear();
+        var linesSymbolModel = new List<LineSymbolModel>();
 
         var linesSymbolSerializable = drawnLineSymbolSerializable.LinesSymbolSerializable;
 
-        if (linesSymbolSerializable == null)
+        if (linesSymbolSerializable != null)
         {
-            return;
+            foreach (var lineSymbolSerializable in linesSymbolSerializable)
+            {
+                var lineSymbolModel = FactorySymbolSerializable.CreateLineSymbolModel(lineSymbolSerializable);
+
+                linesSymbolModel.Add(lineSymbolModel);
+            }
         }
 
-        foreach (var lineSymbolSerializable in linesSymbolSerializable)
-        {
-            var lineSymbolModel = FactorySymbolSerializable.CreateLineSymbolModel(lineSymbolSerializable);
-
-            _linesSymbolModel.Add(lineSymbolModel);
-        }
+        return linesSymbolModel;
     }
 
     private void LoadDrawnLinesSymbol(ProjectSerializable projectSerializable)
@@ -75,7 +73,7 @@ internal class ProjectVM
 
         foreach (var drawnLineSymbolSerializable in drawnLinesSymbolSerializable)
         {
-            LoadLinesSymbol(drawnLineSymbolSerializable);
+            var linesSymbolModel = LoadLinesSymbol(drawnLineSymbolSerializable);
 
             var symbolOutgoingLine = drawnLineSymbolSerializable.SymbolOutgoingLine;
             var symbolIncomingLine = drawnLineSymbolSerializable.SymbolIncomingLine;
@@ -106,8 +104,8 @@ internal class ProjectVM
             var drawnLineSymbolModel = FactoryDrawnLineSymbol.CreateDrawnLineSymbolModel(
                 symbolOutgoingLineVM, 
                 symbolIncomingLineVM, 
-                drawnLineSymbolSerializable, 
-                _linesSymbolModel);
+                drawnLineSymbolSerializable,
+                linesSymbolModel);
 
             var outgoingConnectionPoint = symbolOutgoingLineVM.GetConnectionPoint(drawnLineSymbolSerializable.OutgoingPosition);
             var incomingConnectionPoint = symbolIncomingLineVM.GetConnectionPoint(drawnLineSymbolSerializable.IncomingPosition);

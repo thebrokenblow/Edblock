@@ -3,7 +3,6 @@ using Prism.Commands;
 using System.Windows.Input;
 using EdblockModel.Symbols;
 using System.Collections.Generic;
-using EdblockModel.Symbols.Abstraction;
 using EdblockViewModel.Symbols.ScaleRectangles;
 using EdblockViewModel.Symbols.ConnectionPoints;
 using EdblockModel.Symbols.Enum;
@@ -87,6 +86,7 @@ public abstract class BlockSymbolVM : SymbolVM
 
     protected const int defaultWidth = 140;
     protected const int defaultHeigth = 60;
+
     public BlockSymbolVM(CanvasSymbolsVM canvasSymbolsVM)
     {
         _canvasSymbolsVM = canvasSymbolsVM;
@@ -95,7 +95,7 @@ public abstract class BlockSymbolVM : SymbolVM
 
         var nameBlockSymbol = GetType().Name?.ToString();
 
-        BlockSymbolModel = FactoryBlockSymbolModel.Create(nameBlockSymbol, Id);
+        BlockSymbolModel = FactoryBlockSymbolModel.Create(Id, nameBlockSymbol, color);
 
         TextField = new(canvasSymbolsVM, this);
 
@@ -107,25 +107,6 @@ public abstract class BlockSymbolVM : SymbolVM
 
         Width = defaultWidth;
         Height = defaultHeigth;
-
-        MouseEnter = new(ShowStroke);
-        MouseLeave = new(HideStroke);
-    }
-
-    public BlockSymbolVM(CanvasSymbolsVM canvasSymbolsVM, BlockSymbolModel blockSymbolModel, string id)
-    {
-        Id = id;
-        BlockSymbolModel = blockSymbolModel;
-
-        _canvasSymbolsVM = canvasSymbolsVM;
-
-        TextField = new(canvasSymbolsVM, this);
-
-        var factoryConnectionPoints = new FactoryConnectionPoints(_canvasSymbolsVM, this);
-        ConnectionPoints = factoryConnectionPoints.CreateConnectionPoints();
-
-        var factoryScaleRectangles = new FactoryScaleRectangles(_canvasSymbolsVM, this);
-        ScaleRectangles = factoryScaleRectangles.Create();
 
         MouseEnter = new(ShowStroke);
         MouseLeave = new(HideStroke);

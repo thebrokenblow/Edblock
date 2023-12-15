@@ -1,8 +1,6 @@
 ﻿using System;
-using EdblockModel.Symbols;
 using SerializationEdblock;
 using System.Collections.Generic;
-using EdblockModel.Symbols.Abstraction;
 using EdblockViewModel.Symbols.Abstraction;
 
 namespace EdblockViewModel.Symbols;
@@ -10,20 +8,12 @@ namespace EdblockViewModel.Symbols;
 internal class FactoryBlockSymbolVM
 {
     private readonly Dictionary<string, Func<string, BlockSymbolVM>> instanceSymbolByName;
-    private readonly Dictionary<string, Func<string, BlockSymbolVM>> instanceSymbolBySerializable;
 
     private readonly CanvasSymbolsVM _canvasSymbolsVM;
-    private BlockSymbolModel? _blockSymbolModel;
-    private string? _id;
 
     public FactoryBlockSymbolVM(CanvasSymbolsVM canvasSymbolsVM)
     {
         _canvasSymbolsVM = canvasSymbolsVM;
-
-        instanceSymbolBySerializable = new()
-        {
-             { "ActionSymbol", _ => new ActionSymbol(_canvasSymbolsVM, _blockSymbolModel, _id) }
-        };
 
         instanceSymbolByName = new()
         {
@@ -41,27 +31,11 @@ internal class FactoryBlockSymbolVM
         return instanceSymbolByName[nameBlockSymbol].Invoke(nameBlockSymbol);
     }
 
-    public BlockSymbolVM Create(string? nameBlockSymbol, BlockSymbolModel blockSymbolModel, string id)
-    {
-        _blockSymbolModel = blockSymbolModel;
-        _id = id; 
-
-        if (nameBlockSymbol == null)
-        {
-            throw new Exception("nameBlockSymbol is null");
-        }
-
-        return instanceSymbolBySerializable[nameBlockSymbol].Invoke(nameBlockSymbol);
-    }
-
     public BlockSymbolVM CreateBySerialization(BlockSymbolSerializable blockSymbolSerializable)
     {
         var nameBlockSymbol = blockSymbolSerializable.NameSymbol;
-        var id = blockSymbolSerializable.Id;
-
-        var blockSymbolModel = FactoryBlockSymbolModel.Create(nameBlockSymbol, id);
         
-        var blockSymbolVM = Create(nameBlockSymbol, blockSymbolModel, id);
+        var blockSymbolVM = Create(nameBlockSymbol);
 
         blockSymbolVM.Width = blockSymbolSerializable.Width;
         blockSymbolVM.Height = blockSymbolSerializable.Height;

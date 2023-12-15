@@ -150,10 +150,15 @@ public class ConnectionPoint : INotifyPropertyChanged
     {
         IsHasConnectingLine = true;
 
-        var positionConnectionPoint = Position;
-        var blockSymbolModel = BlockSymbolVM.BlockSymbolModel;
+        var symbolOutgoingLine = BlockSymbolVM.BlockSymbolModel;
 
-        var drawnLineSymbolModel = new DrawnLineSymbolModel(blockSymbolModel, positionConnectionPoint, "#000000");
+        var drawnLineSymbolModel = new DrawnLineSymbolModel()
+        {
+            SymbolOutgoingLine = symbolOutgoingLine,
+            OutgoingPosition = Position,
+            Color = "#000000",
+        };
+
         drawnLineSymbolModel.AddFirstLine();
 
         var drawnLineSymbolVM = new DrawnLineSymbolVM(drawnLineSymbolModel, BlockSymbolVM, this, _canvasSymbolsVM);
@@ -202,17 +207,24 @@ public class ConnectionPoint : INotifyPropertyChanged
             return;
         }
 
+        if (_canvasSymbolsVM.DrawnLineSymbol == null)
+        {
+            return;
+        }
+
         if (_canvasSymbolsVM.BlockByDrawnLines.ContainsKey(blockSymbol))
         {
             var drawnLinesSymbolVM = _canvasSymbolsVM.BlockByDrawnLines[blockSymbol];
+
             drawnLinesSymbolVM.Add(_canvasSymbolsVM.DrawnLineSymbol);
         }
         else
         {
-            var drawnLinesSymbolVM = new List<DrawnLineSymbolVM?>
+            var drawnLinesSymbolVM = new List<DrawnLineSymbolVM>
             {
                 _canvasSymbolsVM.DrawnLineSymbol
             };
+
             _canvasSymbolsVM.BlockByDrawnLines.Add(blockSymbol, drawnLinesSymbolVM);
         }
     }

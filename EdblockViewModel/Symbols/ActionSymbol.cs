@@ -1,4 +1,4 @@
-﻿using EdblockModel.Symbols.Abstraction;
+﻿using EdblockModel.Symbols;
 using EdblockViewModel.Symbols.Abstraction;
 
 namespace EdblockViewModel.Symbols;
@@ -8,15 +8,6 @@ public class ActionSymbol : BlockSymbolVM
     private const string defaultText = "Действие";
     private const string defaultColor = "#FF52C0AA";
     public ActionSymbol(CanvasSymbolsVM canvasSymbolsVM) : base(canvasSymbolsVM)
-    {
-        Color = defaultColor;
-
-        TextField.Width = Width;
-        TextField.Height = Height;
-        TextField.Text = defaultText;
-    }
-
-    public ActionSymbol(CanvasSymbolsVM canvasSymbolsVM, BlockSymbolModel blockSymbolModel, string id) : base(canvasSymbolsVM, blockSymbolModel, id)
     {
         Color = defaultColor;
 

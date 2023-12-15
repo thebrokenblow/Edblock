@@ -3,10 +3,10 @@ using System.Windows.Input;
 using System.ComponentModel;
 using System.Collections.ObjectModel;
 using System.Runtime.CompilerServices;
-using EdblockModel.Symbols.Abstraction;
 using EdblockViewModel.Symbols.Abstraction;
 using EdblockViewModel.Symbols.ConnectionPoints;
 using EdblockViewModel.Symbols.ScaleRectangles;
+using EdblockModel.Symbols;
 
 namespace EdblockViewModel.Symbols;
 

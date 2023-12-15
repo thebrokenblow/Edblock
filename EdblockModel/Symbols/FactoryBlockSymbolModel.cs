@@ -1,28 +1,27 @@
-﻿using EdblockModel.Symbols.Abstraction;
-
-namespace EdblockModel.Symbols;
+﻿namespace EdblockModel.Symbols;
 
 public class FactoryBlockSymbolModel
 {
     private readonly static Dictionary<string, Func<string, BlockSymbolModel>> instanceSymbolByName = new()
     {
-        { "ActionSymbol", x => new ActionSymbolModel(_id, _nameBlockSymbol) }
+        { "ActionSymbol", _ => new ActionSymbolModel() { Id = _id, NameSymbol = _nameBlockSymbol, Color = _color} }
     };
 
     private static string? _id;
     private static string? _nameBlockSymbol;
+    private static string? _color;
 
-    public static BlockSymbolModel Create(string? nameBlockSymbol, string id)
+    public static BlockSymbolModel Create(string? id, string? nameBlockSymbol, string? color)
     {
         _id = id;
-
-        if (nameBlockSymbol == null)
-        {
-            throw new NullReferenceException("Некорректное имя символа");    
-        }
-
+        _color = color;
         _nameBlockSymbol = nameBlockSymbol;
 
-        return instanceSymbolByName[nameBlockSymbol].Invoke(nameBlockSymbol);
+        if (_nameBlockSymbol is null)
+        {
+            throw new NullReferenceException("NameBlockSymbol is null");
+        }
+
+        return instanceSymbolByName[_nameBlockSymbol].Invoke(_nameBlockSymbol);
     }
 }

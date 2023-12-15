@@ -1,16 +1,17 @@
 ﻿using EdblockModel.Symbols.Enum;
 
-namespace EdblockModel.Symbols.Abstraction;
+namespace EdblockModel.Symbols;
 
-public abstract class BlockSymbolModel : SymbolModel
+public abstract class BlockSymbolModel
 {
-    public string Id { get; set; }
-    public string NameSymbol { get; set; }
+    public string? Id { get; set; }
+    public string? NameSymbol { get; set; }
     public int Width { get; set; }
     public int Height { get; set; }
     public int XCoordinate { get; set; }
     public int YCoordinate { get; set; }
     public string? Text { get; set; }
+    public string? Color { get; set; }
 
     private const int minWidth = 40;
     public int MinWidth
@@ -30,11 +31,8 @@ public abstract class BlockSymbolModel : SymbolModel
 
     private readonly Dictionary<PositionConnectionPoint, Func<(int x, int y)>> borderCoordinateByPosition;
 
-    public BlockSymbolModel(string id, string nameBlockSymbol)
+    public BlockSymbolModel()
     {
-        Id = id;
-        NameSymbol = nameBlockSymbol;
-
         borderCoordinateByPosition = new()
         {
             { PositionConnectionPoint.Top, GetTopBorderCoordinate },

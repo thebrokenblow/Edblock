@@ -19,13 +19,18 @@ internal class FactoryDrawnLineSymbol
         var outgoingPosition = drawnLineSymbolSerializable.OutgoingPosition;
         var incomingPosition = drawnLineSymbolSerializable.IncomingPosition;
 
+        var text = drawnLineSymbolSerializable.Text;
         var color = drawnLineSymbolSerializable.Color;
 
-        var drawnLineSymbolModel = new DrawnLineSymbolModel(symbolOutgoingLineModel, outgoingPosition, color)
+        var drawnLineSymbolModel = new DrawnLineSymbolModel()
         {
             LinesSymbolModel = linesSymbolModel,
+            SymbolOutgoingLine = symbolOutgoingLineModel,
             SymbolIncomingLine = symbolIncomingLineModel,
-            IncomingPosition = incomingPosition
+            OutgoingPosition = outgoingPosition,
+            IncomingPosition = incomingPosition,
+            Text = text,
+            Color = color,
         };
 
         return drawnLineSymbolModel;

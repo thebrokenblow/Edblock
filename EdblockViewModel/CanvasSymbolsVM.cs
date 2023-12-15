@@ -86,32 +86,57 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
 
     public void DeleteLine()
     {
-        if (DrawnLineSymbol != null)
+        DeleteDrawnLineSymbol();
+        DeleteSelectDrawnLineSymbol();
+    }
+
+    private void DeleteDrawnLineSymbol()
+    {
+        if (DrawnLineSymbol is null)
         {
-            SymbolsVM.Remove(DrawnLineSymbol);
-
-            DrawnLineSymbol.OutgoingConnectionPoint.IsHasConnectingLine = false;
-
-            DrawnLineSymbol = null;
+            return;
         }
 
-        if (SelectDrawnLineSymbol != null)
+        if (DrawnLineSymbol.OutgoingConnectionPoint is null)
         {
-            var symbolIncomingLine = SelectDrawnLineSymbol.SymbolIncomingLine;
-            var symbolOutgoingLine = SelectDrawnLineSymbol.SymbolOutgoingLine;
-
-            if (symbolIncomingLine != null)
-            {
-                BlockByDrawnLines[symbolIncomingLine].Remove(SelectDrawnLineSymbol);
-                BlockByDrawnLines[symbolOutgoingLine].Remove(SelectDrawnLineSymbol);
-            }
-
-            SelectDrawnLineSymbol.OutgoingConnectionPoint.IsHasConnectingLine = false;
-            SelectDrawnLineSymbol.IncomingConnectionPoint!.IsHasConnectingLine = false;
-
-            SymbolsVM.Remove(SelectDrawnLineSymbol);
-            SelectDrawnLineSymbol = null;
+            return;
         }
+
+        SymbolsVM.Remove(DrawnLineSymbol);
+
+        var outgoingConnectionPoint = DrawnLineSymbol.OutgoingConnectionPoint;
+        outgoingConnectionPoint.IsHasConnectingLine = false;
+
+        DrawnLineSymbol = null;
+    }
+
+    private void DeleteSelectDrawnLineSymbol()
+    {
+        if (SelectDrawnLineSymbol is null)
+        {
+            return;
+        }
+
+        var symbolOutgoingLine = SelectDrawnLineSymbol.SymbolOutgoingLine;
+        var symbolIncomingLine = SelectDrawnLineSymbol.SymbolIncomingLine;
+
+        if (symbolOutgoingLine is not null && symbolIncomingLine is not null)
+        {
+            BlockByDrawnLines[symbolOutgoingLine].Remove(SelectDrawnLineSymbol);
+            BlockByDrawnLines[symbolIncomingLine].Remove(SelectDrawnLineSymbol);
+        }
+
+        var outgoingConnectionPoint = SelectDrawnLineSymbol.OutgoingConnectionPoint;
+        var incomingConnectionPoint = SelectDrawnLineSymbol.IncomingConnectionPoint;
+
+        if (outgoingConnectionPoint is not null && incomingConnectionPoint is not null)
+        {
+            outgoingConnectionPoint.IsHasConnectingLine = false;
+            incomingConnectionPoint.IsHasConnectingLine = false;
+        }
+
+        SymbolsVM.Remove(SelectDrawnLineSymbol);
+        SelectDrawnLineSymbol = null;
     }
 
     public void AddBlockSymbol(BlockSymbolVM blockSymbolVM)
@@ -122,7 +147,7 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
     }
 
     //TODO: Подумать над названием метода
-    public void AddLine()
+    private void AddLine()
     {
         DrawnLineSymbol?.AddLine();
 
@@ -184,12 +209,14 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
         previousXCoordinate = xCoordinate;
         previousYCoordinate = yCoordinate;
 
-        if (RedrawDrawnLines != null)
+        if (RedrawDrawnLines == null)
         {
-            foreach (var redrawLine in RedrawDrawnLines)
-            {
-                redrawLine.Redraw();
-            }
+            return;
+        }
+
+        foreach (var redrawDrawnLine in RedrawDrawnLines)
+        {
+            redrawDrawnLine.Redraw();
         }
     }
 
