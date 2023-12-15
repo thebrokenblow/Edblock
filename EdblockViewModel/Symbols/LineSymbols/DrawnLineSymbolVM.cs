@@ -7,8 +7,6 @@ using EdblockModel.Symbols.LineSymbols;
 using EdblockViewModel.Symbols.Abstraction;
 using EdblockViewModel.Symbols.ConnectionPoints;
 using EdblockModel.Symbols.LineSymbols.RedrawLine;
-using System.IO.Packaging;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace EdblockViewModel.Symbols.LineSymbols;
 
@@ -65,7 +63,7 @@ public class DrawnLineSymbolVM : SymbolVM
         {
             widthTextField = value;
 
-            SetCoordinateTextField();
+            //SetCoordinateTextField();
         }
     }
 
@@ -93,7 +91,7 @@ public class DrawnLineSymbolVM : SymbolVM
 
     public CanvasSymbolsVM CanvasSymbolsVM { get; init; }
 
-    public DrawnLineSymbolVM(DrawnLineSymbolModel drawnLineSymbolModel, BlockSymbolVM symbolOutgoingLine, CanvasSymbolsVM canvasSymbolsVM, ConnectionPoint outgoingConnectionPoint)
+    public DrawnLineSymbolVM(DrawnLineSymbolModel drawnLineSymbolModel, BlockSymbolVM symbolOutgoingLine, ConnectionPoint outgoingConnectionPoint, CanvasSymbolsVM canvasSymbolsVM)
     {
         EnterCursor = new(SetHighlightColorLines);
         LeaveCursor = new(SetDefaultColorLines);
@@ -105,31 +103,10 @@ public class DrawnLineSymbolVM : SymbolVM
 
         SymbolOutgoingLine = symbolOutgoingLine;
         OutgoingConnectionPoint = outgoingConnectionPoint;
-        OutgoingPosition = outgoingConnectionPoint.PositionConnectionPoint;
-
-        CanvasSymbolsVM = canvasSymbolsVM;
-
-        RedrawAllLines();
-    }
-
-    public DrawnLineSymbolVM(DrawnLineSymbolModel drawnLineSymbolModel, BlockSymbolVM symbolOutgoingLine, BlockSymbolVM symbolIncomingLine, CanvasSymbolsVM canvasSymbolsVM)
-    {
-        EnterCursor = new(SetHighlightColorLines);
-        LeaveCursor = new(SetDefaultColorLines);
-
-        DrawnLineSymbolModel = drawnLineSymbolModel;
-
-        SymbolOutgoingLine = symbolOutgoingLine;
-        SymbolIncomingLine = symbolIncomingLine;
-
-        Text = defaultText;
-        Color = defaultColor;
-
-        SymbolOutgoingLine = symbolOutgoingLine;
+        OutgoingPosition = outgoingConnectionPoint.Position;
 
         CanvasSymbolsVM = canvasSymbolsVM;
     }
-
 
     public void RedrawMovableRectanglesLine()
     {

@@ -1,9 +1,9 @@
 ﻿using System;
+using EdblockModel.Symbols;
 using SerializationEdblock;
 using System.Collections.Generic;
-using EdblockViewModel.Symbols.Abstraction;
 using EdblockModel.Symbols.Abstraction;
-using EdblockModel.Symbols;
+using EdblockViewModel.Symbols.Abstraction;
 
 namespace EdblockViewModel.Symbols;
 

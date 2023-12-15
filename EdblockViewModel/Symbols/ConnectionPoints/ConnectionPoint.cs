@@ -73,7 +73,7 @@ public class ConnectionPoint : INotifyPropertyChanged
     public DelegateCommand ClickConnectionPoint { get; init; }
     public BlockSymbolVM BlockSymbolVM { get; init; }
     public Func<(int, int)> GetCoordinate { get; init; }
-    public PositionConnectionPoint PositionConnectionPoint { get; init; }
+    public PositionConnectionPoint Position { get; init; }
     public event PropertyChangedEventHandler? PropertyChanged;
     private readonly CanvasSymbolsVM _canvasSymbolsVM;
     public ConnectionPoint(
@@ -85,7 +85,7 @@ public class ConnectionPoint : INotifyPropertyChanged
         _canvasSymbolsVM = canvasSymbolsVM;
         GetCoordinate = getCoordinate;
 
-        PositionConnectionPoint = positionConnectionPoint;
+        Position = positionConnectionPoint;
         BlockSymbolVM = blockSymbolVM;
         
         EnterCursor = new(ShowConnectionPoints);
@@ -150,13 +150,14 @@ public class ConnectionPoint : INotifyPropertyChanged
     {
         IsHasConnectingLine = true;
 
-        var positionConnectionPoint = PositionConnectionPoint;
+        var positionConnectionPoint = Position;
         var blockSymbolModel = BlockSymbolVM.BlockSymbolModel;
 
         var drawnLineSymbolModel = new DrawnLineSymbolModel(blockSymbolModel, positionConnectionPoint, "#000000");
         drawnLineSymbolModel.AddFirstLine();
 
-        var drawnLineSymbolVM = new DrawnLineSymbolVM(drawnLineSymbolModel, BlockSymbolVM, _canvasSymbolsVM, this);
+        var drawnLineSymbolVM = new DrawnLineSymbolVM(drawnLineSymbolModel, BlockSymbolVM, this, _canvasSymbolsVM);
+        drawnLineSymbolVM.RedrawAllLines();
 
         _canvasSymbolsVM.SymbolsVM.Add(drawnLineSymbolVM);
         _canvasSymbolsVM.DrawnLineSymbol = drawnLineSymbolVM;
@@ -171,15 +172,15 @@ public class ConnectionPoint : INotifyPropertyChanged
         var drawnLineSymbolVM = _canvasSymbolsVM.DrawnLineSymbol;
         var drawnLineSymbolModel = drawnLineSymbolVM!.DrawnLineSymbolModel;
 
-        drawnLineSymbolVM.IncomingPosition = PositionConnectionPoint;
-        drawnLineSymbolModel.IncomingPosition = PositionConnectionPoint;
+        drawnLineSymbolVM.IncomingPosition = Position;
+        drawnLineSymbolModel.IncomingPosition = Position;
         
         drawnLineSymbolVM.SymbolIncomingLine = BlockSymbolVM;
         drawnLineSymbolModel.SymbolIncomingLine = symbolIncomingLineModel;
 
         drawnLineSymbolVM.IncomingConnectionPoint = this;
 
-        var finalLineCoordinate = symbolIncomingLineModel.GetBorderCoordinate(PositionConnectionPoint);
+        var finalLineCoordinate = symbolIncomingLineModel.GetBorderCoordinate(Position);
 
         var completedLineModel = new CompletedLine(drawnLineSymbolModel, finalLineCoordinate);
         var completeLinesSymbolModel = completedLineModel.GetCompleteLines();

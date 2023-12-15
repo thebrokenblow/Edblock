@@ -15,33 +15,12 @@ public class DrawnLineSymbolModel : SymbolModel
 
     private readonly int offsetLine = 10;
 
-    public DrawnLineSymbolModel(BlockSymbolModel symbolOutgoingLine, PositionConnectionPoint outgoingPosition, string color)
+    public DrawnLineSymbolModel(BlockSymbolModel symbolOutgoingLine, PositionConnectionPoint outgoingPosition, string? color)
     {
         LinesSymbolModel = new();
         CoordinateLineModel = new(LinesSymbolModel);
         SymbolOutgoingLine = symbolOutgoingLine;
         OutgoingPosition = outgoingPosition;
-        Color = color;
-    }
-
-    public DrawnLineSymbolModel(
-        List<LineSymbolModel> linesSymbolModel,
-        BlockSymbolModel symbolOutgoingLine, 
-        BlockSymbolModel symbolIncomingLine, 
-        PositionConnectionPoint outgoingPosition, 
-        PositionConnectionPoint incomingPosition, 
-        string color)
-    {
-        LinesSymbolModel = linesSymbolModel;
-
-        SymbolOutgoingLine = symbolOutgoingLine;
-        SymbolIncomingLine = symbolIncomingLine;
-
-        OutgoingPosition = outgoingPosition;
-        IncomingPosition = incomingPosition;
-
-        CoordinateLineModel = new(LinesSymbolModel);
-
         Color = color;
     }
 

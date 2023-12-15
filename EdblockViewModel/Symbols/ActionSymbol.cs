@@ -27,23 +27,17 @@ public class ActionSymbol : BlockSymbolVM
 
     public override void SetWidth(int width)
     {
-        if (width >= BlockSymbolModel.MinWidth)
-        {
-            BlockSymbolModel.SetWidth(width);
+        BlockSymbolModel.Width = width;
+        TextField.Width = width;
 
-            TextField.Width = width;
-            ChangeCoordinateAuxiliaryElements();
-        }
+        ChangeCoordinateAuxiliaryElements();
     }
 
     public override void SetHeight(int height)
     {
-        if (height >= BlockSymbolModel.MinHeight)
-        {
-            BlockSymbolModel.SetHeight(height);
+        BlockSymbolModel.Height = height;
 
-            TextField.Height = height;
-            ChangeCoordinateAuxiliaryElements();
-        }
+        TextField.Height = height;
+        ChangeCoordinateAuxiliaryElements();
     }
 }

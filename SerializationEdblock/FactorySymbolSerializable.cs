@@ -70,4 +70,17 @@ public class FactorySymbolSerializable
 
         return lineSymbolSerializable;
     }
+
+    public static LineSymbolModel CreateLineSymbolModel(LineSymbolSerializable lineSymbolSerializable)
+    {
+        var lineSymbolModel = new LineSymbolModel
+        {
+            X1 = lineSymbolSerializable.X1,
+            Y1 = lineSymbolSerializable.Y1,
+            X2 = lineSymbolSerializable.X2,
+            Y2 = lineSymbolSerializable.Y2
+        };
+
+        return lineSymbolModel;
+    }
 }

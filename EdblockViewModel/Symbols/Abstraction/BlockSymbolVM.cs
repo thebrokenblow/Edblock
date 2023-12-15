@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using EdblockModel.Symbols.Abstraction;
 using EdblockViewModel.Symbols.ScaleRectangles;
 using EdblockViewModel.Symbols.ConnectionPoints;
+using EdblockModel.Symbols.Enum;
 
 namespace EdblockViewModel.Symbols.Abstraction;
 
@@ -33,7 +34,6 @@ public abstract class BlockSymbolVM : SymbolVM
         set
         {
             width = value;
-
             SetWidth(width);
             OnPropertyChanged();
         }
@@ -46,8 +46,7 @@ public abstract class BlockSymbolVM : SymbolVM
         set
         {
             heigth = value;
-
-            SetHeight(heigth);
+            SetHeight(Height);
             OnPropertyChanged();
         }
     }
@@ -181,5 +180,18 @@ public abstract class BlockSymbolVM : SymbolVM
         {
             scaleRectangle.ChangeCoordination();
         }
+    }
+
+    internal ConnectionPoint GetConnectionPoint(PositionConnectionPoint outgoingPosition)
+    {
+        foreach (var connectionPoint in ConnectionPoints)
+        {
+            if (connectionPoint.Position == outgoingPosition)
+            {
+                return connectionPoint;
+            }
+        }
+
+        throw new Exception("Точки соединения с такой позицией нет");
     }
 }
