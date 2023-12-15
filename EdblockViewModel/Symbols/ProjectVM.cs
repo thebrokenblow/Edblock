@@ -113,7 +113,13 @@ internal class ProjectVM
             outgoingConnectionPoint.IsHasConnectingLine = true;
             incomingConnectionPoint.IsHasConnectingLine = true;
 
-            var drawnLineSymbolVM = new DrawnLineSymbolVM(drawnLineSymbolModel);
+            var drawnLineSymbolVM = new DrawnLineSymbolVM(symbolOutgoingLineVM, outgoingConnectionPoint, _canvasSymbolsVM, drawnLineSymbolModel)
+            {
+                Text = drawnLineSymbolSerializable.Text,
+                IncomingConnectionPoint = incomingConnectionPoint,
+                OutgoingPosition = drawnLineSymbolSerializable.OutgoingPosition,
+                IncomingPosition = drawnLineSymbolSerializable.IncomingPosition,
+            };
 
             drawnLineSymbolVM.RedrawAllLines();
             
