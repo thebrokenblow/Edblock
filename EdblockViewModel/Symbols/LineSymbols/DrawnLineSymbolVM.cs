@@ -94,21 +94,32 @@ public class DrawnLineSymbolVM : SymbolVM
 
     public CanvasSymbolsVM CanvasSymbolsVM { get; init; }
 
-    public DrawnLineSymbolVM(DrawnLineSymbolModel drawnLineSymbolModel, BlockSymbolVM symbolOutgoingLine, ConnectionPoint outgoingConnectionPoint, CanvasSymbolsVM canvasSymbolsVM)
+    public DrawnLineSymbolVM(BlockSymbolVM symbolOutgoingLine, ConnectionPoint outgoingConnectionPoint, CanvasSymbolsVM canvasSymbolsVM, DrawnLineSymbolModel? drawnLineSymbolModel = null)
     {
         EnterCursor = new(SetHighlightColorLines);
         LeaveCursor = new(SetDefaultColorLines);
-
-        DrawnLineSymbolModel = drawnLineSymbolModel;
-
-        Text = defaultText;
-        Color = defaultColor;
 
         SymbolOutgoingLine = symbolOutgoingLine;
         OutgoingConnectionPoint = outgoingConnectionPoint;
         OutgoingPosition = outgoingConnectionPoint.Position;
 
+        drawnLineSymbolModel ??= new DrawnLineSymbolModel()
+        {
+            SymbolOutgoingLine = SymbolOutgoingLine.BlockSymbolModel,
+            OutgoingPosition = OutgoingPosition,
+            Color = defaultColor,
+        };
+
         CanvasSymbolsVM = canvasSymbolsVM;
+        DrawnLineSymbolModel = drawnLineSymbolModel;
+
+        Text = defaultText;
+        Color = defaultColor;
+    }
+
+    public void AddFirstLine()
+    {
+        DrawnLineSymbolModel.AddFirstLine();
     }
 
     public void RedrawMovableRectanglesLine()
@@ -145,7 +156,6 @@ public class DrawnLineSymbolVM : SymbolVM
 
     public void ChangeCoordination((int, int) currentCoordinte)
     {
-        var linesSymbolModel = DrawnLineSymbolModel.LinesSymbolModel;
         var startCoordinate = DrawnLineSymbolModel.CoordinateLineModel.GetStartCoordinate();
 
         currentCoordinte = DrawnLineSymbolModel.RoundingCoordinatesLines(startCoordinate, currentCoordinte);
@@ -153,7 +163,7 @@ public class DrawnLineSymbolVM : SymbolVM
         ArrowSymbol.ChangeOrientationArrow(startCoordinate, currentCoordinte, OutgoingPosition);
         DrawnLineSymbolModel.ChangeCoordinateLine(currentCoordinte);
 
-        RedrawPartLines(linesSymbolModel);
+        RedrawPartLines();
     }
 
     public void RedrawAllLines()
@@ -250,8 +260,10 @@ public class DrawnLineSymbolVM : SymbolVM
         ArrowSymbol.IsHighlighted = status;
     }
 
-    private void RedrawPartLines(List<LineSymbolModel> linesSymbolModel)
+    public void RedrawPartLines()
     {
+        var linesSymbolModel = DrawnLineSymbolModel.LinesSymbolModel;
+
         if (LinesSymbolVM.Count == 0)
         {
             AddMissingLines(linesSymbolModel);

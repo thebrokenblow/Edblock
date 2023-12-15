@@ -150,19 +150,9 @@ public class ConnectionPoint : INotifyPropertyChanged
     {
         IsHasConnectingLine = true;
 
-        var symbolOutgoingLine = BlockSymbolVM.BlockSymbolModel;
-
-        var drawnLineSymbolModel = new DrawnLineSymbolModel()
-        {
-            SymbolOutgoingLine = symbolOutgoingLine,
-            OutgoingPosition = Position,
-            Color = "#000000",
-        };
-
-        drawnLineSymbolModel.AddFirstLine();
-
-        var drawnLineSymbolVM = new DrawnLineSymbolVM(drawnLineSymbolModel, BlockSymbolVM, this, _canvasSymbolsVM);
-        drawnLineSymbolVM.RedrawAllLines();
+        var drawnLineSymbolVM = new DrawnLineSymbolVM(BlockSymbolVM, this, _canvasSymbolsVM);
+        drawnLineSymbolVM.AddFirstLine();
+        drawnLineSymbolVM.RedrawPartLines();
 
         _canvasSymbolsVM.SymbolsVM.Add(drawnLineSymbolVM);
         _canvasSymbolsVM.DrawnLineSymbol = drawnLineSymbolVM;
