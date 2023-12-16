@@ -43,7 +43,7 @@ internal class FactoryScaleRectangles
                  _blockSymbolModel,
                  Cursors.SizeNS,
                  null,
-                 ScaleBlockSymbol.GetHeigthTopPart,
+                 ScaleBlockSymbol.ChangeHeigthTopPart,
                  coordinateScaleRectangle.GetCoordinateMiddleTopRectangle);
 
         return middleTopRectangle;
@@ -55,8 +55,8 @@ internal class FactoryScaleRectangles
                  _canvasSymbolsVM,
                 _blockSymbolModel,
                 Cursors.SizeNESW,
-                ScaleBlockSymbol.GetWidthRigthPart,
-                ScaleBlockSymbol.GetHeigthTopPart,
+                ScaleBlockSymbol.ChangeWidthRigthPart,
+                ScaleBlockSymbol.ChangeHeigthTopPart,
                 coordinateScaleRectangle.GetCoordinateRightTopRectangle);
 
         return rightTopRectangle;
@@ -68,7 +68,7 @@ internal class FactoryScaleRectangles
                 _canvasSymbolsVM,
                 _blockSymbolModel,
                 Cursors.SizeWE,
-                ScaleBlockSymbol.GetWidthRigthPart,
+                ScaleBlockSymbol.ChangeWidthRigthPart,
                 null,
                 coordinateScaleRectangle.GetCoordinateRightMiddleRectangle);
 
@@ -81,8 +81,8 @@ internal class FactoryScaleRectangles
                 _canvasSymbolsVM,
                 _blockSymbolModel,
                 Cursors.SizeNWSE,
-                ScaleBlockSymbol.GetWidthRigthPart,
-                ScaleBlockSymbol.GetHeigthBottomPart,
+                ScaleBlockSymbol.ChangeWidthRigthPart,
+                ScaleBlockSymbol.ChangeHeigthBottomPart,
                 coordinateScaleRectangle.GetCoordinateRightBottomRectangle);
 
         return rightBottomRectangle;
@@ -95,7 +95,7 @@ internal class FactoryScaleRectangles
                 _blockSymbolModel,
                 Cursors.SizeNS,
                 null,
-                ScaleBlockSymbol.GetHeigthBottomPart,
+                ScaleBlockSymbol.ChangeHeigthBottomPart,
                 coordinateScaleRectangle.GetCoordinateMiddleBottomRectangle);
 
         return middleBottomRectangle;
@@ -107,8 +107,8 @@ internal class FactoryScaleRectangles
                 _canvasSymbolsVM,
                 _blockSymbolModel,
                 Cursors.SizeNESW,
-                ScaleBlockSymbol.GetWidthLeftPart,
-                ScaleBlockSymbol.GetHeigthBottomPart,
+                ScaleBlockSymbol.ChangeWidthLeftPart,
+                ScaleBlockSymbol.ChangeHeigthBottomPart,
                 coordinateScaleRectangle.GetCoordinateLeftBottomRectangle);
 
         return leftBottomRectangle;
@@ -120,7 +120,7 @@ internal class FactoryScaleRectangles
                 _canvasSymbolsVM,
                 _blockSymbolModel,
                 Cursors.SizeWE,
-                ScaleBlockSymbol.GetWidthLeftPart,
+                ScaleBlockSymbol.ChangeWidthLeftPart,
                 null,
                 coordinateScaleRectangle.GetCoordinateLeftMiddleRectangle);
 
@@ -133,8 +133,8 @@ internal class FactoryScaleRectangles
                 _canvasSymbolsVM,
                 _blockSymbolModel,
                 Cursors.SizeNWSE,
-                ScaleBlockSymbol.GetWidthLeftPart,
-                ScaleBlockSymbol.GetHeigthTopPart,
+                ScaleBlockSymbol.ChangeWidthLeftPart,
+                ScaleBlockSymbol.ChangeHeigthTopPart,
                 coordinateScaleRectangle.GetCoordinateLeftTopRectangle);
 
         return leftTopRectangle;

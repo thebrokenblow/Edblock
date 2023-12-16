@@ -7,23 +7,13 @@ using EdblockModel.Symbols.LineSymbols;
 using EdblockViewModel.Symbols.Abstraction;
 using EdblockViewModel.Symbols.ConnectionPoints;
 using EdblockModel.Symbols.LineSymbols.RedrawLine;
-using System;
 
 namespace EdblockViewModel.Symbols.LineSymbols;
 
 public class DrawnLineSymbolVM : SymbolVM
 {
-    public ObservableCollection<LineSymbolVM> LinesSymbolVM { get; init; }
-    public ObservableCollection<MovableRectangleLine> MovableRectanglesLine { get; init; }
-    public DrawnLineSymbolModel DrawnLineSymbolModel { get; set; }
-    public ArrowSymbol ArrowSymbol { get; set; }
-    public DelegateCommand EnterCursor { get; init; }
-    public DelegateCommand LeaveCursor { get; init; }
-    public ConnectionPoint? OutgoingConnectionPoint { get; init; }
-    public ConnectionPoint? IncomingConnectionPoint { get; set; }
-
     private BlockSymbolVM? symbolOutgoingLine;
-    public BlockSymbolVM? SymbolOutgoingLine
+    public BlockSymbolVM? SymbolOutgoingLine 
     {
         get => symbolOutgoingLine;
         init
@@ -35,7 +25,7 @@ public class DrawnLineSymbolVM : SymbolVM
 
     private BlockSymbolVM? symbolIncomingLine;
     public BlockSymbolVM? SymbolIncomingLine
-    {
+    { 
         get => symbolIncomingLine;
         set
         {
@@ -43,6 +33,15 @@ public class DrawnLineSymbolVM : SymbolVM
             DrawnLineSymbolModel.SymbolIncomingLine = symbolIncomingLine?.BlockSymbolModel;
         }
     }
+
+    public DrawnLineSymbolModel DrawnLineSymbolModel { get; set; }
+    public ObservableCollection<LineSymbolVM> LinesSymbolVM { get; init; }
+    public ObservableCollection<MovableRectangleLine> MovableRectanglesLine { get; init; }
+    public ArrowSymbol ArrowSymbol { get; set; }
+    public DelegateCommand EnterCursor { get; init; }
+    public DelegateCommand LeaveCursor { get; init; }
+    public ConnectionPoint? OutgoingConnectionPoint { get; init; }
+    public ConnectionPoint? IncomingConnectionPoint { get; set; }
 
     private PositionConnectionPoint outgoingPosition;
     public PositionConnectionPoint OutgoingPosition
@@ -156,7 +155,7 @@ public class DrawnLineSymbolVM : SymbolVM
         }
     }
 
-    internal void AddFirstLine()
+    public void AddFirstLine()
     {
         DrawnLineSymbolModel.AddFirstLine();
     }

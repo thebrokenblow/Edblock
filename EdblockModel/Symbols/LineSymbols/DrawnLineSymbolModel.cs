@@ -21,26 +21,6 @@ public class DrawnLineSymbolModel
         CoordinateLineModel = new(LinesSymbolModel);
     }
 
-    public void AddFirstLine()
-    {
-        if (SymbolOutgoingLine == null)
-        {
-            return;
-        }
-
-        var (x, y) = SymbolOutgoingLine.GetBorderCoordinate(OutgoingPosition);
-
-        var firstLineSymbolModel = new LineSymbolModel
-        {
-            X1 = x,
-            Y1 = y,
-            X2 = x,
-            Y2 = y,
-        };
-
-        LinesSymbolModel.Add(firstLineSymbolModel);
-    }
-
     public (int x, int y) RoundingCoordinatesLines((int x, int y) startCoordinate, (int x, int y) currentCoordinate)
     {
         if (OutgoingPosition == PositionConnectionPoint.Bottom || OutgoingPosition == PositionConnectionPoint.Top)
@@ -63,6 +43,26 @@ public class DrawnLineSymbolModel
         {
             CoordinateLineModel.ChangeCoordinatesHorizontalLines(currentCoordinte);
         }
+    }
+
+    public void AddFirstLine()
+    {
+        if (SymbolOutgoingLine == null)
+        {
+            return;
+        }
+
+        var (x, y) = SymbolOutgoingLine.GetBorderCoordinate(OutgoingPosition);
+
+        var firstLineSymbolModel = new LineSymbolModel
+        {
+            X1 = x,
+            Y1 = y,
+            X2 = x,
+            Y2 = y,
+        };
+
+        LinesSymbolModel.Add(firstLineSymbolModel);
     }
 
     public LineSymbolModel GetNewLine()

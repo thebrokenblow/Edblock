@@ -154,7 +154,7 @@ public class ConnectionPoint : INotifyPropertyChanged
         {
             SymbolOutgoingLine = BlockSymbolVM,
             OutgoingPosition = Position,
-            OutgoingConnectionPoint = this,
+            OutgoingConnectionPoint = this
         };
 
         drawnLineSymbolVM.AddFirstLine();
