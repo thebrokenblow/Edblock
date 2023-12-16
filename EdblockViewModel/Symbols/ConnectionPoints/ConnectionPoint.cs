@@ -150,7 +150,13 @@ public class ConnectionPoint : INotifyPropertyChanged
     {
         IsHasConnectingLine = true;
 
-        var drawnLineSymbolVM = new DrawnLineSymbolVM(BlockSymbolVM, this, _canvasSymbolsVM);
+        var drawnLineSymbolVM = new DrawnLineSymbolVM(_canvasSymbolsVM)
+        {
+            SymbolOutgoingLine = BlockSymbolVM,
+            OutgoingPosition = Position,
+            OutgoingConnectionPoint = this
+        };
+
         drawnLineSymbolVM.AddFirstLine();
         drawnLineSymbolVM.RedrawPartLines();
 
@@ -160,20 +166,21 @@ public class ConnectionPoint : INotifyPropertyChanged
 
     private void EndDrawLine()
     {
+        var drawnLineSymbolVM = _canvasSymbolsVM.DrawnLineSymbol;
+
+        if (drawnLineSymbolVM == null)
+        {
+            return;
+        }
+
         IsHasConnectingLine = true;
 
-        var symbolIncomingLineModel = BlockSymbolVM.BlockSymbolModel;
-
-        var drawnLineSymbolVM = _canvasSymbolsVM.DrawnLineSymbol;
-        var drawnLineSymbolModel = drawnLineSymbolVM!.DrawnLineSymbolModel;
-
         drawnLineSymbolVM.IncomingPosition = Position;
-        drawnLineSymbolModel.IncomingPosition = Position;
-        
-        drawnLineSymbolVM.SymbolIncomingLine = BlockSymbolVM;
-        drawnLineSymbolModel.SymbolIncomingLine = symbolIncomingLineModel;
-
         drawnLineSymbolVM.IncomingConnectionPoint = this;
+        drawnLineSymbolVM.SymbolIncomingLine = BlockSymbolVM;
+
+        var drawnLineSymbolModel = drawnLineSymbolVM.DrawnLineSymbolModel;
+        var symbolIncomingLineModel = drawnLineSymbolVM.SymbolIncomingLine.BlockSymbolModel;
 
         var finalLineCoordinate = symbolIncomingLineModel.GetBorderCoordinate(Position);
 

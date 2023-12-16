@@ -101,24 +101,22 @@ internal class ProjectVM
             var symbolOutgoingLineVM = _blockSymbolsVMById[symbolOutgoingLine.Id];
             var symbolIncomingLineVM = _blockSymbolsVMById[symbolIncomingLine.Id];
 
-            var drawnLineSymbolModel = FactoryDrawnLineSymbol.CreateDrawnLineSymbolModel(
-                symbolOutgoingLineVM, 
-                symbolIncomingLineVM, 
-                drawnLineSymbolSerializable,
-                linesSymbolModel);
-
             var outgoingConnectionPoint = symbolOutgoingLineVM.GetConnectionPoint(drawnLineSymbolSerializable.OutgoingPosition);
             var incomingConnectionPoint = symbolIncomingLineVM.GetConnectionPoint(drawnLineSymbolSerializable.IncomingPosition);
 
             outgoingConnectionPoint.IsHasConnectingLine = true;
             incomingConnectionPoint.IsHasConnectingLine = true;
 
-            var drawnLineSymbolVM = new DrawnLineSymbolVM(symbolOutgoingLineVM, outgoingConnectionPoint, _canvasSymbolsVM, drawnLineSymbolModel)
+            var drawnLineSymbolVM = new DrawnLineSymbolVM(_canvasSymbolsVM, linesSymbolModel)
             {
-                Text = drawnLineSymbolSerializable.Text,
+                SymbolOutgoingLine = symbolOutgoingLineVM,
+                SymbolIncomingLine = symbolIncomingLineVM,
+                OutgoingConnectionPoint = outgoingConnectionPoint,
                 IncomingConnectionPoint = incomingConnectionPoint,
-                OutgoingPosition = drawnLineSymbolSerializable.OutgoingPosition,
-                IncomingPosition = drawnLineSymbolSerializable.IncomingPosition,
+                OutgoingPosition = outgoingConnectionPoint.Position,
+                IncomingPosition = incomingConnectionPoint.Position,
+                Text = drawnLineSymbolSerializable.Text,
+                Color = drawnLineSymbolSerializable.Color,
             };
 
             drawnLineSymbolVM.RedrawAllLines();

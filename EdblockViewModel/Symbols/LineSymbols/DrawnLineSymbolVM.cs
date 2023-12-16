@@ -12,18 +12,58 @@ namespace EdblockViewModel.Symbols.LineSymbols;
 
 public class DrawnLineSymbolVM : SymbolVM
 {
-    public BlockSymbolVM? SymbolOutgoingLine { get; set; }
-    public BlockSymbolVM? SymbolIncomingLine { get; set; }
+    private BlockSymbolVM? symbolOutgoingLine;
+    public BlockSymbolVM? SymbolOutgoingLine 
+    {
+        get => symbolOutgoingLine;
+        init
+        {
+            symbolOutgoingLine = value;
+            DrawnLineSymbolModel.SymbolOutgoingLine = symbolOutgoingLine?.BlockSymbolModel;
+        }
+    }
+
+    private BlockSymbolVM? symbolIncomingLine;
+    public BlockSymbolVM? SymbolIncomingLine
+    { 
+        get => symbolIncomingLine;
+        set
+        {
+            symbolIncomingLine = value;
+            DrawnLineSymbolModel.SymbolIncomingLine = symbolIncomingLine?.BlockSymbolModel;
+        }
+    }
+
     public DrawnLineSymbolModel DrawnLineSymbolModel { get; set; }
-    public ObservableCollection<LineSymbolVM> LinesSymbolVM { get; init; } = new();
-    public ObservableCollection<MovableRectangleLine> MovableRectanglesLine { get; init; } = new();
-    public ArrowSymbol ArrowSymbol { get; set; } = new();
+    public ObservableCollection<LineSymbolVM> LinesSymbolVM { get; init; }
+    public ObservableCollection<MovableRectangleLine> MovableRectanglesLine { get; init; }
+    public ArrowSymbol ArrowSymbol { get; set; }
     public DelegateCommand EnterCursor { get; init; }
     public DelegateCommand LeaveCursor { get; init; }
     public ConnectionPoint? OutgoingConnectionPoint { get; init; }
     public ConnectionPoint? IncomingConnectionPoint { get; set; }
-    public PositionConnectionPoint OutgoingPosition { get; init; }
-    public PositionConnectionPoint IncomingPosition { get; set; }
+
+    private PositionConnectionPoint outgoingPosition;
+    public PositionConnectionPoint OutgoingPosition
+    {
+        get => outgoingPosition;
+        set
+        {
+            outgoingPosition = value;
+            DrawnLineSymbolModel.OutgoingPosition = outgoingPosition;
+        }
+    }
+
+    private PositionConnectionPoint incomingPosition;
+    public PositionConnectionPoint IncomingPosition 
+    {
+        get => incomingPosition;
+        set
+        {
+            incomingPosition = value;
+            DrawnLineSymbolModel.IncomingPosition = incomingPosition;
+        }
+    }
 
     private const string defaultText = "да";
     private string? text;
@@ -94,27 +134,25 @@ public class DrawnLineSymbolVM : SymbolVM
 
     public CanvasSymbolsVM CanvasSymbolsVM { get; init; }
 
-    public DrawnLineSymbolVM(BlockSymbolVM symbolOutgoingLine, ConnectionPoint outgoingConnectionPoint, CanvasSymbolsVM canvasSymbolsVM, DrawnLineSymbolModel? drawnLineSymbolModel = null)
+    public DrawnLineSymbolVM(CanvasSymbolsVM canvasSymbolsVM, List<LineSymbolModel>? linesSymbolModel = null)
     {
         EnterCursor = new(SetHighlightColorLines);
         LeaveCursor = new(SetDefaultColorLines);
 
-        SymbolOutgoingLine = symbolOutgoingLine;
-        OutgoingConnectionPoint = outgoingConnectionPoint;
-        OutgoingPosition = outgoingConnectionPoint.Position;
-
-        drawnLineSymbolModel ??= new DrawnLineSymbolModel()
-        {
-            SymbolOutgoingLine = SymbolOutgoingLine.BlockSymbolModel,
-            OutgoingPosition = OutgoingPosition,
-            Color = defaultColor,
-        };
-
-        CanvasSymbolsVM = canvasSymbolsVM;
-        DrawnLineSymbolModel = drawnLineSymbolModel;
+        ArrowSymbol = new();
+        LinesSymbolVM = new();
+        DrawnLineSymbolModel = new();
+        MovableRectanglesLine = new();
 
         Text = defaultText;
         Color = defaultColor;
+
+        CanvasSymbolsVM = canvasSymbolsVM;
+
+        if (linesSymbolModel != null)
+        {
+            DrawnLineSymbolModel.LinesSymbolModel = linesSymbolModel;
+        }
     }
 
     public void AddFirstLine()
