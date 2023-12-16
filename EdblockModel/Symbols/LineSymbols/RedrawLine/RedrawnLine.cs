@@ -6,7 +6,7 @@ namespace EdblockModel.Symbols.LineSymbols.RedrawLine;
 public class RedrawnLine
 {
     public List<CoordinateLine> DecoratedCoordinatesLines { get; set; }
-    private readonly BlockSymbolModel _symbolOutgoingLine;
+    private readonly BlockSymbolModel? _symbolOutgoingLine;
     private readonly BlockSymbolModel? _symbolIncomingLine;
     private readonly PositionConnectionPoint _positionOutgoing;
     private readonly PositionConnectionPoint _positionIncoming;
@@ -35,10 +35,12 @@ public class RedrawnLine
 
     public List<LineSymbolModel> GetRedrawLine()
     {
-        var borderCoordinateOutgoingSymbol = _symbolOutgoingLine.GetBorderCoordinate(_positionOutgoing);
+        var borderCoordinateOutgoingSymbol = _symbolOutgoingLine!.GetBorderCoordinate(_positionOutgoing);
         var borderCoordinateIncomingSymbol = _symbolIncomingLine!.GetBorderCoordinate(_positionIncoming);
 
-        if (IsParallel())
+        bool isParallel = IsParallel();
+
+        if (isParallel)
         {
             redrawnParallelSides.RedrawLine(borderCoordinateOutgoingSymbol, borderCoordinateIncomingSymbol);
         }

@@ -18,17 +18,20 @@ public class ActionSymbol : BlockSymbolVM
 
     public override void SetWidth(int width)
     {
-        BlockSymbolModel.Width = width;
+        Width = width;
         TextField.Width = width;
+        //BlockSymbolModel.Width = width;
 
         ChangeCoordinateAuxiliaryElements();
     }
 
     public override void SetHeight(int height)
     {
-        BlockSymbolModel.Height = height;
+        Height = height;
 
+        BlockSymbolModel.Height = height;
         TextField.Height = height;
+
         ChangeCoordinateAuxiliaryElements();
     }
 }

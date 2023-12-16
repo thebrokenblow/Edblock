@@ -23,11 +23,15 @@ public class ScalePartBlockSymbol
         Func<ScalePartBlockSymbol, CanvasSymbolsVM, int>? getHeigthBlockSymbol)
     {
         ScalingBlockSymbol = scalingBlockSymbol;
+
         InitialWidthBlockSymbol = scalingBlockSymbol.Width;
         InitialHeigthBlockSymbol = scalingBlockSymbol.Height;
+
         InitialXCoordinateBlockSymbol = scalingBlockSymbol.XCoordinate;
         InitialYCoordinateBlockSymbol = scalingBlockSymbol.YCoordinate;
+
         _cursorWhenScaling = cursorWhenScaling;
+
         _getWidthBlockSymbol = getWidthBlockSymbol; 
         _getHeigthBlockSymbol = getHeigthBlockSymbol;
     }
@@ -43,7 +47,7 @@ public class ScalePartBlockSymbol
 
         int width = _getWidthBlockSymbol.Invoke(this, canvasSymbolsVM);
 
-        ScalingBlockSymbol.Width = width;
+        ScalingBlockSymbol.SetWidth(width);
 
         ScalingBlockSymbol.TextField.Cursor = _cursorWhenScaling;
         canvasSymbolsVM.Cursor = _cursorWhenScaling;
@@ -60,7 +64,7 @@ public class ScalePartBlockSymbol
 
         int height = _getHeigthBlockSymbol.Invoke(this, canvasSymbolsVM);
 
-        ScalingBlockSymbol.Height = height;
+        ScalingBlockSymbol.SetHeight(height);
 
         ScalingBlockSymbol.TextField.Cursor = _cursorWhenScaling;
         canvasSymbolsVM.Cursor = _cursorWhenScaling;

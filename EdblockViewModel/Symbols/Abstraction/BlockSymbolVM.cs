@@ -33,7 +33,6 @@ public abstract class BlockSymbolVM : SymbolVM
         set
         {
             width = value;
-            SetWidth(width);
             OnPropertyChanged();
         }
     }
@@ -45,7 +44,6 @@ public abstract class BlockSymbolVM : SymbolVM
         set
         {
             heigth = value;
-            SetHeight(Height);
             OnPropertyChanged();
         }
     }
@@ -107,6 +105,9 @@ public abstract class BlockSymbolVM : SymbolVM
 
         Width = defaultWidth;
         Height = defaultHeigth;
+
+        SetWidth(Width);
+        SetHeight(Height);
 
         MouseEnter = new(ShowStroke);
         MouseLeave = new(HideStroke);
