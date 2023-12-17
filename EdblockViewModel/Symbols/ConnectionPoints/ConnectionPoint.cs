@@ -156,16 +156,12 @@ public class ConnectionPoint : INotifyPropertyChanged
 
     private void StarDrawLine()
     {
+        var isLineOutputAccordingGOST = _connectionPointModel.IsLineOutputAccordingGOST();
 
-        if (_checkBoxLineGostVM.IsChecked)
+        if (_checkBoxLineGostVM.IsChecked && !isLineOutputAccordingGOST)
         {
-            var isLineOutputAccordingGOST = _connectionPointModel.IsLineOutputAccordingGOST();
-
-            if (!isLineOutputAccordingGOST)
-            {
-                MessageBox.Show("Так нелья");
-                return;
-            }
+            MessageBox.Show("Выход линии должен быть снизу или справа");
+            return;
         }
 
         IsHasConnectingLine = true;
@@ -186,15 +182,12 @@ public class ConnectionPoint : INotifyPropertyChanged
 
     private void EndDrawLine()
     {
-        if (_checkBoxLineGostVM.IsChecked)
-        {
-            var isLineIncomingAccordingGOST = _connectionPointModel.IsLineIncomingAccordingGOST();
+        var isLineIncomingAccordingGOST = _connectionPointModel.IsLineIncomingAccordingGOST();
 
-            if (!isLineIncomingAccordingGOST)
-            {
-                MessageBox.Show("Так нелья");
-                return;
-            }
+        if (_checkBoxLineGostVM.IsChecked && !isLineIncomingAccordingGOST)
+        {
+            MessageBox.Show("Вход линии должен быть сверху или снизу");
+            return;
         }
 
         var drawnLineSymbolVM = _canvasSymbolsVM.DrawnLineSymbol;
