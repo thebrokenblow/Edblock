@@ -26,6 +26,14 @@ public partial class PopupBoxMenu : UserControl
         }
     }
 
+    public ScaleAllSymbolVM ScaleAllSymbolVM
+    {
+        set
+        {
+            ScaleAllSymbol.ScaleAllSymbolVM = value;
+        }
+    }
+
     public PopupBoxMenu()
     {
         InitializeComponent();

@@ -1,5 +1,6 @@
 ﻿using System.Windows.Input;
 using System.Collections.Generic;
+using EdblockViewModel.ComponentsVM;
 using EdblockViewModel.Symbols.Abstraction;
 using EdblockModel.Symbols.ScaleRectangles;
 
@@ -9,11 +10,14 @@ internal class FactoryScaleRectangles
 {
     private readonly BlockSymbolVM _blockSymbolModel;
     private readonly CanvasSymbolsVM _canvasSymbolsVM;
+    private readonly ScaleAllSymbolVM _scaleAllSymbolVM;
     private readonly CoordinateScaleRectangle coordinateScaleRectangle;
-    public FactoryScaleRectangles(CanvasSymbolsVM canvasSymbolsVM, BlockSymbolVM blockSymbolModel)
+
+    public FactoryScaleRectangles(CanvasSymbolsVM canvasSymbolsVM, ScaleAllSymbolVM scaleAllSymbolVM, BlockSymbolVM blockSymbolModel)
     {
         _blockSymbolModel = blockSymbolModel;
         _canvasSymbolsVM = canvasSymbolsVM;
+        _scaleAllSymbolVM = scaleAllSymbolVM;
         coordinateScaleRectangle = new CoordinateScaleRectangle(_blockSymbolModel);
     }
 
@@ -40,6 +44,7 @@ internal class FactoryScaleRectangles
     {
         var middleTopRectangle = new ScaleRectangle(
                  _canvasSymbolsVM,
+                 _scaleAllSymbolVM,
                  _blockSymbolModel,
                  Cursors.SizeNS,
                  null,
@@ -53,6 +58,7 @@ internal class FactoryScaleRectangles
     {
         var rightTopRectangle = new ScaleRectangle(
                  _canvasSymbolsVM,
+                 _scaleAllSymbolVM,
                 _blockSymbolModel,
                 Cursors.SizeNESW,
                 ScaleBlockSymbol.GetWidthRigthPart,
@@ -66,6 +72,7 @@ internal class FactoryScaleRectangles
     {
         var rightMiddleRectangle = new ScaleRectangle(
                 _canvasSymbolsVM,
+                _scaleAllSymbolVM,
                 _blockSymbolModel,
                 Cursors.SizeWE,
                 ScaleBlockSymbol.GetWidthRigthPart,
@@ -79,6 +86,7 @@ internal class FactoryScaleRectangles
     {
         var rightBottomRectangle = new ScaleRectangle(
                 _canvasSymbolsVM,
+                _scaleAllSymbolVM,
                 _blockSymbolModel,
                 Cursors.SizeNWSE,
                 ScaleBlockSymbol.GetWidthRigthPart,
@@ -92,6 +100,7 @@ internal class FactoryScaleRectangles
     {
         var middleBottomRectangle = new ScaleRectangle(
                 _canvasSymbolsVM,
+                _scaleAllSymbolVM,
                 _blockSymbolModel,
                 Cursors.SizeNS,
                 null,
@@ -104,7 +113,8 @@ internal class FactoryScaleRectangles
     private ScaleRectangle CreateLeftBottomRectangle()
     {
         var leftBottomRectangle = new ScaleRectangle(
-                _canvasSymbolsVM,
+                _canvasSymbolsVM, 
+                _scaleAllSymbolVM,
                 _blockSymbolModel,
                 Cursors.SizeNESW,
                 ScaleBlockSymbol.GetWidthLeftPart,
@@ -118,6 +128,7 @@ internal class FactoryScaleRectangles
     {
         var leftMiddleRectangle = new ScaleRectangle(
                 _canvasSymbolsVM,
+                _scaleAllSymbolVM,
                 _blockSymbolModel,
                 Cursors.SizeWE,
                 ScaleBlockSymbol.GetWidthLeftPart,
@@ -131,6 +142,7 @@ internal class FactoryScaleRectangles
     {
         var leftTopRectangle = new ScaleRectangle(
                 _canvasSymbolsVM,
+                _scaleAllSymbolVM,
                 _blockSymbolModel,
                 Cursors.SizeNWSE,
                 ScaleBlockSymbol.GetWidthLeftPart,

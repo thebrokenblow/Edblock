@@ -11,13 +11,14 @@ public class EdblockVM
 
     private readonly CanvasSymbolsVM _canvasSymbolsVM;
     private readonly FactoryBlockSymbolVM _factoryBlockSymbol;
-    public EdblockVM(CanvasSymbolsVM canvasSymbolsVM, CheckBoxLineGostVM checkBoxLineGostVM)
+
+    public EdblockVM(CanvasSymbolsVM canvasSymbolsVM, CheckBoxLineGostVM checkBoxLineGostVM, ScaleAllSymbolVM scaleAllSymbolVM)
     {
         ClickEsc = new(canvasSymbolsVM.DeleteLine);
         ClickSymbol = new(CreateBlockSymbol);
 
         _canvasSymbolsVM = canvasSymbolsVM;
-        _factoryBlockSymbol = new(canvasSymbolsVM, checkBoxLineGostVM);
+        _factoryBlockSymbol = new(canvasSymbolsVM, scaleAllSymbolVM,checkBoxLineGostVM);
     }
 
     private void CreateBlockSymbol(string nameBlockSymbol)

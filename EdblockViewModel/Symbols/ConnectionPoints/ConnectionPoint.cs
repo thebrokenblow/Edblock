@@ -158,7 +158,7 @@ public class ConnectionPoint : INotifyPropertyChanged
     {
         var isLineOutputAccordingGOST = _connectionPointModel.IsLineOutputAccordingGOST();
 
-        if (_checkBoxLineGostVM.IsChecked && !isLineOutputAccordingGOST)
+        if (_checkBoxLineGostVM.IsDrawingLinesAccordingGOST && !isLineOutputAccordingGOST)
         {
             MessageBox.Show("Выход линии должен быть снизу или справа");
             return;
@@ -184,7 +184,7 @@ public class ConnectionPoint : INotifyPropertyChanged
     {
         var isLineIncomingAccordingGOST = _connectionPointModel.IsLineIncomingAccordingGOST();
 
-        if (_checkBoxLineGostVM.IsChecked && !isLineIncomingAccordingGOST)
+        if (_checkBoxLineGostVM.IsDrawingLinesAccordingGOST && !isLineIncomingAccordingGOST)
         {
             MessageBox.Show("Вход линии должен быть сверху или снизу");
             return;

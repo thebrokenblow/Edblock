@@ -2,13 +2,5 @@
 
 public class CheckBoxLineGostVM
 {
-    private bool isChecked;
-    public bool IsChecked
-    {
-        get => isChecked;
-        set
-        {
-            isChecked = value;
-        }
-    }
+    public bool IsDrawingLinesAccordingGOST { get; set; }
 }

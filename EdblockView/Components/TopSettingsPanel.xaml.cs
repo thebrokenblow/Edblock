@@ -25,6 +25,14 @@ public partial class TopSettingsPanel : UserControl
         }
     }
 
+    public ScaleAllSymbolVM ScaleAllSymbolVM    
+    {
+        set
+        {
+            PopupBoxMenuUI.ScaleAllSymbolVM = value;
+        }
+    }
+
     public TopSettingsPanel()
     {
         InitializeComponent();

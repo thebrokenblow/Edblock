@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using EdblockViewModel.Symbols.Abstraction;
+using EdblockViewModel.ComponentsVM;
 
 namespace EdblockViewModel.Symbols.ScaleRectangles;
 
@@ -49,6 +50,7 @@ public class ScaleRectangle : INotifyPropertyChanged
     public DelegateCommand ClickScaleRectangle { get; init; }
     public event PropertyChangedEventHandler? PropertyChanged;
     private readonly CanvasSymbolsVM _canvasSymbolsVM;
+    private readonly ScaleAllSymbolVM _scaleAllSymbolVM;
     private readonly BlockSymbolVM _blockSymbolVM;
     private readonly Cursor _cursorScaling;
     private readonly Func<(int, int)> _getCoordinateScaleRectangle;
@@ -56,7 +58,8 @@ public class ScaleRectangle : INotifyPropertyChanged
     private readonly Func<ScalePartBlockSymbol, CanvasSymbolsVM, int>? _getHeightSymbol;
 
     public ScaleRectangle(
-        CanvasSymbolsVM canvasSymbolsVM, 
+        CanvasSymbolsVM canvasSymbolsVM,
+        ScaleAllSymbolVM scaleAllSymbolVM,
         BlockSymbolVM blockSymbolVM,
         Cursor cursorScaling,
         Func<ScalePartBlockSymbol, CanvasSymbolsVM, int>? getWidthSymbol,
@@ -67,6 +70,7 @@ public class ScaleRectangle : INotifyPropertyChanged
         _blockSymbolVM = blockSymbolVM;
         _cursorScaling = cursorScaling;
         _canvasSymbolsVM = canvasSymbolsVM;
+        _scaleAllSymbolVM = scaleAllSymbolVM;
         _getWidthSymbol = getWidthSymbol;
         _getHeightSymbol = getHeightSymbol;
 
@@ -113,6 +117,6 @@ public class ScaleRectangle : INotifyPropertyChanged
 
     private void SaveScaleRectangle()
     {
-        _canvasSymbolsVM.ScalePartBlockSymbol = new(_blockSymbolVM, _cursorScaling, _getWidthSymbol, _getHeightSymbol);
+        _canvasSymbolsVM.ScalePartBlockSymbol = new(_blockSymbolVM, _cursorScaling, _getWidthSymbol, _getHeightSymbol, _scaleAllSymbolVM, _canvasSymbolsVM.SymbolsVM);
     }
 }

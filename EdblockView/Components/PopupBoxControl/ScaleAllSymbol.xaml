@@ -19,6 +19,7 @@
             Content="Масштабирование всех фигур" />
 
         <CheckBox 
+            IsChecked="{Binding IsScaleAllSymbolVM}"
             DockPanel.Dock="Right"  
             HorizontalAlignment="Center"
             Style="{StaticResource CheckBoxSettingsMenu}" />

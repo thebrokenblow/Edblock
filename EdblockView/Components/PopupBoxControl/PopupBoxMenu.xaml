@@ -20,7 +20,7 @@
 
             <popupboxcontrol:CheckBoxLineGost x:Name="CheckBoxLineGost"/>
 
-            <popupboxcontrol:ScaleAllSymbol />
+            <popupboxcontrol:ScaleAllSymbol x:Name="ScaleAllSymbol"/>
 
             <popupboxcontrol:ButtonSaveProject x:Name="ButtonSaveProject" Margin="0 5"/>
 

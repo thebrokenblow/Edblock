@@ -85,14 +85,12 @@ public abstract class BlockSymbolVM : SymbolVM
 
     protected const int defaultWidth = 140;
     protected const int defaultHeigth = 60;
-    protected readonly CheckBoxLineGostVM _checkBoxLineGostVM;
 
     private readonly CanvasSymbolsVM _canvasSymbolsVM;
 
-    public BlockSymbolVM(CanvasSymbolsVM canvasSymbolsVM, CheckBoxLineGostVM checkBoxLineGostVM)
+    public BlockSymbolVM(CanvasSymbolsVM canvasSymbolsVM, ScaleAllSymbolVM scaleAllSymbolVM, CheckBoxLineGostVM checkBoxLineGostVM)
     {
         _canvasSymbolsVM = canvasSymbolsVM;
-        _checkBoxLineGostVM = checkBoxLineGostVM;
 
         Id = Guid.NewGuid().ToString();
 
@@ -102,10 +100,10 @@ public abstract class BlockSymbolVM : SymbolVM
 
         TextField = new(canvasSymbolsVM, this);
 
-        var factoryConnectionPoints = new FactoryConnectionPoints(_canvasSymbolsVM, _checkBoxLineGostVM, this);
+        var factoryConnectionPoints = new FactoryConnectionPoints(_canvasSymbolsVM, checkBoxLineGostVM, this);
         ConnectionPoints = factoryConnectionPoints.CreateConnectionPoints();
 
-        var factoryScaleRectangles = new FactoryScaleRectangles(_canvasSymbolsVM, this);
+        var factoryScaleRectangles = new FactoryScaleRectangles(_canvasSymbolsVM, scaleAllSymbolVM,  this);
         ScaleRectangles = factoryScaleRectangles.Create();
 
         Width = defaultWidth;

@@ -1,4 +1,5 @@
 ﻿using System.Windows.Controls;
+using EdblockViewModel.ComponentsVM;
 
 namespace EdblockView.Components.PopupBoxControl;
 
@@ -7,6 +8,14 @@ namespace EdblockView.Components.PopupBoxControl;
 /// </summary>
 public partial class ScaleAllSymbol : UserControl
 {
+    public ScaleAllSymbolVM ScaleAllSymbolVM
+    {
+        set
+        {
+            DataContext = value;
+        }
+    }
+
     public ScaleAllSymbol()
     {
         InitializeComponent();

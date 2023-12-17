@@ -17,7 +17,7 @@ internal class ProjectVM
         _canvasSymbolsVM = canvasSymbolsVM;
 
         _blockSymbolsVMById = new();
-        _factoryBlockSymbolVM = new(_canvasSymbolsVM, null);
+        _factoryBlockSymbolVM = new(_canvasSymbolsVM, null, null);
     }
 
     public void Load(ProjectSerializable projectSerializable)

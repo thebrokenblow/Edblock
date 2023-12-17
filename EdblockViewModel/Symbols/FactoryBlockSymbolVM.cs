@@ -10,17 +10,16 @@ internal class FactoryBlockSymbolVM
 {
     private readonly Dictionary<string, Func<string, BlockSymbolVM>> instanceSymbolByName;
 
-    private readonly CanvasSymbolsVM _canvasSymbolsVM;
-    private readonly CheckBoxLineGostVM _checkBoxLineGostVM;
-
-    public FactoryBlockSymbolVM(CanvasSymbolsVM canvasSymbolsVM, CheckBoxLineGostVM checkBoxLineGostVM)
+    private BlockSymbolVM? _firstBlockSymbolVM;
+    private readonly ScaleAllSymbolVM _scaleAllSymbolVM;
+    public FactoryBlockSymbolVM(CanvasSymbolsVM canvasSymbolsVM, ScaleAllSymbolVM scaleAllSymbolVM, CheckBoxLineGostVM checkBoxLineGostVM)
     {
         _canvasSymbolsVM = canvasSymbolsVM;
-        _checkBoxLineGostVM = checkBoxLineGostVM;
+        _scaleAllSymbolVM = scaleAllSymbolVM;
 
         instanceSymbolByName = new()
         {
-            { "ActionSymbol", _ => new ActionSymbol(_canvasSymbolsVM, _checkBoxLineGostVM) }
+            { "ActionSymbol", _ => new ActionSymbol(canvasSymbolsVM, scaleAllSymbolVM, checkBoxLineGostVM) }
         };
     }
 
@@ -31,7 +30,16 @@ internal class FactoryBlockSymbolVM
             throw new Exception("nameBlockSymbol is null");
         }
 
-        return instanceSymbolByName[nameBlockSymbol].Invoke(nameBlockSymbol);
+        var blockSymbolVM = instanceSymbolByName[nameBlockSymbol].Invoke(nameBlockSymbol);
+        _firstBlockSymbolVM ??= blockSymbolVM;
+
+        if (_scaleAllSymbolVM.IsScaleAllSymbolVM)
+        {
+            blockSymbolVM.Width = _firstBlockSymbolVM.Width;
+            blockSymbolVM.Height = _firstBlockSymbolVM.Height;
+        }
+
+        return blockSymbolVM;
     }
 
     public BlockSymbolVM CreateBySerialization(BlockSymbolSerializable blockSymbolSerializable)
