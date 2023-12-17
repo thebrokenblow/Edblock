@@ -1,5 +1,6 @@
 ﻿using System;
 using Prism.Commands;
+using EdblockModel.Symbols;
 using System.Windows.Input;
 using System.ComponentModel;
 using EdblockModel.Symbols.Enum;
@@ -8,6 +9,9 @@ using System.Runtime.CompilerServices;
 using EdblockModel.Symbols.LineSymbols;
 using EdblockViewModel.Symbols.LineSymbols;
 using EdblockViewModel.Symbols.Abstraction;
+using EdblockViewModel.ComponentsVM;
+using System.Text;
+using System.Windows;
 
 namespace EdblockViewModel.Symbols.ConnectionPoints;
 
@@ -74,18 +78,22 @@ public class ConnectionPoint : INotifyPropertyChanged
     public BlockSymbolVM BlockSymbolVM { get; init; }
     public Func<(int, int)> GetCoordinate { get; init; }
     public PositionConnectionPoint Position { get; init; }
+
     public event PropertyChangedEventHandler? PropertyChanged;
+
     private readonly CanvasSymbolsVM _canvasSymbolsVM;
-    public ConnectionPoint(
-        CanvasSymbolsVM canvasSymbolsVM, 
-        BlockSymbolVM blockSymbolVM, 
-        Func<(int, int)> getCoordinate,
-        PositionConnectionPoint positionConnectionPoint)
+    private readonly CheckBoxLineGostVM _checkBoxLineGostVM;
+    private readonly ConnectionPointModel _connectionPointModel;
+
+    public ConnectionPoint(CanvasSymbolsVM canvasSymbolsVM, BlockSymbolVM blockSymbolVM, CheckBoxLineGostVM checkBoxLineGostVM, Func<(int, int)> getCoordinate, PositionConnectionPoint position)
     {
         _canvasSymbolsVM = canvasSymbolsVM;
+        _checkBoxLineGostVM = checkBoxLineGostVM;
+        _connectionPointModel = new(position);
+
         GetCoordinate = getCoordinate;
 
-        Position = positionConnectionPoint;
+        Position = position;
         BlockSymbolVM = blockSymbolVM;
         
         EnterCursor = new(ShowConnectionPoints);
@@ -148,6 +156,18 @@ public class ConnectionPoint : INotifyPropertyChanged
 
     private void StarDrawLine()
     {
+
+        if (_checkBoxLineGostVM.IsChecked)
+        {
+            var isLineOutputAccordingGOST = _connectionPointModel.IsLineOutputAccordingGOST();
+
+            if (!isLineOutputAccordingGOST)
+            {
+                MessageBox.Show("Так нелья");
+                return;
+            }
+        }
+
         IsHasConnectingLine = true;
 
         var drawnLineSymbolVM = new DrawnLineSymbolVM(_canvasSymbolsVM)
@@ -166,6 +186,17 @@ public class ConnectionPoint : INotifyPropertyChanged
 
     private void EndDrawLine()
     {
+        if (_checkBoxLineGostVM.IsChecked)
+        {
+            var isLineIncomingAccordingGOST = _connectionPointModel.IsLineIncomingAccordingGOST();
+
+            if (!isLineIncomingAccordingGOST)
+            {
+                MessageBox.Show("Так нелья");
+                return;
+            }
+        }
+
         var drawnLineSymbolVM = _canvasSymbolsVM.DrawnLineSymbol;
 
         if (drawnLineSymbolVM == null)
@@ -190,7 +221,7 @@ public class ConnectionPoint : INotifyPropertyChanged
         drawnLineSymbolModel.LinesSymbolModel = completeLinesSymbolModel;
 
         drawnLineSymbolVM.RedrawAllLines();
-        
+
         AddBlockToLine(drawnLineSymbolVM.SymbolIncomingLine);
         AddBlockToLine(drawnLineSymbolVM.SymbolOutgoingLine);
 

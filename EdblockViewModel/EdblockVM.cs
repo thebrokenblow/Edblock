@@ -1,5 +1,6 @@
 ﻿using Prism.Commands;
 using EdblockViewModel.Symbols;
+using EdblockViewModel.ComponentsVM;
 
 namespace EdblockViewModel;
 
@@ -10,13 +11,13 @@ public class EdblockVM
 
     private readonly CanvasSymbolsVM _canvasSymbolsVM;
     private readonly FactoryBlockSymbolVM _factoryBlockSymbol;
-    public EdblockVM(CanvasSymbolsVM canvasSymbolsVM)
+    public EdblockVM(CanvasSymbolsVM canvasSymbolsVM, CheckBoxLineGostVM checkBoxLineGostVM)
     {
         ClickEsc = new(canvasSymbolsVM.DeleteLine);
         ClickSymbol = new(CreateBlockSymbol);
 
         _canvasSymbolsVM = canvasSymbolsVM;
-        _factoryBlockSymbol = new(canvasSymbolsVM);
+        _factoryBlockSymbol = new(canvasSymbolsVM, checkBoxLineGostVM);
     }
 
     private void CreateBlockSymbol(string nameBlockSymbol)

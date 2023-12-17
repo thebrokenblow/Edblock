@@ -1,4 +1,5 @@
 ﻿using EdblockModel.Symbols;
+using EdblockViewModel.ComponentsVM;
 using EdblockViewModel.Symbols.Abstraction;
 
 namespace EdblockViewModel.Symbols;
@@ -7,7 +8,7 @@ public class ActionSymbol : BlockSymbolVM
 {
     private const string defaultText = "Действие";
     private const string defaultColor = "#FF52C0AA";
-    public ActionSymbol(CanvasSymbolsVM canvasSymbolsVM) : base(canvasSymbolsVM)
+    public ActionSymbol(CanvasSymbolsVM canvasSymbolsVM, CheckBoxLineGostVM checkBoxLineGostVM) : base(canvasSymbolsVM, checkBoxLineGostVM)
     {
         Color = defaultColor;
 
@@ -18,17 +19,16 @@ public class ActionSymbol : BlockSymbolVM
 
     public override void SetWidth(int width)
     {
-        BlockSymbolModel.Width = width;
         TextField.Width = width;
-
+        BlockSymbolModel.Width = width;
         ChangeCoordinateAuxiliaryElements();
     }
 
     public override void SetHeight(int height)
     {
+        TextField.Height = height;
         BlockSymbolModel.Height = height;
 
-        TextField.Height = height;
         ChangeCoordinateAuxiliaryElements();
     }
 }

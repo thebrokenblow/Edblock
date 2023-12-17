@@ -1,5 +1,6 @@
 ﻿using EdblockViewModel;
 using System.Windows.Controls;
+using EdblockViewModel.ComponentsVM;
 
 namespace EdblockView.Components;
 
@@ -8,19 +9,24 @@ namespace EdblockView.Components;
 /// </summary>
 public partial class TopSettingsPanel : UserControl
 {
+    public CanvasSymbolsVM? CanvasSymbolsVM
+    {
+        set
+        {
+            PopupBoxMenuUI.CanvasSymbolsVM = value;
+        }
+    }
+
+    public CheckBoxLineGostVM CheckBoxLineGostVM
+    {
+        set
+        {
+            PopupBoxMenuUI.CheckBoxLineGostVM = value;
+        }
+    }
+
     public TopSettingsPanel()
     {
         InitializeComponent();
-    }
-
-    private CanvasSymbolsVM? canvasSymbolsVM;
-    public CanvasSymbolsVM? CanvasSymbolsVM 
-    {
-        get => canvasSymbolsVM;
-        set
-        {
-            canvasSymbolsVM = value;
-            PopupBoxMenuUI.CanvasSymbolsVM = canvasSymbolsVM;
-        }
     }
 }

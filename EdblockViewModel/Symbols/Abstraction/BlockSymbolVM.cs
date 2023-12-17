@@ -2,10 +2,11 @@
 using Prism.Commands;
 using System.Windows.Input;
 using EdblockModel.Symbols;
+using EdblockModel.Symbols.Enum;
 using System.Collections.Generic;
 using EdblockViewModel.Symbols.ScaleRectangles;
 using EdblockViewModel.Symbols.ConnectionPoints;
-using EdblockModel.Symbols.Enum;
+using EdblockViewModel.ComponentsVM;
 
 namespace EdblockViewModel.Symbols.Abstraction;
 
@@ -82,14 +83,16 @@ public abstract class BlockSymbolVM : SymbolVM
     public TextField TextField { get; init; }
     public BlockSymbolModel BlockSymbolModel { get; init; }
 
-    private readonly CanvasSymbolsVM _canvasSymbolsVM;
-
     protected const int defaultWidth = 140;
     protected const int defaultHeigth = 60;
+    protected readonly CheckBoxLineGostVM _checkBoxLineGostVM;
 
-    public BlockSymbolVM(CanvasSymbolsVM canvasSymbolsVM)
+    private readonly CanvasSymbolsVM _canvasSymbolsVM;
+
+    public BlockSymbolVM(CanvasSymbolsVM canvasSymbolsVM, CheckBoxLineGostVM checkBoxLineGostVM)
     {
         _canvasSymbolsVM = canvasSymbolsVM;
+        _checkBoxLineGostVM = checkBoxLineGostVM;
 
         Id = Guid.NewGuid().ToString();
 
@@ -99,7 +102,7 @@ public abstract class BlockSymbolVM : SymbolVM
 
         TextField = new(canvasSymbolsVM, this);
 
-        var factoryConnectionPoints = new FactoryConnectionPoints(_canvasSymbolsVM, this);
+        var factoryConnectionPoints = new FactoryConnectionPoints(_canvasSymbolsVM, _checkBoxLineGostVM, this);
         ConnectionPoints = factoryConnectionPoints.CreateConnectionPoints();
 
         var factoryScaleRectangles = new FactoryScaleRectangles(_canvasSymbolsVM, this);

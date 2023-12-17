@@ -6,6 +6,7 @@ public class ArrowSymbolModel
 {
     private const int WidthArrow = 8;
     private const int HeightArrow = 8;
+
     private readonly static Dictionary<PositionConnectionPoint, Func<(int, int), List<(int, int)>>> coordinateArrorByPosition = new()
     {
         { PositionConnectionPoint.Right, coordinate => GetCoordinateLeft(coordinate) },

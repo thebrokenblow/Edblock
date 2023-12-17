@@ -1,6 +1,7 @@
 ﻿using System;
 using SerializationEdblock;
 using System.Collections.Generic;
+using EdblockViewModel.ComponentsVM;
 using EdblockViewModel.Symbols.Abstraction;
 
 namespace EdblockViewModel.Symbols;
@@ -10,14 +11,16 @@ internal class FactoryBlockSymbolVM
     private readonly Dictionary<string, Func<string, BlockSymbolVM>> instanceSymbolByName;
 
     private readonly CanvasSymbolsVM _canvasSymbolsVM;
+    private readonly CheckBoxLineGostVM _checkBoxLineGostVM;
 
-    public FactoryBlockSymbolVM(CanvasSymbolsVM canvasSymbolsVM)
+    public FactoryBlockSymbolVM(CanvasSymbolsVM canvasSymbolsVM, CheckBoxLineGostVM checkBoxLineGostVM)
     {
         _canvasSymbolsVM = canvasSymbolsVM;
+        _checkBoxLineGostVM = checkBoxLineGostVM;
 
         instanceSymbolByName = new()
         {
-            { "ActionSymbol", _ => new ActionSymbol(_canvasSymbolsVM) }
+            { "ActionSymbol", _ => new ActionSymbol(_canvasSymbolsVM, _checkBoxLineGostVM) }
         };
     }
 

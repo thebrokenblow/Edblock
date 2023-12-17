@@ -18,7 +18,7 @@
             Width="260" 
             Orientation="Vertical">
 
-            <popupboxcontrol:CheckBoxLineGost/>
+            <popupboxcontrol:CheckBoxLineGost x:Name="CheckBoxLineGost"/>
 
             <popupboxcontrol:ScaleAllSymbol />
 

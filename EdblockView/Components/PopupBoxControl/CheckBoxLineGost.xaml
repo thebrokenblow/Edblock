@@ -4,6 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
+             xmlns:componentsVM="clr-namespace:EdblockViewModel.ComponentsVM;assembly=EdblockViewModel" 
+             d:DataContext="{d:DesignInstance Type=componentsVM:CheckBoxLineGostVM}"
              mc:Ignorable="d" 
              d:DesignHeight="40" d:DesignWidth="255">
     <DockPanel>
@@ -19,6 +21,7 @@
             Content="Вход, выход линий по ГОСТ" />
 
         <CheckBox
+            IsChecked="{Binding IsChecked}"
             Height="40"
             DockPanel.Dock="Right"
             Style="{StaticResource CheckBoxSettingsMenu}"/>

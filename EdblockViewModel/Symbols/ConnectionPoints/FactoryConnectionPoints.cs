@@ -1,21 +1,24 @@
 ﻿using System;
 using EdblockModel.Symbols.Enum;
 using System.Collections.Generic;
+using EdblockViewModel.ComponentsVM;
 using EdblockViewModel.Symbols.Abstraction;
 
 namespace EdblockViewModel.Symbols.ConnectionPoints;
 
 internal class FactoryConnectionPoints
 {
-    private readonly CanvasSymbolsVM _canvasSymbolsVM;
     private readonly BlockSymbolVM _blockSymbol;
+    private readonly CanvasSymbolsVM _canvasSymbolsVM;
+    private readonly CheckBoxLineGostVM _checkBoxLineGostVM;
     private readonly CoordinateConnectionPoint coordinateConnectionPoint;
     private readonly Dictionary<PositionConnectionPoint, Func<PositionConnectionPoint, ConnectionPoint>> instanceConnectionPointByPosition;
 
-    public FactoryConnectionPoints(CanvasSymbolsVM canvasSymbolsVM, BlockSymbolVM blockSymbol)
+    public FactoryConnectionPoints(CanvasSymbolsVM canvasSymbolsVM, CheckBoxLineGostVM checkBoxLineGostVM, BlockSymbolVM blockSymbol)
     {
-        _canvasSymbolsVM = canvasSymbolsVM;
         _blockSymbol = blockSymbol;
+        _canvasSymbolsVM = canvasSymbolsVM;
+        _checkBoxLineGostVM = checkBoxLineGostVM;
 
         instanceConnectionPointByPosition = new()
         {
@@ -58,6 +61,7 @@ internal class FactoryConnectionPoints
         var topConnectionPoint = new ConnectionPoint(
             _canvasSymbolsVM,
             _blockSymbol,
+            _checkBoxLineGostVM,
             coordinateConnectionPoint.GetCoordinateTop,
             PositionConnectionPoint.Top);
 
@@ -69,6 +73,7 @@ internal class FactoryConnectionPoints
         var rightConnectionPoint = new ConnectionPoint(
             _canvasSymbolsVM,
             _blockSymbol,
+            _checkBoxLineGostVM,
             coordinateConnectionPoint.GetCoordinateRight,
             PositionConnectionPoint.Right);
 
@@ -80,6 +85,7 @@ internal class FactoryConnectionPoints
         var bottomConnectionPoint = new ConnectionPoint(
             _canvasSymbolsVM,
             _blockSymbol,
+            _checkBoxLineGostVM,
             coordinateConnectionPoint.GetCoordinateBottom,
             PositionConnectionPoint.Bottom);
 
@@ -91,6 +97,7 @@ internal class FactoryConnectionPoints
         var bottomConnectionPoint = new ConnectionPoint(
             _canvasSymbolsVM,
             _blockSymbol,
+            _checkBoxLineGostVM,
             coordinateConnectionPoint.GetCoordinateLeft,
             PositionConnectionPoint.Left);
 

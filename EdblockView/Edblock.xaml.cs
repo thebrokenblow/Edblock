@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using EdblockViewModel;
 using EdblockView.Components;
+using EdblockViewModel.ComponentsVM;
 
 namespace EdblockView;
 
@@ -14,11 +15,13 @@ public partial class Edblock : Window
         InitializeComponent();
 
         var canvasSymbolsVM = new CanvasSymbolsVM();
+        var checkBoxLineGostVM = new CheckBoxLineGostVM();
 
         CanvasSymbols.CanvasSymbolsVM = canvasSymbolsVM;
         TopSettingsPanelUI.CanvasSymbolsVM = canvasSymbolsVM;
+        TopSettingsPanelUI.CheckBoxLineGostVM = checkBoxLineGostVM;
 
-        var edblockVM = new EdblockVM(canvasSymbolsVM);
+        var edblockVM = new EdblockVM(canvasSymbolsVM, checkBoxLineGostVM);
         DataContext = edblockVM;
     }
 }
