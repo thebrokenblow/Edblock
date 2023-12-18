@@ -1,6 +1,7 @@
 ﻿using Prism.Commands;
 using System.Windows.Input;
 using System.ComponentModel;
+using EdblockViewModel.ComponentsVM;
 using System.Runtime.CompilerServices;
 
 namespace EdblockViewModel.Symbols.LineSymbols;

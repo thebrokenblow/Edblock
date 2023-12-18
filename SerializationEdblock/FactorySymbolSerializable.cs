@@ -11,7 +11,7 @@ public class FactorySymbolSerializable
         {
             Id = blockSymbolModel.Id,
             NameSymbol = blockSymbolModel.NameSymbol,
-            Text = blockSymbolModel.Text,
+            Text = blockSymbolModel.TextFieldModel.Text,
             Width = blockSymbolModel.Width,
             Height = blockSymbolModel.Height,
             XCoordinate = blockSymbolModel.XCoordinate,

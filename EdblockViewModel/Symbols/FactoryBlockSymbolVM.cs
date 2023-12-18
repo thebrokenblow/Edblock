@@ -12,13 +12,14 @@ internal class FactoryBlockSymbolVM
 
     private BlockSymbolVM? _firstBlockSymbolVM;
     private readonly ScaleAllSymbolVM _scaleAllSymbolVM;
-    public FactoryBlockSymbolVM(CanvasSymbolsVM canvasSymbolsVM, ScaleAllSymbolVM scaleAllSymbolVM, CheckBoxLineGostVM checkBoxLineGostVM)
+
+    public FactoryBlockSymbolVM(CanvasSymbolsVM canvasSymbolsVM, ScaleAllSymbolVM scaleAllSymbolVM, CheckBoxLineGostVM checkBoxLineGostVM, FontFamilyControlVM fontFamilyControlVM)
     {
         _scaleAllSymbolVM = scaleAllSymbolVM;
 
         instanceSymbolByName = new()
         {
-            { "ActionSymbol", _ => new ActionSymbol(canvasSymbolsVM, scaleAllSymbolVM, checkBoxLineGostVM) }
+            { "ActionSymbol", _ => new ActionSymbol(canvasSymbolsVM, scaleAllSymbolVM, checkBoxLineGostVM, fontFamilyControlVM) }
         };
     }
 

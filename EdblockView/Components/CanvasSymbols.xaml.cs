@@ -1,6 +1,6 @@
-﻿using EdblockViewModel;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using System.Windows.Controls;
+using EdblockViewModel.ComponentsVM;
 
 namespace EdblockView.Components;
 

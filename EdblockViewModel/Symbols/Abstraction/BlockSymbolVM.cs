@@ -80,7 +80,7 @@ public abstract class BlockSymbolVM : SymbolVM
     public DelegateCommand MouseEnter { get; set; }
     public DelegateCommand MouseLeave { get; set; }
 
-    public TextField TextField { get; init; }
+    public TextFieldVM TextField { get; init; }
     public BlockSymbolModel BlockSymbolModel { get; init; }
 
     private bool isSelected;
@@ -98,10 +98,16 @@ public abstract class BlockSymbolVM : SymbolVM
     protected const int defaultHeigth = 60;
 
     private readonly CanvasSymbolsVM _canvasSymbolsVM;
+    private readonly FontFamilyControlVM _fontFamilyControlVM;
 
-    public BlockSymbolVM(CanvasSymbolsVM canvasSymbolsVM, ScaleAllSymbolVM scaleAllSymbolVM, CheckBoxLineGostVM checkBoxLineGostVM)
+    public BlockSymbolVM(
+        CanvasSymbolsVM canvasSymbolsVM, 
+        ScaleAllSymbolVM scaleAllSymbolVM, 
+        CheckBoxLineGostVM checkBoxLineGostVM,
+        FontFamilyControlVM fontFamilyControlVM)
     {
         _canvasSymbolsVM = canvasSymbolsVM;
+        _fontFamilyControlVM = fontFamilyControlVM;
 
         Id = Guid.NewGuid().ToString();
 
@@ -191,6 +197,7 @@ public abstract class BlockSymbolVM : SymbolVM
     public void Select()
     {
         IsSelected = true;
+        _fontFamilyControlVM.SetFontFamily(this);
         _canvasSymbolsVM.SelectedBlockSymbols.Add(this);
     }
 }

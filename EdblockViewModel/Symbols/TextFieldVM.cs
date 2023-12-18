@@ -1,16 +1,17 @@
 ﻿using Prism.Commands;
 using System.Windows.Input;
+using EdblockModel.Symbols;
 using System.ComponentModel;
+using EdblockViewModel.ComponentsVM;
 using System.Collections.ObjectModel;
 using System.Runtime.CompilerServices;
 using EdblockViewModel.Symbols.Abstraction;
-using EdblockViewModel.Symbols.ConnectionPoints;
 using EdblockViewModel.Symbols.ScaleRectangles;
-using EdblockModel.Symbols;
+using EdblockViewModel.Symbols.ConnectionPoints;
 
 namespace EdblockViewModel.Symbols;
 
-public class TextField : INotifyPropertyChanged
+public class TextFieldVM : INotifyPropertyChanged
 {
     private bool focusable = false;
     public bool Focusable
@@ -64,7 +65,19 @@ public class TextField : INotifyPropertyChanged
         set
         {
             text = value;
-            _blockSymbolModel.Text = text;
+            _blockSymbolModel.TextFieldModel.Text = text;
+            OnPropertyChanged();
+        }
+    }
+
+    private string? fontFamily;
+    public string? FontFamily
+    {
+        get => fontFamily;
+        set
+        {
+            fontFamily = value;
+            _blockSymbolModel.TextFieldModel.FontFamily = fontFamily;
             OnPropertyChanged();
         }
     }
@@ -78,7 +91,7 @@ public class TextField : INotifyPropertyChanged
     private readonly BlockSymbolVM _blockSymbolVM;
     private readonly BlockSymbolModel _blockSymbolModel;
 
-    public TextField(CanvasSymbolsVM canvasSymbolsVM, BlockSymbolVM blockSymbolVM)
+    public TextFieldVM(CanvasSymbolsVM canvasSymbolsVM, BlockSymbolVM blockSymbolVM)
     {
         _canvasSymbolsVM = canvasSymbolsVM;
 

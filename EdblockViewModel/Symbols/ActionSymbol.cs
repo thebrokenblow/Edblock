@@ -8,10 +8,12 @@ public class ActionSymbol : BlockSymbolVM
 {
     private const string defaultText = "Действие";
     private const string defaultColor = "#FF52C0AA";
+
     public ActionSymbol(
         CanvasSymbolsVM canvasSymbolsVM, 
         ScaleAllSymbolVM scaleAllSymbolVM,
-        CheckBoxLineGostVM checkBoxLineGostVM) : base(canvasSymbolsVM, scaleAllSymbolVM, checkBoxLineGostVM)
+        CheckBoxLineGostVM checkBoxLineGostVM,
+        FontFamilyControlVM fontFamilyControlVM) : base(canvasSymbolsVM, scaleAllSymbolVM, checkBoxLineGostVM, fontFamilyControlVM)
     {
         Color = defaultColor;
 

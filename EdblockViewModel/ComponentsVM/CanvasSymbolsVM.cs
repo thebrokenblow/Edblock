@@ -10,7 +10,7 @@ using EdblockViewModel.Symbols.LineSymbols;
 using EdblockViewModel.Symbols.Abstraction;
 using EdblockViewModel.Symbols.ScaleRectangles;
 
-namespace EdblockViewModel;
+namespace EdblockViewModel.ComponentsVM;
 
 public class CanvasSymbolsVM : INotifyPropertyChanged
 {
@@ -174,7 +174,7 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
         MovableRectangleLine = null;
         ScalePartBlockSymbol = null;
 
-        TextField.ChangeFocus(SymbolsVM);
+        TextFieldVM.ChangeFocus(SymbolsVM);
     }
 
     private void ClearSelectedBlockSymbols()

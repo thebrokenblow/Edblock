@@ -2,6 +2,7 @@
 using Prism.Commands;
 using EdblockModel.Symbols.Enum;
 using System.Collections.Generic;
+using EdblockViewModel.ComponentsVM;
 using System.Collections.ObjectModel;
 using EdblockModel.Symbols.LineSymbols;
 using EdblockViewModel.Symbols.Abstraction;

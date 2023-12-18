@@ -25,11 +25,19 @@ public partial class TopSettingsPanel : UserControl
         }
     }
 
-    public ScaleAllSymbolVM ScaleAllSymbolVM    
+    public ScaleAllSymbolVM ScaleAllSymbolVM
     {
         set
         {
             PopupBoxMenuUI.ScaleAllSymbolVM = value;
+        }
+    }
+
+    public FontFamilyControlVM FontFamilyControlVM
+    {
+        set
+        {
+            FontFamilyControlUI.FontFamilyControlVM = value;
         }
     }
 

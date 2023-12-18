@@ -10,7 +10,7 @@ public abstract class BlockSymbolModel
     public int Height { get; set; }
     public int XCoordinate { get; set; }
     public int YCoordinate { get; set; }
-    public string? Text { get; set; }
+    public TextFieldModel TextFieldModel { get; set; }
     public string? Color { get; set; }
 
     private const int minWidth = 40;
@@ -33,6 +33,8 @@ public abstract class BlockSymbolModel
 
     public BlockSymbolModel()
     {
+        TextFieldModel = new();
+
         borderCoordinateByPosition = new()
         {
             { PositionConnectionPoint.Top, GetTopBorderCoordinate },

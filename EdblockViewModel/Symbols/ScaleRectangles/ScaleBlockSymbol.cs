@@ -1,4 +1,6 @@
-﻿namespace EdblockViewModel.Symbols.ScaleRectangles;
+﻿using EdblockViewModel.ComponentsVM;
+
+namespace EdblockViewModel.Symbols.ScaleRectangles;
 
 internal class ScaleBlockSymbol
 {

@@ -23,6 +23,7 @@
 
     <Style x:Key="TextField" TargetType="TextBox">
         <Setter Property="Text" Value="{Binding TextField.Text, UpdateSourceTrigger=PropertyChanged}" />
+        <Setter Property="FontFamily" Value="{Binding TextField.FontFamily}" />
         <Setter Property="Width" Value="{Binding TextField.Width}" />
         <Setter Property="Height" Value="{Binding TextField.Height}" />
         <Setter Property="Cursor" Value="{Binding TextField.Cursor}" />
