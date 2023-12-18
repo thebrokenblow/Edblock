@@ -1,15 +1,14 @@
 ﻿using System.Windows.Controls;
 
-namespace EdblockView.Symbols
+namespace EdblockView.Symbols;
+
+/// <summary>
+/// Логика взаимодействия для TextField.xaml
+/// </summary>
+public partial class TextField : UserControl
 {
-    /// <summary>
-    /// Логика взаимодействия для TextField.xaml
-    /// </summary>
-    public partial class TextField : UserControl
+    public TextField()
     {
-        public TextField()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
     }
 }

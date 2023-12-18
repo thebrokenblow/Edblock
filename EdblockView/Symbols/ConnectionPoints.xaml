@@ -11,7 +11,7 @@
     <ItemsControl ItemsSource="{Binding ConnectionPoints}">
         <ItemsControl.ItemTemplate>
             <DataTemplate DataType="Points">
-                <Ellipse MouseDown="MouseDownConnectionPoint" Style="{StaticResource ConnectionPoint}">
+                <Ellipse MouseDown="TrackStageDrawLine" Style="{StaticResource ConnectionPoint}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="MouseEnter">
                             <i:InvokeCommandAction Command="{Binding EnterCursor}" />

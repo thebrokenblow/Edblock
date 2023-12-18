@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using System.Windows.Input;
+using System.Windows.Controls;
 using EdblockViewModel.Symbols.LineSymbols;
 
 namespace EdblockView.Symbols;
@@ -13,7 +14,7 @@ public partial class LineSymbol : UserControl
         InitializeComponent();
     }
 
-    private void ItemsControl_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+    private void SelectLine(object sender, MouseButtonEventArgs e)
     {
         var itemsControlLines = (ItemsControl)sender;
         var drawnLineSymbolVM = (DrawnLineSymbolVM)itemsControlLines.DataContext;
@@ -21,10 +22,5 @@ public partial class LineSymbol : UserControl
         drawnLineSymbolVM.SelectLine();
 
         e.Handled = true;
-    }
-
-    private void Line_MouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
-    {
-       // e.Handled = true;
     }
 }

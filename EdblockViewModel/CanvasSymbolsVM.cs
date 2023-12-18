@@ -9,7 +9,6 @@ using System.Runtime.CompilerServices;
 using EdblockViewModel.Symbols.LineSymbols;
 using EdblockViewModel.Symbols.Abstraction;
 using EdblockViewModel.Symbols.ScaleRectangles;
-using System.Windows.Controls;
 
 namespace EdblockViewModel;
 
@@ -160,7 +159,6 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
     {
         if (SelectedDrawnLineSymbol != null && MovableRectangleLine == null)
         {
-            //TODO: Плохой код
             var copySelectDrawnLineSymbol = SelectedDrawnLineSymbol;
             SelectedDrawnLineSymbol = null;
             copySelectDrawnLineSymbol.SetDefaultColorLines();

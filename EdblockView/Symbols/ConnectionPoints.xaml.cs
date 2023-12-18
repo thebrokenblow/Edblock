@@ -1,4 +1,5 @@
-﻿using System.Windows.Shapes;
+﻿using System.Windows.Input;
+using System.Windows.Shapes;
 using System.Windows.Controls;
 using EdblockViewModel.Symbols.ConnectionPoints;
 
@@ -14,7 +15,7 @@ public partial class ConnectionPoints : UserControl
         InitializeComponent();
     }
 
-    private void MouseDownConnectionPoint(object sender, System.Windows.Input.MouseButtonEventArgs e)
+    private void TrackStageDrawLine(object sender, MouseButtonEventArgs e)
     {
         var ellipse = (Ellipse)sender;
         var contextEllipse = ellipse.DataContext;
