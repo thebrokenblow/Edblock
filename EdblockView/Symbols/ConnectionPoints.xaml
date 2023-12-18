@@ -11,16 +11,13 @@
     <ItemsControl ItemsSource="{Binding ConnectionPoints}">
         <ItemsControl.ItemTemplate>
             <DataTemplate DataType="Points">
-                <Ellipse Style="{StaticResource ConnectionPoint}">
+                <Ellipse MouseDown="MouseDownConnectionPoint" Style="{StaticResource ConnectionPoint}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="MouseEnter">
                             <i:InvokeCommandAction Command="{Binding EnterCursor}" />
                         </i:EventTrigger>
                         <i:EventTrigger EventName="MouseLeave">
                             <i:InvokeCommandAction Command="{Binding LeaveCursor}" />
-                        </i:EventTrigger>
-                        <i:EventTrigger EventName="MouseDown">
-                            <i:InvokeCommandAction Command="{Binding ClickConnectionPoint}"/>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </Ellipse>

@@ -22,4 +22,9 @@ public partial class LineSymbol : UserControl
 
         e.Handled = true;
     }
+
+    private void Line_MouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+    {
+       // e.Handled = true;
+    }
 }

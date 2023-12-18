@@ -83,6 +83,17 @@ public abstract class BlockSymbolVM : SymbolVM
     public TextField TextField { get; init; }
     public BlockSymbolModel BlockSymbolModel { get; init; }
 
+    private bool isSelected;
+    public bool IsSelected 
+    {
+        get => isSelected;
+        set
+        {
+            isSelected = value;
+            OnPropertyChanged();
+        }
+    }
+
     protected const int defaultWidth = 140;
     protected const int defaultHeigth = 60;
 
@@ -175,5 +186,11 @@ public abstract class BlockSymbolVM : SymbolVM
         }
 
         throw new Exception("Точки соединения с такой позицией нет");
+    }
+
+    public void Select()
+    {
+        IsSelected = true;
+        _canvasSymbolsVM.SelectedBlockSymbols.Add(this);
     }
 }

@@ -10,7 +10,6 @@ using EdblockModel.Symbols.LineSymbols;
 using EdblockViewModel.Symbols.LineSymbols;
 using EdblockViewModel.Symbols.Abstraction;
 using EdblockViewModel.ComponentsVM;
-using System.Text;
 using System.Windows;
 
 namespace EdblockViewModel.Symbols.ConnectionPoints;
@@ -74,7 +73,6 @@ public class ConnectionPoint : INotifyPropertyChanged
 
     public DelegateCommand EnterCursor { get; init; }
     public DelegateCommand LeaveCursor { get; init; }
-    public DelegateCommand ClickConnectionPoint { get; init; }
     public BlockSymbolVM BlockSymbolVM { get; init; }
     public Func<(int, int)> GetCoordinate { get; init; }
     public PositionConnectionPoint Position { get; init; }
@@ -98,7 +96,6 @@ public class ConnectionPoint : INotifyPropertyChanged
         
         EnterCursor = new(ShowConnectionPoints);
         LeaveCursor = new(HideConnectionPoints);
-        ClickConnectionPoint = new(TrackStageDrawLine);
 
         (XCoordinate, YCoordinate) = getCoordinate.Invoke();
     }

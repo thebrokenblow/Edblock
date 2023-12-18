@@ -182,7 +182,7 @@ public class DrawnLineSymbolVM : SymbolVM
 
     public void SetDefaultColorLines()
     {
-        var selectDrawnLineSymbol = CanvasSymbolsVM.SelectDrawnLineSymbol;
+        var selectDrawnLineSymbol = CanvasSymbolsVM.SelectedDrawnLineSymbol;
         var movableRectangleLine = CanvasSymbolsVM.MovableRectangleLine;
 
         if (selectDrawnLineSymbol != this && movableRectangleLine == null)
@@ -245,17 +245,17 @@ public class DrawnLineSymbolVM : SymbolVM
 
     public void SelectLine()
     {
-        var selectDrawnLineSymbol = CanvasSymbolsVM.SelectDrawnLineSymbol;
+        var selectDrawnLineSymbol = CanvasSymbolsVM.SelectedDrawnLineSymbol;
 
         if (selectDrawnLineSymbol != this && selectDrawnLineSymbol != null)
         {
-            CanvasSymbolsVM.SelectDrawnLineSymbol = null;
+            CanvasSymbolsVM.SelectedDrawnLineSymbol = null;
             selectDrawnLineSymbol.SetDefaultColorLines();
         }
 
         SetHighlightColorLines();
         ShowMovableRectanglesLine();
-        CanvasSymbolsVM.SelectDrawnLineSymbol = this;
+        CanvasSymbolsVM.SelectedDrawnLineSymbol = this;
     }
 
     private void SetCoordinateTextField()

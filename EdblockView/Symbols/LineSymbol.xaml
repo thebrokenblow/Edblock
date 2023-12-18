@@ -13,7 +13,7 @@
         <ItemsControl MouseDown="ItemsControl_MouseDown" ItemsSource="{Binding LinesSymbolVM}">
             <ItemsControl.Resources>
                 <DataTemplate DataType="{x:Type symbolsLineVM:LineSymbolVM}">
-                    <Line Style="{StaticResource LineSymbol}"/>
+                    <Line MouseUp="Line_MouseUp" Style="{StaticResource LineSymbol}"/>
                 </DataTemplate>
             </ItemsControl.Resources>
             <ItemsControl.ItemsPanel>

@@ -9,6 +9,7 @@ using System.Runtime.CompilerServices;
 using EdblockViewModel.Symbols.LineSymbols;
 using EdblockViewModel.Symbols.Abstraction;
 using EdblockViewModel.Symbols.ScaleRectangles;
+using System.Windows.Controls;
 
 namespace EdblockViewModel;
 
@@ -62,7 +63,8 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
     public ScalePartBlockSymbol? ScalePartBlockSymbol { get; set; }
 
     public DrawnLineSymbolVM? DrawnLineSymbol { get; set; }
-    public DrawnLineSymbolVM? SelectDrawnLineSymbol { get; set; }
+    public DrawnLineSymbolVM? SelectedDrawnLineSymbol { get; set; }
+    public List<BlockSymbolVM> SelectedBlockSymbols { get; set; }
     private List<DrawnLineSymbolVM>? RedrawDrawnLines { get; set; }
     public MovableRectangleLine? MovableRectangleLine { get; set; }
 
@@ -73,6 +75,7 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
     {
         SymbolsVM = new();
         BlockByDrawnLines = new();
+        SelectedBlockSymbols = new();
         MouseMove = new(RedrawSymbols);
         MouseUp = new(SetDefaultValue);
         MouseLeftButtonDown = new(AddLine);
@@ -109,22 +112,22 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
 
     private void DeleteSelectDrawnLineSymbol()
     {
-        if (SelectDrawnLineSymbol is null)
+        if (SelectedDrawnLineSymbol is null)
         {
             return;
         }
 
-        var symbolOutgoingLine = SelectDrawnLineSymbol.SymbolOutgoingLine;
-        var symbolIncomingLine = SelectDrawnLineSymbol.SymbolIncomingLine;
+        var symbolOutgoingLine = SelectedDrawnLineSymbol.SymbolOutgoingLine;
+        var symbolIncomingLine = SelectedDrawnLineSymbol.SymbolIncomingLine;
 
         if (symbolOutgoingLine is not null && symbolIncomingLine is not null)
         {
-            BlockByDrawnLines[symbolOutgoingLine].Remove(SelectDrawnLineSymbol);
-            BlockByDrawnLines[symbolIncomingLine].Remove(SelectDrawnLineSymbol);
+            BlockByDrawnLines[symbolOutgoingLine].Remove(SelectedDrawnLineSymbol);
+            BlockByDrawnLines[symbolIncomingLine].Remove(SelectedDrawnLineSymbol);
         }
 
-        var outgoingConnectionPoint = SelectDrawnLineSymbol.OutgoingConnectionPoint;
-        var incomingConnectionPoint = SelectDrawnLineSymbol.IncomingConnectionPoint;
+        var outgoingConnectionPoint = SelectedDrawnLineSymbol.OutgoingConnectionPoint;
+        var incomingConnectionPoint = SelectedDrawnLineSymbol.IncomingConnectionPoint;
 
         if (outgoingConnectionPoint is not null && incomingConnectionPoint is not null)
         {
@@ -132,12 +135,14 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
             incomingConnectionPoint.IsHasConnectingLine = false;
         }
 
-        SymbolsVM.Remove(SelectDrawnLineSymbol);
-        SelectDrawnLineSymbol = null;
+        SymbolsVM.Remove(SelectedDrawnLineSymbol);
+        SelectedDrawnLineSymbol = null;
     }
 
     public void AddBlockSymbol(BlockSymbolVM blockSymbolVM)
     {
+        ClearSelectedBlockSymbols();
+
         MovableBlockSymbol = blockSymbolVM;
 
         SymbolsVM.Add(blockSymbolVM);
@@ -147,16 +152,17 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
     private void AddLine()
     {
         DrawnLineSymbol?.AddLine();
+        ClearSelectedBlockSymbols();
         RemoveSelectDrawnLine();
     }
 
     private void RemoveSelectDrawnLine()
     {
-        if (SelectDrawnLineSymbol != null)
+        if (SelectedDrawnLineSymbol != null && MovableRectangleLine == null)
         {
             //TODO: Плохой код
-            var copySelectDrawnLineSymbol = SelectDrawnLineSymbol;
-            SelectDrawnLineSymbol = null;
+            var copySelectDrawnLineSymbol = SelectedDrawnLineSymbol;
+            SelectedDrawnLineSymbol = null;
             copySelectDrawnLineSymbol.SetDefaultColorLines();
         }
     }
@@ -171,6 +177,16 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
         ScalePartBlockSymbol = null;
 
         TextField.ChangeFocus(SymbolsVM);
+    }
+
+    private void ClearSelectedBlockSymbols()
+    {
+        foreach (var selectedBlockSymbols in SelectedBlockSymbols)
+        {
+            selectedBlockSymbols.IsSelected = false;
+        }
+
+        SelectedBlockSymbols.Clear();
     }
 
     public void OnPropertyChanged([CallerMemberName] string prop = "")
