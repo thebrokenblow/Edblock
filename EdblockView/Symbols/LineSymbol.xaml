@@ -29,8 +29,8 @@
                     <Border Style="{StaticResource BorderMovableRectangleLine}">
                         <Rectangle Style="{StaticResource MovableRectangleLine}">
                             <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="MouseRightButtonDown">
-                                    <i:InvokeCommandAction Command="{Binding ButtonDown}"/>
+                                <i:EventTrigger EventName="MouseDown">
+                                    <i:InvokeCommandAction Command="{Binding MouseDown}"/>
                                 </i:EventTrigger>
                                 <i:EventTrigger EventName="MouseEnter">
                                     <i:InvokeCommandAction Command="{Binding MouseEnter}"/>
@@ -56,7 +56,10 @@
             </ItemsControl.ItemContainerStyle>
         </ItemsControl>
 
-        <Polygon DataContext="{Binding ArrowSymbol}" Points="{Binding PointArrowSymbol}" Style="{StaticResource ArrowSymbol}"/>
+        <Polygon 
+            DataContext="{Binding ArrowSymbol}"
+            Points="{Binding PointArrowSymbol}" 
+            Style="{StaticResource ArrowSymbol}"/>
         
         <Canvas>
             <TextBox Style="{StaticResource TextFieldLine}">

@@ -147,6 +147,7 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
     private void AddLine()
     {
         DrawnLineSymbol?.AddLine();
+        RemoveSelectDrawnLine();
     }
 
     private void RemoveSelectDrawnLine()
@@ -169,7 +170,6 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
         MovableRectangleLine = null;
         ScalePartBlockSymbol = null;
 
-        RemoveSelectDrawnLine();
         TextField.ChangeFocus(SymbolsVM);
     }
 

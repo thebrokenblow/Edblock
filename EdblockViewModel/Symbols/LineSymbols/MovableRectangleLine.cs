@@ -60,7 +60,7 @@ public class MovableRectangleLine : INotifyPropertyChanged
 
     public event PropertyChangedEventHandler? PropertyChanged;
 
-    public DelegateCommand ButtonDown { get; init; }
+    public DelegateCommand MouseDown { get; init; }
     public DelegateCommand MouseEnter { get; init; }
     public DelegateCommand MouseLeave { get; init; }
 
@@ -74,7 +74,7 @@ public class MovableRectangleLine : INotifyPropertyChanged
 
         _lineSymbolVM = lineSymbolVM;
 
-        ButtonDown = new(SetMovableRectangleLine);
+        MouseDown = new(SetMovableRectangleLine);
         MouseEnter = new(SetDirectionMovementCursor);
         MouseLeave = new(SetBaseCursor);
 
