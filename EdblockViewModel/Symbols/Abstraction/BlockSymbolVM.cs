@@ -4,9 +4,9 @@ using System.Windows.Input;
 using EdblockModel.Symbols;
 using EdblockModel.Symbols.Enum;
 using System.Collections.Generic;
+using EdblockViewModel.ComponentsVM;
 using EdblockViewModel.Symbols.ScaleRectangles;
 using EdblockViewModel.Symbols.ConnectionPoints;
-using EdblockViewModel.ComponentsVM;
 
 namespace EdblockViewModel.Symbols.Abstraction;
 

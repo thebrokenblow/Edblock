@@ -11,26 +11,29 @@ namespace EdblockView.Components.PopupBoxControl;
 /// </summary>
 public partial class ButtonSaveProject : UserControl
 {
+    private const string fileName = "Edblock";
+    private const string fileExtension = ".json";
+    private const string fileFilter = "Files(*.json)|*.json|All(*.*)|*";
+    public EdblockVM? EdblockVM { get; set; }
+
     public ButtonSaveProject()
     {
         InitializeComponent();
     }
 
-    public CanvasSymbolsVM? CanvasSymbolsVM { get; set; }
-
     private void SaveProject(object sender, RoutedEventArgs e)
     {
         var saveFileDialog = new SaveFileDialog()
         {
-            Filter = "Files(*.json)|*.json|All(*.*)|*"
+            Filter = fileFilter
         };
 
-        var file = new FileInfo("Edblock.json");
-        saveFileDialog.FileName = file.Name;
+        saveFileDialog.FileName = fileName + fileExtension;
 
         if (saveFileDialog.ShowDialog() == true)
         {
             var fileInfo = new FileInfo(saveFileDialog.FileName);
+
             if (fileInfo.Exists)
             {
                 fileInfo.Delete();
@@ -38,7 +41,7 @@ public partial class ButtonSaveProject : UserControl
 
             var filePath = saveFileDialog.FileName.ToString();
 
-            CanvasSymbolsVM?.SaveProject(filePath);
+            EdblockVM?.SaveProject(filePath);
         }
     }
 }

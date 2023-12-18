@@ -9,11 +9,11 @@ namespace EdblockView.Components;
 /// </summary>
 public partial class TopSettingsPanel : UserControl
 {
-    public CanvasSymbolsVM? CanvasSymbolsVM
+    public EdblockVM? EdblockVM
     {
         set
         {
-            PopupBoxMenuUI.CanvasSymbolsVM = value;
+            PopupBoxMenuUI.EdblockVM = value;
         }
     }
 

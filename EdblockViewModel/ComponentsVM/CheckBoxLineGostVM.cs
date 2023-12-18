@@ -1,6 +1,24 @@
-﻿namespace EdblockViewModel.ComponentsVM;
+﻿using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
-public class CheckBoxLineGostVM
+namespace EdblockViewModel.ComponentsVM;
+
+public class CheckBoxLineGostVM : INotifyPropertyChanged
 {
-    public bool IsDrawingLinesAccordingGOST { get; set; }
+    private bool isDrawingLinesAccordingGOST;
+    public bool IsDrawingLinesAccordingGOST 
+    {
+        get => isDrawingLinesAccordingGOST;
+        set
+        {
+            isDrawingLinesAccordingGOST = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public event PropertyChangedEventHandler? PropertyChanged;
+    public void OnPropertyChanged([CallerMemberName] string prop = "")
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
+    }
 }

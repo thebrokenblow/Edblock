@@ -149,7 +149,7 @@ public class DrawnLineSymbolVM : SymbolVM
 
         CanvasSymbolsVM = canvasSymbolsVM;
 
-        if (linesSymbolModel != null)
+        if (linesSymbolModel is not null)
         {
             DrawnLineSymbolModel.LinesSymbolModel = linesSymbolModel;
         }

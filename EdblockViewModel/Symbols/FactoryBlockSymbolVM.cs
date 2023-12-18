@@ -14,7 +14,6 @@ internal class FactoryBlockSymbolVM
     private readonly ScaleAllSymbolVM _scaleAllSymbolVM;
     public FactoryBlockSymbolVM(CanvasSymbolsVM canvasSymbolsVM, ScaleAllSymbolVM scaleAllSymbolVM, CheckBoxLineGostVM checkBoxLineGostVM)
     {
-        _canvasSymbolsVM = canvasSymbolsVM;
         _scaleAllSymbolVM = scaleAllSymbolVM;
 
         instanceSymbolByName = new()

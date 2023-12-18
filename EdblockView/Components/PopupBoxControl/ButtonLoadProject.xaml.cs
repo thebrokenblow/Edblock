@@ -10,26 +10,28 @@ namespace EdblockView.Components.PopupBoxControl;
 /// </summary>
 public partial class ButtonLoadProject : UserControl
 {
+    private const string fileFilter = "Files(*.json)|*.json|All(*.*)|*";
+    public EdblockVM? EdblockVM { get; set; }
+
     public ButtonLoadProject()
     {
         InitializeComponent();
     }
 
-    public CanvasSymbolsVM? CanvasSymbolsVM { get; set; }
-
     private void LoadProject(object sender, RoutedEventArgs e)
     {
         var openFileDialog = new OpenFileDialog()
         {
-            Filter = "File json|*.json"
+            Filter = fileFilter
         };
 
         if (openFileDialog.ShowDialog() == true)
         {
             string filePath = openFileDialog.FileName;
+
             try
             {
-                CanvasSymbolsVM?.LoadProject(filePath);
+                EdblockVM?.LoadProject(filePath);
             }
             catch
             {

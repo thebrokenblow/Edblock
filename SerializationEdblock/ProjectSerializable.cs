@@ -2,13 +2,8 @@
 
 public class ProjectSerializable
 {
-    public List<BlockSymbolSerializable> BlocksSymbolSerializable { get; init; }
-
-    public List<DrawnLineSymbolSerializable> DrawnLinesSymbolSerializable { get; init; }
-
-    public ProjectSerializable(List<BlockSymbolSerializable> blocksSymbolSerializable, List<DrawnLineSymbolSerializable> drawnLinesSymbolSerializable)
-    {
-        BlocksSymbolSerializable = blocksSymbolSerializable;
-        DrawnLinesSymbolSerializable = drawnLinesSymbolSerializable;
-    }
+    public bool IsScaleAllSymbolVM { get; init; }
+    public bool IsDrawingLinesAccordingGOST { get; init; }
+    public List<BlockSymbolSerializable>? BlocksSymbolSerializable { get; init; }
+    public List<DrawnLineSymbolSerializable>? DrawnLinesSymbolSerializable { get; init; }
 }

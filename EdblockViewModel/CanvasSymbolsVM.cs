@@ -1,7 +1,6 @@
 ﻿using System.Windows;
 using Prism.Commands;
 using System.Windows.Input;
-using SerializationEdblock;
 using System.ComponentModel;
 using EdblockViewModel.Symbols;
 using System.Collections.Generic;
@@ -66,7 +65,6 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
     public DrawnLineSymbolVM? SelectDrawnLineSymbol { get; set; }
     private List<DrawnLineSymbolVM>? RedrawDrawnLines { get; set; }
     public MovableRectangleLine? MovableRectangleLine { get; set; }
-    private readonly ProjectVM projectVM;
 
     public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -75,7 +73,6 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
     {
         SymbolsVM = new();
         BlockByDrawnLines = new();
-        projectVM = new(this);
         MouseMove = new(RedrawSymbols);
         MouseUp = new(SetDefaultValue);
         MouseLeftButtonDown = new(AddLine);
@@ -150,8 +147,6 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
     private void AddLine()
     {
         DrawnLineSymbol?.AddLine();
-
-        RemoveSelectDrawnLine();
     }
 
     private void RemoveSelectDrawnLine()
@@ -174,6 +169,7 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
         MovableRectangleLine = null;
         ScalePartBlockSymbol = null;
 
+        RemoveSelectDrawnLine();
         TextField.ChangeFocus(SymbolsVM);
     }
 
@@ -218,41 +214,5 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
         {
             redrawDrawnLine.Redraw();
         }
-    }
-
-    public void SaveProject(string filePath)
-    {
-        var blocksSymbolSerializable = new List<BlockSymbolSerializable>();
-        var drawnLinesSymbolSerializable = new List<DrawnLineSymbolSerializable>();
-
-        foreach (var symbol in SymbolsVM)
-        {
-            if (symbol is BlockSymbolVM blockSymbolVM)
-            {
-                var blockSymbolModel = blockSymbolVM.BlockSymbolModel;
-                var blockSymbolSerializable = FactorySymbolSerializable.CreateBlockSymbolSerializable(blockSymbolModel);
-
-                blocksSymbolSerializable.Add(blockSymbolSerializable);
-            }
-
-            if (symbol is DrawnLineSymbolVM drawnLineSymbolVM)
-            {
-                var drawnLineSymbolModel = drawnLineSymbolVM.DrawnLineSymbolModel;
-                var drawnLineSymbolSerializable = FactorySymbolSerializable.CreateDrawnLineSymbolSerializable(drawnLineSymbolModel);
-
-                drawnLinesSymbolSerializable.Add(drawnLineSymbolSerializable);
-            }
-        }
-
-        var projectSerializable = new ProjectSerializable(blocksSymbolSerializable, drawnLinesSymbolSerializable);
-
-        SerializationProject.Write(projectSerializable, filePath);
-    }
-
-    public async void LoadProject(string filePath)
-    {
-        var loadedProject = await SerializationProject.Read(filePath);
-
-        projectVM.Load(loadedProject);
     }
 }

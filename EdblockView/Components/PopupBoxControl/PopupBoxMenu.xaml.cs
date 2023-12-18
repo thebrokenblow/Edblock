@@ -9,12 +9,12 @@ namespace EdblockView.Components.PopupBoxControl;
 /// </summary>
 public partial class PopupBoxMenu : UserControl
 {
-    public CanvasSymbolsVM? CanvasSymbolsVM
+    public EdblockVM? EdblockVM
     {
         set
         {
-            ButtonSaveProject.CanvasSymbolsVM = value;
-            ButtonLoadProject.CanvasSymbolsVM = value;
+            ButtonSaveProject.EdblockVM = value;
+            ButtonLoadProject.EdblockVM = value;
         }
     }
 

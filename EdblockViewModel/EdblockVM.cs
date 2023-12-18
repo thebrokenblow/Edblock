@@ -9,16 +9,28 @@ public class EdblockVM
     public DelegateCommand ClickEsc { get; init; }
     public DelegateCommand<string> ClickSymbol { get; init; }
 
+    private readonly ProjectVM _projectVM;
     private readonly CanvasSymbolsVM _canvasSymbolsVM;
     private readonly FactoryBlockSymbolVM _factoryBlockSymbol;
-
-    public EdblockVM(CanvasSymbolsVM canvasSymbolsVM, CheckBoxLineGostVM checkBoxLineGostVM, ScaleAllSymbolVM scaleAllSymbolVM)
+    public EdblockVM(CanvasSymbolsVM canvasSymbolsVM, ScaleAllSymbolVM scaleAllSymbolVM, CheckBoxLineGostVM checkBoxLineGostVM)
     {
         ClickEsc = new(canvasSymbolsVM.DeleteLine);
         ClickSymbol = new(CreateBlockSymbol);
 
         _canvasSymbolsVM = canvasSymbolsVM;
+
+        _projectVM = new(canvasSymbolsVM, scaleAllSymbolVM, checkBoxLineGostVM);
         _factoryBlockSymbol = new(canvasSymbolsVM, scaleAllSymbolVM,checkBoxLineGostVM);
+    }
+
+    public void SaveProject(string filePath)
+    {
+        _projectVM.Save(filePath);
+    }
+
+    public void LoadProject(string filePath)
+    {
+        _projectVM.Load(filePath);
     }
 
     private void CreateBlockSymbol(string nameBlockSymbol)

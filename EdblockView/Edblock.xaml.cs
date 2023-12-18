@@ -19,12 +19,14 @@ public partial class Edblock : Window
         var checkBoxLineGostVM = new CheckBoxLineGostVM();
 
         CanvasSymbols.CanvasSymbolsVM = canvasSymbolsVM;
-        TopSettingsPanelUI.ScaleAllSymbolVM = scaleAllSymbolVM;
 
-        TopSettingsPanelUI.CanvasSymbolsVM = canvasSymbolsVM;
+        TopSettingsPanelUI.ScaleAllSymbolVM = scaleAllSymbolVM;
         TopSettingsPanelUI.CheckBoxLineGostVM = checkBoxLineGostVM;
 
-        var edblockVM = new EdblockVM(canvasSymbolsVM, checkBoxLineGostVM, scaleAllSymbolVM);
+        var edblockVM = new EdblockVM(canvasSymbolsVM, scaleAllSymbolVM, checkBoxLineGostVM);
+
+        TopSettingsPanelUI.EdblockVM = edblockVM;
+
         DataContext = edblockVM;
     }
 }

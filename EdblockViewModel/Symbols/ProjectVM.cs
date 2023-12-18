@@ -1,5 +1,6 @@
 ﻿using SerializationEdblock;
 using System.Collections.Generic;
+using EdblockViewModel.ComponentsVM;
 using EdblockModel.Symbols.LineSymbols;
 using EdblockViewModel.Symbols.Abstraction;
 using EdblockViewModel.Symbols.LineSymbols;
@@ -8,22 +9,67 @@ namespace EdblockViewModel.Symbols;
 
 internal class ProjectVM
 {
+    private readonly ScaleAllSymbolVM _scaleAllSymbolVM;
+    private readonly CheckBoxLineGostVM _checkBoxLineGostVM;
     private readonly CanvasSymbolsVM _canvasSymbolsVM;
     private readonly FactoryBlockSymbolVM _factoryBlockSymbolVM;
     private readonly Dictionary<string, BlockSymbolVM> _blockSymbolsVMById;
 
-    public ProjectVM(CanvasSymbolsVM canvasSymbolsVM)
+    public ProjectVM(CanvasSymbolsVM canvasSymbolsVM, ScaleAllSymbolVM scaleAllSymbolVM, CheckBoxLineGostVM checkBoxLineGostVM)
     {
         _canvasSymbolsVM = canvasSymbolsVM;
-
+        _scaleAllSymbolVM = scaleAllSymbolVM;
+        _checkBoxLineGostVM = checkBoxLineGostVM;
         _blockSymbolsVMById = new();
-        _factoryBlockSymbolVM = new(_canvasSymbolsVM, null, null);
+        _factoryBlockSymbolVM = new(_canvasSymbolsVM, scaleAllSymbolVM, checkBoxLineGostVM);
     }
 
-    public void Load(ProjectSerializable projectSerializable)
+    public void Save(string filePath)
     {
-        LoadBlocksSymbols(projectSerializable);
-        LoadDrawnLinesSymbol(projectSerializable);
+        var blocksSymbolSerializable = new List<BlockSymbolSerializable>();
+        var drawnLinesSymbolSerializable = new List<DrawnLineSymbolSerializable>();
+
+        var SymbolsVM = _canvasSymbolsVM.SymbolsVM;
+
+        foreach (var symbol in SymbolsVM)
+        {
+            if (symbol is BlockSymbolVM blockSymbolVM)
+            {
+                var blockSymbolModel = blockSymbolVM.BlockSymbolModel;
+                var blockSymbolSerializable = FactorySymbolSerializable.CreateBlockSymbolSerializable(blockSymbolModel);
+
+                blocksSymbolSerializable.Add(blockSymbolSerializable);
+            }
+
+            if (symbol is DrawnLineSymbolVM drawnLineSymbolVM)
+            {
+                var drawnLineSymbolModel = drawnLineSymbolVM.DrawnLineSymbolModel;
+                var drawnLineSymbolSerializable = FactorySymbolSerializable.CreateDrawnLineSymbolSerializable(drawnLineSymbolModel);
+
+                drawnLinesSymbolSerializable.Add(drawnLineSymbolSerializable);
+            }
+        }
+
+        var projectSerializable = new ProjectSerializable()
+        {
+            IsScaleAllSymbolVM = _scaleAllSymbolVM.IsScaleAllSymbolVM,
+            IsDrawingLinesAccordingGOST = _checkBoxLineGostVM.IsDrawingLinesAccordingGOST,
+            BlocksSymbolSerializable = blocksSymbolSerializable,
+            DrawnLinesSymbolSerializable = drawnLinesSymbolSerializable,
+        };
+
+        SerializationProject.Write(projectSerializable, filePath);
+    }
+
+    public async void Load(string filePath)
+    {
+        var loadedProject = await SerializationProject.Read(filePath);
+
+        _scaleAllSymbolVM.IsScaleAllSymbolVM = loadedProject.IsScaleAllSymbolVM;
+        _checkBoxLineGostVM.IsDrawingLinesAccordingGOST = loadedProject.IsDrawingLinesAccordingGOST;
+
+        LoadBlocksSymbols(loadedProject);
+        LoadDrawnLinesSymbol(loadedProject);
     }
 
     private void LoadBlocksSymbols(ProjectSerializable projectSerializable)
