@@ -5,6 +5,8 @@ namespace EdblockViewModel.ComponentsVM;
 
 public class FontFamilyControlVM
 {
+    public List<string> FontFamilys { get; init; }
+
     public string? fontFamily;
     public string? FontFamily 
     {
@@ -20,6 +22,11 @@ public class FontFamilyControlVM
     public FontFamilyControlVM(List<BlockSymbolVM> selectedBlockSymbols)
     {
         _selectedBlockSymbols = selectedBlockSymbols;
+
+        FontFamilys = new()
+        {
+            "Times New Roman"
+        };
     }
 
     public void SetFontFamily(BlockSymbolVM blockSymbolVM) 

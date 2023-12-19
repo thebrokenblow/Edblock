@@ -41,6 +41,14 @@ public partial class TopSettingsPanel : UserControl
         }
     }
 
+    public FontSizeControlVM FontSizeControlVM
+    {
+        set
+        {
+            FontSizeControlUI.FontSizeControlVM = value;
+        }
+    }
+
     public TopSettingsPanel()
     {
         InitializeComponent();

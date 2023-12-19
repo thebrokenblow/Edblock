@@ -99,14 +99,17 @@ public abstract class BlockSymbolVM : SymbolVM
 
     private readonly CanvasSymbolsVM _canvasSymbolsVM;
     private readonly FontFamilyControlVM _fontFamilyControlVM;
+    private readonly FontSizeControlVM _fontSizeControlVM;
 
     public BlockSymbolVM(
         CanvasSymbolsVM canvasSymbolsVM, 
         ScaleAllSymbolVM scaleAllSymbolVM, 
         CheckBoxLineGostVM checkBoxLineGostVM,
-        FontFamilyControlVM fontFamilyControlVM)
+        FontFamilyControlVM fontFamilyControlVM,
+        FontSizeControlVM fontSizeControlVM)
     {
         _canvasSymbolsVM = canvasSymbolsVM;
+        _fontSizeControlVM = fontSizeControlVM;
         _fontFamilyControlVM = fontFamilyControlVM;
 
         Id = Guid.NewGuid().ToString();
@@ -197,7 +200,10 @@ public abstract class BlockSymbolVM : SymbolVM
     public void Select()
     {
         IsSelected = true;
+
+        _fontSizeControlVM.SetFontSize(this);
         _fontFamilyControlVM.SetFontFamily(this);
+
         _canvasSymbolsVM.SelectedBlockSymbols.Add(this);
     }
 }

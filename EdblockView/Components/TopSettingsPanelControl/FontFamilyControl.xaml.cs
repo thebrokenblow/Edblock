@@ -1,5 +1,4 @@
 ﻿using System.Windows.Controls;
-using System.Collections.Generic;
 using EdblockViewModel.ComponentsVM;
 
 namespace EdblockView.Components.TopSettingsPanelControl;
@@ -23,12 +22,5 @@ public partial class FontFamilyControl : UserControl
     public FontFamilyControl()
     {
         InitializeComponent();
-
-        var fontFamilys = new List<string>
-        {
-            "Times New Roman"
-        };
-
-        FontFamily.ItemsSource = fontFamilys;
     }
 }

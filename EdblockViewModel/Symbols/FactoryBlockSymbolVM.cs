@@ -13,13 +13,18 @@ internal class FactoryBlockSymbolVM
     private BlockSymbolVM? _firstBlockSymbolVM;
     private readonly ScaleAllSymbolVM _scaleAllSymbolVM;
 
-    public FactoryBlockSymbolVM(CanvasSymbolsVM canvasSymbolsVM, ScaleAllSymbolVM scaleAllSymbolVM, CheckBoxLineGostVM checkBoxLineGostVM, FontFamilyControlVM fontFamilyControlVM)
+    public FactoryBlockSymbolVM(
+        CanvasSymbolsVM canvasSymbolsVM, 
+        ScaleAllSymbolVM scaleAllSymbolVM, 
+        CheckBoxLineGostVM checkBoxLineGostVM, 
+        FontFamilyControlVM fontFamilyControlVM,
+        FontSizeControlVM fontSizeControlVM)
     {
         _scaleAllSymbolVM = scaleAllSymbolVM;
 
         instanceSymbolByName = new()
         {
-            { "ActionSymbol", _ => new ActionSymbol(canvasSymbolsVM, scaleAllSymbolVM, checkBoxLineGostVM, fontFamilyControlVM) }
+            { "ActionSymbol", _ => new ActionSymbol(canvasSymbolsVM, scaleAllSymbolVM, checkBoxLineGostVM, fontFamilyControlVM, fontSizeControlVM) }
         };
     }
 
@@ -56,6 +61,7 @@ internal class FactoryBlockSymbolVM
 
         blockSymbolVM.TextField.Text = blockSymbolSerializable.TextFieldSerializable.Text;
         blockSymbolVM.TextField.FontFamily = blockSymbolSerializable.TextFieldSerializable.FontFamily;
+        blockSymbolVM.TextField.FontSize = blockSymbolSerializable.TextFieldSerializable.FontSize;
 
         return blockSymbolVM;
     }

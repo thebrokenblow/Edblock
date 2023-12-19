@@ -10,7 +10,7 @@
              d:DesignHeight="25" d:DesignWidth="100">
     
     <ComboBox
-        Name="FontFamily"
+        ItemsSource="{Binding FontFamilys}"
         SelectedItem="{Binding FontFamily}"
         Style="{StaticResource ComboBoxSettingsMenu}"
         materialDesign:HintAssist.Hint="Шрифт"/>

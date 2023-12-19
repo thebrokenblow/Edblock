@@ -11,7 +11,7 @@ public class FactorySymbolSerializable
         {
             Text = blockSymbolModel.TextFieldModel.Text,
             FontFamily = blockSymbolModel.TextFieldModel.FontFamily,
-
+            FontSize = blockSymbolModel.TextFieldModel.FontSize,
         };
 
         var blockSymbolSerializable = new BlockSymbolSerializable

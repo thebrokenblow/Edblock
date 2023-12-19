@@ -82,6 +82,18 @@ public class TextFieldVM : INotifyPropertyChanged
         }
     }
 
+    private double fontSize;
+    public double FontSize
+    {
+        get => fontSize;
+        set
+        {
+            fontSize = value;
+            _blockSymbolModel.TextFieldModel.FontSize = fontSize;
+            OnPropertyChanged();
+        }
+    }
+
     public DelegateCommand MouseDoubleClick { get; init; }
     public DelegateCommand MouseLeftButtonDown { get; init; }
 
