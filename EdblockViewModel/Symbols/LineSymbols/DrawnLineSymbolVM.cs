@@ -104,7 +104,7 @@ public class DrawnLineSymbolVM : SymbolVM
         {
             widthTextField = value;
 
-            if (OutgoingPosition == PositionConnectionPoint.Left)
+            if (outgoingPosition == PositionConnectionPoint.Left)
             {
                 SetCoordinateTextField();
             }
@@ -315,6 +315,8 @@ public class DrawnLineSymbolVM : SymbolVM
         {
             ChangeSecondLine(linesSymbolModel);
         }
+
+        SetCoordinateTextField();
     }
 
     private void AddMissingLines(List<LineSymbolModel> linesSymbolModel)

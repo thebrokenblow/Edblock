@@ -4,7 +4,7 @@ public class BlockSymbolSerializable
 {
     public string? Id { get; init; }
     public string? NameSymbol { get; init; }
-    public string? Text { get; init; }
+    public TextFieldSerializable? TextFieldSerializable { get; init; }
     public int Width { get; init; }
     public int Height { get; init; }
     public int XCoordinate { get; init; }

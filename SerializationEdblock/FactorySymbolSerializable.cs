@@ -7,11 +7,18 @@ public class FactorySymbolSerializable
 {
     public static BlockSymbolSerializable CreateBlockSymbolSerializable(BlockSymbolModel blockSymbolModel)
     {
+        var textFieldSerializable = new TextFieldSerializable()
+        {
+            Text = blockSymbolModel.TextFieldModel.Text,
+            FontFamily = blockSymbolModel.TextFieldModel.FontFamily,
+
+        };
+
         var blockSymbolSerializable = new BlockSymbolSerializable
         {
             Id = blockSymbolModel.Id,
             NameSymbol = blockSymbolModel.NameSymbol,
-            Text = blockSymbolModel.TextFieldModel.Text,
+            TextFieldSerializable = textFieldSerializable,
             Width = blockSymbolModel.Width,
             Height = blockSymbolModel.Height,
             XCoordinate = blockSymbolModel.XCoordinate,

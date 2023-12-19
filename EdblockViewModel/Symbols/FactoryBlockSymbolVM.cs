@@ -54,7 +54,8 @@ internal class FactoryBlockSymbolVM
         blockSymbolVM.XCoordinate = blockSymbolSerializable.XCoordinate;
         blockSymbolVM.YCoordinate = blockSymbolSerializable.YCoordinate;
 
-        blockSymbolVM.TextField.Text = blockSymbolSerializable.Text;
+        blockSymbolVM.TextField.Text = blockSymbolSerializable.TextFieldSerializable.Text;
+        blockSymbolVM.TextField.FontFamily = blockSymbolSerializable.TextFieldSerializable.FontFamily;
 
         return blockSymbolVM;
     }
