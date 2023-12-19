@@ -143,6 +143,7 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
         ClearSelectedBlockSymbols();
 
         MovableBlockSymbol = blockSymbolVM;
+        MovableBlockSymbol.Select();
 
         SymbolsVM.Add(blockSymbolVM);
     }

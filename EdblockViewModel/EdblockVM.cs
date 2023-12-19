@@ -12,20 +12,22 @@ public class EdblockVM
     private readonly ProjectVM _projectVM;
     private readonly CanvasSymbolsVM _canvasSymbolsVM;
     private readonly FactoryBlockSymbolVM _factoryBlockSymbol;
+
     public EdblockVM(
         CanvasSymbolsVM canvasSymbolsVM,
         ScaleAllSymbolVM scaleAllSymbolVM, 
         CheckBoxLineGostVM checkBoxLineGostVM,
         FontFamilyControlVM fontFamilyControlVM,
-        FontSizeControlVM fontSizeControlVM)
+        FontSizeControlVM fontSizeControlVM, 
+        TextAlignmentControlVM textAlignmentControlVM)
     {
         ClickEsc = new(canvasSymbolsVM.DeleteLine);
         ClickSymbol = new(CreateBlockSymbol);
 
         _canvasSymbolsVM = canvasSymbolsVM;
 
-        _projectVM = new(canvasSymbolsVM, scaleAllSymbolVM, checkBoxLineGostVM, fontFamilyControlVM, fontSizeControlVM);
-        _factoryBlockSymbol = new(canvasSymbolsVM, scaleAllSymbolVM,checkBoxLineGostVM, fontFamilyControlVM, fontSizeControlVM);
+        _projectVM = new(canvasSymbolsVM, scaleAllSymbolVM, checkBoxLineGostVM, fontFamilyControlVM, fontSizeControlVM, textAlignmentControlVM);
+        _factoryBlockSymbol = new(canvasSymbolsVM, scaleAllSymbolVM,checkBoxLineGostVM, fontFamilyControlVM, fontSizeControlVM, textAlignmentControlVM);
     }
 
     public void SaveProject(string filePath)

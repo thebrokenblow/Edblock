@@ -15,13 +15,19 @@ internal class ProjectVM
     private readonly FactoryBlockSymbolVM _factoryBlockSymbolVM;
     private readonly Dictionary<string, BlockSymbolVM> _blockSymbolsVMById;
 
-    public ProjectVM(CanvasSymbolsVM canvasSymbolsVM, ScaleAllSymbolVM scaleAllSymbolVM, CheckBoxLineGostVM checkBoxLineGostVM, FontFamilyControlVM fontFamilyControlVM, FontSizeControlVM fontSizeControlVM)
+    public ProjectVM(
+        CanvasSymbolsVM canvasSymbolsVM,
+        ScaleAllSymbolVM scaleAllSymbolVM,
+        CheckBoxLineGostVM checkBoxLineGostVM,
+        FontFamilyControlVM fontFamilyControlVM, 
+        FontSizeControlVM fontSizeControlVM, 
+        TextAlignmentControlVM textAlignmentControlVM)
     {
         _canvasSymbolsVM = canvasSymbolsVM;
         _scaleAllSymbolVM = scaleAllSymbolVM;
         _checkBoxLineGostVM = checkBoxLineGostVM;
         _blockSymbolsVMById = new();
-        _factoryBlockSymbolVM = new(_canvasSymbolsVM, scaleAllSymbolVM, checkBoxLineGostVM, fontFamilyControlVM, fontSizeControlVM);
+        _factoryBlockSymbolVM = new(_canvasSymbolsVM, scaleAllSymbolVM, checkBoxLineGostVM, fontFamilyControlVM, fontSizeControlVM, textAlignmentControlVM);
     }
 
     public void Save(string filePath)

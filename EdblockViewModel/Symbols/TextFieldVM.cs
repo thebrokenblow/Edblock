@@ -8,6 +8,7 @@ using System.Runtime.CompilerServices;
 using EdblockViewModel.Symbols.Abstraction;
 using EdblockViewModel.Symbols.ScaleRectangles;
 using EdblockViewModel.Symbols.ConnectionPoints;
+using System.Windows;
 
 namespace EdblockViewModel.Symbols;
 
@@ -90,6 +91,18 @@ public class TextFieldVM : INotifyPropertyChanged
         {
             fontSize = value;
             _blockSymbolModel.TextFieldModel.FontSize = fontSize;
+            OnPropertyChanged();
+        }
+    }
+
+    private string? textAlignment;
+    public string? TextAlignment 
+    {
+        get => textAlignment;
+        set
+        {
+            textAlignment = value;
+            _blockSymbolModel.TextFieldModel.FormatAlignment = textAlignment;
             OnPropertyChanged();
         }
     }

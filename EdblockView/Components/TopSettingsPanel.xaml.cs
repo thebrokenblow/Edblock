@@ -49,6 +49,14 @@ public partial class TopSettingsPanel : UserControl
         }
     }
 
+    public TextAlignmentControlVM TextAlignmentControlVM 
+    {
+        set
+        {
+            FormatAlignmentControlUI.TextAlignmentControlVM = value;
+        }
+    }
+
     public TopSettingsPanel()
     {
         InitializeComponent();

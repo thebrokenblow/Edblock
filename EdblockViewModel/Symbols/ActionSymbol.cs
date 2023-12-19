@@ -14,7 +14,8 @@ public class ActionSymbol : BlockSymbolVM
         ScaleAllSymbolVM scaleAllSymbolVM,
         CheckBoxLineGostVM checkBoxLineGostVM,
         FontFamilyControlVM fontFamilyControlVM,
-        FontSizeControlVM fontSizeControlVM) : base(canvasSymbolsVM, scaleAllSymbolVM, checkBoxLineGostVM, fontFamilyControlVM, fontSizeControlVM)
+        FontSizeControlVM fontSizeControlVM,
+        TextAlignmentControlVM textAlignmentControlVM ) : base(canvasSymbolsVM, scaleAllSymbolVM, checkBoxLineGostVM, fontFamilyControlVM, fontSizeControlVM, textAlignmentControlVM)
     {
         Color = defaultColor;
 
