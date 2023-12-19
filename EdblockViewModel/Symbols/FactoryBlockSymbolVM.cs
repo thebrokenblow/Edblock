@@ -63,6 +63,8 @@ internal class FactoryBlockSymbolVM
         blockSymbolVM.TextField.Text = blockSymbolSerializable.TextFieldSerializable.Text;
         blockSymbolVM.TextField.FontFamily = blockSymbolSerializable.TextFieldSerializable.FontFamily;
         blockSymbolVM.TextField.FontSize = blockSymbolSerializable.TextFieldSerializable.FontSize;
+        blockSymbolVM.TextField.TextAlignment = blockSymbolSerializable.TextFieldSerializable.TextAlignment;
+
 
         return blockSymbolVM;
     }

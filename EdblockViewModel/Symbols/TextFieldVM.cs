@@ -102,7 +102,7 @@ public class TextFieldVM : INotifyPropertyChanged
         set
         {
             textAlignment = value;
-            _blockSymbolModel.TextFieldModel.FormatAlignment = textAlignment;
+            _blockSymbolModel.TextFieldModel.TextAlignment = textAlignment;
             OnPropertyChanged();
         }
     }
