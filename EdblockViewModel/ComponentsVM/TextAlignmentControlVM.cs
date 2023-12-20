@@ -61,7 +61,7 @@ public class TextAlignmentControlVM
     {
         foreach (var selectedBlockSymbol in _selectedBlockSymbols)
         {
-            selectedBlockSymbol.TextField.TextAlignment = textAlignment;
+            SetFormatAlignment(selectedBlockSymbol);
         }
     }
 }

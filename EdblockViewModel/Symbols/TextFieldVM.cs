@@ -118,6 +118,30 @@ public class TextFieldVM : INotifyPropertyChanged
         }
     }
 
+    private string? fontStyle;
+    public string? FontStyle
+    {
+        get => fontStyle;
+        set
+        {
+            fontStyle = value;
+            _blockSymbolModel.TextFieldModel.FontStyle = fontStyle;
+            OnPropertyChanged();
+        }
+    }
+
+    private string? textDecorations;
+    public string? TextDecorations
+    {
+        get => textDecorations;
+        set
+        {
+            textDecorations = value;
+            _blockSymbolModel.TextFieldModel.TextDecorations = textDecorations;
+            OnPropertyChanged();
+        }
+    }
+
     public DelegateCommand MouseDoubleClick { get; init; }
     public DelegateCommand MouseLeftButtonDown { get; init; }
 

@@ -27,14 +27,16 @@
             </materialDesign:PackIcon>
         </ListBoxItem>
 
-        <ListBoxItem>
+        <ListBoxItem
+            IsSelected="{Binding IsFormatItalic}">
             <materialDesign:PackIcon 
                     Kind="FormatItalic"
                     Style="{StaticResource IconFormatText}">
             </materialDesign:PackIcon>
         </ListBoxItem>
 
-        <ListBoxItem>
+        <ListBoxItem
+            IsSelected="{Binding IsFormatUnderline}">
             <materialDesign:PackIcon 
                     Kind="FormatUnderline"
                     Style="{StaticResource IconFormatText}">

@@ -7,7 +7,8 @@ public class FormatTextControlVM
 {
     private const string fontWeightBold = "Bold";
     private const string fontWeightNormal = "Normal";
-    private string? fontWeight;
+    private string? currentFontWeight;
+
     private bool isTextBold;
     public bool IsTextBold
     {
@@ -18,16 +19,67 @@ public class FormatTextControlVM
 
             if (isTextBold)
             {
-                fontWeight = fontWeightBold;
+                currentFontWeight = fontWeightBold;
             }
             else
             {
-                fontWeight = fontWeightNormal;
+                currentFontWeight = fontWeightNormal;
             }
 
             SetFontText();
         }
     }
+
+    
+    private const string fontStyleItalic = "Italic";
+    private const string fontStyleNormal = "Normal";
+    private string? currentFontStyle;
+
+    private bool isFormatItalic;
+    public bool IsFormatItalic
+    {
+        get => isFormatItalic;
+        set
+        {
+            isFormatItalic = value;
+
+            if (isFormatItalic)
+            {
+                currentFontStyle = fontStyleItalic;
+            }
+            else
+            {
+                currentFontStyle= fontStyleNormal;
+            }
+
+            SetFontText();
+        }
+    }
+
+    private const string textDecorationsNone = "None";
+    private const string textDecorationsUnderline = "Underline";
+    private string? currentTextDecorations;
+
+    private bool isFormatUnderline;
+    public bool IsFormatUnderline
+    {
+        get => isFormatUnderline;
+        set
+        { 
+            isFormatUnderline = value;
+
+            if (isFormatUnderline)
+            {
+                currentTextDecorations = textDecorationsUnderline;
+            }
+            else 
+            {
+                currentTextDecorations = textDecorationsNone;
+            }
+
+            SetFontText();
+        }
+    } 
 
     private readonly List<BlockSymbolVM> _selectedBlockSymbols;
     public FormatTextControlVM(List<BlockSymbolVM> selectedBlockSymbols)
@@ -35,16 +87,19 @@ public class FormatTextControlVM
         _selectedBlockSymbols = selectedBlockSymbols;
     }
 
-    public void SetFontText(BlockSymbolVM blockSymbolVM)
+    public void SetFontText(BlockSymbolVM selectedBlockSymbol)
     {
-        blockSymbolVM.TextField.FontWeight = fontWeight;
+        selectedBlockSymbol.TextField.FontWeight = currentFontWeight;
+        selectedBlockSymbol.TextField.FontStyle = currentFontStyle;
+        selectedBlockSymbol.TextField.TextDecorations = currentTextDecorations;
+
     }
 
     private void SetFontText()
     {
         foreach (var selectedBlockSymbol in _selectedBlockSymbols)
         {
-            selectedBlockSymbol.TextField.FontWeight = fontWeight;
+            SetFontText(selectedBlockSymbol);
         }
     }
 }

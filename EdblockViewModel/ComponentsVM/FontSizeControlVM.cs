@@ -31,16 +31,16 @@ public class FontSizeControlVM
         }
     }
 
-    public void SetFontSize(BlockSymbolVM blockSymbolVM)
+    public void SetFontSize(BlockSymbolVM selectedBlockSymbol)
     {
-        blockSymbolVM.TextField.FontSize = fontSize;
+        selectedBlockSymbol.TextField.FontSize = fontSize;
     }
 
     private void SetFontSize()
     {
         foreach (var selectedBlockSymbol in _selectedBlockSymbols)
         {
-            selectedBlockSymbol.TextField.FontSize = fontSize;
+            SetFontSize(selectedBlockSymbol);
         }
     }
 }

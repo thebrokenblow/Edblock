@@ -29,16 +29,16 @@ public class FontFamilyControlVM
         };
     }
 
-    public void SetFontFamily(BlockSymbolVM blockSymbolVM) 
+    public void SetFontFamily(BlockSymbolVM selectedBlockSymbol) 
     {
-        blockSymbolVM.TextField.FontFamily = fontFamily;
+        selectedBlockSymbol.TextField.FontFamily = fontFamily;
     }
 
     private void SetFontFamily()
     {
         foreach (var selectedBlockSymbol in _selectedBlockSymbols)
         {
-            selectedBlockSymbol.TextField.FontFamily = fontFamily;
+            SetFontFamily(selectedBlockSymbol);
         }    
     }
 }

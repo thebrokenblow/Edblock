@@ -27,6 +27,8 @@
         <Setter Property="FontSize" Value="{Binding TextField.FontSize}" />
         <Setter Property="TextAlignment" Value="{Binding TextField.TextAlignment}" />
         <Setter Property="FontWeight" Value="{Binding TextField.FontWeight}"/>
+        <Setter Property="FontStyle" Value="{Binding TextField.FontStyle}"/>
+        <Setter Property="TextDecorations" Value="{Binding TextField.TextDecorations}"/>
         <Setter Property="Width" Value="{Binding TextField.Width}" />
         <Setter Property="Height" Value="{Binding TextField.Height}" />
         <Setter Property="Cursor" Value="{Binding TextField.Cursor}" />
