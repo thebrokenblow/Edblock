@@ -28,7 +28,7 @@
 
         <GridSplitter Background="Gray" Width="1" Height="40"/>
 
-        <topSettingsPanelControl:FormatTextControl />
+        <topSettingsPanelControl:FormatTextControl x:Name="FormatTextControlUI"/>
 
         <GridSplitter Background="Gray" Width="1" Height="40"/>
 

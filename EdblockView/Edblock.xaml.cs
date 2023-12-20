@@ -28,11 +28,12 @@ public partial class Edblock : Window
         var fontSizeControlVM = new FontSizeControlVM(selectedBlockSymbols);
         var fontFamilyControlVM = new FontFamilyControlVM(selectedBlockSymbols);
         var textAlignmentControlVM = new TextAlignmentControlVM(selectedBlockSymbols);
+        var formatTextControlVM = new FormatTextControlVM(selectedBlockSymbols);
 
         TopSettingsPanelUI.FontSizeControlVM = fontSizeControlVM;
         TopSettingsPanelUI.FontFamilyControlVM = fontFamilyControlVM;
         TopSettingsPanelUI.TextAlignmentControlVM = textAlignmentControlVM;
-
+        TopSettingsPanelUI.FormatTextControlVM = formatTextControlVM;
 
         var edblockVM = new EdblockVM(
             canvasSymbolsVM, 
@@ -40,7 +41,8 @@ public partial class Edblock : Window
             checkBoxLineGostVM, 
             fontFamilyControlVM, 
             fontSizeControlVM, 
-            textAlignmentControlVM);
+            textAlignmentControlVM, 
+            formatTextControlVM);
 
         TopSettingsPanelUI.EdblockVM = edblockVM;
 

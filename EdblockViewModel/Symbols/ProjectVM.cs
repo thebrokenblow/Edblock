@@ -21,13 +21,14 @@ internal class ProjectVM
         CheckBoxLineGostVM checkBoxLineGostVM,
         FontFamilyControlVM fontFamilyControlVM, 
         FontSizeControlVM fontSizeControlVM, 
-        TextAlignmentControlVM textAlignmentControlVM)
+        TextAlignmentControlVM textAlignmentControlVM, 
+        FormatTextControlVM formatTextControlVM)
     {
         _canvasSymbolsVM = canvasSymbolsVM;
         _scaleAllSymbolVM = scaleAllSymbolVM;
         _checkBoxLineGostVM = checkBoxLineGostVM;
         _blockSymbolsVMById = new();
-        _factoryBlockSymbolVM = new(_canvasSymbolsVM, scaleAllSymbolVM, checkBoxLineGostVM, fontFamilyControlVM, fontSizeControlVM, textAlignmentControlVM);
+        _factoryBlockSymbolVM = new(_canvasSymbolsVM, scaleAllSymbolVM, checkBoxLineGostVM, fontFamilyControlVM, fontSizeControlVM, textAlignmentControlVM, formatTextControlVM);
     }
 
     public void Save(string filePath)

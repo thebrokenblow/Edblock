@@ -6,4 +6,5 @@ public class TextFieldModel
     public string? FontFamily { get; set; }
     public double FontSize { get; set; }
     public string? TextAlignment { get; set; }
+    public string? FontWeight { get; set; }
 }

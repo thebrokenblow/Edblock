@@ -19,13 +19,14 @@ internal class FactoryBlockSymbolVM
         CheckBoxLineGostVM checkBoxLineGostVM, 
         FontFamilyControlVM fontFamilyControlVM,
         FontSizeControlVM fontSizeControlVM, 
-        TextAlignmentControlVM textAlignmentControlVM)
+        TextAlignmentControlVM textAlignmentControlVM, 
+        FormatTextControlVM formatTextControlVM)
     {
         _scaleAllSymbolVM = scaleAllSymbolVM;
 
         instanceSymbolByName = new()
         {
-            { "ActionSymbol", _ => new ActionSymbol(canvasSymbolsVM, scaleAllSymbolVM, checkBoxLineGostVM, fontFamilyControlVM, fontSizeControlVM, textAlignmentControlVM) }
+            { "ActionSymbol", _ => new ActionSymbol(canvasSymbolsVM, scaleAllSymbolVM, checkBoxLineGostVM, fontFamilyControlVM, fontSizeControlVM, textAlignmentControlVM, formatTextControlVM) }
         };
     }
 

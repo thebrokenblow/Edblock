@@ -57,6 +57,14 @@ public partial class TopSettingsPanel : UserControl
         }
     }
 
+    public FormatTextControlVM FormatTextControlVM
+    {
+        set
+        {
+            FormatTextControlUI.FormatTextControlVM = value;
+        }
+    }
+
     public TopSettingsPanel()
     {
         InitializeComponent();

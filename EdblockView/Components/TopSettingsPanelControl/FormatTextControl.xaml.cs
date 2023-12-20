@@ -1,4 +1,5 @@
 ﻿using System.Windows.Controls;
+using EdblockViewModel.ComponentsVM;
 
 namespace EdblockView.Components.TopSettingsPanelControl;
 
@@ -7,6 +8,14 @@ namespace EdblockView.Components.TopSettingsPanelControl;
 /// </summary>
 public partial class FormatTextControl : UserControl
 {
+    public FormatTextControlVM FormatTextControlVM
+    {
+        set
+        {
+            DataContext = value;
+        }
+    }
+
     public FormatTextControl()
     {
         InitializeComponent();

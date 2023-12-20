@@ -101,6 +101,7 @@ public abstract class BlockSymbolVM : SymbolVM
     private readonly FontFamilyControlVM _fontFamilyControlVM;
     private readonly FontSizeControlVM _fontSizeControlVM;
     private readonly TextAlignmentControlVM _textAlignmentControlVM;
+    private readonly FormatTextControlVM _formatTextControlVM;
 
     public BlockSymbolVM(
         CanvasSymbolsVM canvasSymbolsVM, 
@@ -108,12 +109,14 @@ public abstract class BlockSymbolVM : SymbolVM
         CheckBoxLineGostVM checkBoxLineGostVM,
         FontFamilyControlVM fontFamilyControlVM,
         FontSizeControlVM fontSizeControlVM,
-        TextAlignmentControlVM textAlignmentControlVM)
+        TextAlignmentControlVM textAlignmentControlVM,
+        FormatTextControlVM formatTextControlVM)
     {
         _canvasSymbolsVM = canvasSymbolsVM;
         _fontSizeControlVM = fontSizeControlVM;
         _fontFamilyControlVM = fontFamilyControlVM;
         _textAlignmentControlVM = textAlignmentControlVM;
+        _formatTextControlVM = formatTextControlVM;
 
         Id = Guid.NewGuid().ToString();
 
@@ -207,6 +210,7 @@ public abstract class BlockSymbolVM : SymbolVM
         _fontSizeControlVM.SetFontSize(this);
         _fontFamilyControlVM.SetFontFamily(this);
         _textAlignmentControlVM.SetFormatAlignment(this);
+        _formatTextControlVM.SetFontText(this);
 
         _canvasSymbolsVM.SelectedBlockSymbols.Add(this);
     }

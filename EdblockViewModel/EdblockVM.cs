@@ -19,15 +19,16 @@ public class EdblockVM
         CheckBoxLineGostVM checkBoxLineGostVM,
         FontFamilyControlVM fontFamilyControlVM,
         FontSizeControlVM fontSizeControlVM, 
-        TextAlignmentControlVM textAlignmentControlVM)
+        TextAlignmentControlVM textAlignmentControlVM,
+        FormatTextControlVM formatTextControlVM)
     {
         ClickEsc = new(canvasSymbolsVM.DeleteLine);
         ClickSymbol = new(CreateBlockSymbol);
 
         _canvasSymbolsVM = canvasSymbolsVM;
 
-        _projectVM = new(canvasSymbolsVM, scaleAllSymbolVM, checkBoxLineGostVM, fontFamilyControlVM, fontSizeControlVM, textAlignmentControlVM);
-        _factoryBlockSymbol = new(canvasSymbolsVM, scaleAllSymbolVM,checkBoxLineGostVM, fontFamilyControlVM, fontSizeControlVM, textAlignmentControlVM);
+        _projectVM = new(canvasSymbolsVM, scaleAllSymbolVM, checkBoxLineGostVM, fontFamilyControlVM, fontSizeControlVM, textAlignmentControlVM, formatTextControlVM);
+        _factoryBlockSymbol = new(canvasSymbolsVM, scaleAllSymbolVM,checkBoxLineGostVM, fontFamilyControlVM, fontSizeControlVM, textAlignmentControlVM, formatTextControlVM);
     }
 
     public void SaveProject(string filePath)
