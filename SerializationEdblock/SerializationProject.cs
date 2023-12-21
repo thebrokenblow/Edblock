@@ -6,19 +6,23 @@ namespace SerializationEdblock;
 
 public class SerializationProject
 {
-    public static async void Write(ProjectSerializable projectSerializable, string pathFile)
+    private readonly JsonSerializerOptions jsonSerializerOptions;
+    public SerializationProject()
     {
-        var options = new JsonSerializerOptions
+        jsonSerializerOptions = new JsonSerializerOptions
         {
             WriteIndented = true,
             Encoder = JavaScriptEncoder.Create(UnicodeRanges.BasicLatin, UnicodeRanges.Cyrillic),
         };
-
-        using var fileStream = new FileStream(pathFile, FileMode.Create);
-        await JsonSerializer.SerializeAsync(fileStream, projectSerializable, options);
     }
 
-    public static async Task<ProjectSerializable> Read(string pathFile)
+    public async void Write(ProjectSerializable projectSerializable, string pathFile)
+    {
+        using var fileStream = new FileStream(pathFile, FileMode.Create);
+        await JsonSerializer.SerializeAsync(fileStream, projectSerializable, jsonSerializerOptions);
+    }
+
+    public async Task<ProjectSerializable> Read(string pathFile)
     {
         using var fileStream = new FileStream(pathFile, FileMode.Open);
         var projectSerializable = await JsonSerializer.DeserializeAsync<ProjectSerializable>(fileStream);

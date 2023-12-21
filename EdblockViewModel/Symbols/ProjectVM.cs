@@ -13,6 +13,7 @@ internal class ProjectVM
     private readonly CheckBoxLineGostVM _checkBoxLineGostVM;
     private readonly CanvasSymbolsVM _canvasSymbolsVM;
     private readonly FactoryBlockSymbolVM _factoryBlockSymbolVM;
+    private readonly SerializationProject _serializationProject;
     private readonly Dictionary<string, BlockSymbolVM> _blockSymbolsVMById;
 
     public ProjectVM(
@@ -28,6 +29,7 @@ internal class ProjectVM
         _scaleAllSymbolVM = scaleAllSymbolVM;
         _checkBoxLineGostVM = checkBoxLineGostVM;
         _blockSymbolsVMById = new();
+        _serializationProject = new();
         _factoryBlockSymbolVM = new(_canvasSymbolsVM, scaleAllSymbolVM, checkBoxLineGostVM, fontFamilyControlVM, fontSizeControlVM, textAlignmentControlVM, formatTextControlVM);
     }
 
@@ -65,12 +67,12 @@ internal class ProjectVM
             DrawnLinesSymbolSerializable = drawnLinesSymbolSerializable,
         };
 
-        SerializationProject.Write(projectSerializable, filePath);
+        _serializationProject.Write(projectSerializable, filePath);
     }
 
     public async void Load(string filePath)
     {
-        var loadedProject = await SerializationProject.Read(filePath);
+        var loadedProject = await _serializationProject.Read(filePath);
 
         _scaleAllSymbolVM.IsScaleAllSymbolVM = loadedProject.IsScaleAllSymbolVM;
         _checkBoxLineGostVM.IsDrawingLinesAccordingGOST = loadedProject.IsDrawingLinesAccordingGOST;
