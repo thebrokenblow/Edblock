@@ -36,12 +36,12 @@ public partial class Edblock : Window
         TopSettingsPanelUI.FormatTextControlVM = formatTextControlVM;
 
         var edblockVM = new EdblockVM(
-            canvasSymbolsVM, 
-            scaleAllSymbolVM, 
-            checkBoxLineGostVM, 
-            fontFamilyControlVM, 
-            fontSizeControlVM, 
-            textAlignmentControlVM, 
+            canvasSymbolsVM,
+            scaleAllSymbolVM,
+            checkBoxLineGostVM,
+            fontFamilyControlVM,
+            fontSizeControlVM,
+            textAlignmentControlVM,
             formatTextControlVM);
 
         TopSettingsPanelUI.EdblockVM = edblockVM;

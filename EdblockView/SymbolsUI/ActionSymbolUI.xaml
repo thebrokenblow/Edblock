@@ -7,14 +7,25 @@
              xmlns:edblockviewmodel="clr-namespace:EdblockViewModel;assembly=EdblockViewModel"
              d:DataContext="{d:DesignInstance Type=edblockviewmodel:EdblockVM}"
              mc:Ignorable="d" 
-             d:DesignHeight="60" d:DesignWidth="140">
-    <Canvas Style="{StaticResource FrameSymbol}" Background="#FF52C0AA">
-        <TextBlock Style="{StaticResource TextFieldUI}" Text="Действие" Width="140" Height="60">
-            <i:Interaction.Triggers>
-                <i:EventTrigger EventName="MouseLeftButtonDown">
-                    <i:InvokeCommandAction Command="{Binding ClickSymbol}" CommandParameter="ActionSymbol"/>
-                </i:EventTrigger>
-            </i:Interaction.Triggers>
-        </TextBlock>
-    </Canvas>
+             d:DesignHeight="60" d:DesignWidth="350" Background="Transparent">
+    <StackPanel Orientation="Horizontal">
+        
+        <Canvas 
+            Style="{StaticResource FrameSymbol}"
+            Background="#FF52C0AA">
+            <TextBlock Style="{StaticResource TextFieldUI}" Text="Действие" Width="140" Height="60">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="MouseLeftButtonDown">
+                        <i:InvokeCommandAction Command="{Binding ClickSymbol}" CommandParameter="ActionSymbol"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </TextBlock>
+        </Canvas>
+        
+        <Label 
+            Margin="10 0 0 0"
+            Style="{StaticResource LabelSymbolMenu}"
+            Content="Действие (1)" />
+        
+    </StackPanel>
 </UserControl>

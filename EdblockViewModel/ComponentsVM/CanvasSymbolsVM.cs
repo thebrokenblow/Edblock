@@ -83,13 +83,51 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
         Grid = new Rect(-lengthGridCell, -lengthGridCell, lengthGridCell, lengthGridCell);
     }
 
-    public void DeleteLine()
+    public void DeleteSymbols()
     {
-        DeleteDrawnLineSymbol();
-        DeleteSelectDrawnLineSymbol();
+        DeleteCurrentDrawnLineSymbol();
+        DeleteSelectedDrawnLineSymbol();
+
+        foreach (var symbol in SelectedBlockSymbols)
+        {
+            if (BlockByDrawnLines.ContainsKey(symbol))
+            {
+                var lines = BlockByDrawnLines[symbol];
+
+                foreach (var line in lines)
+                {
+                    var symbolOut = line.SymbolOutgoingLine;
+                    var symbolInc = line.SymbolIncomingLine;
+
+                    if (symbol == symbolOut)
+                    {
+                        BlockByDrawnLines[symbolInc].Remove(line);
+                    }
+                    else
+                    {
+                        BlockByDrawnLines[symbolOut].Remove(line);
+                    }
+
+                    var outgoingConnectionPoint = line.OutgoingConnectionPoint;
+                    var incomingConnectionPoint = line.IncomingConnectionPoint;
+
+                    if (outgoingConnectionPoint is not null && incomingConnectionPoint is not null)
+                    {
+                        outgoingConnectionPoint.IsHasConnectingLine = false;
+                        incomingConnectionPoint.IsHasConnectingLine = false;
+                    }
+
+                    SymbolsVM.Remove(line);
+                }
+
+                BlockByDrawnLines[symbol].Clear();
+            }
+
+            SymbolsVM.Remove(symbol);
+        }
     }
 
-    private void DeleteDrawnLineSymbol()
+    private void DeleteCurrentDrawnLineSymbol()
     {
         if (DrawnLineSymbol is null)
         {
@@ -109,7 +147,7 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
         DrawnLineSymbol = null;
     }
 
-    private void DeleteSelectDrawnLineSymbol()
+    private void DeleteSelectedDrawnLineSymbol()
     {
         if (SelectedDrawnLineSymbol is null)
         {
@@ -134,7 +172,6 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
             incomingConnectionPoint.IsHasConnectingLine = false;
         }
 
-        SymbolsVM.Remove(SelectedDrawnLineSymbol);
         SelectedDrawnLineSymbol = null;
     }
 

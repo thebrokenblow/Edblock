@@ -6,7 +6,7 @@ namespace EdblockViewModel;
 
 public class EdblockVM
 {
-    public DelegateCommand ClickEsc { get; init; }
+    public DelegateCommand ClickDelete { get; init; }
     public DelegateCommand<string> ClickSymbol { get; init; }
 
     private readonly ProjectVM _projectVM;
@@ -22,7 +22,7 @@ public class EdblockVM
         TextAlignmentControlVM textAlignmentControlVM,
         FormatTextControlVM formatTextControlVM)
     {
-        ClickEsc = new(canvasSymbolsVM.DeleteLine);
+        ClickDelete = new(canvasSymbolsVM.DeleteSymbols);
         ClickSymbol = new(CreateBlockSymbol);
 
         _canvasSymbolsVM = canvasSymbolsVM;
@@ -41,7 +41,7 @@ public class EdblockVM
         _projectVM.Load(filePath);
     }
 
-    private void CreateBlockSymbol(string nameBlockSymbol)
+    public void CreateBlockSymbol(string nameBlockSymbol)
     {
         var blockSymbolVM = _factoryBlockSymbol.Create(nameBlockSymbol);
 

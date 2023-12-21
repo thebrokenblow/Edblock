@@ -41,7 +41,7 @@ public class FactorySymbolSerializable
         BlockSymbolSerializable? symbolOutgoingLineSerializable = null;
         BlockSymbolSerializable? symbolIncomingLineSerializable = null;
 
-        if (symbolOutgoingLine != null && symbolIncomingLine != null)
+        if (symbolOutgoingLine is not null && symbolIncomingLine is not null)
         {
             symbolOutgoingLineSerializable = CreateBlockSymbolSerializable(symbolOutgoingLine);
             symbolIncomingLineSerializable = CreateBlockSymbolSerializable(symbolIncomingLine);

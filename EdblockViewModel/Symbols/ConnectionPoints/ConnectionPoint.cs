@@ -212,38 +212,35 @@ public class ConnectionPoint : INotifyPropertyChanged
 
         drawnLineSymbolVM.RedrawAllLines();
 
-        AddBlockToLine(drawnLineSymbolVM.SymbolIncomingLine);
-        AddBlockToLine(drawnLineSymbolVM.SymbolOutgoingLine);
+        if (!_canvasSymbolsVM.BlockByDrawnLines.ContainsKey(drawnLineSymbolVM.SymbolOutgoingLine))
+        {
+            var drawnLinesSymbolVM = new List<DrawnLineSymbolVM>();
+            drawnLinesSymbolVM.Add(_canvasSymbolsVM.DrawnLineSymbol);
+
+            _canvasSymbolsVM.BlockByDrawnLines.Add(drawnLineSymbolVM.SymbolOutgoingLine, drawnLinesSymbolVM);
+        }
+        else
+        {
+            _canvasSymbolsVM.BlockByDrawnLines[drawnLineSymbolVM.SymbolOutgoingLine].Add(_canvasSymbolsVM.DrawnLineSymbol);
+        }
+
+        if (!_canvasSymbolsVM.BlockByDrawnLines.ContainsKey(drawnLineSymbolVM.SymbolIncomingLine))
+        {
+            var drawnLinesSymbolVM = new List<DrawnLineSymbolVM>();
+            drawnLinesSymbolVM.Add(_canvasSymbolsVM.DrawnLineSymbol);
+
+            _canvasSymbolsVM.BlockByDrawnLines.Add(drawnLineSymbolVM.SymbolIncomingLine, drawnLinesSymbolVM);
+        }
+        else
+        {
+            _canvasSymbolsVM.BlockByDrawnLines[drawnLineSymbolVM.SymbolIncomingLine].Add(_canvasSymbolsVM.DrawnLineSymbol);
+        }
 
         _canvasSymbolsVM.DrawnLineSymbol = null;
     }
 
     private void AddBlockToLine(BlockSymbolVM? blockSymbol)
     {
-        if (blockSymbol == null)
-        {
-            return;
-        }
-
-        if (_canvasSymbolsVM.DrawnLineSymbol == null)
-        {
-            return;
-        }
-
-        if (_canvasSymbolsVM.BlockByDrawnLines.ContainsKey(blockSymbol))
-        {
-            var drawnLinesSymbolVM = _canvasSymbolsVM.BlockByDrawnLines[blockSymbol];
-
-            drawnLinesSymbolVM.Add(_canvasSymbolsVM.DrawnLineSymbol);
-        }
-        else
-        {
-            var drawnLinesSymbolVM = new List<DrawnLineSymbolVM>
-            {
-                _canvasSymbolsVM.DrawnLineSymbol
-            };
-
-            _canvasSymbolsVM.BlockByDrawnLines.Add(blockSymbol, drawnLinesSymbolVM);
-        }
+      
     }
 }

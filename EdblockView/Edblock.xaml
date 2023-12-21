@@ -6,13 +6,13 @@
         xmlns:components="clr-namespace:EdblockView.Components" 
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
         xmlns:symbol="clr-namespace:EdblockView.SymbolsUI"
-        xmlns:edblockViewModel="clr-namespace:EdblockViewModel;assembly=EdblockViewModel" 
+        xmlns:edblockViewModel="clr-namespace:EdblockViewModel;assembly=EdblockViewModel"
         d:DataContext="{d:DesignInstance Type=edblockViewModel:EdblockVM}"
         mc:Ignorable="d"
         Title="Edblock" Height="600" Width="1200">
-
+    
     <Window.InputBindings>
-        <KeyBinding Command="{Binding ClickEsc}" Key="Delete"/>
+        <KeyBinding Command="{Binding ClickDelete}" Key="Delete"/>
     </Window.InputBindings>
 
     <Window.Triggers>
@@ -79,26 +79,11 @@
                     <TranslateTransform/>
                 </TransformGroup>
             </Grid.RenderTransform>
+
             <ScrollViewer>
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="75"/>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="160"/>
-                        <ColumnDefinition Width="190"/>
-                    </Grid.ColumnDefinitions>
-
-                    <symbol:ActionSymbolUI
-                        Grid.Column="0" 
-                        Grid.Row="0" />
-
-                    <Label 
-                        Style="{StaticResource LabelSymbolMenu}"
-                        Grid.Row="0"
-                        Grid.Column="1"
-                        Content="Действие (1)" />
-                </Grid>
+                <StackPanel>
+                    <symbol:ActionSymbolUI Margin="10 10 0 0"/>
+                </StackPanel>
             </ScrollViewer>
 
             <Button 
