@@ -84,6 +84,7 @@
                 <StackPanel>
                     <symbol:ActionSymbolUI Margin="10 10 0 0"/>
                     <symbol:ConditionSymbolUI Margin="10 10 0 0"/>
+                    <symbol:VerticalConditionSymbolUI Margin="10 10 0 0"/>
                 </StackPanel>
             </ScrollViewer>
 
