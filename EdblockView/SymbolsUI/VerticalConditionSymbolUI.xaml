@@ -5,11 +5,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
              mc:Ignorable="d" 
-             d:DesignHeight="155" d:DesignWidth="320">
+             d:DesignHeight="155" d:DesignWidth="300">
     <StackPanel Orientation="Horizontal">
-        <Canvas 
-            Margin="0 0 0 110"
-            Style="{StaticResource FrameSymbol}">
+        <Canvas Width="143" Height="155">
 
             <Polygon 
                 Points="0 30 70 60 140 30 70 0 0 30"

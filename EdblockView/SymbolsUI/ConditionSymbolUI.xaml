@@ -7,7 +7,7 @@
              xmlns:edblockviewmodel="clr-namespace:EdblockViewModel;assembly=EdblockViewModel"
              d:DataContext="{d:DesignInstance Type=edblockviewmodel:EdblockVM}"
              mc:Ignorable="d" 
-             d:DesignHeight="60" d:DesignWidth="250">
+             d:DesignHeight="60" d:DesignWidth="300">
     <StackPanel Orientation="Horizontal">
         <Canvas
             Style="{StaticResource FrameSymbol}">

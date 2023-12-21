@@ -5,12 +5,11 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
              mc:Ignorable="d" 
-             d:DesignHeight="120" d:DesignWidth="320">
+             d:DesignHeight="97" d:DesignWidth="300">
     <StackPanel Orientation="Horizontal">
         <Canvas
-            Margin="0 0 0 30"
-            Style="{StaticResource FrameSymbol}">
-
+            Width="145"
+            Height="98">
             <Polygon 
                 Points="0 30 70 60 140 30 70 0 0 30" 
                 Fill="#FF60B2D3" />
@@ -44,7 +43,8 @@
                 Style="{StaticResource LineSymbol}" />
 
             <Ellipse
-                Margin="-3 89"
+                Canvas.Top="89"
+                Canvas.Left="-3.5"
                 Fill="Black"
                 Style="{StaticResource ConnectionPoint}" />
 
@@ -56,7 +56,8 @@
                 Style="{StaticResource LineSymbol}" />
 
             <Ellipse 
-                Margin="66 89" 
+                Canvas.Left="66"
+                Canvas.Top="89"
                 Fill="Black"
                 Style="{StaticResource ConnectionPoint}" />
 
@@ -68,12 +69,13 @@
                 Style="{StaticResource LineSymbol}" />
 
             <Ellipse 
-                Margin="135.5 89" 
+                Canvas.Top="89"
+                Canvas.Left="135.5"
                 Fill="Black"
                 Style="{StaticResource ConnectionPoint}" />
         </Canvas>
 
-        <StackPanel Margin="20 15 0 0" Height="70" Width="150">
+        <StackPanel Margin="10 0 0 0" Height="70" Width="150">
             <Label 
                 Style="{StaticResource LabelSymbolMenu}"
                 Content="Условие (3)" />
