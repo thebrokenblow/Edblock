@@ -1,0 +1,26 @@
+﻿<UserControl x:Class="EdblockView.SymbolsUI.InputOutputSymbolUI"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="60" d:DesignWidth="300">
+    <StackPanel Orientation="Horizontal">
+        <Canvas Style="{StaticResource FrameSymbol}">
+            <Polygon
+                Points="20 0 0 60 120 60 140 0"
+                Fill="#FF008080"/>
+
+            <TextBlock 
+                Style="{StaticResource TextFieldUI}"
+                Text="Ввод / Вывод"
+                Width="140"
+                Height="60"/>
+        </Canvas>
+        
+        <Label
+            Margin="10 0 0 0"
+            Content="Ввод / Вывод (6)"
+            Style="{StaticResource LabelSymbolMenu}"/>
+    </StackPanel>
+</UserControl>

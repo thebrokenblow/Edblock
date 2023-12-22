@@ -9,7 +9,7 @@
         xmlns:edblockViewModel="clr-namespace:EdblockViewModel;assembly=EdblockViewModel"
         d:DataContext="{d:DesignInstance Type=edblockViewModel:EdblockVM}"
         mc:Ignorable="d"
-        Title="Edblock" Height="600" Width="1200">
+        Title="Edblock" Height="1200" Width="1700">
     
     <Window.InputBindings>
         <KeyBinding Command="{Binding ClickDelete}" Key="Delete"/>
@@ -82,11 +82,16 @@
 
             <ScrollViewer>
                 <StackPanel>
-                    <symbol:ActionSymbolUI Margin="10 10 0 0"/>
-                    <symbol:ConditionSymbolUI Margin="10 10 0 0"/>
-                    <symbol:VerticalConditionSymbolUI Margin="10 10 0 0"/>
-                    <symbol:HorizontalConditionSymbolUI Margin="10 10 0 0"/>
-                    <symbol:StartEndSymbolUI Margin="10 10 0 0"/>
+                    <symbol:ActionSymbolUI Margin="10 10 0 0" />
+                    <symbol:ConditionSymbolUI Margin="10 10 0 0" />
+                    <symbol:VerticalConditionSymbolUI Margin="10 10 0 0" />
+                    <symbol:HorizontalConditionSymbolUI Margin="10 10 0 0" />
+                    <symbol:StartEndSymbolUI Margin="10 10 0 0" />
+                    <symbol:InputOutputSymbolUI Margin="10 10 0 0" />
+                    <symbol:SubroutineSymbolUI Margin="10 10 0 0" />
+                    <symbol:CycleForSymbolUI Margin="10 10 0 0" />
+                    <symbol:CycleWhileBeginSymbolUI Margin="10 10 0 0"/>
+                    <symbol:CycleWhileEndSymbolUI Margin="10 10 0 0"/>
                 </StackPanel>
             </ScrollViewer>
 
