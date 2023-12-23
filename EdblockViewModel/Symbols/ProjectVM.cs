@@ -30,7 +30,7 @@ internal class ProjectVM
         _checkBoxLineGostVM = checkBoxLineGostVM;
         _blockSymbolsVMById = new();
         _serializationProject = new();
-        _factoryBlockSymbolVM = new(_canvasSymbolsVM, scaleAllSymbolVM, checkBoxLineGostVM, fontFamilyControlVM, fontSizeControlVM, textAlignmentControlVM, formatTextControlVM);
+        //_factoryBlockSymbolVM = new(_canvasSymbolsVM, scaleAllSymbolVM, checkBoxLineGostVM, fontFamilyControlVM, fontSizeControlVM, textAlignmentControlVM, formatTextControlVM);
     }
 
     public void Save(string filePath)

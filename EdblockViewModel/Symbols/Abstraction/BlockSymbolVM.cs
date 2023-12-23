@@ -103,20 +103,13 @@ public abstract class BlockSymbolVM : SymbolVM
     private readonly TextAlignmentControlVM _textAlignmentControlVM;
     private readonly FormatTextControlVM _formatTextControlVM;
 
-    public BlockSymbolVM(
-        CanvasSymbolsVM canvasSymbolsVM, 
-        ScaleAllSymbolVM scaleAllSymbolVM, 
-        CheckBoxLineGostVM checkBoxLineGostVM,
-        FontFamilyControlVM fontFamilyControlVM,
-        FontSizeControlVM fontSizeControlVM,
-        TextAlignmentControlVM textAlignmentControlVM,
-        FormatTextControlVM formatTextControlVM)
+    public BlockSymbolVM(EdblockVM edblockVM)
     {
-        _canvasSymbolsVM = canvasSymbolsVM;
-        _fontSizeControlVM = fontSizeControlVM;
-        _fontFamilyControlVM = fontFamilyControlVM;
-        _textAlignmentControlVM = textAlignmentControlVM;
-        _formatTextControlVM = formatTextControlVM;
+        _canvasSymbolsVM = edblockVM.CanvasSymbolsVM;
+        _fontSizeControlVM = edblockVM.FontSizeControlVM;
+        _fontFamilyControlVM = edblockVM.FontFamilyControlVM;
+        _textAlignmentControlVM = edblockVM.TextAlignmentControlVM;
+        _formatTextControlVM = edblockVM.FormatTextControlVM;
 
         Id = Guid.NewGuid().ToString();
 
@@ -124,12 +117,12 @@ public abstract class BlockSymbolVM : SymbolVM
 
         BlockSymbolModel = FactoryBlockSymbolModel.Create(Id, nameBlockSymbol, color);
 
-        TextField = new(canvasSymbolsVM, this);
+        TextField = new(_canvasSymbolsVM, this);
 
-        var factoryConnectionPoints = new FactoryConnectionPoints(_canvasSymbolsVM, checkBoxLineGostVM, this);
+        var factoryConnectionPoints = new FactoryConnectionPoints(_canvasSymbolsVM, edblockVM.PopupBoxMenuVM.CheckBoxLineGostVM, this);
         ConnectionPoints = factoryConnectionPoints.CreateConnectionPoints();
 
-        var factoryScaleRectangles = new FactoryScaleRectangles(_canvasSymbolsVM, scaleAllSymbolVM,  this);
+        var factoryScaleRectangles = new FactoryScaleRectangles(_canvasSymbolsVM, edblockVM.PopupBoxMenuVM.ScaleAllSymbolVM,  this);
         ScaleRectangles = factoryScaleRectangles.Create();
 
         Width = defaultWidth;

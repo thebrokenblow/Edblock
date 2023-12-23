@@ -1,0 +1,60 @@
+﻿<UserControl x:Class="EdblockView.SymbolsUI.CommentSymbolUI"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="60" d:DesignWidth="300">
+    <StackPanel Orientation="Horizontal">
+        <Canvas
+            Background="Transparent"
+            Style="{StaticResource FrameSymbol}">
+
+            <Line 
+                X1="0" 
+                Y1="30" 
+                X2="20" 
+                Y2="30" 
+                Style="{StaticResource LineCommentSymbol}" />
+
+            <Line 
+                X1="30" 
+                Y1="30" 
+                X2="60" 
+                Y2="30" 
+                Style="{StaticResource LineCommentSymbol}" />
+    
+            <Line 
+                X1="70" 
+                Y1="30"
+                X2="90" 
+                Y2="30" 
+                Style="{StaticResource LineCommentSymbol}" />
+
+            <Line 
+                X1="90" 
+                Y1="0" 
+                X2="90" 
+                Y2="60" 
+                Style="{StaticResource LineCommentSymbol}"/>
+
+            <Line 
+                X1="90" 
+                Y1="0"
+                X2="110"
+                Y2="0" 
+                Style="{StaticResource LineCommentSymbol}"/>
+
+            <Line
+                X1="90" 
+                Y1="60" 
+                X2="110" 
+                Y2="60"
+                Style="{StaticResource LineCommentSymbol}"/>
+        </Canvas>
+
+        <Label 
+            Content="Комментарий (12)"
+            Style="{StaticResource LabelSymbolMenu}"/>
+    </StackPanel>
+</UserControl>

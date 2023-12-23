@@ -1,5 +1,4 @@
 ﻿using EdblockModel.Symbols;
-using EdblockViewModel.ComponentsVM;
 using EdblockViewModel.Symbols.Abstraction;
 
 namespace EdblockViewModel.Symbols;
@@ -9,14 +8,7 @@ public class ActionSymbol : BlockSymbolVM
     private const string defaultText = "Действие";
     private const string defaultColor = "#FF52C0AA";
 
-    public ActionSymbol(
-        CanvasSymbolsVM canvasSymbolsVM, 
-        ScaleAllSymbolVM scaleAllSymbolVM,
-        CheckBoxLineGostVM checkBoxLineGostVM,
-        FontFamilyControlVM fontFamilyControlVM,
-        FontSizeControlVM fontSizeControlVM,
-        TextAlignmentControlVM textAlignmentControlVM,
-        FormatTextControlVM formatTextControlVM) : base(canvasSymbolsVM, scaleAllSymbolVM, checkBoxLineGostVM, fontFamilyControlVM, fontSizeControlVM, textAlignmentControlVM, formatTextControlVM)
+    public ActionSymbol(EdblockVM edblockVM) : base(edblockVM)
     {
         Color = defaultColor;
 

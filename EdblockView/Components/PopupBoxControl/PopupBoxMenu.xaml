@@ -5,6 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:popupboxcontrol="clr-namespace:EdblockView.Components.PopupBoxControl"
+             xmlns:edblockViewModel="clr-namespace:EdblockViewModel.ComponentsVM;assembly=EdblockViewModel"
+             d:DataContext="{d:DesignInstance Type=edblockViewModel:PopupBoxMenuVM}"
              mc:Ignorable="d" 
              d:DesignHeight="40" d:DesignWidth="40">
     <materialDesign:PopupBox 
@@ -18,9 +20,9 @@
             Width="260" 
             Orientation="Vertical">
 
-            <popupboxcontrol:CheckBoxLineGost x:Name="CheckBoxLineGost"/>
+            <popupboxcontrol:CheckBoxLineGost DataContext="{Binding CheckBoxLineGostVM}" />
 
-            <popupboxcontrol:ScaleAllSymbol x:Name="ScaleAllSymbol"/>
+            <popupboxcontrol:ScaleAllSymbol DataContext="{Binding ScaleAllSymbolVM}"/>
 
             <popupboxcontrol:ButtonSaveProject x:Name="ButtonSaveProject" Margin="0 5"/>
 

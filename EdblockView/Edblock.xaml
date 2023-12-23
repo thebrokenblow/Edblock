@@ -59,6 +59,7 @@
         </StackPanel>
 
         <components:CanvasSymbols 
+            DataContext="{Binding CanvasSymbolsVM}"
             x:Name="CanvasSymbols" 
             Grid.Row="1"
             Grid.Column="1" />
@@ -82,7 +83,7 @@
 
             <ScrollViewer>
                 <StackPanel>
-                    <symbol:ActionSymbolUI Margin="10 10 0 0" />
+                    <symbol:ActionSymbolUI Margin="10 10 0 0"/>
                     <symbol:ConditionSymbolUI Margin="10 10 0 0" />
                     <symbol:VerticalConditionSymbolUI Margin="10 10 0 0" />
                     <symbol:HorizontalConditionSymbolUI Margin="10 10 0 0" />
@@ -92,6 +93,9 @@
                     <symbol:CycleForSymbolUI Margin="10 10 0 0" />
                     <symbol:CycleWhileBeginSymbolUI Margin="10 10 0 0"/>
                     <symbol:CycleWhileEndSymbolUI Margin="10 10 0 0"/>
+                    <symbol:LinkSymbolUI Margin="10 10 0 0"/>
+                    <symbol:CommentSymbolUI Margin="10 10 0 0"/>
+                    <symbol:ParallelActionSymbolUI Margin="10 10 0 0"/>
                 </StackPanel>
             </ScrollViewer>
 

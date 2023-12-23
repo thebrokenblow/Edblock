@@ -9,26 +9,34 @@ public class EdblockVM
     public DelegateCommand ClickDelete { get; init; }
     public DelegateCommand<string> ClickSymbol { get; init; }
 
+    public CanvasSymbolsVM CanvasSymbolsVM { get; init; }
+    public FontSizeControlVM FontSizeControlVM { get; init; }
+    public FontFamilyControlVM FontFamilyControlVM { get; init; }
+    public TextAlignmentControlVM TextAlignmentControlVM { get; init; }
+    public FormatTextControlVM FormatTextControlVM { get; init; }
+    public PopupBoxMenuVM PopupBoxMenuVM { get; init; }
+
     private readonly ProjectVM _projectVM;
-    private readonly CanvasSymbolsVM _canvasSymbolsVM;
+
     private readonly FactoryBlockSymbolVM _factoryBlockSymbol;
 
-    public EdblockVM(
-        CanvasSymbolsVM canvasSymbolsVM,
-        ScaleAllSymbolVM scaleAllSymbolVM, 
-        CheckBoxLineGostVM checkBoxLineGostVM,
-        FontFamilyControlVM fontFamilyControlVM,
-        FontSizeControlVM fontSizeControlVM, 
-        TextAlignmentControlVM textAlignmentControlVM,
-        FormatTextControlVM formatTextControlVM)
+    public EdblockVM()
     {
-        ClickDelete = new(canvasSymbolsVM.DeleteSymbols);
+        CanvasSymbolsVM = new CanvasSymbolsVM();
+
+        var selectedBlockSymbols = CanvasSymbolsVM.SelectedBlockSymbols;
+
+        FontSizeControlVM = new FontSizeControlVM(selectedBlockSymbols);
+        FontFamilyControlVM = new FontFamilyControlVM(selectedBlockSymbols);
+        TextAlignmentControlVM = new TextAlignmentControlVM(selectedBlockSymbols);
+        FormatTextControlVM = new FormatTextControlVM(selectedBlockSymbols);
+
+        PopupBoxMenuVM = new();
+
+        ClickDelete = new(CanvasSymbolsVM.DeleteSymbols);
         ClickSymbol = new(CreateBlockSymbol);
-
-        _canvasSymbolsVM = canvasSymbolsVM;
-
-        _projectVM = new(canvasSymbolsVM, scaleAllSymbolVM, checkBoxLineGostVM, fontFamilyControlVM, fontSizeControlVM, textAlignmentControlVM, formatTextControlVM);
-        _factoryBlockSymbol = new(canvasSymbolsVM, scaleAllSymbolVM,checkBoxLineGostVM, fontFamilyControlVM, fontSizeControlVM, textAlignmentControlVM, formatTextControlVM);
+        //_projectVM = new(this);
+        _factoryBlockSymbol = new(this);
     }
 
     public void SaveProject(string filePath)
@@ -45,6 +53,6 @@ public class EdblockVM
     {
         var blockSymbolVM = _factoryBlockSymbol.Create(nameBlockSymbol);
 
-        _canvasSymbolsVM.AddBlockSymbol(blockSymbolVM);
+        CanvasSymbolsVM.AddBlockSymbol(blockSymbolVM);
     }
 }

@@ -4,8 +4,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
-             xmlns:topSettingsPanelControl="clr-namespace:EdblockView.Components.TopSettingsPanelControl"
+             xmlns:components="clr-namespace:EdblockView.Components.TopSettingsPanelControl"
              xmlns:popupBoxControl="clr-namespace:EdblockView.Components.PopupBoxControl"
+             xmlns:edblockViewModel="clr-namespace:EdblockViewModel;assembly=EdblockViewModel"
+             d:DataContext="{d:DesignInstance Type=edblockViewModel:EdblockVM}"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <DockPanel 
@@ -14,21 +16,23 @@
 
         <GridSplitter Background="Gray" Width="1" Height="40"/>
 
-        <topSettingsPanelControl:FontSizeControl
-            x:Name="FontSizeControlUI"
-            Margin="15 0 0 0"/>
+        <components:FontSizeControl
+            Margin="15 0 0 0"
+            DataContext="{Binding FontSizeControlVM}"/>
 
-        <topSettingsPanelControl:FontFamilyControl
-            x:Name="FontFamilyControlUI"
-            Margin="20 0 0 0" />
+        <components:FontFamilyControl
+            Margin="20 0 0 0"
+            DataContext="{Binding FontFamilyControlVM}" />
 
         <GridSplitter Background="Gray" Width="1" Height="40" Margin="20 0 0 0"/>
 
-        <topSettingsPanelControl:FormatAlignmentControl x:Name="FormatAlignmentControlUI"/>
+        <components:TextAlignmentControl
+            DataContext="{Binding TextAlignmentControlVM}" />
 
         <GridSplitter Background="Gray" Width="1" Height="40"/>
 
-        <topSettingsPanelControl:FormatTextControl x:Name="FormatTextControlUI"/>
+        <components:FormatTextControl 
+            DataContext="{Binding FormatTextControlVM}"/>
 
         <GridSplitter Background="Gray" Width="1" Height="40"/>
 
@@ -52,7 +56,7 @@
 
         <GridSplitter Background="Gray" Width="1" Height="40"/>
 
-        <popupBoxControl:PopupBoxMenu x:Name="PopupBoxMenuUI"/>
+        <popupBoxControl:PopupBoxMenu DataContext="{Binding PopupBoxMenuVM}"/>
         
     </DockPanel>
 </UserControl>

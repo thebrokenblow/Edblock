@@ -23,12 +23,11 @@ public partial class ButtonSaveProject : UserControl
 
     private void SaveProject(object sender, RoutedEventArgs e)
     {
-        var saveFileDialog = new SaveFileDialog()
+        var saveFileDialog = new SaveFileDialog
         {
-            Filter = fileFilter
+            Filter = fileFilter,
+            FileName = fileName + fileExtension
         };
-
-        saveFileDialog.FileName = fileName + fileExtension;
 
         if (saveFileDialog.ShowDialog() == true)
         {
@@ -41,7 +40,14 @@ public partial class ButtonSaveProject : UserControl
 
             var filePath = saveFileDialog.FileName.ToString();
 
-            EdblockVM?.SaveProject(filePath);
+            try
+            {
+                EdblockVM?.SaveProject(filePath);
+            }
+            catch
+            {
+                MessageBox.Show("Ошибка при сохранении проекта");
+            }
         }
     }
 }
