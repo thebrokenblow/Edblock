@@ -115,6 +115,12 @@
         <Setter Property="Height" Value="{Binding HeightTextField}" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="Visibility" Value="Hidden" />
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding IsShowTextField}" Value="True">
+                <Setter Property="Visibility" Value="Visible"/>
+            </DataTrigger>
+        </Style.Triggers>
     </Style>
 
     <Style x:Key="BorderMovableRectangleLine" TargetType="Border">

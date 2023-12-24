@@ -119,8 +119,7 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
 
                     SymbolsVM.Remove(line);
                 }
-
-                BlockByDrawnLines[symbol].Clear();
+                BlockByDrawnLines.Remove(symbol);
             }
 
             SymbolsVM.Remove(symbol);
@@ -172,15 +171,19 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
             incomingConnectionPoint.IsHasConnectingLine = false;
         }
 
+        SymbolsVM.Remove(SelectedDrawnLineSymbol);
+
         SelectedDrawnLineSymbol = null;
     }
 
     public void AddBlockSymbol(BlockSymbolVM blockSymbolVM)
     {
+        RemoveSelectDrawnLine();
         ClearSelectedBlockSymbols();
 
         MovableBlockSymbol = blockSymbolVM;
         MovableBlockSymbol.Select();
+
 
         SymbolsVM.Add(blockSymbolVM);
     }
@@ -193,7 +196,7 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
         RemoveSelectDrawnLine();
     }
 
-    private void RemoveSelectDrawnLine()
+    public void RemoveSelectDrawnLine()
     {
         if (SelectedDrawnLineSymbol != null && MovableRectangleLine == null)
         {

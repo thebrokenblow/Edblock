@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Prism.Commands;
 using EdblockModel.Symbols.Enum;
 using System.Collections.Generic;
@@ -17,8 +18,8 @@ public class DrawnLineSymbolVM : SymbolVM
     public ObservableCollection<LineSymbolVM> LinesSymbolVM { get; init; }
     public ObservableCollection<MovableRectangleLine> MovableRectanglesLine { get; init; }
     public ArrowSymbol ArrowSymbol { get; set; }
-    public DelegateCommand EnterCursor { get; init; }
-    public DelegateCommand LeaveCursor { get; init; }
+    public DelegateCommand MouseEnter { get; init; }
+    public DelegateCommand MouseLeave { get; init; }
     public ConnectionPoint? OutgoingConnectionPoint { get; init; }
     public ConnectionPoint? IncomingConnectionPoint { get; set; }
 
@@ -89,7 +90,18 @@ public class DrawnLineSymbolVM : SymbolVM
             DrawnLineSymbolModel.Color = color;
         }
     }
-    
+
+    private bool isShowTextField;
+    public bool IsShowTextField
+    {
+        get => isShowTextField;
+        set
+        {
+            isShowTextField = value;
+            OnPropertyChanged();
+        }
+    }
+
     private const int heightTextField = 20;
     public static int HeightTextField 
     {
@@ -137,8 +149,8 @@ public class DrawnLineSymbolVM : SymbolVM
 
     public DrawnLineSymbolVM(CanvasSymbolsVM canvasSymbolsVM, List<LineSymbolModel>? linesSymbolModel = null)
     {
-        EnterCursor = new(SetHighlightColorLines);
-        LeaveCursor = new(SetDefaultColorLines);
+        MouseEnter = new(SetHighlightColorLines);
+        MouseLeave = new(SetDefaultColorLines);
 
         ArrowSymbol = new();
         LinesSymbolVM = new();
@@ -185,8 +197,9 @@ public class DrawnLineSymbolVM : SymbolVM
     {
         var selectDrawnLineSymbol = CanvasSymbolsVM.SelectedDrawnLineSymbol;
         var movableRectangleLine = CanvasSymbolsVM.MovableRectangleLine;
+        var drawnLineSymbol = CanvasSymbolsVM.DrawnLineSymbol;
 
-        if (selectDrawnLineSymbol != this && movableRectangleLine == null)
+        if (selectDrawnLineSymbol != this && movableRectangleLine == null && drawnLineSymbol == null)
         {
             SetHighlightStatus(false);
             HideMovableRectanglesLine();
@@ -247,8 +260,9 @@ public class DrawnLineSymbolVM : SymbolVM
     public void SelectLine()
     {
         var selectDrawnLineSymbol = CanvasSymbolsVM.SelectedDrawnLineSymbol;
+        var drawnLineSymbol = CanvasSymbolsVM.DrawnLineSymbol;
 
-        if (selectDrawnLineSymbol != this && selectDrawnLineSymbol != null)
+        if (selectDrawnLineSymbol != this && selectDrawnLineSymbol != null && drawnLineSymbol != null)
         {
             CanvasSymbolsVM.SelectedDrawnLineSymbol = null;
             selectDrawnLineSymbol.SetDefaultColorLines();
@@ -405,5 +419,10 @@ public class DrawnLineSymbolVM : SymbolVM
 
             LinesSymbolVM.Add(currentLineSymbolVM);
         }
+    }
+
+    public void ShowTextField()
+    {
+        IsShowTextField = true;
     }
 }

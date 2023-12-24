@@ -137,6 +137,8 @@ public abstract class BlockSymbolVM : SymbolVM
 
     public void SetCoordinate((int x, int y) currentCoordinate, (int x, int y) previousCoordinate)
     {
+        _canvasSymbolsVM.RemoveSelectDrawnLine();
+
         if (XCoordinate == 0 && YCoordinate == 0)
         {
             XCoordinate = currentCoordinate.x - Width / 2;

@@ -23,4 +23,14 @@ public partial class LineSymbol : UserControl
 
         e.Handled = true;
     }
+
+    private void ShowTextField(object sender, MouseButtonEventArgs e)
+    {
+        var itemsControlLines = (ItemsControl)sender;
+        var drawnLineSymbolVM = (DrawnLineSymbolVM)itemsControlLines.DataContext;
+
+        drawnLineSymbolVM.ShowTextField();
+
+        e.Handled = true;
+    }
 }

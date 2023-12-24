@@ -10,7 +10,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <ItemsControl MouseDown="SelectLine" ItemsSource="{Binding LinesSymbolVM}">
+        <ItemsControl MouseDown="SelectLine" MouseDoubleClick="ShowTextField" ItemsSource="{Binding LinesSymbolVM}">
             <ItemsControl.Resources>
                 <DataTemplate DataType="{x:Type symbolsLineVM:LineSymbolVM}">
                     <Line Style="{StaticResource LineSymbol}"/>
@@ -73,10 +73,10 @@
         
         <i:Interaction.Triggers>
             <i:EventTrigger EventName="MouseEnter">
-                <i:InvokeCommandAction Command="{Binding EnterCursor}" />
+                <i:InvokeCommandAction Command="{Binding MouseEnter}" />
             </i:EventTrigger>
             <i:EventTrigger EventName="MouseLeave">
-                <i:InvokeCommandAction Command="{Binding LeaveCursor}" />
+                <i:InvokeCommandAction Command="{Binding MouseLeave}" />
             </i:EventTrigger>
         </i:Interaction.Triggers>
     </Grid>
