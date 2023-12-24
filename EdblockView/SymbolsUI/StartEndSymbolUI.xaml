@@ -6,9 +6,10 @@
              mc:Ignorable="d" 
              d:DesignHeight="60" d:DesignWidth="300">
     <StackPanel Orientation="Horizontal">
-        
         <Canvas 
-            Style="{StaticResource FrameSymbol}">
+            Width="140"
+            Height="60">
+            
             <Rectangle 
                 Width="140" 
                 Height="60" 

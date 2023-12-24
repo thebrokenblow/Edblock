@@ -49,13 +49,13 @@ public class ConnectionPoint : INotifyPropertyChanged
         }
     }
 
-    private bool isSelect = false;
-    public bool IsSelect
+    private bool isSelected = false;
+    public bool IsSelected
     {
-        get => isSelect;
+        get => isSelected;
         set
         {
-            isSelect = value;
+            isSelected = value;
             OnPropertyChanged();
         }
     }
@@ -154,7 +154,7 @@ public class ConnectionPoint : INotifyPropertyChanged
             SetDisplayConnectionPoints(connectionPoints, isEnterConnectionPoint);
 
             _canvasSymbolsVM.Cursor = cursorDisplaying;
-            IsSelect = isSelectConnectionPoint;
+            IsSelected = isSelectConnectionPoint;
         }
     }
 

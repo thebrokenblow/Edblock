@@ -10,7 +10,8 @@
              d:DesignHeight="60" d:DesignWidth="300">
     <StackPanel Orientation="Horizontal">
         <Canvas 
-            Style="{StaticResource FrameSymbol}"
+            Width="140"
+            Height="60"
             Background="#FF52C0AA">
             <TextBlock Style="{StaticResource TextFieldUI}" Text="Действие" Width="140" Height="60">
                 <i:Interaction.Triggers>

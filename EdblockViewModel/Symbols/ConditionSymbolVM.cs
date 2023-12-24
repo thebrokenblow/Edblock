@@ -20,26 +20,10 @@ public class ConditionSymbolVM : BlockSymbolVM
 
     private const string defaultText = "Условеие";
     private const string defaultColor = "#FF60B2D3";
-    private const int countPoints = 4;
 
     public ConditionSymbolVM(EdblockVM edblockVM) : base(edblockVM)
     {
         Color = defaultColor;
-
-
-        var textFieldWidth = BlockSymbolModel.GetTextFieldWidth();
-        var textFieldLeftOffset = BlockSymbolModel.GetTextFieldLeftOffset();
-
-        TextField.Width = textFieldWidth;
-        TextField.LeftOffset = textFieldLeftOffset;
-
-        var textFieldHeight = BlockSymbolModel.GetTextFieldHeight();
-        var textFieldTopOffset = BlockSymbolModel.GetTextFieldTopOffset();
-
-        TextField.Height = textFieldHeight;
-        TextField.TopOffset = textFieldTopOffset;
-
-
         TextField.Text = defaultText;
     }
 

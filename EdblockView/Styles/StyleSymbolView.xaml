@@ -9,11 +9,6 @@
             </DataTrigger>
         </Style.Triggers>
     </Style>
-    
-    <Style x:Key="FrameSymbol" TargetType="Canvas">
-        <Setter Property="Width" Value="140" />
-        <Setter Property="Height" Value="60" />
-    </Style>
 
     <Style x:Key="SymbolByPolygon" TargetType="Polygon">
         <Setter Property="Points" Value="{Binding Points}" />
@@ -24,12 +19,6 @@
                 <Setter Property="Stroke" Value="Blue"/>
             </DataTrigger>
         </Style.Triggers>
-    </Style>
-
-    <Style x:Key="TextFieldUI" TargetType="TextBlock">
-        <Setter Property="Cursor" Value="Hand" />
-        <Setter Property="Foreground" Value="White" />
-        <Setter Property="TextAlignment" Value="Center" />
     </Style>
 
     <Style x:Key="TextField" TargetType="TextBox">
@@ -66,7 +55,7 @@
             <DataTrigger Binding="{Binding IsShow}" Value="True">
                 <Setter Property="Fill" Value="#777777"/>
             </DataTrigger>
-            <DataTrigger Binding="{Binding IsSelect}" Value="True">
+            <DataTrigger Binding="{Binding IsSelected}" Value="True">
                 <Setter Property="Stroke" Value="#00FF00"/>
             </DataTrigger>
             <DataTrigger Binding="{Binding IsHasConnectingLine}" Value="True">
@@ -104,29 +93,24 @@
         <Setter Property="StrokeThickness" Value="1.25"/>
         <Setter Property="Stroke" Value="Black" />
         <Style.Triggers>
-            <DataTrigger Binding="{Binding IsHighlighted}" Value="True">
+            <DataTrigger Binding="{Binding IsSelected}" Value="True">
                 <Setter Property="Stroke" Value="#00FF00"/>
             </DataTrigger>
         </Style.Triggers>
     </Style>
 
-    <Style x:Key="LineCommentSymbol" TargetType="Line">
-        <Setter Property="StrokeThickness" Value="1"/>
-        <Setter Property="Stroke" Value="Black"/>
-    </Style>
-
     <Style x:Key="ArrowSymbol" TargetType="Polygon">
         <Setter Property="Fill" Value="Black" />
         <Style.Triggers>
-            <DataTrigger Binding="{Binding IsHighlighted}" Value="True">
+            <DataTrigger Binding="{Binding IsSelected}" Value="True">
                 <Setter Property="Fill" Value="#00FF00"/>
             </DataTrigger>
         </Style.Triggers>
     </Style>
 
     <Style x:Key="TextFieldLine" TargetType="TextBox">
-        <Setter Property="Canvas.Left" Value="{Binding LeftCoordinateTextField}" />
-        <Setter Property="Canvas.Top" Value="{Binding TopCoordinateTextField}" />
+        <Setter Property="Canvas.Left" Value="{Binding LeftOffsetTextField}" />
+        <Setter Property="Canvas.Top" Value="{Binding TopOffsetTextField}" />
         <Setter Property="Text" Value="{Binding Text}" />
         <Setter Property="Height" Value="{Binding HeightTextField}" />
         <Setter Property="Background" Value="Transparent" />

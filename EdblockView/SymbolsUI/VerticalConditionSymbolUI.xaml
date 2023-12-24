@@ -5,12 +5,11 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
              mc:Ignorable="d" 
-             d:DesignHeight="155" d:DesignWidth="300">
+             d:DesignHeight="155" d:DesignWidth="320">
     <StackPanel Orientation="Horizontal">
-        <Canvas Width="143" Height="155">
-
+        <Canvas Width="145" Height="155">
             <Polygon 
-                Points="0 30 70 60 140 30 70 0 0 30"
+                Points="70 60 140 30 70 0 0 30"
                 Fill="#FF60B2D3" />
 
             <TextBlock 
@@ -25,18 +24,18 @@
                 Y1="60"
                 X2="70"
                 Y2="150"
-                Style="{StaticResource LineSymbol}" />
+                Style="{StaticResource LineConditionSymbolUI}" />
 
             <Line 
                 X1="70"
                 Y1="90"
                 X2="140"
                 Y2="90"
-                Style="{StaticResource LineSymbol}" />
+                Style="{StaticResource LineConditionSymbolUI}" />
 
             <Ellipse 
                 Margin="135 86" 
-                Style="{StaticResource ConnectionPoint}" 
+                Style="{StaticResource ConnectionPointUI}" 
                 Fill="Black" />
 
             <Line 
@@ -44,11 +43,11 @@
                 Y1="120"
                 X2="140"
                 Y2="120"
-                Style="{StaticResource LineSymbol}" />
+                Style="{StaticResource LineConditionSymbolUI}" />
 
             <Ellipse
                 Margin="135 116" 
-                Style="{StaticResource ConnectionPoint}"
+                Style="{StaticResource ConnectionPointUI}"
                 Fill="Black"/>
 
             <Line 
@@ -56,14 +55,14 @@
                 Y1="150"
                 X2="140"
                 Y2="150"
-                Style="{StaticResource LineSymbol}" />
+                Style="{StaticResource LineConditionSymbolUI}" />
 
             <Ellipse 
                 Margin="135 146" 
-                Style="{StaticResource ConnectionPoint}"
+                Style="{StaticResource ConnectionPointUI}"
                 Fill="Black"/>
         </Canvas>
-        
+
         <StackPanel Margin="20 0 0 0" Height="70" Width="150">
             <Label 
                 Style="{StaticResource LabelSymbolMenu}"
@@ -75,5 +74,4 @@
                 materialDesign:HintAssist.Hint="Количесво линий" />
         </StackPanel>
     </StackPanel>
-    
 </UserControl>

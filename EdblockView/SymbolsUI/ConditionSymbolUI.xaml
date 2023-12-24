@@ -10,7 +10,8 @@
              d:DesignHeight="60" d:DesignWidth="300">
     <StackPanel Orientation="Horizontal">
         <Canvas
-            Style="{StaticResource FrameSymbol}">
+            Width="140" 
+            Height="60">
             <Polygon 
                 Points="0 30 70 60 140 30 70 0 0 30"
                 Fill="#FF60B2D3" />

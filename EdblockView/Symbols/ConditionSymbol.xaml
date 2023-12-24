@@ -9,8 +9,11 @@
              mc:Ignorable="d" 
              d:DesignHeight="60" d:DesignWidth="140">
     <Canvas MouseDown="Canvas_MouseDown">
-        <Polygon Style="{StaticResource SymbolByPolygon}"/>
-        <symbol:TextField Canvas.Top="{Binding TextField.TopOffset}" Canvas.Left="{Binding TextField.LeftOffset}"/>
+        <Polygon 
+            Style="{StaticResource SymbolByPolygon}"/>
+        <symbol:TextField 
+            Canvas.Top="{Binding TextField.TopOffset}" 
+            Canvas.Left="{Binding TextField.LeftOffset}"/>
         <symbol:ConnectionPoints/>
         <symbol:ScaleRectangles/>
     </Canvas>

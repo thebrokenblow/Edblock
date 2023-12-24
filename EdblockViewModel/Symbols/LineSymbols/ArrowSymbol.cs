@@ -21,13 +21,13 @@ public class ArrowSymbol : INotifyPropertyChanged
         }
     }
 
-    private bool isHighlighted;
-    public bool IsHighlighted
+    private bool isSelected;
+    public bool IsSelected
     {
-        get => isHighlighted;
+        get => isSelected;
         set
         {
-            isHighlighted = value;
+            isSelected = value;
             OnPropertyChanged();
         }
     }

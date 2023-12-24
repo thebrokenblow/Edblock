@@ -7,8 +7,9 @@
              mc:Ignorable="d" 
              d:DesignHeight="60" d:DesignWidth="300">
     <StackPanel Orientation="Horizontal">
-        <Canvas
-            Style="{StaticResource FrameSymbol}">
+        <Canvas            
+            Width="140" 
+            Height="60">
             <Polygon 
                 Fill="#FFC618" 
                 Points="10 0 0 10 0 50 10 60 130 60 140 50 140 10 130 0"/>

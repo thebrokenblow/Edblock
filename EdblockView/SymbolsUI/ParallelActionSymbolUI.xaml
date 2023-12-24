@@ -8,32 +8,34 @@
     <StackPanel Orientation="Horizontal">
         <Canvas
             Background="Transparent"
-            Style="{StaticResource FrameSymbol}">
+            Width="140" 
+            Height="60">
 
             <Line 
                 X1="0" 
                 Y1="20" 
                 X2="140" 
                 Y2="20" 
-                Style="{StaticResource LineCommentSymbol}" />
+                Style="{StaticResource LineParallelActionSymbolUI}" />
 
             <Ellipse
                 Margin="70 16"
                 Fill="Black"
-                Style="{StaticResource ConnectionPoint}"/>
+                Style="{StaticResource ConnectionPointUI}"/>
 
             <Line 
                 X1="0" 
                 Y1="40" 
                 X2="140" 
                 Y2="40" 
-                Style="{StaticResource LineCommentSymbol}" />
+                Style="{StaticResource LineParallelActionSymbolUI}" />
 
             <Ellipse
                 Margin="70 36"
                 Fill="Black"
-                Style="{StaticResource ConnectionPoint}"/>
+                Style="{StaticResource ConnectionPointUI}"/>
         </Canvas>
+        
         <Label 
             Content="Комментарий (12)"
             Margin="10 0 0 0"

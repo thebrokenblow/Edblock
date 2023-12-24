@@ -111,24 +111,24 @@ public class DrawnLineSymbolVM : SymbolVM
         }
     }
 
-    private double topCoordinateTextField;
-    public double TopCoordinateTextField
+    private double topOffsetTextField;
+    public double TopOffsetTextField
     {
-        get => topCoordinateTextField;
+        get => topOffsetTextField;
         set
         {
-            topCoordinateTextField = value;
+            topOffsetTextField = value;
             OnPropertyChanged();
         }
     }
 
-    private double leftCoordinateTextField;
-    public double LeftCoordinateTextField
+    private double leftOffsetTextField;
+    public double LeftOffsetTextField
     {
-        get => leftCoordinateTextField;
+        get => leftOffsetTextField;
         set
         {
-            leftCoordinateTextField = value;
+            leftOffsetTextField = value;
             OnPropertyChanged();
         }
     }
@@ -264,17 +264,17 @@ public class DrawnLineSymbolVM : SymbolVM
         var linesSymbolModel = DrawnLineSymbolModel.LinesSymbolModel;
         var firstLineSymbolModel = linesSymbolModel[0];
 
-        LeftCoordinateTextField = firstLineSymbolModel.X1;
-        TopCoordinateTextField = firstLineSymbolModel.Y1;
+        LeftOffsetTextField = firstLineSymbolModel.X1;
+        TopOffsetTextField = firstLineSymbolModel.Y1;
 
         if (OutgoingPosition != PositionConnectionPoint.Bottom)
         {
-            TopCoordinateTextField -= heightTextField;
+            TopOffsetTextField -= heightTextField;
         }
 
         if (OutgoingPosition == PositionConnectionPoint.Left)
         {
-            LeftCoordinateTextField -= widthTextField;
+            LeftOffsetTextField -= widthTextField;
         }
     }
 
@@ -293,10 +293,10 @@ public class DrawnLineSymbolVM : SymbolVM
     {
         foreach (var lineSymbol in LinesSymbolVM)
         {
-            lineSymbol.IsHighlighted = status;
+            lineSymbol.IsSelected = status;
         }
 
-        ArrowSymbol.IsHighlighted = status;
+        ArrowSymbol.IsSelected = status;
     }
 
     public void RedrawPartLines()

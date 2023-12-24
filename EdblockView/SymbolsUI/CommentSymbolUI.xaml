@@ -8,49 +8,50 @@
     <StackPanel Orientation="Horizontal">
         <Canvas
             Background="Transparent"
-            Style="{StaticResource FrameSymbol}">
+            Width="140"
+            Height="60">
 
             <Line 
                 X1="0" 
                 Y1="30" 
                 X2="20" 
                 Y2="30" 
-                Style="{StaticResource LineCommentSymbol}" />
+                Style="{StaticResource LineCommentSymbolUI}" />
 
             <Line 
                 X1="30" 
                 Y1="30" 
                 X2="60" 
                 Y2="30" 
-                Style="{StaticResource LineCommentSymbol}" />
+                Style="{StaticResource LineCommentSymbolUI}" />
     
             <Line 
                 X1="70" 
                 Y1="30"
                 X2="90" 
                 Y2="30" 
-                Style="{StaticResource LineCommentSymbol}" />
+                Style="{StaticResource LineCommentSymbolUI}" />
 
             <Line 
                 X1="90" 
                 Y1="0" 
                 X2="90" 
                 Y2="60" 
-                Style="{StaticResource LineCommentSymbol}"/>
+                Style="{StaticResource LineCommentSymbolUI}"/>
 
             <Line 
                 X1="90" 
                 Y1="0"
                 X2="110"
                 Y2="0" 
-                Style="{StaticResource LineCommentSymbol}"/>
+                Style="{StaticResource LineCommentSymbolUI}"/>
 
             <Line
                 X1="90" 
                 Y1="60" 
                 X2="110" 
                 Y2="60"
-                Style="{StaticResource LineCommentSymbol}"/>
+                Style="{StaticResource LineCommentSymbolUI}"/>
         </Canvas>
 
         <Label 

@@ -11,10 +11,6 @@ public class ActionSymbolVM : BlockSymbolVM
     public ActionSymbolVM(EdblockVM edblockVM) : base(edblockVM)
     {
         Color = defaultColor;
-
-        TextField.Width = Width;
-        TextField.Height = Height;
-
         TextField.Text = defaultText;
     }
 

@@ -15,7 +15,8 @@
             Height="{Binding Height}" 
             Background="{Binding Color}"
             MouseDown="MouseDownOnSymbol">
-            <symbol:TextField/>
+            <symbol:TextField Canvas.Top="{Binding TextField.TopOffset}" 
+                              Canvas.Left="{Binding TextField.LeftOffset}"/>
             <symbol:ConnectionPoints/>
             <symbol:ScaleRectangles/>
         </Canvas>

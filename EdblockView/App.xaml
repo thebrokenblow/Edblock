@@ -5,7 +5,8 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Styles/StyleSymbol.xaml" />
+                <ResourceDictionary Source="Styles/StyleSymbolView.xaml" />
+                <ResourceDictionary Source="Styles/StyleSymbolUI.xaml" />
                 <ResourceDictionary Source="Styles/SettingsMenu.xaml" />
                 <ResourceDictionary Source="Styles/StyleMenu.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
