@@ -142,6 +142,28 @@ public class TextFieldVM : INotifyPropertyChanged
         }
     }
 
+    private int leftOffset;
+    public int LeftOffset
+    {
+        get => leftOffset;
+        set
+        {
+            leftOffset = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private int topOffset;
+    public int TopOffset
+    {
+        get => topOffset;
+        set
+        {
+            topOffset = value;
+            OnPropertyChanged();
+        }
+    }
+
     public DelegateCommand MouseDoubleClick { get; init; }
     public DelegateCommand MouseLeftButtonDown { get; init; }
 

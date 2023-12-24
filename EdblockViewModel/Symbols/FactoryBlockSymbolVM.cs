@@ -19,7 +19,8 @@ internal class FactoryBlockSymbolVM
 
         instanceSymbolByName = new()
         {
-            { "ActionSymbol", _ => new ActionSymbol(edblockVM) }
+            { "ActionSymbol", _ => new ActionSymbolVM(edblockVM) },
+            { "ConditionSymbol", _ => new ConditionSymbolVM(edblockVM) }
         };
     }
 
@@ -54,13 +55,19 @@ internal class FactoryBlockSymbolVM
         blockSymbolVM.XCoordinate = blockSymbolSerializable.XCoordinate;
         blockSymbolVM.YCoordinate = blockSymbolSerializable.YCoordinate;
 
-        blockSymbolVM.TextField.Text = blockSymbolSerializable.TextFieldSerializable.Text;
-        blockSymbolVM.TextField.FontFamily = blockSymbolSerializable.TextFieldSerializable.FontFamily;
-        blockSymbolVM.TextField.FontSize = blockSymbolSerializable.TextFieldSerializable.FontSize;
-        blockSymbolVM.TextField.TextAlignment = blockSymbolSerializable.TextFieldSerializable.TextAlignment;
-        blockSymbolVM.TextField.FontWeight = blockSymbolSerializable.TextFieldSerializable.FontWeight;
-        blockSymbolVM.TextField.FontStyle = blockSymbolSerializable.TextFieldSerializable.FontStyle;
-        blockSymbolVM.TextField.TextDecorations = blockSymbolSerializable.TextFieldSerializable.TextDecorations;
+        var textField = blockSymbolVM.TextField;
+        var textFieldSerializable = blockSymbolSerializable.TextFieldSerializable;
+
+        if (textFieldSerializable != null)
+        {
+            textField.Text = textFieldSerializable.Text;
+            textField.FontFamily = textFieldSerializable.FontFamily;
+            textField.FontSize = textFieldSerializable.FontSize;
+            textField.TextAlignment = textFieldSerializable.TextAlignment;
+            textField.FontWeight = textFieldSerializable.FontWeight;
+            textField.FontStyle = textFieldSerializable.FontStyle;
+            textField.TextDecorations = textFieldSerializable.TextDecorations;
+        }
 
         return blockSymbolVM;
     }

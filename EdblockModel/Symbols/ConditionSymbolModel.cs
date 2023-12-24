@@ -1,24 +1,24 @@
 ﻿namespace EdblockModel.Symbols;
 
-public class ActionSymbolModel : BlockSymbolModel
+public class ConditionSymbolModel : BlockSymbolModel
 {
     public override int GetTextFieldWidth()
     {
-        return Width;
+        return Width / 2;
     }
 
     public override int GetTextFieldHeight()
     {
-        return Height;
+        return Height / 2;
     }
 
     public override int GetTextFieldLeftOffset()
     {
-        return 0;
+        return Width / 4;
     }
 
     public override int GetTextFieldTopOffset()
     {
-        return 0;
+        return Height / 4;
     }
 }

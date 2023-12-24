@@ -15,8 +15,11 @@
     <Grid>
         <ItemsControl ItemsSource="{Binding SymbolsVM}">
             <ItemsControl.Resources>
-                <DataTemplate DataType="{x:Type symbolsVM:ActionSymbol}">
+                <DataTemplate DataType="{x:Type symbolsVM:ActionSymbolVM}">
                     <symbols:ActionSymbol/>
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type symbolsVM:ConditionSymbolVM}">
+                    <symbols:ConditionSymbol/>
                 </DataTemplate>
                 <DataTemplate DataType="{x:Type symbolLineVM:DrawnLineSymbolVM}">
                     <symbols:LineSymbol/>

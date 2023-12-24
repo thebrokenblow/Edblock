@@ -3,12 +3,12 @@ using EdblockViewModel.Symbols.Abstraction;
 
 namespace EdblockViewModel.Symbols;
 
-public class ActionSymbol : BlockSymbolVM
+public class ActionSymbolVM : BlockSymbolVM
 {
     private const string defaultText = "Действие";
     private const string defaultColor = "#FF52C0AA";
 
-    public ActionSymbol(EdblockVM edblockVM) : base(edblockVM)
+    public ActionSymbolVM(EdblockVM edblockVM) : base(edblockVM)
     {
         Color = defaultColor;
 
@@ -22,6 +22,7 @@ public class ActionSymbol : BlockSymbolVM
     {
         TextField.Width = width;
         BlockSymbolModel.Width = width;
+
         ChangeCoordinateAuxiliaryElements();
     }
 

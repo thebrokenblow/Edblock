@@ -4,7 +4,8 @@ public class FactoryBlockSymbolModel
 {
     private readonly static Dictionary<string, Func<string, BlockSymbolModel>> instanceSymbolByName = new()
     {
-        { "ActionSymbol", _ => new ActionSymbolModel() { Id = _id, NameSymbol = _nameBlockSymbol, Color = _color} }
+        { "ActionSymbolVM", _ => new ActionSymbolModel() { Id = _id, NameSymbol = _nameBlockSymbol, Color = _color} },
+        { "ConditionSymbolVM", _ => new ConditionSymbolModel() { Id = _id, NameSymbol = _nameBlockSymbol, Color = _color} }
     };
 
     private static string? _id;

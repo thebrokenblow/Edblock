@@ -14,7 +14,7 @@
             <Polygon 
                 Points="0 30 70 60 140 30 70 0 0 30"
                 Fill="#FF60B2D3" />
-            
+
             <TextBlock 
                 Style="{StaticResource TextFieldUI}"
                 Canvas.Top="20"
@@ -27,11 +27,6 @@
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </TextBlock>
-            <i:Interaction.Triggers>
-                <i:EventTrigger EventName="MouseLeftButtonDown">
-                    <i:InvokeCommandAction Command="{Binding ClickSymbol}" CommandParameter="ConditionSymbol"/>
-                </i:EventTrigger>
-            </i:Interaction.Triggers>
         </Canvas>
 
         <Label 
