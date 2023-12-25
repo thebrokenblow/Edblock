@@ -1,4 +1,6 @@
-﻿using EdblockModel.Symbols.Enum;
+﻿using EdblockModel.SymbolsModel;
+using EdblockModel.SymbolsModel.Enum;
+using EdblockModel.SymbolsModel.LineSymbols;
 
 namespace EdblockModel.Symbols.LineSymbols;
 

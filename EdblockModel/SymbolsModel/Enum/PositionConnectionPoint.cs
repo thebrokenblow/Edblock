@@ -1,4 +1,4 @@
-﻿namespace EdblockModel.Symbols.Enum;
+﻿namespace EdblockModel.SymbolsModel.Enum;
 
 public enum PositionConnectionPoint
 {

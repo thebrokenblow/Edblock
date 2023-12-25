@@ -1,6 +1,6 @@
-﻿using EdblockModel.Symbols.Enum;
+﻿using EdblockModel.SymbolsModel.Enum;
 
-namespace EdblockModel.Symbols.LineSymbols;
+namespace EdblockModel.SymbolsModel.LineSymbols;
 
 public class ArrowSymbolModel
 {

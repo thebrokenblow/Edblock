@@ -1,7 +1,7 @@
 ﻿using Prism.Commands;
 using System.Windows.Input;
-using EdblockModel.Symbols;
 using System.ComponentModel;
+using EdblockModel.SymbolsModel;
 using EdblockViewModel.ComponentsVM;
 using System.Collections.ObjectModel;
 using System.Runtime.CompilerServices;

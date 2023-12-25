@@ -1,4 +1,4 @@
-﻿namespace EdblockModel.Symbols.LineSymbols.DecoratorLineSymbols;
+﻿namespace EdblockModel.SymbolsModel.LineSymbols.DecoratorLineSymbols;
 
 public class BuilderCoordinateDecorator
 {

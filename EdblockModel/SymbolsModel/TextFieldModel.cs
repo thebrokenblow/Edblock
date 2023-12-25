@@ -1,4 +1,4 @@
-﻿namespace EdblockModel.Symbols;
+﻿namespace EdblockModel.SymbolsModel;
 
 public class TextFieldModel
 {

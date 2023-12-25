@@ -4,13 +4,13 @@ using System.Windows;
 using EdblockModel.Symbols;
 using System.Windows.Input;
 using System.ComponentModel;
-using EdblockModel.Symbols.Enum;
 using System.Collections.Generic;
 using EdblockViewModel.ComponentsVM;
 using System.Runtime.CompilerServices;
-using EdblockModel.Symbols.LineSymbols;
 using EdblockViewModel.Symbols.LineSymbols;
 using EdblockViewModel.Symbols.Abstraction;
+using EdblockModel.SymbolsModel.Enum;
+using EdblockModel.SymbolsModel.LineSymbols;
 
 namespace EdblockViewModel.Symbols.ConnectionPoints;
 

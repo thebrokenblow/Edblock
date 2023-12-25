@@ -1,4 +1,6 @@
-﻿namespace EdblockModel.Symbols;
+﻿using EdblockModel.SymbolsModel;
+
+namespace EdblockModel.SymbolsModel;
 
 public class StartEndSymbolModel : BlockSymbolModel
 {

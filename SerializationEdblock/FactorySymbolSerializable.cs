@@ -1,5 +1,6 @@
-﻿using EdblockModel.Symbols;
+﻿using EdblockModel.SymbolsModel;
 using EdblockModel.Symbols.LineSymbols;
+using EdblockModel.SymbolsModel.LineSymbols;
 
 namespace SerializationEdblock;
 

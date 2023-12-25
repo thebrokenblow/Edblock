@@ -4,6 +4,7 @@ using EdblockViewModel.ComponentsVM;
 using EdblockModel.Symbols.LineSymbols;
 using EdblockViewModel.Symbols.Abstraction;
 using EdblockViewModel.Symbols.LineSymbols;
+using EdblockModel.SymbolsModel.LineSymbols;
 
 namespace EdblockViewModel.Symbols;
 

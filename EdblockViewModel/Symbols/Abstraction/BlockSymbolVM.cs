@@ -1,10 +1,10 @@
 ﻿using System;
 using Prism.Commands;
 using System.Windows.Input;
-using EdblockModel.Symbols;
-using EdblockModel.Symbols.Enum;
 using System.Collections.Generic;
 using EdblockViewModel.ComponentsVM;
+using EdblockModel.SymbolsModel;
+using EdblockModel.SymbolsModel.Enum;
 using EdblockViewModel.Symbols.ScaleRectangles;
 using EdblockViewModel.Symbols.ConnectionPoints;
 

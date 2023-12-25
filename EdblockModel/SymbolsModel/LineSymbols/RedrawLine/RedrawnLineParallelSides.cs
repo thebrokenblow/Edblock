@@ -1,7 +1,8 @@
-﻿using EdblockModel.Symbols.Enum;
-using EdblockModel.Symbols.LineSymbols.DecoratorLineSymbols;
+﻿using EdblockModel.SymbolsModel.Enum;
+using EdblockModel.Symbols.LineSymbols;
+using EdblockModel.SymbolsModel.LineSymbols.DecoratorLineSymbols;
 
-namespace EdblockModel.Symbols.LineSymbols.RedrawLine;
+namespace EdblockModel.SymbolsModel.LineSymbols.RedrawLine;
 
 internal class RedrawnLineParallelSides
 {

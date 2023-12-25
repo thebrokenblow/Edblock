@@ -1,10 +1,10 @@
 ﻿using System.Windows;
 using System.Windows.Media;
-using EdblockModel.Symbols.Enum;
 using System.Collections.Generic;
-using EdblockModel.Symbols.LineSymbols;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using EdblockModel.SymbolsModel.Enum;
+using EdblockModel.SymbolsModel.LineSymbols;
 
 namespace EdblockViewModel.Symbols.LineSymbols;
 

@@ -1,6 +1,6 @@
-﻿using EdblockModel.Symbols.Enum;
+﻿using EdblockModel.SymbolsModel.Enum;
 
-namespace EdblockModel.Symbols;
+namespace EdblockModel.SymbolsModel;
 
 public abstract class BlockSymbolModel
 {

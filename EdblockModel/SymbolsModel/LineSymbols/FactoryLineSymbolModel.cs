@@ -1,4 +1,4 @@
-﻿namespace EdblockModel.Symbols.LineSymbols;
+﻿namespace EdblockModel.SymbolsModel.LineSymbols;
 
 public class FactoryLineSymbolModel
 {
