@@ -11,10 +11,9 @@
     <Canvas MouseDown="Canvas_MouseDown">
         <Polygon 
             Style="{StaticResource SymbolByPolygonView}"/>
-        <symbolView:TextFieldView 
-            Canvas.Top="{Binding TextField.TopOffset}" 
-            Canvas.Left="{Binding TextField.LeftOffset}"/>
-        <symbolView:ConnectionPointsView/>
-        <symbolView:ScaleRectanglesView/>
+        
+        <symbolView:TextFieldView />
+        <symbolView:ConnectionPointsView />
+        <symbolView:ScaleRectanglesView />
     </Canvas>
 </UserControl>

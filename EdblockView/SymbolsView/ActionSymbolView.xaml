@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"  
-             xmlns:symbol="clr-namespace:EdblockView.SymbolsView" 
+             xmlns:symbolView="clr-namespace:EdblockView.SymbolsView" 
              xmlns:symbolVM="clr-namespace:EdblockViewModel.Symbols;assembly=EdblockViewModel" 
              d:DataContext="{d:DesignInstance Type=symbolVM:ActionSymbolVM}"
              mc:Ignorable="d" 
@@ -15,11 +15,10 @@
             Height="{Binding Height}" 
             Background="{Binding Color}"
             MouseDown="MouseDownOnSymbol">
-            <symbol:TextFieldView 
-                Canvas.Top="{Binding TextField.TopOffset}" 
-                Canvas.Left="{Binding TextField.LeftOffset}"/>
-            <symbol:ConnectionPointsView/>
-            <symbol:ScaleRectanglesView/>
+            
+            <symbolView:TextFieldView />
+            <symbolView:ConnectionPointsView />
+            <symbolView:ScaleRectanglesView />
         </Canvas>
     </Border>
 </UserControl>

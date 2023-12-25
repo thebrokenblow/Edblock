@@ -5,26 +5,29 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:edblockViewModel="clr-namespace:EdblockViewModel;assembly=EdblockViewModel"      
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors" 
+             xmlns:componentsVM="clr-namespace:EdblockViewModel.ComponentsVM;assembly=EdblockViewModel"
+             xmlns:blockSymbolView="clr-namespace:EdblockView.SymbolsView"
              xmlns:blockSymbolsVM="clr-namespace:EdblockViewModel.Symbols;assembly=EdblockViewModel"   
-             xmlns:lineSymbolsVM="clr-namespace:EdblockViewModel.Symbols.LineSymbols;assembly=EdblockViewModel"   
-             xmlns:componentsvm="clr-namespace:EdblockViewModel.ComponentsVM;assembly=EdblockViewModel"
-             xmlns:symbolsview="clr-namespace:EdblockView.SymbolsView"
-             d:DataContext="{d:DesignInstance Type=componentsvm:CanvasSymbolsVM}"
+             xmlns:lineSymbolView="clr-namespace:EdblockView.SymbolsView.LineSymbolView"
+             xmlns:lineSymbolsVM="clr-namespace:EdblockViewModel.Symbols.LineSymbols;assembly=EdblockViewModel"
+             d:DataContext="{d:DesignInstance Type=componentsVM:CanvasSymbolsVM}"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <ItemsControl ItemsSource="{Binding SymbolsVM}">
             <ItemsControl.Resources>
-                <!--<DataTemplate DataType="{x:Type blockSymbolsVM:ActionSymbolVM}">
-                    <symbolsview:ActionSymbolView/>
+                <DataTemplate DataType="{x:Type blockSymbolsVM:ActionSymbolVM}">
+                    <blockSymbolView:ActionSymbolView/>
                 </DataTemplate>
                 <DataTemplate DataType="{x:Type blockSymbolsVM:ConditionSymbolVM}">
-                    <symbolsview:ConditionSymbolView/>
+                    <blockSymbolView:ConditionSymbolView/>
                 </DataTemplate>
                 <DataTemplate DataType="{x:Type blockSymbolsVM:StartEndSymbolVM}">
-                    <symbolsview:StartEndSymbolView/>
-                </DataTemplate>-->
-              
+                    <blockSymbolView:StartEndSymbolView/>
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type lineSymbolsVM:DrawnLineSymbolVM}">
+                    <lineSymbolView:DrawnLineSymbolView/>
+                </DataTemplate>
             </ItemsControl.Resources>
             <ItemsControl.Template>
                 <ControlTemplate>
