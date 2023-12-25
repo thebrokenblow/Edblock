@@ -1,7 +1,7 @@
 ﻿using EdblockModel.SymbolsModel.Enum;
-using EdblockModel.SymbolsModel.LineSymbolsModel.DecoratorLineSymbols;
+using EdblockModel.SymbolsModel.LineSymbolsModel.DecoratorLineSymbolsModel;
 
-namespace EdblockModel.SymbolsModel.LineSymbolsModel.RedrawLine;
+namespace EdblockModel.SymbolsModel.LineSymbolsModel.RedrawnLineSymbolsModel;
 
 public class RedrawnLine
 {
@@ -114,15 +114,15 @@ public class RedrawnLine
 
     private bool IsParallel()
     {
-        bool istParallel = 
-            (_positionOutgoing == PositionConnectionPoint.Bottom && _positionIncoming == PositionConnectionPoint.Top) ||
-            (_positionOutgoing == PositionConnectionPoint.Top && _positionIncoming == PositionConnectionPoint.Bottom) ||
-            (_positionOutgoing == PositionConnectionPoint.Right && _positionIncoming == PositionConnectionPoint.Left) ||
-            (_positionOutgoing == PositionConnectionPoint.Left && _positionIncoming == PositionConnectionPoint.Right) ||
-            (_positionOutgoing == PositionConnectionPoint.Left && _positionIncoming == PositionConnectionPoint.Left) ||
-            (_positionOutgoing == PositionConnectionPoint.Right && _positionIncoming == PositionConnectionPoint.Right) ||
-            (_positionOutgoing == PositionConnectionPoint.Top && _positionIncoming == PositionConnectionPoint.Top) ||
-            (_positionOutgoing == PositionConnectionPoint.Bottom && _positionIncoming == PositionConnectionPoint.Bottom);
+        bool istParallel =
+            _positionOutgoing == PositionConnectionPoint.Bottom && _positionIncoming == PositionConnectionPoint.Top ||
+            _positionOutgoing == PositionConnectionPoint.Top && _positionIncoming == PositionConnectionPoint.Bottom ||
+            _positionOutgoing == PositionConnectionPoint.Right && _positionIncoming == PositionConnectionPoint.Left ||
+            _positionOutgoing == PositionConnectionPoint.Left && _positionIncoming == PositionConnectionPoint.Right ||
+            _positionOutgoing == PositionConnectionPoint.Left && _positionIncoming == PositionConnectionPoint.Left ||
+            _positionOutgoing == PositionConnectionPoint.Right && _positionIncoming == PositionConnectionPoint.Right ||
+            _positionOutgoing == PositionConnectionPoint.Top && _positionIncoming == PositionConnectionPoint.Top ||
+            _positionOutgoing == PositionConnectionPoint.Bottom && _positionIncoming == PositionConnectionPoint.Bottom;
 
         return istParallel;
     }

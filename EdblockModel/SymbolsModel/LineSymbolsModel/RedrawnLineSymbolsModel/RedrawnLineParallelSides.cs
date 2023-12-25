@@ -1,7 +1,7 @@
 ﻿using EdblockModel.SymbolsModel.Enum;
-using EdblockModel.SymbolsModel.LineSymbolsModel.DecoratorLineSymbols;
+using EdblockModel.SymbolsModel.LineSymbolsModel.DecoratorLineSymbolsModel;
 
-namespace EdblockModel.SymbolsModel.LineSymbolsModel.RedrawLine;
+namespace EdblockModel.SymbolsModel.LineSymbolsModel.RedrawnLineSymbolsModel;
 
 internal class RedrawnLineParallelSides
 {
@@ -32,7 +32,7 @@ internal class RedrawnLineParallelSides
     {
         var builderCoordinateDecorator = new BuilderCoordinateDecorator();
 
-        if ((_positionOutgoing == PositionConnectionPoint.Right && _positionIncoming == PositionConnectionPoint.Left) ||
+        if (_positionOutgoing == PositionConnectionPoint.Right && _positionIncoming == PositionConnectionPoint.Left ||
             _positionOutgoing == PositionConnectionPoint.Left && _positionIncoming == PositionConnectionPoint.Right)
         {
             builderCoordinateDecorator = builderCoordinateDecorator.SetSwap();
@@ -63,10 +63,10 @@ internal class RedrawnLineParallelSides
         (coordinateSymbolOutgoing, coordinateSymbolIncoming) =
                 RedrawnLine.SetBuilderCoordinate(coordinateSymbolOutgoing, coordinateSymbolIncoming, _builderCoordinateDecorator);
 
-        if ((_positionOutgoing == PositionConnectionPoint.Bottom && _positionIncoming == PositionConnectionPoint.Top) ||
-            (_positionOutgoing == PositionConnectionPoint.Top && _positionIncoming == PositionConnectionPoint.Bottom) ||
-            (_positionOutgoing == PositionConnectionPoint.Right && _positionIncoming == PositionConnectionPoint.Left) ||
-            (_positionOutgoing == PositionConnectionPoint.Left && _positionIncoming == PositionConnectionPoint.Right))
+        if (_positionOutgoing == PositionConnectionPoint.Bottom && _positionIncoming == PositionConnectionPoint.Top ||
+            _positionOutgoing == PositionConnectionPoint.Top && _positionIncoming == PositionConnectionPoint.Bottom ||
+            _positionOutgoing == PositionConnectionPoint.Right && _positionIncoming == PositionConnectionPoint.Left ||
+            _positionOutgoing == PositionConnectionPoint.Left && _positionIncoming == PositionConnectionPoint.Right)
         {
             ChooseWayRedrawDifferentSides(coordinateSymbolOutgoing, coordinateSymbolIncoming, borderCoordinateOutgoingSymbol, borderCoordinateIncomingSymbol);
         }
@@ -74,11 +74,11 @@ internal class RedrawnLineParallelSides
         {
             _redrawLine.ChangeCountLines(linesOneDifferentPositions, _builderCoordinateDecorator);
 
-            (var firstCoordinateLineIncrement, var secondCoordinateLineIncrement) = 
+            (var firstCoordinateLineIncrement, var secondCoordinateLineIncrement) =
                 GetVerticalCoordinateLineIncrement(coordinateSymbolOutgoing, coordinateSymbolIncoming);
 
-            if ((_positionOutgoing == PositionConnectionPoint.Left && _positionIncoming == PositionConnectionPoint.Left) ||
-                (_positionOutgoing == PositionConnectionPoint.Right && _positionIncoming == PositionConnectionPoint.Right))
+            if (_positionOutgoing == PositionConnectionPoint.Left && _positionIncoming == PositionConnectionPoint.Left ||
+                _positionOutgoing == PositionConnectionPoint.Right && _positionIncoming == PositionConnectionPoint.Right)
             {
                 (firstCoordinateLineIncrement, secondCoordinateLineIncrement) =
                     GetHorizontalCoordinateLineIncrement(coordinateSymbolOutgoing, coordinateSymbolIncoming);
@@ -151,7 +151,7 @@ internal class RedrawnLineParallelSides
     }
 
     private void SetCoordinatesLastLine(
-        (int x, int y) borderCoordinateOutgoingSymbol, 
+        (int x, int y) borderCoordinateOutgoingSymbol,
         (int x, int y) borderCoordinateIncomingSymbol)
     {
         var firstLine = _decoratedCoordinatesLines[^1];
@@ -164,7 +164,7 @@ internal class RedrawnLineParallelSides
     }
 
     private void SetCoordinatesOneDifferentPositions(
-        ICoordinateDecorator coordinateSymbolOutgoing, 
+        ICoordinateDecorator coordinateSymbolOutgoing,
         ICoordinateDecorator coordinateSymbolIncoming)
     {
         var firstLine = _decoratedCoordinatesLines[0];
@@ -193,9 +193,9 @@ internal class RedrawnLineParallelSides
     }
 
     private void SetCoordinatesIdenticalSides(
-        ICoordinateDecorator coordinateSymbolOutgoing, 
+        ICoordinateDecorator coordinateSymbolOutgoing,
         ICoordinateDecorator coordinateSymbolIncoming,
-        (int x, int y) coordinateFirstLine, 
+        (int x, int y) coordinateFirstLine,
         (int x, int y) coordinateSecondLine)
     {
         var firstLine = _decoratedCoordinatesLines[0];

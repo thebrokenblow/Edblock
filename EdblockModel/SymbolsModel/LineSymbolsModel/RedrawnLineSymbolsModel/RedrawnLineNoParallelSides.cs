@@ -1,7 +1,7 @@
 ﻿using EdblockModel.SymbolsModel.Enum;
-using EdblockModel.SymbolsModel.LineSymbolsModel.DecoratorLineSymbols;
+using EdblockModel.SymbolsModel.LineSymbolsModel.DecoratorLineSymbolsModel;
 
-namespace EdblockModel.SymbolsModel.LineSymbolsModel.RedrawLine;
+namespace EdblockModel.SymbolsModel.LineSymbolsModel.RedrawnLineSymbolsModel;
 
 internal class RedrawnLineNoParallelSides
 {
@@ -25,7 +25,7 @@ internal class RedrawnLineNoParallelSides
 
         _redrawLine = redrawLine;
         _baseLineOffset = baseLineOffset;
-       
+
         _builderCoordinateDecorator = new BuilderCoordinateDecorator();
 
         if (_positionIncoming == PositionConnectionPoint.Bottom || _positionOutgoing == PositionConnectionPoint.Bottom)
@@ -44,15 +44,15 @@ internal class RedrawnLineNoParallelSides
 
         int horizontalOffsetLine = GetHorizontalOffsetLine();
 
-        if ((_positionOutgoing == PositionConnectionPoint.Top && _positionIncoming == PositionConnectionPoint.Right) ||
-            (_positionOutgoing == PositionConnectionPoint.Top && _positionIncoming == PositionConnectionPoint.Left) ||
-            (_positionOutgoing == PositionConnectionPoint.Bottom && _positionIncoming == PositionConnectionPoint.Left) ||
-            (_positionOutgoing == PositionConnectionPoint.Bottom && _positionIncoming == PositionConnectionPoint.Right))
+        if (_positionOutgoing == PositionConnectionPoint.Top && _positionIncoming == PositionConnectionPoint.Right ||
+            _positionOutgoing == PositionConnectionPoint.Top && _positionIncoming == PositionConnectionPoint.Left ||
+            _positionOutgoing == PositionConnectionPoint.Bottom && _positionIncoming == PositionConnectionPoint.Left ||
+            _positionOutgoing == PositionConnectionPoint.Bottom && _positionIncoming == PositionConnectionPoint.Right)
         {
             ChangeLines(coordinateSymbolOutgoing, coordinateSymbolIncoming, horizontalOffsetLine);
         }
         else
-        { 
+        {
             ChangeLines(coordinateSymbolIncoming, coordinateSymbolOutgoing, horizontalOffsetLine);
             _redrawLine.ReverseCoordinateLine();
         }
@@ -74,10 +74,10 @@ internal class RedrawnLineNoParallelSides
 
     private int GetHorizontalOffsetLine()
     {
-        if ((_positionOutgoing == PositionConnectionPoint.Top && _positionIncoming == PositionConnectionPoint.Right) ||
-            (_positionOutgoing == PositionConnectionPoint.Left && _positionIncoming == PositionConnectionPoint.Top) ||
-            (_positionOutgoing == PositionConnectionPoint.Bottom && _positionIncoming == PositionConnectionPoint.Right) ||
-            (_positionOutgoing == PositionConnectionPoint.Left && _positionIncoming == PositionConnectionPoint.Bottom))
+        if (_positionOutgoing == PositionConnectionPoint.Top && _positionIncoming == PositionConnectionPoint.Right ||
+            _positionOutgoing == PositionConnectionPoint.Left && _positionIncoming == PositionConnectionPoint.Top ||
+            _positionOutgoing == PositionConnectionPoint.Bottom && _positionIncoming == PositionConnectionPoint.Right ||
+            _positionOutgoing == PositionConnectionPoint.Left && _positionIncoming == PositionConnectionPoint.Bottom)
         {
             int horizontalOffsetLine = _symbolOutgoingLine.XCoordinate - _baseLineOffset;
 

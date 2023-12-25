@@ -1,13 +1,13 @@
 ﻿using System.Linq;
 using Prism.Commands;
 using System.Collections.Generic;
-using EdblockViewModel.ComponentsVM;
 using System.Collections.ObjectModel;
+using EdblockViewModel.ComponentsVM;
 using EdblockViewModel.Symbols.Abstraction;
 using EdblockViewModel.Symbols.ConnectionPoints;
 using EdblockModel.SymbolsModel.Enum;
 using EdblockModel.SymbolsModel.LineSymbolsModel;
-using EdblockModel.SymbolsModel.LineSymbolsModel.RedrawLine;
+using EdblockModel.SymbolsModel.LineSymbolsModel.RedrawnLineSymbolsModel;
 
 namespace EdblockViewModel.Symbols.LineSymbols;
 
