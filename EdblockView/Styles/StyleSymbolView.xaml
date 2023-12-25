@@ -47,6 +47,8 @@
         <Setter Property="Height" Value="{Binding TextField.Height}" />
         <Setter Property="Cursor" Value="{Binding TextField.Cursor}" />
         <Setter Property="Focusable" Value="{Binding TextField.Focusable}" />
+        <Setter Property="Canvas.Left" Value="{Binding TextField.LeftOffset}" />
+        <Setter Property="Canvas.Top" Value="{Binding TextField.TopOffset}" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Foreground" Value="White" />
         <Setter Property="TextWrapping" Value="Wrap" />
@@ -56,6 +58,20 @@
             <Trigger Property="Focusable" Value="true">
                 <Setter Property="BorderBrush" Value="Transparent"/>
             </Trigger>
+        </Style.Triggers>
+    </Style>
+
+
+    <Style x:Key="TextFieldLineView" TargetType="TextBox">
+        <Setter Property="Text" Value="{Binding Text, UpdateSourceTrigger=PropertyChanged}" />
+        <Setter Property="Height" Value="{Binding HeightTextField}" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="Visibility" Value="Hidden" />
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding IsShowTextField}" Value="True">
+                <Setter Property="Visibility" Value="Visible"/>
+            </DataTrigger>
         </Style.Triggers>
     </Style>
 
@@ -118,21 +134,6 @@
         <Style.Triggers>
             <DataTrigger Binding="{Binding IsSelected}" Value="True">
                 <Setter Property="Fill" Value="#00FF00"/>
-            </DataTrigger>
-        </Style.Triggers>
-    </Style>
-
-    <Style x:Key="TextFieldLineView" TargetType="TextBox">
-        <Setter Property="Canvas.Left" Value="{Binding LeftOffsetTextField}" />
-        <Setter Property="Canvas.Top" Value="{Binding TopOffsetTextField}" />
-        <Setter Property="Text" Value="{Binding Text}" />
-        <Setter Property="Height" Value="{Binding HeightTextField}" />
-        <Setter Property="Background" Value="Transparent" />
-        <Setter Property="BorderBrush" Value="Transparent" />
-        <Setter Property="Visibility" Value="Hidden" />
-        <Style.Triggers>
-            <DataTrigger Binding="{Binding IsShowTextField}" Value="True">
-                <Setter Property="Visibility" Value="Visible"/>
             </DataTrigger>
         </Style.Triggers>
     </Style>

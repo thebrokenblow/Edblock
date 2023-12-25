@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace EdblockView.SymbolsView.LineSymbol;
+namespace EdblockView.SymbolsView.LineSymbolView;
 
 /// <summary>
 /// Логика взаимодействия для ArrowSymbolView.xaml

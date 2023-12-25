@@ -9,9 +9,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Canvas>
-        <TextBox Style="{StaticResource TextFieldView}" 
-                 Canvas.Top="{Binding TextField.TopOffset}" 
-                 Canvas.Left="{Binding TextField.LeftOffset}">
+        <TextBox Style="{StaticResource TextFieldView}">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="MouseLeftButtonDown">
                     <i:InvokeCommandAction Command="{Binding TextField.MouseLeftButtonDown}"/>

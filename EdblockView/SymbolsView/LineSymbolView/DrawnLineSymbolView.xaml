@@ -5,9 +5,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors" 
              xmlns:edblockVM="clr-namespace:EdblockView;assembly=EdblockViewModel" 
-             xmlns:linesymbols="clr-namespace:EdblockViewModel.Symbols.LineSymbols;assembly=EdblockViewModel" 
-             xmlns:linesymbol="clr-namespace:EdblockView.SymbolsView.LineSymbol"
-             d:DataContext="{d:DesignInstance Type=linesymbols:DrawnLineSymbolVM}"
+             xmlns:lineSymbolView="clr-namespace:EdblockView.SymbolsView.LineSymbolView"
+             xmlns:lineSymbolVM="clr-namespace:EdblockViewModel.Symbols.LineSymbols;assembly=EdblockViewModel" 
+             d:DataContext="{d:DesignInstance Type=lineSymbolVM:DrawnLineSymbolVM}"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
@@ -16,7 +16,7 @@
             MouseDoubleClick="ShowTextField" 
             ItemsSource="{Binding LinesSymbolVM}">
             <ItemsControl.Resources>
-                <DataTemplate DataType="{x:Type linesymbols:LineSymbolVM}">
+                <DataTemplate DataType="{x:Type lineSymbolVM:LineSymbolVM}">
                     <Line Style="{StaticResource LineSymbolView}"/>
                 </DataTemplate>
             </ItemsControl.Resources>
@@ -27,40 +27,8 @@
             </ItemsControl.ItemsPanel>
         </ItemsControl>
 
-        <ItemsControl ItemsSource="{Binding MovableRectanglesLine}">
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <Border Style="{StaticResource BorderMovableRectangleLineView}">
-                        <Rectangle Style="{StaticResource MovableRectangleLineView}">
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="MouseDown">
-                                    <i:InvokeCommandAction Command="{Binding MouseDown}"/>
-                                </i:EventTrigger>
-                                <i:EventTrigger EventName="MouseEnter">
-                                    <i:InvokeCommandAction Command="{Binding MouseEnter}"/>
-                                </i:EventTrigger>
-                                <i:EventTrigger EventName="MouseLeave">
-                                    <i:InvokeCommandAction Command="{Binding MouseLeave}"/>
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
-                        </Rectangle>
-                    </Border>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <Canvas />
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-            <ItemsControl.ItemContainerStyle>
-                <Style TargetType="FrameworkElement">
-                    <Setter Property="Canvas.Left" Value="{Binding XCoordinate}" />
-                    <Setter Property="Canvas.Top" Value="{Binding YCoordinate}" />
-                </Style>
-            </ItemsControl.ItemContainerStyle>
-        </ItemsControl>
-
-        <linesymbol:ArrowSymbolView/>
+        <lineSymbolView:MovableRectanglesLineView/>
+        <lineSymbolView:ArrowSymbolView/>
 
         <Canvas>
             <TextBox Style="{StaticResource TextFieldLineView}">
@@ -74,10 +42,10 @@
 
         <i:Interaction.Triggers>
             <i:EventTrigger EventName="MouseEnter">
-                <i:InvokeCommandAction Command="{Binding EnterCursor}" />
+                <i:InvokeCommandAction Command="{Binding MouseEnter}" />
             </i:EventTrigger>
             <i:EventTrigger EventName="MouseLeave">
-                <i:InvokeCommandAction Command="{Binding LeaveCursor}" />
+                <i:InvokeCommandAction Command="{Binding MouseLeave}" />
             </i:EventTrigger>
         </i:Interaction.Triggers>
     </Grid>
