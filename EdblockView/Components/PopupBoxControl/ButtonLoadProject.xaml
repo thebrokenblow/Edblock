@@ -7,10 +7,10 @@
              mc:Ignorable="d" 
              d:DesignHeight="40" d:DesignWidth="245">
     <DockPanel>
-        <!--<materialDesign:PackIcon
+        <materialDesign:PackIcon
             DockPanel.Dock="Left"
             Style="{StaticResource IconSettingsMenu}"
-            Kind="upload" />-->
+            Kind="upload" />
 
         <Button 
             Click="LoadProject"

@@ -9,11 +9,11 @@
              mc:Ignorable="d" 
              d:DesignHeight="25" d:DesignWidth="100">
     
-    <!--<ComboBox
+    <ComboBox
         ItemsSource="{Binding FontSizes}"
         SelectedItem="{Binding FontSize}"
         materialDesign:HintAssist.Hint="Размер текста"
         materialDesign:ComboBoxAssist.MaxLength="2"
-        Style="{StaticResource ComboBoxSettingsMenu}" />-->
+        Style="{StaticResource ComboBoxSettingsMenu}" />
     
 </UserControl>

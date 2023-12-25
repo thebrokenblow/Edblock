@@ -7,10 +7,10 @@
              mc:Ignorable="d" 
              d:DesignHeight="50" d:DesignWidth="245">
     <DockPanel>
-        <!--<materialDesign:PackIcon 
+        <materialDesign:PackIcon 
             DockPanel.Dock="Left"
             Style="{StaticResource IconSettingsMenu}"
-            Kind="Printer" />-->
+            Kind="Printer" />
 
         <Button 
             Margin="20 0 0 0"

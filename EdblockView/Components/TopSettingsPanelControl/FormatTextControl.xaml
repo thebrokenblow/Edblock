@@ -8,7 +8,7 @@
              d:DataContext="{d:DesignInstance Type=componentsVM:FormatTextControlVM}"
              mc:Ignorable="d" 
              d:DesignHeight="40" d:DesignWidth="160">
-    <!--<ListBox
+    <ListBox
             SelectionMode="Extended"
             Background="Transparent"
             Style="{StaticResource MaterialDesignToolToggleFlatListBox}">
@@ -42,5 +42,5 @@
                     Style="{StaticResource IconFormatText}">
             </materialDesign:PackIcon>
         </ListBoxItem>
-    </ListBox>-->
+    </ListBox>
 </UserControl>
