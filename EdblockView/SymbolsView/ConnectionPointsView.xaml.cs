@@ -3,14 +3,14 @@ using System.Windows.Shapes;
 using System.Windows.Controls;
 using EdblockViewModel.Symbols.ConnectionPoints;
 
-namespace EdblockView.Symbols;
+namespace EdblockView.SymbolsView;
 
 /// <summary>
 /// Логика взаимодействия для ConnectionPoints.xaml
 /// </summary>
-public partial class ConnectionPoints : UserControl
+public partial class ConnectionPointsView : UserControl
 {
-    public ConnectionPoints()
+    public ConnectionPointsView()
     {
         InitializeComponent();
     }

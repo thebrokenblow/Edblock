@@ -1,13 +1,13 @@
 ﻿using System.Windows.Controls;
 
-namespace EdblockView.Symbols;
+namespace EdblockView.SymbolsView;
 
 /// <summary>
 /// Логика взаимодействия для MovableRectangleLine.xaml
 /// </summary>
-public partial class MovableRectangleLine : UserControl
+public partial class MovableRectangleLineView : UserControl
 {
-    public MovableRectangleLine()
+    public MovableRectangleLineView()
     {
         InitializeComponent();
     }

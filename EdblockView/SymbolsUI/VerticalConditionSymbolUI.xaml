@@ -5,9 +5,11 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
              mc:Ignorable="d" 
-             d:DesignHeight="155" d:DesignWidth="320">
+             d:DesignHeight="175" d:DesignWidth="360">
     <StackPanel Orientation="Horizontal">
-        <Canvas Width="145" Height="155">
+        <Canvas Width="145"
+                Height="155"
+                Margin="10 10 10 10">
             <Polygon 
                 Points="70 60 140 30 70 0 0 30"
                 Fill="#FF60B2D3" />
@@ -35,8 +37,7 @@
 
             <Ellipse 
                 Margin="135 86" 
-                Style="{StaticResource ConnectionPointUI}" 
-                Fill="Black" />
+                Style="{StaticResource ConnectionPointUI}" />
 
             <Line 
                 X1="70"
@@ -47,8 +48,7 @@
 
             <Ellipse
                 Margin="135 116" 
-                Style="{StaticResource ConnectionPointUI}"
-                Fill="Black"/>
+                Style="{StaticResource ConnectionPointUI}"/>
 
             <Line 
                 X1="70"
@@ -59,8 +59,7 @@
 
             <Ellipse 
                 Margin="135 146" 
-                Style="{StaticResource ConnectionPointUI}"
-                Fill="Black"/>
+                Style="{StaticResource ConnectionPointUI}"/>
         </Canvas>
 
         <StackPanel Margin="20 0 0 0" Height="70" Width="150">

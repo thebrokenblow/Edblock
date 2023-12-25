@@ -2,14 +2,14 @@
 using System.Windows.Controls;
 using EdblockViewModel.Symbols.Abstraction;
 
-namespace EdblockView.Symbols;
+namespace EdblockView.SymbolsView;
 
 /// <summary>
 /// Логика взаимодействия для ActionSymbol.xaml
 /// </summary>
-public partial class ActionSymbol : UserControl
+public partial class ActionSymbolView : UserControl
 {
-    public ActionSymbol()
+    public ActionSymbolView()
     {
         InitializeComponent();
     }

@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="EdblockView.Symbols.ConnectionPoints"
+﻿<UserControl x:Class="EdblockView.SymbolsView.ConnectionPointsView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -11,7 +11,7 @@
     <ItemsControl ItemsSource="{Binding ConnectionPoints}">
         <ItemsControl.ItemTemplate>
             <DataTemplate DataType="Points">
-                <Ellipse MouseDown="TrackStageDrawLine" Style="{StaticResource ConnectionPoint}">
+                <Ellipse MouseDown="TrackStageDrawLine" Style="{StaticResource ConnectionPointView}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="MouseEnter">
                             <i:InvokeCommandAction Command="{Binding EnterCursor}" />

@@ -4,12 +4,13 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="60" d:DesignWidth="300">
+             d:DesignHeight="80" d:DesignWidth="300">
     <StackPanel Orientation="Horizontal">
         <Canvas 
             Width="140"
             Height="60"
-            Background="#FFBA64C8">
+            Background="#FFBA64C8"
+            Margin="10 10 10 10">
 
             <Border 
                 BorderBrush="Black" 
@@ -26,7 +27,6 @@
         </Canvas>
         
         <Label
-            Margin="10 0 0 0"
             Style="{StaticResource LabelSymbolMenu}"
             Content="Подпрограмма (7)" />
     </StackPanel>
