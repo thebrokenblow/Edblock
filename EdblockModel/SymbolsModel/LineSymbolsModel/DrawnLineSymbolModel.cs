@@ -1,8 +1,6 @@
-﻿using EdblockModel.SymbolsModel;
-using EdblockModel.SymbolsModel.Enum;
-using EdblockModel.SymbolsModel.LineSymbols;
+﻿using EdblockModel.SymbolsModel.Enum;
 
-namespace EdblockModel.Symbols.LineSymbols;
+namespace EdblockModel.SymbolsModel.LineSymbolsModel;
 
 public class DrawnLineSymbolModel
 {

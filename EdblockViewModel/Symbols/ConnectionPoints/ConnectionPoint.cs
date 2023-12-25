@@ -10,7 +10,7 @@ using System.Runtime.CompilerServices;
 using EdblockViewModel.Symbols.LineSymbols;
 using EdblockViewModel.Symbols.Abstraction;
 using EdblockModel.SymbolsModel.Enum;
-using EdblockModel.SymbolsModel.LineSymbols;
+using EdblockModel.SymbolsModel.LineSymbolsModel;
 
 namespace EdblockViewModel.Symbols.ConnectionPoints;
 

@@ -1,7 +1,6 @@
 ﻿using EdblockModel.SymbolsModel.Enum;
-using EdblockModel.Symbols.LineSymbols;
 
-namespace EdblockModel.SymbolsModel.LineSymbols;
+namespace EdblockModel.SymbolsModel.LineSymbolsModel;
 
 public class CompletedLine
 {

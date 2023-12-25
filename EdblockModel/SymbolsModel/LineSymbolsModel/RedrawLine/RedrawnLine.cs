@@ -1,8 +1,7 @@
-﻿using EdblockModel.Symbols.LineSymbols;
-using EdblockModel.SymbolsModel.Enum;
-using EdblockModel.SymbolsModel.LineSymbols.DecoratorLineSymbols;
+﻿using EdblockModel.SymbolsModel.Enum;
+using EdblockModel.SymbolsModel.LineSymbolsModel.DecoratorLineSymbols;
 
-namespace EdblockModel.SymbolsModel.LineSymbols.RedrawLine;
+namespace EdblockModel.SymbolsModel.LineSymbolsModel.RedrawLine;
 
 public class RedrawnLine
 {

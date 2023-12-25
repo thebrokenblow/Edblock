@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using EdblockModel.SymbolsModel.Enum;
-using EdblockModel.SymbolsModel.LineSymbols;
+using EdblockModel.SymbolsModel.LineSymbolsModel;
 
 namespace EdblockViewModel.Symbols.LineSymbols;
 
