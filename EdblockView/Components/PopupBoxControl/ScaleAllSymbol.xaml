@@ -7,10 +7,10 @@
              mc:Ignorable="d" 
              d:DesignHeight="40" d:DesignWidth="255">
     <DockPanel>
-        <materialDesign:PackIcon
+        <!--<materialDesign:PackIcon
             DockPanel.Dock="Left"
             Style="{StaticResource IconSettingsMenu}"
-            Kind="Resize" />
+            Kind="Resize" />-->
 
         <Label 
             Margin="5 0 5 0"
@@ -18,10 +18,10 @@
             Style="{StaticResource LabelSettingsMenu}"
             Content="Масштабирование всех фигур" />
 
-        <CheckBox 
+        <!--<CheckBox 
             IsChecked="{Binding IsScaleAllSymbolVM}"
             DockPanel.Dock="Right"  
             HorizontalAlignment="Center"
-            Style="{StaticResource CheckBoxSettingsMenu}" />
+            Style="{StaticResource CheckBoxSettingsMenu}" />-->
     </DockPanel>
 </UserControl>

@@ -9,10 +9,10 @@
              mc:Ignorable="d" 
              d:DesignHeight="40" d:DesignWidth="255">
     <DockPanel>
-        <materialDesign:PackIcon
+        <!--<materialDesign:PackIcon
             DockPanel.Dock="Left"
             Style="{StaticResource IconSettingsMenu}"
-            Kind="FileDocument" />
+            Kind="FileDocument" />-->
 
         <Label 
             Margin="5 0 5 0"

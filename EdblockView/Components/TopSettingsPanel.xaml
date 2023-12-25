@@ -36,7 +36,7 @@
 
         <GridSplitter Background="Gray" Width="1" Height="40"/>
 
-        <Button 
+        <!--<Button 
             Margin="7 10 0 0"
             Style="{StaticResource MagnifyMinusPlus}">
             <materialDesign:PackIcon 
@@ -52,7 +52,7 @@
                 Kind="MagnifyPlusOutline"
                 Style="{StaticResource IconCanvasMagnificationReduction}">
             </materialDesign:PackIcon>
-        </Button>
+        </Button>-->
 
         <GridSplitter Background="Gray" Width="1" Height="40"/>
 

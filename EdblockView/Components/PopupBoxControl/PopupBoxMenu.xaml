@@ -9,7 +9,7 @@
              d:DataContext="{d:DesignInstance Type=edblockViewModel:PopupBoxMenuVM}"
              mc:Ignorable="d" 
              d:DesignHeight="40" d:DesignWidth="40">
-    <materialDesign:PopupBox 
+    <!--<materialDesign:PopupBox 
         Width="30"
         Height="40"
         Foreground="#838383"
@@ -32,5 +32,5 @@
 
             <popupboxcontrol:ButtonPrintProject Margin="0 5"/>
         </StackPanel>
-    </materialDesign:PopupBox>
+    </materialDesign:PopupBox>-->
 </UserControl>

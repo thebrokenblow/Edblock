@@ -1,5 +1,6 @@
 ﻿using System.Windows.Input;
 using System.Windows.Controls;
+using System.Windows;
 
 namespace EdblockView.Components;
 
@@ -47,5 +48,10 @@ public partial class CanvasSymbols : UserControl
         //    }
         //    scrollViewer.ScrollToVerticalOffset(scrollViewer.VerticalOffset + canvasOffset);
         //}
+    }
+
+    private void Button_Click(object sender, System.Windows.RoutedEventArgs e)
+    {
+        MessageBox.Show("ПРИВЕТ");
     }
 }
