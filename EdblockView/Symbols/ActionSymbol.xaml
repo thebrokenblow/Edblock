@@ -1,25 +1,24 @@
-﻿<UserControl x:Class="EdblockView.SymbolsView.ActionSymbolView"
+﻿<UserControl x:Class="EdblockView.Symbols.ActionSymbol"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"  
-             xmlns:symbol="clr-namespace:EdblockView.SymbolsView" 
-             xmlns:symbolVM="clr-namespace:EdblockViewModel.Symbols;assembly=EdblockViewModel" 
-             d:DataContext="{d:DesignInstance Type=symbolVM:ActionSymbolVM}"
+             xmlns:symbol="clr-namespace:EdblockView.Symbols" 
+             xmlns:symbolVM="clr-namespace:EdblockViewModel.Symbols.Abstraction;assembly=EdblockViewModel" 
+             d:DataContext="{d:DesignInstance Type=symbolVM:BlockSymbolVM}"
              mc:Ignorable="d" 
              d:DesignHeight="60" d:DesignWidth="140">
 
-    <Border Style="{StaticResource BorderSymbolView}">
+    <Border Style="{StaticResource BorderSymbol}">
         <Canvas
             Width="{Binding Width}" 
             Height="{Binding Height}" 
             Background="{Binding Color}"
             MouseDown="MouseDownOnSymbol">
-            <symbol:TextFieldView 
-                Canvas.Top="{Binding TextField.TopOffset}" 
-                Canvas.Left="{Binding TextField.LeftOffset}"/>
-            <symbol:ConnectionPointsView/>
-            <symbol:ScaleRectanglesView/>
+            <symbol:TextField Canvas.Top="{Binding TextField.TopOffset}" 
+                              Canvas.Left="{Binding TextField.LeftOffset}"/>
+            <symbol:ConnectionPoints/>
+            <symbol:ScaleRectangles/>
         </Canvas>
     </Border>
 </UserControl>

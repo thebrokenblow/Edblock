@@ -105,9 +105,9 @@ public class ArrowSymbolModel
     {
         var coordinateArrow = new List<(int, int)>
         {
-            (coordinate.x, coordinate.y + HeightArrow / 2),
-            (coordinate.x, coordinate.y - HeightArrow / 2),
-            (coordinate.x + WidthArrow, coordinate.y),
+            (coordinate.x - WidthArrow, coordinate.y + HeightArrow / 2),
+            (coordinate.x - WidthArrow, coordinate.y - HeightArrow / 2),
+            (coordinate.x, coordinate.y)
         };
 
         return coordinateArrow;
@@ -117,9 +117,9 @@ public class ArrowSymbolModel
     {
         var coordinateArrow = new List<(int, int)>
         {
-            (coordinate.x, coordinate.y + HeightArrow / 2),
-            (coordinate.x, coordinate.y - HeightArrow / 2),
-            (coordinate.x - WidthArrow, coordinate.y),
+            (coordinate.x + WidthArrow, coordinate.y + HeightArrow / 2),
+            (coordinate.x + WidthArrow, coordinate.y - HeightArrow / 2),
+            (coordinate.x, coordinate.y),
         };
 
         return coordinateArrow;
@@ -129,9 +129,9 @@ public class ArrowSymbolModel
     {
         var coordinateArrow = new List<(int, int)>
         {
-            (coordinate.x - WidthArrow / 2,coordinate.y),
-            (coordinate.x, coordinate.y + HeightArrow),
-            (coordinate.x + WidthArrow / 2, coordinate.y),
+            (coordinate.x - WidthArrow / 2,coordinate.y - HeightArrow),
+            (coordinate.x, coordinate.y),
+            (coordinate.x + WidthArrow / 2, coordinate.y - HeightArrow),
         };
 
         return coordinateArrow;
@@ -141,9 +141,9 @@ public class ArrowSymbolModel
     {
         var coordinateArrow = new List<(int, int)>
         {
-            (coordinate.x - WidthArrow / 2, coordinate.y),
-            (coordinate.x + WidthArrow / 2, coordinate.y),
-            (coordinate.x, coordinate.y - HeightArrow),
+            (coordinate.x - WidthArrow / 2, coordinate.y + HeightArrow),
+            (coordinate.x + WidthArrow / 2, coordinate.y + HeightArrow),
+            (coordinate.x, coordinate.y),
         };
 
         return coordinateArrow;

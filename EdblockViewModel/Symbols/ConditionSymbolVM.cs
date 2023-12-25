@@ -37,6 +37,7 @@ public class ConditionSymbolVM : BlockSymbolVM
         TextField.Width = textFieldWidth;
         TextField.LeftOffset = textFieldLeftOffset;
 
+
         ChangeCoordinateAuxiliaryElements();
 
         SetCoordinatePolygonPoints();

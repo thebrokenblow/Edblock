@@ -27,16 +27,6 @@
         <Setter Property="VerticalAlignment" Value="Top"/>
     </Style>
 
-    <Style x:Key="SymbolUI" TargetType="UserControl">
-        <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="Cursor" Value="Hand"/>
-        <Style.Triggers>
-            <Trigger Property="IsMouseOver" Value="true">
-                <Setter Property="Background" Value="LightGray"/>
-            </Trigger>
-        </Style.Triggers>
-    </Style>
-
     <Style x:Key="LabelSymbolMenu" TargetType="Label" BasedOn="{StaticResource MaterialDesignLabel}">
         <Setter Property="FontSize" Value="11.5"/>
         <Setter Property="HorizontalAlignment" Value="Center"/>

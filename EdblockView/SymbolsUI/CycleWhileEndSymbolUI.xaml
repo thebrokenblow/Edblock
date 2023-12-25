@@ -4,24 +4,26 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="80" d:DesignWidth="350">
+             d:DesignHeight="60" d:DesignWidth="350">
     <StackPanel Orientation="Horizontal">
         <Canvas
             Width="140" 
-            Height="60"
-            Margin="10 10 10 10">
+            Height="60">
             <Polygon 
                 Fill="#CCCCFF" 
                 Points="0 0 0 50 10 60 130 60 140 50 140 0"/>
+
             <TextBlock 
                 Width="140"
                 Height="60"
                 Style="{StaticResource TextFieldUI}"
                 Text="Конец цикла"/>
         </Canvas>
-
+        
         <Label 
+            Margin="10 0 0 0"
             Style="{StaticResource LabelSymbolMenu}"
             Content="Цикл (10) do while, while (Конец)" />
+        
     </StackPanel>
 </UserControl>

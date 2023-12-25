@@ -4,12 +4,11 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="80" d:DesignWidth="360">
+             d:DesignHeight="60" d:DesignWidth="300">
     <StackPanel Orientation="Horizontal">
         <Canvas 
             Width="140" 
-            Height="60"
-            Margin="10 10 10 10">
+            Height="60">
             <Polygon
                 Points="20 0 0 60 120 60 140 0"
                 Fill="#FF008080"/>
@@ -22,6 +21,7 @@
         </Canvas>
         
         <Label
+            Margin="10 0 0 0"
             Content="Ввод / Вывод (6)"
             Style="{StaticResource LabelSymbolMenu}"/>
     </StackPanel>

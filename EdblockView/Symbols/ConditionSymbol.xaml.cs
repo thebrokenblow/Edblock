@@ -2,14 +2,14 @@
 using System.Windows.Controls;
 using EdblockViewModel.Symbols.Abstraction;
 
-namespace EdblockView.SymbolsView;
+namespace EdblockView.Symbols;
 
 /// <summary>
 /// Логика взаимодействия для ConditionSymbol.xaml
 /// </summary>
-public partial class ConditionSymbolView : UserControl
+public partial class ConditionSymbol : UserControl
 {
-    public ConditionSymbolView()
+    public ConditionSymbol()
     {
         InitializeComponent();
     }

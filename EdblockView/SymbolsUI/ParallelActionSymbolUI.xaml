@@ -4,13 +4,12 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="80" d:DesignWidth="330">
+             d:DesignHeight="60" d:DesignWidth="330">
     <StackPanel Orientation="Horizontal">
         <Canvas
             Background="Transparent"
             Width="140" 
-            Height="60"
-            Margin="10 10 10 10">
+            Height="60">
 
             <Line 
                 X1="0" 
@@ -21,6 +20,7 @@
 
             <Ellipse
                 Margin="70 16"
+                Fill="Black"
                 Style="{StaticResource ConnectionPointUI}"/>
 
             <Line 
@@ -32,11 +32,13 @@
 
             <Ellipse
                 Margin="70 36"
+                Fill="Black"
                 Style="{StaticResource ConnectionPointUI}"/>
         </Canvas>
         
         <Label 
             Content="Комментарий (12)"
+            Margin="10 0 0 0"
             Style="{StaticResource LabelSymbolMenu}"/>
     </StackPanel>
 </UserControl>

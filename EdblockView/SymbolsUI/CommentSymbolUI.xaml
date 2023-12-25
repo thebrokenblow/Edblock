@@ -4,13 +4,12 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="80" d:DesignWidth="360">
+             d:DesignHeight="60" d:DesignWidth="300">
     <StackPanel Orientation="Horizontal">
         <Canvas
             Background="Transparent"
             Width="140"
-            Height="60"
-            Margin="10 10 10 10">
+            Height="60">
 
             <Line 
                 X1="0" 
@@ -25,7 +24,7 @@
                 X2="60" 
                 Y2="30" 
                 Style="{StaticResource LineCommentSymbolUI}" />
-
+    
             <Line 
                 X1="70" 
                 Y1="30"

@@ -1,13 +1,14 @@
 ﻿using Prism.Commands;
 using EdblockViewModel.Symbols;
 using EdblockViewModel.ComponentsVM;
-using EdblockViewModel.Symbols.Abstraction;
 
 namespace EdblockViewModel;
 
 public class EdblockVM
 {
     public DelegateCommand ClickDelete { get; init; }
+    public DelegateCommand<string> ClickSymbol { get; init; }
+
     public CanvasSymbolsVM CanvasSymbolsVM { get; init; }
     public FontSizeControlVM FontSizeControlVM { get; init; }
     public FontFamilyControlVM FontFamilyControlVM { get; init; }
@@ -33,6 +34,7 @@ public class EdblockVM
         PopupBoxMenuVM = new();
 
         ClickDelete = new(CanvasSymbolsVM.DeleteSymbols);
+        ClickSymbol = new(CreateBlockSymbol);
         //_projectVM = new(this);
         _factoryBlockSymbol = new(this);
     }
@@ -47,8 +49,10 @@ public class EdblockVM
         _projectVM.Load(filePath);
     }
 
-    public void AddBlockSymbol(BlockSymbolVM blockSymbolVM)
+    public void CreateBlockSymbol(string nameBlockSymbol)
     {
+        var blockSymbolVM = _factoryBlockSymbol.Create(nameBlockSymbol);
+
         CanvasSymbolsVM.AddBlockSymbol(blockSymbolVM);
     }
 }

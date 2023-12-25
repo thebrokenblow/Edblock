@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="EdblockView.SymbolsView.ScaleRectanglesView"
+﻿<UserControl x:Class="EdblockView.Symbols.ScaleRectangles"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -11,8 +11,8 @@
     <ItemsControl ItemsSource="{Binding ScaleRectangles}">
         <ItemsControl.ItemTemplate>
             <DataTemplate DataType="Rectangles">
-                <Border Style="{StaticResource BorderScaleRectangleView}">
-                    <Rectangle Style="{StaticResource ScaleRectangleView}">
+                <Border Style="{StaticResource BorderScaleRectangle}">
+                    <Rectangle Style="{StaticResource ScaleRectangle}">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="MouseEnter">
                                 <i:InvokeCommandAction Command="{Binding EnterCursor}" />
