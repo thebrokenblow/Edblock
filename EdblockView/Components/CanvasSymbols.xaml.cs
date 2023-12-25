@@ -48,4 +48,9 @@ public partial class CanvasSymbols : UserControl
         //    scrollViewer.ScrollToVerticalOffset(scrollViewer.VerticalOffset + canvasOffset);
         //}
     }
+
+    private void ActionSymbolView_MouseDown(object sender, MouseButtonEventArgs e)
+    {
+
+    }
 }

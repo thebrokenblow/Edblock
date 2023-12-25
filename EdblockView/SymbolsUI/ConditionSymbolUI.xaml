@@ -3,35 +3,28 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:edblockviewmodel="clr-namespace:EdblockViewModel;assembly=EdblockViewModel"
              d:DataContext="{d:DesignInstance Type=edblockviewmodel:EdblockVM}"
              mc:Ignorable="d" 
-             d:DesignHeight="60" d:DesignWidth="300">
+             d:DesignHeight="80" d:DesignWidth="300">
     <StackPanel Orientation="Horizontal">
         <Canvas
             Width="140" 
-            Height="60">
+            Height="60"
+            Margin="10 10 10 10">
             <Polygon 
-                Points="0 30 70 60 140 30 70 0 0 30"
+                Points="70 60 140 30 70 0 0 30"
                 Fill="#FF60B2D3" />
 
             <TextBlock 
-                Style="{StaticResource TextFieldUI}"
-                Canvas.Top="20"
+                Text="Условие"
                 Width="140"
                 Height="20"
-                Text="Условие">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="MouseLeftButtonDown">
-                        <i:InvokeCommandAction Command="{Binding ClickSymbol}" CommandParameter="ConditionSymbol"/>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </TextBlock>
+                Canvas.Top="20"
+                Style="{StaticResource TextFieldUI}"/>
         </Canvas>
 
         <Label 
-            Margin="10 0 0 0"
             Style="{StaticResource LabelSymbolMenu}"
             Content="Условие (2)" />
     </StackPanel>

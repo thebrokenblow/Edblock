@@ -1,4 +1,8 @@
-﻿using System.Windows.Controls;
+﻿using EdblockViewModel;
+using System.Windows.Controls;
+using EdblockView.Abstraction;
+using EdblockViewModel.Symbols;
+using EdblockViewModel.Symbols.Abstraction;
 
 namespace EdblockView.SymbolsUI;
 
@@ -6,10 +10,17 @@ namespace EdblockView.SymbolsUI;
 /// Логика взаимодействия для ConditionSymbolUI.xaml
 /// </summary>
 /// 
-public partial class ConditionSymbolUI : UserControl
+public partial class ConditionSymbolUI : UserControl, IFactorySymbolVM
 {
     public ConditionSymbolUI()
     {
         InitializeComponent();
+    }
+
+    public BlockSymbolVM CreateBlockSymbolVM(EdblockVM edblockVM)
+    {
+        var conditionSymbolVM = new ConditionSymbolVM(edblockVM);
+
+        return conditionSymbolVM;
     }
 }

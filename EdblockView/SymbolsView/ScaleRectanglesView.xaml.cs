@@ -1,13 +1,13 @@
 ﻿using System.Windows.Controls;
 
-namespace EdblockView.Symbols;
+namespace EdblockView.SymbolsView;
 
 /// <summary>
 /// Логика взаимодействия для ScaleRectangles.xaml
 /// </summary>
-public partial class ScaleRectangles : UserControl
+public partial class ScaleRectanglesView : UserControl
 {
-    public ScaleRectangles()
+    public ScaleRectanglesView()
     {
         InitializeComponent();
     }

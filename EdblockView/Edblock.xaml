@@ -3,13 +3,13 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-        xmlns:components="clr-namespace:EdblockView.Components" 
+        xmlns:componentsUI="clr-namespace:EdblockView.Components" 
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
         xmlns:symbol="clr-namespace:EdblockView.SymbolsUI"
         xmlns:edblockViewModel="clr-namespace:EdblockViewModel;assembly=EdblockViewModel"
         d:DataContext="{d:DesignInstance Type=edblockViewModel:EdblockVM}"
         mc:Ignorable="d"
-        Title="Edblock" Height="1200" Width="1700">
+        Title="Edblock" Height="1300" Width="1700">
     
     <Window.InputBindings>
         <KeyBinding Command="{Binding ClickDelete}" Key="Delete"/>
@@ -34,7 +34,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <components:TopSettingsPanel 
+        <componentsUI:TopSettingsPanel 
             x:Name="TopSettingsPanelUI"
             Grid.Row="0"
             Grid.Column="2"/>
@@ -58,7 +58,7 @@
             </Button>
         </StackPanel>
 
-        <components:CanvasSymbols 
+        <componentsUI:CanvasSymbols 
             DataContext="{Binding CanvasSymbolsVM}"
             x:Name="CanvasSymbols" 
             Grid.Row="1"
@@ -82,20 +82,36 @@
             </Grid.RenderTransform>
 
             <ScrollViewer>
-                <StackPanel>
-                    <symbol:ActionSymbolUI Margin="10 10 0 0"/>
-                    <symbol:ConditionSymbolUI Margin="10 10 0 0" />
-                    <symbol:VerticalConditionSymbolUI Margin="10 10 0 0" />
-                    <symbol:HorizontalConditionSymbolUI Margin="10 10 0 0" />
-                    <symbol:StartEndSymbolUI Margin="10 10 0 0" />
-                    <symbol:InputOutputSymbolUI Margin="10 10 0 0" />
-                    <symbol:SubroutineSymbolUI Margin="10 10 0 0" />
-                    <symbol:CycleForSymbolUI Margin="10 10 0 0" />
-                    <symbol:CycleWhileBeginSymbolUI Margin="10 10 0 0"/>
-                    <symbol:CycleWhileEndSymbolUI Margin="10 10 0 0"/>
-                    <symbol:LinkSymbolUI Margin="10 10 0 0"/>
-                    <symbol:CommentSymbolUI Margin="10 10 0 0"/>
-                    <symbol:ParallelActionSymbolUI Margin="10 10 0 0"/>
+                <StackPanel Width="360">
+                    <symbol:ActionSymbolUI 
+                        Style="{StaticResource SymbolUI}"
+                        MouseDown="AddSymbol"/>
+                    <symbol:ConditionSymbolUI 
+                        Style="{StaticResource SymbolUI}"
+                        MouseDown="AddSymbol"/>
+                    <symbol:VerticalConditionSymbolUI 
+                        Style="{StaticResource SymbolUI}" />
+                    <symbol:HorizontalConditionSymbolUI 
+                        Style="{StaticResource SymbolUI}"/>
+                    <symbol:StartEndSymbolUI 
+                        Style="{StaticResource SymbolUI}" 
+                        MouseDown="AddSymbol"/>
+                    <symbol:InputOutputSymbolUI 
+                        Style="{StaticResource SymbolUI}" />
+                    <symbol:SubroutineSymbolUI 
+                        Style="{StaticResource SymbolUI}" />
+                    <symbol:CycleForSymbolUI 
+                        Style="{StaticResource SymbolUI}"/>
+                    <symbol:CycleWhileBeginSymbolUI 
+                        Style="{StaticResource SymbolUI}"/>
+                    <symbol:CycleWhileEndSymbolUI 
+                        Style="{StaticResource SymbolUI}" />
+                    <symbol:LinkSymbolUI 
+                        Style="{StaticResource SymbolUI}"/>
+                    <symbol:CommentSymbolUI 
+                        Style="{StaticResource SymbolUI}" />
+                    <symbol:ParallelActionSymbolUI 
+                        Style="{StaticResource SymbolUI}" />
                 </StackPanel>
             </ScrollViewer>
 

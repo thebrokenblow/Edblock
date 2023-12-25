@@ -79,14 +79,14 @@ public class DrawnLineSymbolModel
     {
         if (LinesSymbolModel.Count % 2 == 1)
         {
-            if (startCoordinate.y > currentCoordinate.y)
+            if (startCoordinate.y - offsetLine >= currentCoordinate.y)
             {
                 currentCoordinate.y += offsetLine;
             }
         }
         else
         {
-            if (startCoordinate.x - offsetLine > currentCoordinate.x)
+            if (startCoordinate.x + offsetLine > currentCoordinate.x)
             {
                 currentCoordinate.x += offsetLine;
             }
@@ -99,14 +99,14 @@ public class DrawnLineSymbolModel
     {
         if (LinesSymbolModel.Count % 2 == 1)
         {
-            if (startCoordinate.x - offsetLine > currentCoordinate.x)
+            if (startCoordinate.x > currentCoordinate.x)
             {
                 currentCoordinate.x += offsetLine;
             }
         }
         else
         {
-            if (startCoordinate.y - offsetLine > currentCoordinate.y)
+            if (startCoordinate.y > currentCoordinate.y)
             {
                 currentCoordinate.y += offsetLine;
             }

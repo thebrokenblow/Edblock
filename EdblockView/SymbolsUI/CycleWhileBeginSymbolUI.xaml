@@ -4,11 +4,12 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="60" d:DesignWidth="350">
+             d:DesignHeight="80" d:DesignWidth="350">
     <StackPanel Orientation="Horizontal">
         <Canvas
             Width="140" 
-            Height="60">
+            Height="60"
+            Margin="10 10 10 10">
             <Polygon 
                 Fill="#CCCCFF" 
                 Points="0 60 0 10 10 0 130 0 140 10 140 60"/>
@@ -21,7 +22,6 @@
         </Canvas>
 
         <Label
-            Margin="10 0 0 0"
             Content="Цикл (9) do while, while (Начало)"
             Style="{StaticResource LabelSymbolMenu}" />
     </StackPanel>

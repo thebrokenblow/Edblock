@@ -1,27 +1,14 @@
-﻿using System.Windows;
-using EdblockModel.Symbols;
-using System.Windows.Media;
+﻿using EdblockModel.Symbols;
 using EdblockViewModel.Symbols.Abstraction;
 
 namespace EdblockViewModel.Symbols;
 
-public class ConditionSymbolVM : BlockSymbolVM
+public class StartEndSymbolVM : BlockSymbolVM
 {
-    private PointCollection? points;
-    public PointCollection? Points 
-    {
-        get => points;
-        set
-        {
-            points = value;
-            OnPropertyChanged();
-        }
-    } 
+    private const string defaultText = "Начало / Конец";
+    private const string defaultColor = "#FFF25252";
 
-    private const string defaultText = "Условеие";
-    private const string defaultColor = "#FF60B2D3";
-
-    public ConditionSymbolVM(EdblockVM edblockVM) : base(edblockVM)
+    public StartEndSymbolVM(EdblockVM edblockVM) : base(edblockVM)
     {
         Color = defaultColor;
         TextField.Text = defaultText;
@@ -29,8 +16,9 @@ public class ConditionSymbolVM : BlockSymbolVM
 
     public override void SetWidth(int width)
     {
+        TextField.Width = width;
         BlockSymbolModel.Width = width;
-        
+
         var textFieldWidth = BlockSymbolModel.GetTextFieldWidth();
         var textFieldLeftOffset = BlockSymbolModel.GetTextFieldLeftOffset();
 
@@ -38,12 +26,11 @@ public class ConditionSymbolVM : BlockSymbolVM
         TextField.LeftOffset = textFieldLeftOffset;
 
         ChangeCoordinateAuxiliaryElements();
-
-        SetCoordinatePolygonPoints();
     }
 
     public override void SetHeight(int height)
     {
+        TextField.Height = height;
         BlockSymbolModel.Height = height;
 
         var textFieldHeight = BlockSymbolModel.GetTextFieldHeight();
@@ -53,18 +40,5 @@ public class ConditionSymbolVM : BlockSymbolVM
         TextField.TopOffset = textFieldTopOffset;
 
         ChangeCoordinateAuxiliaryElements();
-
-        SetCoordinatePolygonPoints();
-    }
-
-    private void SetCoordinatePolygonPoints()
-    {
-        Points = new()
-        {
-            new Point(Width / 2, Height),
-            new Point(Width, Height / 2),
-            new Point(Width / 2, 0),
-            new Point(0, Height / 2)
-        };
     }
 }

@@ -5,11 +5,12 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
              mc:Ignorable="d" 
-             d:DesignHeight="97" d:DesignWidth="300">
+             d:DesignHeight="120" d:DesignWidth="360">
     <StackPanel Orientation="Horizontal">
         <Canvas
             Width="145"
-            Height="98">
+            Height="98"
+            Margin="10 10 10 10">
             <Polygon 
                 Points="0 30 70 60 140 30 70 0 0 30" 
                 Fill="#FF60B2D3" />
@@ -26,56 +27,56 @@
                 Y1="60"
                 X2="70"
                 Y2="70"
-                Style="{StaticResource LineSymbol}" />
+                Style="{StaticResource LineConditionSymbolUI}" />
 
             <Line 
                 X1="0"
                 Y1="70"
                 X2="140"
                 Y2="70"
-                Style="{StaticResource LineSymbol}" />
+                Style="{StaticResource LineConditionSymbolUI}" />
 
             <Line 
                 X1="0.5"
                 Y1="70"
                 X2="0.5"
                 Y2="90"
-                Style="{StaticResource LineSymbol}" />
+                Style="{StaticResource LineConditionSymbolUI}" />
 
             <Ellipse
                 Canvas.Top="89"
                 Canvas.Left="-3.5"
                 Fill="Black"
-                Style="{StaticResource ConnectionPoint}" />
+                Style="{StaticResource ConnectionPointUI}" />
 
             <Line 
                 X1="70"
                 Y1="70"
                 X2="70"
                 Y2="90"
-                Style="{StaticResource LineSymbol}" />
+                Style="{StaticResource LineConditionSymbolUI}" />
 
             <Ellipse 
                 Canvas.Left="66"
                 Canvas.Top="89"
                 Fill="Black"
-                Style="{StaticResource ConnectionPoint}" />
+                Style="{StaticResource ConnectionPointUI}" />
 
             <Line 
                 X1="139.5"
                 Y1="70"
                 X2="139.5"
                 Y2="90"
-                Style="{StaticResource LineSymbol}" />
+                Style="{StaticResource LineConditionSymbolUI}" />
 
             <Ellipse 
                 Canvas.Top="89"
                 Canvas.Left="135.5"
                 Fill="Black"
-                Style="{StaticResource ConnectionPoint}" />
+                Style="{StaticResource ConnectionPointUI}" />
         </Canvas>
 
-        <StackPanel Margin="10 0 0 0" Height="70" Width="150">
+        <StackPanel Height="70" Width="150">
             <Label 
                 Style="{StaticResource LabelSymbolMenu}"
                 Content="Условие (3)" />
