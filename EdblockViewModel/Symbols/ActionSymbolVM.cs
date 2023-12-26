@@ -1,4 +1,4 @@
-﻿using EdblockModel.Symbols;
+﻿using EdblockModel.SymbolsModel;
 using EdblockViewModel.Symbols.Abstraction;
 
 namespace EdblockViewModel.Symbols;
@@ -28,5 +28,19 @@ public class ActionSymbolVM : BlockSymbolVM
         BlockSymbolModel.Height = height;
 
         ChangeCoordinateAuxiliaryElements();
+    }
+
+    public override BlockSymbolModel CreateBlockSymbolModel()
+    {
+        var nameBlockSymbolVM = GetType().BaseType?.ToString();
+
+        var actionSymbolModel = new ActionSymbolModel
+        {
+            Id = Id,
+            NameSymbol = nameBlockSymbolVM,
+            Color = Color
+        };
+
+        return actionSymbolModel;
     }
 }

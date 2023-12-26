@@ -25,6 +25,9 @@
                 <DataTemplate DataType="{x:Type blockSymbolsVM:StartEndSymbolVM}">
                     <blockSymbolView:StartEndSymbolView/>
                 </DataTemplate>
+                <DataTemplate DataType="{x:Type blockSymbolsVM:InputOutputSymbolVM}">
+                    <blockSymbolView:InputOutputSymbolView/>
+                </DataTemplate>
                 <DataTemplate DataType="{x:Type lineSymbolsVM:DrawnLineSymbolVM}">
                     <lineSymbolView:DrawnLineSymbolView/>
                 </DataTemplate>

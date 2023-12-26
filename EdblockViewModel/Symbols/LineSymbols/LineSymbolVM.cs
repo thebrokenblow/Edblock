@@ -1,6 +1,6 @@
-﻿using EdblockModel.SymbolsModel.LineSymbolsModel;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using EdblockModel.SymbolsModel.LineSymbolsModel;
 
 namespace EdblockViewModel.Symbols.LineSymbols;
 

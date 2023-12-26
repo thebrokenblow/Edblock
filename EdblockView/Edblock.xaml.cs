@@ -19,7 +19,7 @@ public partial class Edblock : Window
         DataContext = edblockVM;
     }
 
-    private void AddSymbol(object sender, MouseButtonEventArgs e)
+    private void AddSymbolView(object sender, MouseButtonEventArgs e)
     {
         if (sender is IFactorySymbolVM factorySymbolVM)
         {

@@ -77,14 +77,8 @@ public abstract class BlockSymbolVM : SymbolVM
         }
     }
 
-    public DelegateCommand MouseEnter { get; set; }
-    public DelegateCommand MouseLeave { get; set; }
-
-    public TextFieldVM TextField { get; init; }
-    public BlockSymbolModel BlockSymbolModel { get; init; }
-
     private bool isSelected;
-    public bool IsSelected 
+    public bool IsSelected
     {
         get => isSelected;
         set
@@ -93,6 +87,12 @@ public abstract class BlockSymbolVM : SymbolVM
             OnPropertyChanged();
         }
     }
+
+    public DelegateCommand MouseEnter { get; set; }
+    public DelegateCommand MouseLeave { get; set; }
+
+    public TextFieldVM TextField { get; init; }
+    public BlockSymbolModel BlockSymbolModel { get; init; }
 
     protected const int defaultWidth = 140;
     protected const int defaultHeigth = 60;
@@ -113,9 +113,7 @@ public abstract class BlockSymbolVM : SymbolVM
 
         Id = Guid.NewGuid().ToString();
 
-        var nameBlockSymbol = GetType().Name?.ToString();
-
-        BlockSymbolModel = FactoryBlockSymbolModel.Create(Id, nameBlockSymbol, color);
+        BlockSymbolModel = CreateBlockSymbolModel();
 
         TextField = new(_canvasSymbolsVM, this);
 
@@ -134,6 +132,7 @@ public abstract class BlockSymbolVM : SymbolVM
 
     public abstract void SetWidth(int width);
     public abstract void SetHeight(int height);
+    public abstract BlockSymbolModel CreateBlockSymbolModel();
 
     public void SetCoordinate((int x, int y) currentCoordinate, (int x, int y) previousCoordinate)
     {
@@ -153,12 +152,10 @@ public abstract class BlockSymbolVM : SymbolVM
 
     public void ShowStroke()
     {
-        // Условие истино, когда символ не перемещается и не масштабируется (просто навёл курсор)
-
         var movableSymbol = _canvasSymbolsVM.MovableBlockSymbol;
         var scalePartBlockSymbolVM = _canvasSymbolsVM.ScalePartBlockSymbol;
 
-        if (movableSymbol == null && scalePartBlockSymbolVM == null)
+        if (movableSymbol == null && scalePartBlockSymbolVM == null)  // Условие истино, когда символ не перемещается и не масштабируется (просто навёл курсор)
         {
             ConnectionPoint.SetDisplayConnectionPoints(ConnectionPoints, true);
             ScaleRectangle.SetStateDisplay(ScaleRectangles, true);

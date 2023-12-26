@@ -17,8 +17,6 @@ public class EdblockVM
 
     private readonly ProjectVM _projectVM;
 
-    private readonly FactoryBlockSymbolVM _factoryBlockSymbol;
-
     public EdblockVM()
     {
         CanvasSymbolsVM = new CanvasSymbolsVM();
@@ -34,7 +32,6 @@ public class EdblockVM
 
         ClickDelete = new(CanvasSymbolsVM.DeleteSymbols);
         //_projectVM = new(this);
-        _factoryBlockSymbol = new(this);
     }
 
     public void SaveProject(string filePath)

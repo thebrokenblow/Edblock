@@ -1,4 +1,4 @@
-﻿using EdblockModel.Symbols;
+﻿using EdblockModel.SymbolsModel;
 using EdblockViewModel.Symbols.Abstraction;
 
 namespace EdblockViewModel.Symbols;
@@ -40,5 +40,19 @@ public class StartEndSymbolVM : BlockSymbolVM
         TextField.TopOffset = textFieldTopOffset;
 
         ChangeCoordinateAuxiliaryElements();
+    }
+
+    public override BlockSymbolModel CreateBlockSymbolModel()
+    {
+        var nameBlockSymbolModel = GetType().BaseType?.ToString();
+
+        var startEndSymbolModel = new StartEndSymbolModel()
+        {
+            Id = Id,
+            NameSymbol = nameBlockSymbolModel,
+            Color = Color,
+        };
+
+        return startEndSymbolModel;
     }
 }

@@ -85,19 +85,20 @@
                 <StackPanel Width="360">
                     <symbol:ActionSymbolUI 
                         Style="{StaticResource SymbolUI}"
-                        MouseDown="AddSymbol"/>
+                        MouseDown="AddSymbolView"/>
                     <symbol:ConditionSymbolUI 
                         Style="{StaticResource SymbolUI}"
-                        MouseDown="AddSymbol"/>
+                        MouseDown="AddSymbolView"/>
                     <symbol:VerticalConditionSymbolUI 
                         Style="{StaticResource SymbolUI}" />
                     <symbol:HorizontalConditionSymbolUI 
                         Style="{StaticResource SymbolUI}"/>
                     <symbol:StartEndSymbolUI 
                         Style="{StaticResource SymbolUI}" 
-                        MouseDown="AddSymbol"/>
+                        MouseDown="AddSymbolView"/>
                     <symbol:InputOutputSymbolUI 
-                        Style="{StaticResource SymbolUI}" />
+                        Style="{StaticResource SymbolUI}" 
+                        MouseDown="AddSymbolView"/>
                     <symbol:SubroutineSymbolUI 
                         Style="{StaticResource SymbolUI}" />
                     <symbol:CycleForSymbolUI 

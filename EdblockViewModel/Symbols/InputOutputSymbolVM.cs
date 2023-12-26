@@ -5,10 +5,10 @@ using EdblockViewModel.Symbols.Abstraction;
 
 namespace EdblockViewModel.Symbols;
 
-public class ConditionSymbolVM : BlockSymbolVM, IHavePolygon
+public class InputOutputSymbolVM : BlockSymbolVM, IHavePolygon
 {
     private PointCollection? points;
-    public PointCollection? Points 
+    public PointCollection? Points
     {
         get => points;
         set
@@ -16,21 +16,24 @@ public class ConditionSymbolVM : BlockSymbolVM, IHavePolygon
             points = value;
             OnPropertyChanged();
         }
-    } 
+    }
 
-    private const string defaultText = "Условеие";
-    private const string defaultColor = "#FF60B2D3";
+    private const string defaultText = "Ввод / Вывод";
+    private const string defaultColor = "#FF008080";
+    private const int sideProjection = 20;
 
-    public ConditionSymbolVM(EdblockVM edblockVM) : base(edblockVM)
+    public InputOutputSymbolVM(EdblockVM edblockVM) : base(edblockVM)
     {
         Color = defaultColor;
         TextField.Text = defaultText;
+
+        SetCoordinatePolygonPoints();
     }
 
     public override void SetWidth(int width)
     {
         BlockSymbolModel.Width = width;
-        
+
         var textFieldWidth = BlockSymbolModel.GetTextFieldWidth();
         var textFieldLeftOffset = BlockSymbolModel.GetTextFieldLeftOffset();
 
@@ -61,24 +64,24 @@ public class ConditionSymbolVM : BlockSymbolVM, IHavePolygon
     {
         var nameBlockSymbolVM = GetType().BaseType?.ToString();
 
-        var conditionSymbolModel = new ConditionSymbolModel()
+        var inputOutputSymbolModel = new InputOutputSymbolModel()
         {
             Id = Id,
             NameSymbol = nameBlockSymbolVM,
-            Color = Color,
+            Color = Color
         };
 
-        return conditionSymbolModel;
+        return inputOutputSymbolModel;
     }
 
     private void SetCoordinatePolygonPoints()
     {
         Points = new()
         {
-            new Point(Width / 2, Height),
-            new Point(Width, Height / 2),
-            new Point(Width / 2, 0),
-            new Point(0, Height / 2)
+            new Point(sideProjection, 0),
+            new Point(0, Height),
+            new Point(Width - sideProjection, Height),
+            new Point(Width, 0)
         };
     }
 }
