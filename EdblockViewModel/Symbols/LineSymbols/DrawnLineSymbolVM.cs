@@ -196,7 +196,7 @@ public class DrawnLineSymbolVM : SymbolVM
     {
         var selectDrawnLineSymbol = CanvasSymbolsVM.SelectedDrawnLineSymbol;
         var movableRectangleLine = CanvasSymbolsVM.MovableRectangleLine;
-        var drawnLineSymbol = CanvasSymbolsVM.DrawnLineSymbol;
+        var drawnLineSymbol = CanvasSymbolsVM.СurrentDrawnLineSymbol;
 
         if (selectDrawnLineSymbol != this && movableRectangleLine == null && drawnLineSymbol == null)
         {
@@ -205,14 +205,13 @@ public class DrawnLineSymbolVM : SymbolVM
         }
     }
 
-    public void ChangeCoordination((int, int) currentCoordinte)
+    public void ChangeCoordination((int x, int y) currentCoordinte)
     {
         var startCoordinate = DrawnLineSymbolModel.CoordinateLineModel.GetStartCoordinate();
-
         currentCoordinte = DrawnLineSymbolModel.RoundingCoordinatesLines(startCoordinate, currentCoordinte);
 
-        ArrowSymbol.ChangeOrientationArrow(startCoordinate, currentCoordinte, OutgoingPosition);
         DrawnLineSymbolModel.ChangeCoordinateLine(currentCoordinte);
+        ArrowSymbol.ChangeOrientationArrow(startCoordinate, currentCoordinte, OutgoingPosition);
 
         RedrawPartLines();
     }
@@ -259,7 +258,7 @@ public class DrawnLineSymbolVM : SymbolVM
     public void SelectLine()
     {
         var selectDrawnLineSymbol = CanvasSymbolsVM.SelectedDrawnLineSymbol;
-        var drawnLineSymbol = CanvasSymbolsVM.DrawnLineSymbol;
+        var drawnLineSymbol = CanvasSymbolsVM.СurrentDrawnLineSymbol;
 
         if (selectDrawnLineSymbol != this && selectDrawnLineSymbol != null && drawnLineSymbol != null)
         {
@@ -294,7 +293,7 @@ public class DrawnLineSymbolVM : SymbolVM
     private void SetHighlightColorLines()
     {
         var movableSymbol = CanvasSymbolsVM.MovableBlockSymbol;
-        var drawnLineSymbol = CanvasSymbolsVM.DrawnLineSymbol;
+        var drawnLineSymbol = CanvasSymbolsVM.СurrentDrawnLineSymbol;
 
         if (movableSymbol == null && drawnLineSymbol == null)
         {

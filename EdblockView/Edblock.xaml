@@ -119,10 +119,12 @@
                         MouseDown="AddSymbolView" />
                     
                     <symbol:CycleWhileEndSymbolUI 
-                        Style="{StaticResource SymbolUI}" />
+                        Style="{StaticResource SymbolUI}" 
+                        MouseDown="AddSymbolView" />
                     
                     <symbol:LinkSymbolUI 
-                        Style="{StaticResource SymbolUI}"/>
+                        Style="{StaticResource SymbolUI}"
+                        MouseDown="AddSymbolView" />
                     
                     <symbol:CommentSymbolUI 
                         Style="{StaticResource SymbolUI}" />

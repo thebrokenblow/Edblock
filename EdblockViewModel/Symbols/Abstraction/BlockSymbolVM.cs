@@ -138,17 +138,22 @@ public abstract class BlockSymbolVM : SymbolVM
 
     public void SetCoordinate((int x, int y) currentCoordinate, (int x, int y) previousCoordinate)
     {
-        _canvasSymbolsVM.RemoveSelectDrawnLine();
+        var currentDrawnLineSymbol = _canvasSymbolsVM.СurrentDrawnLineSymbol;
 
-        if (XCoordinate == 0 && YCoordinate == 0)
+        if (currentDrawnLineSymbol == null) //Условие истино, если не рисуется линия
         {
-            XCoordinate = currentCoordinate.x - Width / 2;
-            YCoordinate = currentCoordinate.y - Height / 2;
-        }
-        else
-        {
-            XCoordinate = currentCoordinate.x - (previousCoordinate.x - XCoordinate);
-            YCoordinate = currentCoordinate.y - (previousCoordinate.y - YCoordinate);
+            _canvasSymbolsVM.RemoveSelectDrawnLine();
+
+            if (XCoordinate == 0 && YCoordinate == 0)
+            {
+                XCoordinate = currentCoordinate.x - Width / 2;
+                YCoordinate = currentCoordinate.y - Height / 2;
+            }
+            else
+            {
+                XCoordinate = currentCoordinate.x - (previousCoordinate.x - XCoordinate);
+                YCoordinate = currentCoordinate.y - (previousCoordinate.y - YCoordinate);
+            }
         }
     }
 

@@ -23,14 +23,16 @@ public class DrawnLineSymbolModel
 
     public (int x, int y) RoundingCoordinatesLines((int x, int y) startCoordinate, (int x, int y) currentCoordinate)
     {
-        if (OutgoingPosition == PositionConnectionPoint.Bottom || OutgoingPosition == PositionConnectionPoint.Top)
+        if (OutgoingPosition == PositionConnectionPoint.Left || OutgoingPosition == PositionConnectionPoint.Right)
         {
-            return HorizontalRounding(startCoordinate, currentCoordinate);
+            currentCoordinate = HorizontalRounding(startCoordinate, currentCoordinate);
         }
         else
         {
-            return VerticallyRounding(startCoordinate, currentCoordinate);
+            currentCoordinate = VerticallyRounding(startCoordinate, currentCoordinate);
         }
+
+        return currentCoordinate;
     }
 
     public void ChangeCoordinateLine((int x, int y) currentCoordinte)
@@ -79,16 +81,16 @@ public class DrawnLineSymbolModel
     {
         if (LinesSymbolModel.Count % 2 == 1)
         {
-            if (startCoordinate.y - offsetLine >= currentCoordinate.y)
+            if (startCoordinate.x > currentCoordinate.x)
             {
-                currentCoordinate.y += offsetLine;
+                currentCoordinate.x += offsetLine;
             }
         }
         else
         {
-            if (startCoordinate.x + offsetLine > currentCoordinate.x)
+            if (startCoordinate.y - offsetLine > currentCoordinate.y)
             {
-                currentCoordinate.x += offsetLine;
+                currentCoordinate.y += offsetLine;
             }
         }
 
@@ -99,16 +101,16 @@ public class DrawnLineSymbolModel
     {
         if (LinesSymbolModel.Count % 2 == 1)
         {
-            if (startCoordinate.x > currentCoordinate.x)
+            if (startCoordinate.y > currentCoordinate.y)
             {
-                currentCoordinate.x += offsetLine;
+                currentCoordinate.y += offsetLine;
             }
         }
         else
         {
-            if (startCoordinate.y > currentCoordinate.y)
+            if (startCoordinate.x - offsetLine > currentCoordinate.x)
             {
-                currentCoordinate.y += offsetLine;
+                currentCoordinate.x += offsetLine;
             }
         }
 

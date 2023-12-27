@@ -61,7 +61,7 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
     public BlockSymbolVM? MovableBlockSymbol { get; set; }
     public ScalePartBlockSymbol? ScalePartBlockSymbol { get; set; }
 
-    public DrawnLineSymbolVM? DrawnLineSymbol { get; set; }
+    public DrawnLineSymbolVM? СurrentDrawnLineSymbol { get; set; }
     public DrawnLineSymbolVM? SelectedDrawnLineSymbol { get; set; }
     public List<BlockSymbolVM> SelectedBlockSymbols { get; set; }
     private List<DrawnLineSymbolVM>? RedrawDrawnLines { get; set; }
@@ -128,22 +128,22 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
 
     private void DeleteCurrentDrawnLineSymbol()
     {
-        if (DrawnLineSymbol is null)
+        if (СurrentDrawnLineSymbol is null)
         {
             return;
         }
 
-        if (DrawnLineSymbol.OutgoingConnectionPoint is null)
+        if (СurrentDrawnLineSymbol.OutgoingConnectionPoint is null)
         {
             return;
         }
 
-        SymbolsVM.Remove(DrawnLineSymbol);
+        SymbolsVM.Remove(СurrentDrawnLineSymbol);
 
-        var outgoingConnectionPoint = DrawnLineSymbol.OutgoingConnectionPoint;
+        var outgoingConnectionPoint = СurrentDrawnLineSymbol.OutgoingConnectionPoint;
         outgoingConnectionPoint.IsHasConnectingLine = false;
 
-        DrawnLineSymbol = null;
+        СurrentDrawnLineSymbol = null;
     }
 
     private void DeleteSelectedDrawnLineSymbol()
@@ -191,7 +191,7 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
     //TODO: Подумать над названием метода
     private void AddLine()
     {
-        DrawnLineSymbol?.AddLine();
+        СurrentDrawnLineSymbol?.AddLine();
         ClearSelectedBlockSymbols();
         RemoveSelectDrawnLine();
     }
@@ -254,7 +254,7 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
         var previousCoordinate = (previousXCoordinate, previousYCoordinate);
 
         MovableBlockSymbol?.SetCoordinate(currentCoordinate, previousCoordinate);
-        DrawnLineSymbol?.ChangeCoordination(currentCoordinate);
+        СurrentDrawnLineSymbol?.ChangeCoordination(currentCoordinate);
         MovableRectangleLine?.ChangeCoordinateLine(currentCoordinate);
 
         previousXCoordinate = xCoordinate;

@@ -37,6 +37,9 @@
                 <DataTemplate DataType="{x:Type blockSymbolsVM:CycleWhileBeginSymbolVM}">
                     <blockSymbolView:CycleWhileBeginSymbolView MouseDown="SelectBlockSymbol"/>
                 </DataTemplate>
+                <DataTemplate DataType="{x:Type blockSymbolsVM:CycleWhileEndSymbolVM}">
+                    <blockSymbolView:CycleWhileEndSymbolView MouseDown="SelectBlockSymbol"/>
+                </DataTemplate>
                 <DataTemplate DataType="{x:Type lineSymbolsVM:DrawnLineSymbolVM}">
                     <lineSymbolView:DrawnLineSymbolView />
                 </DataTemplate>

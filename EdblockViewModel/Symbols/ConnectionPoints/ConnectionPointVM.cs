@@ -122,7 +122,7 @@ public class ConnectionPointVM : INotifyPropertyChanged
 
     public void TrackStageDrawLine()
     {
-        if (_canvasSymbolsVM.DrawnLineSymbol == null)
+        if (_canvasSymbolsVM.СurrentDrawnLineSymbol == null)
         {
             StarDrawLine();
         }
@@ -182,7 +182,7 @@ public class ConnectionPointVM : INotifyPropertyChanged
         drawnLineSymbolVM.RedrawPartLines();
 
         _canvasSymbolsVM.SymbolsVM.Add(drawnLineSymbolVM);
-        _canvasSymbolsVM.DrawnLineSymbol = drawnLineSymbolVM;
+        _canvasSymbolsVM.СurrentDrawnLineSymbol = drawnLineSymbolVM;
     }
 
     private void FinishDrawLine()
@@ -196,7 +196,7 @@ public class ConnectionPointVM : INotifyPropertyChanged
             return;
         }
 
-        var drawnLineSymbolVM = _canvasSymbolsVM.DrawnLineSymbol;
+        var drawnLineSymbolVM = _canvasSymbolsVM.СurrentDrawnLineSymbol;
 
         if (drawnLineSymbolVM == null)
         {
@@ -231,7 +231,7 @@ public class ConnectionPointVM : INotifyPropertyChanged
         AddBlockToLine(symbolOutgoingLine, drawnLineSymbolVM);
         AddBlockToLine(BlockSymbolVM, drawnLineSymbolVM);
 
-        _canvasSymbolsVM.DrawnLineSymbol = null;
+        _canvasSymbolsVM.СurrentDrawnLineSymbol = null;
     }
 
     private void AddBlockToLine(BlockSymbolVM blockSymbolVM, DrawnLineSymbolVM drawnLineSymbolVM)

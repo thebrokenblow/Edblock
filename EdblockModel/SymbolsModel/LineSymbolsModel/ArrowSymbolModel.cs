@@ -4,8 +4,8 @@ namespace EdblockModel.SymbolsModel.LineSymbolsModel;
 
 public class ArrowSymbolModel
 {
-    private const int WidthArrow = 8;
-    private const int HeightArrow = 8;
+    private const int WidthArrow = 7;
+    private const int HeightArrow = 7;
 
     private readonly static Dictionary<PositionConnectionPoint, Func<(int, int), List<(int, int)>>> coordinateArrorByPosition = new()
     {
@@ -18,8 +18,7 @@ public class ArrowSymbolModel
     //Получение координат стрелки во время рисования линии
     public static List<(int, int)> GetCoordinateArrow((int x, int y) startCoordinateLine, (int x, int y) currentCoordinateLine, PositionConnectionPoint positionConnectionPoint)
     {
-        if (positionConnectionPoint == PositionConnectionPoint.Top ||
-            positionConnectionPoint == PositionConnectionPoint.Bottom)
+        if (positionConnectionPoint == PositionConnectionPoint.Top || positionConnectionPoint == PositionConnectionPoint.Bottom)
         {
             var coordinateArrow = GetCoordinateVerticalCP(startCoordinateLine, currentCoordinateLine);
             return coordinateArrow;
@@ -105,9 +104,9 @@ public class ArrowSymbolModel
     {
         var coordinateArrow = new List<(int, int)>
         {
-            (coordinate.x, coordinate.y + HeightArrow / 2),
-            (coordinate.x, coordinate.y - HeightArrow / 2),
-            (coordinate.x + WidthArrow, coordinate.y),
+            (coordinate.x - WidthArrow, coordinate.y - HeightArrow / 2),
+            (coordinate.x, coordinate.y),
+            (coordinate.x - WidthArrow, coordinate.y + HeightArrow / 2)
         };
 
         return coordinateArrow;
@@ -117,9 +116,9 @@ public class ArrowSymbolModel
     {
         var coordinateArrow = new List<(int, int)>
         {
-            (coordinate.x, coordinate.y + HeightArrow / 2),
-            (coordinate.x, coordinate.y - HeightArrow / 2),
-            (coordinate.x - WidthArrow, coordinate.y),
+            (coordinate.x + WidthArrow, coordinate.y - HeightArrow / 2),
+            (coordinate.x, coordinate.y),
+            (coordinate.x + WidthArrow, coordinate.y + HeightArrow / 2),
         };
 
         return coordinateArrow;
@@ -129,9 +128,9 @@ public class ArrowSymbolModel
     {
         var coordinateArrow = new List<(int, int)>
         {
-            (coordinate.x - WidthArrow / 2,coordinate.y),
-            (coordinate.x, coordinate.y + HeightArrow),
-            (coordinate.x + WidthArrow / 2, coordinate.y),
+            (coordinate.x - WidthArrow / 2,coordinate.y - HeightArrow),
+            (coordinate.x, coordinate.y),
+            (coordinate.x + WidthArrow / 2, coordinate.y - HeightArrow),
         };
 
         return coordinateArrow;
@@ -141,9 +140,9 @@ public class ArrowSymbolModel
     {
         var coordinateArrow = new List<(int, int)>
         {
-            (coordinate.x - WidthArrow / 2, coordinate.y),
-            (coordinate.x + WidthArrow / 2, coordinate.y),
-            (coordinate.x, coordinate.y - HeightArrow),
+            (coordinate.x - WidthArrow / 2, coordinate.y + HeightArrow),
+            (coordinate.x + WidthArrow / 2, coordinate.y + HeightArrow),
+            (coordinate.x, coordinate.y ),
         };
 
         return coordinateArrow;
