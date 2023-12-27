@@ -15,7 +15,7 @@
             Height="{Binding Height}" 
             Background="{Binding Color}">
             
-            <symbolView:TextFieldView />
+            <symbolView:TextFieldView DataContext="{Binding TextFieldVM}"/>
             <symbolView:ConnectionPointsView />
             <symbolView:ScaleRectanglesView />
 

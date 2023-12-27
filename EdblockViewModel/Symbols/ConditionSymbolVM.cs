@@ -24,7 +24,7 @@ public class ConditionSymbolVM : BlockSymbolVM, IHavePolygon
     public ConditionSymbolVM(EdblockVM edblockVM) : base(edblockVM)
     {
         Color = defaultColor;
-        TextField.Text = defaultText;
+        TextFieldVM.Text = defaultText;
     }
 
     public override void SetWidth(int width)
@@ -34,8 +34,8 @@ public class ConditionSymbolVM : BlockSymbolVM, IHavePolygon
         var textFieldWidth = BlockSymbolModel.GetTextFieldWidth();
         var textFieldLeftOffset = BlockSymbolModel.GetTextFieldLeftOffset();
 
-        TextField.Width = textFieldWidth;
-        TextField.LeftOffset = textFieldLeftOffset;
+        TextFieldVM.Width = textFieldWidth;
+        TextFieldVM.LeftOffset = textFieldLeftOffset;
 
         ChangeCoordinateAuxiliaryElements();
 
@@ -49,8 +49,8 @@ public class ConditionSymbolVM : BlockSymbolVM, IHavePolygon
         var textFieldHeight = BlockSymbolModel.GetTextFieldHeight();
         var textFieldTopOffset = BlockSymbolModel.GetTextFieldTopOffset();
 
-        TextField.Height = textFieldHeight;
-        TextField.TopOffset = textFieldTopOffset;
+        TextFieldVM.Height = textFieldHeight;
+        TextFieldVM.TopOffset = textFieldTopOffset;
 
         ChangeCoordinateAuxiliaryElements();
 

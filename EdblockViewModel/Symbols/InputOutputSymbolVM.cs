@@ -25,7 +25,7 @@ public class InputOutputSymbolVM : BlockSymbolVM, IHavePolygon
     public InputOutputSymbolVM(EdblockVM edblockVM) : base(edblockVM)
     {
         Color = defaultColor;
-        TextField.Text = defaultText;
+        TextFieldVM.Text = defaultText;
 
         SetCoordinatePolygonPoints();
     }
@@ -37,8 +37,8 @@ public class InputOutputSymbolVM : BlockSymbolVM, IHavePolygon
         var textFieldWidth = BlockSymbolModel.GetTextFieldWidth();
         var textFieldLeftOffset = BlockSymbolModel.GetTextFieldLeftOffset();
 
-        TextField.Width = textFieldWidth;
-        TextField.LeftOffset = textFieldLeftOffset;
+        TextFieldVM.Width = textFieldWidth;
+        TextFieldVM.LeftOffset = textFieldLeftOffset;
 
         ChangeCoordinateAuxiliaryElements();
 
@@ -52,8 +52,8 @@ public class InputOutputSymbolVM : BlockSymbolVM, IHavePolygon
         var textFieldHeight = BlockSymbolModel.GetTextFieldHeight();
         var textFieldTopOffset = BlockSymbolModel.GetTextFieldTopOffset();
 
-        TextField.Height = textFieldHeight;
-        TextField.TopOffset = textFieldTopOffset;
+        TextFieldVM.Height = textFieldHeight;
+        TextFieldVM.TopOffset = textFieldTopOffset;
 
         ChangeCoordinateAuxiliaryElements();
 

@@ -33,7 +33,7 @@
             Height="{Binding HeightBorder}" 
             Width="{Binding WidthBorder}" />
 
-        <symbolView:TextFieldView />
+        <symbolView:TextFieldView DataContext="{Binding TextFieldVM}"/>
         <symbolView:ConnectionPointsView/>
         <symbolView:ScaleRectanglesView />
     </Canvas>

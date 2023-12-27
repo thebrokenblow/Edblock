@@ -162,20 +162,21 @@ public class TextFieldVM : INotifyPropertyChanged
         }
     }
 
+    public BlockSymbolVM BlockSymbolVM { get; init; }
+
     public DelegateCommand MouseDoubleClick { get; init; }
     public DelegateCommand MouseLeftButtonDown { get; init; }
 
     public event PropertyChangedEventHandler? PropertyChanged;
 
     private readonly CanvasSymbolsVM _canvasSymbolsVM;
-    private readonly BlockSymbolVM _blockSymbolVM;
     private readonly BlockSymbolModel _blockSymbolModel;
 
     public TextFieldVM(CanvasSymbolsVM canvasSymbolsVM, BlockSymbolVM blockSymbolVM)
     {
         _canvasSymbolsVM = canvasSymbolsVM;
 
-        _blockSymbolVM = blockSymbolVM;
+        BlockSymbolVM = blockSymbolVM;
         _blockSymbolModel = blockSymbolVM.BlockSymbolModel;
 
         Cursor = Cursors.SizeAll;
@@ -190,7 +191,7 @@ public class TextFieldVM : INotifyPropertyChanged
         {
             if (symbol is BlockSymbolVM blockSymbol)
             {
-                var textFieldSymbol = blockSymbol.TextField;
+                var textFieldSymbol = blockSymbol.TextFieldVM;
                 if (textFieldSymbol.Focusable)
                 {
                     textFieldSymbol.Focusable = false;
@@ -216,6 +217,6 @@ public class TextFieldVM : INotifyPropertyChanged
     {
         Cursor = Cursors.SizeAll;
        
-        _blockSymbolVM.SetMovableSymbol();
+        BlockSymbolVM.SetMovableSymbol();
     }
 }

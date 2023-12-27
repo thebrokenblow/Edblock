@@ -66,7 +66,7 @@ public class ScalePartBlockSymbol
             ScalingBlockSymbol.Width = width;
         }
 
-        ScalingBlockSymbol.TextField.Cursor = _cursorWhenScaling;
+        ScalingBlockSymbol.TextFieldVM.Cursor = _cursorWhenScaling;
         canvasSymbolsVM.Cursor = _cursorWhenScaling;
     }
 
@@ -96,7 +96,7 @@ public class ScalePartBlockSymbol
             ScalingBlockSymbol.Height = height;
         }
 
-        ScalingBlockSymbol.TextField.Cursor = _cursorWhenScaling;
+        ScalingBlockSymbol.TextFieldVM.Cursor = _cursorWhenScaling;
         canvasSymbolsVM.Cursor = _cursorWhenScaling;
     }
 }

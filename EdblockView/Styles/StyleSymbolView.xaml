@@ -36,19 +36,19 @@
     </Style>
 
     <Style x:Key="TextFieldView" TargetType="TextBox">
-        <Setter Property="Text" Value="{Binding TextField.Text, UpdateSourceTrigger=PropertyChanged}" />
-        <Setter Property="FontFamily" Value="{Binding TextField.FontFamily}" />
-        <Setter Property="FontSize" Value="{Binding TextField.FontSize}" />
-        <Setter Property="TextAlignment" Value="{Binding TextField.TextAlignment}" />
-        <Setter Property="FontWeight" Value="{Binding TextField.FontWeight}"/>
-        <Setter Property="FontStyle" Value="{Binding TextField.FontStyle}"/>
-        <Setter Property="TextDecorations" Value="{Binding TextField.TextDecorations}"/>
-        <Setter Property="Width" Value="{Binding TextField.Width}" />
-        <Setter Property="Height" Value="{Binding TextField.Height}" />
-        <Setter Property="Cursor" Value="{Binding TextField.Cursor}" />
-        <Setter Property="Focusable" Value="{Binding TextField.Focusable}" />
-        <Setter Property="Canvas.Left" Value="{Binding TextField.LeftOffset}" />
-        <Setter Property="Canvas.Top" Value="{Binding TextField.TopOffset}" />
+        <Setter Property="Text" Value="{Binding Text, UpdateSourceTrigger=PropertyChanged}" />
+        <Setter Property="FontFamily" Value="{Binding FontFamily}" />
+        <Setter Property="FontSize" Value="{Binding FontSize}" />
+        <Setter Property="TextAlignment" Value="{Binding TextAlignment}" />
+        <Setter Property="FontWeight" Value="{Binding FontWeight}"/>
+        <Setter Property="FontStyle" Value="{Binding FontStyle}"/>
+        <Setter Property="TextDecorations" Value="{Binding TextDecorations}"/>
+        <Setter Property="Width" Value="{Binding Width}" />
+        <Setter Property="Height" Value="{Binding Height}" />
+        <Setter Property="Cursor" Value="{Binding Cursor}" />
+        <Setter Property="Focusable" Value="{Binding Focusable}" />
+        <Setter Property="Canvas.Left" Value="{Binding LeftOffset}" />
+        <Setter Property="Canvas.Top" Value="{Binding TopOffset}" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Foreground" Value="White" />
         <Setter Property="TextWrapping" Value="Wrap" />

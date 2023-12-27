@@ -92,7 +92,7 @@ public abstract class BlockSymbolVM : SymbolVM
     public DelegateCommand MouseLeave { get; set; }
     public DelegateCommand MouseLeftButtonDown { get; set; }
 
-    public TextFieldVM TextField { get; init; }
+    public TextFieldVM TextFieldVM { get; init; }
     public BlockSymbolModel BlockSymbolModel { get; init; }
 
     protected const int defaultWidth = 140;
@@ -116,7 +116,7 @@ public abstract class BlockSymbolVM : SymbolVM
 
         BlockSymbolModel = CreateBlockSymbolModel();
 
-        TextField = new(_canvasSymbolsVM, this);
+        TextFieldVM = new(_canvasSymbolsVM, this);
 
         var factoryConnectionPoints = new FactoryConnectionPoints(_canvasSymbolsVM, edblockVM.PopupBoxMenuVM.CheckBoxLineGostVM, this);
         ConnectionPoints = factoryConnectionPoints.CreateConnectionPoints();
@@ -163,7 +163,7 @@ public abstract class BlockSymbolVM : SymbolVM
         {
             ConnectionPointVM.SetDisplayConnectionPoints(ConnectionPoints, true);
             ScaleRectangle.SetStateDisplay(ScaleRectangles, true);
-            TextField.Cursor = Cursors.SizeAll;
+            TextFieldVM.Cursor = Cursors.SizeAll;
         }
     }
 

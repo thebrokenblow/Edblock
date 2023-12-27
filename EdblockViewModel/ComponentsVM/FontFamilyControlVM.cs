@@ -31,7 +31,7 @@ public class FontFamilyControlVM
 
     public void SetFontFamily(BlockSymbolVM selectedBlockSymbol) 
     {
-        selectedBlockSymbol.TextField.FontFamily = fontFamily;
+        selectedBlockSymbol.TextFieldVM.FontFamily = fontFamily;
     }
 
     private void SetFontFamily()

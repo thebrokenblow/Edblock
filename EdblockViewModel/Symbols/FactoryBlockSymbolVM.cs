@@ -55,7 +55,7 @@ internal class FactoryBlockSymbolVM
         blockSymbolVM.XCoordinate = blockSymbolSerializable.XCoordinate;
         blockSymbolVM.YCoordinate = blockSymbolSerializable.YCoordinate;
 
-        var textField = blockSymbolVM.TextField;
+        var textField = blockSymbolVM.TextFieldVM;
         var textFieldSerializable = blockSymbolSerializable.TextFieldSerializable;
 
         if (textFieldSerializable != null)

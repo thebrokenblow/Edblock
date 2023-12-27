@@ -28,7 +28,7 @@
             </i:Interaction.Triggers>
         </Rectangle>
 
-        <symbolView:TextFieldView/>
+        <symbolView:TextFieldView DataContext="{Binding TextFieldVM}"/>
         <symbolView:ConnectionPointsView/>
         <symbolView:ScaleRectanglesView/>
     </Canvas>

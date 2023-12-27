@@ -11,4 +11,9 @@ public partial class TextFieldView : UserControl
     {
         InitializeComponent();
     }
+
+    private void TextBox_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+    {
+        var t = DataContext;
+    }
 }

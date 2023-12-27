@@ -54,7 +54,7 @@ public class TextAlignmentControlVM
 
     public void SetFormatAlignment(BlockSymbolVM selectedBlockSymbol)
     {
-        selectedBlockSymbol.TextField.TextAlignment = textAlignment;
+        selectedBlockSymbol.TextFieldVM.TextAlignment = textAlignment;
     }
 
     private void SetFormatAlignment()

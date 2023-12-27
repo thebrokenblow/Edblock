@@ -89,9 +89,9 @@ public class FormatTextControlVM
 
     public void SetFontText(BlockSymbolVM selectedBlockSymbol)
     {
-        selectedBlockSymbol.TextField.FontWeight = currentFontWeight;
-        selectedBlockSymbol.TextField.FontStyle = currentFontStyle;
-        selectedBlockSymbol.TextField.TextDecorations = currentTextDecorations;
+        selectedBlockSymbol.TextFieldVM.FontWeight = currentFontWeight;
+        selectedBlockSymbol.TextFieldVM.FontStyle = currentFontStyle;
+        selectedBlockSymbol.TextFieldVM.TextDecorations = currentTextDecorations;
 
     }
 

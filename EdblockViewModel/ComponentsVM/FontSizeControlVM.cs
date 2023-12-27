@@ -33,7 +33,7 @@ public class FontSizeControlVM
 
     public void SetFontSize(BlockSymbolVM selectedBlockSymbol)
     {
-        selectedBlockSymbol.TextField.FontSize = fontSize;
+        selectedBlockSymbol.TextFieldVM.FontSize = fontSize;
     }
 
     private void SetFontSize()

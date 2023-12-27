@@ -11,33 +11,33 @@ public class StartEndSymbolVM : BlockSymbolVM
     public StartEndSymbolVM(EdblockVM edblockVM) : base(edblockVM)
     {
         Color = defaultColor;
-        TextField.Text = defaultText;
+        TextFieldVM.Text = defaultText;
     }
 
     public override void SetWidth(int width)
     {
-        TextField.Width = width;
+        TextFieldVM.Width = width;
         BlockSymbolModel.Width = width;
 
         var textFieldWidth = BlockSymbolModel.GetTextFieldWidth();
         var textFieldLeftOffset = BlockSymbolModel.GetTextFieldLeftOffset();
 
-        TextField.Width = textFieldWidth;
-        TextField.LeftOffset = textFieldLeftOffset;
+        TextFieldVM.Width = textFieldWidth;
+        TextFieldVM.LeftOffset = textFieldLeftOffset;
 
         ChangeCoordinateAuxiliaryElements();
     }
 
     public override void SetHeight(int height)
     {
-        TextField.Height = height;
+        TextFieldVM.Height = height;
         BlockSymbolModel.Height = height;
 
         var textFieldHeight = BlockSymbolModel.GetTextFieldHeight();
         var textFieldTopOffset = BlockSymbolModel.GetTextFieldTopOffset();
 
-        TextField.Height = textFieldHeight;
-        TextField.TopOffset = textFieldTopOffset;
+        TextFieldVM.Height = textFieldHeight;
+        TextFieldVM.TopOffset = textFieldTopOffset;
 
         ChangeCoordinateAuxiliaryElements();
     }
