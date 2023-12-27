@@ -86,35 +86,37 @@
                     
                     <symbol:ActionSymbolUI 
                         Style="{StaticResource SymbolUI}"
-                        MouseDown="AddSymbolView"/>
+                        MouseDown="AddSymbolView" />
                     
                     <symbol:ConditionSymbolUI 
                         Style="{StaticResource SymbolUI}"
-                        MouseDown="AddSymbolView"/>
+                        MouseDown="AddSymbolView" />
                     
                     <symbol:VerticalConditionSymbolUI 
                         Style="{StaticResource SymbolUI}" />
                     
                     <symbol:HorizontalConditionSymbolUI 
-                        Style="{StaticResource SymbolUI}"/>
+                        Style="{StaticResource SymbolUI}" />
                     
                     <symbol:StartEndSymbolUI 
                         Style="{StaticResource SymbolUI}" 
-                        MouseDown="AddSymbolView"/>
+                        MouseDown="AddSymbolView" />
                     
                     <symbol:InputOutputSymbolUI 
                         Style="{StaticResource SymbolUI}" 
-                        MouseDown="AddSymbolView"/>
+                        MouseDown="AddSymbolView" />
                     
                     <symbol:SubroutineSymbolUI
                         Style="{StaticResource SymbolUI}" 
-                        MouseDown="AddSymbolView"/>
+                        MouseDown="AddSymbolView" />
                     
                     <symbol:CycleForSymbolUI 
-                        Style="{StaticResource SymbolUI}"/>
+                        Style="{StaticResource SymbolUI}"
+                        MouseDown="AddSymbolView" />
                     
                     <symbol:CycleWhileBeginSymbolUI 
-                        Style="{StaticResource SymbolUI}"/>
+                        Style="{StaticResource SymbolUI}"
+                        MouseDown="AddSymbolView" />
                     
                     <symbol:CycleWhileEndSymbolUI 
                         Style="{StaticResource SymbolUI}" />

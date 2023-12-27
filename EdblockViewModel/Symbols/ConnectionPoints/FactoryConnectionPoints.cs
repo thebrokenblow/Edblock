@@ -12,7 +12,7 @@ internal class FactoryConnectionPoints
     private readonly CanvasSymbolsVM _canvasSymbolsVM;
     private readonly CheckBoxLineGostVM _checkBoxLineGostVM;
     private readonly CoordinateConnectionPoint coordinateConnectionPoint;
-    private readonly Dictionary<PositionConnectionPoint, Func<PositionConnectionPoint, ConnectionPoint>> instanceConnectionPointByPosition;
+    private readonly Dictionary<PositionConnectionPoint, Func<PositionConnectionPoint, ConnectionPointVM>> instanceConnectionPointByPosition;
 
     public FactoryConnectionPoints(CanvasSymbolsVM canvasSymbolsVM, CheckBoxLineGostVM checkBoxLineGostVM, BlockSymbolVM blockSymbol)
     {
@@ -31,14 +31,14 @@ internal class FactoryConnectionPoints
         coordinateConnectionPoint = new(_blockSymbol);
     }
 
-    public List<ConnectionPoint> CreateConnectionPoints()
+    public List<ConnectionPointVM> CreateConnectionPoints()
     {
         var topConnectionPoint = CreateTop();
         var rightConnectionPoint = CreateRight();
         var bottomConnectionPoint = CreateBottom();
         var leftConnectionPoint = CreateLeft();
 
-        var connectionPoints = new List<ConnectionPoint>()
+        var connectionPoints = new List<ConnectionPointVM>()
         {
             topConnectionPoint,
             rightConnectionPoint,
@@ -49,16 +49,16 @@ internal class FactoryConnectionPoints
         return connectionPoints;
     }
 
-    public ConnectionPoint CreateConnectionPoint(PositionConnectionPoint positionConnectionPoint)
+    public ConnectionPointVM CreateConnectionPoint(PositionConnectionPoint positionConnectionPoint)
     {
         var connectionPoint = instanceConnectionPointByPosition[positionConnectionPoint].Invoke(positionConnectionPoint);
 
         return connectionPoint;
     }
 
-    private ConnectionPoint CreateTop()
+    private ConnectionPointVM CreateTop()
     {
-        var topConnectionPoint = new ConnectionPoint(
+        var topConnectionPoint = new ConnectionPointVM(
             _canvasSymbolsVM,
             _blockSymbol,
             _checkBoxLineGostVM,
@@ -68,9 +68,9 @@ internal class FactoryConnectionPoints
         return topConnectionPoint;
     }
 
-    private ConnectionPoint CreateRight()
+    private ConnectionPointVM CreateRight()
     {
-        var rightConnectionPoint = new ConnectionPoint(
+        var rightConnectionPoint = new ConnectionPointVM(
             _canvasSymbolsVM,
             _blockSymbol,
             _checkBoxLineGostVM,
@@ -80,9 +80,9 @@ internal class FactoryConnectionPoints
         return rightConnectionPoint;
     }
 
-    private ConnectionPoint CreateBottom()
+    private ConnectionPointVM CreateBottom()
     {
-        var bottomConnectionPoint = new ConnectionPoint(
+        var bottomConnectionPoint = new ConnectionPointVM(
             _canvasSymbolsVM,
             _blockSymbol,
             _checkBoxLineGostVM,
@@ -92,9 +92,9 @@ internal class FactoryConnectionPoints
         return bottomConnectionPoint;
     }
 
-    private ConnectionPoint CreateLeft()
+    private ConnectionPointVM CreateLeft()
     {
-        var bottomConnectionPoint = new ConnectionPoint(
+        var bottomConnectionPoint = new ConnectionPointVM(
             _canvasSymbolsVM,
             _blockSymbol,
             _checkBoxLineGostVM,

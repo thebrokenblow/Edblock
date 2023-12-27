@@ -74,7 +74,7 @@ public class InputOutputSymbolVM : BlockSymbolVM, IHavePolygon
         return inputOutputSymbolModel;
     }
 
-    private void SetCoordinatePolygonPoints()
+    public void SetCoordinatePolygonPoints()
     {
         Points = new()
         {

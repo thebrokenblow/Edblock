@@ -12,7 +12,7 @@ namespace EdblockViewModel.Symbols.Abstraction;
 
 public abstract class BlockSymbolVM : SymbolVM
 {
-    public List<ConnectionPoint> ConnectionPoints { get; init; }
+    public List<ConnectionPointVM> ConnectionPoints { get; init; }
     public List<ScaleRectangle> ScaleRectangles { get; init; }
     public string Id { get; set; }
 
@@ -127,8 +127,8 @@ public abstract class BlockSymbolVM : SymbolVM
         Width = defaultWidth;
         Height = defaultHeigth;
 
-        MouseEnter = new(ShowStroke);
-        MouseLeave = new(HideStroke);
+        MouseEnter = new(ShowAuxiliaryElements);
+        MouseLeave = new(HideAuxiliaryElements);
         MouseLeftButtonDown = new(SetMovableSymbol);
     }
 
@@ -152,22 +152,26 @@ public abstract class BlockSymbolVM : SymbolVM
         }
     }
 
-    public void ShowStroke()
+    public void ShowAuxiliaryElements()
     {
+        _canvasSymbolsVM.Cursor = Cursors.SizeAll;
+
         var movableSymbol = _canvasSymbolsVM.MovableBlockSymbol;
         var scalePartBlockSymbolVM = _canvasSymbolsVM.ScalePartBlockSymbol;
 
         if (movableSymbol == null && scalePartBlockSymbolVM == null)  // Условие истино, когда символ не перемещается и не масштабируется (просто навёл курсор)
         {
-            ConnectionPoint.SetDisplayConnectionPoints(ConnectionPoints, true);
+            ConnectionPointVM.SetDisplayConnectionPoints(ConnectionPoints, true);
             ScaleRectangle.SetStateDisplay(ScaleRectangles, true);
             TextField.Cursor = Cursors.SizeAll;
         }
     }
 
-    public void HideStroke()
+    public void HideAuxiliaryElements()
     {
-        ConnectionPoint.SetDisplayConnectionPoints(ConnectionPoints, false);
+        _canvasSymbolsVM.Cursor = Cursors.Arrow;
+
+        ConnectionPointVM.SetDisplayConnectionPoints(ConnectionPoints, false);
         ScaleRectangle.SetStateDisplay(ScaleRectangles, false);
     }
 
@@ -184,7 +188,7 @@ public abstract class BlockSymbolVM : SymbolVM
         }
     }
 
-    internal ConnectionPoint GetConnectionPoint(PositionConnectionPoint outgoingPosition)
+    internal ConnectionPointVM GetConnectionPoint(PositionConnectionPoint outgoingPosition)
     {
         foreach (var connectionPoint in ConnectionPoints)
         {
@@ -199,7 +203,7 @@ public abstract class BlockSymbolVM : SymbolVM
 
     public void SetMovableSymbol()
     {
-        ConnectionPoint.SetDisplayConnectionPoints(ConnectionPoints, false);
+        ConnectionPointVM.SetDisplayConnectionPoints(ConnectionPoints, false);
         ScaleRectangle.SetStateDisplay(ScaleRectangles, false);
 
         _canvasSymbolsVM.Cursor = Cursors.SizeAll;

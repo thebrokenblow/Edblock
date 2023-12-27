@@ -19,7 +19,7 @@ public partial class ConnectionPointsView : UserControl
     {
         var ellipse = (Ellipse)sender;
         var contextEllipse = ellipse.DataContext;
-        var connectionPoint = (ConnectionPoint)contextEllipse;
+        var connectionPoint = (ConnectionPointVM)contextEllipse;
         connectionPoint.TrackStageDrawLine();
 
         e.Handled = true;

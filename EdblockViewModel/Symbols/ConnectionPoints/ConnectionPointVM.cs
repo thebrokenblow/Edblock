@@ -14,7 +14,7 @@ using EdblockModel.SymbolsModel.LineSymbolsModel;
 
 namespace EdblockViewModel.Symbols.ConnectionPoints;
 
-public class ConnectionPoint : INotifyPropertyChanged
+public class ConnectionPointVM : INotifyPropertyChanged
 {
     private int xCoordinate;
     public int XCoordinate
@@ -83,7 +83,7 @@ public class ConnectionPoint : INotifyPropertyChanged
     private readonly CheckBoxLineGostVM _checkBoxLineGostVM;
     private readonly ConnectionPointModel _connectionPointModel;
 
-    public ConnectionPoint(
+    public ConnectionPointVM(
         CanvasSymbolsVM canvasSymbolsVM, 
         BlockSymbolVM blockSymbolVM, 
         CheckBoxLineGostVM checkBoxLineGostVM,
@@ -137,7 +137,7 @@ public class ConnectionPoint : INotifyPropertyChanged
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameProperty));
     }
 
-    public static void SetDisplayConnectionPoints(List<ConnectionPoint> connectionPoints, bool isShow)
+    public static void SetDisplayConnectionPoints(List<ConnectionPointVM> connectionPoints, bool isShow)
     {
         foreach (var connectionPoint in connectionPoints)
         {

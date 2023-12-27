@@ -1,10 +1,23 @@
-﻿using EdblockModel.SymbolsModel;
+﻿using System.Windows;
+using System.Windows.Media;
+using EdblockModel.SymbolsModel;
 using EdblockViewModel.Symbols.Abstraction;
 
 namespace EdblockViewModel.Symbols;
 
-public class SubroutineSymbolVM : BlockSymbolVM
+public class SubroutineSymbolVM : BlockSymbolVM, IHavePolygon
 {
+    private PointCollection? points;
+    public PointCollection? Points
+    {
+        get => points;
+        set
+        {
+            points = value;
+            OnPropertyChanged();
+        }
+    }
+
     private int widthBorder;
     public int WidthBorder
     {
@@ -54,6 +67,7 @@ public class SubroutineSymbolVM : BlockSymbolVM
         TextField.Width = textFieldWidth;
         TextField.LeftOffset = textFieldLeftOffset;
 
+        SetCoordinatePolygonPoints();
         ChangeCoordinateAuxiliaryElements();
     }
 
@@ -68,6 +82,7 @@ public class SubroutineSymbolVM : BlockSymbolVM
         TextField.Height = textFieldHeight;
         TextField.TopOffset = textFieldTopOffset;
 
+        SetCoordinatePolygonPoints();
         ChangeCoordinateAuxiliaryElements();
     }
 
@@ -83,5 +98,16 @@ public class SubroutineSymbolVM : BlockSymbolVM
         };
 
         return subroutineSymbolModel;
+    }
+
+    public void SetCoordinatePolygonPoints()
+    {
+        Points = new()
+        {
+            new Point(0, 0),
+            new Point(0, Height),
+            new Point(Width, Height),
+            new Point(Width, 0)
+        };
     }
 }

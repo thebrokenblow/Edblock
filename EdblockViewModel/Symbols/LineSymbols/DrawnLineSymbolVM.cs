@@ -19,8 +19,8 @@ public class DrawnLineSymbolVM : SymbolVM
     public ArrowSymbol ArrowSymbol { get; set; }
     public DelegateCommand MouseEnter { get; init; }
     public DelegateCommand MouseLeave { get; init; }
-    public ConnectionPoint? OutgoingConnectionPoint { get; init; }
-    public ConnectionPoint? IncomingConnectionPoint { get; set; }
+    public ConnectionPointVM? OutgoingConnectionPoint { get; init; }
+    public ConnectionPointVM? IncomingConnectionPoint { get; set; }
 
     private BlockSymbolVM? symbolOutgoingLine;
     public BlockSymbolVM? SymbolOutgoingLine

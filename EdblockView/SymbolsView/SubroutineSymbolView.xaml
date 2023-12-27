@@ -9,23 +9,10 @@
              d:DataContext="{d:DesignInstance Type=symbolVM:SubroutineSymbolVM}"
              mc:Ignorable="d" 
              d:DesignHeight="60" d:DesignWidth="140">
-    <Border Style="{StaticResource BorderSymbolView}">
-        <Canvas 
-            Width="{Binding Width}"
-            Height="{Binding Height}"
-            Background="{Binding Color}">
-
-            <Border 
-                BorderBrush="Black" 
-                BorderThickness="1" 
-                Canvas.Left="{Binding LeftOffsetBorder}"
-                Height="{Binding HeightBorder}" 
-                Width="{Binding WidthBorder}" />
-            
-            <symbolView:TextFieldView/>
-            <symbolView:ConnectionPointsView/>
-            <symbolView:ScaleRectanglesView/>
-
+    <Canvas>
+        <Polygon 
+            Fill="{Binding Color}"
+            Style="{StaticResource SymbolByPolygonView}">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="MouseLeftButtonDown">
                     <i:InvokeCommandAction Command="{Binding MouseLeftButtonDown}"/>
@@ -37,6 +24,17 @@
                     <i:InvokeCommandAction Command="{Binding MouseLeave}"/>
                 </i:EventTrigger>
             </i:Interaction.Triggers>
-        </Canvas>
-    </Border>
+        </Polygon>
+        
+        <Border 
+            BorderBrush="Black" 
+            BorderThickness="1" 
+            Canvas.Left="{Binding LeftOffsetBorder}"
+            Height="{Binding HeightBorder}" 
+            Width="{Binding WidthBorder}" />
+
+        <symbolView:TextFieldView />
+        <symbolView:ConnectionPointsView/>
+        <symbolView:ScaleRectanglesView />
+    </Canvas>
 </UserControl>
