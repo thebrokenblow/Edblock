@@ -83,34 +83,48 @@
 
             <ScrollViewer>
                 <StackPanel Width="360">
+                    
                     <symbol:ActionSymbolUI 
                         Style="{StaticResource SymbolUI}"
                         MouseDown="AddSymbolView"/>
+                    
                     <symbol:ConditionSymbolUI 
                         Style="{StaticResource SymbolUI}"
                         MouseDown="AddSymbolView"/>
+                    
                     <symbol:VerticalConditionSymbolUI 
                         Style="{StaticResource SymbolUI}" />
+                    
                     <symbol:HorizontalConditionSymbolUI 
                         Style="{StaticResource SymbolUI}"/>
+                    
                     <symbol:StartEndSymbolUI 
                         Style="{StaticResource SymbolUI}" 
                         MouseDown="AddSymbolView"/>
+                    
                     <symbol:InputOutputSymbolUI 
                         Style="{StaticResource SymbolUI}" 
                         MouseDown="AddSymbolView"/>
-                    <symbol:SubroutineSymbolUI 
-                        Style="{StaticResource SymbolUI}" />
+                    
+                    <symbol:SubroutineSymbolUI
+                        Style="{StaticResource SymbolUI}" 
+                        MouseDown="AddSymbolView"/>
+                    
                     <symbol:CycleForSymbolUI 
                         Style="{StaticResource SymbolUI}"/>
+                    
                     <symbol:CycleWhileBeginSymbolUI 
                         Style="{StaticResource SymbolUI}"/>
+                    
                     <symbol:CycleWhileEndSymbolUI 
                         Style="{StaticResource SymbolUI}" />
+                    
                     <symbol:LinkSymbolUI 
                         Style="{StaticResource SymbolUI}"/>
+                    
                     <symbol:CommentSymbolUI 
                         Style="{StaticResource SymbolUI}" />
+                    
                     <symbol:ParallelActionSymbolUI 
                         Style="{StaticResource SymbolUI}" />
                 </StackPanel>

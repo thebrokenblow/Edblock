@@ -6,8 +6,6 @@ using EdblockViewModel.ComponentsVM;
 using System.Collections.ObjectModel;
 using System.Runtime.CompilerServices;
 using EdblockViewModel.Symbols.Abstraction;
-using EdblockViewModel.Symbols.ScaleRectangles;
-using EdblockViewModel.Symbols.ConnectionPoints;
 
 namespace EdblockViewModel.Symbols;
 
@@ -216,14 +214,8 @@ public class TextFieldVM : INotifyPropertyChanged
 
     private void SetMovableSymbol()
     {
-        ConnectionPoint.SetDisplayConnectionPoints(_blockSymbolVM.ConnectionPoints, false);
-        ScaleRectangle.SetStateDisplay(_blockSymbolVM.ScaleRectangles, false);
-
         Cursor = Cursors.SizeAll;
-        
-        _canvasSymbolsVM.Cursor = Cursors.SizeAll;
-
-        _canvasSymbolsVM.MovableBlockSymbol = _blockSymbolVM;
-        _canvasSymbolsVM.SetCurrentRedrawLines(_blockSymbolVM);
+       
+        _blockSymbolVM.SetMovableSymbol();
     }
 }

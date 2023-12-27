@@ -5,16 +5,28 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:symbolView="clr-namespace:EdblockView.SymbolsView" 
              xmlns:symbolVM="clr-namespace:EdblockViewModel.Symbols;assembly=EdblockViewModel" 
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              d:DataContext="{d:DesignInstance Type=symbolVM:StartEndSymbolVM}"
              mc:Ignorable="d" 
              d:DesignHeight="60" d:DesignWidth="140">
     <Canvas 
         Width="{Binding Width}" 
-        Height="{Binding Height}" 
-        MouseDown="Rectangle_MouseDown">
+        Height="{Binding Height}">
 
         <Rectangle
-            Style="{StaticResource SymbolByRectangleView}"/>
+            Style="{StaticResource SymbolByRectangleView}">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="MouseLeftButtonDown">
+                    <i:InvokeCommandAction Command="{Binding MouseLeftButtonDown}"/>
+                </i:EventTrigger>
+                <i:EventTrigger EventName="MouseEnter">
+                    <i:InvokeCommandAction Command="{Binding MouseEnter}"/>
+                </i:EventTrigger>
+                <i:EventTrigger EventName="MouseLeave">
+                    <i:InvokeCommandAction Command="{Binding MouseLeave}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </Rectangle>
 
         <symbolView:TextFieldView/>
         <symbolView:ConnectionPointsView/>

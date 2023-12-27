@@ -90,6 +90,7 @@ public abstract class BlockSymbolVM : SymbolVM
 
     public DelegateCommand MouseEnter { get; set; }
     public DelegateCommand MouseLeave { get; set; }
+    public DelegateCommand MouseLeftButtonDown { get; set; }
 
     public TextFieldVM TextField { get; init; }
     public BlockSymbolModel BlockSymbolModel { get; init; }
@@ -128,6 +129,7 @@ public abstract class BlockSymbolVM : SymbolVM
 
         MouseEnter = new(ShowStroke);
         MouseLeave = new(HideStroke);
+        MouseLeftButtonDown = new(SetMovableSymbol);
     }
 
     public abstract void SetWidth(int width);
@@ -193,6 +195,17 @@ public abstract class BlockSymbolVM : SymbolVM
         }
 
         throw new Exception("Точки соединения с такой позицией нет");
+    }
+
+    public void SetMovableSymbol()
+    {
+        ConnectionPoint.SetDisplayConnectionPoints(ConnectionPoints, false);
+        ScaleRectangle.SetStateDisplay(ScaleRectangles, false);
+
+        _canvasSymbolsVM.Cursor = Cursors.SizeAll;
+
+        _canvasSymbolsVM.MovableBlockSymbol = this;
+        _canvasSymbolsVM.SetCurrentRedrawLines(this);
     }
 
     public void Select()

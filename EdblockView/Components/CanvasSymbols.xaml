@@ -17,19 +17,22 @@
         <ItemsControl ItemsSource="{Binding SymbolsVM}">
             <ItemsControl.Resources>
                 <DataTemplate DataType="{x:Type blockSymbolsVM:ActionSymbolVM}">
-                    <blockSymbolView:ActionSymbolView/>
+                    <blockSymbolView:ActionSymbolView MouseDown="SelectBlockSymbol" />
                 </DataTemplate>
                 <DataTemplate DataType="{x:Type blockSymbolsVM:ConditionSymbolVM}">
-                    <blockSymbolView:ConditionSymbolView/>
+                    <blockSymbolView:ConditionSymbolView MouseDown="SelectBlockSymbol"/>
                 </DataTemplate>
                 <DataTemplate DataType="{x:Type blockSymbolsVM:StartEndSymbolVM}">
-                    <blockSymbolView:StartEndSymbolView/>
+                    <blockSymbolView:StartEndSymbolView MouseDown="SelectBlockSymbol"/>
                 </DataTemplate>
                 <DataTemplate DataType="{x:Type blockSymbolsVM:InputOutputSymbolVM}">
-                    <blockSymbolView:InputOutputSymbolView/>
+                    <blockSymbolView:InputOutputSymbolView MouseDown="SelectBlockSymbol"/>
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type blockSymbolsVM:SubroutineSymbolVM}">
+                    <blockSymbolView:SubroutineSymbolView MouseDown="SelectBlockSymbol"/>
                 </DataTemplate>
                 <DataTemplate DataType="{x:Type lineSymbolsVM:DrawnLineSymbolVM}">
-                    <lineSymbolView:DrawnLineSymbolView/>
+                    <lineSymbolView:DrawnLineSymbolView />
                 </DataTemplate>
             </ItemsControl.Resources>
             <ItemsControl.Template>

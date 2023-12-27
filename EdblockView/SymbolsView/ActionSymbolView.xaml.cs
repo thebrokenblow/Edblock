@@ -1,6 +1,4 @@
-﻿using System.Windows.Input;
-using System.Windows.Controls;
-using EdblockViewModel.Symbols.Abstraction;
+﻿using System.Windows.Controls;
 
 namespace EdblockView.SymbolsView;
 
@@ -12,15 +10,5 @@ public partial class ActionSymbolView : UserControl
     public ActionSymbolView()
     {
         InitializeComponent();
-    }
-
-    private void MouseDownOnSymbol(object sender, MouseButtonEventArgs e)
-    {
-        var canvasSymbol = (Canvas)sender;
-        var contextCanvasSymbol = canvasSymbol.DataContext;
-        var blockSymbolVM = (BlockSymbolVM)contextCanvasSymbol;
-        blockSymbolVM.Select();
-
-        e.Handled = true;
     }
 }

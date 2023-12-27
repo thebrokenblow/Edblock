@@ -3,12 +3,40 @@ using EdblockViewModel.Symbols.Abstraction;
 
 namespace EdblockViewModel.Symbols;
 
-public class ActionSymbolVM : BlockSymbolVM
+public class SubroutineSymbolVM : BlockSymbolVM
 {
-    private const string defaultText = "Действие";
-    private const string defaultColor = "#FF52C0AA";
+    private int widthBorder;
+    public int WidthBorder
+    {
+        get => widthBorder;
+        set
+        {
+            widthBorder = value;
+            OnPropertyChanged();
+        }
+    }
 
-    public ActionSymbolVM(EdblockVM edblockVM) : base(edblockVM)
+    private int heightBorder;
+    public int HeightBorder
+    {
+        get => heightBorder;
+        set
+        {
+            heightBorder = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public const int leftOffsetBorder = 20;
+    public static int LeftOffsetBorder
+    {
+        get => leftOffsetBorder;
+    }
+
+    private const string defaultText = "Подпрограмма";
+    private const string defaultColor = "#FFBA64C8";
+
+    public SubroutineSymbolVM(EdblockVM edblockVM) : base(edblockVM)
     {
         Color = defaultColor;
         TextField.Text = defaultText;
@@ -17,6 +45,8 @@ public class ActionSymbolVM : BlockSymbolVM
     public override void SetWidth(int width)
     {
         BlockSymbolModel.Width = width;
+
+        WidthBorder = width - leftOffsetBorder * 2;
 
         var textFieldWidth = BlockSymbolModel.GetTextFieldWidth();
         var textFieldLeftOffset = BlockSymbolModel.GetTextFieldLeftOffset();
@@ -29,6 +59,7 @@ public class ActionSymbolVM : BlockSymbolVM
 
     public override void SetHeight(int height)
     {
+        HeightBorder = height;
         BlockSymbolModel.Height = height;
 
         var textFieldHeight = BlockSymbolModel.GetTextFieldHeight();
@@ -44,13 +75,13 @@ public class ActionSymbolVM : BlockSymbolVM
     {
         var nameBlockSymbolVM = GetType().BaseType?.ToString();
 
-        var actionSymbolModel = new ActionSymbolModel
+        var subroutineSymbolModel = new SubroutineSymbolModel
         {
             Id = Id,
             NameSymbol = nameBlockSymbolVM,
             Color = Color
         };
 
-        return actionSymbolModel;
+        return subroutineSymbolModel;
     }
 }
