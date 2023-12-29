@@ -16,35 +16,55 @@ public class ConditionSymbolVM : BlockSymbolVM, IHavePolygon
             points = value;
             OnPropertyChanged();
         }
-    } 
+    }
+
+    private const int defaultWidth = 140;
+    private const int defaultHeigth = 60;
 
     private const string defaultText = "Условие";
     private const string defaultColor = "#FF60B2D3";
 
     public ConditionSymbolVM(EdblockVM edblockVM) : base(edblockVM)
     {
+        ScaleRectangles = _builderScaleRectangles
+                .AddMiddleTopRectangle()
+                .AddRightTopRectangle()
+                .AddRightMiddleRectangle()
+                .AddRightBottomRectangle()
+                .AddMiddleBottomRectangle()
+                .AddLeftBottomRectangle()
+                .AddLeftMiddleRectangle()
+                .AddLeftTopRectangle()
+                .Build();
+
         Color = defaultColor;
+
         TextFieldVM.Text = defaultText;
+
+        Width = defaultWidth;
+        Height = defaultHeigth;
+
+        SetWidth(Width);
+        SetHeight(Height);
     }
 
     public override void SetWidth(int width)
-    {
-        BlockSymbolModel.Width = width;
-        
+    {     
+        Width = width;
+
         var textFieldWidth = BlockSymbolModel.GetTextFieldWidth();
         var textFieldLeftOffset = BlockSymbolModel.GetTextFieldLeftOffset();
 
         TextFieldVM.Width = textFieldWidth;
         TextFieldVM.LeftOffset = textFieldLeftOffset;
 
-        ChangeCoordinateAuxiliaryElements();
-
         SetCoordinatePolygonPoints();
+        ChangeCoordinateAuxiliaryElements();
     }
 
     public override void SetHeight(int height)
     {
-        BlockSymbolModel.Height = height;
+        Height = height;
 
         var textFieldHeight = BlockSymbolModel.GetTextFieldHeight();
         var textFieldTopOffset = BlockSymbolModel.GetTextFieldTopOffset();
@@ -52,9 +72,8 @@ public class ConditionSymbolVM : BlockSymbolVM, IHavePolygon
         TextFieldVM.Height = textFieldHeight;
         TextFieldVM.TopOffset = textFieldTopOffset;
 
-        ChangeCoordinateAuxiliaryElements();
-
         SetCoordinatePolygonPoints();
+        ChangeCoordinateAuxiliaryElements();
     }
 
     public override BlockSymbolModel CreateBlockSymbolModel()

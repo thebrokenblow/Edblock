@@ -33,8 +33,8 @@ public class TextFieldVM : INotifyPropertyChanged
         }
     }
 
-    private int width;
-    public int Width
+    private double width;
+    public double Width
     {
         get => width;
         set
@@ -45,8 +45,8 @@ public class TextFieldVM : INotifyPropertyChanged
     }
 
 
-    private int height;
-    public int Height
+    private double height;
+    public double Height
     {
         get => height;
         set
@@ -140,8 +140,8 @@ public class TextFieldVM : INotifyPropertyChanged
         }
     }
 
-    private int leftOffset;
-    public int LeftOffset
+    private double leftOffset;
+    public double LeftOffset
     {
         get => leftOffset;
         set
@@ -151,8 +151,8 @@ public class TextFieldVM : INotifyPropertyChanged
         }
     }
 
-    private int topOffset;
-    public int TopOffset
+    private double topOffset;
+    public double TopOffset
     {
         get => topOffset;
         set

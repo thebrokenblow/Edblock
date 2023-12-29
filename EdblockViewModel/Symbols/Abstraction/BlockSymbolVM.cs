@@ -12,8 +12,8 @@ namespace EdblockViewModel.Symbols.Abstraction;
 
 public abstract class BlockSymbolVM : SymbolVM
 {
-    public List<ConnectionPointVM> ConnectionPoints { get; init; }
     public List<ScaleRectangle> ScaleRectangles { get; init; }
+    public List<ConnectionPointVM> ConnectionPoints { get; init; }
     public string Id { get; set; }
 
     private string? color;
@@ -24,6 +24,8 @@ public abstract class BlockSymbolVM : SymbolVM
         {
             color = value;
             BlockSymbolModel.Color = color;
+
+            OnPropertyChanged();
         } 
     }
 
@@ -34,7 +36,8 @@ public abstract class BlockSymbolVM : SymbolVM
         set
         {
             width = value;
-            SetWidth(width);
+            BlockSymbolModel.Width = width;
+
             OnPropertyChanged();
         }
     }
@@ -46,7 +49,8 @@ public abstract class BlockSymbolVM : SymbolVM
         set
         {
             heigth = value;
-            SetHeight(Height);
+            BlockSymbolModel.Height = heigth;
+
             OnPropertyChanged();
         }
     }
@@ -95,14 +99,12 @@ public abstract class BlockSymbolVM : SymbolVM
     public TextFieldVM TextFieldVM { get; init; }
     public BlockSymbolModel BlockSymbolModel { get; init; }
 
-    protected const int defaultWidth = 140;
-    protected const int defaultHeigth = 60;
-
     private readonly CanvasSymbolsVM _canvasSymbolsVM;
     private readonly FontFamilyControlVM _fontFamilyControlVM;
     private readonly FontSizeControlVM _fontSizeControlVM;
     private readonly TextAlignmentControlVM _textAlignmentControlVM;
     private readonly FormatTextControlVM _formatTextControlVM;
+    protected readonly BuilderScaleRectangles _builderScaleRectangles;
 
     public BlockSymbolVM(EdblockVM edblockVM)
     {
@@ -121,11 +123,7 @@ public abstract class BlockSymbolVM : SymbolVM
         var factoryConnectionPoints = new FactoryConnectionPoints(_canvasSymbolsVM, edblockVM.PopupBoxMenuVM.CheckBoxLineGostVM, this);
         ConnectionPoints = factoryConnectionPoints.CreateConnectionPoints();
 
-        var factoryScaleRectangles = new FactoryScaleRectangles(_canvasSymbolsVM, edblockVM.PopupBoxMenuVM.ScaleAllSymbolVM,  this);
-        ScaleRectangles = factoryScaleRectangles.Create();
-
-        Width = defaultWidth;
-        Height = defaultHeigth;
+        _builderScaleRectangles = new BuilderScaleRectangles(_canvasSymbolsVM, edblockVM.PopupBoxMenuVM.ScaleAllSymbolVM,  this);
 
         MouseEnter = new(ShowAuxiliaryElements);
         MouseLeave = new(HideAuxiliaryElements);

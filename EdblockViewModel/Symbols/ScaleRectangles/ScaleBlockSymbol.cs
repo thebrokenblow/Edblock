@@ -13,7 +13,7 @@ internal class ScaleBlockSymbol
         {
             return minWidth;
         }
-       
+
         return widthBlockSymbol;
     }
 

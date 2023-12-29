@@ -5,18 +5,39 @@ namespace EdblockViewModel.Symbols;
 
 public class ActionSymbolVM : BlockSymbolVM
 {
+    private const int defaultWidth = 140;
+    private const int defaultHeigth = 60;
+
     private const string defaultText = "Действие";
     private const string defaultColor = "#FF52C0AA";
 
     public ActionSymbolVM(EdblockVM edblockVM) : base(edblockVM)
     {
+        ScaleRectangles = _builderScaleRectangles
+                        .AddMiddleTopRectangle()
+                        .AddRightTopRectangle()
+                        .AddRightMiddleRectangle()
+                        .AddRightBottomRectangle()
+                        .AddMiddleBottomRectangle()
+                        .AddLeftBottomRectangle()
+                        .AddLeftMiddleRectangle()
+                        .AddLeftTopRectangle()
+                        .Build();
+
         Color = defaultColor;
+
         TextFieldVM.Text = defaultText;
+
+        Width = defaultWidth;
+        Height = defaultHeigth;
+
+        SetWidth(Width);
+        SetHeight(Height);
     }
 
     public override void SetWidth(int width)
     {
-        BlockSymbolModel.Width = width;
+        Width = width;
 
         var textFieldWidth = BlockSymbolModel.GetTextFieldWidth();
         var textFieldLeftOffset = BlockSymbolModel.GetTextFieldLeftOffset();
@@ -29,7 +50,7 @@ public class ActionSymbolVM : BlockSymbolVM
 
     public override void SetHeight(int height)
     {
-        BlockSymbolModel.Height = height;
+        Height = height;
 
         var textFieldHeight = BlockSymbolModel.GetTextFieldHeight();
         var textFieldTopOffset = BlockSymbolModel.GetTextFieldTopOffset();

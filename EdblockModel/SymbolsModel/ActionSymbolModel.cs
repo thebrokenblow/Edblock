@@ -2,22 +2,22 @@
 
 public class ActionSymbolModel : BlockSymbolModel
 {
-    public override int GetTextFieldWidth()
+    public override double GetTextFieldWidth()
     {
         return Width;
     }
 
-    public override int GetTextFieldHeight()
+    public override double GetTextFieldHeight()
     {
         return Height;
     }
 
-    public override int GetTextFieldLeftOffset()
+    public override double GetTextFieldLeftOffset()
     {
         return 0;
     }
 
-    public override int GetTextFieldTopOffset()
+    public override double GetTextFieldTopOffset()
     {
         return 0;
     }

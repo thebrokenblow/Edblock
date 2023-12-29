@@ -6,22 +6,22 @@ public class StartEndSymbolModel : BlockSymbolModel
 {
     private const int offsetTextField = 25;
 
-    public override int GetTextFieldWidth()
+    public override double GetTextFieldWidth()
     {
         return Width - offsetTextField;
     }
 
-    public override int GetTextFieldHeight()
+    public override double GetTextFieldHeight()
     {
         return Height;
     }
 
-    public override int GetTextFieldLeftOffset()
+    public override double GetTextFieldLeftOffset()
     {
        return offsetTextField / 2;
     }
 
-    public override int GetTextFieldTopOffset()
+    public override double GetTextFieldTopOffset()
     {
         return 0;
     }

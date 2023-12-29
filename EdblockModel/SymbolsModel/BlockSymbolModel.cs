@@ -24,10 +24,10 @@ public abstract class BlockSymbolModel
         get => minHeight;
     }
 
-    public abstract int GetTextFieldWidth();
-    public abstract int GetTextFieldHeight();
-    public abstract int GetTextFieldLeftOffset();
-    public abstract int GetTextFieldTopOffset();
+    public abstract double GetTextFieldWidth();
+    public abstract double GetTextFieldHeight();
+    public abstract double GetTextFieldLeftOffset();
+    public abstract double GetTextFieldTopOffset();
 
     private readonly Dictionary<PositionConnectionPoint, Func<(int x, int y)>> borderCoordinateByPosition;
 

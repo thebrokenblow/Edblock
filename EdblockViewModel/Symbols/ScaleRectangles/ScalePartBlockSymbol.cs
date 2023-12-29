@@ -57,13 +57,13 @@ public class ScalePartBlockSymbol
             {
                 if (symbol is BlockSymbolVM blockSymbolVM)
                 {
-                    blockSymbolVM.Width = width;
+                    blockSymbolVM.SetWidth(width);
                 }
             }
         }
         else
         {
-            ScalingBlockSymbol.Width = width;
+            ScalingBlockSymbol.SetWidth(width);
         }
 
         ScalingBlockSymbol.TextFieldVM.Cursor = _cursorWhenScaling;
@@ -87,13 +87,13 @@ public class ScalePartBlockSymbol
             {
                 if (symbol is BlockSymbolVM blockSymbolVM)
                 {
-                    blockSymbolVM.Height = height;
+                    blockSymbolVM.SetHeight(height);
                 }
             }
         }
         else
         {
-            ScalingBlockSymbol.Height = height;
+            ScalingBlockSymbol.SetHeight(height);
         }
 
         ScalingBlockSymbol.TextFieldVM.Cursor = _cursorWhenScaling;

@@ -1,17 +1,16 @@
-﻿<UserControl x:Class="EdblockView.SymbolsView.CycleWhileEndSymbolView"
+﻿<UserControl x:Class="EdblockView.SymbolsView.LinkSymbolView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:symbolView="clr-namespace:EdblockView.SymbolsView"
              xmlns:symbolVM="clr-namespace:EdblockViewModel.Symbols;assembly=EdblockViewModel" 
-             d:DataContext="{d:DesignInstance Type=symbolVM:CycleWhileEndSymbolVM}"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             d:DataContext="{d:DesignInstance Type=symbolVM:LinkSymbolVM}"
              mc:Ignorable="d" 
-             d:DesignHeight="60" d:DesignWidth="140">
+             d:DesignHeight="60" d:DesignWidth="60">
     <Canvas>
-        <Polygon 
-            Style="{StaticResource SymbolByPolygonView}">
+        <Ellipse Style="{StaticResource SymbolByEllipseView}">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="MouseLeftButtonDown">
                     <i:InvokeCommandAction Command="{Binding MouseLeftButtonDown}"/>
@@ -23,8 +22,8 @@
                     <i:InvokeCommandAction Command="{Binding MouseLeave}"/>
                 </i:EventTrigger>
             </i:Interaction.Triggers>
-        </Polygon>
-
+        </Ellipse>
+        
         <symbolView:TextFieldView DataContext="{Binding TextFieldVM}"/>
         <symbolView:ConnectionPointsView />
         <symbolView:ScaleRectanglesView />

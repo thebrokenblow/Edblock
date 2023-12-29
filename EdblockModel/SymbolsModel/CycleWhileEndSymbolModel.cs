@@ -4,22 +4,22 @@ public class CycleWhileEndSymbolModel : BlockSymbolModel
 {
     public const int offsetTextField = 10;
 
-    public override int GetTextFieldWidth()
+    public override double GetTextFieldWidth()
     {
         return Width - offsetTextField * 2;
     }
 
-    public override int GetTextFieldHeight()
+    public override double GetTextFieldHeight()
     {
         return Height;
     }
 
-    public override int GetTextFieldLeftOffset()
+    public override double GetTextFieldLeftOffset()
     {
         return offsetTextField;
     }
 
-    public override int GetTextFieldTopOffset()
+    public override double GetTextFieldTopOffset()
     {
         return 0;
     }

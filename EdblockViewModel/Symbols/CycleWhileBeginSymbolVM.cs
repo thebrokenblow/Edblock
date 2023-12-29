@@ -18,19 +18,41 @@ public class CycleWhileBeginSymbolVM : BlockSymbolVM, IHavePolygon
         }
     }
 
+    private const int defaultWidth = 140;
+    private const int defaultHeigth = 60;
+    
+    private const int sideProjection = 10;
+
     private const string defaultText = "Начало цикла";
     private const string defaultColor = "#CCCCFF";
-    private const int sideProjection = 10;
 
     public CycleWhileBeginSymbolVM(EdblockVM edblockVM) : base(edblockVM)
     {
+        ScaleRectangles = _builderScaleRectangles
+                .AddMiddleTopRectangle()
+                .AddRightTopRectangle()
+                .AddRightMiddleRectangle()
+                .AddRightBottomRectangle()
+                .AddMiddleBottomRectangle()
+                .AddLeftBottomRectangle()
+                .AddLeftMiddleRectangle()
+                .AddLeftTopRectangle()
+                .Build();
+
         Color = defaultColor;
+
         TextFieldVM.Text = defaultText;
+
+        Width = defaultWidth;
+        Height = defaultHeigth;
+
+        SetWidth(Width);
+        SetHeight(Height);
     }
 
     public override void SetWidth(int width)
     {
-        BlockSymbolModel.Width = width;
+        Width = width;
 
         var textFieldWidth = BlockSymbolModel.GetTextFieldWidth();
         var textFieldLeftOffset = BlockSymbolModel.GetTextFieldLeftOffset();
@@ -38,14 +60,13 @@ public class CycleWhileBeginSymbolVM : BlockSymbolVM, IHavePolygon
         TextFieldVM.Width = textFieldWidth;
         TextFieldVM.LeftOffset = textFieldLeftOffset;
 
-        ChangeCoordinateAuxiliaryElements();
-
         SetCoordinatePolygonPoints();
+        ChangeCoordinateAuxiliaryElements();
     }
 
     public override void SetHeight(int height)
     {
-        BlockSymbolModel.Height = height;
+        Height = height;
 
         var textFieldHeight = BlockSymbolModel.GetTextFieldHeight();
         var textFieldTopOffset = BlockSymbolModel.GetTextFieldTopOffset();
@@ -53,9 +74,8 @@ public class CycleWhileBeginSymbolVM : BlockSymbolVM, IHavePolygon
         TextFieldVM.Height = textFieldHeight;
         TextFieldVM.TopOffset = textFieldTopOffset;
 
-        ChangeCoordinateAuxiliaryElements();
-
         SetCoordinatePolygonPoints();
+        ChangeCoordinateAuxiliaryElements();
     }
 
     public override BlockSymbolModel CreateBlockSymbolModel()
