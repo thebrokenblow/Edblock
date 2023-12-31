@@ -127,7 +127,8 @@
                         MouseDown="AddSymbolView" />
                     
                     <symbol:CommentSymbolUI 
-                        Style="{StaticResource SymbolUI}" />
+                        Style="{StaticResource SymbolUI}"
+                        MouseDown="AddSymbolView"/>
                     
                     <symbol:ParallelActionSymbolUI 
                         Style="{StaticResource SymbolUI}" />

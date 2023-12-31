@@ -9,6 +9,7 @@ using System.Runtime.CompilerServices;
 using EdblockViewModel.Symbols.LineSymbols;
 using EdblockViewModel.Symbols.Abstraction;
 using EdblockViewModel.Symbols.ScaleRectangles;
+using EdblockViewModel.Symbols.CommentSymbolVMComponents;
 
 namespace EdblockViewModel.ComponentsVM;
 
@@ -85,11 +86,27 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
 
     public void DeleteSymbols()
     {
+        MovableBlockSymbol = null;
         DeleteCurrentDrawnLineSymbol();
         DeleteSelectedDrawnLineSymbol();
 
         foreach (var symbol in SelectedBlockSymbols)
         {
+            if (symbol is IHaveCommentVM iHaveCommentVM1)
+            {
+                if (iHaveCommentVM1.CommentSymbolVM is not null)
+                {
+                    SymbolsVM.Remove(iHaveCommentVM1.CommentSymbolVM);
+                }
+            }
+
+            if (symbol is CommentSymbolVM commentSymbolVM)
+            {
+                if (commentSymbolVM.BlockSymbolVM is IHaveCommentVM iHaveCommentVM)
+                {
+                    iHaveCommentVM.CommentSymbolVM = null;
+                }
+            }
             if (BlockByDrawnLines.ContainsKey(symbol))
             {
                 var lines = BlockByDrawnLines[symbol];
@@ -184,7 +201,6 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
         MovableBlockSymbol = blockSymbolVM;
         MovableBlockSymbol.Select();
 
-
         SymbolsVM.Add(blockSymbolVM);
     }
 
@@ -211,7 +227,12 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
         Cursor = Cursors.Arrow;
 
         RedrawDrawnLines = null;
-        MovableBlockSymbol = null;
+
+        if (MovableBlockSymbol is not CommentSymbolVM)
+        {
+            MovableBlockSymbol = null;
+        }
+        
         MovableRectangleLine = null;
         ScalePartBlockSymbol = null;
 
@@ -222,10 +243,13 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
     {
         foreach (var selectedBlockSymbols in SelectedBlockSymbols)
         {
-            selectedBlockSymbols.IsSelected = false;
+            if (selectedBlockSymbols != MovableBlockSymbol)
+            {
+                selectedBlockSymbols.IsSelected = false;
+            }
         }
 
-        SelectedBlockSymbols.Clear();
+        SelectedBlockSymbols.RemoveAll(x => x != MovableBlockSymbol);
     }
 
     public void OnPropertyChanged([CallerMemberName] string prop = "")

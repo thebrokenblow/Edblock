@@ -11,6 +11,7 @@ using EdblockViewModel.Symbols.LineSymbols;
 using EdblockViewModel.Symbols.Abstraction;
 using EdblockModel.SymbolsModel.Enum;
 using EdblockModel.SymbolsModel.LineSymbolsModel;
+using EdblockViewModel.Symbols.CommentSymbolVMComponents;
 
 namespace EdblockViewModel.Symbols.ConnectionPoints;
 
@@ -120,15 +121,27 @@ public class ConnectionPointVM : INotifyPropertyChanged
         SetDisplayConnectionPoint(Cursors.Arrow, false, false);
     }
 
-    public void TrackStageDrawLine()
+    public void Click()
     {
-        if (_canvasSymbolsVM.СurrentDrawnLineSymbol == null)
+        if (_canvasSymbolsVM.MovableBlockSymbol is CommentSymbolVM commentSymbolVM)
         {
-            StarDrawLine();
+            if (BlockSymbolVM is IHaveCommentVM iHaveCommentVM)
+            {
+                IsHasConnectingLine = true;
+                iHaveCommentVM.CommentSymbolVM = commentSymbolVM;
+                iHaveCommentVM.CommentSymbolVM.ConnectionPointVM = this;
+            }
         }
         else
         {
-            FinishDrawLine();
+            if (_canvasSymbolsVM.СurrentDrawnLineSymbol == null)
+            {
+                StarDrawLine();
+            }
+            else
+            {
+                FinishDrawLine();
+            }
         }
     }
 

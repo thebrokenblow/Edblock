@@ -10,6 +10,7 @@
              xmlns:blockSymbolsVM="clr-namespace:EdblockViewModel.Symbols;assembly=EdblockViewModel"   
              xmlns:lineSymbolView="clr-namespace:EdblockView.SymbolsView.LineSymbolView"
              xmlns:lineSymbolsVM="clr-namespace:EdblockViewModel.Symbols.LineSymbols;assembly=EdblockViewModel"
+             xmlns:commentSymbolVM="clr-namespace:EdblockViewModel.Symbols.CommentSymbolVMComponents;assembly=EdblockViewModel"   
              d:DataContext="{d:DesignInstance Type=componentsVM:CanvasSymbolsVM}"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
@@ -42,6 +43,9 @@
                 </DataTemplate>
                 <DataTemplate DataType="{x:Type blockSymbolsVM:LinkSymbolVM}">
                     <blockSymbolView:LinkSymbolView MouseDown="SelectBlockSymbol"/>
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type commentSymbolVM:CommentSymbolVM}">
+                    <blockSymbolView:CommentSymbolView MouseDown="SelectBlockSymbol"/>
                 </DataTemplate>
                 <DataTemplate DataType="{x:Type lineSymbolsVM:DrawnLineSymbolVM}">
                     <lineSymbolView:DrawnLineSymbolView />

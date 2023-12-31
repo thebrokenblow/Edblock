@@ -173,4 +173,23 @@
         </Style.Triggers>
     </Style>
 
+    <Style x:Key="LineCommentSymbolView" TargetType="Line">
+        <Setter Property="X1" Value="{Binding X1}" />
+        <Setter Property="Y1" Value="{Binding Y1}" />
+        <Setter Property="X2" Value="{Binding X2}" />
+        <Setter Property="Y2" Value="{Binding Y2}" />
+        <Setter Property="StrokeThickness" Value="1.25"/>
+        <Setter Property="Stroke" Value="Black" />
+    </Style>
+
+
+    <Style x:Key="VerticalBaselineView" TargetType="Line">
+        <Setter Property="X1" Value="{Binding X1}" />
+        <Setter Property="Y1" Value="{Binding Y1}" />
+        <Setter Property="X2" Value="{Binding X2}" />
+        <Setter Property="Y2" Value="{Binding Y2}" />
+        <Setter Property="StrokeThickness" Value="1.25"/>
+        <Setter Property="Stroke" Value="Black" />
+    </Style>
+    
 </ResourceDictionary>

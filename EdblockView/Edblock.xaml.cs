@@ -2,6 +2,7 @@
 using EdblockViewModel;
 using System.Windows.Input;
 using EdblockView.Abstraction;
+using EdblockViewModel.Symbols.CommentSymbolVMComponents;
 
 namespace EdblockView;
 
@@ -24,7 +25,13 @@ public partial class Edblock : Window
         if (sender is IFactorySymbolVM factorySymbolVM)
         {
             var blockSymbolVM = factorySymbolVM.CreateBlockSymbolVM(edblockVM);
-            edblockVM.AddBlockSymbol(blockSymbolVM);
+
+            var movableBlockSymbol = edblockVM.CanvasSymbolsVM.MovableBlockSymbol;
+
+            if (movableBlockSymbol is not CommentSymbolVM)
+            {
+                edblockVM.AddBlockSymbol(blockSymbolVM);
+            }
         }
     }
 }

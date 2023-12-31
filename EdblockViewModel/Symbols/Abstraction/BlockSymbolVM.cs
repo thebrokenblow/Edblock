@@ -7,6 +7,8 @@ using EdblockModel.SymbolsModel;
 using EdblockModel.SymbolsModel.Enum;
 using EdblockViewModel.Symbols.ScaleRectangles;
 using EdblockViewModel.Symbols.ConnectionPoints;
+using EdblockViewModel.Symbols.CommentSymbolVMComponents;
+using System.Diagnostics.Contracts;
 
 namespace EdblockViewModel.Symbols.Abstraction;
 
@@ -98,8 +100,8 @@ public abstract class BlockSymbolVM : SymbolVM
 
     public TextFieldVM TextFieldVM { get; init; }
     public BlockSymbolModel BlockSymbolModel { get; init; }
+    public CanvasSymbolsVM CanvasSymbolsVM { get; init; }
 
-    private readonly CanvasSymbolsVM _canvasSymbolsVM;
     private readonly FontFamilyControlVM _fontFamilyControlVM;
     private readonly FontSizeControlVM _fontSizeControlVM;
     private readonly TextAlignmentControlVM _textAlignmentControlVM;
@@ -108,7 +110,7 @@ public abstract class BlockSymbolVM : SymbolVM
 
     public BlockSymbolVM(EdblockVM edblockVM)
     {
-        _canvasSymbolsVM = edblockVM.CanvasSymbolsVM;
+        CanvasSymbolsVM = edblockVM.CanvasSymbolsVM;
         _fontSizeControlVM = edblockVM.FontSizeControlVM;
         _fontFamilyControlVM = edblockVM.FontFamilyControlVM;
         _textAlignmentControlVM = edblockVM.TextAlignmentControlVM;
@@ -118,12 +120,12 @@ public abstract class BlockSymbolVM : SymbolVM
 
         BlockSymbolModel = CreateBlockSymbolModel();
 
-        TextFieldVM = new(_canvasSymbolsVM, this);
+        TextFieldVM = new(CanvasSymbolsVM, this);
 
-        var factoryConnectionPoints = new FactoryConnectionPoints(_canvasSymbolsVM, edblockVM.PopupBoxMenuVM.CheckBoxLineGostVM, this);
+        var factoryConnectionPoints = new FactoryConnectionPoints(CanvasSymbolsVM, edblockVM.PopupBoxMenuVM.CheckBoxLineGostVM, this);
         ConnectionPoints = factoryConnectionPoints.CreateConnectionPoints();
 
-        _builderScaleRectangles = new BuilderScaleRectangles(_canvasSymbolsVM, edblockVM.PopupBoxMenuVM.ScaleAllSymbolVM,  this);
+        _builderScaleRectangles = new BuilderScaleRectangles(CanvasSymbolsVM, edblockVM.PopupBoxMenuVM.ScaleAllSymbolVM,  this);
 
         MouseEnter = new(ShowAuxiliaryElements);
         MouseLeave = new(HideAuxiliaryElements);
@@ -134,13 +136,13 @@ public abstract class BlockSymbolVM : SymbolVM
     public abstract void SetHeight(int height);
     public abstract BlockSymbolModel CreateBlockSymbolModel();
 
-    public void SetCoordinate((int x, int y) currentCoordinate, (int x, int y) previousCoordinate)
+    public virtual void SetCoordinate((int x, int y) currentCoordinate, (int x, int y) previousCoordinate)
     {
-        var currentDrawnLineSymbol = _canvasSymbolsVM.СurrentDrawnLineSymbol;
+        var currentDrawnLineSymbol = CanvasSymbolsVM.СurrentDrawnLineSymbol;
 
         if (currentDrawnLineSymbol == null) //Условие истино, если не рисуется линия
         {
-            _canvasSymbolsVM.RemoveSelectDrawnLine();
+            CanvasSymbolsVM.RemoveSelectDrawnLine();
 
             if (XCoordinate == 0 && YCoordinate == 0)
             {
@@ -151,18 +153,23 @@ public abstract class BlockSymbolVM : SymbolVM
             {
                 XCoordinate = currentCoordinate.x - (previousCoordinate.x - XCoordinate);
                 YCoordinate = currentCoordinate.y - (previousCoordinate.y - YCoordinate);
+
+                if (this is IHaveCommentVM iHaveCommentVM)
+                {
+                    iHaveCommentVM.CommentSymbolVM?.SetCoordinateBlockSymbol();
+                }
             }
         }
     }
 
     public void ShowAuxiliaryElements()
     {
-        _canvasSymbolsVM.Cursor = Cursors.SizeAll;
+        CanvasSymbolsVM.Cursor = Cursors.SizeAll;
 
-        var movableSymbol = _canvasSymbolsVM.MovableBlockSymbol;
-        var scalePartBlockSymbolVM = _canvasSymbolsVM.ScalePartBlockSymbol;
+        var movableSymbol = CanvasSymbolsVM.MovableBlockSymbol;
+        var scalePartBlockSymbolVM = CanvasSymbolsVM.ScalePartBlockSymbol;
 
-        if (movableSymbol == null && scalePartBlockSymbolVM == null)  // Условие истино, когда символ не перемещается и не масштабируется (просто навёл курсор)
+        if (movableSymbol is null && scalePartBlockSymbolVM is null)  // Условие истино, когда символ не перемещается и не масштабируется (просто навёл курсор)
         {
             ConnectionPointVM.SetDisplayConnectionPoints(ConnectionPoints, true);
             ScaleRectangle.SetStateDisplay(ScaleRectangles, true);
@@ -172,7 +179,7 @@ public abstract class BlockSymbolVM : SymbolVM
 
     public void HideAuxiliaryElements()
     {
-        _canvasSymbolsVM.Cursor = Cursors.Arrow;
+        CanvasSymbolsVM.Cursor = Cursors.Arrow;
 
         ConnectionPointVM.SetDisplayConnectionPoints(ConnectionPoints, false);
         ScaleRectangle.SetStateDisplay(ScaleRectangles, false);
@@ -209,10 +216,10 @@ public abstract class BlockSymbolVM : SymbolVM
         ConnectionPointVM.SetDisplayConnectionPoints(ConnectionPoints, false);
         ScaleRectangle.SetStateDisplay(ScaleRectangles, false);
 
-        _canvasSymbolsVM.Cursor = Cursors.SizeAll;
+        CanvasSymbolsVM.Cursor = Cursors.SizeAll;
 
-        _canvasSymbolsVM.MovableBlockSymbol = this;
-        _canvasSymbolsVM.SetCurrentRedrawLines(this);
+        CanvasSymbolsVM.MovableBlockSymbol = this;
+        CanvasSymbolsVM.SetCurrentRedrawLines(this);
     }
 
     public void Select()
@@ -224,6 +231,6 @@ public abstract class BlockSymbolVM : SymbolVM
         _textAlignmentControlVM.SetFormatAlignment(this);
         _formatTextControlVM.SetFontText(this);
 
-        _canvasSymbolsVM.SelectedBlockSymbols.Add(this);
+        CanvasSymbolsVM.SelectedBlockSymbols.Add(this);
     }
 }

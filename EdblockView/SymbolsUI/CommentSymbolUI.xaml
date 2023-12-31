@@ -22,35 +22,35 @@
             <Line 
                 X1="30" 
                 Y1="30" 
-                X2="60" 
+                X2="50" 
                 Y2="30" 
                 Style="{StaticResource LineCommentSymbolUI}" />
 
             <Line 
-                X1="70" 
+                X1="60" 
                 Y1="30"
-                X2="90" 
+                X2="80" 
                 Y2="30" 
                 Style="{StaticResource LineCommentSymbolUI}" />
 
             <Line 
-                X1="90" 
+                X1="80" 
                 Y1="0" 
-                X2="90" 
+                X2="80" 
                 Y2="60" 
                 Style="{StaticResource LineCommentSymbolUI}"/>
 
             <Line 
-                X1="90" 
+                X1="80" 
                 Y1="0"
-                X2="110"
+                X2="100"
                 Y2="0" 
                 Style="{StaticResource LineCommentSymbolUI}"/>
 
             <Line
-                X1="90" 
+                X1="80" 
                 Y1="60" 
-                X2="110" 
+                X2="100" 
                 Y2="60"
                 Style="{StaticResource LineCommentSymbolUI}"/>
         </Canvas>
