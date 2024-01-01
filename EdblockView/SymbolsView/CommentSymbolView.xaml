@@ -4,11 +4,13 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:commentSymbolVM="clr-namespace:EdblockViewModel.Symbols.CommentSymbolVMComponents;assembly=EdblockViewModel" 
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors" 
+             xmlns:edblockVM="clr-namespace:EdblockView;assembly=EdblockViewModel" 
              d:DataContext="{d:DesignInstance Type=commentSymbolVM:CommentSymbolVM}"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Border Style="{StaticResource BorderSymbolView}">
-        <Canvas Width="100" Height="60" Background="Transparent">
+        <Canvas Width="{Binding Width}" Height="{Binding Height}" Background="Transparent">
             <ItemsControl ItemsSource="{Binding HorizontalLines}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate DataType="Line">
@@ -42,6 +44,20 @@
                   Y2="{Binding LowerHorizontalBaseline.Y2}"
                   Stroke="Black"
                   StrokeThickness="1.25"/>
+
+
+            <Canvas>
+                <TextBox Canvas.Left="{Binding TextFieldVM.LeftOffset}" Canvas.Top="{Binding TextFieldVM.TopOffset}" Text="{Binding TextFieldVM.Text}" Foreground="Black" AcceptsReturn="True" TextWrapping="Wrap">
+                    <i:Interaction.Behaviors>
+                        <edblockVM:ReadOnlyPropertyToVMBindingBehavior 
+                            ModelProperty="{Binding HeightTextField}"
+                            ReadOnlyDependencyProperty="{Binding ActualHeight, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=TextBox}}"/>
+                        <edblockVM:ReadOnlyPropertyToVMBindingBehavior 
+                            ModelProperty="{Binding WidthTextField}"
+                            ReadOnlyDependencyProperty="{Binding ActualWidth, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=TextBox}}"/>
+                    </i:Interaction.Behaviors>
+                </TextBox>
+            </Canvas>
 
         </Canvas>
     </Border>

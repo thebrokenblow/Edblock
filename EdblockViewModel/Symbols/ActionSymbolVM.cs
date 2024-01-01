@@ -1,7 +1,6 @@
 ﻿using EdblockModel.SymbolsModel;
 using EdblockViewModel.Symbols.Abstraction;
 using EdblockViewModel.Symbols.CommentSymbolVMComponents;
-using System.Numerics;
 
 namespace EdblockViewModel.Symbols;
 
@@ -54,8 +53,6 @@ public class ActionSymbolVM : BlockSymbolVM, IHaveCommentVM
 
         SetWidth(Width);
         SetHeight(Height);
-
-        CommentSymbolVM = new(edblockVM);
     }
 
     public override void SetWidth(int width)
@@ -69,6 +66,8 @@ public class ActionSymbolVM : BlockSymbolVM, IHaveCommentVM
         TextFieldVM.LeftOffset = textFieldLeftOffset;
 
         ChangeCoordinateAuxiliaryElements();
+
+        CommentSymbolVM?.SetCoordinateBlockSymbol();
     }
 
     public override void SetHeight(int height)
@@ -82,6 +81,8 @@ public class ActionSymbolVM : BlockSymbolVM, IHaveCommentVM
         TextFieldVM.TopOffset = textFieldTopOffset;
 
         ChangeCoordinateAuxiliaryElements();
+
+        CommentSymbolVM?.SetCoordinateBlockSymbol();
     }
 
     public override BlockSymbolModel CreateBlockSymbolModel()

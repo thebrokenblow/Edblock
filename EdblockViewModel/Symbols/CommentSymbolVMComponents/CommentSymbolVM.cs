@@ -17,25 +17,77 @@ public class CommentSymbolVM : BlockSymbolVM
 
     private readonly CanvasSymbolsVM canvasSymbolsVM;
 
+    private double heightTextField;
+    public double HeightTextField
+    {
+        get => heightTextField;
+        set
+        {
+            value -= value % 10;
+            value += 10;
+
+            if (value >= defaultHeight)
+            {
+                heightTextField = value;
+            }
+            else
+            {
+                heightTextField = defaultHeight;
+            }
+
+            VerticalBaseline.Y1 = 0;
+            VerticalBaseline.Y2 = heightTextField;
+
+            YCoordinate -= ((int)heightTextField - Height) / 2;
+
+            Height = (int)heightTextField;
+            TextFieldVM.Height = Height;
+
+            LowerHorizontalBaseline.Y1 = heightTextField;
+            LowerHorizontalBaseline.Y2 = heightTextField;
+
+            foreach (var item in HorizontalLines)
+            {
+                item.Y1 = VerticalBaseline.Y2 / 2;
+                item.Y2 = VerticalBaseline.Y2 / 2;
+            }
+        }
+    }
+
+    private double widthTextField;
+    public double WidthTextField 
+    {
+        get => widthTextField;
+        set
+        {
+            widthTextField = value;
+            Width = xCoordinate + (int)widthTextField;
+        }
+    }
+
+    private const string defaultText = "Комментарий";
+
+    private int xCoordinate = 0;
+    private const int defaultHeight = 60;
     private const int countHorizontalLine = 3;
     private const int lengthHorizontalLine = 20;
     private const int spaceBetweenHorizontalLines = 10;
     public CommentSymbolVM(EdblockVM edblockVM) : base(edblockVM)
     {
+        TextFieldVM.Text = defaultText;
+        TextFieldVM.Height = defaultHeight;
         canvasSymbolsVM = edblockVM.CanvasSymbolsVM;
 
         HorizontalLines = new();
-
-        int xCoordinate = 0;
 
         for (int i = 0; i < countHorizontalLine; i++)
         {
             var сommentHorizontalLine = new CommentLine()
             {
                 X1 = xCoordinate,
-                Y1 = 30,
+                Y1 = defaultHeight / 2,
                 X2 = xCoordinate + lengthHorizontalLine,
-                Y2 = 30,
+                Y2 = defaultHeight / 2,
             };
 
             HorizontalLines.Add(сommentHorizontalLine);
@@ -48,9 +100,9 @@ public class CommentSymbolVM : BlockSymbolVM
         VerticalBaseline = new()
         {
             X1 = xCoordinate,
-            Y1 = 60,
+            Y1 = 0,
             X2 = xCoordinate,
-            Y2 = 0,
+            Y2 = defaultHeight,
         };
 
         UpperHorizontalBaseline = new()
@@ -64,13 +116,15 @@ public class CommentSymbolVM : BlockSymbolVM
         LowerHorizontalBaseline = new()
         {
             X1 = xCoordinate,
-            Y1 = 60,
+            Y1 = defaultHeight,
             X2 = xCoordinate + lengthHorizontalLine,
-            Y2 = 60,
+            Y2 = defaultHeight,
         };
 
-        Width = 100;
-        Height = 60;
+        TextFieldVM.LeftOffset = xCoordinate;
+
+        Width = xCoordinate + (int)widthTextField;
+        Height = defaultHeight;
     }
 
     public override void SetCoordinate((int x, int y) currentCoordinate, (int x, int y) previousCoordinate)
@@ -106,7 +160,7 @@ public class CommentSymbolVM : BlockSymbolVM
         if (BlockSymbolVM is not null)
         {
             XCoordinate = BlockSymbolVM.XCoordinate + BlockSymbolVM.Width;
-            YCoordinate = BlockSymbolVM.YCoordinate;
+            YCoordinate = BlockSymbolVM.YCoordinate + BlockSymbolVM.Height / 2 - (int)VerticalBaseline.Y2 / 2;
         }
     }
 
