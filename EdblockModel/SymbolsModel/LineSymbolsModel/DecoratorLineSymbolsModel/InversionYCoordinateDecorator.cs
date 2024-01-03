@@ -2,13 +2,13 @@
 
 public class InversionYCoordinateDecorator : ICoordinateDecorator
 {
-    public int X
+    public double X
     {
         get => _coordinateDecorator.X;
         set => _coordinateDecorator.X = value;
     }
 
-    public int Y
+    public double Y
     {
         get => _coordinateDecorator.Y * -1;
         set => _coordinateDecorator.Y = value * -1;

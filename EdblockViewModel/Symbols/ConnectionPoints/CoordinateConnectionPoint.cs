@@ -11,34 +11,34 @@ internal class CoordinateConnectionPoint
     public CoordinateConnectionPoint(BlockSymbolVM blockSymbolVM) =>
         _blockSymbolVM = blockSymbolVM;
 
-    public (int, int) GetCoordinateLeft()
+    public (double, double) GetCoordinateLeft()
     {
-        int pointsX = -offsetPosition - width;
-        int pointsY = _blockSymbolVM.Height / 2 - height / 2;
+        double pointsX = -offsetPosition - width;
+        double pointsY = _blockSymbolVM.Height / 2 - height / 2;
 
         return (pointsX, pointsY);
     }
 
-    public (int, int) GetCoordinateRight()
+    public (double, double) GetCoordinateRight()
     {
-        int pointsX = _blockSymbolVM.Width + offsetPosition;
-        int pointsY = _blockSymbolVM.Height / 2 - height / 2;
+        double pointsX = _blockSymbolVM.Width + offsetPosition;
+        double pointsY = _blockSymbolVM.Height / 2 - height / 2;
 
         return (pointsX, pointsY);
     }
 
-    public (int, int) GetCoordinateTop()
+    public (double, double) GetCoordinateTop()
     {
-        int pointsX = _blockSymbolVM.Width / 2 - width / 2;
-        int pointsY = -offsetPosition - height;
+        double pointsX = _blockSymbolVM.Width / 2 - width / 2;
+        double pointsY = -offsetPosition - height;
 
         return (pointsX, pointsY);
     }
 
-    public (int, int) GetCoordinateBottom()
+    public (double, double) GetCoordinateBottom()
     {
-        int pointsX = _blockSymbolVM.Width / 2 - width / 2;
-        int pointsY = _blockSymbolVM.Height + offsetPosition;
+        double pointsX = _blockSymbolVM.Width / 2 - width / 2;
+        double pointsY = _blockSymbolVM.Height + offsetPosition;
 
         return (pointsX, pointsY);
     }

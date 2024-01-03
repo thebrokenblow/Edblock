@@ -55,7 +55,7 @@ internal class RedrawnLineParallelSides
         return builderCoordinateDecorator;
     }
 
-    public void RedrawLine((int x, int y) borderCoordinateOutgoingSymbol, (int x, int y) borderCoordinateIncomingSymbol)
+    public void RedrawLine((double x, double y) borderCoordinateOutgoingSymbol, (double x, double y) borderCoordinateIncomingSymbol)
     {
         ICoordinateDecorator coordinateSymbolOutgoing = new CoordinateDecorator(borderCoordinateOutgoingSymbol);
         ICoordinateDecorator coordinateSymbolIncoming = new CoordinateDecorator(borderCoordinateIncomingSymbol);
@@ -88,7 +88,7 @@ internal class RedrawnLineParallelSides
         }
     }
 
-    private ((int x, int y), (int x, int y)) GetVerticalCoordinateLineIncrement(ICoordinateDecorator coordinateSymbolOutgoing, ICoordinateDecorator coordinateSymbolIncoming)
+    private ((double x, double y), (double x, double y)) GetVerticalCoordinateLineIncrement(ICoordinateDecorator coordinateSymbolOutgoing, ICoordinateDecorator coordinateSymbolIncoming)
     {
         if (coordinateSymbolOutgoing.Y >= coordinateSymbolIncoming.Y)
         {
@@ -110,7 +110,7 @@ internal class RedrawnLineParallelSides
         }
     }
 
-    private ((int x, int y), (int x, int y)) GetHorizontalCoordinateLineIncrement(ICoordinateDecorator coordinateSymbolOutgoing, ICoordinateDecorator coordinateSymbolIncoming)
+    private ((double x, double y), (double x, double y)) GetHorizontalCoordinateLineIncrement(ICoordinateDecorator coordinateSymbolOutgoing, ICoordinateDecorator coordinateSymbolIncoming)
     {
         if (coordinateSymbolOutgoing.X >= coordinateSymbolIncoming.X)
         {
@@ -135,8 +135,8 @@ internal class RedrawnLineParallelSides
     private void ChooseWayRedrawDifferentSides(
         ICoordinateDecorator coordinateSymbolOutgoing,
         ICoordinateDecorator coordinateSymbolIncoming,
-        (int x, int y) borderCoordinateOutgoingSymbol,
-        (int x, int y) borderCoordinateIncomingSymbol)
+        (double x, double y) borderCoordinateOutgoingSymbol,
+        (double x, double y) borderCoordinateIncomingSymbol)
     {
         if (coordinateSymbolOutgoing.X == coordinateSymbolIncoming.X && coordinateSymbolOutgoing.Y < coordinateSymbolIncoming.Y)
         {
@@ -151,8 +151,8 @@ internal class RedrawnLineParallelSides
     }
 
     private void SetCoordinatesLastLine(
-        (int x, int y) borderCoordinateOutgoingSymbol,
-        (int x, int y) borderCoordinateIncomingSymbol)
+        (double x, double y) borderCoordinateOutgoingSymbol,
+        (double x, double y) borderCoordinateIncomingSymbol)
     {
         var firstLine = _decoratedCoordinatesLines[^1];
 
@@ -195,8 +195,8 @@ internal class RedrawnLineParallelSides
     private void SetCoordinatesIdenticalSides(
         ICoordinateDecorator coordinateSymbolOutgoing,
         ICoordinateDecorator coordinateSymbolIncoming,
-        (int x, int y) coordinateFirstLine,
-        (int x, int y) coordinateSecondLine)
+        (double x, double y) coordinateFirstLine,
+        (double x, double y) coordinateSecondLine)
     {
         var firstLine = _decoratedCoordinatesLines[0];
 

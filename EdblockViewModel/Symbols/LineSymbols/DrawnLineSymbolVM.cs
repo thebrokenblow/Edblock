@@ -205,7 +205,7 @@ public class DrawnLineSymbolVM : SymbolVM
         }
     }
 
-    public void ChangeCoordination((int x, int y) currentCoordinte)
+    public void ChangeCoordination((double x, double y) currentCoordinte)
     {
         var startCoordinate = DrawnLineSymbolModel.CoordinateLineModel.GetStartCoordinate();
         currentCoordinte = DrawnLineSymbolModel.RoundingCoordinatesLines(startCoordinate, currentCoordinte);

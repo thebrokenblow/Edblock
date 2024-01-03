@@ -50,7 +50,7 @@ public class InputOutputSymbolVM : BlockSymbolVM, IHavePolygon
         SetHeight(Height);
     }
 
-    public override void SetWidth(int width)
+    public override void SetWidth(double width)
     {
         Width = width;
 
@@ -64,7 +64,7 @@ public class InputOutputSymbolVM : BlockSymbolVM, IHavePolygon
         ChangeCoordinateAuxiliaryElements();
     }
 
-    public override void SetHeight(int height)
+    public override void SetHeight(double height)
     {
         Height = height;
 

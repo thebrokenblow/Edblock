@@ -9,7 +9,7 @@ public class CoordinateLineModel
         _lineSymbolModel = lineSymbolModel;
     }
 
-    public (int, int) GetStartCoordinate() //Получение начальных координат в зависимости от уже нарисованных линий
+    public (double x, double y) GetStartCoordinate() //Получение начальных координат в зависимости от уже нарисованных линий
     {
         if (_lineSymbolModel.Count == 1 || _lineSymbolModel.Count == 2)
         {
@@ -31,7 +31,7 @@ public class CoordinateLineModel
         }
     }
 
-    public void ChangeCoordinatesVerticalLines((int x, int y) currentCoordinate)
+    public void ChangeCoordinatesVerticalLines((double x, double y) currentCoordinate)
     {
         var lastLineSymbol = _lineSymbolModel[^1];
 
@@ -62,7 +62,7 @@ public class CoordinateLineModel
         }
     }
 
-    public void ChangeCoordinatesHorizontalLines((int x, int y) currentCoordinate)
+    public void ChangeCoordinatesHorizontalLines((double x, double y) currentCoordinate)
     {
         var lastLineSymbol = _lineSymbolModel[^1];
 

@@ -7,7 +7,7 @@ public class ArrowSymbolModel
     private const int WidthArrow = 7;
     private const int HeightArrow = 7;
 
-    private readonly static Dictionary<PositionConnectionPoint, Func<(int, int), List<(int, int)>>> coordinateArrorByPosition = new()
+    private readonly static Dictionary<PositionConnectionPoint, Func<(double, double), List<(double, double)>>> coordinateArrorByPosition = new()
     {
         { PositionConnectionPoint.Right, coordinate => GetCoordinateLeft(coordinate) },
         { PositionConnectionPoint.Left, coordinate => GetCoordinateRigth(coordinate) },
@@ -16,7 +16,7 @@ public class ArrowSymbolModel
     };
 
     //Получение координат стрелки во время рисования линии
-    public static List<(int, int)> GetCoordinateArrow((int x, int y) startCoordinateLine, (int x, int y) currentCoordinateLine, PositionConnectionPoint positionConnectionPoint)
+    public static List<(double, double)> GetCoordinateArrow((double x, double y) startCoordinateLine, (double x, double y) currentCoordinateLine, PositionConnectionPoint positionConnectionPoint)
     {
         if (positionConnectionPoint == PositionConnectionPoint.Top || positionConnectionPoint == PositionConnectionPoint.Bottom)
         {
@@ -31,26 +31,29 @@ public class ArrowSymbolModel
     }
 
     //Получение координат стрелки при присоединение линии
-    public static List<(int, int)> GetCoordinateArrow((int x, int y) finalCoordinate, PositionConnectionPoint positionConnectionPoint)
+    public static List<(double, double)> GetCoordinateArrow((double x, double y) finalCoordinate, PositionConnectionPoint positionConnectionPoint)
     {
         var coordinateArror = coordinateArrorByPosition[positionConnectionPoint].Invoke(finalCoordinate);
+
         return coordinateArror;
     }
 
 
     //Получение координа стрелки, если линия выходит из левой и правой точки соединения
-    private static List<(int, int)> GetCoordinateHorizontalCP((int x, int y) startCoordinateLine, (int x, int y) currentCoordinateLine)
+    private static List<(double, double)> GetCoordinateHorizontalCP((double x, double y) startCoordinateLine, (double x, double y) currentCoordinateLine)
     {
         if (currentCoordinateLine.y == startCoordinateLine.y)
         {
             if (currentCoordinateLine.x > startCoordinateLine.x)
             {
                 var coordinateArrow = GetCoordinateRigth(currentCoordinateLine);
+
                 return coordinateArrow;
             }
             else
             {
                 var coordinateArrow = GetCoordinateLeft(currentCoordinateLine);
+
                 return coordinateArrow;
             }
         }
@@ -59,18 +62,20 @@ public class ArrowSymbolModel
             if (currentCoordinateLine.y > startCoordinateLine.y)
             {
                 var coordinateArrow = GetCoordinateBottom(currentCoordinateLine);
+
                 return coordinateArrow;
             }
             else
             {
                 var coordinateArrow = GetCoordinateTop(currentCoordinateLine);
+
                 return coordinateArrow;
             }
         }
     }
 
     //Получение координа стрелки, если линия выходит из верхней и нижней точки соединения
-    private static List<(int, int)> GetCoordinateVerticalCP((int x, int y) startCoordinateLine, (int x, int y) currentCoordinateLine)
+    private static List<(double, double)> GetCoordinateVerticalCP((double x, double y) startCoordinateLine, (double x, double y) currentCoordinateLine)
     {
         if (currentCoordinateLine.x == startCoordinateLine.x)
         {
@@ -100,9 +105,9 @@ public class ArrowSymbolModel
         }
     }
 
-    private static List<(int, int)> GetCoordinateRigth((int x, int y) coordinate)
+    private static List<(double, double)> GetCoordinateRigth((double x, double y) coordinate)
     {
-        var coordinateArrow = new List<(int, int)>
+        var coordinateArrow = new List<(double, double)>
         {
             (coordinate.x - WidthArrow, coordinate.y - HeightArrow / 2),
             (coordinate.x, coordinate.y),
@@ -112,9 +117,9 @@ public class ArrowSymbolModel
         return coordinateArrow;
     }
 
-    private static List<(int, int)> GetCoordinateLeft((int x, int y) coordinate)
+    private static List<(double, double)> GetCoordinateLeft((double x, double y) coordinate)
     {
-        var coordinateArrow = new List<(int, int)>
+        var coordinateArrow = new List<(double, double)>
         {
             (coordinate.x + WidthArrow, coordinate.y - HeightArrow / 2),
             (coordinate.x, coordinate.y),
@@ -124,9 +129,9 @@ public class ArrowSymbolModel
         return coordinateArrow;
     }
 
-    private static List<(int, int)> GetCoordinateBottom((int x, int y) coordinate)
+    private static List<(double, double)> GetCoordinateBottom((double x, double y) coordinate)
     {
-        var coordinateArrow = new List<(int, int)>
+        var coordinateArrow = new List<(double, double)>
         {
             (coordinate.x - WidthArrow / 2,coordinate.y - HeightArrow),
             (coordinate.x, coordinate.y),
@@ -136,9 +141,9 @@ public class ArrowSymbolModel
         return coordinateArrow;
     }
 
-    private static List<(int, int)> GetCoordinateTop((int x, int y) coordinate)
+    private static List<(double, double)> GetCoordinateTop((double x, double y) coordinate)
     {
-        var coordinateArrow = new List<(int, int)>
+        var coordinateArrow = new List<(double, double)>
         {
             (coordinate.x - WidthArrow / 2, coordinate.y + HeightArrow),
             (coordinate.x + WidthArrow / 2, coordinate.y + HeightArrow),

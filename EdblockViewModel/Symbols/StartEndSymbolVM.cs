@@ -35,7 +35,7 @@ public class StartEndSymbolVM : BlockSymbolVM
         SetHeight(Height);
     }
 
-    public override void SetWidth(int width)
+    public override void SetWidth(double width)
     {
         Width = width;
 
@@ -48,7 +48,7 @@ public class StartEndSymbolVM : BlockSymbolVM
         ChangeCoordinateAuxiliaryElements();
     }
 
-    public override void SetHeight(int height)
+    public override void SetHeight(double height)
     {
         Height = height;
 

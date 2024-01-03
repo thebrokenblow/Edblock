@@ -21,7 +21,7 @@ public class DrawnLineSymbolModel
         CoordinateLineModel = new(LinesSymbolModel);
     }
 
-    public (int x, int y) RoundingCoordinatesLines((int x, int y) startCoordinate, (int x, int y) currentCoordinate)
+    public (double x, double y) RoundingCoordinatesLines((double x, double y) startCoordinate, (double x, double y) currentCoordinate)
     {
         if (OutgoingPosition == PositionConnectionPoint.Left || OutgoingPosition == PositionConnectionPoint.Right)
         {
@@ -35,7 +35,7 @@ public class DrawnLineSymbolModel
         return currentCoordinate;
     }
 
-    public void ChangeCoordinateLine((int x, int y) currentCoordinte)
+    public void ChangeCoordinateLine((double x, double y) currentCoordinte)
     {
         if (OutgoingPosition == PositionConnectionPoint.Bottom || OutgoingPosition == PositionConnectionPoint.Top)
         {
@@ -77,7 +77,7 @@ public class DrawnLineSymbolModel
         return newLineSymbolModel;
     }
 
-    private (int x, int y) HorizontalRounding((int x, int y) startCoordinate, (int x, int y) currentCoordinate)
+    private (double x, double y) HorizontalRounding((double x, double y) startCoordinate, (double x, double y) currentCoordinate)
     {
         if (LinesSymbolModel.Count % 2 == 1)
         {
@@ -97,7 +97,7 @@ public class DrawnLineSymbolModel
         return currentCoordinate;
     }
 
-    private (int x, int y) VerticallyRounding((int x, int y) startCoordinate, (int x, int y) currentCoordinate)
+    private (double x, double y) VerticallyRounding((double x, double y) startCoordinate, (double x, double y) currentCoordinate)
     {
         if (LinesSymbolModel.Count % 2 == 1)
         {

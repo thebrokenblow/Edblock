@@ -17,8 +17,8 @@ namespace EdblockViewModel.Symbols.ConnectionPoints;
 
 public class ConnectionPointVM : INotifyPropertyChanged
 {
-    private int xCoordinate;
-    public int XCoordinate
+    private double xCoordinate;
+    public double XCoordinate
     {
         get => xCoordinate;
         set
@@ -28,8 +28,8 @@ public class ConnectionPointVM : INotifyPropertyChanged
         }
     }
 
-    private int yCoordinate;
-    public int YCoordinate
+    private double yCoordinate;
+    public double YCoordinate
     {
         get => yCoordinate;
         set
@@ -75,7 +75,7 @@ public class ConnectionPointVM : INotifyPropertyChanged
     public DelegateCommand EnterCursor { get; init; }
     public DelegateCommand LeaveCursor { get; init; }
     public BlockSymbolVM BlockSymbolVM { get; init; }
-    public Func<(int, int)> GetCoordinate { get; init; }
+    public Func<(double, double)> GetCoordinate { get; init; }
     public PositionConnectionPoint Position { get; init; }
 
     public event PropertyChangedEventHandler? PropertyChanged;
@@ -88,7 +88,7 @@ public class ConnectionPointVM : INotifyPropertyChanged
         CanvasSymbolsVM canvasSymbolsVM, 
         BlockSymbolVM blockSymbolVM, 
         CheckBoxLineGostVM checkBoxLineGostVM,
-        Func<(int, int)> getCoordinate, 
+        Func<(double, double)> getCoordinate, 
         PositionConnectionPoint position)
     {
         _canvasSymbolsVM = canvasSymbolsVM;

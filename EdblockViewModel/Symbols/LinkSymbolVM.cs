@@ -31,17 +31,17 @@ public class LinkSymbolVM : BlockSymbolVM
         SetHeight(Height);
     }
 
-    public override void SetHeight(int height)
+    public override void SetHeight(double height)
     {
         SetSize(height);
     }
 
-    public override void SetWidth(int width)
+    public override void SetWidth(double width)
     {
         SetSize(width);
     }
 
-    public void SetSize(int size)
+    public void SetSize(double size)
     {
         Height = size;
         Width = size;

@@ -15,7 +15,7 @@ public class FactoryLineSymbolModel
         return lineSymbol;
     }
 
-    public static LineSymbolModel CreateLineByPenulteLine(LineSymbolModel penultimateLine, (int x2, int y2) finalCoordinate)
+    public static LineSymbolModel CreateLineByPenulteLine(LineSymbolModel penultimateLine, (double x2, double y2) finalCoordinate)
     {
         var lastLine = new LineSymbolModel
         {

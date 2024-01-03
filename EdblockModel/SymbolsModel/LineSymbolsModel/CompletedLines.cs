@@ -7,9 +7,9 @@ public class CompletedLine
     private readonly List<LineSymbolModel> linesSymbolModel;
     private readonly PositionConnectionPoint outgoingPosition;
     private readonly PositionConnectionPoint incomingPosition;
-    private readonly (int x, int y) _finalCoordinate;
+    private readonly (double x, double y) _finalCoordinate;
 
-    public CompletedLine(DrawnLineSymbolModel drawnLineSymbolModel, (int x, int y) finalCoordinate)
+    public CompletedLine(DrawnLineSymbolModel drawnLineSymbolModel, (double x, double y) finalCoordinate)
     {
         linesSymbolModel = drawnLineSymbolModel.LinesSymbolModel;
         outgoingPosition = drawnLineSymbolModel.OutgoingPosition;
@@ -103,7 +103,7 @@ public class CompletedLine
         linesSymbolModel.Add(lastLine);
     }
 
-    private void FinishLinesParallelSides(LineSymbolModel lastLine, (int X2, int Y2) coordinatePenultimateLine)
+    private void FinishLinesParallelSides(LineSymbolModel lastLine, (double X2, double Y2) coordinatePenultimateLine)
     {
         if (lastLine.X2 == _finalCoordinate.x || lastLine.Y2 == _finalCoordinate.y)
         {
@@ -120,7 +120,7 @@ public class CompletedLine
         }
     }
 
-    private void FinishLinesNotParallelSides(LineSymbolModel lastLine, (int x2, int y2) coordinatePenultimateLine)
+    private void FinishLinesNotParallelSides(LineSymbolModel lastLine, (double x2, double y2) coordinatePenultimateLine)
     {
         if (lastLine.X2 == _finalCoordinate.x || lastLine.Y2 == _finalCoordinate.y)
         {
@@ -138,7 +138,7 @@ public class CompletedLine
         }
     }
 
-    private void FinishDrawingLastLines(LineSymbolModel lastLine, (int x1, int y1) startLineCoordinate)
+    private void FinishDrawingLastLines(LineSymbolModel lastLine, (double x1, double y1) startLineCoordinate)
     {
         lastLine.X1 = startLineCoordinate.x1;
         lastLine.Y1 = startLineCoordinate.y1;

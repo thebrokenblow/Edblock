@@ -32,19 +32,19 @@ public class ArrowSymbol : INotifyPropertyChanged
         }
     }
 
-    public void ChangeOrientationArrow((int x, int y) startCoordinateLine, (int x, int y) currentCoordinateLine, PositionConnectionPoint positionConnectionPoint)
+    public void ChangeOrientationArrow((double x, double y) startCoordinateLine, (double x, double y) currentCoordinateLine, PositionConnectionPoint positionConnectionPoint)
     {
         var coordinatesArrow = ArrowSymbolModel.GetCoordinateArrow(startCoordinateLine, currentCoordinateLine, positionConnectionPoint);
         SetCoodinate(coordinatesArrow);
     }
 
-    public void ChangeOrientationArrow((int x, int y) finalCoordinate, PositionConnectionPoint positionConnectionPoint)
+    public void ChangeOrientationArrow((double x, double y) finalCoordinate, PositionConnectionPoint positionConnectionPoint)
     {
         var coordinatesArrow = ArrowSymbolModel.GetCoordinateArrow(finalCoordinate, positionConnectionPoint);
         SetCoodinate(coordinatesArrow);
     }
 
-    private void SetCoodinate(List<(int x, int y)> coordinatesArrow)
+    private void SetCoodinate(List<(double x, double y)> coordinatesArrow)
     {
         var pointArrowSymbol = new PointCollection();
 

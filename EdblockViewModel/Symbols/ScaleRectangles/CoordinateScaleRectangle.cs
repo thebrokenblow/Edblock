@@ -10,59 +10,59 @@ internal class CoordinateScaleRectangle
     internal CoordinateScaleRectangle(BlockSymbolVM blockSymbolVM) =>
         _blockSymbolVM = blockSymbolVM;
 
-    internal (int, int) GetCoordinateLeftTopRectangle()
+    internal (double, double) GetCoordinateLeftTopRectangle()
     {
         return (-positionOffset, -positionOffset);
     }
 
-    internal (int, int) GetCoordinateLeftMiddleRectangle()
+    internal (double, double) GetCoordinateLeftMiddleRectangle()
     {
-        int yCoordinate = _blockSymbolVM.Height / 2 - positionOffset;
+        double yCoordinate = _blockSymbolVM.Height / 2 - positionOffset;
 
         return (-positionOffset, yCoordinate);
     }
 
-    internal (int, int) GetCoordinateLeftBottomRectangle()
+    internal (double, double) GetCoordinateLeftBottomRectangle()
     {
-        int yCoordinate = _blockSymbolVM.Height - positionOffset;
+        double yCoordinate = _blockSymbolVM.Height - positionOffset;
 
         return (-positionOffset, yCoordinate);
     }
 
-    internal (int, int) GetCoordinateRightTopRectangle()
+    internal (double, double) GetCoordinateRightTopRectangle()
     {
-        int xCoordinate = _blockSymbolVM.Width - positionOffset;
+        double xCoordinate = _blockSymbolVM.Width - positionOffset;
 
         return (xCoordinate, -positionOffset);
     }
 
-    internal (int, int) GetCoordinateRightMiddleRectangle()
+    internal (double, double) GetCoordinateRightMiddleRectangle()
     {
-        int xCoordinate = _blockSymbolVM.Width - positionOffset;
-        int yCoordinate = _blockSymbolVM.Height / 2 - positionOffset;
+        double xCoordinate = _blockSymbolVM.Width - positionOffset;
+        double yCoordinate = _blockSymbolVM.Height / 2 - positionOffset;
 
         return (xCoordinate, yCoordinate);
     }
 
-    internal (int, int) GetCoordinateRightBottomRectangle()
+    internal (double, double) GetCoordinateRightBottomRectangle()
     {
-        int xCoordinate = _blockSymbolVM.Width - positionOffset;
-        int yCoordinate = _blockSymbolVM.Height - positionOffset;
+        double xCoordinate = _blockSymbolVM.Width - positionOffset;
+        double yCoordinate = _blockSymbolVM.Height - positionOffset;
 
         return (xCoordinate, yCoordinate);
     }
 
-    internal (int, int) GetCoordinateMiddleBottomRectangle()
+    internal (double, double) GetCoordinateMiddleBottomRectangle()
     {
-        int xCoordinate = _blockSymbolVM.Width / 2 - positionOffset;
-        int yCoordinate = _blockSymbolVM.Height - positionOffset;
+        double xCoordinate = _blockSymbolVM.Width / 2 - positionOffset;
+        double yCoordinate = _blockSymbolVM.Height - positionOffset;
 
         return (xCoordinate, yCoordinate);
     }
 
-    internal (int, int) GetCoordinateMiddleTopRectangle()
+    internal (double, double) GetCoordinateMiddleTopRectangle()
     {
-        int xCoordinate = _blockSymbolVM.Width / 2 - positionOffset;
+        double xCoordinate = _blockSymbolVM.Width / 2 - positionOffset;
 
         return (xCoordinate, -positionOffset);
     }

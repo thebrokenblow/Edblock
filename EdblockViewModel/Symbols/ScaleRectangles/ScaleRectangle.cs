@@ -12,8 +12,8 @@ namespace EdblockViewModel.Symbols.ScaleRectangles;
 public class ScaleRectangle : INotifyPropertyChanged
 {
 
-    private int xCoordinate;
-    public int XCoordinate
+    private double xCoordinate;
+    public double XCoordinate
     {
         get => xCoordinate;
         set
@@ -23,8 +23,8 @@ public class ScaleRectangle : INotifyPropertyChanged
         }
     }
 
-    private int yCoordinate;
-    public int YCoordinate
+    private double yCoordinate;
+    public double YCoordinate
     {
         get => yCoordinate;
         set
@@ -53,18 +53,18 @@ public class ScaleRectangle : INotifyPropertyChanged
     private readonly ScaleAllSymbolVM _scaleAllSymbolVM;
     private readonly BlockSymbolVM _blockSymbolVM;
     private readonly Cursor _cursorScaling;
-    private readonly Func<(int, int)> _getCoordinateScaleRectangle;
-    private readonly Func<ScalePartBlockSymbol, CanvasSymbolsVM, int>? _getWidthSymbol;
-    private readonly Func<ScalePartBlockSymbol, CanvasSymbolsVM, int>? _getHeightSymbol;
+    private readonly Func<(double, double)> _getCoordinateScaleRectangle;
+    private readonly Func<ScalePartBlockSymbol, CanvasSymbolsVM, double>? _getWidthSymbol;
+    private readonly Func<ScalePartBlockSymbol, CanvasSymbolsVM, double>? _getHeightSymbol;
 
     public ScaleRectangle(
         CanvasSymbolsVM canvasSymbolsVM,
         ScaleAllSymbolVM scaleAllSymbolVM,
         BlockSymbolVM blockSymbolVM,
         Cursor cursorScaling,
-        Func<ScalePartBlockSymbol, CanvasSymbolsVM, int>? getWidthSymbol,
-        Func<ScalePartBlockSymbol, CanvasSymbolsVM, int>? getHeightSymbol,
-        Func<(int, int)> getCoordinateScaleRectangle
+        Func<ScalePartBlockSymbol, CanvasSymbolsVM, double>? getWidthSymbol,
+        Func<ScalePartBlockSymbol, CanvasSymbolsVM, double>? getHeightSymbol,
+        Func<(double, double)> getCoordinateScaleRectangle
         )
     {
         _blockSymbolVM = blockSymbolVM;

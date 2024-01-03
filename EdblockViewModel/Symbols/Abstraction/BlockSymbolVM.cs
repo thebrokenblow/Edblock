@@ -31,8 +31,8 @@ public abstract class BlockSymbolVM : SymbolVM
         } 
     }
 
-    private int width;
-    public int Width
+    private double width;
+    public double Width
     {
         get => width;
         set
@@ -44,8 +44,8 @@ public abstract class BlockSymbolVM : SymbolVM
         }
     }
 
-    private int heigth;
-    public int Height
+    private double heigth;
+    public double Height
     {
         get => heigth;
         set
@@ -57,8 +57,8 @@ public abstract class BlockSymbolVM : SymbolVM
         }
     }
 
-    private int xCoordinate; 
-    public int XCoordinate
+    private double xCoordinate; 
+    public double XCoordinate
     {
         get => xCoordinate;
         set
@@ -70,8 +70,8 @@ public abstract class BlockSymbolVM : SymbolVM
         }
     }
 
-    private int yCoordinate;
-    public int YCoordinate
+    private double yCoordinate;
+    public double YCoordinate
     {
         get => yCoordinate;
         set
@@ -132,8 +132,8 @@ public abstract class BlockSymbolVM : SymbolVM
         MouseLeftButtonDown = new(SetMovableSymbol);
     }
 
-    public abstract void SetWidth(int width);
-    public abstract void SetHeight(int height);
+    public abstract void SetWidth(double width);
+    public abstract void SetHeight(double height);
     public abstract BlockSymbolModel CreateBlockSymbolModel();
 
     public virtual void SetCoordinate((int x, int y) currentCoordinate, (int x, int y) previousCoordinate)

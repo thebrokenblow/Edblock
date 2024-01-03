@@ -18,8 +18,8 @@ public class SubroutineSymbolVM : BlockSymbolVM, IHavePolygon
         }
     }
 
-    private int widthBorder;
-    public int WidthBorder
+    private double widthBorder;
+    public double WidthBorder
     {
         get => widthBorder;
         set
@@ -29,8 +29,8 @@ public class SubroutineSymbolVM : BlockSymbolVM, IHavePolygon
         }
     }
 
-    private int heightBorder;
-    public int HeightBorder
+    private double heightBorder;
+    public double HeightBorder
     {
         get => heightBorder;
         set
@@ -76,7 +76,7 @@ public class SubroutineSymbolVM : BlockSymbolVM, IHavePolygon
         SetHeight(Height);
     }
 
-    public override void SetWidth(int width)
+    public override void SetWidth(double width)
     {
         Width = width;
 
@@ -92,7 +92,7 @@ public class SubroutineSymbolVM : BlockSymbolVM, IHavePolygon
         ChangeCoordinateAuxiliaryElements();
     }
 
-    public override void SetHeight(int height)
+    public override void SetHeight(double height)
     {
         Height = height;
 

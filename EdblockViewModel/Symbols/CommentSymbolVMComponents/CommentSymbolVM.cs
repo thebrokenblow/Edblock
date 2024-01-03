@@ -37,10 +37,9 @@ public class CommentSymbolVM : BlockSymbolVM
             VerticalBaseline.Y1 = 0;
             VerticalBaseline.Y2 = heightTextField;
 
-            YCoordinate -= ((int)heightTextField - Height) / 2;
+            YCoordinate -= (heightTextField - Height) / 2;
 
-            TextFieldVM.Width = 
-            Height = (int)heightTextField;
+            Height = heightTextField;
 
             LowerHorizontalBaseline.Y1 = heightTextField;
             LowerHorizontalBaseline.Y2 = heightTextField;
@@ -144,12 +143,12 @@ public class CommentSymbolVM : BlockSymbolVM
         return new ActionSymbolModel();
     }
 
-    public override void SetHeight(int height)
+    public override void SetHeight(double height)
     {
 
     }
 
-    public override void SetWidth(int width)
+    public override void SetWidth(double width)
     {
 
     }
@@ -159,7 +158,7 @@ public class CommentSymbolVM : BlockSymbolVM
         if (BlockSymbolVM is not null)
         {
             XCoordinate = BlockSymbolVM.XCoordinate + BlockSymbolVM.Width;
-            YCoordinate = BlockSymbolVM.YCoordinate + BlockSymbolVM.Height / 2 - (int)VerticalBaseline.Y2 / 2;
+            YCoordinate = BlockSymbolVM.YCoordinate + BlockSymbolVM.Height / 2 - VerticalBaseline.Y2 / 2;
         }
     }
 

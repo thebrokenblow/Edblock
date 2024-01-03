@@ -2,13 +2,13 @@
 
 public class SwapCoordinateDecorator : ICoordinateDecorator
 {
-    public int X
+    public double X
     {
         get => _coordinateDecorator.Y;
         set => _coordinateDecorator.Y = value;
     }
 
-    public int Y
+    public double Y
     {
         get => _coordinateDecorator.X;
         set => _coordinateDecorator.X = value;

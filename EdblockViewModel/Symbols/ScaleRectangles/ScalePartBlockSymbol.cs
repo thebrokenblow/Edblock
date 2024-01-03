@@ -9,22 +9,22 @@ namespace EdblockViewModel.Symbols.ScaleRectangles;
 public class ScalePartBlockSymbol
 {
     public BlockSymbolVM ScalingBlockSymbol { get; init; }
-    public int InitialWidthBlockSymbol { get; init; }
-    public int InitialHeigthBlockSymbol { get; init; }
-    public int InitialXCoordinateBlockSymbol { get; init; }
-    public int InitialYCoordinateBlockSymbol { get; init; }
+    public double InitialWidthBlockSymbol { get; init; }
+    public double InitialHeigthBlockSymbol { get; init; }
+    public double InitialXCoordinateBlockSymbol { get; init; }
+    public double InitialYCoordinateBlockSymbol { get; init; }
 
     private readonly ScaleAllSymbolVM _scaleAllSymbolVM;
     private readonly Cursor _cursorWhenScaling;
     private readonly ObservableCollection<SymbolVM> _symbols;
-    private readonly Func<ScalePartBlockSymbol, CanvasSymbolsVM, int>? _getWidthBlockSymbol;
-    private readonly Func<ScalePartBlockSymbol, CanvasSymbolsVM, int>? _getHeigthBlockSymbol;
+    private readonly Func<ScalePartBlockSymbol, CanvasSymbolsVM, double>? _getWidthBlockSymbol;
+    private readonly Func<ScalePartBlockSymbol, CanvasSymbolsVM, double>? _getHeigthBlockSymbol;
 
     public ScalePartBlockSymbol(
         BlockSymbolVM scalingBlockSymbol,
         Cursor cursorWhenScaling,
-        Func<ScalePartBlockSymbol, CanvasSymbolsVM, int>? getWidthBlockSymbol,
-        Func<ScalePartBlockSymbol, CanvasSymbolsVM, int>? getHeigthBlockSymbol,
+        Func<ScalePartBlockSymbol, CanvasSymbolsVM, double>? getWidthBlockSymbol,
+        Func<ScalePartBlockSymbol, CanvasSymbolsVM, double>? getHeigthBlockSymbol,
         ScaleAllSymbolVM scaleAllSymbolVM,
         ObservableCollection<SymbolVM> symbolsVM)
     {
@@ -49,7 +49,7 @@ public class ScalePartBlockSymbol
             return;
         }
 
-        int width = _getWidthBlockSymbol.Invoke(this, canvasSymbolsVM);
+        double width = _getWidthBlockSymbol.Invoke(this, canvasSymbolsVM);
 
         if (_scaleAllSymbolVM.IsScaleAllSymbolVM)
         {
@@ -79,7 +79,7 @@ public class ScalePartBlockSymbol
             return;
         }
 
-        int height = _getHeigthBlockSymbol.Invoke(this, canvasSymbolsVM);
+        double height = _getHeigthBlockSymbol.Invoke(this, canvasSymbolsVM);
 
         if (_scaleAllSymbolVM.IsScaleAllSymbolVM)
         {

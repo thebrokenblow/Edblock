@@ -6,8 +6,8 @@ namespace EdblockViewModel.Symbols.LineSymbols;
 
 public class LineSymbolVM : INotifyPropertyChanged
 {
-    private int x1;
-    public int X1
+    private double x1;
+    public double X1
     {
         get => x1;
         set
@@ -19,8 +19,8 @@ public class LineSymbolVM : INotifyPropertyChanged
         }
     }
 
-    private int y1;
-    public int Y1
+    private double y1;
+    public double Y1
     {
         get => y1;
         set
@@ -32,8 +32,8 @@ public class LineSymbolVM : INotifyPropertyChanged
         }
     }
 
-    private int x2;
-    public int X2
+    private double x2;
+    public double X2
     {
         get => x2;
         set
@@ -45,9 +45,8 @@ public class LineSymbolVM : INotifyPropertyChanged
         }
     }
 
-    private int y2;
-
-    public int Y2
+    private double y2;
+    public double Y2
     {
         get => y2;
         set

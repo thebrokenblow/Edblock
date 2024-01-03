@@ -6,10 +6,10 @@ public abstract class BlockSymbolModel
 {
     public string? Id { get; set; }
     public string? NameSymbol { get; set; }
-    public int Width { get; set; }
-    public int Height { get; set; }
-    public int XCoordinate { get; set; }
-    public int YCoordinate { get; set; }
+    public double Width { get; set; }
+    public double Height { get; set; }
+    public double XCoordinate { get; set; }
+    public double YCoordinate { get; set; }
     public TextFieldModel TextFieldModel { get; set; }
     public string? Color { get; set; }
 
@@ -29,7 +29,7 @@ public abstract class BlockSymbolModel
     public abstract double GetTextFieldLeftOffset();
     public abstract double GetTextFieldTopOffset();
 
-    private readonly Dictionary<PositionConnectionPoint, Func<(int x, int y)>> borderCoordinateByPosition;
+    private readonly Dictionary<PositionConnectionPoint, Func<(double x, double y)>> borderCoordinateByPosition;
 
     public BlockSymbolModel()
     {
@@ -44,27 +44,27 @@ public abstract class BlockSymbolModel
         };
     }
 
-    public (int x, int y) GetBorderCoordinate(PositionConnectionPoint positionConnectionPoint)
+    public (double x, double y) GetBorderCoordinate(PositionConnectionPoint positionConnectionPoint)
     {
         return borderCoordinateByPosition[positionConnectionPoint].Invoke();
     }
 
-    private (int x, int y) GetTopBorderCoordinate()
+    private (double x, double y) GetTopBorderCoordinate()
     {
         return (XCoordinate + Width / 2, YCoordinate);
     }
 
-    private (int x, int y) GetBottomBorderCoordinate()
+    private (double x, double y) GetBottomBorderCoordinate()
     {
         return (XCoordinate + Width / 2, YCoordinate + Height);
     }
 
-    private (int x, int y) GetLeftBorderCoordinate()
+    private (double x, double y) GetLeftBorderCoordinate()
     {
         return (XCoordinate, YCoordinate + Height / 2);
     }
 
-    private (int x, int y) GetRightBorderCoordinate()
+    private (double x, double y) GetRightBorderCoordinate()
     {
         return (XCoordinate + Width, YCoordinate + Height / 2);
     }
