@@ -46,18 +46,28 @@
                   StrokeThickness="1.25"/>
 
 
-            <Canvas>
-                <TextBox Canvas.Left="{Binding TextFieldVM.LeftOffset}" Canvas.Top="{Binding TextFieldVM.TopOffset}" Text="{Binding TextFieldVM.Text}" Foreground="Black" AcceptsReturn="True" TextWrapping="Wrap">
-                    <i:Interaction.Behaviors>
-                        <edblockVM:ReadOnlyPropertyToVMBindingBehavior 
+            <TextBox Style="{StaticResource TextFieldView}" 
+                     Cursor="{x:Null}"
+                     Height="Auto"
+                     Width="Auto"
+                     Foreground="Black">
+                <i:Interaction.Behaviors>
+                    <edblockVM:ReadOnlyPropertyToVMBindingBehavior 
                             ModelProperty="{Binding HeightTextField}"
                             ReadOnlyDependencyProperty="{Binding ActualHeight, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=TextBox}}"/>
-                        <edblockVM:ReadOnlyPropertyToVMBindingBehavior 
+                    <edblockVM:ReadOnlyPropertyToVMBindingBehavior 
                             ModelProperty="{Binding WidthTextField}"
                             ReadOnlyDependencyProperty="{Binding ActualWidth, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=TextBox}}"/>
-                    </i:Interaction.Behaviors>
-                </TextBox>
-            </Canvas>
+                </i:Interaction.Behaviors>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="MouseLeftButtonDown">
+                        <i:InvokeCommandAction Command="{Binding TextFieldVM.MouseLeftButtonDown}"/>
+                    </i:EventTrigger>
+                    <i:EventTrigger EventName="PreviewMouseDoubleClick">
+                        <i:InvokeCommandAction Command="{Binding TextFieldVM.MouseDoubleClick}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </TextBox>
 
         </Canvas>
     </Border>

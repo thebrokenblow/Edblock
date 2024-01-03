@@ -48,19 +48,19 @@
     </Style>
 
     <Style x:Key="TextFieldView" TargetType="TextBox">
-        <Setter Property="Text" Value="{Binding Text, UpdateSourceTrigger=PropertyChanged}" />
-        <Setter Property="FontFamily" Value="{Binding FontFamily}" />
-        <Setter Property="FontSize" Value="{Binding FontSize}" />
-        <Setter Property="TextAlignment" Value="{Binding TextAlignment}" />
-        <Setter Property="FontWeight" Value="{Binding FontWeight}"/>
-        <Setter Property="FontStyle" Value="{Binding FontStyle}"/>
-        <Setter Property="TextDecorations" Value="{Binding TextDecorations}"/>
-        <Setter Property="Width" Value="{Binding Width}" />
-        <Setter Property="Height" Value="{Binding Height}" />
-        <Setter Property="Cursor" Value="{Binding Cursor}" />
-        <Setter Property="Focusable" Value="{Binding Focusable}" />
-        <Setter Property="Canvas.Left" Value="{Binding LeftOffset}" />
-        <Setter Property="Canvas.Top" Value="{Binding TopOffset}" />
+        <Setter Property="Text" Value="{Binding TextFieldVM.Text, UpdateSourceTrigger=PropertyChanged}" />
+        <Setter Property="FontFamily" Value="{Binding TextFieldVM.FontFamily}" />
+        <Setter Property="FontSize" Value="{Binding TextFieldVM.FontSize}" />
+        <Setter Property="TextAlignment" Value="{Binding TextFieldVM.TextAlignment}" />
+        <Setter Property="FontWeight" Value="{Binding TextFieldVM.FontWeight}"/>
+        <Setter Property="FontStyle" Value="{Binding TextFieldVM.FontStyle}"/>
+        <Setter Property="TextDecorations" Value="{Binding TextFieldVM.TextDecorations}"/>
+        <Setter Property="Width" Value="{Binding TextFieldVM.Width}" />
+        <Setter Property="Height" Value="{Binding TextFieldVM.Height}" />
+        <Setter Property="Cursor" Value="{Binding TextFieldVM.Cursor}" />
+        <Setter Property="Focusable" Value="{Binding TextFieldVM.Focusable}" />
+        <Setter Property="Canvas.Left" Value="{Binding TextFieldVM.LeftOffset}" />
+        <Setter Property="Canvas.Top" Value="{Binding TextFieldVM.TopOffset}" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Foreground" Value="White" />
         <Setter Property="TextWrapping" Value="Wrap" />
@@ -73,10 +73,12 @@
         </Style.Triggers>
     </Style>
 
-
     <Style x:Key="TextFieldLineView" TargetType="TextBox">
         <Setter Property="Text" Value="{Binding Text, UpdateSourceTrigger=PropertyChanged}" />
         <Setter Property="Height" Value="{Binding HeightTextField}" />
+        <Setter Property="Canvas.Top" Value="{Binding TopOffsetTextField}" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Canvas.Left" Value="{Binding LeftOffsetTextField}" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderBrush" Value="Transparent" />
         <Setter Property="Visibility" Value="Hidden" />

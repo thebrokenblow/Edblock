@@ -23,8 +23,23 @@
                 </i:EventTrigger>
             </i:Interaction.Triggers>
         </Ellipse>
-        
-        <symbolView:TextFieldView DataContext="{Binding TextFieldVM}"/>
+
+        <TextBox Style="{StaticResource TextFieldView}">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="MouseLeftButtonDown">
+                    <i:InvokeCommandAction Command="{Binding TextFieldVM.MouseLeftButtonDown}"/>
+                </i:EventTrigger>
+                <i:EventTrigger EventName="PreviewMouseDoubleClick">
+                    <i:InvokeCommandAction Command="{Binding TextFieldVM.MouseDoubleClick}"/>
+                </i:EventTrigger>
+                <i:EventTrigger EventName="MouseEnter">
+                    <i:InvokeCommandAction Command="{Binding MouseEnter}"/>
+                </i:EventTrigger>
+                <i:EventTrigger EventName="MouseLeave">
+                    <i:InvokeCommandAction Command="{Binding MouseLeave}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </TextBox>
         <symbolView:ConnectionPointsView />
         <symbolView:ScaleRectanglesView />
     </Canvas>

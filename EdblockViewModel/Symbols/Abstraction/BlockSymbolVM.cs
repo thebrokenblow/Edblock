@@ -213,13 +213,16 @@ public abstract class BlockSymbolVM : SymbolVM
 
     public void SetMovableSymbol()
     {
-        ConnectionPointVM.SetDisplayConnectionPoints(ConnectionPoints, false);
-        ScaleRectangle.SetStateDisplay(ScaleRectangles, false);
+        if (this is not CommentSymbolVM)
+        {
+            ConnectionPointVM.SetDisplayConnectionPoints(ConnectionPoints, false);
+            ScaleRectangle.SetStateDisplay(ScaleRectangles, false);
 
-        CanvasSymbolsVM.Cursor = Cursors.SizeAll;
+            CanvasSymbolsVM.Cursor = Cursors.SizeAll;
 
-        CanvasSymbolsVM.MovableBlockSymbol = this;
-        CanvasSymbolsVM.SetCurrentRedrawLines(this);
+            CanvasSymbolsVM.MovableBlockSymbol = this;
+            CanvasSymbolsVM.SetCurrentRedrawLines(this);
+        }
     }
 
     public void Select()

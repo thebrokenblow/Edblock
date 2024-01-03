@@ -23,10 +23,9 @@ public class CommentSymbolVM : BlockSymbolVM
         get => heightTextField;
         set
         {
-            value -= value % 10;
-            value += 10;
+            value = value - value % 10 + 10;
 
-            if (value >= defaultHeight)
+            if (value > defaultHeight)
             {
                 heightTextField = value;
             }
@@ -40,16 +39,16 @@ public class CommentSymbolVM : BlockSymbolVM
 
             YCoordinate -= ((int)heightTextField - Height) / 2;
 
+            TextFieldVM.Width = 
             Height = (int)heightTextField;
-            TextFieldVM.Height = Height;
 
             LowerHorizontalBaseline.Y1 = heightTextField;
             LowerHorizontalBaseline.Y2 = heightTextField;
 
-            foreach (var item in HorizontalLines)
+            foreach (var horizontalLine in HorizontalLines)
             {
-                item.Y1 = VerticalBaseline.Y2 / 2;
-                item.Y2 = VerticalBaseline.Y2 / 2;
+                horizontalLine.Y1 = VerticalBaseline.Y2 / 2;
+                horizontalLine.Y2 = VerticalBaseline.Y2 / 2;
             }
         }
     }
