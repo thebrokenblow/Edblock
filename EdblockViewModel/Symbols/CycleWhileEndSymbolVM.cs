@@ -1,12 +1,23 @@
 ﻿using System.Windows;
 using System.Windows.Media;
+using System.Collections.Generic;
 using EdblockModel.SymbolsModel;
-using EdblockViewModel.Symbols.Abstraction;
+using EdblockModel.AbstractionsModel;
+using EdblockViewModel.AbstractionsVM;
+using EdblockViewModel.Symbols.ScaleRectangles;
+using EdblockViewModel.Symbols.ConnectionPoints;
+using EdblockViewModel.Symbols.ComponentsSymbolsVM;
 
 namespace EdblockViewModel.Symbols;
 
-public class CycleWhileEndSymbolVM : BlockSymbolVM, IHavePolygon
+public class CycleWhileEndSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnectionPoint, IHasScaleRectangles
 {
+    public TextFieldSymbolVM TextFieldSymbolVM { get; init; }
+    public List<ScaleRectangle> ScaleRectangles { get; init; }
+    public List<ConnectionPointVM> ConnectionPoints { get; init; }
+    public BuilderScaleRectangles BuilderScaleRectangles { get; init; }
+    public FactoryConnectionPoints FactoryConnectionPoints { get; init; }
+
     private PointCollection? points;
     public PointCollection? Points
     {
@@ -29,20 +40,28 @@ public class CycleWhileEndSymbolVM : BlockSymbolVM, IHavePolygon
     
     public CycleWhileEndSymbolVM(EdblockVM edblockVM) : base(edblockVM)
     {
-        ScaleRectangles = _builderScaleRectangles
-                .AddMiddleTopRectangle()
-                .AddRightTopRectangle()
-                .AddRightMiddleRectangle()
-                .AddRightBottomRectangle()
-                .AddMiddleBottomRectangle()
-                .AddLeftBottomRectangle()
-                .AddLeftMiddleRectangle()
-                .AddLeftTopRectangle()
-                .Build();
+        TextFieldSymbolVM = new(edblockVM.CanvasSymbolsVM, this);
+
+        FactoryConnectionPoints = new(CanvasSymbolsVM, edblockVM.PopupBoxMenuVM.CheckBoxLineGostVM, this);
+        ConnectionPoints = FactoryConnectionPoints.CreateConnectionPoints();
+
+        BuilderScaleRectangles = new(CanvasSymbolsVM, edblockVM.PopupBoxMenuVM.ScaleAllSymbolVM, this);
+
+        ScaleRectangles =
+            BuilderScaleRectangles
+                        .AddMiddleTopRectangle()
+                        .AddRightTopRectangle()
+                        .AddRightMiddleRectangle()
+                        .AddRightBottomRectangle()
+                        .AddMiddleBottomRectangle()
+                        .AddLeftBottomRectangle()
+                        .AddLeftMiddleRectangle()
+                        .AddLeftTopRectangle()
+                        .Build();
 
         Color = defaultColor;
 
-        TextFieldVM.Text = defaultText;
+        TextFieldSymbolVM.Text = defaultText;
 
         Width = defaultWidth;
         Height = defaultHeigth;
@@ -55,11 +74,11 @@ public class CycleWhileEndSymbolVM : BlockSymbolVM, IHavePolygon
     {
         Width = width;
 
-        var textFieldWidth = BlockSymbolModel.GetTextFieldWidth();
-        var textFieldLeftOffset = BlockSymbolModel.GetTextFieldLeftOffset();
+        var textFieldWidth = GetTextFieldWidth();
+        var textFieldLeftOffset = GetTextFieldLeftOffset();
 
-        TextFieldVM.Width = textFieldWidth;
-        TextFieldVM.LeftOffset = textFieldLeftOffset;
+        TextFieldSymbolVM.Width = textFieldWidth;
+        TextFieldSymbolVM.LeftOffset = textFieldLeftOffset;
 
         SetCoordinatePolygonPoints();
         ChangeCoordinateAuxiliaryElements();
@@ -69,11 +88,11 @@ public class CycleWhileEndSymbolVM : BlockSymbolVM, IHavePolygon
     {
         Height = height;
 
-        var textFieldHeight = BlockSymbolModel.GetTextFieldHeight();
-        var textFieldTopOffset = BlockSymbolModel.GetTextFieldTopOffset();
+        var textFieldHeight = GetTextFieldHeight();
+        var textFieldTopOffset = GetTextFieldTopOffset();
 
-        TextFieldVM.Height = textFieldHeight;
-        TextFieldVM.TopOffset = textFieldTopOffset;
+        TextFieldSymbolVM.Height = textFieldHeight;
+        TextFieldSymbolVM.TopOffset = textFieldTopOffset;
 
         SetCoordinatePolygonPoints();
         ChangeCoordinateAuxiliaryElements();
@@ -83,7 +102,7 @@ public class CycleWhileEndSymbolVM : BlockSymbolVM, IHavePolygon
     {
         var nameBlockSymbolVM = GetType().BaseType?.ToString();
 
-        var cycleWhileBeginSymbolModel = new CycleWhileBeginSymbolModel()
+        var cycleWhileBeginSymbolModel = new CycleWhileSymbolModel()
         {
             Id = Id,
             NameSymbol = nameBlockSymbolVM,
@@ -104,5 +123,25 @@ public class CycleWhileEndSymbolVM : BlockSymbolVM, IHavePolygon
             new Point(Width, Height - sideProjection),
             new Point(Width, 0),
         };
+    }
+
+    public double GetTextFieldWidth()
+    {
+        return Width - sideProjection * 2;
+    }
+
+    public double GetTextFieldHeight()
+    {
+        return Height;
+    }
+
+    public double GetTextFieldLeftOffset()
+    {
+        return sideProjection;
+    }
+
+    public double GetTextFieldTopOffset()
+    {
+        return 0;
     }
 }

@@ -1,4 +1,5 @@
-﻿using EdblockModel.SymbolsModel.Enum;
+﻿using EdblockModel.Enum;
+using EdblockModel.AbstractionsModel;
 using EdblockModel.SymbolsModel.LineSymbolsModel.DecoratorLineSymbolsModel;
 
 namespace EdblockModel.SymbolsModel.LineSymbolsModel.RedrawnLineSymbolsModel;
@@ -8,8 +9,8 @@ public class RedrawnLine
     public List<CoordinateLine> DecoratedCoordinatesLines { get; set; }
     private readonly BlockSymbolModel? _symbolOutgoingLine;
     private readonly BlockSymbolModel? _symbolIncomingLine;
-    private readonly PositionConnectionPoint _positionOutgoing;
-    private readonly PositionConnectionPoint _positionIncoming;
+    private readonly SideSymbol _positionOutgoing;
+    private readonly SideSymbol _positionIncoming;
     private List<CoordinateLine> _coordinatesLines;
     private readonly RedrawnLineParallelSides redrawnParallelSides;
     private readonly RedrawnLineNoParallelSides redrawnLineNoParallelSides;
@@ -35,8 +36,9 @@ public class RedrawnLine
 
     public List<LineSymbolModel> GetRedrawLine()
     {
-        var borderCoordinateOutgoingSymbol = _symbolOutgoingLine!.GetBorderCoordinate(_positionOutgoing);
-        var borderCoordinateIncomingSymbol = _symbolIncomingLine!.GetBorderCoordinate(_positionIncoming);
+        //TODO: получение границы символа 
+        var borderCoordinateOutgoingSymbol = (0, 0);//_symbolOutgoingLine!.GetBorderCoordinate(_positionOutgoing);
+        var borderCoordinateIncomingSymbol = (0, 0);//_symbolIncomingLine!.GetBorderCoordinate(_positionIncoming);
 
         if (IsParallel())
         {
@@ -115,14 +117,14 @@ public class RedrawnLine
     private bool IsParallel()
     {
         bool istParallel =
-            _positionOutgoing == PositionConnectionPoint.Bottom && _positionIncoming == PositionConnectionPoint.Top ||
-            _positionOutgoing == PositionConnectionPoint.Top && _positionIncoming == PositionConnectionPoint.Bottom ||
-            _positionOutgoing == PositionConnectionPoint.Right && _positionIncoming == PositionConnectionPoint.Left ||
-            _positionOutgoing == PositionConnectionPoint.Left && _positionIncoming == PositionConnectionPoint.Right ||
-            _positionOutgoing == PositionConnectionPoint.Left && _positionIncoming == PositionConnectionPoint.Left ||
-            _positionOutgoing == PositionConnectionPoint.Right && _positionIncoming == PositionConnectionPoint.Right ||
-            _positionOutgoing == PositionConnectionPoint.Top && _positionIncoming == PositionConnectionPoint.Top ||
-            _positionOutgoing == PositionConnectionPoint.Bottom && _positionIncoming == PositionConnectionPoint.Bottom;
+            _positionOutgoing == SideSymbol.Bottom && _positionIncoming == SideSymbol.Top ||
+            _positionOutgoing == SideSymbol.Top && _positionIncoming == SideSymbol.Bottom ||
+            _positionOutgoing == SideSymbol.Right && _positionIncoming == SideSymbol.Left ||
+            _positionOutgoing == SideSymbol.Left && _positionIncoming == SideSymbol.Right ||
+            _positionOutgoing == SideSymbol.Left && _positionIncoming == SideSymbol.Left ||
+            _positionOutgoing == SideSymbol.Right && _positionIncoming == SideSymbol.Right ||
+            _positionOutgoing == SideSymbol.Top && _positionIncoming == SideSymbol.Top ||
+            _positionOutgoing == SideSymbol.Bottom && _positionIncoming == SideSymbol.Bottom;
 
         return istParallel;
     }

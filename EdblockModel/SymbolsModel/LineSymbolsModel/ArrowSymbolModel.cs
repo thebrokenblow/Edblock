@@ -1,4 +1,4 @@
-﻿using EdblockModel.SymbolsModel.Enum;
+﻿using EdblockModel.Enum;
 
 namespace EdblockModel.SymbolsModel.LineSymbolsModel;
 
@@ -7,18 +7,18 @@ public class ArrowSymbolModel
     private const int WidthArrow = 7;
     private const int HeightArrow = 7;
 
-    private readonly static Dictionary<PositionConnectionPoint, Func<(double, double), List<(double, double)>>> coordinateArrorByPosition = new()
+    private readonly static Dictionary<SideSymbol, Func<(double, double), List<(double, double)>>> coordinateArrorByPosition = new()
     {
-        { PositionConnectionPoint.Right, coordinate => GetCoordinateLeft(coordinate) },
-        { PositionConnectionPoint.Left, coordinate => GetCoordinateRigth(coordinate) },
-        { PositionConnectionPoint.Top, coordinate => GetCoordinateBottom(coordinate) },
-        { PositionConnectionPoint.Bottom, coordinate => GetCoordinateTop(coordinate) }
+        { SideSymbol.Right, coordinate => GetCoordinateLeft(coordinate) },
+        { SideSymbol.Left, coordinate => GetCoordinateRigth(coordinate) },
+        { SideSymbol.Top, coordinate => GetCoordinateBottom(coordinate) },
+        { SideSymbol.Bottom, coordinate => GetCoordinateTop(coordinate) }
     };
 
     //Получение координат стрелки во время рисования линии
-    public static List<(double, double)> GetCoordinateArrow((double x, double y) startCoordinateLine, (double x, double y) currentCoordinateLine, PositionConnectionPoint positionConnectionPoint)
+    public static List<(double, double)> GetCoordinateArrow((double x, double y) startCoordinateLine, (double x, double y) currentCoordinateLine, SideSymbol positionConnectionPoint)
     {
-        if (positionConnectionPoint == PositionConnectionPoint.Top || positionConnectionPoint == PositionConnectionPoint.Bottom)
+        if (positionConnectionPoint == SideSymbol.Top || positionConnectionPoint == SideSymbol.Bottom)
         {
             var coordinateArrow = GetCoordinateVerticalCP(startCoordinateLine, currentCoordinateLine);
             return coordinateArrow;
@@ -31,7 +31,7 @@ public class ArrowSymbolModel
     }
 
     //Получение координат стрелки при присоединение линии
-    public static List<(double, double)> GetCoordinateArrow((double x, double y) finalCoordinate, PositionConnectionPoint positionConnectionPoint)
+    public static List<(double, double)> GetCoordinateArrow((double x, double y) finalCoordinate, SideSymbol positionConnectionPoint)
     {
         var coordinateArror = coordinateArrorByPosition[positionConnectionPoint].Invoke(finalCoordinate);
 

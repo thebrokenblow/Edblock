@@ -1,22 +1,17 @@
 ﻿using System;
-using Prism.Commands;
 using System.Windows.Input;
-using System.Collections.Generic;
+using Prism.Commands;
+using EdblockModel.Enum;
+using EdblockModel.AbstractionsModel;
 using EdblockViewModel.ComponentsVM;
-using EdblockModel.SymbolsModel;
-using EdblockModel.SymbolsModel.Enum;
 using EdblockViewModel.Symbols.ScaleRectangles;
 using EdblockViewModel.Symbols.ConnectionPoints;
-using EdblockViewModel.Symbols.CommentSymbolVMComponents;
-using System.Diagnostics.Contracts;
 
-namespace EdblockViewModel.Symbols.Abstraction;
+namespace EdblockViewModel.AbstractionsVM;
 
 public abstract class BlockSymbolVM : SymbolVM
 {
-    public List<ScaleRectangle> ScaleRectangles { get; init; }
-    public List<ConnectionPointVM> ConnectionPoints { get; init; }
-    public string Id { get; set; }
+    public Guid Id { get; set; }
 
     private string? color;
     public override string? Color
@@ -28,7 +23,7 @@ public abstract class BlockSymbolVM : SymbolVM
             BlockSymbolModel.Color = color;
 
             OnPropertyChanged();
-        } 
+        }
     }
 
     private double width;
@@ -38,7 +33,11 @@ public abstract class BlockSymbolVM : SymbolVM
         set
         {
             width = value;
-            BlockSymbolModel.Width = width;
+
+            if (BlockSymbolModel is IHasSize symbolHasSize)
+            {
+                symbolHasSize.Width = width;
+            }
 
             OnPropertyChanged();
         }
@@ -51,13 +50,17 @@ public abstract class BlockSymbolVM : SymbolVM
         set
         {
             heigth = value;
-            BlockSymbolModel.Height = heigth;
+
+            if (BlockSymbolModel is IHasSize symbolHasSize)
+            {
+                symbolHasSize.Height = heigth;
+            }
 
             OnPropertyChanged();
         }
     }
 
-    private double xCoordinate; 
+    private double xCoordinate;
     public double XCoordinate
     {
         get => xCoordinate;
@@ -97,8 +100,6 @@ public abstract class BlockSymbolVM : SymbolVM
     public DelegateCommand MouseEnter { get; set; }
     public DelegateCommand MouseLeave { get; set; }
     public DelegateCommand MouseLeftButtonDown { get; set; }
-
-    public TextFieldVM TextFieldVM { get; init; }
     public BlockSymbolModel BlockSymbolModel { get; init; }
     public CanvasSymbolsVM CanvasSymbolsVM { get; init; }
 
@@ -106,7 +107,6 @@ public abstract class BlockSymbolVM : SymbolVM
     private readonly FontSizeControlVM _fontSizeControlVM;
     private readonly TextAlignmentControlVM _textAlignmentControlVM;
     private readonly FormatTextControlVM _formatTextControlVM;
-    protected readonly BuilderScaleRectangles _builderScaleRectangles;
 
     public BlockSymbolVM(EdblockVM edblockVM)
     {
@@ -116,49 +116,39 @@ public abstract class BlockSymbolVM : SymbolVM
         _textAlignmentControlVM = edblockVM.TextAlignmentControlVM;
         _formatTextControlVM = edblockVM.FormatTextControlVM;
 
-        Id = Guid.NewGuid().ToString();
+        Id = Guid.NewGuid();
 
         BlockSymbolModel = CreateBlockSymbolModel();
-
-        TextFieldVM = new(CanvasSymbolsVM, this);
-
-        var factoryConnectionPoints = new FactoryConnectionPoints(CanvasSymbolsVM, edblockVM.PopupBoxMenuVM.CheckBoxLineGostVM, this);
-        ConnectionPoints = factoryConnectionPoints.CreateConnectionPoints();
-
-        _builderScaleRectangles = new BuilderScaleRectangles(CanvasSymbolsVM, edblockVM.PopupBoxMenuVM.ScaleAllSymbolVM,  this);
 
         MouseEnter = new(ShowAuxiliaryElements);
         MouseLeave = new(HideAuxiliaryElements);
         MouseLeftButtonDown = new(SetMovableSymbol);
     }
 
+    public abstract BlockSymbolModel CreateBlockSymbolModel();
     public abstract void SetWidth(double width);
     public abstract void SetHeight(double height);
-    public abstract BlockSymbolModel CreateBlockSymbolModel();
 
-    public virtual void SetCoordinate((int x, int y) currentCoordinate, (int x, int y) previousCoordinate)
+    public void SetCoordinate((int x, int y) currentCoordinate, (int x, int y) previousCoordinate)
     {
         var currentDrawnLineSymbol = CanvasSymbolsVM.СurrentDrawnLineSymbol;
 
-        if (currentDrawnLineSymbol == null) //Условие истино, если не рисуется линия
+        if (currentDrawnLineSymbol != null) //Условие истино, если не рисуется линия
         {
-            CanvasSymbolsVM.RemoveSelectDrawnLine();
+            return;
+        }
 
-            if (XCoordinate == 0 && YCoordinate == 0)
-            {
-                XCoordinate = currentCoordinate.x - Width / 2;
-                YCoordinate = currentCoordinate.y - Height / 2;
-            }
-            else
-            {
-                XCoordinate = currentCoordinate.x - (previousCoordinate.x - XCoordinate);
-                YCoordinate = currentCoordinate.y - (previousCoordinate.y - YCoordinate);
+        CanvasSymbolsVM.RemoveSelectDrawnLine();
 
-                if (this is IHaveCommentVM iHaveCommentVM)
-                {
-                    iHaveCommentVM.CommentSymbolVM?.SetCoordinateBlockSymbol();
-                }
-            }
+        if (XCoordinate == 0 && YCoordinate == 0)
+        {
+            XCoordinate = currentCoordinate.x - Width / 2;
+            YCoordinate = currentCoordinate.y - Height / 2;
+        }
+        else
+        {
+            XCoordinate = currentCoordinate.x - (previousCoordinate.x - XCoordinate);
+            YCoordinate = currentCoordinate.y - (previousCoordinate.y - YCoordinate);
         }
     }
 
@@ -169,42 +159,83 @@ public abstract class BlockSymbolVM : SymbolVM
         var movableSymbol = CanvasSymbolsVM.MovableBlockSymbol;
         var scalePartBlockSymbolVM = CanvasSymbolsVM.ScalePartBlockSymbol;
 
-        if (movableSymbol is null && scalePartBlockSymbolVM is null)  // Условие истино, когда символ не перемещается и не масштабируется (просто навёл курсор)
+        if (movableSymbol is not null || scalePartBlockSymbolVM is not null) // Условие истино, когда символ перемещается и масштабируется(просто навёл курсор)
         {
-            ConnectionPointVM.SetDisplayConnectionPoints(ConnectionPoints, true);
-            ScaleRectangle.SetStateDisplay(ScaleRectangles, true);
-            TextFieldVM.Cursor = Cursors.SizeAll;
+            return;
+        }
+
+        SetDisplayScaleRectangles(true);
+        SetDisplayConnectionPoints(true);
+
+        if (this is IHasTextFieldVM symbolHasTextField)
+        {
+            symbolHasTextField.TextFieldSymbolVM.Cursor = Cursors.SizeAll;
         }
     }
 
     public void HideAuxiliaryElements()
     {
-        CanvasSymbolsVM.Cursor = Cursors.Arrow;
+        SetDisplayScaleRectangles(false);
+        SetDisplayConnectionPoints(false);
 
-        ConnectionPointVM.SetDisplayConnectionPoints(ConnectionPoints, false);
-        ScaleRectangle.SetStateDisplay(ScaleRectangles, false);
+        CanvasSymbolsVM.Cursor = Cursors.Arrow;
+    }
+
+    private void SetDisplayConnectionPoints(bool status)
+    {
+        if (this is IHasConnectionPoint symbolHasConnectionPoint)
+        {
+            var connectionPoints = symbolHasConnectionPoint.ConnectionPoints;
+
+            ConnectionPointVM.SetDisplayConnectionPoints(connectionPoints, status);
+        }
+    }
+
+    private void SetDisplayScaleRectangles(bool status)
+    {
+        if (this is IHasScaleRectangles symbolHasScaleRectangles)
+        {
+            var scaleRectangles = symbolHasScaleRectangles.ScaleRectangles;
+
+            ScaleRectangle.SetStateDisplay(scaleRectangles, status);
+        }
     }
 
     protected void ChangeCoordinateAuxiliaryElements()
     {
-        foreach (var connectionPoint in ConnectionPoints)
+        if (this is IHasConnectionPoint symbolHasConnectionPoint)
         {
-            connectionPoint.ChangeCoordination();
+            var connectionPoints = symbolHasConnectionPoint.ConnectionPoints;
+
+            foreach (var connectionPoint in connectionPoints)
+            {
+                connectionPoint.ChangeCoordination();
+            }
         }
 
-        foreach (var scaleRectangle in ScaleRectangles)
+        if (this is IHasScaleRectangles symbolHasScaleRectangles)
         {
-            scaleRectangle.ChangeCoordination();
+            var scaleRectangles = symbolHasScaleRectangles.ScaleRectangles;
+
+            foreach (var scaleRectangle in scaleRectangles)
+            {
+                scaleRectangle.ChangeCoordination();
+            }
         }
     }
 
-    internal ConnectionPointVM GetConnectionPoint(PositionConnectionPoint outgoingPosition)
+    internal ConnectionPointVM GetConnectionPoint(SideSymbol outgoingPosition)
     {
-        foreach (var connectionPoint in ConnectionPoints)
+        if (this is IHasConnectionPoint symbolHasConnectionPoint)
         {
-            if (connectionPoint.Position == outgoingPosition)
+            var connectionPoints = symbolHasConnectionPoint.ConnectionPoints;
+
+            foreach (var connectionPoint in connectionPoints)
             {
-                return connectionPoint;
+                if (connectionPoint.Position == outgoingPosition)
+                {
+                    return connectionPoint;
+                }
             }
         }
 
@@ -213,16 +244,13 @@ public abstract class BlockSymbolVM : SymbolVM
 
     public void SetMovableSymbol()
     {
-        if (this is not CommentSymbolVM)
-        {
-            ConnectionPointVM.SetDisplayConnectionPoints(ConnectionPoints, false);
-            ScaleRectangle.SetStateDisplay(ScaleRectangles, false);
+        SetDisplayScaleRectangles(false);
+        SetDisplayConnectionPoints(false);
 
-            CanvasSymbolsVM.Cursor = Cursors.SizeAll;
+        CanvasSymbolsVM.Cursor = Cursors.SizeAll;
 
-            CanvasSymbolsVM.MovableBlockSymbol = this;
-            CanvasSymbolsVM.SetCurrentRedrawLines(this);
-        }
+        CanvasSymbolsVM.MovableBlockSymbol = this;
+        CanvasSymbolsVM.SetCurrentRedrawLines(this);
     }
 
     public void Select()
@@ -230,9 +258,9 @@ public abstract class BlockSymbolVM : SymbolVM
         IsSelected = true;
 
         _fontSizeControlVM.SetFontSize(this);
+        _formatTextControlVM.SetFontText(this);
         _fontFamilyControlVM.SetFontFamily(this);
         _textAlignmentControlVM.SetFormatAlignment(this);
-        _formatTextControlVM.SetFontText(this);
 
         CanvasSymbolsVM.SelectedBlockSymbols.Add(this);
     }

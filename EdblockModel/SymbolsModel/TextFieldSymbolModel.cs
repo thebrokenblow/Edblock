@@ -1,6 +1,6 @@
 ﻿namespace EdblockModel.SymbolsModel;
 
-public class TextFieldModel
+public class TextFieldSymbolModel
 {
     public string? Text { get; set; }
     public string? FontFamily { get; set; }

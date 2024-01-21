@@ -1,7 +1,7 @@
 ﻿using EdblockView.Abstraction;
 using EdblockViewModel;
+using EdblockViewModel.AbstractionsVM;
 using EdblockViewModel.Symbols;
-using EdblockViewModel.Symbols.Abstraction;
 using System.Windows.Controls;
 
 namespace EdblockView.SymbolsUI;

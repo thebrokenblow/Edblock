@@ -3,11 +3,11 @@ using Prism.Commands;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using EdblockViewModel.ComponentsVM;
-using EdblockViewModel.Symbols.Abstraction;
 using EdblockViewModel.Symbols.ConnectionPoints;
-using EdblockModel.SymbolsModel.Enum;
 using EdblockModel.SymbolsModel.LineSymbolsModel;
 using EdblockModel.SymbolsModel.LineSymbolsModel.RedrawnLineSymbolsModel;
+using EdblockViewModel.AbstractionsVM;
+using EdblockModel.Enum;
 
 namespace EdblockViewModel.Symbols.LineSymbols;
 
@@ -44,8 +44,8 @@ public class DrawnLineSymbolVM : SymbolVM
         }
     }
 
-    private PositionConnectionPoint outgoingPosition;
-    public PositionConnectionPoint OutgoingPosition
+    private SideSymbol outgoingPosition;
+    public SideSymbol OutgoingPosition
     {
         get => outgoingPosition;
         set
@@ -55,8 +55,8 @@ public class DrawnLineSymbolVM : SymbolVM
         }
     }
 
-    private PositionConnectionPoint incomingPosition;
-    public PositionConnectionPoint IncomingPosition 
+    private SideSymbol incomingPosition;
+    public SideSymbol IncomingPosition 
     {
         get => incomingPosition;
         set
@@ -115,7 +115,7 @@ public class DrawnLineSymbolVM : SymbolVM
         {
             widthTextField = value;
 
-            if (outgoingPosition == PositionConnectionPoint.Left)
+            if (outgoingPosition == SideSymbol.Left)
             {
                 SetCoordinateTextField();
             }
@@ -279,12 +279,12 @@ public class DrawnLineSymbolVM : SymbolVM
         LeftOffsetTextField = firstLineSymbolModel.X1;
         TopOffsetTextField = firstLineSymbolModel.Y1;
 
-        if (OutgoingPosition != PositionConnectionPoint.Bottom)
+        if (OutgoingPosition != SideSymbol.Bottom)
         {
             TopOffsetTextField -= heightTextField;
         }
 
-        if (OutgoingPosition == PositionConnectionPoint.Left)
+        if (OutgoingPosition == SideSymbol.Left)
         {
             LeftOffsetTextField -= widthTextField;
         }

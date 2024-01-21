@@ -4,8 +4,8 @@ using System.Windows.Input;
 using System.ComponentModel;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using EdblockViewModel.Symbols.Abstraction;
 using EdblockViewModel.ComponentsVM;
+using EdblockViewModel.AbstractionsVM;
 
 namespace EdblockViewModel.Symbols.ScaleRectangles;
 
@@ -105,14 +105,22 @@ public class ScaleRectangle : INotifyPropertyChanged
         if (_canvasSymbolsVM.ScalePartBlockSymbol == null)
         {
             _canvasSymbolsVM.Cursor = _cursorScaling;
-            SetStateDisplay(_blockSymbolVM.ScaleRectangles, true);
+
+            if (_blockSymbolVM is IHasScaleRectangles blockSymbolHasScaleRectangles)
+            {
+                SetStateDisplay(blockSymbolHasScaleRectangles.ScaleRectangles, true);
+            }
         }
     }
 
     private void HideScaleRectangles()
     {
         _canvasSymbolsVM.Cursor = Cursors.Arrow;
-        SetStateDisplay(_blockSymbolVM.ScaleRectangles, false);
+
+        if (_blockSymbolVM is IHasScaleRectangles blockSymbolHasScaleRectangles)
+        {
+            SetStateDisplay(blockSymbolHasScaleRectangles.ScaleRectangles, false);
+        }
     }
 
     private void SaveScaleRectangle()

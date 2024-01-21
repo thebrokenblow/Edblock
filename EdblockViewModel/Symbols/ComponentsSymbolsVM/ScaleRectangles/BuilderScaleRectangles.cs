@@ -1,25 +1,25 @@
 ﻿using System.Windows.Input;
 using System.Collections.Generic;
 using EdblockViewModel.ComponentsVM;
-using EdblockViewModel.Symbols.Abstraction;
 using EdblockModel.Symbols.ScaleRectangles;
+using EdblockViewModel.AbstractionsVM;
 
 namespace EdblockViewModel.Symbols.ScaleRectangles;
 
 public class BuilderScaleRectangles
 {
-    private readonly BlockSymbolVM _blockSymbolModel;
+    private readonly BlockSymbolVM _blockSymbolVM;
     private readonly CanvasSymbolsVM _canvasSymbolsVM;
     private readonly ScaleAllSymbolVM _scaleAllSymbolVM;
     private readonly CoordinateScaleRectangle coordinateScaleRectangle;
     private readonly List<ScaleRectangle> scaleRectangles;
 
-    public BuilderScaleRectangles(CanvasSymbolsVM canvasSymbolsVM, ScaleAllSymbolVM scaleAllSymbolVM, BlockSymbolVM blockSymbolModel)
+    public BuilderScaleRectangles(CanvasSymbolsVM canvasSymbolsVM, ScaleAllSymbolVM scaleAllSymbolVM, BlockSymbolVM blockSymbolVM)
     {
-        _blockSymbolModel = blockSymbolModel;
+        _blockSymbolVM = blockSymbolVM;
         _canvasSymbolsVM = canvasSymbolsVM;
         _scaleAllSymbolVM = scaleAllSymbolVM;
-        coordinateScaleRectangle = new CoordinateScaleRectangle(_blockSymbolModel);
+        coordinateScaleRectangle = new CoordinateScaleRectangle(blockSymbolVM);
         scaleRectangles = new();
     }
 
@@ -97,7 +97,7 @@ public class BuilderScaleRectangles
         var middleTopRectangle = new ScaleRectangle(
                  _canvasSymbolsVM,
                  _scaleAllSymbolVM,
-                 _blockSymbolModel,
+                 _blockSymbolVM,
                  Cursors.SizeNS,
                  null,
                  ScaleBlockSymbol.GetHeigthTopPart,
@@ -111,7 +111,7 @@ public class BuilderScaleRectangles
         var rightTopRectangle = new ScaleRectangle(
                  _canvasSymbolsVM,
                  _scaleAllSymbolVM,
-                _blockSymbolModel,
+                _blockSymbolVM,
                 Cursors.SizeNESW,
                 ScaleBlockSymbol.GetWidthRigthPart,
                 ScaleBlockSymbol.GetHeigthTopPart,
@@ -125,7 +125,7 @@ public class BuilderScaleRectangles
         var rightMiddleRectangle = new ScaleRectangle(
                 _canvasSymbolsVM,
                 _scaleAllSymbolVM,
-                _blockSymbolModel,
+                _blockSymbolVM,
                 Cursors.SizeWE,
                 ScaleBlockSymbol.GetWidthRigthPart,
                 null,
@@ -139,7 +139,7 @@ public class BuilderScaleRectangles
         var rightBottomRectangle = new ScaleRectangle(
                 _canvasSymbolsVM,
                 _scaleAllSymbolVM,
-                _blockSymbolModel,
+                _blockSymbolVM,
                 Cursors.SizeNWSE,
                 ScaleBlockSymbol.GetWidthRigthPart,
                 ScaleBlockSymbol.GetHeigthBottomPart,
@@ -153,7 +153,7 @@ public class BuilderScaleRectangles
         var middleBottomRectangle = new ScaleRectangle(
                 _canvasSymbolsVM,
                 _scaleAllSymbolVM,
-                _blockSymbolModel,
+                _blockSymbolVM,
                 Cursors.SizeNS,
                 null,
                 ScaleBlockSymbol.GetHeigthBottomPart,
@@ -167,7 +167,7 @@ public class BuilderScaleRectangles
         var leftBottomRectangle = new ScaleRectangle(
                 _canvasSymbolsVM, 
                 _scaleAllSymbolVM,
-                _blockSymbolModel,
+                _blockSymbolVM,
                 Cursors.SizeNESW,
                 ScaleBlockSymbol.GetWidthLeftPart,
                 ScaleBlockSymbol.GetHeigthBottomPart,
@@ -181,7 +181,7 @@ public class BuilderScaleRectangles
         var leftMiddleRectangle = new ScaleRectangle(
                 _canvasSymbolsVM,
                 _scaleAllSymbolVM,
-                _blockSymbolModel,
+                _blockSymbolVM,
                 Cursors.SizeWE,
                 ScaleBlockSymbol.GetWidthLeftPart,
                 null,
@@ -195,7 +195,7 @@ public class BuilderScaleRectangles
         var leftTopRectangle = new ScaleRectangle(
                 _canvasSymbolsVM,
                 _scaleAllSymbolVM,
-                _blockSymbolModel,
+                _blockSymbolVM,
                 Cursors.SizeNWSE,
                 ScaleBlockSymbol.GetWidthLeftPart,
                 ScaleBlockSymbol.GetHeigthTopPart,

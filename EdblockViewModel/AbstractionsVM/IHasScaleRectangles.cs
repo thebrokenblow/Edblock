@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using EdblockViewModel.Symbols.ScaleRectangles;
 
-namespace EdblockViewModel.Symbols.Abstraction;
+namespace EdblockViewModel.AbstractionsVM;
 
-public interface IHaveScaleRectangles
+public interface IHasScaleRectangles
 {
     public List<ScaleRectangle> ScaleRectangles { get; init; }
+    public BuilderScaleRectangles BuilderScaleRectangles { get; init; }
 }

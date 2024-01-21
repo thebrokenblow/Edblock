@@ -1,12 +1,12 @@
-﻿using EdblockModel.SymbolsModel.Enum;
+﻿using EdblockModel.Enum;
 
 namespace EdblockModel.SymbolsModel.LineSymbolsModel;
 
 public class CompletedLine
 {
     private readonly List<LineSymbolModel> linesSymbolModel;
-    private readonly PositionConnectionPoint outgoingPosition;
-    private readonly PositionConnectionPoint incomingPosition;
+    private readonly SideSymbol outgoingPosition;
+    private readonly SideSymbol incomingPosition;
     private readonly (double x, double y) _finalCoordinate;
 
     public CompletedLine(DrawnLineSymbolModel drawnLineSymbolModel, (double x, double y) finalCoordinate)
@@ -35,9 +35,9 @@ public class CompletedLine
 
     public void CompletedEvenLine(LineSymbolModel lastLine)
     {
-        if (outgoingPosition == PositionConnectionPoint.Top || outgoingPosition == PositionConnectionPoint.Bottom)
+        if (outgoingPosition == SideSymbol.Top || outgoingPosition == SideSymbol.Bottom)
         {
-            if (incomingPosition == PositionConnectionPoint.Top || incomingPosition == PositionConnectionPoint.Bottom)
+            if (incomingPosition == SideSymbol.Top || incomingPosition == SideSymbol.Bottom)
             {
                 FinishDrawingLinesVerticalSides(lastLine);
             }
@@ -49,7 +49,7 @@ public class CompletedLine
         }
         else
         {
-            if (incomingPosition == PositionConnectionPoint.Top || incomingPosition == PositionConnectionPoint.Bottom)
+            if (incomingPosition == SideSymbol.Top || incomingPosition == SideSymbol.Bottom)
             {
                 var coordinatePenultimateLine = (_finalCoordinate.x, lastLine.Y1);
                 FinishLinesNotParallelSides(lastLine, coordinatePenultimateLine);
@@ -63,9 +63,9 @@ public class CompletedLine
 
     public void CompletedOddLine(LineSymbolModel lastLine)
     {
-        if (outgoingPosition == PositionConnectionPoint.Top || outgoingPosition == PositionConnectionPoint.Bottom)
+        if (outgoingPosition == SideSymbol.Top || outgoingPosition == SideSymbol.Bottom)
         {
-            if (incomingPosition == PositionConnectionPoint.Top || incomingPosition == PositionConnectionPoint.Bottom)
+            if (incomingPosition == SideSymbol.Top || incomingPosition == SideSymbol.Bottom)
             {
                 var coordinatePenultimateLine = (_finalCoordinate.x, lastLine.Y2);
                 FinishLinesParallelSides(lastLine, coordinatePenultimateLine);
@@ -77,7 +77,7 @@ public class CompletedLine
         }
         else
         {
-            if (incomingPosition == PositionConnectionPoint.Top || incomingPosition == PositionConnectionPoint.Bottom)
+            if (incomingPosition == SideSymbol.Top || incomingPosition == SideSymbol.Bottom)
             {
                 FinishDrawingLinesVerticalSides(lastLine);
             }

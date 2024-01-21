@@ -1,10 +1,22 @@
-﻿using EdblockModel.SymbolsModel;
-using EdblockViewModel.Symbols.Abstraction;
+﻿using System;
+using System.Collections.Generic;
+using EdblockModel.SymbolsModel;
+using EdblockModel.AbstractionsModel;
+using EdblockViewModel.AbstractionsVM;
+using EdblockViewModel.Symbols.ScaleRectangles;
+using EdblockViewModel.Symbols.ConnectionPoints;
+using EdblockViewModel.Symbols.ComponentsSymbolsVM;
 
 namespace EdblockViewModel.Symbols;
 
-public class LinkSymbolVM : BlockSymbolVM
+public class LinkSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnectionPoint, IHasScaleRectangles
 {
+    public TextFieldSymbolVM TextFieldSymbolVM { get; init; }
+    public List<ScaleRectangle> ScaleRectangles { get; init; }
+    public List<ConnectionPointVM> ConnectionPoints { get; init; }
+    public BuilderScaleRectangles BuilderScaleRectangles { get; init; }
+    public FactoryConnectionPoints FactoryConnectionPoints { get; init; }
+
     private const int defaultWidth = 60;
     private const int defaultHeigth = 60;
 
@@ -13,16 +25,28 @@ public class LinkSymbolVM : BlockSymbolVM
 
     public LinkSymbolVM(EdblockVM edblockVM) : base(edblockVM)
     {
-        ScaleRectangles = _builderScaleRectangles
-                .AddRightTopRectangle()
-                .AddRightBottomRectangle()
-                .AddLeftBottomRectangle()
-                .AddLeftTopRectangle()
-                .Build();
+        TextFieldSymbolVM = new(edblockVM.CanvasSymbolsVM, this);
 
-        TextFieldVM.Text = defaultText;
+        FactoryConnectionPoints = new(CanvasSymbolsVM, edblockVM.PopupBoxMenuVM.CheckBoxLineGostVM, this);
+        ConnectionPoints = FactoryConnectionPoints.CreateConnectionPoints();
+
+        BuilderScaleRectangles = new(CanvasSymbolsVM, edblockVM.PopupBoxMenuVM.ScaleAllSymbolVM, this);
+
+        ScaleRectangles =
+            BuilderScaleRectangles
+                        .AddMiddleTopRectangle()
+                        .AddRightTopRectangle()
+                        .AddRightMiddleRectangle()
+                        .AddRightBottomRectangle()
+                        .AddMiddleBottomRectangle()
+                        .AddLeftBottomRectangle()
+                        .AddLeftMiddleRectangle()
+                        .AddLeftTopRectangle()
+                        .Build();
 
         Color = defaultColor;
+
+        TextFieldSymbolVM.Text = defaultText;
 
         Width = defaultWidth;
         Height = defaultHeigth;
@@ -46,17 +70,17 @@ public class LinkSymbolVM : BlockSymbolVM
         Height = size;
         Width = size;
 
-        var textFieldWidth = BlockSymbolModel.GetTextFieldWidth();
-        var textFieldLeftOffset = BlockSymbolModel.GetTextFieldLeftOffset();
+        var textFieldWidth = GetTextFieldWidth();
+        var textFieldLeftOffset = GetTextFieldLeftOffset();
 
-        var textFieldHeight = BlockSymbolModel.GetTextFieldHeight();
-        var textFieldTopOffset = BlockSymbolModel.GetTextFieldTopOffset();
+        var textFieldHeight = GetTextFieldHeight();
+        var textFieldTopOffset = GetTextFieldTopOffset();
 
-        TextFieldVM.Width = textFieldWidth;
-        TextFieldVM.Height = textFieldHeight;
+        TextFieldSymbolVM.Width = textFieldWidth;
+        TextFieldSymbolVM.Height = textFieldHeight;
 
-        TextFieldVM.LeftOffset = textFieldLeftOffset;
-        TextFieldVM.TopOffset = textFieldTopOffset;
+        TextFieldSymbolVM.LeftOffset = textFieldLeftOffset;
+        TextFieldSymbolVM.TopOffset = textFieldTopOffset;
 
         ChangeCoordinateAuxiliaryElements();
     }
@@ -73,5 +97,25 @@ public class LinkSymbolVM : BlockSymbolVM
         };
 
         return linkSymbolModel;
+    }
+
+    public double GetTextFieldWidth()
+    {
+        return Math.Sqrt(Height * Height / 2);
+    }
+
+    public double GetTextFieldHeight()
+    {
+        return Math.Sqrt(Height * Height / 2);
+    }
+
+    public double GetTextFieldLeftOffset()
+    {
+        return (Height - Math.Sqrt(Height * Height / 2)) / 2;
+    }
+
+    public double GetTextFieldTopOffset()
+    {
+        return (Height - Math.Sqrt(Height * Height / 2)) / 2;
     }
 }

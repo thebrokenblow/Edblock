@@ -1,8 +1,8 @@
 ﻿using System.Windows.Media;
 
-namespace EdblockViewModel.Symbols.Abstraction;
+namespace EdblockViewModel.AbstractionsVM;
 
-public interface IHavePolygon
+public interface IHasPolygon
 {
     public PointCollection? Points { get; set; }
     public void SetCoordinatePolygonPoints();

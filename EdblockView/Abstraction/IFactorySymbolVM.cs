@@ -1,5 +1,5 @@
 ﻿using EdblockViewModel;
-using EdblockViewModel.Symbols.Abstraction;
+using EdblockViewModel.AbstractionsVM;
 
 namespace EdblockView.Abstraction;
 

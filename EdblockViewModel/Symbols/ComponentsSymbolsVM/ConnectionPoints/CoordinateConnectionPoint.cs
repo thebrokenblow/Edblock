@@ -1,13 +1,15 @@
-﻿using EdblockViewModel.Symbols.Abstraction;
+﻿using EdblockViewModel.AbstractionsVM;
 
 namespace EdblockViewModel.Symbols.ConnectionPoints;
 
 internal class CoordinateConnectionPoint
 {
-    private const int offsetPosition = 10;
     private const int width = 8;
     private const int height = 8;
+    private const int offsetPosition = 10;
+
     private readonly BlockSymbolVM _blockSymbolVM;
+    
     public CoordinateConnectionPoint(BlockSymbolVM blockSymbolVM) =>
         _blockSymbolVM = blockSymbolVM;
 

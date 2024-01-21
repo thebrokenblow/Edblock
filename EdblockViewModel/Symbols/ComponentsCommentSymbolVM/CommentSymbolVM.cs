@@ -1,12 +1,14 @@
 ﻿using System.Collections.Generic;
+using EdblockModel.AbstractionsModel;
 using EdblockModel.SymbolsModel;
+using EdblockViewModel.AbstractionsVM;
 using EdblockViewModel.ComponentsVM;
-using EdblockViewModel.Symbols.Abstraction;
+using EdblockViewModel.Symbols.ComponentsSymbolsVM;
 using EdblockViewModel.Symbols.ConnectionPoints;
 
-namespace EdblockViewModel.Symbols.CommentSymbolVMComponents;
+namespace EdblockViewModel.Symbols.ComponentsCommentSymbolVM;
 
-public class CommentSymbolVM : BlockSymbolVM
+public class CommentSymbolVM : BlockSymbolVM, IHasTextFieldVM
 {
     public List<CommentLine> HorizontalLines { get; set; }
     public CommentLine VerticalBaseline { get; set; }
@@ -63,6 +65,8 @@ public class CommentSymbolVM : BlockSymbolVM
         }
     }
 
+    public TextFieldSymbolVM TextFieldSymbolVM { get; init; }
+
     private const string defaultText = "Комментарий";
 
     private int xCoordinate = 0;
@@ -72,8 +76,10 @@ public class CommentSymbolVM : BlockSymbolVM
     private const int spaceBetweenHorizontalLines = 10;
     public CommentSymbolVM(EdblockVM edblockVM) : base(edblockVM)
     {
-        TextFieldVM.Text = defaultText;
-        TextFieldVM.Height = defaultHeight;
+        TextFieldSymbolVM = new(edblockVM.CanvasSymbolsVM, this);
+
+        TextFieldSymbolVM.Text = defaultText;
+        TextFieldSymbolVM.Height = defaultHeight;
         canvasSymbolsVM = edblockVM.CanvasSymbolsVM;
 
         HorizontalLines = new();
@@ -119,38 +125,15 @@ public class CommentSymbolVM : BlockSymbolVM
             Y2 = defaultHeight,
         };
 
-        TextFieldVM.LeftOffset = xCoordinate;
+        TextFieldSymbolVM.LeftOffset = xCoordinate;
 
         Width = xCoordinate + (int)widthTextField;
         Height = defaultHeight;
     }
 
-    public override void SetCoordinate((int x, int y) currentCoordinate, (int x, int y) previousCoordinate)
-    {
-        var currentDrawnLineSymbol = CanvasSymbolsVM.СurrentDrawnLineSymbol;
-
-        if (currentDrawnLineSymbol == null) //Условие истино, если не рисуется линия
-        {
-            CanvasSymbolsVM.RemoveSelectDrawnLine();
-
-            XCoordinate = currentCoordinate.x + 10;
-            YCoordinate = currentCoordinate.y - Height / 2;
-        }
-    }
-
     public override BlockSymbolModel CreateBlockSymbolModel()
     {
-        return new ActionSymbolModel();
-    }
-
-    public override void SetHeight(double height)
-    {
-
-    }
-
-    public override void SetWidth(double width)
-    {
-
+        return new CommentSymbolModel();
     }
 
     public void SetCoordinateBlockSymbol()
@@ -171,5 +154,33 @@ public class CommentSymbolVM : BlockSymbolVM
         IsSelected = false;
         canvasSymbolsVM.SelectedBlockSymbols.Remove(this);
         canvasSymbolsVM.MovableBlockSymbol = null;
+    }
+
+    public double GetTextFieldWidth()
+    {
+        return 0;
+    }
+
+    public double GetTextFieldHeight()
+    {
+        return 0;
+    }
+
+    public double GetTextFieldLeftOffset()
+    {
+        return 0;
+    }
+
+    public double GetTextFieldTopOffset()
+    {
+        return 0;
+    }
+
+    public override void SetWidth(double width)
+    {
+    }
+
+    public override void SetHeight(double height)
+    {
     }
 }

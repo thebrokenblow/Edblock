@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using EdblockViewModel.Symbols.Abstraction;
+using EdblockViewModel.AbstractionsVM;
 
 namespace EdblockViewModel.ComponentsVM;
 
@@ -33,7 +33,10 @@ public class FontSizeControlVM
 
     public void SetFontSize(BlockSymbolVM selectedBlockSymbol)
     {
-        selectedBlockSymbol.TextFieldVM.FontSize = fontSize;
+        if (selectedBlockSymbol is IHasTextFieldVM symbolHasTextFieldVM)
+        {
+            symbolHasTextFieldVM.TextFieldSymbolVM.FontSize = fontSize;
+        }
     }
 
     private void SetFontSize()

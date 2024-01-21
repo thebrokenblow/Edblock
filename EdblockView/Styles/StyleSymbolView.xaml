@@ -48,19 +48,19 @@
     </Style>
 
     <Style x:Key="TextFieldView" TargetType="TextBox">
-        <Setter Property="Text" Value="{Binding TextFieldVM.Text, UpdateSourceTrigger=PropertyChanged}" />
-        <Setter Property="FontFamily" Value="{Binding TextFieldVM.FontFamily}" />
-        <Setter Property="FontSize" Value="{Binding TextFieldVM.FontSize}" />
-        <Setter Property="TextAlignment" Value="{Binding TextFieldVM.TextAlignment}" />
-        <Setter Property="FontWeight" Value="{Binding TextFieldVM.FontWeight}"/>
-        <Setter Property="FontStyle" Value="{Binding TextFieldVM.FontStyle}"/>
-        <Setter Property="TextDecorations" Value="{Binding TextFieldVM.TextDecorations}"/>
-        <Setter Property="Width" Value="{Binding TextFieldVM.Width}" />
-        <Setter Property="Height" Value="{Binding TextFieldVM.Height}" />
-        <Setter Property="Cursor" Value="{Binding TextFieldVM.Cursor}" />
-        <Setter Property="Focusable" Value="{Binding TextFieldVM.Focusable}" />
-        <Setter Property="Canvas.Left" Value="{Binding TextFieldVM.LeftOffset}" />
-        <Setter Property="Canvas.Top" Value="{Binding TextFieldVM.TopOffset}" />
+        <Setter Property="Text" Value="{Binding TextFieldSymbolVM.Text, UpdateSourceTrigger=PropertyChanged}" />
+        <Setter Property="FontFamily" Value="{Binding TextFieldSymbolVM.FontFamily}" />
+        <Setter Property="FontSize" Value="{Binding TextFieldSymbolVM.FontSize}" />
+        <Setter Property="TextAlignment" Value="{Binding TextFieldSymbolVM.TextAlignment}" />
+        <Setter Property="FontWeight" Value="{Binding TextFieldSymbolVM.FontWeight}"/>
+        <Setter Property="FontStyle" Value="{Binding TextFieldSymbolVM.FontStyle}"/>
+        <Setter Property="TextDecorations" Value="{Binding TextFieldSymbolVM.TextDecorations}"/>
+        <Setter Property="Width" Value="{Binding TextFieldSymbolVM.Width}" />
+        <Setter Property="Height" Value="{Binding TextFieldSymbolVM.Height}" />
+        <Setter Property="Cursor" Value="{Binding TextFieldSymbolVM.Cursor}" />
+        <Setter Property="Focusable" Value="{Binding TextFieldSymbolVM.Focusable}" />
+        <Setter Property="Canvas.Left" Value="{Binding TextFieldSymbolVM.LeftOffset}" />
+        <Setter Property="Canvas.Top" Value="{Binding TextFieldSymbolVM.TopOffset}" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Foreground" Value="White" />
         <Setter Property="TextWrapping" Value="Wrap" />

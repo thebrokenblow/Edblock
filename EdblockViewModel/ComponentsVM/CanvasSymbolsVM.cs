@@ -2,14 +2,13 @@
 using Prism.Commands;
 using System.Windows.Input;
 using System.ComponentModel;
-using EdblockViewModel.Symbols;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Runtime.CompilerServices;
 using EdblockViewModel.Symbols.LineSymbols;
-using EdblockViewModel.Symbols.Abstraction;
 using EdblockViewModel.Symbols.ScaleRectangles;
-using EdblockViewModel.Symbols.CommentSymbolVMComponents;
+using EdblockViewModel.Symbols.ComponentsSymbolsVM;
+using EdblockViewModel.AbstractionsVM;
 
 namespace EdblockViewModel.ComponentsVM;
 
@@ -92,21 +91,6 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
 
         foreach (var symbol in SelectedBlockSymbols)
         {
-            if (symbol is IHaveCommentVM iHaveCommentVM1)
-            {
-                if (iHaveCommentVM1.CommentSymbolVM is not null)
-                {
-                    SymbolsVM.Remove(iHaveCommentVM1.CommentSymbolVM);
-                }
-            }
-
-            if (symbol is CommentSymbolVM commentSymbolVM)
-            {
-                if (commentSymbolVM.BlockSymbolVM is IHaveCommentVM iHaveCommentVM)
-                {
-                    iHaveCommentVM.CommentSymbolVM = null;
-                }
-            }
             if (BlockByDrawnLines.ContainsKey(symbol))
             {
                 var lines = BlockByDrawnLines[symbol];
@@ -228,15 +212,12 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
 
         RedrawDrawnLines = null;
 
-        if (MovableBlockSymbol is not CommentSymbolVM)
-        {
-            MovableBlockSymbol = null;
-        }
-        
+        MovableBlockSymbol = null;
+
         MovableRectangleLine = null;
         ScalePartBlockSymbol = null;
 
-        TextFieldVM.ChangeFocus(SymbolsVM);
+        TextFieldSymbolVM.ChangeFocus(SymbolsVM);
     }
 
     private void ClearSelectedBlockSymbols()

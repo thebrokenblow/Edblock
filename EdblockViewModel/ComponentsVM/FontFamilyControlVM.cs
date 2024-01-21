@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using EdblockViewModel.Symbols.Abstraction;
+using EdblockViewModel.AbstractionsVM;
 
 namespace EdblockViewModel.ComponentsVM;
 
@@ -31,7 +31,10 @@ public class FontFamilyControlVM
 
     public void SetFontFamily(BlockSymbolVM selectedBlockSymbol) 
     {
-        selectedBlockSymbol.TextFieldVM.FontFamily = fontFamily;
+        if (selectedBlockSymbol is IHasTextFieldVM symbolHasTextFieldVM)
+        {
+            symbolHasTextFieldVM.TextFieldSymbolVM.FontFamily = fontFamily;
+        }
     }
 
     private void SetFontFamily()

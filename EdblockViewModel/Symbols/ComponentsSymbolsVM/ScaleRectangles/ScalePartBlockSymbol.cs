@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Windows.Input;
 using EdblockViewModel.ComponentsVM;
-using EdblockViewModel.Symbols.Abstraction;
 using System.Collections.ObjectModel;
+using EdblockViewModel.AbstractionsVM;
 
 namespace EdblockViewModel.Symbols.ScaleRectangles;
 
@@ -66,7 +66,11 @@ public class ScalePartBlockSymbol
             ScalingBlockSymbol.SetWidth(width);
         }
 
-        ScalingBlockSymbol.TextFieldVM.Cursor = _cursorWhenScaling;
+        if (ScalingBlockSymbol is IHasTextFieldVM blockSymbolHasTextField)
+        {
+            blockSymbolHasTextField.TextFieldSymbolVM.Cursor = _cursorWhenScaling;
+        }
+
         canvasSymbolsVM.Cursor = _cursorWhenScaling;
     }
 
@@ -96,7 +100,11 @@ public class ScalePartBlockSymbol
             ScalingBlockSymbol.SetHeight(height);
         }
 
-        ScalingBlockSymbol.TextFieldVM.Cursor = _cursorWhenScaling;
+        if (ScalingBlockSymbol is IHasTextFieldVM blockSymbolHasTextField)
+        {
+            blockSymbolHasTextField.TextFieldSymbolVM.Cursor = _cursorWhenScaling;
+        }
+
         canvasSymbolsVM.Cursor = _cursorWhenScaling;
     }
 }

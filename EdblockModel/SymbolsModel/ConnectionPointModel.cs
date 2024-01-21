@@ -1,19 +1,19 @@
-﻿using EdblockModel.SymbolsModel.Enum;
+﻿using EdblockModel.Enum;
 
 namespace EdblockModel.Symbols;
 
-public class ConnectionPointModel
+public class ConnectionPointModel //TODO: Этого класса здесь быть не должно, эта логика должна быть в модели
 {
-    private readonly PositionConnectionPoint _position;
+    private readonly SideSymbol _position;
 
-    public ConnectionPointModel(PositionConnectionPoint position)
+    public ConnectionPointModel(SideSymbol position)
     {
         _position = position;
     }
 
     public bool IsLineOutputAccordingGOST()
     {
-        if (_position == PositionConnectionPoint.Bottom || _position == PositionConnectionPoint.Right)
+        if (_position == SideSymbol.Bottom || _position == SideSymbol.Right)
         {
             return true;
         }
@@ -23,7 +23,7 @@ public class ConnectionPointModel
 
     public bool IsLineIncomingAccordingGOST()
     {
-        if (_position == PositionConnectionPoint.Top || _position == PositionConnectionPoint.Left)
+        if (_position == SideSymbol.Top || _position == SideSymbol.Left)
         {
             return true;
         }

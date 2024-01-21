@@ -1,24 +1,22 @@
-﻿namespace EdblockModel.SymbolsModel;
+﻿using EdblockModel.AbstractionsModel;
 
-public class ConditionSymbolModel : BlockSymbolModel
+namespace EdblockModel.SymbolsModel;
+
+public class ConditionSymbolModel : BlockSymbolModel, IHasSize, IHasTextFieldSymbolModel
 {
-    public override double GetTextFieldWidth()
-    {
-        return Width / 2;
-    }
+    public double Width { get; set; }
+    public double Height { get; set; }
 
-    public override double GetTextFieldHeight()
-    {
-        return Height / 2;
-    }
+    private const double minWidth = 40;
+    public double MinWidth => minWidth;
 
-    public override double GetTextFieldLeftOffset()
-    {
-        return Width / 4;
-    }
+    private const double minHeight = 20;
+    public double MinHeight => minHeight;
 
-    public override double GetTextFieldTopOffset()
+    public TextFieldSymbolModel TextFieldSymbolModel { get; init; }
+
+    public ConditionSymbolModel()
     {
-        return Height / 4;
+        TextFieldSymbolModel = new();
     }
 }

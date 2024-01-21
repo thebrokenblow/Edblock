@@ -1,7 +1,7 @@
 ﻿using Prism.Commands;
 using EdblockViewModel.Symbols;
 using EdblockViewModel.ComponentsVM;
-using EdblockViewModel.Symbols.Abstraction;
+using EdblockViewModel.AbstractionsVM;
 
 namespace EdblockViewModel;
 

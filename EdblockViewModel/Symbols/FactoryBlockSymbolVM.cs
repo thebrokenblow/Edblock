@@ -2,7 +2,7 @@
 using SerializationEdblock;
 using System.Collections.Generic;
 using EdblockViewModel.ComponentsVM;
-using EdblockViewModel.Symbols.Abstraction;
+using EdblockViewModel.AbstractionsVM;
 
 namespace EdblockViewModel.Symbols;
 
@@ -55,19 +55,19 @@ internal class FactoryBlockSymbolVM
         blockSymbolVM.XCoordinate = blockSymbolSerializable.XCoordinate;
         blockSymbolVM.YCoordinate = blockSymbolSerializable.YCoordinate;
 
-        var textField = blockSymbolVM.TextFieldVM;
-        var textFieldSerializable = blockSymbolSerializable.TextFieldSerializable;
+        //var textField = blockSymbolVM.TextFieldVM;
+        //var textFieldSerializable = blockSymbolSerializable.TextFieldSerializable;
 
-        if (textFieldSerializable != null)
-        {
-            textField.Text = textFieldSerializable.Text;
-            textField.FontFamily = textFieldSerializable.FontFamily;
-            textField.FontSize = textFieldSerializable.FontSize;
-            textField.TextAlignment = textFieldSerializable.TextAlignment;
-            textField.FontWeight = textFieldSerializable.FontWeight;
-            textField.FontStyle = textFieldSerializable.FontStyle;
-            textField.TextDecorations = textFieldSerializable.TextDecorations;
-        }
+        //if (textFieldSerializable != null)
+        //{
+        //    textField.Text = textFieldSerializable.Text;
+        //    textField.FontFamily = textFieldSerializable.FontFamily;
+        //    textField.FontSize = textFieldSerializable.FontSize;
+        //    textField.TextAlignment = textFieldSerializable.TextAlignment;
+        //    textField.FontWeight = textFieldSerializable.FontWeight;
+        //    textField.FontStyle = textFieldSerializable.FontStyle;
+        //    textField.TextDecorations = textFieldSerializable.TextDecorations;
+        //}
 
         return blockSymbolVM;
     }

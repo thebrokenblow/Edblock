@@ -1,4 +1,4 @@
-﻿using EdblockModel.SymbolsModel.Enum;
+﻿using EdblockModel.Enum;
 using EdblockModel.SymbolsModel.LineSymbolsModel.DecoratorLineSymbolsModel;
 
 namespace EdblockModel.SymbolsModel.LineSymbolsModel.RedrawnLineSymbolsModel;
@@ -8,8 +8,8 @@ internal class RedrawnLineParallelSides
     private readonly RedrawnLine _redrawLine;
     private readonly List<CoordinateLine> _decoratedCoordinatesLines;
     private readonly BuilderCoordinateDecorator _builderCoordinateDecorator;
-    private readonly PositionConnectionPoint _positionOutgoing;
-    private readonly PositionConnectionPoint _positionIncoming;
+    private readonly SideSymbol _positionOutgoing;
+    private readonly SideSymbol _positionIncoming;
     private readonly int _baseLineOffset;
     private const int linesSamePositions = 1;
     private const int linesOneDifferentPositions = 3;
@@ -32,20 +32,20 @@ internal class RedrawnLineParallelSides
     {
         var builderCoordinateDecorator = new BuilderCoordinateDecorator();
 
-        if (_positionOutgoing == PositionConnectionPoint.Right && _positionIncoming == PositionConnectionPoint.Left ||
-            _positionOutgoing == PositionConnectionPoint.Left && _positionIncoming == PositionConnectionPoint.Right)
+        if (_positionOutgoing == SideSymbol.Right && _positionIncoming == SideSymbol.Left ||
+            _positionOutgoing == SideSymbol.Left && _positionIncoming == SideSymbol.Right)
         {
             builderCoordinateDecorator = builderCoordinateDecorator.SetSwap();
 
             return builderCoordinateDecorator;
         }
-        else if (_positionOutgoing == PositionConnectionPoint.Bottom && _positionIncoming == PositionConnectionPoint.Bottom)
+        else if (_positionOutgoing == SideSymbol.Bottom && _positionIncoming == SideSymbol.Bottom)
         {
             builderCoordinateDecorator = builderCoordinateDecorator.SetInversionYCoordinate();
 
             return builderCoordinateDecorator;
         }
-        else if (_positionOutgoing == PositionConnectionPoint.Left && _positionIncoming == PositionConnectionPoint.Left)
+        else if (_positionOutgoing == SideSymbol.Left && _positionIncoming == SideSymbol.Left)
         {
             builderCoordinateDecorator = builderCoordinateDecorator.SetInversionXCoordinate();
 
@@ -63,10 +63,10 @@ internal class RedrawnLineParallelSides
         (coordinateSymbolOutgoing, coordinateSymbolIncoming) =
                 RedrawnLine.SetBuilderCoordinate(coordinateSymbolOutgoing, coordinateSymbolIncoming, _builderCoordinateDecorator);
 
-        if (_positionOutgoing == PositionConnectionPoint.Bottom && _positionIncoming == PositionConnectionPoint.Top ||
-            _positionOutgoing == PositionConnectionPoint.Top && _positionIncoming == PositionConnectionPoint.Bottom ||
-            _positionOutgoing == PositionConnectionPoint.Right && _positionIncoming == PositionConnectionPoint.Left ||
-            _positionOutgoing == PositionConnectionPoint.Left && _positionIncoming == PositionConnectionPoint.Right)
+        if (_positionOutgoing == SideSymbol.Bottom && _positionIncoming == SideSymbol.Top ||
+            _positionOutgoing == SideSymbol.Top && _positionIncoming == SideSymbol.Bottom ||
+            _positionOutgoing == SideSymbol.Right && _positionIncoming == SideSymbol.Left ||
+            _positionOutgoing == SideSymbol.Left && _positionIncoming == SideSymbol.Right)
         {
             ChooseWayRedrawDifferentSides(coordinateSymbolOutgoing, coordinateSymbolIncoming, borderCoordinateOutgoingSymbol, borderCoordinateIncomingSymbol);
         }
@@ -77,8 +77,8 @@ internal class RedrawnLineParallelSides
             (var firstCoordinateLineIncrement, var secondCoordinateLineIncrement) =
                 GetVerticalCoordinateLineIncrement(coordinateSymbolOutgoing, coordinateSymbolIncoming);
 
-            if (_positionOutgoing == PositionConnectionPoint.Left && _positionIncoming == PositionConnectionPoint.Left ||
-                _positionOutgoing == PositionConnectionPoint.Right && _positionIncoming == PositionConnectionPoint.Right)
+            if (_positionOutgoing == SideSymbol.Left && _positionIncoming == SideSymbol.Left ||
+                _positionOutgoing == SideSymbol.Right && _positionIncoming == SideSymbol.Right)
             {
                 (firstCoordinateLineIncrement, secondCoordinateLineIncrement) =
                     GetHorizontalCoordinateLineIncrement(coordinateSymbolOutgoing, coordinateSymbolIncoming);

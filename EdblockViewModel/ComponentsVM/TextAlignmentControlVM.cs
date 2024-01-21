@@ -1,7 +1,7 @@
 ﻿using System.Windows.Controls;
 using MaterialDesignThemes.Wpf;
 using System.Collections.Generic;
-using EdblockViewModel.Symbols.Abstraction;
+using EdblockViewModel.AbstractionsVM;
 
 namespace EdblockViewModel.ComponentsVM;
 
@@ -54,7 +54,10 @@ public class TextAlignmentControlVM
 
     public void SetFormatAlignment(BlockSymbolVM selectedBlockSymbol)
     {
-        selectedBlockSymbol.TextFieldVM.TextAlignment = textAlignment;
+        if (selectedBlockSymbol is IHasTextFieldVM symbolHasTextFieldVM)
+        {
+            symbolHasTextFieldVM.TextFieldSymbolVM.TextAlignment = textAlignment;
+        }
     }
 
     private void SetFormatAlignment()

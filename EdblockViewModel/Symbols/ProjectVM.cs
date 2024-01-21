@@ -1,9 +1,9 @@
 ﻿using SerializationEdblock;
 using System.Collections.Generic;
 using EdblockViewModel.ComponentsVM;
-using EdblockViewModel.Symbols.Abstraction;
 using EdblockViewModel.Symbols.LineSymbols;
 using EdblockModel.SymbolsModel.LineSymbolsModel;
+using EdblockViewModel.AbstractionsVM;
 
 namespace EdblockViewModel.Symbols;
 
@@ -35,39 +35,39 @@ internal class ProjectVM
 
     public void Save(string filePath)
     {
-        var blocksSymbolSerializable = new List<BlockSymbolSerializable>();
-        var drawnLinesSymbolSerializable = new List<DrawnLineSymbolSerializable>();
+        //var blocksSymbolSerializable = new List<BlockSymbolSerializable>();
+        //var drawnLinesSymbolSerializable = new List<DrawnLineSymbolSerializable>();
 
-        var SymbolsVM = _canvasSymbolsVM.SymbolsVM;
+        //var SymbolsVM = _canvasSymbolsVM.SymbolsVM;
 
-        foreach (var symbol in SymbolsVM)
-        {
-            if (symbol is BlockSymbolVM blockSymbolVM)
-            {
-                var blockSymbolModel = blockSymbolVM.BlockSymbolModel;
-                var blockSymbolSerializable = FactorySymbolSerializable.CreateBlockSymbolSerializable(blockSymbolModel);
+        //foreach (var symbol in SymbolsVM)
+        //{
+        //    if (symbol is BlockSymbolVM blockSymbolVM)
+        //    {
+        //        var blockSymbolModel = blockSymbolVM.BlockSymbolModel;
+        //        var blockSymbolSerializable = FactorySymbolSerializable.CreateBlockSymbolSerializable(blockSymbolModel);
 
-                blocksSymbolSerializable.Add(blockSymbolSerializable);
-            }
+        //        blocksSymbolSerializable.Add(blockSymbolSerializable);
+        //    }
 
-            if (symbol is DrawnLineSymbolVM drawnLineSymbolVM)
-            {
-                var drawnLineSymbolModel = drawnLineSymbolVM.DrawnLineSymbolModel;
-                var drawnLineSymbolSerializable = FactorySymbolSerializable.CreateDrawnLineSymbolSerializable(drawnLineSymbolModel);
+        //    if (symbol is DrawnLineSymbolVM drawnLineSymbolVM)
+        //    {
+        //        var drawnLineSymbolModel = drawnLineSymbolVM.DrawnLineSymbolModel;
+        //        var drawnLineSymbolSerializable = FactorySymbolSerializable.CreateDrawnLineSymbolSerializable(drawnLineSymbolModel);
 
-                drawnLinesSymbolSerializable.Add(drawnLineSymbolSerializable);
-            }
-        }
+        //        drawnLinesSymbolSerializable.Add(drawnLineSymbolSerializable);
+        //    }
+        //}
 
-        var projectSerializable = new ProjectSerializable()
-        {
-            IsScaleAllSymbolVM = _scaleAllSymbolVM.IsScaleAllSymbolVM,
-            IsDrawingLinesAccordingGOST = _checkBoxLineGostVM.IsDrawingLinesAccordingGOST,
-            BlocksSymbolSerializable = blocksSymbolSerializable,
-            DrawnLinesSymbolSerializable = drawnLinesSymbolSerializable,
-        };
+        //var projectSerializable = new ProjectSerializable()
+        //{
+        //    IsScaleAllSymbolVM = _scaleAllSymbolVM.IsScaleAllSymbolVM,
+        //    IsDrawingLinesAccordingGOST = _checkBoxLineGostVM.IsDrawingLinesAccordingGOST,
+        //    BlocksSymbolSerializable = blocksSymbolSerializable,
+        //    DrawnLinesSymbolSerializable = drawnLinesSymbolSerializable,
+        //};
 
-        _serializationProject.Write(projectSerializable, filePath);
+        //_serializationProject.Write(projectSerializable, filePath);
     }
 
     public async void Load(string filePath)
@@ -122,89 +122,89 @@ internal class ProjectVM
 
     private void LoadDrawnLinesSymbol(ProjectSerializable projectSerializable)
     {
-        _canvasSymbolsVM.BlockByDrawnLines.Clear();
+        //_canvasSymbolsVM.BlockByDrawnLines.Clear();
 
-        var drawnLinesSymbolSerializable = projectSerializable.DrawnLinesSymbolSerializable;
+        //var drawnLinesSymbolSerializable = projectSerializable.DrawnLinesSymbolSerializable;
 
-        foreach (var drawnLineSymbolSerializable in drawnLinesSymbolSerializable)
-        {
-            var linesSymbolModel = LoadLinesSymbol(drawnLineSymbolSerializable);
+        //foreach (var drawnLineSymbolSerializable in drawnLinesSymbolSerializable)
+        //{
+        //    var linesSymbolModel = LoadLinesSymbol(drawnLineSymbolSerializable);
 
-            var symbolOutgoingLine = drawnLineSymbolSerializable.SymbolOutgoingLine;
-            var symbolIncomingLine = drawnLineSymbolSerializable.SymbolIncomingLine;
+        //    var symbolOutgoingLine = drawnLineSymbolSerializable.SymbolOutgoingLine;
+        //    var symbolIncomingLine = drawnLineSymbolSerializable.SymbolIncomingLine;
 
-            if (symbolOutgoingLine == null)
-            {
-                continue;
-            }
+        //    if (symbolOutgoingLine == null)
+        //    {
+        //        continue;
+        //    }
 
-            if (symbolOutgoingLine.Id == null)
-            {
-                continue;
-            }
+        //    if (symbolOutgoingLine.Id == null)
+        //    {
+        //        continue;
+        //    }
 
-            if (symbolIncomingLine == null)
-            {
-                continue;
-            }
+        //    if (symbolIncomingLine == null)
+        //    {
+        //        continue;
+        //    }
 
-            if (symbolIncomingLine.Id == null)
-            {
-                continue;
-            }
+        //    if (symbolIncomingLine.Id == null)
+        //    {
+        //        continue;
+        //    }
 
-            var symbolOutgoingLineVM = _blockSymbolsVMById[symbolOutgoingLine.Id];
-            var symbolIncomingLineVM = _blockSymbolsVMById[symbolIncomingLine.Id];
+        //    var symbolOutgoingLineVM = _blockSymbolsVMById[symbolOutgoingLine.Id];
+        //    var symbolIncomingLineVM = _blockSymbolsVMById[symbolIncomingLine.Id];
 
-            var outgoingConnectionPoint = symbolOutgoingLineVM.GetConnectionPoint(drawnLineSymbolSerializable.OutgoingPosition);
-            var incomingConnectionPoint = symbolIncomingLineVM.GetConnectionPoint(drawnLineSymbolSerializable.IncomingPosition);
+        //    var outgoingConnectionPoint = symbolOutgoingLineVM.GetConnectionPoint(drawnLineSymbolSerializable.OutgoingPosition);
+        //    var incomingConnectionPoint = symbolIncomingLineVM.GetConnectionPoint(drawnLineSymbolSerializable.IncomingPosition);
 
-            outgoingConnectionPoint.IsHasConnectingLine = true;
-            incomingConnectionPoint.IsHasConnectingLine = true;
+        //    outgoingConnectionPoint.IsHasConnectingLine = true;
+        //    incomingConnectionPoint.IsHasConnectingLine = true;
 
-            var drawnLineSymbolVM = new DrawnLineSymbolVM(_canvasSymbolsVM, linesSymbolModel)
-            {
-                SymbolOutgoingLine = symbolOutgoingLineVM,
-                SymbolIncomingLine = symbolIncomingLineVM,
-                OutgoingConnectionPoint = outgoingConnectionPoint,
-                IncomingConnectionPoint = incomingConnectionPoint,
-                OutgoingPosition = outgoingConnectionPoint.Position,
-                IncomingPosition = incomingConnectionPoint.Position,
-                Text = drawnLineSymbolSerializable.Text,
-                Color = drawnLineSymbolSerializable.Color,
-            };
+        //    var drawnLineSymbolVM = new DrawnLineSymbolVM(_canvasSymbolsVM, linesSymbolModel)
+        //    {
+        //        SymbolOutgoingLine = symbolOutgoingLineVM,
+        //        SymbolIncomingLine = symbolIncomingLineVM,
+        //        OutgoingConnectionPoint = outgoingConnectionPoint,
+        //        IncomingConnectionPoint = incomingConnectionPoint,
+        //        OutgoingPosition = outgoingConnectionPoint.Position,
+        //        IncomingPosition = incomingConnectionPoint.Position,
+        //        Text = drawnLineSymbolSerializable.Text,
+        //        Color = drawnLineSymbolSerializable.Color,
+        //    };
 
-            drawnLineSymbolVM.RedrawAllLines();
+        //    drawnLineSymbolVM.RedrawAllLines();
             
-            if (!_canvasSymbolsVM.BlockByDrawnLines.ContainsKey(symbolOutgoingLineVM))
-            {
-                var drawnsLineSymbolVM = new List<DrawnLineSymbolVM>
-                {
-                    drawnLineSymbolVM   
-                };
+        //    if (!_canvasSymbolsVM.BlockByDrawnLines.ContainsKey(symbolOutgoingLineVM))
+        //    {
+        //        var drawnsLineSymbolVM = new List<DrawnLineSymbolVM>
+        //        {
+        //            drawnLineSymbolVM   
+        //        };
 
-                _canvasSymbolsVM.BlockByDrawnLines.Add(symbolOutgoingLineVM, drawnsLineSymbolVM);
-            }
-            else
-            {
-                _canvasSymbolsVM.BlockByDrawnLines[symbolOutgoingLineVM].Add(drawnLineSymbolVM);
-            }
+        //        _canvasSymbolsVM.BlockByDrawnLines.Add(symbolOutgoingLineVM, drawnsLineSymbolVM);
+        //    }
+        //    else
+        //    {
+        //        _canvasSymbolsVM.BlockByDrawnLines[symbolOutgoingLineVM].Add(drawnLineSymbolVM);
+        //    }
 
-            if (!_canvasSymbolsVM.BlockByDrawnLines.ContainsKey(symbolIncomingLineVM))
-            {
-                var drawnsLineSymbolVM = new List<DrawnLineSymbolVM>
-                {
-                    drawnLineSymbolVM
-                };
+        //    if (!_canvasSymbolsVM.BlockByDrawnLines.ContainsKey(symbolIncomingLineVM))
+        //    {
+        //        var drawnsLineSymbolVM = new List<DrawnLineSymbolVM>
+        //        {
+        //            drawnLineSymbolVM
+        //        };
 
-                _canvasSymbolsVM.BlockByDrawnLines.Add(symbolIncomingLineVM, drawnsLineSymbolVM);
-            }
-            else
-            {
-                _canvasSymbolsVM.BlockByDrawnLines[symbolIncomingLineVM].Add(drawnLineSymbolVM);
-            }
+        //        _canvasSymbolsVM.BlockByDrawnLines.Add(symbolIncomingLineVM, drawnsLineSymbolVM);
+        //    }
+        //    else
+        //    {
+        //        _canvasSymbolsVM.BlockByDrawnLines[symbolIncomingLineVM].Add(drawnLineSymbolVM);
+        //    }
 
-            _canvasSymbolsVM.SymbolsVM.Add(drawnLineSymbolVM);
-        }
+        //    _canvasSymbolsVM.SymbolsVM.Add(drawnLineSymbolVM);
+        //}
     }
 }

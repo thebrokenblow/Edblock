@@ -3,8 +3,8 @@ using System.Windows.Media;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using EdblockModel.SymbolsModel.Enum;
 using EdblockModel.SymbolsModel.LineSymbolsModel;
+using EdblockModel.Enum;
 
 namespace EdblockViewModel.Symbols.LineSymbols;
 
@@ -32,13 +32,13 @@ public class ArrowSymbol : INotifyPropertyChanged
         }
     }
 
-    public void ChangeOrientationArrow((double x, double y) startCoordinateLine, (double x, double y) currentCoordinateLine, PositionConnectionPoint positionConnectionPoint)
+    public void ChangeOrientationArrow((double x, double y) startCoordinateLine, (double x, double y) currentCoordinateLine, SideSymbol positionConnectionPoint)
     {
         var coordinatesArrow = ArrowSymbolModel.GetCoordinateArrow(startCoordinateLine, currentCoordinateLine, positionConnectionPoint);
         SetCoodinate(coordinatesArrow);
     }
 
-    public void ChangeOrientationArrow((double x, double y) finalCoordinate, PositionConnectionPoint positionConnectionPoint)
+    public void ChangeOrientationArrow((double x, double y) finalCoordinate, SideSymbol positionConnectionPoint)
     {
         var coordinatesArrow = ArrowSymbolModel.GetCoordinateArrow(finalCoordinate, positionConnectionPoint);
         SetCoodinate(coordinatesArrow);

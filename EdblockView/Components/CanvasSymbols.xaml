@@ -8,9 +8,9 @@
              xmlns:componentsVM="clr-namespace:EdblockViewModel.ComponentsVM;assembly=EdblockViewModel"
              xmlns:blockSymbolView="clr-namespace:EdblockView.SymbolsView"
              xmlns:blockSymbolsVM="clr-namespace:EdblockViewModel.Symbols;assembly=EdblockViewModel"   
+             xmlns:componentsCommentSymbolVM="clr-namespace:EdblockViewModel.Symbols.ComponentsCommentSymbolVM;assembly=EdblockViewModel"   
              xmlns:lineSymbolView="clr-namespace:EdblockView.SymbolsView.LineSymbolView"
              xmlns:lineSymbolsVM="clr-namespace:EdblockViewModel.Symbols.LineSymbols;assembly=EdblockViewModel"
-             xmlns:commentSymbolVM="clr-namespace:EdblockViewModel.Symbols.CommentSymbolVMComponents;assembly=EdblockViewModel"   
              d:DataContext="{d:DesignInstance Type=componentsVM:CanvasSymbolsVM}"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
@@ -44,7 +44,7 @@
                 <DataTemplate DataType="{x:Type blockSymbolsVM:LinkSymbolVM}">
                     <blockSymbolView:LinkSymbolView MouseDown="SelectBlockSymbol"/>
                 </DataTemplate>
-                <DataTemplate DataType="{x:Type commentSymbolVM:CommentSymbolVM}">
+                <DataTemplate DataType="{x:Type componentsCommentSymbolVM:CommentSymbolVM}">
                     <blockSymbolView:CommentSymbolView MouseDown="SelectBlockSymbol"/>
                 </DataTemplate>
                 <DataTemplate DataType="{x:Type lineSymbolsVM:DrawnLineSymbolVM}">

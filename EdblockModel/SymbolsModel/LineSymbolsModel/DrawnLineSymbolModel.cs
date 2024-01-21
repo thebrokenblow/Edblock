@@ -1,4 +1,5 @@
-﻿using EdblockModel.SymbolsModel.Enum;
+﻿using EdblockModel.Enum;
+using EdblockModel.AbstractionsModel;
 
 namespace EdblockModel.SymbolsModel.LineSymbolsModel;
 
@@ -8,8 +9,8 @@ public class DrawnLineSymbolModel
     public BlockSymbolModel? SymbolOutgoingLine { get; set; }
     public BlockSymbolModel? SymbolIncomingLine { get; set; }
     public CoordinateLineModel CoordinateLineModel { get; set; }
-    public PositionConnectionPoint OutgoingPosition { get; set; }
-    public PositionConnectionPoint IncomingPosition { get; set; }
+    public SideSymbol OutgoingPosition { get; set; }
+    public SideSymbol IncomingPosition { get; set; }
     public string? Color { get; set; }
     public string? Text { get; set; }
 
@@ -23,7 +24,7 @@ public class DrawnLineSymbolModel
 
     public (double x, double y) RoundingCoordinatesLines((double x, double y) startCoordinate, (double x, double y) currentCoordinate)
     {
-        if (OutgoingPosition == PositionConnectionPoint.Left || OutgoingPosition == PositionConnectionPoint.Right)
+        if (OutgoingPosition == SideSymbol.Left || OutgoingPosition == SideSymbol.Right)
         {
             currentCoordinate = HorizontalRounding(startCoordinate, currentCoordinate);
         }
@@ -37,7 +38,7 @@ public class DrawnLineSymbolModel
 
     public void ChangeCoordinateLine((double x, double y) currentCoordinte)
     {
-        if (OutgoingPosition == PositionConnectionPoint.Bottom || OutgoingPosition == PositionConnectionPoint.Top)
+        if (OutgoingPosition == SideSymbol.Bottom || OutgoingPosition == SideSymbol.Top)
         {
             CoordinateLineModel.ChangeCoordinatesVerticalLines(currentCoordinte);
         }
@@ -54,7 +55,8 @@ public class DrawnLineSymbolModel
             return;
         }
 
-        var (x, y) = SymbolOutgoingLine.GetBorderCoordinate(OutgoingPosition);
+        //TODO: получение границы символы
+        var (x, y) = (0, 0);//SymbolOutgoingLine.GetBorderCoordinate(OutgoingPosition);
 
         var firstLineSymbolModel = new LineSymbolModel
         {

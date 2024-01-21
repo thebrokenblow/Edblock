@@ -8,10 +8,9 @@ using System.Collections.Generic;
 using EdblockViewModel.ComponentsVM;
 using System.Runtime.CompilerServices;
 using EdblockViewModel.Symbols.LineSymbols;
-using EdblockViewModel.Symbols.Abstraction;
-using EdblockModel.SymbolsModel.Enum;
 using EdblockModel.SymbolsModel.LineSymbolsModel;
-using EdblockViewModel.Symbols.CommentSymbolVMComponents;
+using EdblockViewModel.AbstractionsVM;
+using EdblockModel.Enum;
 
 namespace EdblockViewModel.Symbols.ConnectionPoints;
 
@@ -75,8 +74,10 @@ public class ConnectionPointVM : INotifyPropertyChanged
     public DelegateCommand EnterCursor { get; init; }
     public DelegateCommand LeaveCursor { get; init; }
     public BlockSymbolVM BlockSymbolVM { get; init; }
+    public IHasConnectionPoint BlockSymbolHasConnectionPoint { get; init; }
+
     public Func<(double, double)> GetCoordinate { get; init; }
-    public PositionConnectionPoint Position { get; init; }
+    public SideSymbol Position { get; init; }
 
     public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -89,7 +90,7 @@ public class ConnectionPointVM : INotifyPropertyChanged
         BlockSymbolVM blockSymbolVM, 
         CheckBoxLineGostVM checkBoxLineGostVM,
         Func<(double, double)> getCoordinate, 
-        PositionConnectionPoint position)
+        SideSymbol position)
     {
         _canvasSymbolsVM = canvasSymbolsVM;
         _checkBoxLineGostVM = checkBoxLineGostVM;
@@ -98,8 +99,10 @@ public class ConnectionPointVM : INotifyPropertyChanged
         GetCoordinate = getCoordinate;
 
         Position = position;
+
         BlockSymbolVM = blockSymbolVM;
-        
+        BlockSymbolHasConnectionPoint = (IHasConnectionPoint)blockSymbolVM;
+
         EnterCursor = new(ShowConnectionPoints);
         LeaveCursor = new(HideConnectionPoints);
 
@@ -123,25 +126,13 @@ public class ConnectionPointVM : INotifyPropertyChanged
 
     public void Click()
     {
-        if (_canvasSymbolsVM.MovableBlockSymbol is CommentSymbolVM commentSymbolVM)
+        if (_canvasSymbolsVM.СurrentDrawnLineSymbol == null)
         {
-            if (BlockSymbolVM is IHaveCommentVM iHaveCommentVM)
-            {
-                IsHasConnectingLine = true;
-                iHaveCommentVM.CommentSymbolVM = commentSymbolVM;
-                iHaveCommentVM.CommentSymbolVM.ConnectionPointVM = this;
-            }
+            StarDrawLine();
         }
         else
         {
-            if (_canvasSymbolsVM.СurrentDrawnLineSymbol == null)
-            {
-                StarDrawLine();
-            }
-            else
-            {
-                FinishDrawLine();
-            }
+            FinishDrawLine();
         }
     }
 
@@ -162,7 +153,7 @@ public class ConnectionPointVM : INotifyPropertyChanged
     {
         if (_canvasSymbolsVM.ScalePartBlockSymbol == null) //Код выполняется, если символ не масштабируется
         {
-            var connectionPoints = BlockSymbolVM.ConnectionPoints;
+            var connectionPoints = BlockSymbolHasConnectionPoint.ConnectionPoints;
 
             SetDisplayConnectionPoints(connectionPoints, isEnterConnectionPoint);
 
@@ -231,8 +222,8 @@ public class ConnectionPointVM : INotifyPropertyChanged
 
         var drawnLineSymbolModel = drawnLineSymbolVM.DrawnLineSymbolModel;
         var symbolIncomingLineModel = drawnLineSymbolVM.SymbolIncomingLine.BlockSymbolModel;
-
-        var finalLineCoordinate = symbolIncomingLineModel.GetBorderCoordinate(Position);
+        //TODO: получение границы символа
+        var finalLineCoordinate = (0, 0);//symbolIncomingLineModel.GetBorderCoordinate(Position);
 
         var completedLineModel = new CompletedLine(drawnLineSymbolModel, finalLineCoordinate);
         var completeLinesSymbolModel = completedLineModel.GetCompleteLines();

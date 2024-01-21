@@ -1,34 +1,34 @@
 ﻿using System;
 using System.Collections.Generic;
+using EdblockModel.Enum;
 using EdblockViewModel.ComponentsVM;
-using EdblockModel.SymbolsModel.Enum;
-using EdblockViewModel.Symbols.Abstraction;
+using EdblockViewModel.AbstractionsVM;
 
 namespace EdblockViewModel.Symbols.ConnectionPoints;
 
-internal class FactoryConnectionPoints
+public class FactoryConnectionPoints
 {
-    private readonly BlockSymbolVM _blockSymbol;
+    private readonly BlockSymbolVM _blockSymbolCM;
     private readonly CanvasSymbolsVM _canvasSymbolsVM;
     private readonly CheckBoxLineGostVM _checkBoxLineGostVM;
     private readonly CoordinateConnectionPoint coordinateConnectionPoint;
-    private readonly Dictionary<PositionConnectionPoint, Func<PositionConnectionPoint, ConnectionPointVM>> instanceConnectionPointByPosition;
+    private readonly Dictionary<SideSymbol, Func<SideSymbol, ConnectionPointVM>> instanceConnectionPointByPosition;
 
-    public FactoryConnectionPoints(CanvasSymbolsVM canvasSymbolsVM, CheckBoxLineGostVM checkBoxLineGostVM, BlockSymbolVM blockSymbol)
+    public FactoryConnectionPoints(CanvasSymbolsVM canvasSymbolsVM, CheckBoxLineGostVM checkBoxLineGostVM, BlockSymbolVM blockSymbolVM)
     {
-        _blockSymbol = blockSymbol;
+        _blockSymbolCM = blockSymbolVM;
         _canvasSymbolsVM = canvasSymbolsVM;
         _checkBoxLineGostVM = checkBoxLineGostVM;
 
         instanceConnectionPointByPosition = new()
         {
-             { PositionConnectionPoint.Top, _ => CreateTop() },
-             { PositionConnectionPoint.Right, _ => CreateRight() },
-             { PositionConnectionPoint.Bottom, _ => CreateBottom() },
-             { PositionConnectionPoint.Left, _ => CreateLeft() },
+             { SideSymbol.Top, _ => CreateTop() },
+             { SideSymbol.Right, _ => CreateRight() },
+             { SideSymbol.Bottom, _ => CreateBottom() },
+             { SideSymbol.Left, _ => CreateLeft() },
         };
 
-        coordinateConnectionPoint = new(_blockSymbol);
+        coordinateConnectionPoint = new(blockSymbolVM);
     }
 
     public List<ConnectionPointVM> CreateConnectionPoints()
@@ -49,7 +49,7 @@ internal class FactoryConnectionPoints
         return connectionPoints;
     }
 
-    public ConnectionPointVM CreateConnectionPoint(PositionConnectionPoint positionConnectionPoint)
+    public ConnectionPointVM CreateConnectionPoint(SideSymbol positionConnectionPoint)
     {
         var connectionPoint = instanceConnectionPointByPosition[positionConnectionPoint].Invoke(positionConnectionPoint);
 
@@ -60,10 +60,10 @@ internal class FactoryConnectionPoints
     {
         var topConnectionPoint = new ConnectionPointVM(
             _canvasSymbolsVM,
-            _blockSymbol,
+            _blockSymbolCM,
             _checkBoxLineGostVM,
             coordinateConnectionPoint.GetCoordinateTop,
-            PositionConnectionPoint.Top);
+            SideSymbol.Top);
 
         return topConnectionPoint;
     }
@@ -72,10 +72,10 @@ internal class FactoryConnectionPoints
     {
         var rightConnectionPoint = new ConnectionPointVM(
             _canvasSymbolsVM,
-            _blockSymbol,
+            _blockSymbolCM,
             _checkBoxLineGostVM,
             coordinateConnectionPoint.GetCoordinateRight,
-            PositionConnectionPoint.Right);
+            SideSymbol.Right);
 
         return rightConnectionPoint;
     }
@@ -84,10 +84,10 @@ internal class FactoryConnectionPoints
     {
         var bottomConnectionPoint = new ConnectionPointVM(
             _canvasSymbolsVM,
-            _blockSymbol,
+            _blockSymbolCM,
             _checkBoxLineGostVM,
             coordinateConnectionPoint.GetCoordinateBottom,
-            PositionConnectionPoint.Bottom);
+            SideSymbol.Bottom);
 
         return bottomConnectionPoint;
     }
@@ -96,10 +96,10 @@ internal class FactoryConnectionPoints
     {
         var bottomConnectionPoint = new ConnectionPointVM(
             _canvasSymbolsVM,
-            _blockSymbol,
+            _blockSymbolCM,
             _checkBoxLineGostVM,
             coordinateConnectionPoint.GetCoordinateLeft,
-            PositionConnectionPoint.Left);
+            SideSymbol.Left);
 
         return bottomConnectionPoint;
     }

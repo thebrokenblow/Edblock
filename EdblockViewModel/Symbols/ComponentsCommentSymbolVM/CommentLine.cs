@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace EdblockViewModel.Symbols.CommentSymbolVMComponents;
+namespace EdblockViewModel.Symbols.ComponentsCommentSymbolVM;
 
 public class CommentLine : INotifyPropertyChanged
 {

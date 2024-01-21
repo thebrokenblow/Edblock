@@ -1,39 +1,38 @@
-﻿using EdblockModel.SymbolsModel;
-using EdblockViewModel.Symbols.Abstraction;
-using EdblockViewModel.Symbols.CommentSymbolVMComponents;
+﻿using System.Collections.Generic;
+using EdblockModel.SymbolsModel;
+using EdblockModel.AbstractionsModel;
+using EdblockViewModel.AbstractionsVM;
+using EdblockViewModel.Symbols.ScaleRectangles;
+using EdblockViewModel.Symbols.ConnectionPoints;
+using EdblockViewModel.Symbols.ComponentsSymbolsVM;
 
 namespace EdblockViewModel.Symbols;
 
-public class ActionSymbolVM : BlockSymbolVM, IHaveCommentVM
+public class ActionSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnectionPoint, IHasScaleRectangles
 {
+    public TextFieldSymbolVM TextFieldSymbolVM { get; init; }
+    public List<ScaleRectangle> ScaleRectangles { get; init; }
+    public List<ConnectionPointVM> ConnectionPoints { get; init; }
+    public BuilderScaleRectangles BuilderScaleRectangles { get; init; }
+    public FactoryConnectionPoints FactoryConnectionPoints { get; init; }
+
     private const int defaultWidth = 140;
     private const int defaultHeigth = 60;
 
     private const string defaultText = "Действие";
     private const string defaultColor = "#FF52C0AA";
 
-    private CommentSymbolVM? commentSymbolVM;
-    public CommentSymbolVM? CommentSymbolVM
-    {
-        get => commentSymbolVM;
-        set
-        {
-            if (value is null)
-            {
-                if (commentSymbolVM is not null)
-                {
-                    commentSymbolVM.ConnectionPointVM.IsHasConnectingLine = false;
-                }
-            }
-
-            commentSymbolVM = value;
-            commentSymbolVM?.AddСomment(this);
-        }
-    }
-
     public ActionSymbolVM(EdblockVM edblockVM) : base(edblockVM)
     {
-        ScaleRectangles = _builderScaleRectangles
+        TextFieldSymbolVM = new(edblockVM.CanvasSymbolsVM, this);
+
+        FactoryConnectionPoints = new(CanvasSymbolsVM, edblockVM.PopupBoxMenuVM.CheckBoxLineGostVM, this);
+        ConnectionPoints = FactoryConnectionPoints.CreateConnectionPoints();
+
+        BuilderScaleRectangles = new(CanvasSymbolsVM, edblockVM.PopupBoxMenuVM.ScaleAllSymbolVM, this);
+
+        ScaleRectangles =
+            BuilderScaleRectangles
                         .AddMiddleTopRectangle()
                         .AddRightTopRectangle()
                         .AddRightMiddleRectangle()
@@ -46,7 +45,7 @@ public class ActionSymbolVM : BlockSymbolVM, IHaveCommentVM
 
         Color = defaultColor;
 
-        TextFieldVM.Text = defaultText;
+        TextFieldSymbolVM.Text = defaultText;
 
         Width = defaultWidth;
         Height = defaultHeigth;
@@ -59,43 +58,59 @@ public class ActionSymbolVM : BlockSymbolVM, IHaveCommentVM
     {
         Width = width;
 
-        var textFieldWidth = BlockSymbolModel.GetTextFieldWidth();
-        var textFieldLeftOffset = BlockSymbolModel.GetTextFieldLeftOffset();
+        var textFieldWidth = GetTextFieldWidth();
+        var textFieldLeftOffset = GetTextFieldLeftOffset();
 
-        TextFieldVM.Width = textFieldWidth;
-        TextFieldVM.LeftOffset = textFieldLeftOffset;
+        TextFieldSymbolVM.Width = textFieldWidth;
+        TextFieldSymbolVM.LeftOffset = textFieldLeftOffset;
 
         ChangeCoordinateAuxiliaryElements();
-
-        CommentSymbolVM?.SetCoordinateBlockSymbol();
     }
 
     public override void SetHeight(double height)
     {
         Height = height;
 
-        var textFieldHeight = BlockSymbolModel.GetTextFieldHeight();
-        var textFieldTopOffset = BlockSymbolModel.GetTextFieldTopOffset();
+        var textFieldHeight = GetTextFieldHeight();
+        var textFieldTopOffset = GetTextFieldTopOffset();
 
-        TextFieldVM.Height = textFieldHeight;
-        TextFieldVM.TopOffset = textFieldTopOffset;
+        TextFieldSymbolVM.Height = textFieldHeight;
+        TextFieldSymbolVM.TopOffset = textFieldTopOffset;
 
         ChangeCoordinateAuxiliaryElements();
-
-        CommentSymbolVM?.SetCoordinateBlockSymbol();
     }
 
     public override BlockSymbolModel CreateBlockSymbolModel()
     {
-        var nameBlockSymbolVM = GetType().BaseType?.ToString();
+        var nameSymbol = GetType().BaseType?.ToString();
 
         var actionSymbolModel = new ActionSymbolModel
         {
             Id = Id,
-            NameSymbol = nameBlockSymbolVM,
+            NameSymbol = nameSymbol,
             Color = Color
         };
 
         return actionSymbolModel;
+    }
+
+    public double GetTextFieldWidth()
+    {
+        return Width;
+    }
+
+    public double GetTextFieldHeight()
+    {
+        return Height;
+    }
+
+    public double GetTextFieldLeftOffset()
+    {
+        return 0;
+    }
+
+    public double GetTextFieldTopOffset()
+    {
+        return 0;
     }
 }

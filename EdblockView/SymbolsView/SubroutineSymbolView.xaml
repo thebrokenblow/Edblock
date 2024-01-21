@@ -36,10 +36,10 @@
         <TextBox Style="{StaticResource TextFieldView}">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="MouseLeftButtonDown">
-                    <i:InvokeCommandAction Command="{Binding TextFieldVM.MouseLeftButtonDown}"/>
+                    <i:InvokeCommandAction Command="{Binding TextFieldSymbolVM.MouseLeftButtonDown}"/>
                 </i:EventTrigger>
                 <i:EventTrigger EventName="PreviewMouseDoubleClick">
-                    <i:InvokeCommandAction Command="{Binding TextFieldVM.MouseDoubleClick}"/>
+                    <i:InvokeCommandAction Command="{Binding TextFieldSymbolVM.MouseDoubleClick}"/>
                 </i:EventTrigger>
                 <i:EventTrigger EventName="MouseEnter">
                     <i:InvokeCommandAction Command="{Binding MouseEnter}"/>

@@ -1,15 +1,15 @@
-﻿using Prism.Commands;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using System.ComponentModel;
-using EdblockModel.SymbolsModel;
-using EdblockViewModel.ComponentsVM;
 using System.Collections.ObjectModel;
 using System.Runtime.CompilerServices;
-using EdblockViewModel.Symbols.Abstraction;
+using Prism.Commands;
+using EdblockModel.SymbolsModel;
+using EdblockViewModel.ComponentsVM;
+using EdblockViewModel.AbstractionsVM;
 
-namespace EdblockViewModel.Symbols;
+namespace EdblockViewModel.Symbols.ComponentsSymbolsVM;
 
-public class TextFieldVM : INotifyPropertyChanged
+public class TextFieldSymbolVM : INotifyPropertyChanged
 {
     private bool focusable = false;
     public bool Focusable
@@ -63,7 +63,7 @@ public class TextFieldVM : INotifyPropertyChanged
         set
         {
             text = value;
-            _blockSymbolModel.TextFieldModel.Text = text;
+            _textFieldModel.Text = text;
             OnPropertyChanged();
         }
     }
@@ -75,7 +75,7 @@ public class TextFieldVM : INotifyPropertyChanged
         set
         {
             fontFamily = value;
-            _blockSymbolModel.TextFieldModel.FontFamily = fontFamily;
+            _textFieldModel.FontFamily = fontFamily;
             OnPropertyChanged();
         }
     }
@@ -87,31 +87,31 @@ public class TextFieldVM : INotifyPropertyChanged
         set
         {
             fontSize = value;
-            _blockSymbolModel.TextFieldModel.FontSize = fontSize;
+            _textFieldModel.FontSize = fontSize;
             OnPropertyChanged();
         }
     }
 
     private string? textAlignment;
-    public string? TextAlignment 
+    public string? TextAlignment
     {
         get => textAlignment;
         set
         {
             textAlignment = value;
-            _blockSymbolModel.TextFieldModel.TextAlignment = textAlignment;
+            _textFieldModel.TextAlignment = textAlignment;
             OnPropertyChanged();
         }
     }
 
     private string? fontWeight;
-    public string? FontWeight 
+    public string? FontWeight
     {
         get => fontWeight;
         set
         {
             fontWeight = value;
-            _blockSymbolModel.TextFieldModel.FontWeight = fontWeight;
+            _textFieldModel.FontWeight = fontWeight;
             OnPropertyChanged();
         }
     }
@@ -123,7 +123,7 @@ public class TextFieldVM : INotifyPropertyChanged
         set
         {
             fontStyle = value;
-            _blockSymbolModel.TextFieldModel.FontStyle = fontStyle;
+            _textFieldModel.FontStyle = fontStyle;
             OnPropertyChanged();
         }
     }
@@ -135,7 +135,7 @@ public class TextFieldVM : INotifyPropertyChanged
         set
         {
             textDecorations = value;
-            _blockSymbolModel.TextFieldModel.TextDecorations = textDecorations;
+            _textFieldModel.TextDecorations = textDecorations;
             OnPropertyChanged();
         }
     }
@@ -162,25 +162,22 @@ public class TextFieldVM : INotifyPropertyChanged
         }
     }
 
-    public BlockSymbolVM BlockSymbolVM { get; init; }
-
     public DelegateCommand MouseDoubleClick { get; init; }
     public DelegateCommand MouseLeftButtonDown { get; init; }
 
     public event PropertyChangedEventHandler? PropertyChanged;
 
     private readonly CanvasSymbolsVM _canvasSymbolsVM;
-    private readonly BlockSymbolModel _blockSymbolModel;
+    private readonly BlockSymbolVM _blockSymbolVM;
+    private readonly TextFieldSymbolModel _textFieldModel;
 
-    public TextFieldVM(CanvasSymbolsVM canvasSymbolsVM, BlockSymbolVM blockSymbolVM)
+    public TextFieldSymbolVM(CanvasSymbolsVM canvasSymbolsVM, BlockSymbolVM blockSymbolVM)
     {
+        _textFieldModel = new();
+        _blockSymbolVM = blockSymbolVM;
         _canvasSymbolsVM = canvasSymbolsVM;
 
-        BlockSymbolVM = blockSymbolVM;
-        _blockSymbolModel = blockSymbolVM.BlockSymbolModel;
-
         Cursor = Cursors.SizeAll;
-
         MouseDoubleClick = new(AddFocus);
         MouseLeftButtonDown = new(SetMovableSymbol);
     }
@@ -189,9 +186,10 @@ public class TextFieldVM : INotifyPropertyChanged
     {
         foreach (var symbol in Symbols)
         {
-            if (symbol is BlockSymbolVM blockSymbol)
+            if (symbol is IHasTextFieldVM blockTextFieldVM)
             {
-                var textFieldSymbol = blockSymbol.TextFieldVM;
+                var textFieldSymbol = blockTextFieldVM.TextFieldSymbolVM;
+
                 if (textFieldSymbol.Focusable)
                 {
                     textFieldSymbol.Focusable = false;
@@ -216,7 +214,7 @@ public class TextFieldVM : INotifyPropertyChanged
     private void SetMovableSymbol()
     {
         Cursor = Cursors.SizeAll;
-       
-        BlockSymbolVM.SetMovableSymbol();
+
+        _blockSymbolVM.SetMovableSymbol();
     }
 }

@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using EdblockViewModel.Symbols.Abstraction;
+using EdblockViewModel.AbstractionsVM;
 
 namespace EdblockViewModel.ComponentsVM;
 
@@ -7,6 +7,7 @@ public class FormatTextControlVM
 {
     private const string fontWeightBold = "Bold";
     private const string fontWeightNormal = "Normal";
+
     private string? currentFontWeight;
 
     private bool isTextBold;
@@ -33,6 +34,7 @@ public class FormatTextControlVM
     
     private const string fontStyleItalic = "Italic";
     private const string fontStyleNormal = "Normal";
+
     private string? currentFontStyle;
 
     private bool isFormatItalic;
@@ -58,6 +60,7 @@ public class FormatTextControlVM
 
     private const string textDecorationsNone = "None";
     private const string textDecorationsUnderline = "Underline";
+
     private string? currentTextDecorations;
 
     private bool isFormatUnderline;
@@ -89,10 +92,12 @@ public class FormatTextControlVM
 
     public void SetFontText(BlockSymbolVM selectedBlockSymbol)
     {
-        selectedBlockSymbol.TextFieldVM.FontWeight = currentFontWeight;
-        selectedBlockSymbol.TextFieldVM.FontStyle = currentFontStyle;
-        selectedBlockSymbol.TextFieldVM.TextDecorations = currentTextDecorations;
-
+        if (selectedBlockSymbol is IHasTextFieldVM symbolHasTextFieldVM)
+        {
+            symbolHasTextFieldVM.TextFieldSymbolVM.FontWeight = currentFontWeight;
+            symbolHasTextFieldVM.TextFieldSymbolVM.FontStyle = currentFontStyle;
+            symbolHasTextFieldVM.TextFieldSymbolVM.TextDecorations = currentTextDecorations;
+        }
     }
 
     private void SetFontText()
