@@ -5,6 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors" 
              xmlns:edblockVM="clr-namespace:EdblockView;assembly=EdblockViewModel" 
+             xmlns:componentsCommentSymbolVM="clr-namespace:EdblockViewModel.Symbols.ComponentsCommentSymbolVM;assembly=EdblockViewModel"
+             d:DataContext="{d:DesignInstance Type=componentsCommentSymbolVM:CommentSymbolVM}"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Border Style="{StaticResource BorderSymbolView}">
@@ -64,10 +66,10 @@
                 </i:Interaction.Behaviors>
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="MouseLeftButtonDown">
-                        <i:InvokeCommandAction Command="{Binding TextFieldVM.MouseLeftButtonDown}"/>
+                        <i:InvokeCommandAction Command="{Binding TextFieldSymbolVM.MouseLeftButtonDown}"/>
                     </i:EventTrigger>
                     <i:EventTrigger EventName="PreviewMouseDoubleClick">
-                        <i:InvokeCommandAction Command="{Binding TextFieldVM.MouseDoubleClick}"/>
+                        <i:InvokeCommandAction Command="{Binding TextFieldSymbolVM.MouseDoubleClick}"/>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </TextBox>

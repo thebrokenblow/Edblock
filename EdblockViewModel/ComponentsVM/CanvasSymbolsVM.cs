@@ -217,6 +217,9 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
         MovableRectangleLine = null;
         ScalePartBlockSymbol = null;
 
+        previousXCoordinate = 0;
+        previousYCoordinate = 0;
+
         TextFieldSymbolVM.ChangeFocus(SymbolsVM);
     }
 

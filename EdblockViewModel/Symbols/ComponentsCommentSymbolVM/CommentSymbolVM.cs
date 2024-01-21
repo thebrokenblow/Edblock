@@ -1,23 +1,23 @@
 ﻿using System.Collections.Generic;
-using EdblockModel.AbstractionsModel;
 using EdblockModel.SymbolsModel;
-using EdblockViewModel.AbstractionsVM;
+using EdblockModel.AbstractionsModel;
 using EdblockViewModel.ComponentsVM;
-using EdblockViewModel.Symbols.ComponentsSymbolsVM;
+using EdblockViewModel.AbstractionsVM;
 using EdblockViewModel.Symbols.ConnectionPoints;
+using EdblockViewModel.Symbols.ComponentsSymbolsVM;
 
 namespace EdblockViewModel.Symbols.ComponentsCommentSymbolVM;
 
 public class CommentSymbolVM : BlockSymbolVM, IHasTextFieldVM
 {
-    public List<CommentLine> HorizontalLines { get; set; }
-    public CommentLine VerticalBaseline { get; set; }
-    public CommentLine UpperHorizontalBaseline { get; set; }
-    public CommentLine LowerHorizontalBaseline { get; set; }
+    public List<CommentLine> HorizontalLines { get; set; } = new();
+    public CommentLine VerticalBaseline { get; set; } = new();
+    public CommentLine UpperHorizontalBaseline { get; set; } = new();
+    public CommentLine LowerHorizontalBaseline { get; set; } = new();
     public BlockSymbolVM? BlockSymbolVM { get; set; }
     public ConnectionPointVM? ConnectionPointVM { get; set; }
 
-    private readonly CanvasSymbolsVM canvasSymbolsVM;
+    private readonly CanvasSymbolsVM _canvasSymbolsVM;
 
     private double heightTextField;
     public double HeightTextField
@@ -25,43 +25,20 @@ public class CommentSymbolVM : BlockSymbolVM, IHasTextFieldVM
         get => heightTextField;
         set
         {
-            value = value - value % 10 + 10;
+            heightTextField = GetTextFieldHeight(value);
 
-            if (value > defaultHeight)
-            {
-                heightTextField = value;
-            }
-            else
-            {
-                heightTextField = defaultHeight;
-            }
-
-            VerticalBaseline.Y1 = 0;
-            VerticalBaseline.Y2 = heightTextField;
-
-            YCoordinate -= (heightTextField - Height) / 2;
-
-            Height = heightTextField;
-
-            LowerHorizontalBaseline.Y1 = heightTextField;
-            LowerHorizontalBaseline.Y2 = heightTextField;
-
-            foreach (var horizontalLine in HorizontalLines)
-            {
-                horizontalLine.Y1 = VerticalBaseline.Y2 / 2;
-                horizontalLine.Y2 = VerticalBaseline.Y2 / 2;
-            }
+            SetHeight(heightTextField);
         }
     }
 
     private double widthTextField;
-    public double WidthTextField 
+    public double WidthTextField
     {
         get => widthTextField;
         set
         {
             widthTextField = value;
-            Width = xCoordinate + (int)widthTextField;
+            SetWidth(widthTextField);
         }
     }
 
@@ -69,118 +46,146 @@ public class CommentSymbolVM : BlockSymbolVM, IHasTextFieldVM
 
     private const string defaultText = "Комментарий";
 
-    private int xCoordinate = 0;
     private const int defaultHeight = 60;
     private const int countHorizontalLine = 3;
     private const int lengthHorizontalLine = 20;
     private const int spaceBetweenHorizontalLines = 10;
     public CommentSymbolVM(EdblockVM edblockVM) : base(edblockVM)
     {
-        TextFieldSymbolVM = new(edblockVM.CanvasSymbolsVM, this);
+        _canvasSymbolsVM = edblockVM.CanvasSymbolsVM;
 
-        TextFieldSymbolVM.Text = defaultText;
-        TextFieldSymbolVM.Height = defaultHeight;
-        canvasSymbolsVM = edblockVM.CanvasSymbolsVM;
+        HeightTextField = defaultHeight;
 
-        HorizontalLines = new();
+        InitHorizontalLine();
 
-        for (int i = 0; i < countHorizontalLine; i++)
+        double xCoordinateHorizontalLines = SetCoordinateHorizontalLines();
+
+        SetCoordinateVerticalBaseline(xCoordinateHorizontalLines);
+        SetCoordinateUpperHorizontalBaseline(xCoordinateHorizontalLines);
+        SetCoordinateLowerHorizontalBaseline(xCoordinateHorizontalLines);
+
+        TextFieldSymbolVM = new(_canvasSymbolsVM, this)
         {
-            var сommentHorizontalLine = new CommentLine()
-            {
-                X1 = xCoordinate,
-                Y1 = defaultHeight / 2,
-                X2 = xCoordinate + lengthHorizontalLine,
-                Y2 = defaultHeight / 2,
-            };
-
-            HorizontalLines.Add(сommentHorizontalLine);
-
-            xCoordinate += lengthHorizontalLine + spaceBetweenHorizontalLines;
-        }
-
-        xCoordinate -= spaceBetweenHorizontalLines;
-
-        VerticalBaseline = new()
-        {
-            X1 = xCoordinate,
-            Y1 = 0,
-            X2 = xCoordinate,
-            Y2 = defaultHeight,
+            Text = defaultText,
+            LeftOffset = UpperHorizontalBaseline.X1,
         };
 
-        UpperHorizontalBaseline = new()
-        {
-            X1 = xCoordinate,
-            Y1 = 0,
-            X2 = xCoordinate + lengthHorizontalLine,
-            Y2 = 0,
-        };
-
-        LowerHorizontalBaseline = new()
-        {
-            X1 = xCoordinate,
-            Y1 = defaultHeight,
-            X2 = xCoordinate + lengthHorizontalLine,
-            Y2 = defaultHeight,
-        };
-
-        TextFieldSymbolVM.LeftOffset = xCoordinate;
-
-        Width = xCoordinate + (int)widthTextField;
-        Height = defaultHeight;
+        Width = UpperHorizontalBaseline.X2 + widthTextField;
+        Height = heightTextField;
     }
 
     public override BlockSymbolModel CreateBlockSymbolModel()
     {
-        return new CommentSymbolModel();
+        var commentSymbolModel = new CommentSymbolModel();
+
+        return commentSymbolModel;
     }
 
-    public void SetCoordinateBlockSymbol()
+    private void InitHorizontalLine()
     {
-        if (BlockSymbolVM is not null)
+        for (int i = 0; i < countHorizontalLine; i++)
         {
-            XCoordinate = BlockSymbolVM.XCoordinate + BlockSymbolVM.Width;
-            YCoordinate = BlockSymbolVM.YCoordinate + BlockSymbolVM.Height / 2 - VerticalBaseline.Y2 / 2;
+            var сommentHorizontalLine = new CommentLine();
+            HorizontalLines.Add(сommentHorizontalLine);
         }
     }
 
-    public void AddСomment(BlockSymbolVM blockSymbolVM)
+    private double SetCoordinateHorizontalLines()
     {
-        BlockSymbolVM = blockSymbolVM;
+        double xCoordinateHorizontalLines = 0;
 
-        SetCoordinateBlockSymbol();
+        foreach (var horizontalLine in HorizontalLines)
+        {
+            horizontalLine.X1 = xCoordinateHorizontalLines;
+            horizontalLine.Y1 = heightTextField / 2;
+            horizontalLine.X2 = xCoordinateHorizontalLines + lengthHorizontalLine;
+            horizontalLine.Y2 = heightTextField / 2;
 
-        IsSelected = false;
-        canvasSymbolsVM.SelectedBlockSymbols.Remove(this);
-        canvasSymbolsVM.MovableBlockSymbol = null;
+            xCoordinateHorizontalLines = horizontalLine.X2 + spaceBetweenHorizontalLines;
+        }
+
+        xCoordinateHorizontalLines -= spaceBetweenHorizontalLines;
+
+        return xCoordinateHorizontalLines;
     }
 
-    public double GetTextFieldWidth()
+    private void SetCoordinateVerticalBaseline(double xCoordinateHorizontalLines)
     {
-        return 0;
+        SetWidthVerticalBaseline(xCoordinateHorizontalLines);
+        SetHeightVerticalBaseline();
     }
 
-    public double GetTextFieldHeight()
+    private void SetWidthVerticalBaseline(double xCoordinateHorizontalLines)
     {
-        return 0;
+        VerticalBaseline.X1 = xCoordinateHorizontalLines;
+        VerticalBaseline.X2 = xCoordinateHorizontalLines;
     }
 
-    public double GetTextFieldLeftOffset()
+    private void SetHeightVerticalBaseline()
     {
-        return 0;
+        VerticalBaseline.Y1 = 0;
+        VerticalBaseline.Y2 = heightTextField;
     }
 
-    public double GetTextFieldTopOffset()
+    private void SetCoordinateUpperHorizontalBaseline(double xCoordinateHorizontalLines)
     {
-        return 0;
+        SetWidthUpperHorizontalBaseline(xCoordinateHorizontalLines);
+        SetHeightUpperHorizontalBaseline();
+    }
+
+    private void SetWidthUpperHorizontalBaseline(double xCoordinateHorizontalLines)
+    {
+        UpperHorizontalBaseline.X1 = xCoordinateHorizontalLines;
+        UpperHorizontalBaseline.X2 = xCoordinateHorizontalLines + lengthHorizontalLine;
+    }
+
+    private void SetHeightUpperHorizontalBaseline()
+    {
+        UpperHorizontalBaseline.Y1 = 0;
+        UpperHorizontalBaseline.Y2 = 0;
+    }
+
+    private void SetCoordinateLowerHorizontalBaseline(double xCoordinateHorizontalLines)
+    {
+        SetWidthLowerHorizontalBaseline(xCoordinateHorizontalLines);
+        SetHeightLowerHorizontalBaseline();
+    }
+
+    private void SetWidthLowerHorizontalBaseline(double xCoordinateHorizontalLines)
+    {
+        LowerHorizontalBaseline.X1 = xCoordinateHorizontalLines;
+        LowerHorizontalBaseline.X2 = xCoordinateHorizontalLines + lengthHorizontalLine;
+    }
+
+    private void SetHeightLowerHorizontalBaseline()
+    {
+        LowerHorizontalBaseline.Y1 = heightTextField;
+        LowerHorizontalBaseline.Y2 = heightTextField;
     }
 
     public override void SetWidth(double width)
     {
+        Width = UpperHorizontalBaseline.X1 + width;
     }
 
     public override void SetHeight(double height)
     {
+        SetCoordinateHorizontalLines();
+        SetHeightVerticalBaseline();
+        SetHeightLowerHorizontalBaseline();
+
+        YCoordinate -= (height - Height) / 2;
+
+        Height = height;
+    }
+
+    private static double GetTextFieldHeight(double heightTextField)
+    {
+        if (heightTextField % 10 > 0)
+        {
+            heightTextField = heightTextField - heightTextField % 10 + 10;
+        }
+
+        return heightTextField;
     }
 }

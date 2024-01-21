@@ -140,7 +140,7 @@ public abstract class BlockSymbolVM : SymbolVM
 
         CanvasSymbolsVM.RemoveSelectDrawnLine();
 
-        if (XCoordinate == 0 && YCoordinate == 0)
+        if (XCoordinate == 0 || YCoordinate == 0) //TODO: здесь должна быть проверка на то что это новый симвоб
         {
             XCoordinate = currentCoordinate.x - Width / 2;
             YCoordinate = currentCoordinate.y - Height / 2;
