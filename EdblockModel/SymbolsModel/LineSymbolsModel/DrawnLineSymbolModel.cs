@@ -48,22 +48,19 @@ public class DrawnLineSymbolModel
         }
     }
 
-    public void AddFirstLine()
+    public void AddFirstLine((double x, double y) borderCoordinate)
     {
         if (SymbolOutgoingLine == null)
         {
             return;
         }
 
-        //TODO: получение границы символы
-        var (x, y) = (0, 0);//SymbolOutgoingLine.GetBorderCoordinate(OutgoingPosition);
-
         var firstLineSymbolModel = new LineSymbolModel
         {
-            X1 = x,
-            Y1 = y,
-            X2 = x,
-            Y2 = y,
+            X1 = borderCoordinate.x,
+            Y1 = borderCoordinate.y,
+            X2 = borderCoordinate.x,
+            Y2 = borderCoordinate.y,
         };
 
         LinesSymbolModel.Add(firstLineSymbolModel);

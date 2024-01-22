@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using EdblockModel.Enum;
 using EdblockModel.SymbolsModel;
 using EdblockModel.AbstractionsModel;
 using EdblockViewModel.AbstractionsVM;
@@ -14,7 +15,6 @@ public class ActionSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnectionPoin
     public List<ScaleRectangle> ScaleRectangles { get; init; }
     public List<ConnectionPointVM> ConnectionPoints { get; init; }
     public BuilderScaleRectangles BuilderScaleRectangles { get; init; }
-    public FactoryConnectionPoints FactoryConnectionPoints { get; init; }
 
     private const int defaultWidth = 140;
     private const int defaultHeigth = 60;
@@ -22,14 +22,55 @@ public class ActionSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnectionPoin
     private const string defaultText = "Действие";
     private const string defaultColor = "#FF52C0AA";
 
+    private const int offsetPositionConnectionPoint = 10;
     public ActionSymbolVM(EdblockVM edblockVM) : base(edblockVM)
     {
         TextFieldSymbolVM = new(edblockVM.CanvasSymbolsVM, this);
 
-        FactoryConnectionPoints = new(CanvasSymbolsVM, edblockVM.PopupBoxMenuVM.CheckBoxLineGostVM, this);
-        ConnectionPoints = FactoryConnectionPoints.CreateConnectionPoints();
+        var topConnectionPoint = new ConnectionPointVM(
+            edblockVM.CanvasSymbolsVM,
+            this,
+            edblockVM.PopupBoxMenuVM.CheckBoxLineGostVM,
+            GetCoordinateTopConnectionPoint,
+            GetTopBorderCoordinate,
+            SideSymbol.Top);
+
+        var leftConnectionPoint = new ConnectionPointVM(
+            edblockVM.CanvasSymbolsVM,
+            this,
+            edblockVM.PopupBoxMenuVM.CheckBoxLineGostVM,
+            GetCoordinateLeftConnectionPoint,
+            GetLeftBorderCoordinate,
+            SideSymbol.Left);
+
+        var rightConnectionPoint = new ConnectionPointVM(
+            edblockVM.CanvasSymbolsVM,
+            this,
+            edblockVM.PopupBoxMenuVM.CheckBoxLineGostVM,
+            GetCoordinateRightConnectionPoint,
+            GetRightBorderCoordinate,
+            SideSymbol.Right);
+
+        var bottomConnectionPoint = new ConnectionPointVM(
+            edblockVM.CanvasSymbolsVM,
+            this,
+            edblockVM.PopupBoxMenuVM.CheckBoxLineGostVM,
+            GetCoordinateBottomConnectionPoint,
+            GetBottomBorderCoordinate,
+            SideSymbol.Bottom);
+
+        ConnectionPoints = new()
+        {
+            topConnectionPoint,
+            leftConnectionPoint,
+            rightConnectionPoint,
+            bottomConnectionPoint
+        };
+
 
         BuilderScaleRectangles = new(CanvasSymbolsVM, edblockVM.PopupBoxMenuVM.ScaleAllSymbolVM, this);
+
+        BlockSymbolModel = CreateBlockSymbolModel();
 
         ScaleRectangles =
             BuilderScaleRectangles
@@ -104,13 +145,65 @@ public class ActionSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnectionPoin
         return Height;
     }
 
-    public double GetTextFieldLeftOffset()
+    public static double GetTextFieldLeftOffset()
     {
         return 0;
     }
 
-    public double GetTextFieldTopOffset()
+    public static double GetTextFieldTopOffset()
     {
         return 0;
+    }
+
+    public (double, double) GetCoordinateLeftConnectionPoint()
+    {
+        double pointsX = -offsetPositionConnectionPoint - 8;
+        double pointsY = Height / 2 - 8 / 2;
+
+        return (pointsX, pointsY);
+    }
+
+    public (double, double) GetCoordinateRightConnectionPoint()
+    {
+        double pointsX = Width + offsetPositionConnectionPoint;
+        double pointsY = Height / 2 - 8 / 2;
+
+        return (pointsX, pointsY);
+    }
+
+    public (double, double) GetCoordinateTopConnectionPoint()
+    {
+        double pointsX = Width / 2 - 8 / 2;
+        double pointsY = -offsetPositionConnectionPoint - 8;
+
+        return (pointsX, pointsY);
+    }
+
+    public (double, double) GetCoordinateBottomConnectionPoint()
+    {
+        double pointsX = Width / 2 - 8 / 2;
+        double pointsY = Height + offsetPositionConnectionPoint;
+
+        return (pointsX, pointsY);
+    }
+
+    public (double x, double y) GetTopBorderCoordinate()
+    {
+        return (XCoordinate + Width / 2, YCoordinate);
+    }
+
+    public (double x, double y) GetBottomBorderCoordinate()
+    {
+        return (XCoordinate + Width / 2, YCoordinate + Height);
+    }
+
+    public (double x, double y) GetLeftBorderCoordinate()
+    {
+        return (XCoordinate, YCoordinate + Height / 2);
+    }
+
+    public (double x, double y) GetRightBorderCoordinate()
+    {
+        return (XCoordinate + Width, YCoordinate + Height / 2);
     }
 }

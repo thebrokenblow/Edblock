@@ -167,9 +167,9 @@ public class DrawnLineSymbolVM : SymbolVM
         }
     }
 
-    public void AddFirstLine()
+    public void AddFirstLine((double x, double y) borderCoordinate)
     {
-        DrawnLineSymbolModel.AddFirstLine();
+        DrawnLineSymbolModel.AddFirstLine(borderCoordinate);
     }
 
     public void RedrawMovableRectanglesLine()
@@ -401,8 +401,16 @@ public class DrawnLineSymbolVM : SymbolVM
 
     internal void Redraw()
     {
+        if (OutgoingConnectionPoint is null || IncomingConnectionPoint is null)
+        {
+            return;
+        }
+
+        var borderCoordinateOutgoingSymbol = OutgoingConnectionPoint.GetCoordinateLineConnections();
+        var borderCoordinateIncomingSymbol = IncomingConnectionPoint.GetCoordinateLineConnections();
+
         var redrawLineSymbolVM = new RedrawnLine(DrawnLineSymbolModel);
-        var redrawnLinesModel = redrawLineSymbolVM.GetRedrawLine();
+        var redrawnLinesModel = redrawLineSymbolVM.GetRedrawLine(borderCoordinateOutgoingSymbol, borderCoordinateIncomingSymbol);
         DrawnLineSymbolModel.LinesSymbolModel = redrawnLinesModel;
 
         RedrawAllLines();

@@ -3,8 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
              mc:Ignorable="d" 
-             d:DesignHeight="80" d:DesignWidth="330">
+             d:DesignHeight="120" d:DesignWidth="330">
     <StackPanel Orientation="Horizontal">
         <Canvas
             Background="Transparent"
@@ -34,9 +35,24 @@
                 Margin="70 36"
                 Style="{StaticResource ConnectionPointUI}"/>
         </Canvas>
+
+        <StackPanel Margin="10 10 0 0">
+            <Label 
+                Content="Параллельные действия (13)"
+                Style="{StaticResource LabelSymbolMenu}"/>
+
+            <TextBox
+                Text="1"
+                Name="CountSymbolsIncoming"
+                Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                materialDesign:HintAssist.Hint="Количесво входов" />
+
+            <TextBox
+                Text="1"
+                Name="CountSymbolsOutgoing"
+                Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                materialDesign:HintAssist.Hint="Количесво выходов" />
+        </StackPanel>
         
-        <Label 
-            Content="Комментарий (12)"
-            Style="{StaticResource LabelSymbolMenu}"/>
     </StackPanel>
 </UserControl>

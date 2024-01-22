@@ -16,7 +16,6 @@ public class SubroutineSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnection
     public List<ScaleRectangle> ScaleRectangles { get; init; }
     public List<ConnectionPointVM> ConnectionPoints { get; init; }
     public BuilderScaleRectangles BuilderScaleRectangles { get; init; }
-    public FactoryConnectionPoints FactoryConnectionPoints { get; init; }
 
     private PointCollection? points;
     public PointCollection? Points
@@ -66,9 +65,6 @@ public class SubroutineSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnection
     public SubroutineSymbolVM(EdblockVM edblockVM) : base(edblockVM)
     {
         TextFieldSymbolVM = new(edblockVM.CanvasSymbolsVM, this);
-
-        FactoryConnectionPoints = new(CanvasSymbolsVM, edblockVM.PopupBoxMenuVM.CheckBoxLineGostVM, this);
-        ConnectionPoints = FactoryConnectionPoints.CreateConnectionPoints();
 
         BuilderScaleRectangles = new(CanvasSymbolsVM, edblockVM.PopupBoxMenuVM.ScaleAllSymbolVM, this);
 

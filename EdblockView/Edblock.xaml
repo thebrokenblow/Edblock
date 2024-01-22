@@ -9,7 +9,7 @@
         xmlns:edblockViewModel="clr-namespace:EdblockViewModel;assembly=EdblockViewModel"
         d:DataContext="{d:DesignInstance Type=edblockViewModel:EdblockVM}"
         mc:Ignorable="d"
-        Title="Edblock" Height="1300" Width="1700">
+        Title="Edblock" Height="1350" Width="1700">
     
     <Window.InputBindings>
         <KeyBinding Command="{Binding ClickDelete}" Key="Delete"/>
@@ -131,7 +131,8 @@
                         MouseDown="AddSymbolView"/>
                     
                     <symbol:ParallelActionSymbolUI 
-                        Style="{StaticResource SymbolUI}" />
+                        Style="{StaticResource SymbolUI}" 
+                        MouseDown="AddSymbolView"/>
                 </StackPanel>
             </ScrollViewer>
 

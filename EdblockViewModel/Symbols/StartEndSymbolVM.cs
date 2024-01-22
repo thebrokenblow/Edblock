@@ -14,7 +14,6 @@ public class StartEndSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnectionPo
     public List<ScaleRectangle> ScaleRectangles { get; init; }
     public List<ConnectionPointVM> ConnectionPoints { get; init; }
     public BuilderScaleRectangles BuilderScaleRectangles { get; init; }
-    public FactoryConnectionPoints FactoryConnectionPoints { get; init; }
 
     private const int defaultWidth = 140;
     private const int defaultHeigth = 60;
@@ -28,8 +27,6 @@ public class StartEndSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnectionPo
     {
         TextFieldSymbolVM = new(edblockVM.CanvasSymbolsVM, this);
 
-        FactoryConnectionPoints = new(CanvasSymbolsVM, edblockVM.PopupBoxMenuVM.CheckBoxLineGostVM, this);
-        ConnectionPoints = FactoryConnectionPoints.CreateConnectionPoints();
 
         BuilderScaleRectangles = new(CanvasSymbolsVM, edblockVM.PopupBoxMenuVM.ScaleAllSymbolVM, this);
 

@@ -20,7 +20,11 @@ public abstract class BlockSymbolVM : SymbolVM
         set
         {
             color = value;
-            BlockSymbolModel.Color = color;
+
+            if (BlockSymbolModel is not null)
+            {
+                BlockSymbolModel.Color = color;
+            }
 
             OnPropertyChanged();
         }
@@ -67,7 +71,11 @@ public abstract class BlockSymbolVM : SymbolVM
         set
         {
             xCoordinate = value;
-            BlockSymbolModel.XCoordinate = xCoordinate;
+
+            if (BlockSymbolModel is not null)
+            {
+                BlockSymbolModel.XCoordinate = xCoordinate;
+            }
 
             OnPropertyChanged();
         }
@@ -80,7 +88,11 @@ public abstract class BlockSymbolVM : SymbolVM
         set
         {
             yCoordinate = value;
-            BlockSymbolModel.YCoordinate = yCoordinate;
+
+            if (BlockSymbolModel is not null)
+            {
+                BlockSymbolModel.YCoordinate = yCoordinate;
+            }
 
             OnPropertyChanged();
         }
@@ -100,7 +112,7 @@ public abstract class BlockSymbolVM : SymbolVM
     public DelegateCommand MouseEnter { get; set; }
     public DelegateCommand MouseLeave { get; set; }
     public DelegateCommand MouseLeftButtonDown { get; set; }
-    public BlockSymbolModel BlockSymbolModel { get; init; }
+    public BlockSymbolModel? BlockSymbolModel { get; init; }
     public CanvasSymbolsVM CanvasSymbolsVM { get; init; }
 
     private readonly FontFamilyControlVM _fontFamilyControlVM;
@@ -117,8 +129,6 @@ public abstract class BlockSymbolVM : SymbolVM
         _formatTextControlVM = edblockVM.FormatTextControlVM;
 
         Id = Guid.NewGuid();
-
-        BlockSymbolModel = CreateBlockSymbolModel();
 
         MouseEnter = new(ShowAuxiliaryElements);
         MouseLeave = new(HideAuxiliaryElements);

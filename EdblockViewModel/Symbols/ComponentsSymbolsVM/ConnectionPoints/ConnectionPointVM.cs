@@ -76,10 +76,13 @@ public class ConnectionPointVM : INotifyPropertyChanged
     public BlockSymbolVM BlockSymbolVM { get; init; }
     public IHasConnectionPoint BlockSymbolHasConnectionPoint { get; init; }
 
-    public Func<(double, double)> GetCoordinate { get; init; }
+    public Func<(double, double)> GetCoordinateConnectionPoint { get; init; }
+    public Func<(double, double)> GetCoordinateLineConnections { get; init; }
     public SideSymbol Position { get; init; }
 
     public event PropertyChangedEventHandler? PropertyChanged;
+
+    private const int diametr = 8;
 
     private readonly CanvasSymbolsVM _canvasSymbolsVM;
     private readonly CheckBoxLineGostVM _checkBoxLineGostVM;
@@ -89,14 +92,16 @@ public class ConnectionPointVM : INotifyPropertyChanged
         CanvasSymbolsVM canvasSymbolsVM, 
         BlockSymbolVM blockSymbolVM, 
         CheckBoxLineGostVM checkBoxLineGostVM,
-        Func<(double, double)> getCoordinate, 
+        Func<(double, double)> getCoordinateConnectionPoint,
+        Func<(double, double)> getCoordinateLineConnections,
         SideSymbol position)
     {
         _canvasSymbolsVM = canvasSymbolsVM;
         _checkBoxLineGostVM = checkBoxLineGostVM;
         _connectionPointModel = new(position);
 
-        GetCoordinate = getCoordinate;
+        GetCoordinateConnectionPoint = getCoordinateConnectionPoint;
+        GetCoordinateLineConnections = getCoordinateLineConnections;
 
         Position = position;
 
@@ -106,12 +111,15 @@ public class ConnectionPointVM : INotifyPropertyChanged
         EnterCursor = new(ShowConnectionPoints);
         LeaveCursor = new(HideConnectionPoints);
 
-        (XCoordinate, YCoordinate) = getCoordinate.Invoke();
+        (XCoordinate, YCoordinate) = getCoordinateConnectionPoint.Invoke();
+
+        XCoordinate -= diametr;
+        YCoordinate -= diametr;
     }
 
     public void ChangeCoordination()
     {
-        (XCoordinate, YCoordinate) = GetCoordinate.Invoke();
+        (XCoordinate, YCoordinate) = GetCoordinateConnectionPoint.Invoke();
     }
 
     public void ShowConnectionPoints()
@@ -182,7 +190,9 @@ public class ConnectionPointVM : INotifyPropertyChanged
             OutgoingConnectionPoint = this
         };
 
-        drawnLineSymbolVM.AddFirstLine();
+        var borderCoordinate = GetCoordinateLineConnections.Invoke();
+
+        drawnLineSymbolVM.AddFirstLine(borderCoordinate);
         drawnLineSymbolVM.RedrawPartLines();
 
         _canvasSymbolsVM.SymbolsVM.Add(drawnLineSymbolVM);
@@ -222,8 +232,8 @@ public class ConnectionPointVM : INotifyPropertyChanged
 
         var drawnLineSymbolModel = drawnLineSymbolVM.DrawnLineSymbolModel;
         var symbolIncomingLineModel = drawnLineSymbolVM.SymbolIncomingLine.BlockSymbolModel;
-        //TODO: получение границы символа
-        var finalLineCoordinate = (0, 0);//symbolIncomingLineModel.GetBorderCoordinate(Position);
+
+        var finalLineCoordinate = GetCoordinateLineConnections.Invoke();
 
         var completedLineModel = new CompletedLine(drawnLineSymbolModel, finalLineCoordinate);
         var completeLinesSymbolModel = completedLineModel.GetCompleteLines();

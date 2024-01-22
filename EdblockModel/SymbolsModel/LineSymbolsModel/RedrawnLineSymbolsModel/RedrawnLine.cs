@@ -34,12 +34,8 @@ public class RedrawnLine
         _linesSymbolModel = drawnLineSymbolModel.LinesSymbolModel;
     }
 
-    public List<LineSymbolModel> GetRedrawLine()
+    public List<LineSymbolModel> GetRedrawLine((double x, double y) borderCoordinateOutgoingSymbol, (double x, double y) borderCoordinateIncomingSymbol)
     {
-        //TODO: получение границы символа 
-        var borderCoordinateOutgoingSymbol = (0, 0);//_symbolOutgoingLine!.GetBorderCoordinate(_positionOutgoing);
-        var borderCoordinateIncomingSymbol = (0, 0);//_symbolIncomingLine!.GetBorderCoordinate(_positionIncoming);
-
         if (IsParallel())
         {
             redrawnParallelSides.RedrawLine(borderCoordinateOutgoingSymbol, borderCoordinateIncomingSymbol);

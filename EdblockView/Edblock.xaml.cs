@@ -2,7 +2,6 @@
 using EdblockViewModel;
 using System.Windows.Input;
 using EdblockView.Abstraction;
-using EdblockViewModel.Symbols.ComponentsCommentSymbolVM;
 
 namespace EdblockView;
 

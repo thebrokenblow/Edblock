@@ -15,7 +15,6 @@ public class LinkSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnectionPoint,
     public List<ScaleRectangle> ScaleRectangles { get; init; }
     public List<ConnectionPointVM> ConnectionPoints { get; init; }
     public BuilderScaleRectangles BuilderScaleRectangles { get; init; }
-    public FactoryConnectionPoints FactoryConnectionPoints { get; init; }
 
     private const int defaultWidth = 60;
     private const int defaultHeigth = 60;
@@ -27,20 +26,14 @@ public class LinkSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnectionPoint,
     {
         TextFieldSymbolVM = new(edblockVM.CanvasSymbolsVM, this);
 
-        FactoryConnectionPoints = new(CanvasSymbolsVM, edblockVM.PopupBoxMenuVM.CheckBoxLineGostVM, this);
-        ConnectionPoints = FactoryConnectionPoints.CreateConnectionPoints();
 
         BuilderScaleRectangles = new(CanvasSymbolsVM, edblockVM.PopupBoxMenuVM.ScaleAllSymbolVM, this);
 
         ScaleRectangles =
             BuilderScaleRectangles
-                        .AddMiddleTopRectangle()
                         .AddRightTopRectangle()
-                        .AddRightMiddleRectangle()
                         .AddRightBottomRectangle()
-                        .AddMiddleBottomRectangle()
                         .AddLeftBottomRectangle()
-                        .AddLeftMiddleRectangle()
                         .AddLeftTopRectangle()
                         .Build();
 
@@ -117,5 +110,25 @@ public class LinkSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnectionPoint,
     public double GetTextFieldTopOffset()
     {
         return (Height - Math.Sqrt(Height * Height / 2)) / 2;
+    }
+
+    public (double x, double y) GetTopBorderCoordinate()
+    {
+        return (XCoordinate + Width / 2, YCoordinate);
+    }
+
+    public (double x, double y) GetBottomBorderCoordinate()
+    {
+        return (XCoordinate + Width / 2, YCoordinate + Height);
+    }
+
+    public (double x, double y) GetLeftBorderCoordinate()
+    {
+        return (XCoordinate, YCoordinate + Height / 2);
+    }
+
+    public (double x, double y) GetRightBorderCoordinate()
+    {
+        return (XCoordinate + Width, YCoordinate + Height / 2);
     }
 }

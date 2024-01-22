@@ -89,10 +89,10 @@ public class ScaleRectangle : INotifyPropertyChanged
 
     public static void SetStateDisplay(List<ScaleRectangle> scaleRectangles, bool isShowScaleRectangle)
     {
-        //foreach (var scaleRectangle in scaleRectangles)
-        //{
-        //    scaleRectangle.IsShow = isShowScaleRectangle;
-        //}
+        foreach (var scaleRectangle in scaleRectangles)
+        {
+            scaleRectangle.IsShow = isShowScaleRectangle;
+        }
     }
 
     public void OnPropertyChanged([CallerMemberName] string prop = "")
