@@ -2,16 +2,13 @@
 
 namespace EdblockModel.SymbolsModel;
 
-public class CycleForSymbolModel : BlockSymbolModel, IHasSize, IHasTextFieldSymbolModel
+public class CycleForSymbolModel : BlockSymbolModel, IHasTextFieldSymbolModel
 {
-    public double Width { get; set; }
-    public double Height { get; set; }
-
     private const double minWidth = 40;
-    public double MinWidth => minWidth;
+    public override double MinWidth => minWidth;
 
     private const double minHeight = 20;
-    public double MinHeight => minHeight;
+    public override double MinHeight => minHeight;
 
     public TextFieldSymbolModel TextFieldSymbolModel { get; init; }
 

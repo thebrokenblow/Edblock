@@ -13,8 +13,8 @@ namespace EdblockViewModel.Symbols;
 public class ConditionSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnectionPoint, IHasScaleRectangles
 {
     public TextFieldSymbolVM TextFieldSymbolVM { get; init; }
-    public List<ScaleRectangle> ScaleRectangles { get; init; }
-    public List<ConnectionPointVM> ConnectionPoints { get; init; }
+    public List<ScaleRectangle> ScaleRectangles { get; init; } = new();
+    public List<ConnectionPointVM> ConnectionPoints { get; init; } = new();
     public BuilderScaleRectangles BuilderScaleRectangles { get; init; }
 
     private PointCollection? points;
@@ -55,6 +55,7 @@ public class ConditionSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnectionP
         Color = defaultColor;
 
         TextFieldSymbolVM.Text = defaultText;
+        BlockSymbolModel = CreateBlockSymbolModel();
 
         Width = defaultWidth;
         Height = defaultHeigth;
@@ -67,8 +68,8 @@ public class ConditionSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnectionP
     {     
         Width = width;
 
-        var textFieldWidth = GetTextFieldWidth();
-        var textFieldLeftOffset = GetTextFieldLeftOffset();
+        var textFieldWidth = Width / 2;
+        var textFieldLeftOffset = Width / 4;
 
         TextFieldSymbolVM.Width = textFieldWidth;
         TextFieldSymbolVM.LeftOffset = textFieldLeftOffset;
@@ -81,8 +82,8 @@ public class ConditionSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnectionP
     {
         Height = height;
 
-        var textFieldHeight = GetTextFieldHeight();
-        var textFieldTopOffset = GetTextFieldTopOffset();
+        var textFieldHeight = Height / 2;
+        var textFieldTopOffset = Height / 4;
 
         TextFieldSymbolVM.Height = textFieldHeight;
         TextFieldSymbolVM.TopOffset = textFieldTopOffset;
@@ -114,45 +115,5 @@ public class ConditionSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnectionP
             new Point(Width / 2, 0),
             new Point(0, Height / 2)
         };
-    }
-
-    public double GetTextFieldWidth()
-    {
-        return Width / 2;
-    }
-
-    public double GetTextFieldHeight()
-    {
-        return Height / 2;
-    }
-
-    public double GetTextFieldLeftOffset()
-    {
-        return Width / 4;
-    }
-
-    public double GetTextFieldTopOffset()
-    {
-        return Height / 4;
-    }
-
-    public (double x, double y) GetTopBorderCoordinate()
-    {
-        return (XCoordinate + Width / 2, YCoordinate);
-    }
-
-    public (double x, double y) GetBottomBorderCoordinate()
-    {
-        return (XCoordinate + Width / 2, YCoordinate + Height);
-    }
-
-    public (double x, double y) GetLeftBorderCoordinate()
-    {
-        return (XCoordinate, YCoordinate + Height / 2);
-    }
-
-    public (double x, double y) GetRightBorderCoordinate()
-    {
-        return (XCoordinate + Width, YCoordinate + Height / 2);
     }
 }

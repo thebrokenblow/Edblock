@@ -60,6 +60,8 @@ public class ScalePartBlockSymbol
                     blockSymbolVM.SetWidth(width);
                 }
             }
+
+            canvasSymbolsVM.RedrawnAllDrawnLines();
         }
         else
         {
@@ -94,6 +96,8 @@ public class ScalePartBlockSymbol
                     blockSymbolVM.SetHeight(height);
                 }
             }
+
+            canvasSymbolsVM.RedrawnAllDrawnLines();
         }
         else
         {

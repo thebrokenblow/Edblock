@@ -112,9 +112,6 @@ public class ConnectionPointVM : INotifyPropertyChanged
         LeaveCursor = new(HideConnectionPoints);
 
         (XCoordinate, YCoordinate) = getCoordinateConnectionPoint.Invoke();
-
-        XCoordinate -= diametr;
-        YCoordinate -= diametr;
     }
 
     public void ChangeCoordination()
@@ -170,7 +167,7 @@ public class ConnectionPointVM : INotifyPropertyChanged
         }
     }
 
-    private void StarDrawLine()
+    public void StarDrawLine()
     {
         var isLineOutputAccordingGOST = _connectionPointModel.IsLineOutputAccordingGOST();
         var isDrawingLinesAccordingGOST = _checkBoxLineGostVM.IsDrawingLinesAccordingGOST;
@@ -199,7 +196,7 @@ public class ConnectionPointVM : INotifyPropertyChanged
         _canvasSymbolsVM.СurrentDrawnLineSymbol = drawnLineSymbolVM;
     }
 
-    private void FinishDrawLine()
+    public void FinishDrawLine()
     {
         var isLineIncomingAccordingGOST = _connectionPointModel.IsLineIncomingAccordingGOST();
         var isDrawingLinesAccordingGOST = _checkBoxLineGostVM.IsDrawingLinesAccordingGOST;

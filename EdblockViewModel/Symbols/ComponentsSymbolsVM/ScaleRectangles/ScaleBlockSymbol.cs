@@ -1,6 +1,4 @@
-﻿using System;
-using EdblockModel.AbstractionsModel;
-using EdblockViewModel.ComponentsVM;
+﻿using EdblockViewModel.ComponentsVM;
 
 namespace EdblockViewModel.Symbols.ScaleRectangles;
 
@@ -10,93 +8,73 @@ internal class ScaleBlockSymbol
     {
         var blockSymbolModel = scalePartBlockSymbol.ScalingBlockSymbol.BlockSymbolModel;
 
-        if (blockSymbolModel is IHasSize blockSymbolHasSize)
+        double minWidth = blockSymbolModel.MinWidth;
+        double widthBlockSymbol = canvasSymbolsVM.XCoordinate - scalePartBlockSymbol.InitialXCoordinateBlockSymbol;
+
+        if (minWidth > widthBlockSymbol)
         {
-            double minWidth = blockSymbolHasSize.MinWidth;
-            double widthBlockSymbol = canvasSymbolsVM.XCoordinate - scalePartBlockSymbol.InitialXCoordinateBlockSymbol;
-
-            if (minWidth > widthBlockSymbol)
-            {
-                return minWidth;
-            }
-
-            return widthBlockSymbol;
+            return minWidth;
         }
 
-        throw new Exception($"Символ { blockSymbolModel.GetType().Name } не может быть масштабирован");
+        return widthBlockSymbol;
     }
 
     internal static double GetHeigthBottomPart(ScalePartBlockSymbol scalePartBlockSymbol, CanvasSymbolsVM canvasSymbolsVM)
     {
         var blockSymbolModel = scalePartBlockSymbol.ScalingBlockSymbol.BlockSymbolModel;
 
-        if (blockSymbolModel is IHasSize blockSymbolHasSize)
+        double minHeight = blockSymbolModel.MinHeight;
+        double heigthBlockSymbol = canvasSymbolsVM.YCoordinate - scalePartBlockSymbol.InitialYCoordinateBlockSymbol;
+
+        if (minHeight > heigthBlockSymbol)
         {
-            double minHeight = blockSymbolHasSize.MinHeight;
-            double heigthBlockSymbol = canvasSymbolsVM.YCoordinate - scalePartBlockSymbol.InitialYCoordinateBlockSymbol;
-
-            if (minHeight > heigthBlockSymbol)
-            {
-                return minHeight;
-            }
-
-            return heigthBlockSymbol;
+            return minHeight;
         }
 
-        throw new Exception($"Символ {blockSymbolModel.GetType().Name} не может быть масштабирован");
+        return heigthBlockSymbol;
     }
 
     internal static double GetWidthLeftPart(ScalePartBlockSymbol scalePartBlockSymbol, CanvasSymbolsVM canvasSymbolsVM)
     {
         var blockSymbolModel = scalePartBlockSymbol.ScalingBlockSymbol.BlockSymbolModel;
 
-        if (blockSymbolModel is IHasSize blockSymbolHasSize)
+        int currentXCoordinateCursor = canvasSymbolsVM.XCoordinate;
+        double initialWidth = scalePartBlockSymbol.InitialWidthBlockSymbol;
+        double initialXCoordinate = scalePartBlockSymbol.InitialXCoordinateBlockSymbol;
+        double minWidth = blockSymbolModel.MinWidth;
+
+        double widthBlockSymbol = initialWidth + (initialXCoordinate - currentXCoordinateCursor);
+
+        if (minWidth > widthBlockSymbol)
         {
-            int currentXCoordinateCursor = canvasSymbolsVM.XCoordinate;
-            double initialWidth = scalePartBlockSymbol.InitialWidthBlockSymbol;
-            double initialXCoordinate = scalePartBlockSymbol.InitialXCoordinateBlockSymbol;
-            double minWidth = blockSymbolHasSize.MinWidth;
-
-            double widthBlockSymbol = initialWidth + (initialXCoordinate - currentXCoordinateCursor);
-
-            if (minWidth > widthBlockSymbol)
-            {
-                return minWidth;
-            }
-
-            double xCoordinate = initialXCoordinate - (widthBlockSymbol - initialWidth);
-            scalePartBlockSymbol.ScalingBlockSymbol.XCoordinate = xCoordinate;
-
-            return widthBlockSymbol;
+            return minWidth;
         }
 
-        throw new Exception($"Символ {blockSymbolModel.GetType().Name} не может быть масштабирован");
+        double xCoordinate = initialXCoordinate - (widthBlockSymbol - initialWidth);
+        scalePartBlockSymbol.ScalingBlockSymbol.XCoordinate = xCoordinate;
+
+        return widthBlockSymbol;
     }
 
     internal static double GetHeigthTopPart(ScalePartBlockSymbol scalePartBlockSymbol, CanvasSymbolsVM canvasSymbolsVM)
     {
         var blockSymbolModel = scalePartBlockSymbol.ScalingBlockSymbol.BlockSymbolModel;
 
-        if (blockSymbolModel is IHasSize blockSymbolHasSize)
+        int currentYCoordinateCursor = canvasSymbolsVM.YCoordinate;
+        double initialHeigth = scalePartBlockSymbol.InitialHeigthBlockSymbol;
+        double initialYCoordinate = scalePartBlockSymbol.InitialYCoordinateBlockSymbol;
+        double minHeight = blockSymbolModel.MinHeight;
+
+        double heigthBlockSymbol = initialHeigth + (initialYCoordinate - currentYCoordinateCursor);
+
+        if (minHeight > heigthBlockSymbol)
         {
-            int currentYCoordinateCursor = canvasSymbolsVM.YCoordinate;
-            double initialHeigth = scalePartBlockSymbol.InitialHeigthBlockSymbol;
-            double initialYCoordinate = scalePartBlockSymbol.InitialYCoordinateBlockSymbol;
-            double minHeight = blockSymbolHasSize.MinHeight;
-
-            double heigthBlockSymbol = initialHeigth + (initialYCoordinate - currentYCoordinateCursor);
-
-            if (minHeight > heigthBlockSymbol)
-            {
-                return minHeight;
-            }
-
-            double yCoordinate = initialYCoordinate - (heigthBlockSymbol - initialHeigth);
-            scalePartBlockSymbol.ScalingBlockSymbol.YCoordinate = yCoordinate;
-
-            return heigthBlockSymbol;
+            return minHeight;
         }
 
-        throw new Exception($"Символ {blockSymbolModel.GetType().Name} не может быть масштабирован");
+        double yCoordinate = initialYCoordinate - (heigthBlockSymbol - initialHeigth);
+        scalePartBlockSymbol.ScalingBlockSymbol.YCoordinate = yCoordinate;
+
+        return heigthBlockSymbol;
     }
 }

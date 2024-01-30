@@ -28,33 +28,33 @@ public class ActionSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnectionPoin
         TextFieldSymbolVM = new(edblockVM.CanvasSymbolsVM, this);
 
         var topConnectionPoint = new ConnectionPointVM(
-            edblockVM.CanvasSymbolsVM,
+            CanvasSymbolsVM,
             this,
-            edblockVM.PopupBoxMenuVM.CheckBoxLineGostVM,
+            _checkBoxLineGostVM,
             GetCoordinateTopConnectionPoint,
             GetTopBorderCoordinate,
             SideSymbol.Top);
 
         var leftConnectionPoint = new ConnectionPointVM(
-            edblockVM.CanvasSymbolsVM,
+            CanvasSymbolsVM,
             this,
-            edblockVM.PopupBoxMenuVM.CheckBoxLineGostVM,
+            _checkBoxLineGostVM,
             GetCoordinateLeftConnectionPoint,
             GetLeftBorderCoordinate,
             SideSymbol.Left);
 
         var rightConnectionPoint = new ConnectionPointVM(
-            edblockVM.CanvasSymbolsVM,
+            CanvasSymbolsVM,
             this,
-            edblockVM.PopupBoxMenuVM.CheckBoxLineGostVM,
+            _checkBoxLineGostVM,
             GetCoordinateRightConnectionPoint,
             GetRightBorderCoordinate,
             SideSymbol.Right);
 
         var bottomConnectionPoint = new ConnectionPointVM(
-            edblockVM.CanvasSymbolsVM,
+            CanvasSymbolsVM,
             this,
-            edblockVM.PopupBoxMenuVM.CheckBoxLineGostVM,
+            _checkBoxLineGostVM,
             GetCoordinateBottomConnectionPoint,
             GetBottomBorderCoordinate,
             SideSymbol.Bottom);
@@ -158,7 +158,7 @@ public class ActionSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnectionPoin
     public (double, double) GetCoordinateLeftConnectionPoint()
     {
         double pointsX = -offsetPositionConnectionPoint - 8;
-        double pointsY = Height / 2 - 8 / 2;
+        double pointsY = Height / 2;
 
         return (pointsX, pointsY);
     }
@@ -166,22 +166,22 @@ public class ActionSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnectionPoin
     public (double, double) GetCoordinateRightConnectionPoint()
     {
         double pointsX = Width + offsetPositionConnectionPoint;
-        double pointsY = Height / 2 - 8 / 2;
+        double pointsY = Height / 2;
 
         return (pointsX, pointsY);
     }
 
     public (double, double) GetCoordinateTopConnectionPoint()
     {
-        double pointsX = Width / 2 - 8 / 2;
-        double pointsY = -offsetPositionConnectionPoint - 8;
+        double pointsX = Width / 2;
+        double pointsY = -offsetPositionConnectionPoint;
 
         return (pointsX, pointsY);
     }
 
     public (double, double) GetCoordinateBottomConnectionPoint()
     {
-        double pointsX = Width / 2 - 8 / 2;
+        double pointsX = Width / 2;
         double pointsY = Height + offsetPositionConnectionPoint;
 
         return (pointsX, pointsY);

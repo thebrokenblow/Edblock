@@ -8,6 +8,7 @@
              xmlns:componentsVM="clr-namespace:EdblockViewModel.ComponentsVM;assembly=EdblockViewModel"
              xmlns:blockSymbolView="clr-namespace:EdblockView.SymbolsView"
              xmlns:blockSymbolsVM="clr-namespace:EdblockViewModel.Symbols;assembly=EdblockViewModel"   
+             xmlns:switchCaseConditionSymbolsVM="clr-namespace:EdblockViewModel.Symbols.SwitchCaseConditionSymbolsVM;assembly=EdblockViewModel"   
              xmlns:componentsCommentSymbolVM="clr-namespace:EdblockViewModel.Symbols.ComponentsCommentSymbolVM;assembly=EdblockViewModel"   
              xmlns:lineSymbolView="clr-namespace:EdblockView.SymbolsView.LineSymbolView"
              xmlns:lineSymbolsVM="clr-namespace:EdblockViewModel.Symbols.LineSymbols;assembly=EdblockViewModel"
@@ -22,6 +23,9 @@
                 </DataTemplate>
                 <DataTemplate DataType="{x:Type blockSymbolsVM:ConditionSymbolVM}">
                     <blockSymbolView:ConditionSymbolView MouseDown="SelectBlockSymbol"/>
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type switchCaseConditionSymbolsVM:HorizontalConditionSymbolVM}">
+                    <blockSymbolView:HorizontalConditionSymbolView MouseDown="SelectBlockSymbol"/>
                 </DataTemplate>
                 <DataTemplate DataType="{x:Type blockSymbolsVM:StartEndSymbolVM}">
                     <blockSymbolView:StartEndSymbolView MouseDown="SelectBlockSymbol"/>

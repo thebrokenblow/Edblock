@@ -96,7 +96,8 @@
                         Style="{StaticResource SymbolUI}" />
                     
                     <symbol:HorizontalConditionSymbolUI 
-                        Style="{StaticResource SymbolUI}" />
+                        Style="{StaticResource SymbolUI}" 
+                        MouseDown="AddSymbolView"/>
                     
                     <symbol:StartEndSymbolUI 
                         Style="{StaticResource SymbolUI}" 

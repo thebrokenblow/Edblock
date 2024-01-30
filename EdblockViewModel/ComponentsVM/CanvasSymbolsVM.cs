@@ -64,7 +64,7 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
     public DrawnLineSymbolVM? СurrentDrawnLineSymbol { get; set; }
     public DrawnLineSymbolVM? SelectedDrawnLineSymbol { get; set; }
     public List<BlockSymbolVM> SelectedBlockSymbols { get; set; }
-    private List<DrawnLineSymbolVM>? RedrawDrawnLines { get; set; }
+    private List<DrawnLineSymbolVM>? DrawnLines { get; set; }
     public MovableRectangleLine? MovableRectangleLine { get; set; }
 
     public event PropertyChangedEventHandler? PropertyChanged;
@@ -210,7 +210,7 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
     {
         Cursor = Cursors.Arrow;
 
-        RedrawDrawnLines = null;
+        DrawnLines = null;
 
         MovableBlockSymbol = null;
 
@@ -252,7 +252,7 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
     {
         if (BlockByDrawnLines.ContainsKey(blockSymbolVM))
         {
-            RedrawDrawnLines = BlockByDrawnLines[blockSymbolVM];
+            DrawnLines = BlockByDrawnLines[blockSymbolVM];
         }
     }
 
@@ -268,14 +268,27 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
         previousXCoordinate = xCoordinate;
         previousYCoordinate = yCoordinate;
 
-        if (RedrawDrawnLines == null)
+        if (DrawnLines == null)
         {
             return;
         }
-
-        foreach (var redrawDrawnLine in RedrawDrawnLines)
+        
+        foreach (var redrawDrawnLine in DrawnLines)
         {
             redrawDrawnLine.Redraw();
+        }
+    }
+
+    public void RedrawnAllDrawnLines()
+    {
+        foreach (var item in BlockByDrawnLines)
+        {
+            var drawnLines = BlockByDrawnLines[item.Key];
+
+            foreach (var redrawDrawnLine in drawnLines)
+            {
+                redrawDrawnLine.Redraw();
+            }
         }
     }
 }

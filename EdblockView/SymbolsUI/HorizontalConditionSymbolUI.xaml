@@ -83,6 +83,7 @@
 
             <TextBox
                 Text="3"
+                Name="countLines"
                 Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                 materialDesign:HintAssist.Hint="Количесво линий" />
         </StackPanel>

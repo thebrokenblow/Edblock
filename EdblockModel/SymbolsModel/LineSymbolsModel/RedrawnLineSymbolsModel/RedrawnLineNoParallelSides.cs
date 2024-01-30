@@ -87,7 +87,7 @@ internal class RedrawnLineNoParallelSides
         else
         {
             
-            double horizontalOffsetLine = _symbolOutgoingLine.XCoordinate + ((IHasSize)_symbolOutgoingLine).Width + _baseLineOffset;
+            double horizontalOffsetLine = _symbolOutgoingLine.XCoordinate + _symbolOutgoingLine.Width + _baseLineOffset;
 
             return horizontalOffsetLine;
         }

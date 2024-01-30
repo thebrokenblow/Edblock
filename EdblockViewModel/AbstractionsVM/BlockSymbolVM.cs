@@ -38,9 +38,9 @@ public abstract class BlockSymbolVM : SymbolVM
         {
             width = value;
 
-            if (BlockSymbolModel is IHasSize symbolHasSize)
+            if (BlockSymbolModel is not null)
             {
-                symbolHasSize.Width = width;
+                BlockSymbolModel.Width = width;
             }
 
             OnPropertyChanged();
@@ -55,9 +55,9 @@ public abstract class BlockSymbolVM : SymbolVM
         {
             heigth = value;
 
-            if (BlockSymbolModel is IHasSize symbolHasSize)
+            if (BlockSymbolModel is not null)
             {
-                symbolHasSize.Height = heigth;
+                BlockSymbolModel.Height = heigth;
             }
 
             OnPropertyChanged();
@@ -115,6 +115,8 @@ public abstract class BlockSymbolVM : SymbolVM
     public BlockSymbolModel? BlockSymbolModel { get; init; }
     public CanvasSymbolsVM CanvasSymbolsVM { get; init; }
 
+    protected readonly CheckBoxLineGostVM _checkBoxLineGostVM;
+
     private readonly FontFamilyControlVM _fontFamilyControlVM;
     private readonly FontSizeControlVM _fontSizeControlVM;
     private readonly TextAlignmentControlVM _textAlignmentControlVM;
@@ -123,10 +125,12 @@ public abstract class BlockSymbolVM : SymbolVM
     public BlockSymbolVM(EdblockVM edblockVM)
     {
         CanvasSymbolsVM = edblockVM.CanvasSymbolsVM;
+
         _fontSizeControlVM = edblockVM.FontSizeControlVM;
         _fontFamilyControlVM = edblockVM.FontFamilyControlVM;
-        _textAlignmentControlVM = edblockVM.TextAlignmentControlVM;
         _formatTextControlVM = edblockVM.FormatTextControlVM;
+        _textAlignmentControlVM = edblockVM.TextAlignmentControlVM;
+        _checkBoxLineGostVM = edblockVM.PopupBoxMenuVM.CheckBoxLineGostVM;
 
         Id = Guid.NewGuid();
 
@@ -157,8 +161,11 @@ public abstract class BlockSymbolVM : SymbolVM
         }
         else
         {
-            XCoordinate = currentCoordinate.x - (previousCoordinate.x - XCoordinate);
-            YCoordinate = currentCoordinate.y - (previousCoordinate.y - YCoordinate);
+            if (previousCoordinate.x != 0 && previousCoordinate.y != 0)
+            {
+                XCoordinate = currentCoordinate.x - (previousCoordinate.x - XCoordinate);
+                YCoordinate = currentCoordinate.y - (previousCoordinate.y - YCoordinate);
+            }
         }
     }
 

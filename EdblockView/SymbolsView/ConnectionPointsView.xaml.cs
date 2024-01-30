@@ -17,10 +17,15 @@ public partial class ConnectionPointsView : UserControl
 
     private void TrackStageDrawLine(object sender, MouseButtonEventArgs e)
     {
-        var ellipse = (Ellipse)sender;
-        var contextEllipse = ellipse.DataContext;
-        var connectionPoint = (ConnectionPointVM)contextEllipse;
-        connectionPoint.Click();
+        if (sender is Ellipse ellipse)
+        {
+            var contextEllipse = ellipse.DataContext;
+
+            if (contextEllipse is ConnectionPointVM connectionPointVM)
+            {
+                connectionPointVM.Click();
+            }           
+        }
 
         e.Handled = true;
     }
