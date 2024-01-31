@@ -43,8 +43,49 @@
         </TextBox>
 
         <symbolView:ScaleRectanglesView />
-        <symbolView:ConnectionPointsView />
-        
+
+        <ItemsControl ItemsSource="{Binding ConnectionPoints}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate DataType="Points">
+                    <Ellipse MouseDown="TrackStageDrawLine" Style="{StaticResource ConnectionPointSwitchCaseView}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="MouseEnter">
+                                <i:InvokeCommandAction Command="{Binding EnterCursor}" />
+                            </i:EventTrigger>
+                            <i:EventTrigger EventName="MouseLeave">
+                                <i:InvokeCommandAction Command="{Binding LeaveCursor}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </Ellipse>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Canvas />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemContainerStyle>
+                <Style TargetType="FrameworkElement">
+                    <Setter Property="Canvas.Left" Value="{Binding XCoordinate}" />
+                    <Setter Property="Canvas.Top" Value="{Binding YCoordinate}" />
+                </Style>
+            </ItemsControl.ItemContainerStyle>
+        </ItemsControl>
+
+        <Line 
+            X1="{Binding VerticalLineSwitchCase.X1}"
+            Y1="{Binding VerticalLineSwitchCase.Y1}"
+            X2="{Binding VerticalLineSwitchCase.X2}" 
+            Y2="{Binding VerticalLineSwitchCase.Y2}"
+            Style="{StaticResource LineSwitchCaseView}"/>
+
+        <Line 
+            X1="{Binding HorizontalLineSwitchCase.X1}"
+            Y1="{Binding HorizontalLineSwitchCase.Y1}"
+            X2="{Binding HorizontalLineSwitchCase.X2}" 
+            Y2="{Binding HorizontalLineSwitchCase.Y2}"
+            Style="{StaticResource LineSwitchCaseView}"/>
+
         <ItemsControl 
             ItemsSource="{Binding LinesSwitchCase}">
             <ItemsControl.Resources>

@@ -31,32 +31,24 @@ public class ActionSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnectionPoin
             CanvasSymbolsVM,
             this,
             _checkBoxLineGostVM,
-            GetCoordinateTopConnectionPoint,
-            GetTopBorderCoordinate,
             SideSymbol.Top);
 
         var leftConnectionPoint = new ConnectionPointVM(
             CanvasSymbolsVM,
             this,
             _checkBoxLineGostVM,
-            GetCoordinateLeftConnectionPoint,
-            GetLeftBorderCoordinate,
             SideSymbol.Left);
 
         var rightConnectionPoint = new ConnectionPointVM(
             CanvasSymbolsVM,
             this,
             _checkBoxLineGostVM,
-            GetCoordinateRightConnectionPoint,
-            GetRightBorderCoordinate,
             SideSymbol.Right);
 
         var bottomConnectionPoint = new ConnectionPointVM(
             CanvasSymbolsVM,
             this,
             _checkBoxLineGostVM,
-            GetCoordinateBottomConnectionPoint,
-            GetBottomBorderCoordinate,
             SideSymbol.Bottom);
 
         ConnectionPoints = new()

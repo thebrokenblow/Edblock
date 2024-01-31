@@ -48,22 +48,20 @@ public class DrawnLineSymbolModel
         }
     }
 
-    public void AddFirstLine((double x, double y) borderCoordinate)
+    public void AddFirstLine(double xCoordinateLineDraw, double yCoordinateLineDrawe)
     {
-        if (SymbolOutgoingLine == null)
+        if (SymbolOutgoingLine != null)
         {
-            return;
+            var firstLineSymbolModel = new LineSymbolModel
+            {
+                X1 = xCoordinateLineDraw,
+                Y1 = yCoordinateLineDrawe,
+                X2 = xCoordinateLineDraw,
+                Y2 = yCoordinateLineDrawe,
+            };
+
+            LinesSymbolModel.Add(firstLineSymbolModel);
         }
-
-        var firstLineSymbolModel = new LineSymbolModel
-        {
-            X1 = borderCoordinate.x,
-            Y1 = borderCoordinate.y,
-            X2 = borderCoordinate.x,
-            Y2 = borderCoordinate.y,
-        };
-
-        LinesSymbolModel.Add(firstLineSymbolModel);
     }
 
     public LineSymbolModel GetNewLine()
