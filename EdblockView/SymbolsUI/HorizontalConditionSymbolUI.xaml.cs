@@ -1,9 +1,9 @@
-﻿using EdblockView.Abstraction;
+﻿using System;
+using System.Windows.Controls;
+using EdblockView.Abstraction;
 using EdblockViewModel;
 using EdblockViewModel.AbstractionsVM;
 using EdblockViewModel.Symbols.SwitchCaseConditionSymbolsVM;
-using System;
-using System.Windows.Controls;
 
 namespace EdblockView.SymbolsUI;
 

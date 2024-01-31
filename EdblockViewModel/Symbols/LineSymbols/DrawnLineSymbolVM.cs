@@ -401,13 +401,13 @@ public class DrawnLineSymbolVM : SymbolVM
 
     internal void Redraw()
     {
-        if (OutgoingConnectionPoint is null || IncomingConnectionPoint is null)
+        if (OutgoingConnectionPoint is null || IncomingConnectionPoint is null || SymbolOutgoingLine is null || SymbolIncomingLine is null)
         {
             return;
         }
 
-        var borderCoordinateOutgoingSymbol = (OutgoingConnectionPoint.XCoordinateLineDraw, OutgoingConnectionPoint.XCoordinateLineDraw);
-        var borderCoordinateIncomingSymbol = (IncomingConnectionPoint.XCoordinateLineDraw, IncomingConnectionPoint.XCoordinateLineDraw);
+        var borderCoordinateOutgoingSymbol = (OutgoingConnectionPoint.XCoordinateLineDraw + SymbolOutgoingLine.XCoordinate, OutgoingConnectionPoint.YCoordinateLineDraw + SymbolOutgoingLine.YCoordinate);
+        var borderCoordinateIncomingSymbol = (IncomingConnectionPoint.XCoordinateLineDraw + SymbolIncomingLine.XCoordinate, IncomingConnectionPoint.YCoordinateLineDraw + SymbolIncomingLine.YCoordinate);
 
         var redrawLineSymbolVM = new RedrawnLine(DrawnLineSymbolModel);
         var redrawnLinesModel = redrawLineSymbolVM.GetRedrawLine(borderCoordinateOutgoingSymbol, borderCoordinateIncomingSymbol);

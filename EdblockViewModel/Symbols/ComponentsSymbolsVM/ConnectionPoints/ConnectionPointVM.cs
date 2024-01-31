@@ -215,7 +215,7 @@ public class ConnectionPointVM : INotifyPropertyChanged
 
         var drawnLineSymbolModel = drawnLineSymbolVM.DrawnLineSymbolModel;
 
-        var finalLineCoordinate = (XCoordinateLineDraw, YCoordinateLineDraw);
+        var finalLineCoordinate = (BlockSymbolVM.XCoordinate + XCoordinateLineDraw, BlockSymbolVM.YCoordinate + YCoordinateLineDraw);
 
         var completedLineModel = new CompletedLine(drawnLineSymbolModel, finalLineCoordinate);
         var completeLinesSymbolModel = completedLineModel.GetCompleteLines();

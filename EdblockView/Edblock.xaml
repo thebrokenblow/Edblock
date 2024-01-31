@@ -93,7 +93,8 @@
                         MouseDown="AddSymbolView" />
                     
                     <symbol:VerticalConditionSymbolUI 
-                        Style="{StaticResource SymbolUI}" />
+                        Style="{StaticResource SymbolUI}"
+                        MouseDown="AddSymbolView"/>
                     
                     <symbol:HorizontalConditionSymbolUI 
                         Style="{StaticResource SymbolUI}" 

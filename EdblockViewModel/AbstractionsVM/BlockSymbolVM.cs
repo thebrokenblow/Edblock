@@ -220,16 +220,6 @@ public abstract class BlockSymbolVM : SymbolVM
 
     protected void ChangeCoordinateAuxiliaryElements()
     {
-        //if (this is IHasConnectionPoint symbolHasConnectionPoint)
-        //{
-        //    var connectionPoints = symbolHasConnectionPoint.ConnectionPoints;
-
-        //    foreach (var connectionPoint in connectionPoints)
-        //    {
-        //        connectionPoint.ChangeCoordination();
-        //    }
-        //}
-
         if (this is IHasScaleRectangles symbolHasScaleRectangles)
         {
             var scaleRectangles = symbolHasScaleRectangles.ScaleRectangles;

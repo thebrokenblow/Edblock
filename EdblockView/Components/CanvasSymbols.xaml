@@ -27,6 +27,9 @@
                 <DataTemplate DataType="{x:Type switchCaseConditionSymbolsVM:HorizontalConditionSymbolVM}">
                     <blockSymbolView:HorizontalConditionSymbolView MouseDown="SelectBlockSymbol"/>
                 </DataTemplate>
+                <DataTemplate DataType="{x:Type switchCaseConditionSymbolsVM:VerticalConditionSymbolVM}">
+                    <blockSymbolView:HorizontalConditionSymbolView MouseDown="SelectBlockSymbol"/>
+                </DataTemplate>
                 <DataTemplate DataType="{x:Type blockSymbolsVM:StartEndSymbolVM}">
                     <blockSymbolView:StartEndSymbolView MouseDown="SelectBlockSymbol"/>
                 </DataTemplate>

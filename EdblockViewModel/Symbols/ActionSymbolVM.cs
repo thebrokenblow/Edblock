@@ -25,6 +25,9 @@ public class ActionSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnectionPoin
     private const int offsetPositionConnectionPoint = 10;
     public ActionSymbolVM(EdblockVM edblockVM) : base(edblockVM)
     {
+        Width = defaultWidth;
+        Height = defaultHeigth;
+
         TextFieldSymbolVM = new(edblockVM.CanvasSymbolsVM, this);
 
         var topConnectionPoint = new ConnectionPointVM(
@@ -32,6 +35,9 @@ public class ActionSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnectionPoin
             this,
             _checkBoxLineGostVM,
             SideSymbol.Top);
+
+        (topConnectionPoint.XCoordinate, topConnectionPoint.YCoordinate)  = GetCoordinateTopConnectionPoint();
+        (topConnectionPoint.XCoordinateLineDraw, topConnectionPoint.YCoordinateLineDraw)  = GetTopBorderCoordinate();
 
         var leftConnectionPoint = new ConnectionPointVM(
             CanvasSymbolsVM,
@@ -59,7 +65,6 @@ public class ActionSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnectionPoin
             bottomConnectionPoint
         };
 
-
         BuilderScaleRectangles = new(CanvasSymbolsVM, edblockVM.PopupBoxMenuVM.ScaleAllSymbolVM, this);
 
         BlockSymbolModel = CreateBlockSymbolModel();
@@ -79,9 +84,6 @@ public class ActionSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnectionPoin
         Color = defaultColor;
 
         TextFieldSymbolVM.Text = defaultText;
-
-        Width = defaultWidth;
-        Height = defaultHeigth;
 
         SetWidth(Width);
         SetHeight(Height);
@@ -165,8 +167,8 @@ public class ActionSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnectionPoin
 
     public (double, double) GetCoordinateTopConnectionPoint()
     {
-        double pointsX = Width / 2;
-        double pointsY = -offsetPositionConnectionPoint;
+        double pointsX = Width / 2 - 4;
+        double pointsY = -offsetPositionConnectionPoint - 4;
 
         return (pointsX, pointsY);
     }
