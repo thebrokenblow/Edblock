@@ -1,6 +1,7 @@
-﻿using System.Windows;
-using EdblockViewModel;
+﻿using System;
+using System.Windows;
 using System.Windows.Input;
+using EdblockViewModel;
 using EdblockView.Abstraction;
 
 namespace EdblockView;
@@ -23,8 +24,15 @@ public partial class Edblock : Window
     {
         if (sender is IFactorySymbolVM factorySymbolVM)
         {
-            var blockSymbolVM = factorySymbolVM.CreateBlockSymbolVM(edblockVM);
-            edblockVM.AddBlockSymbol(blockSymbolVM);
+            try
+            {
+                var blockSymbolVM = factorySymbolVM.CreateBlockSymbolVM(edblockVM);
+                edblockVM.AddBlockSymbol(blockSymbolVM);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }

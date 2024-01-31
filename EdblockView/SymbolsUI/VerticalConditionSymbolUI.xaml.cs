@@ -19,7 +19,14 @@ public partial class VerticalConditionSymbolUI : UserControl, IFactorySymbolVM
 
     public BlockSymbolVM CreateBlockSymbolVM(EdblockVM edblockVM)
     {
-        var verticalConditionSymbolVM = new VerticalConditionSymbolVM(edblockVM, Convert.ToInt32(countLines.Text));
+        int countLines = Convert.ToInt32(textBoxCountLines.Text);
+
+        if (countLines < 1 || countLines >= 20)
+        {
+            throw new Exception("Количество выходов дожно быть больше 1 и меньше 20");
+        }
+
+        var verticalConditionSymbolVM = new VerticalConditionSymbolVM(edblockVM, countLines);
 
         return verticalConditionSymbolVM;
     }

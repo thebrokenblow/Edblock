@@ -2,6 +2,8 @@
 using System.Windows.Shapes;
 using System.Windows.Controls;
 using EdblockViewModel.Symbols.ConnectionPoints;
+using System.ComponentModel;
+using System;
 
 namespace EdblockView.SymbolsView;
 
