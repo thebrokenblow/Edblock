@@ -12,6 +12,9 @@ namespace EdblockView.SymbolsUI;
 /// </summary>
 public partial class VerticalConditionSymbolUI : UserControl, IFactorySymbolVM
 {
+    private const int minCountLines = 2;
+    private const int maxCountLines = 20;
+
     public VerticalConditionSymbolUI()
     {
         InitializeComponent();
@@ -21,9 +24,9 @@ public partial class VerticalConditionSymbolUI : UserControl, IFactorySymbolVM
     {
         int countLines = Convert.ToInt32(textBoxCountLines.Text);
 
-        if (countLines < 1 || countLines >= 20)
+        if (countLines < minCountLines || countLines >= maxCountLines)
         {
-            throw new Exception("Количество выходов дожно быть больше 1 и меньше 20");
+            throw new Exception($"Количество выходов должно быть {minCountLines} или больше и меньше {maxCountLines}");
         }
 
         var verticalConditionSymbolVM = new VerticalConditionSymbolVM(edblockVM, countLines);
