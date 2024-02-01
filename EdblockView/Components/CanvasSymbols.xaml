@@ -10,6 +10,8 @@
              xmlns:blockSymbolsVM="clr-namespace:EdblockViewModel.Symbols;assembly=EdblockViewModel"   
              xmlns:switchCaseConditionSymbolsVM="clr-namespace:EdblockViewModel.Symbols.SwitchCaseConditionSymbolsVM;assembly=EdblockViewModel"   
              xmlns:componentsCommentSymbolVM="clr-namespace:EdblockViewModel.Symbols.ComponentsCommentSymbolVM;assembly=EdblockViewModel"   
+             xmlns:componentsParallelActionSymbolVM="clr-namespace:EdblockViewModel.Symbols.ComponentsParallelActionSymbolVM;assembly=EdblockViewModel"   
+             
              xmlns:lineSymbolView="clr-namespace:EdblockView.SymbolsView.LineSymbolView"
              xmlns:lineSymbolsVM="clr-namespace:EdblockViewModel.Symbols.LineSymbols;assembly=EdblockViewModel"
              d:DataContext="{d:DesignInstance Type=componentsVM:CanvasSymbolsVM}"
@@ -53,6 +55,9 @@
                 </DataTemplate>
                 <DataTemplate DataType="{x:Type componentsCommentSymbolVM:CommentSymbolVM}">
                     <blockSymbolView:CommentSymbolView MouseDown="SelectBlockSymbol"/>
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type componentsParallelActionSymbolVM:ParallelActionSymbolVM}">
+                    <blockSymbolView:ParallelActionSymbolView MouseDown="SelectBlockSymbol"/>
                 </DataTemplate>
                 <DataTemplate DataType="{x:Type lineSymbolsVM:DrawnLineSymbolVM}">
                     <lineSymbolView:DrawnLineSymbolView />

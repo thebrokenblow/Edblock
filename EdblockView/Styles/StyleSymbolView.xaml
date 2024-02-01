@@ -224,5 +224,10 @@
         <Setter Property="StrokeThickness" Value="1.25"/>
         <Setter Property="Stroke" Value="Black" />
     </Style>
-    
+
+    <Style x:Key="LineParallelActionSymbolView" TargetType="Line">
+        <Setter Property="StrokeThickness" Value="1"/>
+        <Setter Property="Stroke" Value="Black"/>
+    </Style>
+
 </ResourceDictionary>
