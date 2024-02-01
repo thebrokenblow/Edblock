@@ -31,8 +31,8 @@ public class ParallelActionSymbolVM : BlockSymbolVM, IHasConnectionPoint
 
         _maxSymbols = Math.Max(countSymbolsIncoming, countSymbolsOutgoing);
 
-        _sumConnectionPoints = countSymbolsIncoming + countSymbolsOutgoing;
-        ConnectionPoints = new(_sumConnectionPoints);
+        ConnectionPoints = new(countSymbolsIncoming);
+        ConnectionPoints2 = new(countSymbolsOutgoing);
 
         for (int i = 0; i < countSymbolsIncoming; i++)
         {
@@ -85,18 +85,18 @@ public class ParallelActionSymbolVM : BlockSymbolVM, IHasConnectionPoint
 
         if (_countSymbolsIncoming == _countSymbolsOutgoing)
         {
-            SetXCoordinateCPLeadingLine(0, _countSymbolsIncoming, width);
-            SetXCoordinateCPLeadingLine(_countSymbolsIncoming, _sumConnectionPoints, width);
+            SetXCoordinateCPLeadingLine(ConnectionPoints, width);
+            SetXCoordinateCPLeadingLine(ConnectionPoints2, width);
         }
         else if (_countSymbolsIncoming > _countSymbolsOutgoing)
         {
-            SetXCoordinateCPLeadingLine(0, _countSymbolsIncoming, width);
-            SetXCoordinateCPNotLeadingLine(_countSymbolsIncoming, _sumConnectionPoints, _countSymbolsOutgoing, width);
+            SetXCoordinateCPLeadingLine(ConnectionPoints, width);
+            SetXCoordinateCPNotLeadingLine(ConnectionPoints2, width);
         }
         else
         {
-            SetXCoordinateCPNotLeadingLine(_countSymbolsIncoming, _sumConnectionPoints, _countSymbolsOutgoing, width);
-            SetXCoordinateCPLeadingLine(0, _countSymbolsOutgoing, width);
+            SetXCoordinateCPLeadingLine(ConnectionPoints2, width);
+            SetXCoordinateCPNotLeadingLine(ConnectionPoints, width);
         }
     }
 
@@ -112,88 +112,87 @@ public class ParallelActionSymbolVM : BlockSymbolVM, IHasConnectionPoint
 
         if (_countSymbolsIncoming == _countSymbolsOutgoing)
         {
-            for (int i = 0; i < _countSymbolsIncoming; i++)
+            for (int i = 0; i < ConnectionPoints.Count; i++)
             {
                 ConnectionPoints[i].YCoordinate = -4;
                 ConnectionPoints[i].YCoordinateLineDraw = 0;
             }
 
-            for (int i = _countSymbolsIncoming; i < _sumConnectionPoints; i++)
+            for (int i = 0; i < ConnectionPoints2.Count; i++)
             {
-                ConnectionPoints[i].YCoordinate = height - 4;
-                ConnectionPoints[i].YCoordinateLineDraw = height;
+                ConnectionPoints2[i].YCoordinate = height - 4;
+                ConnectionPoints2[i].YCoordinateLineDraw = height;
             }
         }
         else if (_countSymbolsIncoming > _countSymbolsOutgoing)
         {
-            for (int i = 0; i < _countSymbolsOutgoing; i++)
+            for (int i = 0; i < ConnectionPoints.Count; i++)
             {
                 ConnectionPoints[i].YCoordinate = -4;
                 ConnectionPoints[i].YCoordinateLineDraw = 0;
             }
 
-            for (int i = _countSymbolsOutgoing; i < _countSymbolsIncoming; i++)
+            for (int i = 0; i < ConnectionPoints2.Count; i++)
             {
-                ConnectionPoints[i].YCoordinate = height - 4;
-                ConnectionPoints[i].YCoordinateLineDraw = height;
+                ConnectionPoints2[i].YCoordinate = height - 4;
+                ConnectionPoints2[i].YCoordinateLineDraw = height;
             }
         }
         else
         {
-            for (int i = 0; i < _countSymbolsIncoming; i++)
+            for (int i = 0; i < ConnectionPoints.Count; i++)
             {
                 ConnectionPoints[i].YCoordinate = -4;
                 ConnectionPoints[i].YCoordinateLineDraw = 0;
             }
 
-            for (int i = _countSymbolsIncoming; i < _countSymbolsOutgoing; i++)
+            for (int i = 0; i < ConnectionPoints2.Count; i++)
             {
-                ConnectionPoints[i].YCoordinate = height - 4;
-                ConnectionPoints[i].YCoordinateLineDraw = height;
+                ConnectionPoints2[i].YCoordinate = height - 4;
+                ConnectionPoints2[i].YCoordinateLineDraw = height;
             }
         }
     }
 
     //Установка x координат для Точек соединения для линии с максимальным кол-во точек соединений
-    private void SetXCoordinateCPLeadingLine(int begin, int end, double width)
+    private void SetXCoordinateCPLeadingLine(List<ConnectionPointVM> connectionPoints, double width)
     {
         width /= 2;
         int numberConnectionPoint = 0;
 
-        for (int i = begin; i < end; i++)
+        for (int i = 0; i < connectionPoints.Count; i++)
         {
-            ConnectionPoints[i].XCoordinate = width * (numberConnectionPoint + 1) + indentBetweenSymbol * numberConnectionPoint + width * numberConnectionPoint - 4;
-            ConnectionPoints[i].XCoordinateLineDraw = width * (numberConnectionPoint + 1) + indentBetweenSymbol * numberConnectionPoint + width * numberConnectionPoint;
+            connectionPoints[i].XCoordinate = width * (numberConnectionPoint + 1) + indentBetweenSymbol * numberConnectionPoint + width * numberConnectionPoint - 4;
+            connectionPoints[i].XCoordinateLineDraw = width * (numberConnectionPoint + 1) + indentBetweenSymbol * numberConnectionPoint + width * numberConnectionPoint;
 
             numberConnectionPoint++;
         }
     }
 
     //Установка x координат для Точек соединения для линии с минимальным кол-во точек соединений
-    private void SetXCoordinateCPNotLeadingLine(int begin, int end, int countSymbols, double width)
+    private void SetXCoordinateCPNotLeadingLine(List<ConnectionPointVM> connectionPoints, double width)
     {
-        var length = (Width - width) / (countSymbols - 1);
-
-        int numberConnectionPoint = 0;
-
-        if (countSymbols == 1)
+        if (connectionPoints.Count == 1)
         {
-            ConnectionPoints[begin].XCoordinate = Width / 2 - 4;
-            ConnectionPoints[begin].XCoordinateLineDraw = Width / 2;
+            connectionPoints[0].XCoordinate = Width / 2 - 4;
+            connectionPoints[0].XCoordinateLineDraw = Width / 2;
         }
         else
         {
-            for (int i = begin; i < end; i++)
+            var numberConnectionPoint = 0;
+            var length = (Width - width) / (connectionPoints.Count - 1);
+
+            for (int i = 0; i < connectionPoints.Count; i++)
             {
                 if (numberConnectionPoint == 0)
                 {
-                    ConnectionPoints[i].XCoordinate = width / 2 - 4;
-                    ConnectionPoints[i].XCoordinateLineDraw = width / 2;
+                    connectionPoints[i].XCoordinate = width / 2 - 4;
+                    connectionPoints[i].XCoordinateLineDraw = width / 2;
                 }
                 else
                 {
-                    ConnectionPoints[i].XCoordinate = ConnectionPoints[i - 1].XCoordinate + length;
-                    ConnectionPoints[i].XCoordinateLineDraw = ConnectionPoints[i - 1].XCoordinateLineDraw + length;
+                    connectionPoints[i].XCoordinate = connectionPoints[i - 1].XCoordinate + length;
+                    connectionPoints[i].XCoordinateLineDraw = connectionPoints[i - 1].XCoordinateLineDraw + length;
                 }
 
                 numberConnectionPoint++;

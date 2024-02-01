@@ -51,6 +51,34 @@
             </ItemsControl.ItemContainerStyle>
         </ItemsControl>
 
+        <ItemsControl ItemsSource="{Binding ConnectionPoints2}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate DataType="Points">
+                    <Ellipse MouseDown="TrackStageDrawLine" Style="{StaticResource ConnectionPointSwitchCaseView}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="MouseEnter">
+                                <i:InvokeCommandAction Command="{Binding EnterCursor}" />
+                            </i:EventTrigger>
+                            <i:EventTrigger EventName="MouseLeave">
+                                <i:InvokeCommandAction Command="{Binding LeaveCursor}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </Ellipse>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Canvas />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemContainerStyle>
+                <Style TargetType="FrameworkElement">
+                    <Setter Property="Canvas.Left" Value="{Binding XCoordinate}" />
+                    <Setter Property="Canvas.Top" Value="{Binding YCoordinate}" />
+                </Style>
+            </ItemsControl.ItemContainerStyle>
+        </ItemsControl>
+
         <i:Interaction.Triggers>
             <i:EventTrigger EventName="MouseLeftButtonDown">
                 <i:InvokeCommandAction Command="{Binding MouseLeftButtonDown}"/>
