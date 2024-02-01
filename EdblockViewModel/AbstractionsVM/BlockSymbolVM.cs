@@ -171,7 +171,7 @@ public abstract class BlockSymbolVM : SymbolVM
 
     public void ShowAuxiliaryElements()
     {
-        if (CanvasSymbolsVM.Cursor == Cursors.Arrow)
+        //if (CanvasSymbolsVM.Cursor == Cursors.Arrow)
         {
             CanvasSymbolsVM.Cursor = Cursors.SizeAll;
         }

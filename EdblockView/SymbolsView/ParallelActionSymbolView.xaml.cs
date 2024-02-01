@@ -1,7 +1,7 @@
-﻿using EdblockViewModel.Symbols.ConnectionPoints;
-using System.Windows.Controls;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using System.Windows.Shapes;
+using System.Windows.Controls;
+using EdblockViewModel.Symbols.ConnectionPoints;
 
 namespace EdblockView.SymbolsView;
 
