@@ -19,7 +19,6 @@ public class ParallelActionSymbolVM : BlockSymbolVM, IHasConnectionPoint
     private readonly int _maxSymbols;
     private readonly int _countSymbolsIncoming;
     private readonly int _countSymbolsOutgoing;
-    private readonly int _sumConnectionPoints;
     private const int defaultWidth = 140;
     private const int defaultHeigth = 20;
     private const int indentBetweenSymbol = 20;

@@ -43,13 +43,13 @@
 
             <TextBox
                 Text="1"
-                Name="CountSymbolsIncoming"
+                Name="сountSymbolsIncoming"
                 Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                 materialDesign:HintAssist.Hint="Количесво входов" />
 
             <TextBox
                 Text="1"
-                Name="CountSymbolsOutgoing"
+                Name="сountSymbolsOutgoing"
                 Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                 materialDesign:HintAssist.Hint="Количесво выходов" />
         </StackPanel>

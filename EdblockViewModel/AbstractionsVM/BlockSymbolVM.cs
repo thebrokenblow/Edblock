@@ -171,7 +171,10 @@ public abstract class BlockSymbolVM : SymbolVM
 
     public void ShowAuxiliaryElements()
     {
-        CanvasSymbolsVM.Cursor = Cursors.SizeAll;
+        if (CanvasSymbolsVM.Cursor == Cursors.Arrow)
+        {
+            CanvasSymbolsVM.Cursor = Cursors.SizeAll;
+        }
 
         var movableSymbol = CanvasSymbolsVM.MovableBlockSymbol;
         var scalePartBlockSymbolVM = CanvasSymbolsVM.ScalePartBlockSymbol;

@@ -13,7 +13,7 @@ namespace EdblockView.SymbolsUI;
 public partial class HorizontalConditionSymbolUI : UserControl, IFactorySymbolVM
 {
     private const int minCountLines = 2;
-    private const int maxCountLines = 20;
+    private const int maxCountLines = 21;
     public HorizontalConditionSymbolUI()
     {
         InitializeComponent();

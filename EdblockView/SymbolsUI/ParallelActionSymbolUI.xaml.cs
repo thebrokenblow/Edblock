@@ -12,6 +12,13 @@ namespace EdblockView.SymbolsUI;
 /// </summary>
 public partial class ParallelActionSymbolUI : UserControl, IFactorySymbolVM
 {
+    private const int minCountSymbolsIncoming = 1;
+    private const int maxCountSymbolsIncoming = 21;
+
+    private const int minCountSymbolsOutgoing = 1;
+    private const int maxCountSymbolsOutgoing = 21;
+
+
     public ParallelActionSymbolUI()
     {
         InitializeComponent();
@@ -19,8 +26,18 @@ public partial class ParallelActionSymbolUI : UserControl, IFactorySymbolVM
 
     public BlockSymbolVM CreateBlockSymbolVM(EdblockVM edblockVM)
     {
-        var countSymbolsIncoming = Convert.ToInt32(CountSymbolsIncoming.Text);
-        var countSymbolsOutgoing = Convert.ToInt32(CountSymbolsOutgoing.Text);
+        var countSymbolsIncoming = Convert.ToInt32(сountSymbolsIncoming.Text);
+        var countSymbolsOutgoing = Convert.ToInt32(сountSymbolsOutgoing.Text);
+
+        if (countSymbolsIncoming < minCountSymbolsIncoming || countSymbolsIncoming >= maxCountSymbolsIncoming)
+        {
+            throw new Exception($"Количество входов должно быть {minCountSymbolsIncoming} или больше и меньше {maxCountSymbolsIncoming}");
+        }
+
+        if (countSymbolsOutgoing < minCountSymbolsOutgoing || countSymbolsOutgoing >= maxCountSymbolsOutgoing)
+        {
+            throw new Exception($"Количество выходов должно быть {minCountSymbolsOutgoing} или больше и меньше {maxCountSymbolsOutgoing}");
+        }
 
         var parallelActionSymbolVM = new ParallelActionSymbolVM(edblockVM, countSymbolsIncoming, countSymbolsOutgoing);
 
