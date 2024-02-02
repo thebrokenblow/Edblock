@@ -73,33 +73,6 @@ public class ParallelActionSymbolVM : BlockSymbolVM, IHasConnectionPoint
         return parallelActionSymbolModel;
     }
 
-    public override void SetWidth(double width)
-    {
-        Width = width * _maxSymbols + indentBetweenSymbol * (_maxSymbols - 1);
-
-        UpperHorizontalLine.X1 = 0;
-        UpperHorizontalLine.X2 = Width;
-
-        LowerHorizontalLine.X1 = 0;
-        LowerHorizontalLine.X2 = Width;
-
-        if (_countSymbolsIncoming == _countSymbolsOutgoing)
-        {
-            SetXCoordinateCPLeadingLine(0, _countSymbolsIncoming, width);
-            SetXCoordinateCPLeadingLine(_countSymbolsIncoming, _sumCountSymbols, width);
-        }
-        else if (_countSymbolsIncoming > _countSymbolsOutgoing)
-        {
-            SetXCoordinateCPLeadingLine(0, _countSymbolsIncoming, width);
-            SetXCoordinateCPNotLeadingLine(_countSymbolsIncoming, _sumCountSymbols, width);
-        }
-        else
-        {
-            SetXCoordinateCPNotLeadingLine(0, _countSymbolsIncoming, width);
-            SetXCoordinateCPLeadingLine(_countSymbolsIncoming, _sumCountSymbols, width);
-        }
-    }
-
     public override void SetHeight(double height)
     {
         Height = height;
@@ -133,8 +106,35 @@ public class ParallelActionSymbolVM : BlockSymbolVM, IHasConnectionPoint
     {
         for (int i = begin; i < end; i++)
         {
-            ConnectionPoints[i].YCoordinate = Symbols - 4;
+            ConnectionPoints[i].YCoordinate = Symbols;
             ConnectionPoints[i].YCoordinateLineDraw = Symbols;
+        }
+    }
+
+    public override void SetWidth(double width)
+    {
+        Width = width * _maxSymbols + indentBetweenSymbol * (_maxSymbols - 1);
+
+        UpperHorizontalLine.X1 = 0;
+        UpperHorizontalLine.X2 = Width;
+
+        LowerHorizontalLine.X1 = 0;
+        LowerHorizontalLine.X2 = Width;
+
+        if (_countSymbolsIncoming == _countSymbolsOutgoing)
+        {
+            SetXCoordinateCPLeadingLine(0, _countSymbolsIncoming, width);
+            SetXCoordinateCPLeadingLine(_countSymbolsIncoming, _sumCountSymbols, width);
+        }
+        else if (_countSymbolsIncoming > _countSymbolsOutgoing)
+        {
+            SetXCoordinateCPLeadingLine(0, _countSymbolsIncoming, width);
+            SetXCoordinateCPNotLeadingLine(_countSymbolsIncoming, _sumCountSymbols, width);
+        }
+        else
+        {
+            SetXCoordinateCPNotLeadingLine(0, _countSymbolsIncoming, width);
+            SetXCoordinateCPLeadingLine(_countSymbolsIncoming, _sumCountSymbols, width);
         }
     }
 
@@ -146,7 +146,7 @@ public class ParallelActionSymbolVM : BlockSymbolVM, IHasConnectionPoint
 
         for (int i = begin; i < end; i++)
         {
-            ConnectionPoints[i].XCoordinate = widthSymbols * (2 * numberConnectionPoint + 1) + indentBetweenSymbol * numberConnectionPoint - 4;
+            ConnectionPoints[i].XCoordinate = widthSymbols * (2 * numberConnectionPoint + 1) + indentBetweenSymbol * numberConnectionPoint;
             ConnectionPoints[i].XCoordinateLineDraw = widthSymbols * (2 * numberConnectionPoint + 1) + indentBetweenSymbol * numberConnectionPoint;
 
             numberConnectionPoint++;
@@ -158,14 +158,14 @@ public class ParallelActionSymbolVM : BlockSymbolVM, IHasConnectionPoint
     {
         if (end - begin == 1)
         {
-            ConnectionPoints[begin].XCoordinate = Width / 2 - 4;
+            ConnectionPoints[begin].XCoordinate = Width / 2;
             ConnectionPoints[begin].XCoordinateLineDraw = Width / 2;
         }
         else
         {
             var length = (Width - widthSymbols) / (end - begin - 1);
 
-            ConnectionPoints[begin].XCoordinate = widthSymbols / 2 - 4;
+            ConnectionPoints[begin].XCoordinate = widthSymbols / 2;
             ConnectionPoints[begin].XCoordinateLineDraw = widthSymbols / 2;
 
             for (int i = begin + 1; i < end; i++)

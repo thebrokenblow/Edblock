@@ -125,6 +125,24 @@
         </Style.Triggers>
     </Style>
 
+    <Style x:Key="ConnectionPointParallelActionSymbolView" TargetType="Ellipse">
+        <Setter Property="Fill" Value="Black"/>
+        <Setter Property="Stroke" Value="Transparent"/>
+        <Setter Property="Width" Value="8"/>
+        <Setter Property="Height" Value="8"/>
+        <Setter Property="StrokeThickness" Value="1.5" />
+        <Setter Property="Visibility" Value="Visible" />
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding IsSelected}" Value="True">
+                <Setter Property="Stroke" Value="#00FF00"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding IsHasConnectingLine}" Value="True">
+                <Setter Property="Visibility" Value="Hidden"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+
     <Style x:Key="BorderScaleRectangleView" TargetType="Border">
         <Setter Property="BorderBrush" Value="#00FFFFFF" />
         <Setter Property="BorderThickness" Value="2" />

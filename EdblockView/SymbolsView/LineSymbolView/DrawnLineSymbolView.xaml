@@ -13,11 +13,11 @@
     <Canvas>
         <ItemsControl 
             MouseDown="SelectLine"
-            MouseDoubleClick="ShowTextField" 
+            MouseDoubleClick="ShowTextField"
             ItemsSource="{Binding LinesSymbolVM}">
             <ItemsControl.Resources>
                 <DataTemplate DataType="{x:Type lineSymbolVM:LineSymbolVM}">
-                    <Line Style="{StaticResource LineSymbolView}"/>
+                    <Line MouseDown="Line_MouseDown" Style="{StaticResource LineSymbolView}"/>
                 </DataTemplate>
             </ItemsControl.Resources>
             <ItemsControl.ItemsPanel>

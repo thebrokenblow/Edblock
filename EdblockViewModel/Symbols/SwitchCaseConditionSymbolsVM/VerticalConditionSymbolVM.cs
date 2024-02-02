@@ -36,9 +36,7 @@ public class VerticalConditionSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasCon
     private const int defaultWidth = 140;
     private const int defaultHeigth = 60;
 
-    private const int baselineLength = 20;
     private const int indentBetweenSymbol = 20;
-    private const int conditionLineLength = 20;
 
     private const string defaultText = "Условие";
     private const string defaultColor = "#FF60B2D3";
@@ -102,7 +100,7 @@ public class VerticalConditionSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasCon
         var textFieldWidth = Width / 2;
         var textFieldLeftOffset = Width / 4;
 
-        TextFieldSymbolVM.Width = textFieldWidth - 4;
+        TextFieldSymbolVM.Width = textFieldWidth;
         TextFieldSymbolVM.LeftOffset = textFieldLeftOffset;
 
         SetCoordinatePolygonPoints();
@@ -138,7 +136,7 @@ public class VerticalConditionSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasCon
         {
             double heightLine = Height / 2 + (Height + indentBetweenSymbol) * i;
 
-            ConnectionPoints[i - 1].YCoordinate = heightLine - 4;
+            ConnectionPoints[i - 1].YCoordinate = heightLine;
             ConnectionPoints[i - 1].YCoordinateLineDraw = heightLine;
         }
     }

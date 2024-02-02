@@ -8,6 +8,7 @@ using EdblockModel.SymbolsModel.LineSymbolsModel;
 using EdblockModel.SymbolsModel.LineSymbolsModel.RedrawnLineSymbolsModel;
 using EdblockViewModel.AbstractionsVM;
 using EdblockModel.Enum;
+using System.Windows.Input;
 
 namespace EdblockViewModel.Symbols.LineSymbols;
 
@@ -194,11 +195,13 @@ public class DrawnLineSymbolVM : SymbolVM
 
     public void SetDefaultColorLines()
     {
+        CanvasSymbolsVM.Cursor = Cursors.Arrow;
+
         var selectDrawnLineSymbol = CanvasSymbolsVM.SelectedDrawnLineSymbol;
         var movableRectangleLine = CanvasSymbolsVM.MovableRectangleLine;
         var drawnLineSymbol = CanvasSymbolsVM.СurrentDrawnLineSymbol;
 
-        if (selectDrawnLineSymbol != this && movableRectangleLine == null && drawnLineSymbol == null)
+        if (selectDrawnLineSymbol != this && movableRectangleLine == null && drawnLineSymbol != this)
         {
             SetHighlightStatus(false);
             HideMovableRectanglesLine();
@@ -295,7 +298,15 @@ public class DrawnLineSymbolVM : SymbolVM
         var movableSymbol = CanvasSymbolsVM.MovableBlockSymbol;
         var drawnLineSymbol = CanvasSymbolsVM.СurrentDrawnLineSymbol;
 
-        if (movableSymbol == null && drawnLineSymbol == null)
+        if (CanvasSymbolsVM.SelectedDrawnLineSymbol != null)
+        {
+            CanvasSymbolsVM.SelectedDrawnLineSymbol.SetDefaultColorLines();
+            CanvasSymbolsVM.SelectedDrawnLineSymbol = null;
+        }
+
+        CanvasSymbolsVM.Cursor = Cursors.Hand;
+
+        if (movableSymbol == null && drawnLineSymbol != this)
         {
             SetHighlightStatus(true);
         }

@@ -116,10 +116,14 @@ public class HorizontalConditionSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasC
         SetCoordinatePolygonPoints();
         ChangeCoordinateAuxiliaryElements();
 
-        for (int i = 0; i < ConnectionPoints.Count; i++)
+        var xCoordinateConnectionPoint = -displacementCoefficient + Width / 2;
+        
+        foreach (var connectionPoint in ConnectionPoints)
         {
-            ConnectionPoints[i].XCoordinate = -displacementCoefficient + Width / 2 + (Width + indentBetweenSymbol) * i - 4;
-            ConnectionPoints[i].XCoordinateLineDraw = -displacementCoefficient + Width / 2 + (Width + indentBetweenSymbol) * i;
+            connectionPoint.XCoordinate = xCoordinateConnectionPoint;
+            connectionPoint.XCoordinateLineDraw = xCoordinateConnectionPoint;
+
+            xCoordinateConnectionPoint += Width + indentBetweenSymbol;
         }
 
         SetCoordinateVerticalLine();
@@ -140,10 +144,12 @@ public class HorizontalConditionSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasC
         SetCoordinatePolygonPoints();
         ChangeCoordinateAuxiliaryElements();
 
-        for (int i = 0; i < ConnectionPoints.Count; i++)
+        var yCoordinateConnectionPoint = Height + baselineLength + conditionLineLength;
+
+        foreach (var connectionPoint in ConnectionPoints)
         {
-            ConnectionPoints[i].YCoordinate = Height + baselineLength + conditionLineLength - 4;
-            ConnectionPoints[i].YCoordinateLineDraw = YCoordinate + Height + baselineLength + conditionLineLength;
+            connectionPoint.YCoordinate = yCoordinateConnectionPoint;
+            connectionPoint.YCoordinateLineDraw = yCoordinateConnectionPoint;
         }
 
         SetCoordinateVerticalLine();

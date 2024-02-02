@@ -33,4 +33,9 @@ public partial class DrawnLineSymbolView : UserControl
 
         e.Handled = true;
     }
+
+    private void Line_MouseDown(object sender, MouseButtonEventArgs e)
+    {
+
+    }
 }

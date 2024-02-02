@@ -15,13 +15,13 @@ public class MovableRectangleLine : INotifyPropertyChanged
     }
 
     private const double height = 4;
-    public static double Height 
+    public static double Height
     {
-        get => height; 
+        get => height;
     }
 
     private const double borderThickness = 1;
-    public static double BorderThickness 
+    public static double BorderThickness
     {
         get => borderThickness;
     }

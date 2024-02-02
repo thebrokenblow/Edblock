@@ -1,5 +1,4 @@
-﻿using System;
-using Prism.Commands;
+﻿using Prism.Commands;
 using System.Windows;
 using EdblockModel.Symbols;
 using System.Windows.Input;
@@ -22,7 +21,7 @@ public class ConnectionPointVM : INotifyPropertyChanged
         get => xCoordinate;
         set
         {
-            xCoordinate = value;
+            xCoordinate = value - diametr / 2;
             OnPropertyChanged();
         }
     }
@@ -33,7 +32,7 @@ public class ConnectionPointVM : INotifyPropertyChanged
         get => yCoordinate;
         set
         {
-            yCoordinate = value;
+            yCoordinate = value - diametr / 2;
             OnPropertyChanged();
         }
     }
@@ -88,11 +87,7 @@ public class ConnectionPointVM : INotifyPropertyChanged
     private readonly CheckBoxLineGostVM _checkBoxLineGostVM;
     private readonly ConnectionPointModel _connectionPointModel;
 
-    public ConnectionPointVM(
-        CanvasSymbolsVM canvasSymbolsVM, 
-        BlockSymbolVM blockSymbolVM, 
-        CheckBoxLineGostVM checkBoxLineGostVM,
-        SideSymbol position)
+    public ConnectionPointVM(CanvasSymbolsVM canvasSymbolsVM, BlockSymbolVM blockSymbolVM, CheckBoxLineGostVM checkBoxLineGostVM, SideSymbol position)
     {
         _canvasSymbolsVM = canvasSymbolsVM;
         _checkBoxLineGostVM = checkBoxLineGostVM;
