@@ -1,12 +1,13 @@
-﻿using EdblockModel.SymbolsModel.LineSymbolsModel;
+﻿using EdblockViewModel.ComponentsVM;
+using EdblockModel.SymbolsModel.LineSymbolsModel;
 
 namespace EdblockViewModel.Symbols.LineSymbols;
 
 public class FactoryLineSymbol
 {
-    public static LineSymbolVM CreateLine(LineSymbolModel lineSymbolModel)
+    public static LineSymbolVM CreateLine(DrawnLineSymbolVM drawnLineSymbolVM, LineSymbolModel lineSymbolModel)
     {
-        var lineSymbol = new LineSymbolVM(lineSymbolModel)
+        var lineSymbol = new LineSymbolVM(drawnLineSymbolVM, lineSymbolModel)
         {
             X1 = lineSymbolModel.X2,
             Y1 = lineSymbolModel.Y2,
@@ -17,9 +18,9 @@ public class FactoryLineSymbol
         return lineSymbol;
     }
 
-    public static LineSymbolVM CreateLineByLineModel(LineSymbolModel lineSymbolModel)
+    public static LineSymbolVM CreateLineByLineModel(DrawnLineSymbolVM drawnLineSymbolVM, LineSymbolModel lineSymbolModel)
     {
-        var lineSymbol = new LineSymbolVM(lineSymbolModel)
+        var lineSymbol = new LineSymbolVM(drawnLineSymbolVM, lineSymbolModel)
         {
             X1 = lineSymbolModel.X1,
             Y1 = lineSymbolModel.Y1,

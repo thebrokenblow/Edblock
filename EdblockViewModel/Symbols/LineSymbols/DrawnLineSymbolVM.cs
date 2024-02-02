@@ -228,7 +228,7 @@ public class DrawnLineSymbolVM : SymbolVM
 
         foreach (var lineSymbolModel in linesSymbolModel)
         {
-            var lineSymbolVM = FactoryLineSymbol.CreateLineByLineModel(lineSymbolModel);
+            var lineSymbolVM = FactoryLineSymbol.CreateLineByLineModel(this, lineSymbolModel);
             LinesSymbolVM.Add(lineSymbolVM);
         }
 
@@ -346,7 +346,7 @@ public class DrawnLineSymbolVM : SymbolVM
     {
         foreach (var lineSymbolModel in linesSymbolModel)
         {
-            var lineSymbolVM = FactoryLineSymbol.CreateLineByLineModel(lineSymbolModel);
+            var lineSymbolVM = FactoryLineSymbol.CreateLineByLineModel(this, lineSymbolModel);
             LinesSymbolVM.Add(lineSymbolVM);
         }
     }
@@ -380,7 +380,7 @@ public class DrawnLineSymbolVM : SymbolVM
         else if (countLinesVM < countLinesModel)
         {
             var secondLineModel = currentLinesSymbolModel[1];
-            var secondLineVM = FactoryLineSymbol.CreateLineByLineModel(secondLineModel);
+            var secondLineVM = FactoryLineSymbol.CreateLineByLineModel(this, secondLineModel);
             LinesSymbolVM.Add(secondLineVM);
         }
 
@@ -432,7 +432,7 @@ public class DrawnLineSymbolVM : SymbolVM
         if (LinesSymbolVM.Count > 1)
         {
             var currentLineSymbolModel = DrawnLineSymbolModel.GetNewLine();
-            var currentLineSymbolVM = FactoryLineSymbol.CreateLine(currentLineSymbolModel);
+            var currentLineSymbolVM = FactoryLineSymbol.CreateLine(this, currentLineSymbolModel);
 
             LinesSymbolVM.Add(currentLineSymbolVM);
         }

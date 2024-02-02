@@ -1,6 +1,7 @@
 ﻿using EdblockViewModel.Symbols.LineSymbols;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Shapes;
 
 namespace EdblockView.SymbolsView.LineSymbolView;
 
@@ -36,6 +37,12 @@ public partial class DrawnLineSymbolView : UserControl
 
     private void Line_MouseDown(object sender, MouseButtonEventArgs e)
     {
-
+        if (sender is Line lineView)
+        {
+            if (lineView.DataContext is LineSymbolVM lineSymbolVM)
+            {
+                lineSymbolVM.FinishDrawingLine();
+            }
+        }
     }
 }

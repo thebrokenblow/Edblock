@@ -1,6 +1,10 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using EdblockViewModel.ComponentsVM;
 using EdblockModel.SymbolsModel.LineSymbolsModel;
+using System;
+using EdblockViewModel.AbstractionsVM;
+using System.Collections.Generic;
 
 namespace EdblockViewModel.Symbols.LineSymbols;
 
@@ -70,8 +74,11 @@ public class LineSymbolVM : INotifyPropertyChanged
     }
 
     private readonly LineSymbolModel _lineSymbolModel;
-    public LineSymbolVM(LineSymbolModel lineSymbolModel)
+    private readonly DrawnLineSymbolVM _drawnLineSymbolVM;
+
+    public LineSymbolVM(DrawnLineSymbolVM drawnLineSymbolVM, LineSymbolModel lineSymbolModel)
     {
+        _drawnLineSymbolVM = drawnLineSymbolVM;
         _lineSymbolModel = lineSymbolModel;
     }
 
@@ -79,5 +86,64 @@ public class LineSymbolVM : INotifyPropertyChanged
     public void OnPropertyChanged([CallerMemberName] string prop = "")
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
+    }
+
+    public void FinishDrawingLine()
+    {
+        var currentDrawnLineSymbol = _drawnLineSymbolVM.CanvasSymbolsVM.СurrentDrawnLineSymbol;
+
+        if (currentDrawnLineSymbol != null)
+        {
+            var blockSymbolVM = currentDrawnLineSymbol.SymbolOutgoingLine;
+
+            var lastLineSymbolVM = currentDrawnLineSymbol.LinesSymbolVM[^1];
+
+            if (x1 == x2 && lastLineSymbolVM.y1 == lastLineSymbolVM.y2)
+            {
+                lastLineSymbolVM.X2 = x2;
+
+                var blockByDrawnLines = _drawnLineSymbolVM.CanvasSymbolsVM.BlockByDrawnLines;
+
+                if (!blockByDrawnLines.ContainsKey(blockSymbolVM))
+                {
+                    var drawnLinesSymbolVM = new List<DrawnLineSymbolVM>
+                    {
+                        currentDrawnLineSymbol
+                    };
+
+                    blockByDrawnLines.Add(blockSymbolVM, drawnLinesSymbolVM);
+                }
+                else
+                {
+                    blockByDrawnLines[blockSymbolVM].Add(currentDrawnLineSymbol);
+                }
+            }
+            else if (y1 == y2 && lastLineSymbolVM.x1 == lastLineSymbolVM.x2)
+            {
+                lastLineSymbolVM.Y2 = y2;
+
+                var blockByDrawnLines = _drawnLineSymbolVM.CanvasSymbolsVM.BlockByDrawnLines;
+
+                if (!blockByDrawnLines.ContainsKey(blockSymbolVM))
+                {
+                    var drawnLinesSymbolVM = new List<DrawnLineSymbolVM>
+                    {
+                        currentDrawnLineSymbol
+                    };
+
+                    blockByDrawnLines.Add(blockSymbolVM, drawnLinesSymbolVM);
+                }
+                else
+                {
+                    blockByDrawnLines[blockSymbolVM].Add(currentDrawnLineSymbol);
+                }
+            }
+            else
+            {
+                throw new Exception("Неправильное соединение линий");
+            }
+
+            _drawnLineSymbolVM.CanvasSymbolsVM.СurrentDrawnLineSymbol = null;
+        }
     }
 }
