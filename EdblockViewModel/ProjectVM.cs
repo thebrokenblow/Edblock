@@ -25,23 +25,25 @@ internal class ProjectVM
         var blocksSymbolSerializable = new List<BlockSymbolSerializable>();
         var drawnLinesSymbolSerializable = new List<DrawnLineSymbolSerializable>();
 
-        var blockSymbolsVM = canvasSymbolsVM.BlockSymbolsVM;
-        var drawnLinesSymbolVM = canvasSymbolsVM.DrawnLinesSymbolVM;
+        var SymbolsVM = canvasSymbolsVM.SymbolsVM;
 
-        foreach (var blockSymbolVM in blockSymbolsVM)
+        foreach (var symbol in SymbolsVM)
         {
-            var blockSymbolModel = blockSymbolVM.BlockSymbolModel;
-            var blockSymbolSerializable = FactorySymbolSerializable.CreateBlockSymbolSerializable(blockSymbolModel);
+            if (symbol is BlockSymbolVM blockSymbolVM)
+            {
+                var blockSymbolModel = blockSymbolVM.BlockSymbolModel;
+                var blockSymbolSerializable = FactorySymbolSerializable.CreateBlockSymbolSerializable(blockSymbolModel);
 
-            blocksSymbolSerializable.Add(blockSymbolSerializable);
-        }
+                blocksSymbolSerializable.Add(blockSymbolSerializable);
+            }
 
-        foreach (var drawnLineSymbolVM in drawnLinesSymbolVM)
-        {
-            var drawnLineSymbolModel = drawnLineSymbolVM.DrawnLineSymbolModel;
-            var drawnLineSymbolSerializable = FactorySymbolSerializable.CreateDrawnLineSymbolSerializable(drawnLineSymbolModel);
+            if (symbol is DrawnLineSymbolVM drawnLineSymbolVM)
+            {
+                var drawnLineSymbolModel = drawnLineSymbolVM.DrawnLineSymbolModel;
+                var drawnLineSymbolSerializable = FactorySymbolSerializable.CreateDrawnLineSymbolSerializable(drawnLineSymbolModel);
 
-            drawnLinesSymbolSerializable.Add(drawnLineSymbolSerializable);
+                drawnLinesSymbolSerializable.Add(drawnLineSymbolSerializable);
+            }
         }
 
         var projectSerializable = new ProjectSerializable()

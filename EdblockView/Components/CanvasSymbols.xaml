@@ -18,19 +18,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <ItemsControl ItemsSource="{Binding DrawnLinesSymbolVM}">
-            <ItemsControl.Resources>
-                <DataTemplate DataType="{x:Type lineSymbolsVM:DrawnLineSymbolVM}">
-                    <lineSymbolView:DrawnLineSymbolView />
-                </DataTemplate>
-            </ItemsControl.Resources>
-            <ItemsControl.Template>
-                <ControlTemplate>
-                    <Canvas/>
-                </ControlTemplate>
-            </ItemsControl.Template>
-        </ItemsControl>
-        <ItemsControl ItemsSource="{Binding BlockSymbolsVM}">
+        <ItemsControl ItemsSource="{Binding SymbolsVM}">
             <ItemsControl.Resources>
                 <DataTemplate DataType="{x:Type blockSymbolsVM:ActionSymbolVM}">
                     <blockSymbolView:ActionSymbolView MouseDown="SelectBlockSymbol" />

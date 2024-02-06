@@ -5,12 +5,10 @@ using EdblockModel.SymbolsModel;
 using EdblockViewModel.ComponentsVM;
 using EdblockViewModel.Symbols.ScaleRectangles;
 using EdblockViewModel.Symbols.ConnectionPoints;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 
 namespace EdblockViewModel.AbstractionsVM;
 
-public abstract class BlockSymbolVM : INotifyPropertyChanged
+public abstract class BlockSymbolVM : SymbolVM
 {
     private Guid id;
     public Guid Id 
@@ -23,7 +21,7 @@ public abstract class BlockSymbolVM : INotifyPropertyChanged
     }
 
     private string? color;
-    public string? Color
+    public override string? Color
     {
         get => color;
         set
@@ -253,12 +251,5 @@ public abstract class BlockSymbolVM : INotifyPropertyChanged
         _textAlignmentControlVM.SetFormatAlignment(this);
 
         CanvasSymbolsVM.SelectedBlockSymbols.Add(this);
-    }
-
-    public event PropertyChangedEventHandler? PropertyChanged;
-
-    public void OnPropertyChanged([CallerMemberName] string prop = "")
-    {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
     }
 }
