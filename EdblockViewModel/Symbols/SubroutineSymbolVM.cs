@@ -2,7 +2,6 @@
 using System.Windows.Media;
 using System.Collections.Generic;
 using EdblockModel.SymbolsModel;
-using EdblockModel.AbstractionsModel;
 using EdblockViewModel.AbstractionsVM;
 using EdblockViewModel.Symbols.ScaleRectangles;
 using EdblockViewModel.Symbols.ConnectionPoints;
@@ -121,20 +120,6 @@ public class SubroutineSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnection
 
         SetCoordinatePolygonPoints();
         ChangeCoordinateAuxiliaryElements();
-    }
-
-    public override BlockSymbolModel CreateBlockSymbolModel()
-    {
-        var nameBlockSymbolVM = GetType().BaseType?.ToString();
-
-        var subroutineSymbolModel = new SubroutineSymbolModel
-        {
-            Id = Id,
-            NameSymbol = nameBlockSymbolVM,
-            Color = Color
-        };
-
-        return subroutineSymbolModel;
     }
 
     public void SetCoordinatePolygonPoints()

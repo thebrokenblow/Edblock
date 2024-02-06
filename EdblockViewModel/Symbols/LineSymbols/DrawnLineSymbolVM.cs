@@ -214,7 +214,7 @@ public class DrawnLineSymbolVM : SymbolVM
         currentCoordinte = DrawnLineSymbolModel.RoundingCoordinatesLines(startCoordinate, currentCoordinte);
 
         DrawnLineSymbolModel.ChangeCoordinateLine(currentCoordinte);
-        ArrowSymbol.ChangeOrientationArrow(startCoordinate, currentCoordinte, OutgoingPosition);
+        ArrowSymbol.ChangeOrientation(startCoordinate, currentCoordinte, OutgoingPosition);
 
         RedrawPartLines();
     }
@@ -237,7 +237,7 @@ public class DrawnLineSymbolVM : SymbolVM
 
         var lastLine = linesSymbolModel[^1];
         var coordinateLastLine = (lastLine.X2, lastLine.Y2);
-        ArrowSymbol.ChangeOrientationArrow(coordinateLastLine, IncomingPosition);
+        ArrowSymbol.ChangeOrientation(coordinateLastLine, IncomingPosition);
     }
 
     private void ShowMovableRectanglesLine()

@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using EdblockModel.SymbolsModel;
-using EdblockModel.AbstractionsModel;
 using EdblockViewModel.AbstractionsVM;
 using EdblockViewModel.Symbols.ScaleRectangles;
 using EdblockViewModel.Symbols.ConnectionPoints;
@@ -76,20 +74,6 @@ public class LinkSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnectionPoint,
         TextFieldSymbolVM.TopOffset = textFieldTopOffset;
 
         ChangeCoordinateAuxiliaryElements();
-    }
-
-    public override BlockSymbolModel CreateBlockSymbolModel()
-    {
-        var nameBlockSymbolVM = GetType().BaseType?.ToString();
-
-        var linkSymbolModel = new LinkSymbolModel()
-        {
-            Id = Id,
-            NameSymbol = nameBlockSymbolVM,
-            Color = Color
-        };
-
-        return linkSymbolModel;
     }
 
     public double GetTextFieldWidth()

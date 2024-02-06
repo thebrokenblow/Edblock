@@ -1,8 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Media;
 using System.Collections.Generic;
-using EdblockModel.SymbolsModel;
-using EdblockModel.AbstractionsModel;
 using EdblockViewModel.AbstractionsVM;
 using EdblockViewModel.Symbols.ScaleRectangles;
 using EdblockViewModel.Symbols.ConnectionPoints;
@@ -69,11 +67,8 @@ public class CycleForSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnectionPo
     {
         Width = width;
 
-        var textFieldWidth = GetTextFieldWidth();
-        var textFieldLeftOffset = GetTextFieldLeftOffset();
-
-        TextFieldSymbolVM.Width = textFieldWidth;
-        TextFieldSymbolVM.LeftOffset = textFieldLeftOffset;
+        TextFieldSymbolVM.Width = Width - sideProjection * 2;
+        TextFieldSymbolVM.LeftOffset = sideProjection;
 
         SetCoordinatePolygonPoints();
         ChangeCoordinateAuxiliaryElements();
@@ -83,28 +78,14 @@ public class CycleForSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnectionPo
     {
         Height = height;
 
-        var textFieldHeight = GetTextFieldHeight();
-        var textFieldTopOffset = GetTextFieldTopOffset();
+        var textFieldHeight = height;
+        var textFieldTopOffset = 0;
 
         TextFieldSymbolVM.Height = textFieldHeight;
         TextFieldSymbolVM.TopOffset = textFieldTopOffset;
 
         SetCoordinatePolygonPoints();
         ChangeCoordinateAuxiliaryElements();
-    }
-
-    public override BlockSymbolModel CreateBlockSymbolModel()
-    {
-        var nameBlockSymbolVM = GetType().BaseType?.ToString();
-
-        var cycleForSymbolModel = new CycleForSymbolModel()
-        {
-            Id = Id,
-            NameSymbol = nameBlockSymbolVM,
-            Color = Color,
-        };
-
-        return cycleForSymbolModel;
     }
 
     public void SetCoordinatePolygonPoints()
@@ -120,45 +101,5 @@ public class CycleForSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnectionPo
             new Point(Width, sideProjection),
             new Point(Width - sideProjection, 0),
         };
-    }
-
-    public double GetTextFieldWidth()
-    {
-        return Width - sideProjection * 2;
-    }
-
-    public double GetTextFieldHeight()
-    {
-        return Height;
-    }
-
-    public double GetTextFieldLeftOffset()
-    {
-        return sideProjection;
-    }
-
-    public double GetTextFieldTopOffset()
-    {
-        return 0;
-    }
-
-    public (double x, double y) GetTopBorderCoordinate()
-    {
-        return (XCoordinate + Width / 2, YCoordinate);
-    }
-
-    public (double x, double y) GetBottomBorderCoordinate()
-    {
-        return (XCoordinate + Width / 2, YCoordinate + Height);
-    }
-
-    public (double x, double y) GetLeftBorderCoordinate()
-    {
-        return (XCoordinate, YCoordinate + Height / 2);
-    }
-
-    public (double x, double y) GetRightBorderCoordinate()
-    {
-        return (XCoordinate + Width, YCoordinate + Height / 2);
     }
 }

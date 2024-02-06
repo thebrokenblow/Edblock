@@ -1,8 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Media;
 using System.Collections.Generic;
-using EdblockModel.SymbolsModel;
-using EdblockModel.AbstractionsModel;
 using EdblockViewModel.AbstractionsVM;
 using EdblockViewModel.Symbols.ScaleRectangles;
 using EdblockViewModel.Symbols.ConnectionPoints;
@@ -92,20 +90,6 @@ public class CycleWhileEndSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnect
 
         SetCoordinatePolygonPoints();
         ChangeCoordinateAuxiliaryElements();
-    }
-
-    public override BlockSymbolModel CreateBlockSymbolModel()
-    {
-        var nameBlockSymbolVM = GetType().BaseType?.ToString();
-
-        var cycleWhileBeginSymbolModel = new CycleWhileSymbolModel()
-        {
-            Id = Id,
-            NameSymbol = nameBlockSymbolVM,
-            Color = Color,
-        };
-
-        return cycleWhileBeginSymbolModel;
     }
 
     public void SetCoordinatePolygonPoints()

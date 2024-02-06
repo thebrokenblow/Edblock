@@ -1,8 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Media;
 using System.Collections.Generic;
-using EdblockModel.SymbolsModel;
-using EdblockModel.AbstractionsModel;
 using EdblockViewModel.AbstractionsVM;
 using EdblockViewModel.Symbols.ScaleRectangles;
 using EdblockViewModel.Symbols.ConnectionPoints;
@@ -14,7 +12,7 @@ public class ConditionSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnectionP
 {
     public TextFieldSymbolVM TextFieldSymbolVM { get; init; }
     public List<ScaleRectangle> ScaleRectangles { get; init; } = new();
-    public List<ConnectionPointVM> ConnectionPoints { get; init; } = new();
+    public List<ConnectionPointVM> ConnectionPoints { get; init; } = new(countConnectionPoints);
     public BuilderScaleRectangles BuilderScaleRectangles { get; init; }
 
     private PointCollection? points;
@@ -31,6 +29,7 @@ public class ConditionSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnectionP
     private const int defaultWidth = 140;
     private const int defaultHeigth = 60;
 
+    private const int countConnectionPoints = 4;
     private const string defaultText = "Условие";
     private const string defaultColor = "#FF60B2D3";
 
@@ -55,7 +54,6 @@ public class ConditionSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnectionP
         Color = defaultColor;
 
         TextFieldSymbolVM.Text = defaultText;
-        BlockSymbolModel = CreateBlockSymbolModel();
 
         Width = defaultWidth;
         Height = defaultHeigth;
@@ -90,20 +88,6 @@ public class ConditionSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnectionP
 
         SetCoordinatePolygonPoints();
         ChangeCoordinateAuxiliaryElements();
-    }
-
-    public override BlockSymbolModel CreateBlockSymbolModel()
-    {
-        var nameBlockSymbolVM = GetType().BaseType?.ToString();
-
-        var conditionSymbolModel = new ConditionSymbolModel()
-        {
-            Id = Id,
-            NameSymbol = nameBlockSymbolVM,
-            Color = Color,
-        };
-
-        return conditionSymbolModel;
     }
 
     public void SetCoordinatePolygonPoints()

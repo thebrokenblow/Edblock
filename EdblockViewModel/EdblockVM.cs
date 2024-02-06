@@ -15,7 +15,7 @@ public class EdblockVM
     public FormatTextControlVM FormatTextControlVM { get; init; }
     public PopupBoxMenuVM PopupBoxMenuVM { get; init; }
 
-    private readonly ProjectVM _projectVM;
+    private readonly ProjectVM projectVM;
 
     public EdblockVM()
     {
@@ -28,20 +28,20 @@ public class EdblockVM
         TextAlignmentControlVM = new TextAlignmentControlVM(selectedBlockSymbols);
         FormatTextControlVM = new FormatTextControlVM(selectedBlockSymbols);
 
-        PopupBoxMenuVM = new();
+        PopupBoxMenuVM = new(this);
 
         ClickDelete = new(CanvasSymbolsVM.DeleteSymbols);
-        //_projectVM = new(this);
+        projectVM = new(this);
     }
 
     public void SaveProject(string filePath)
     {
-        _projectVM.Save(filePath);
+        projectVM.Save(filePath);
     }
 
     public void LoadProject(string filePath)
     {
-        _projectVM.Load(filePath);
+       // _projectVM.Load(filePath);
     }
 
     public void AddBlockSymbol(BlockSymbolVM blockSymbolVM)

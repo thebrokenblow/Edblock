@@ -2,11 +2,13 @@
 
 public class PopupBoxMenuVM
 {
+    public EdblockVM EdblockVM { get; set; }
     public ScaleAllSymbolVM ScaleAllSymbolVM { get; set; } 
     public CheckBoxLineGostVM CheckBoxLineGostVM { get; set; }
 
-    public PopupBoxMenuVM()
+    public PopupBoxMenuVM(EdblockVM edblockVM)
     {
+        EdblockVM = edblockVM;
         ScaleAllSymbolVM = new();
         CheckBoxLineGostVM = new();
     }

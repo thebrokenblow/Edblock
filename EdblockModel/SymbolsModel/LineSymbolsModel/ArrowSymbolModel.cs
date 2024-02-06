@@ -7,6 +7,8 @@ public class ArrowSymbolModel
     private const int WidthArrow = 7;
     private const int HeightArrow = 7;
 
+    private static ArrowOrientation arrowOrientation;
+
     private readonly static Dictionary<SideSymbol, Func<(double, double), List<(double, double)>>> coordinateArrorByPosition = new()
     {
         { SideSymbol.Right, coordinate => GetCoordinateLeft(coordinate) },
@@ -14,6 +16,35 @@ public class ArrowSymbolModel
         { SideSymbol.Top, coordinate => GetCoordinateBottom(coordinate) },
         { SideSymbol.Bottom, coordinate => GetCoordinateTop(coordinate) }
     };
+
+    public static List<(double, double)> GetFinalCoordinate((double x, double y) finalCoordinate)
+    {
+        if (arrowOrientation == ArrowOrientation.Top)
+        {
+            var coordinateArrow = GetCoordinateTop(finalCoordinate);
+
+            return coordinateArrow;
+        }
+        else if (arrowOrientation == ArrowOrientation.Right)
+        {
+            var coordinateArrow = GetCoordinateRigth(finalCoordinate);
+
+            return coordinateArrow;
+
+        }
+        else if (arrowOrientation == ArrowOrientation.Bottom)
+        {
+            var coordinateArrow = GetCoordinateBottom(finalCoordinate);
+
+            return coordinateArrow;
+        }
+        else
+        {
+            var coordinateArrow = GetCoordinateLeft(finalCoordinate);
+
+            return coordinateArrow;
+        }
+    }
 
     //Получение координат стрелки во время рисования линии
     public static List<(double, double)> GetCoordinateArrow((double x, double y) startCoordinateLine, (double x, double y) currentCoordinateLine, SideSymbol positionConnectionPoint)
@@ -47,12 +78,14 @@ public class ArrowSymbolModel
             if (currentCoordinateLine.x > startCoordinateLine.x)
             {
                 var coordinateArrow = GetCoordinateRigth(currentCoordinateLine);
+                arrowOrientation = ArrowOrientation.Right;
 
                 return coordinateArrow;
             }
             else
             {
                 var coordinateArrow = GetCoordinateLeft(currentCoordinateLine);
+                arrowOrientation = ArrowOrientation.Left;
 
                 return coordinateArrow;
             }
@@ -62,12 +95,14 @@ public class ArrowSymbolModel
             if (currentCoordinateLine.y > startCoordinateLine.y)
             {
                 var coordinateArrow = GetCoordinateBottom(currentCoordinateLine);
+                arrowOrientation = ArrowOrientation.Bottom;
 
                 return coordinateArrow;
             }
             else
             {
                 var coordinateArrow = GetCoordinateTop(currentCoordinateLine);
+                arrowOrientation = ArrowOrientation.Top;
 
                 return coordinateArrow;
             }
@@ -82,11 +117,15 @@ public class ArrowSymbolModel
             if (currentCoordinateLine.y > startCoordinateLine.y)
             {
                 var coordinateArrow = GetCoordinateBottom(currentCoordinateLine);
+                arrowOrientation = ArrowOrientation.Bottom;
+
                 return coordinateArrow;
             }
             else
             {
                 var coordinateArrow = GetCoordinateTop(currentCoordinateLine);
+                arrowOrientation = ArrowOrientation.Top;
+
                 return coordinateArrow;
             }
         }
@@ -95,11 +134,15 @@ public class ArrowSymbolModel
             if (currentCoordinateLine.x > startCoordinateLine.x)
             {
                 var coordinateArrow = GetCoordinateRigth(currentCoordinateLine);
+                arrowOrientation = ArrowOrientation.Right;
+
                 return coordinateArrow;
             }
             else
             {
                 var coordinateArrow = GetCoordinateLeft(currentCoordinateLine);
+                arrowOrientation = ArrowOrientation.Left;
+
                 return coordinateArrow;
             }
         }

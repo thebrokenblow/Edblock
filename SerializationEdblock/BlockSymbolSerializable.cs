@@ -2,8 +2,9 @@
 
 public class BlockSymbolSerializable
 {
-    public string? Id { get; init; }
+    public Guid Id { get; init; }
     public string? NameSymbol { get; init; }
+    public string? Color { get; init; }
     public TextFieldSerializable? TextFieldSerializable { get; init; }
     public double Width { get; init; }
     public double Height { get; init; }

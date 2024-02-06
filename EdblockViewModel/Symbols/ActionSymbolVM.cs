@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
 using EdblockModel.Enum;
-using EdblockModel.SymbolsModel;
-using EdblockModel.AbstractionsModel;
 using EdblockViewModel.AbstractionsVM;
 using EdblockViewModel.Symbols.ScaleRectangles;
 using EdblockViewModel.Symbols.ConnectionPoints;
@@ -30,7 +28,6 @@ public class ActionSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnectionPoin
         Height = defaultHeigth;
 
         TextFieldSymbolVM = new(edblockVM.CanvasSymbolsVM, this);
-        BlockSymbolModel = CreateBlockSymbolModel();
 
         BuilderScaleRectangles = new(CanvasSymbolsVM, edblockVM.PopupBoxMenuVM.ScaleAllSymbolVM, this);
 
@@ -81,20 +78,6 @@ public class ActionSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnectionPoin
         ChangeCoordinateAuxiliaryElements();
     }
 
-    public override BlockSymbolModel CreateBlockSymbolModel()
-    {
-        var nameSymbol = GetType().BaseType?.ToString();
-
-        var actionSymbolModel = new ActionSymbolModel
-        {
-            Id = Id,
-            NameSymbol = nameSymbol,
-            Color = Color
-        };
-
-        return actionSymbolModel;
-    }
-
     private void SetCoordinateConnectionPoint()
     {
         SetCoordinateTopConnectionPoint();
@@ -105,45 +88,53 @@ public class ActionSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnectionPoin
 
     private void SetCoordinateTopConnectionPoint()
     {
+        var xCoordinate = Width / 2;
+
         var topConnectionPoint = ConnectionPoints[0];
 
-        topConnectionPoint.XCoordinate = Width / 2;
+        topConnectionPoint.XCoordinate = xCoordinate;
         topConnectionPoint.YCoordinate = -offsetPositionConnectionPoint;
 
-        topConnectionPoint.XCoordinateLineDraw = Width / 2;
+        topConnectionPoint.XCoordinateLineDraw = xCoordinate;
         topConnectionPoint.YCoordinateLineDraw = 0;
     }
 
     public void SetCoordinateRightConnectionPoint()
     {
+        var yCoordinate = Height / 2;
+
         var bottomConnectionPoint = ConnectionPoints[1];
 
         bottomConnectionPoint.XCoordinate = Width + offsetPositionConnectionPoint;
-        bottomConnectionPoint.YCoordinate = Height / 2;
+        bottomConnectionPoint.YCoordinate = yCoordinate;
 
         bottomConnectionPoint.XCoordinateLineDraw = Width;
-        bottomConnectionPoint.YCoordinateLineDraw = Height / 2;
+        bottomConnectionPoint.YCoordinateLineDraw = yCoordinate;
     }
 
     public void SetCoordinateBottomConnectionPoint()
     {
+        var xCoordinate = Width / 2;
+
         var bottomConnectionPoint = ConnectionPoints[2];
 
-        bottomConnectionPoint.XCoordinate = Width / 2;
+        bottomConnectionPoint.XCoordinate = xCoordinate;
         bottomConnectionPoint.YCoordinate = Height + offsetPositionConnectionPoint;
 
-        bottomConnectionPoint.XCoordinateLineDraw = Width / 2;
+        bottomConnectionPoint.XCoordinateLineDraw = xCoordinate;
         bottomConnectionPoint.YCoordinateLineDraw = Height;
     }
 
     public void SetCoordinateLeftConnectionPoint()
     {
+        var yCoordinate = Height / 2;
+
         var leftConnectionPoint = ConnectionPoints[3];
 
         leftConnectionPoint.XCoordinate = -offsetPositionConnectionPoint;
-        leftConnectionPoint.YCoordinate = Height / 2;
+        leftConnectionPoint.YCoordinate = yCoordinate;
 
         leftConnectionPoint.XCoordinateLineDraw = 0;
-        leftConnectionPoint.YCoordinateLineDraw = Height / 2;
+        leftConnectionPoint.YCoordinateLineDraw = yCoordinate;
     }
 }

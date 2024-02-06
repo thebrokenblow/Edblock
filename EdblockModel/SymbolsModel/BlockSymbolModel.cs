@@ -1,6 +1,8 @@
-﻿namespace EdblockModel.AbstractionsModel;
+﻿using EdblockModel.SymbolsModel;
 
-public abstract class BlockSymbolModel
+namespace EdblockModel.SymbolsModel;
+
+public class BlockSymbolModel
 {
     public Guid Id { get; set; }
     public string? NameSymbol { get; set; }
@@ -9,6 +11,5 @@ public abstract class BlockSymbolModel
     public string? Color { get; set; }
     public double Width { get; set; }
     public double Height { get; set; }
-    public abstract double MinWidth { get; }
-    public abstract double MinHeight { get; }
+    public TextFieldSymbolModel? TextFieldSymbolModel { get; set; }
 }

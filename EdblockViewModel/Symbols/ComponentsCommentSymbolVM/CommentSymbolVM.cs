@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using EdblockModel.SymbolsModel;
-using EdblockModel.AbstractionsModel;
 using EdblockViewModel.ComponentsVM;
 using EdblockViewModel.AbstractionsVM;
 using EdblockViewModel.Symbols.ConnectionPoints;
@@ -72,13 +71,6 @@ public class CommentSymbolVM : BlockSymbolVM, IHasTextFieldVM
 
         Width = UpperHorizontalBaseline.X2 + widthTextField;
         Height = heightTextField;
-    }
-
-    public override BlockSymbolModel CreateBlockSymbolModel()
-    {
-        var commentSymbolModel = new CommentSymbolModel();
-
-        return commentSymbolModel;
     }
 
     private void InitHorizontalLine()

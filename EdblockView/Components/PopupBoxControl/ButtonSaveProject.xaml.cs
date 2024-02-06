@@ -14,7 +14,6 @@ public partial class ButtonSaveProject : UserControl
     private const string fileName = "Edblock";
     private const string fileExtension = ".json";
     private const string fileFilter = "Files(*.json)|*.json|All(*.*)|*";
-    public EdblockVM? EdblockVM { get; set; }
 
     public ButtonSaveProject()
     {
@@ -23,30 +22,33 @@ public partial class ButtonSaveProject : UserControl
 
     private void SaveProject(object sender, RoutedEventArgs e)
     {
-        var saveFileDialog = new SaveFileDialog
+        if (DataContext is EdblockVM edblock)
         {
-            Filter = fileFilter,
-            FileName = fileName + fileExtension
-        };
-
-        if (saveFileDialog.ShowDialog() == true)
-        {
-            var fileInfo = new FileInfo(saveFileDialog.FileName);
-
-            if (fileInfo.Exists)
+            var saveFileDialog = new SaveFileDialog
             {
-                fileInfo.Delete();
-            }
+                Filter = fileFilter,
+                FileName = fileName + fileExtension
+            };
 
-            var filePath = saveFileDialog.FileName.ToString();
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                var fileInfo = new FileInfo(saveFileDialog.FileName);
 
-            try
-            {
-                EdblockVM?.SaveProject(filePath);
-            }
-            catch
-            {
-                MessageBox.Show("Ошибка при сохранении проекта");
+                if (fileInfo.Exists)
+                {
+                    fileInfo.Delete();
+                }
+
+                var filePath = saveFileDialog.FileName.ToString();
+
+                try
+                {
+                    edblock.SaveProject(filePath);
+                }
+                catch
+                {
+                    MessageBox.Show("Ошибка при сохранении проекта");
+                }
             }
         }
     }

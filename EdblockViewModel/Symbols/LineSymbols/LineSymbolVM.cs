@@ -1,10 +1,8 @@
-﻿using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using EdblockViewModel.ComponentsVM;
-using EdblockModel.SymbolsModel.LineSymbolsModel;
-using System;
-using EdblockViewModel.AbstractionsVM;
+﻿using System;
+using System.ComponentModel;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using EdblockModel.SymbolsModel.LineSymbolsModel;
 
 namespace EdblockViewModel.Symbols.LineSymbols;
 
@@ -96,6 +94,7 @@ public class LineSymbolVM : INotifyPropertyChanged
         {
             var blockSymbolVM = currentDrawnLineSymbol.SymbolOutgoingLine;
 
+            var firstLine = currentDrawnLineSymbol.LinesSymbolVM[0];
             var lastLineSymbolVM = currentDrawnLineSymbol.LinesSymbolVM[^1];
 
             if (x1 == x2 && lastLineSymbolVM.y1 == lastLineSymbolVM.y2)
@@ -103,20 +102,8 @@ public class LineSymbolVM : INotifyPropertyChanged
                 lastLineSymbolVM.X2 = x2;
 
                 var blockByDrawnLines = _drawnLineSymbolVM.CanvasSymbolsVM.BlockByDrawnLines;
-
-                if (!blockByDrawnLines.ContainsKey(blockSymbolVM))
-                {
-                    var drawnLinesSymbolVM = new List<DrawnLineSymbolVM>
-                    {
-                        currentDrawnLineSymbol
-                    };
-
-                    blockByDrawnLines.Add(blockSymbolVM, drawnLinesSymbolVM);
-                }
-                else
-                {
-                    blockByDrawnLines[blockSymbolVM].Add(currentDrawnLineSymbol);
-                }
+               
+                currentDrawnLineSymbol.ArrowSymbol.ChangePosition((x2, lastLineSymbolVM.y2));
             }
             else if (y1 == y2 && lastLineSymbolVM.x1 == lastLineSymbolVM.x2)
             {
@@ -124,19 +111,7 @@ public class LineSymbolVM : INotifyPropertyChanged
 
                 var blockByDrawnLines = _drawnLineSymbolVM.CanvasSymbolsVM.BlockByDrawnLines;
 
-                if (!blockByDrawnLines.ContainsKey(blockSymbolVM))
-                {
-                    var drawnLinesSymbolVM = new List<DrawnLineSymbolVM>
-                    {
-                        currentDrawnLineSymbol
-                    };
-
-                    blockByDrawnLines.Add(blockSymbolVM, drawnLinesSymbolVM);
-                }
-                else
-                {
-                    blockByDrawnLines[blockSymbolVM].Add(currentDrawnLineSymbol);
-                }
+                currentDrawnLineSymbol.ArrowSymbol.ChangePosition((lastLineSymbolVM.x2, y2));
             }
             else
             {

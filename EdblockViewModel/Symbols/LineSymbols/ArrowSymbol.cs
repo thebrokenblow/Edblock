@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using EdblockModel.SymbolsModel.LineSymbolsModel;
 using EdblockModel.Enum;
+using EdblockModel.SymbolsModel.LineSymbolsModel.DecoratorLineSymbolsModel;
 
 namespace EdblockViewModel.Symbols.LineSymbols;
 
@@ -32,13 +33,19 @@ public class ArrowSymbol : INotifyPropertyChanged
         }
     }
 
-    public void ChangeOrientationArrow((double x, double y) startCoordinateLine, (double x, double y) currentCoordinateLine, SideSymbol positionConnectionPoint)
+    public void ChangePosition((double x, double y) finalCoordinate)
+    {
+        var coordinatesArrow = ArrowSymbolModel.GetFinalCoordinate(finalCoordinate);
+        SetCoodinate(coordinatesArrow);
+    }
+
+    public void ChangeOrientation((double x, double y) startCoordinateLine, (double x, double y) currentCoordinateLine, SideSymbol positionConnectionPoint)
     {
         var coordinatesArrow = ArrowSymbolModel.GetCoordinateArrow(startCoordinateLine, currentCoordinateLine, positionConnectionPoint);
         SetCoodinate(coordinatesArrow);
     }
 
-    public void ChangeOrientationArrow((double x, double y) finalCoordinate, SideSymbol positionConnectionPoint)
+    public void ChangeOrientation((double x, double y) finalCoordinate, SideSymbol positionConnectionPoint)
     {
         var coordinatesArrow = ArrowSymbolModel.GetCoordinateArrow(finalCoordinate, positionConnectionPoint);
         SetCoodinate(coordinatesArrow);

@@ -173,9 +173,10 @@ public class TextFieldSymbolVM : INotifyPropertyChanged
 
     public TextFieldSymbolVM(CanvasSymbolsVM canvasSymbolsVM, BlockSymbolVM blockSymbolVM)
     {
-        _textFieldModel = new();
-        _blockSymbolVM = blockSymbolVM;
         _canvasSymbolsVM = canvasSymbolsVM;
+        _blockSymbolVM = blockSymbolVM;
+        _blockSymbolVM.BlockSymbolModel.TextFieldSymbolModel = new();
+        _textFieldModel = _blockSymbolVM.BlockSymbolModel.TextFieldSymbolModel;
 
         Cursor = Cursors.SizeAll;
         MouseDoubleClick = new(AddFocus);

@@ -24,9 +24,9 @@
 
             <popupboxcontrol:ScaleAllSymbol DataContext="{Binding ScaleAllSymbolVM}"/>
 
-            <popupboxcontrol:ButtonSaveProject x:Name="ButtonSaveProject" Margin="0 5"/>
+            <popupboxcontrol:ButtonSaveProject DataContext="{Binding EdblockVM}" x:Name="ButtonSaveProject" Margin="0 5"/>
 
-            <popupboxcontrol:ButtonLoadProject x:Name="ButtonLoadProject" Margin="0 5"/>
+            <popupboxcontrol:ButtonLoadProject DataContext="{Binding EdblockVM}" x:Name="ButtonLoadProject" Margin="0 5"/>
 
             <popupboxcontrol:ButtonSaveImg Margin="0 5"/>
 

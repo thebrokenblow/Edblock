@@ -8,7 +8,7 @@ internal class ScaleBlockSymbol
     {
         var blockSymbolModel = scalePartBlockSymbol.ScalingBlockSymbol.BlockSymbolModel;
 
-        double minWidth = blockSymbolModel.MinWidth;
+        double minWidth = 40;//blockSymbolModel.MinWidth;
         double widthBlockSymbol = canvasSymbolsVM.XCoordinate - scalePartBlockSymbol.InitialXCoordinateBlockSymbol;
 
         if (minWidth > widthBlockSymbol)
@@ -23,7 +23,7 @@ internal class ScaleBlockSymbol
     {
         var blockSymbolModel = scalePartBlockSymbol.ScalingBlockSymbol.BlockSymbolModel;
 
-        double minHeight = blockSymbolModel.MinHeight;
+        double minHeight = 40;//blockSymbolModel.MinHeight;
         double heigthBlockSymbol = canvasSymbolsVM.YCoordinate - scalePartBlockSymbol.InitialYCoordinateBlockSymbol;
 
         if (minHeight > heigthBlockSymbol)
@@ -41,7 +41,7 @@ internal class ScaleBlockSymbol
         int currentXCoordinateCursor = canvasSymbolsVM.XCoordinate;
         double initialWidth = scalePartBlockSymbol.InitialWidthBlockSymbol;
         double initialXCoordinate = scalePartBlockSymbol.InitialXCoordinateBlockSymbol;
-        double minWidth = blockSymbolModel.MinWidth;
+        double minWidth = 40;//blockSymbolModel.MinWidth;
 
         double widthBlockSymbol = initialWidth + (initialXCoordinate - currentXCoordinateCursor);
 
@@ -63,7 +63,7 @@ internal class ScaleBlockSymbol
         int currentYCoordinateCursor = canvasSymbolsVM.YCoordinate;
         double initialHeigth = scalePartBlockSymbol.InitialHeigthBlockSymbol;
         double initialYCoordinate = scalePartBlockSymbol.InitialYCoordinateBlockSymbol;
-        double minHeight = blockSymbolModel.MinHeight;
+        double minHeight = 40;//blockSymbolModel.MinHeight;
 
         double heigthBlockSymbol = initialHeigth + (initialYCoordinate - currentYCoordinateCursor);
 

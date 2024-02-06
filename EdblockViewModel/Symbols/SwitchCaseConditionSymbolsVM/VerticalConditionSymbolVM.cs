@@ -3,7 +3,6 @@ using System.Windows.Media;
 using System.Collections.Generic;
 using EdblockModel.Enum;
 using EdblockModel.SymbolsModel;
-using EdblockModel.AbstractionsModel;
 using EdblockViewModel.AbstractionsVM;
 using EdblockViewModel.Symbols.ScaleRectangles;
 using EdblockViewModel.Symbols.ConnectionPoints;
@@ -139,20 +138,6 @@ public class VerticalConditionSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasCon
             ConnectionPoints[i - 1].YCoordinate = heightLine;
             ConnectionPoints[i - 1].YCoordinateLineDraw = heightLine;
         }
-    }
-
-    public override BlockSymbolModel CreateBlockSymbolModel()
-    {
-        var nameBlockSymbolVM = GetType().BaseType?.ToString();
-
-        var conditionSymbolModel = new ConditionSymbolModel()
-        {
-            Id = Id,
-            NameSymbol = nameBlockSymbolVM,
-            Color = Color,
-        };
-
-        return conditionSymbolModel;
     }
 
     private void SetCoordinateVerticalLineSwitchCase()

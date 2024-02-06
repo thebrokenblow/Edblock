@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using EdblockModel.Enum;
 using EdblockModel.SymbolsModel;
-using EdblockModel.AbstractionsModel;
 using EdblockViewModel.AbstractionsVM;
 using EdblockViewModel.Symbols.ConnectionPoints;
 
@@ -56,7 +55,6 @@ public class ParallelActionSymbolVM : BlockSymbolVM, IHasConnectionPoint
             ConnectionPoints.Add(bottomConnectionPoint);
         }
 
-        BlockSymbolModel = CreateBlockSymbolModel();
 
         SetWidth(defaultWidth);
         SetHeight(defaultHeigth);

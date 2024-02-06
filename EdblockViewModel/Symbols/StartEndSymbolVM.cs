@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using EdblockModel.SymbolsModel;
-using EdblockModel.AbstractionsModel;
 using EdblockViewModel.AbstractionsVM;
 using EdblockViewModel.Symbols.ScaleRectangles;
 using EdblockViewModel.Symbols.ConnectionPoints;
@@ -77,20 +76,6 @@ public class StartEndSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnectionPo
         TextFieldSymbolVM.TopOffset = textFieldTopOffset;
 
         ChangeCoordinateAuxiliaryElements();
-    }
-
-    public override BlockSymbolModel CreateBlockSymbolModel()
-    {
-        var nameBlockSymbolModel = GetType().BaseType?.ToString();
-
-        var startEndSymbolModel = new StartEndSymbolModel()
-        {
-            Id = Id,
-            NameSymbol = nameBlockSymbolModel,
-            Color = Color,
-        };
-
-        return startEndSymbolModel;
     }
 
     public double GetTextFieldWidth()

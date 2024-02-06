@@ -1,5 +1,4 @@
 ﻿using EdblockModel.Enum;
-using EdblockModel.AbstractionsModel;
 using EdblockModel.SymbolsModel.LineSymbolsModel.DecoratorLineSymbolsModel;
 
 namespace EdblockModel.SymbolsModel.LineSymbolsModel.RedrawnLineSymbolsModel;

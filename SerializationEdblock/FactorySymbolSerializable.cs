@@ -1,4 +1,4 @@
-﻿using EdblockModel.AbstractionsModel;
+﻿using EdblockModel.SymbolsModel;
 using EdblockModel.SymbolsModel.LineSymbolsModel;
 
 namespace SerializationEdblock;
@@ -7,29 +7,37 @@ public class FactorySymbolSerializable
 {
     public static BlockSymbolSerializable CreateBlockSymbolSerializable(BlockSymbolModel blockSymbolModel)
     {
-        //var textFieldSerializable = new TextFieldSerializable()
-        //{
-        //    Text = blockSymbolModel.TextFieldModel.Text,
-        //    FontFamily = blockSymbolModel.TextFieldModel.FontFamily,
-        //    FontSize = blockSymbolModel.TextFieldModel.FontSize,
-        //    TextAlignment = blockSymbolModel.TextFieldModel.TextAlignment,
-        //    FontWeight = blockSymbolModel.TextFieldModel.FontWeight,
-        //    FontStyle = blockSymbolModel.TextFieldModel.FontStyle,
-        //    TextDecorations = blockSymbolModel.TextFieldModel.TextDecorations,
-        //};
+        TextFieldSerializable? textFieldSerializable = null;
 
-        //var blockSymbolSerializable = new BlockSymbolSerializable
-        //{
-        //    Id = blockSymbolModel.Id,
-        //    NameSymbol = blockSymbolModel.NameSymbol,
-        //    TextFieldSerializable = textFieldSerializable,
-        //    Width = blockSymbolModel.Width,
-        //    Height = blockSymbolModel.Height,
-        //    XCoordinate = blockSymbolModel.XCoordinate,
-        //    YCoordinate = blockSymbolModel.YCoordinate
-        //};
+        if (blockSymbolModel.TextFieldSymbolModel is not null)
+        {
+            var textFieldSymbolModel = blockSymbolModel.TextFieldSymbolModel;
 
-        return null;
+            textFieldSerializable = new TextFieldSerializable()
+            {
+                Text = textFieldSymbolModel.Text,
+                FontFamily = textFieldSymbolModel.FontFamily,
+                FontSize = textFieldSymbolModel.FontSize,
+                TextAlignment = textFieldSymbolModel.TextAlignment,
+                FontWeight = textFieldSymbolModel.FontWeight,
+                FontStyle = textFieldSymbolModel.FontStyle,
+                TextDecorations = textFieldSymbolModel.TextDecorations,
+            };
+        }
+
+        var blockSymbolSerializable = new BlockSymbolSerializable
+        {
+            Id = blockSymbolModel.Id,
+            NameSymbol = blockSymbolModel.NameSymbol,
+            Color = blockSymbolModel.Color,
+            TextFieldSerializable = textFieldSerializable,
+            Width = blockSymbolModel.Width,
+            Height = blockSymbolModel.Height,
+            XCoordinate = blockSymbolModel.XCoordinate,
+            YCoordinate = blockSymbolModel.YCoordinate
+        };
+
+        return blockSymbolSerializable;
     }
 
     public static DrawnLineSymbolSerializable CreateDrawnLineSymbolSerializable(DrawnLineSymbolModel drawnLineSymbolModel)

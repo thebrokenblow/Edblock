@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 using Prism.Commands;
-using EdblockModel.Enum;
-using EdblockModel.AbstractionsModel;
+using EdblockModel.SymbolsModel;
 using EdblockViewModel.ComponentsVM;
 using EdblockViewModel.Symbols.ScaleRectangles;
 using EdblockViewModel.Symbols.ConnectionPoints;
@@ -11,7 +10,15 @@ namespace EdblockViewModel.AbstractionsVM;
 
 public abstract class BlockSymbolVM : SymbolVM
 {
-    public Guid Id { get; set; }
+    private Guid id;
+    public Guid Id 
+    {
+        get => id;
+        set
+        {
+            id = value;
+        }
+    }
 
     private string? color;
     public override string? Color
@@ -20,11 +27,7 @@ public abstract class BlockSymbolVM : SymbolVM
         set
         {
             color = value;
-
-            if (BlockSymbolModel is not null)
-            {
-                BlockSymbolModel.Color = color;
-            }
+            BlockSymbolModel.Color = color;
 
             OnPropertyChanged();
         }
@@ -37,11 +40,7 @@ public abstract class BlockSymbolVM : SymbolVM
         set
         {
             width = value;
-
-            if (BlockSymbolModel is not null)
-            {
-                BlockSymbolModel.Width = width;
-            }
+            BlockSymbolModel.Width = width;
 
             OnPropertyChanged();
         }
@@ -54,11 +53,7 @@ public abstract class BlockSymbolVM : SymbolVM
         set
         {
             heigth = value;
-
-            if (BlockSymbolModel is not null)
-            {
-                BlockSymbolModel.Height = heigth;
-            }
+            BlockSymbolModel.Height = heigth;
 
             OnPropertyChanged();
         }
@@ -71,11 +66,7 @@ public abstract class BlockSymbolVM : SymbolVM
         set
         {
             xCoordinate = value;
-
-            if (BlockSymbolModel is not null)
-            {
-                BlockSymbolModel.XCoordinate = xCoordinate;
-            }
+            BlockSymbolModel.XCoordinate = xCoordinate;
 
             OnPropertyChanged();
         }
@@ -88,11 +79,7 @@ public abstract class BlockSymbolVM : SymbolVM
         set
         {
             yCoordinate = value;
-
-            if (BlockSymbolModel is not null)
-            {
-                BlockSymbolModel.YCoordinate = yCoordinate;
-            }
+            BlockSymbolModel.YCoordinate = yCoordinate;
 
             OnPropertyChanged();
         }
@@ -112,7 +99,7 @@ public abstract class BlockSymbolVM : SymbolVM
     public DelegateCommand MouseEnter { get; set; }
     public DelegateCommand MouseLeave { get; set; }
     public DelegateCommand MouseLeftButtonDown { get; set; }
-    public BlockSymbolModel? BlockSymbolModel { get; init; }
+    public BlockSymbolModel BlockSymbolModel { get; init; }
     public CanvasSymbolsVM CanvasSymbolsVM { get; init; }
 
     protected readonly CheckBoxLineGostVM _checkBoxLineGostVM;
@@ -134,14 +121,26 @@ public abstract class BlockSymbolVM : SymbolVM
 
         Id = Guid.NewGuid();
 
+        BlockSymbolModel = CreateBlockSymbolModel();
+
         MouseEnter = new(ShowAuxiliaryElements);
         MouseLeave = new(HideAuxiliaryElements);
         MouseLeftButtonDown = new(SetMovableSymbol);
     }
 
-    public abstract BlockSymbolModel CreateBlockSymbolModel();
     public abstract void SetWidth(double width);
     public abstract void SetHeight(double height);
+
+    public virtual BlockSymbolModel CreateBlockSymbolModel()
+    {
+        var blockSymbolModel = new BlockSymbolModel()
+        {
+            Id = Id,
+            NameSymbol = GetType().Name.ToString(),
+        };
+
+        return blockSymbolModel;
+    }
 
     public void SetCoordinate((int x, int y) currentCoordinate, (int x, int y) previousCoordinate)
     {
@@ -171,10 +170,7 @@ public abstract class BlockSymbolVM : SymbolVM
 
     public void ShowAuxiliaryElements()
     {
-        //if (CanvasSymbolsVM.Cursor == Cursors.Arrow)
-        {
-            CanvasSymbolsVM.Cursor = Cursors.SizeAll;
-        }
+        CanvasSymbolsVM.Cursor = Cursors.SizeAll;
 
         var movableSymbol = CanvasSymbolsVM.MovableBlockSymbol;
         var scalePartBlockSymbolVM = CanvasSymbolsVM.ScalePartBlockSymbol;
@@ -232,24 +228,6 @@ public abstract class BlockSymbolVM : SymbolVM
                 scaleRectangle.ChangeCoordination();
             }
         }
-    }
-
-    internal ConnectionPointVM GetConnectionPoint(SideSymbol outgoingPosition)
-    {
-        if (this is IHasConnectionPoint symbolHasConnectionPoint)
-        {
-            var connectionPoints = symbolHasConnectionPoint.ConnectionPoints;
-
-            foreach (var connectionPoint in connectionPoints)
-            {
-                if (connectionPoint.Position == outgoingPosition)
-                {
-                    return connectionPoint;
-                }
-            }
-        }
-
-        throw new Exception("Точки соединения с такой позицией нет");
     }
 
     public void SetMovableSymbol()
