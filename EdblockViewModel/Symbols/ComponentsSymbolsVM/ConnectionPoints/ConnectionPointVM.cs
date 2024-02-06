@@ -173,7 +173,7 @@ public class ConnectionPointVM : INotifyPropertyChanged
         drawnLineSymbolVM.AddFirstLine(BlockSymbolVM.XCoordinate + XCoordinateLineDraw, BlockSymbolVM.YCoordinate + YCoordinateLineDraw);
         drawnLineSymbolVM.RedrawPartLines();
 
-        _canvasSymbolsVM.SymbolsVM.Add(drawnLineSymbolVM);
+        _canvasSymbolsVM.DrawnLinesSymbolVM.Add(drawnLineSymbolVM);
         _canvasSymbolsVM.СurrentDrawnLineSymbol = drawnLineSymbolVM;
     }
 

@@ -9,10 +9,12 @@ using EdblockModel.SymbolsModel.LineSymbolsModel.RedrawnLineSymbolsModel;
 using EdblockViewModel.AbstractionsVM;
 using EdblockModel.Enum;
 using System.Windows.Input;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace EdblockViewModel.Symbols.LineSymbols;
 
-public class DrawnLineSymbolVM : SymbolVM
+public class DrawnLineSymbolVM : INotifyPropertyChanged
 {
     public DrawnLineSymbolModel DrawnLineSymbolModel { get; set; }
     public ObservableCollection<LineSymbolVM> LinesSymbolVM { get; init; }
@@ -81,7 +83,7 @@ public class DrawnLineSymbolVM : SymbolVM
 
     private const string defaultColor = "#000000";
     private string? color;
-    public override string? Color
+    public string? Color
     {
         get => color;
         set
@@ -441,5 +443,12 @@ public class DrawnLineSymbolVM : SymbolVM
     public void ShowTextField()
     {
         IsShowTextField = true;
+    }
+
+    public event PropertyChangedEventHandler? PropertyChanged;
+
+    public void OnPropertyChanged([CallerMemberName] string prop = "")
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
     }
 }
