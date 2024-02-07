@@ -1,5 +1,4 @@
 ﻿using Prism.Commands;
-using EdblockViewModel.Symbols;
 using EdblockViewModel.ComponentsVM;
 using EdblockViewModel.AbstractionsVM;
 
@@ -41,7 +40,7 @@ public class EdblockVM
 
     public void LoadProject(string filePath)
     {
-       // _projectVM.Load(filePath);
+        projectVM.Load(filePath);
     }
 
     public void AddBlockSymbol(BlockSymbolVM blockSymbolVM)

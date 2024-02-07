@@ -1,16 +1,15 @@
 ﻿using System.Windows;
 using System.Windows.Media;
 using System.Collections.Generic;
-using EdblockModel.Enum;
-using EdblockModel.SymbolsModel;
 using EdblockViewModel.AbstractionsVM;
-using EdblockViewModel.Symbols.ScaleRectangles;
-using EdblockViewModel.Symbols.ConnectionPoints;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM;
+using EdblockViewModel.Symbols.ComponentsSymbolsVM.ConnectionPoints;
+using EdblockViewModel.Symbols.ComponentsSymbolsVM.ScaleRectangles;
+using EdblockModel.EnumsModel;
 
 namespace EdblockViewModel.Symbols.SwitchCaseConditionSymbolsVM;
 
-public class HorizontalConditionSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnectionPoint, IHasScaleRectangles
+public class HorizontalConditionSymbolVM : SwitchCaseSymbolVM, IHasTextFieldVM, IHasConnectionPoint, IHasScaleRectangles
 {
     public TextFieldSymbolVM TextFieldSymbolVM { get; init; }
     public List<ScaleRectangle> ScaleRectangles { get; init; } = new();
@@ -32,7 +31,6 @@ public class HorizontalConditionSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasC
     }
 
     private double displacementCoefficient;
-    private readonly int _countLines;
 
     private const int defaultWidth = 140;
     private const int defaultHeigth = 60;
@@ -44,15 +42,13 @@ public class HorizontalConditionSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasC
     private const string defaultText = "Условие";
     private const string defaultColor = "#FF60B2D3";
 
-    public HorizontalConditionSymbolVM(EdblockVM edblockVM, int countLines) : base(edblockVM)
+    public HorizontalConditionSymbolVM(EdblockVM edblockVM, int countLines) : base(edblockVM, countLines)
     {
         var canvasSymbolsVM = edblockVM.CanvasSymbolsVM;
         var scaleAllSymbolVM = edblockVM.PopupBoxMenuVM.ScaleAllSymbolVM;
 
         TextFieldSymbolVM = new(canvasSymbolsVM, this);
         BuilderScaleRectangles = new(canvasSymbolsVM, scaleAllSymbolVM, this);
-
-        _countLines = countLines;
 
         ScaleRectangles =
          BuilderScaleRectangles
@@ -86,10 +82,8 @@ public class HorizontalConditionSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasC
 
         Width = defaultWidth;
         Height = defaultHeigth;
-        
+
         TextFieldSymbolVM.Text = defaultText;
-        
-        BlockSymbolModel = CreateBlockSymbolModel();
 
         displacementCoefficient = CalculateDisplacementCoefficient();
 

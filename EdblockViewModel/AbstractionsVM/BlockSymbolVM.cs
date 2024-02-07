@@ -3,15 +3,17 @@ using System.Windows.Input;
 using Prism.Commands;
 using EdblockModel.SymbolsModel;
 using EdblockViewModel.ComponentsVM;
-using EdblockViewModel.Symbols.ScaleRectangles;
-using EdblockViewModel.Symbols.ConnectionPoints;
+using EdblockViewModel.Symbols.ComponentsSymbolsVM.ConnectionPoints;
+using EdblockViewModel.Symbols.ComponentsSymbolsVM.ScaleRectangles;
+using EdblockModel.EnumsModel;
+using EdblockViewModel.Symbols.ComponentsSymbolsVM;
 
 namespace EdblockViewModel.AbstractionsVM;
 
 public abstract class BlockSymbolVM : SymbolVM
 {
-    private Guid id;
-    public Guid Id 
+    private string id;
+    public string Id 
     {
         get => id;
         set
@@ -119,9 +121,7 @@ public abstract class BlockSymbolVM : SymbolVM
         _textAlignmentControlVM = edblockVM.TextAlignmentControlVM;
         _checkBoxLineGostVM = edblockVM.PopupBoxMenuVM.CheckBoxLineGostVM;
 
-        Id = Guid.NewGuid();
-
-        BlockSymbolModel = CreateBlockSymbolModel();
+        Id = Guid.NewGuid().ToString();
 
         MouseEnter = new(ShowAuxiliaryElements);
         MouseLeave = new(HideAuxiliaryElements);
@@ -251,5 +251,23 @@ public abstract class BlockSymbolVM : SymbolVM
         _textAlignmentControlVM.SetFormatAlignment(this);
 
         CanvasSymbolsVM.SelectedBlockSymbols.Add(this);
+    }
+
+    internal ConnectionPointVM GetConnectionPoint(SideSymbol incomingPosition)
+    {
+        if (this is IHasConnectionPoint blockSymbolHasConnectionPoint)
+        {
+            var connectionPoints = blockSymbolHasConnectionPoint.ConnectionPoints;
+
+            foreach(var connectionPoint in connectionPoints)
+            {
+                if (connectionPoint.Position == incomingPosition && !connectionPoint.IsHasConnectingLine)
+                {
+                    return connectionPoint;
+                }    
+            }
+        }
+
+        throw new Exception("Данный символ не содержит точек соединения");
     }
 }

@@ -2,8 +2,8 @@
 using EdblockModel.SymbolsModel;
 using EdblockViewModel.ComponentsVM;
 using EdblockViewModel.AbstractionsVM;
-using EdblockViewModel.Symbols.ConnectionPoints;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM;
+using EdblockViewModel.Symbols.ComponentsSymbolsVM.ConnectionPoints;
 
 namespace EdblockViewModel.Symbols.ComponentsCommentSymbolVM;
 

@@ -1,4 +1,4 @@
-﻿using EdblockModel.Enum;
+﻿using EdblockModel.EnumsModel;
 
 namespace EdblockModel.SymbolsModel.LineSymbolsModel;
 

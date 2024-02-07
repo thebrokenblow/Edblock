@@ -63,7 +63,7 @@ public class TextFieldSymbolVM : INotifyPropertyChanged
         set
         {
             text = value;
-            _textFieldModel.Text = text;
+            TextFieldModel.Text = text;
             OnPropertyChanged();
         }
     }
@@ -75,7 +75,7 @@ public class TextFieldSymbolVM : INotifyPropertyChanged
         set
         {
             fontFamily = value;
-            _textFieldModel.FontFamily = fontFamily;
+            TextFieldModel.FontFamily = fontFamily;
             OnPropertyChanged();
         }
     }
@@ -87,7 +87,7 @@ public class TextFieldSymbolVM : INotifyPropertyChanged
         set
         {
             fontSize = value;
-            _textFieldModel.FontSize = fontSize;
+            TextFieldModel.FontSize = fontSize;
             OnPropertyChanged();
         }
     }
@@ -99,7 +99,7 @@ public class TextFieldSymbolVM : INotifyPropertyChanged
         set
         {
             textAlignment = value;
-            _textFieldModel.TextAlignment = textAlignment;
+            TextFieldModel.TextAlignment = textAlignment;
             OnPropertyChanged();
         }
     }
@@ -111,7 +111,7 @@ public class TextFieldSymbolVM : INotifyPropertyChanged
         set
         {
             fontWeight = value;
-            _textFieldModel.FontWeight = fontWeight;
+            TextFieldModel.FontWeight = fontWeight;
             OnPropertyChanged();
         }
     }
@@ -123,7 +123,7 @@ public class TextFieldSymbolVM : INotifyPropertyChanged
         set
         {
             fontStyle = value;
-            _textFieldModel.FontStyle = fontStyle;
+            TextFieldModel.FontStyle = fontStyle;
             OnPropertyChanged();
         }
     }
@@ -135,7 +135,7 @@ public class TextFieldSymbolVM : INotifyPropertyChanged
         set
         {
             textDecorations = value;
-            _textFieldModel.TextDecorations = textDecorations;
+            TextFieldModel.TextDecorations = textDecorations;
             OnPropertyChanged();
         }
     }
@@ -169,14 +169,16 @@ public class TextFieldSymbolVM : INotifyPropertyChanged
 
     private readonly CanvasSymbolsVM _canvasSymbolsVM;
     private readonly BlockSymbolVM _blockSymbolVM;
-    private readonly TextFieldSymbolModel _textFieldModel;
+    public TextFieldSymbolModel TextFieldModel { get; set; }
 
     public TextFieldSymbolVM(CanvasSymbolsVM canvasSymbolsVM, BlockSymbolVM blockSymbolVM)
     {
         _canvasSymbolsVM = canvasSymbolsVM;
         _blockSymbolVM = blockSymbolVM;
+
         _blockSymbolVM.BlockSymbolModel.TextFieldSymbolModel = new();
-        _textFieldModel = _blockSymbolVM.BlockSymbolModel.TextFieldSymbolModel;
+
+        TextFieldModel = _blockSymbolVM.BlockSymbolModel.TextFieldSymbolModel;
 
         Cursor = Cursors.SizeAll;
         MouseDoubleClick = new(AddFocus);

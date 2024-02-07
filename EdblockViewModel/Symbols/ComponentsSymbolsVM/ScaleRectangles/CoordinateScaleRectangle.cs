@@ -1,6 +1,6 @@
 ﻿using EdblockViewModel.AbstractionsVM;
 
-namespace EdblockModel.Symbols.ScaleRectangles;
+namespace EdblockViewModel.Symbols.ComponentsSymbolsVM.ScaleRectangles;
 
 internal class CoordinateScaleRectangle
 {

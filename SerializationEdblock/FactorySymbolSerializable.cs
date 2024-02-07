@@ -1,29 +1,14 @@
 ﻿using EdblockModel.SymbolsModel;
 using EdblockModel.SymbolsModel.LineSymbolsModel;
+using SerializationEdblock.SymbolsSerializable;
 
 namespace SerializationEdblock;
 
 public class FactorySymbolSerializable
 {
-    public static BlockSymbolSerializable CreateBlockSymbolSerializable(BlockSymbolModel blockSymbolModel)
+    public static BlockSymbolSerializable Create(BlockSymbolModel blockSymbolModel)
     {
-        TextFieldSerializable? textFieldSerializable = null;
-
-        if (blockSymbolModel.TextFieldSymbolModel is not null)
-        {
-            var textFieldSymbolModel = blockSymbolModel.TextFieldSymbolModel;
-
-            textFieldSerializable = new TextFieldSerializable()
-            {
-                Text = textFieldSymbolModel.Text,
-                FontFamily = textFieldSymbolModel.FontFamily,
-                FontSize = textFieldSymbolModel.FontSize,
-                TextAlignment = textFieldSymbolModel.TextAlignment,
-                FontWeight = textFieldSymbolModel.FontWeight,
-                FontStyle = textFieldSymbolModel.FontStyle,
-                TextDecorations = textFieldSymbolModel.TextDecorations,
-            };
-        }
+        var textFieldSerializable = CreateTextFieldSerializable(blockSymbolModel.TextFieldSymbolModel);
 
         var blockSymbolSerializable = new BlockSymbolSerializable
         {
@@ -40,6 +25,65 @@ public class FactorySymbolSerializable
         return blockSymbolSerializable;
     }
 
+    public static SwitchCaseSymbolsSerializable Create(SwitchCaseSymbolModel switchCaseSymbolModel)
+    {
+        var textFieldSerializable = CreateTextFieldSerializable(switchCaseSymbolModel.TextFieldSymbolModel);
+
+        var switchCaseSymbolsSerializable = new SwitchCaseSymbolsSerializable
+        {
+            Id = switchCaseSymbolModel.Id,
+            NameSymbol = switchCaseSymbolModel.NameSymbol,
+            Color = switchCaseSymbolModel.Color,
+            Width = switchCaseSymbolModel.Width,
+            Height = switchCaseSymbolModel.Height,
+            TextFieldSerializable = textFieldSerializable,
+            XCoordinate = switchCaseSymbolModel.XCoordinate,
+            YCoordinate = switchCaseSymbolModel.YCoordinate,
+            CountLines = switchCaseSymbolModel.CountLine,
+        };
+
+        return switchCaseSymbolsSerializable;
+    }
+
+    public static ParallelActionSymbolSerializable Create(ParallelActionSymbolModel parallelActionSymbolModel)
+    {
+        var parallelActionSymbolSerializable = new ParallelActionSymbolSerializable
+        {
+            Id = parallelActionSymbolModel.Id,
+            NameSymbol = parallelActionSymbolModel.NameSymbol,
+            Color = parallelActionSymbolModel.Color,
+            Width = parallelActionSymbolModel.Width,
+            Height = parallelActionSymbolModel.Height,
+            XCoordinate = parallelActionSymbolModel.XCoordinate,
+            YCoordinate = parallelActionSymbolModel.YCoordinate,
+            CountSymbolsOutgoing = parallelActionSymbolModel.CountSymbolsOutgoing,
+            CountSymbolsIncoming = parallelActionSymbolModel.CountSymbolsIncoming,
+        };
+
+        return parallelActionSymbolSerializable;
+    }
+
+    private static TextFieldSerializable? CreateTextFieldSerializable(TextFieldSymbolModel? textFieldSymbolModel)
+    {
+        TextFieldSerializable? textFieldSerializable = null;
+
+        if (textFieldSymbolModel is not null)
+        {
+            textFieldSerializable = new TextFieldSerializable()
+            {
+                Text = textFieldSymbolModel.Text,
+                FontFamily = textFieldSymbolModel.FontFamily,
+                FontSize = textFieldSymbolModel.FontSize,
+                TextAlignment = textFieldSymbolModel.TextAlignment,
+                FontWeight = textFieldSymbolModel.FontWeight,
+                FontStyle = textFieldSymbolModel.FontStyle,
+                TextDecorations = textFieldSymbolModel.TextDecorations,
+            };
+        }
+
+        return textFieldSerializable;
+    }
+
     public static DrawnLineSymbolSerializable CreateDrawnLineSymbolSerializable(DrawnLineSymbolModel drawnLineSymbolModel)
     {
         var symbolOutgoingLine = drawnLineSymbolModel.SymbolOutgoingLine;
@@ -51,8 +95,8 @@ public class FactorySymbolSerializable
 
         if (symbolOutgoingLine is not null && symbolIncomingLine is not null)
         {
-            symbolOutgoingLineSerializable = CreateBlockSymbolSerializable(symbolOutgoingLine);
-            symbolIncomingLineSerializable = CreateBlockSymbolSerializable(symbolIncomingLine);
+            symbolOutgoingLineSerializable = Create(symbolOutgoingLine);
+            symbolIncomingLineSerializable = Create(symbolIncomingLine);
         }
 
         var linesSymbolSerializable = new List<LineSymbolSerializable>();

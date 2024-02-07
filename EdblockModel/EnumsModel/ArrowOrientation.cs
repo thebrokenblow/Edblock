@@ -1,4 +1,4 @@
-﻿namespace EdblockModel.Enum;
+﻿namespace EdblockModel.EnumsModel;
 
 public enum ArrowOrientation
 {

@@ -1,6 +1,6 @@
-﻿using EdblockModel.Enum;
+﻿using EdblockModel.EnumsModel;
 
-namespace SerializationEdblock;
+namespace SerializationEdblock.SymbolsSerializable;
 
 public class DrawnLineSymbolSerializable
 {

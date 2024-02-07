@@ -1,16 +1,17 @@
 ﻿using System.Windows;
 using System.Windows.Media;
 using System.Collections.Generic;
-using EdblockModel.Enum;
-using EdblockModel.SymbolsModel;
 using EdblockViewModel.AbstractionsVM;
-using EdblockViewModel.Symbols.ScaleRectangles;
-using EdblockViewModel.Symbols.ConnectionPoints;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM;
+using EdblockViewModel.Symbols.ComponentsSymbolsVM.ConnectionPoints;
+using EdblockViewModel.Symbols.ComponentsSymbolsVM.ScaleRectangles;
+using EdblockModel.EnumsModel;
+using EdblockViewModel.AttributeVM;
 
 namespace EdblockViewModel.Symbols.SwitchCaseConditionSymbolsVM;
 
-public class VerticalConditionSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnectionPoint, IHasScaleRectangles
+[SymbolType("VerticalConditionSymbolVM")]
+public class VerticalConditionSymbolVM : SwitchCaseSymbolVM, IHasTextFieldVM, IHasConnectionPoint, IHasScaleRectangles
 {
     public TextFieldSymbolVM TextFieldSymbolVM { get; init; }
     public List<ConnectionPointVM> ConnectionPoints { get; init; }
@@ -30,8 +31,6 @@ public class VerticalConditionSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasCon
         }
     }
 
-    private readonly int _countLines;
-
     private const int defaultWidth = 140;
     private const int defaultHeigth = 60;
 
@@ -40,16 +39,17 @@ public class VerticalConditionSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasCon
     private const string defaultText = "Условие";
     private const string defaultColor = "#FF60B2D3";
 
-    public VerticalConditionSymbolVM(EdblockVM edblockVM, int countLines) : base(edblockVM)
+    public VerticalConditionSymbolVM(EdblockVM edblockVM, int countLines) : base(edblockVM, countLines)
     {
-
         var canvasSymbolsVM = edblockVM.CanvasSymbolsVM;
         var scaleAllSymbolVM = edblockVM.PopupBoxMenuVM.ScaleAllSymbolVM;
 
-        TextFieldSymbolVM = new(canvasSymbolsVM, this);
-        BuilderScaleRectangles = new(canvasSymbolsVM, scaleAllSymbolVM, this);
+        TextFieldSymbolVM = new(canvasSymbolsVM, this)
+        {
+            Text = defaultText
+        };
 
-        _countLines = countLines;
+        BuilderScaleRectangles = new(canvasSymbolsVM, scaleAllSymbolVM, this);
 
         ScaleRectangles =
          BuilderScaleRectangles
@@ -83,10 +83,6 @@ public class VerticalConditionSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasCon
 
         Width = defaultWidth;
         Height = defaultHeigth;
-
-        TextFieldSymbolVM.Text = defaultText;
-
-        BlockSymbolModel = CreateBlockSymbolModel();
 
         SetWidth(Width);
         SetHeight(Height);

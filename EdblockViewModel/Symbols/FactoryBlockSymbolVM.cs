@@ -1,53 +1,33 @@
 ﻿using System;
-using SerializationEdblock;
-using System.Collections.Generic;
-using EdblockViewModel.ComponentsVM;
+using System.Linq;
+using System.Reflection;
+using EdblockViewModel.AttributeVM;
 using EdblockViewModel.AbstractionsVM;
+using EdblockViewModel.Symbols.SwitchCaseConditionSymbolsVM;
+using SerializationEdblock.SymbolsSerializable;
 
 namespace EdblockViewModel.Symbols;
 
 internal class FactoryBlockSymbolVM
 {
-    private readonly Dictionary<string, Func<string, BlockSymbolVM>> instanceSymbolByName;
-
-    private BlockSymbolVM? _firstBlockSymbolVM;
-    private readonly ScaleAllSymbolVM _scaleAllSymbolVM;
+    private readonly EdblockVM _edblockVM;
 
     public FactoryBlockSymbolVM(EdblockVM edblockVM)
     {
-        _scaleAllSymbolVM = edblockVM.PopupBoxMenuVM.ScaleAllSymbolVM;
-
-        instanceSymbolByName = new()
-        {
-            { "ActionSymbol", _ => new ActionSymbolVM(edblockVM) },
-            { "ConditionSymbol", _ => new ConditionSymbolVM(edblockVM) }
-        };
+        _edblockVM = edblockVM;
     }
 
-    public BlockSymbolVM Create(string? nameBlockSymbol)
+    public BlockSymbolVM CreateBlockSymbolVM(BlockSymbolSerializable blockSymbolSerializable)
     {
-        if (nameBlockSymbol == null)
+        var symbolType = GetTypeBlockSymbolVM(blockSymbolSerializable.NameSymbol);
+        var blockSymbol = Activator.CreateInstance(symbolType, _edblockVM);
+
+        if (blockSymbol is not BlockSymbolVM)
         {
-            throw new Exception("nameBlockSymbol is null");
+            throw new Exception($"Не удалось создать объект с именем {blockSymbolSerializable.NameSymbol}");
         }
 
-        var blockSymbolVM = instanceSymbolByName[nameBlockSymbol].Invoke(nameBlockSymbol);
-        _firstBlockSymbolVM ??= blockSymbolVM;
-
-        if (_scaleAllSymbolVM.IsScaleAllSymbolVM)
-        {
-            blockSymbolVM.Width = _firstBlockSymbolVM.Width;
-            blockSymbolVM.Height = _firstBlockSymbolVM.Height;
-        }
-
-        return blockSymbolVM;
-    }
-
-    public BlockSymbolVM CreateBySerialization(BlockSymbolSerializable blockSymbolSerializable)
-    {
-        var nameBlockSymbol = blockSymbolSerializable.NameSymbol;
-        
-        var blockSymbolVM = Create(nameBlockSymbol);
+        var blockSymbolVM = (BlockSymbolVM)blockSymbol;
 
         blockSymbolVM.Width = blockSymbolSerializable.Width;
         blockSymbolVM.Height = blockSymbolSerializable.Height;
@@ -55,20 +35,75 @@ internal class FactoryBlockSymbolVM
         blockSymbolVM.XCoordinate = blockSymbolSerializable.XCoordinate;
         blockSymbolVM.YCoordinate = blockSymbolSerializable.YCoordinate;
 
-        //var textField = blockSymbolVM.TextFieldVM;
-        //var textFieldSerializable = blockSymbolSerializable.TextFieldSerializable;
+        if (blockSymbolVM is IHasTextFieldVM blockSymbolHasTextFieldVM)
+        {
+            var textField = blockSymbolHasTextFieldVM.TextFieldSymbolVM;
+            var textFieldSerializable = blockSymbolSerializable.TextFieldSerializable;
 
-        //if (textFieldSerializable != null)
-        //{
-        //    textField.Text = textFieldSerializable.Text;
-        //    textField.FontFamily = textFieldSerializable.FontFamily;
-        //    textField.FontSize = textFieldSerializable.FontSize;
-        //    textField.TextAlignment = textFieldSerializable.TextAlignment;
-        //    textField.FontWeight = textFieldSerializable.FontWeight;
-        //    textField.FontStyle = textFieldSerializable.FontStyle;
-        //    textField.TextDecorations = textFieldSerializable.TextDecorations;
-        //}
+            if (textFieldSerializable is not null)
+            {
+                textField.Text = textFieldSerializable.Text;
+                textField.FontFamily = textFieldSerializable.FontFamily;
+                textField.FontSize = textFieldSerializable.FontSize;
+                textField.TextAlignment = textFieldSerializable.TextAlignment;
+                textField.FontWeight = textFieldSerializable.FontWeight;
+                textField.FontStyle = textFieldSerializable.FontStyle;
+                textField.TextDecorations = textFieldSerializable.TextDecorations;
+            }
+        }
 
         return blockSymbolVM;
+    }
+
+    public SwitchCaseSymbolVM CreateBlockSymbolVM(SwitchCaseSymbolsSerializable switchCaseSymbolsSerializable)
+    {
+        var symbolType = GetTypeBlockSymbolVM(switchCaseSymbolsSerializable.NameSymbol);
+        var blockSymbol = Activator.CreateInstance(symbolType, _edblockVM, switchCaseSymbolsSerializable.CountLines);
+
+        if (blockSymbol is not SwitchCaseSymbolVM)
+        {
+            throw new Exception($"Не удалось создать объект с именем {switchCaseSymbolsSerializable.NameSymbol}");
+        }
+
+        var switchCaseSymbolVM = (SwitchCaseSymbolVM)blockSymbol;
+
+        switchCaseSymbolVM.Width = switchCaseSymbolsSerializable.Width;
+        switchCaseSymbolVM.Height = switchCaseSymbolsSerializable.Height;
+
+        switchCaseSymbolVM.XCoordinate = switchCaseSymbolsSerializable.XCoordinate;
+        switchCaseSymbolVM.YCoordinate = switchCaseSymbolsSerializable.YCoordinate;
+
+        if (switchCaseSymbolVM is IHasTextFieldVM blockSymbolHasTextFieldVM)
+        {
+            var textField = blockSymbolHasTextFieldVM.TextFieldSymbolVM;
+            var textFieldSerializable = switchCaseSymbolsSerializable.TextFieldSerializable;
+
+            if (textFieldSerializable is not null)
+            {
+                textField.Text = textFieldSerializable.Text;
+                textField.FontFamily = textFieldSerializable.FontFamily;
+                textField.FontSize = textFieldSerializable.FontSize;
+                textField.TextAlignment = textFieldSerializable.TextAlignment;
+                textField.FontWeight = textFieldSerializable.FontWeight;
+                textField.FontStyle = textFieldSerializable.FontStyle;
+                textField.TextDecorations = textFieldSerializable.TextDecorations;
+            }
+        }
+
+        return switchCaseSymbolVM;
+    }
+
+    private static Type GetTypeBlockSymbolVM(string nameSymbolVM)
+    {
+        return Assembly.GetExecutingAssembly().GetTypes().FirstOrDefault(
+            type =>
+            {
+                var attr = type.GetCustomAttribute<SymbolTypeAttribute>();
+                if (attr is null)
+                {
+                    return false;
+                }
+                return attr.NameSymbol == nameSymbolVM;
+            }) ?? throw new Exception($"Нет класса или атрибута с именем {nameSymbolVM}");
     }
 }

@@ -19,6 +19,7 @@ public class SerializationProject
     public async void Write(ProjectSerializable projectSerializable, string pathFile)
     {
         using var fileStream = new FileStream(pathFile, FileMode.Create);
+
         await JsonSerializer.SerializeAsync(fileStream, projectSerializable, jsonSerializerOptions);
     }
 

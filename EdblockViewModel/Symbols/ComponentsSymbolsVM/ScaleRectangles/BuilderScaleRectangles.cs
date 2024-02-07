@@ -1,10 +1,9 @@
 ﻿using System.Windows.Input;
 using System.Collections.Generic;
 using EdblockViewModel.ComponentsVM;
-using EdblockModel.Symbols.ScaleRectangles;
 using EdblockViewModel.AbstractionsVM;
 
-namespace EdblockViewModel.Symbols.ScaleRectangles;
+namespace EdblockViewModel.Symbols.ComponentsSymbolsVM.ScaleRectangles;
 
 public class BuilderScaleRectangles
 {
@@ -165,7 +164,7 @@ public class BuilderScaleRectangles
     private ScaleRectangle CreateLeftBottomRectangle()
     {
         var leftBottomRectangle = new ScaleRectangle(
-                _canvasSymbolsVM, 
+                _canvasSymbolsVM,
                 _scaleAllSymbolVM,
                 _blockSymbolVM,
                 Cursors.SizeNESW,

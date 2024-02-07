@@ -1,6 +1,5 @@
 ﻿using Prism.Commands;
 using System.Windows;
-using EdblockModel.Symbols;
 using System.Windows.Input;
 using System.ComponentModel;
 using System.Collections.Generic;
@@ -9,9 +8,10 @@ using System.Runtime.CompilerServices;
 using EdblockViewModel.Symbols.LineSymbols;
 using EdblockModel.SymbolsModel.LineSymbolsModel;
 using EdblockViewModel.AbstractionsVM;
-using EdblockModel.Enum;
+using EdblockModel.EnumsModel;
+using EdblockModel.SymbolsModel;
 
-namespace EdblockViewModel.Symbols.ConnectionPoints;
+namespace EdblockViewModel.Symbols.ComponentsSymbolsVM.ConnectionPoints;
 
 public class ConnectionPointVM : INotifyPropertyChanged
 {

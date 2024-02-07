@@ -3,12 +3,12 @@ using Prism.Commands;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using EdblockViewModel.ComponentsVM;
-using EdblockViewModel.Symbols.ConnectionPoints;
 using EdblockModel.SymbolsModel.LineSymbolsModel;
 using EdblockModel.SymbolsModel.LineSymbolsModel.RedrawnLineSymbolsModel;
 using EdblockViewModel.AbstractionsVM;
-using EdblockModel.Enum;
 using System.Windows.Input;
+using EdblockViewModel.Symbols.ComponentsSymbolsVM.ConnectionPoints;
+using EdblockModel.EnumsModel;
 
 namespace EdblockViewModel.Symbols.LineSymbols;
 

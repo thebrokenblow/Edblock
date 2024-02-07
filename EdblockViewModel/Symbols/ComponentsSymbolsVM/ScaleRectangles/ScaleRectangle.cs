@@ -7,7 +7,7 @@ using System.Runtime.CompilerServices;
 using EdblockViewModel.ComponentsVM;
 using EdblockViewModel.AbstractionsVM;
 
-namespace EdblockViewModel.Symbols.ScaleRectangles;
+namespace EdblockViewModel.Symbols.ComponentsSymbolsVM.ScaleRectangles;
 
 public class ScaleRectangle : INotifyPropertyChanged
 {

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using EdblockModel.Enum;
+using EdblockModel.EnumsModel;
 using EdblockModel.SymbolsModel;
 using EdblockViewModel.AbstractionsVM;
-using EdblockViewModel.Symbols.ConnectionPoints;
+using EdblockViewModel.Symbols.ComponentsSymbolsVM.ConnectionPoints;
 
 namespace EdblockViewModel.Symbols.ComponentsParallelActionSymbolVM;
 
@@ -64,6 +64,8 @@ public class ParallelActionSymbolVM : BlockSymbolVM, IHasConnectionPoint
     {
         var parallelActionSymbolModel = new ParallelActionSymbolModel()
         {
+            Id = Id,
+            NameSymbol = GetType().Name.ToString(),
             CountSymbolsIncoming = _countSymbolsIncoming,
             CountSymbolsOutgoing = _countSymbolsOutgoing
         };

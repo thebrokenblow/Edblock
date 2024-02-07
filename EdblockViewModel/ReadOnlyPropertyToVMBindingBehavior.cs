@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using Microsoft.Xaml.Behaviors;
 
-namespace EdblockView;
+namespace EdblockViewModel;
 
 public class ReadOnlyPropertyToVMBindingBehavior : Behavior<UIElement>
 {
@@ -22,7 +22,7 @@ public class ReadOnlyPropertyToVMBindingBehavior : Behavior<UIElement>
     }
 
     public static readonly DependencyProperty ModelPropertyProperty =
-        DependencyProperty.Register("ModelProperty", typeof(object), typeof(ReadOnlyPropertyToVMBindingBehavior), 
+        DependencyProperty.Register("ModelProperty", typeof(object), typeof(ReadOnlyPropertyToVMBindingBehavior),
             new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
 
     private static void OnReadOnlyDependencyPropertyPropertyChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)

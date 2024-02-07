@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using EdblockModel.SymbolsModel.LineSymbolsModel;
+using EdblockViewModel.Symbols.ComponentsParallelActionSymbolVM;
 
 namespace EdblockViewModel.Symbols.LineSymbols;
 
@@ -92,7 +93,12 @@ public class LineSymbolVM : INotifyPropertyChanged
 
         if (currentDrawnLineSymbol != null)
         {
-            var blockSymbolVM = currentDrawnLineSymbol.SymbolOutgoingLine;
+            var symbolOutgoingLine = currentDrawnLineSymbol.SymbolOutgoingLine;
+
+            if (symbolOutgoingLine is ParallelActionSymbolVM)
+            {
+                return;
+            }
 
             var firstLine = currentDrawnLineSymbol.LinesSymbolVM[0];
             var lastLineSymbolVM = currentDrawnLineSymbol.LinesSymbolVM[^1];
@@ -100,16 +106,12 @@ public class LineSymbolVM : INotifyPropertyChanged
             if (x1 == x2 && lastLineSymbolVM.y1 == lastLineSymbolVM.y2)
             {
                 lastLineSymbolVM.X2 = x2;
-
-                var blockByDrawnLines = _drawnLineSymbolVM.CanvasSymbolsVM.BlockByDrawnLines;
                
                 currentDrawnLineSymbol.ArrowSymbol.ChangePosition((x2, lastLineSymbolVM.y2));
             }
             else if (y1 == y2 && lastLineSymbolVM.x1 == lastLineSymbolVM.x2)
             {
                 lastLineSymbolVM.Y2 = y2;
-
-                var blockByDrawnLines = _drawnLineSymbolVM.CanvasSymbolsVM.BlockByDrawnLines;
 
                 currentDrawnLineSymbol.ArrowSymbol.ChangePosition((lastLineSymbolVM.x2, y2));
             }

@@ -2,9 +2,9 @@
 using System.Windows.Media;
 using System.Collections.Generic;
 using EdblockViewModel.AbstractionsVM;
-using EdblockViewModel.Symbols.ScaleRectangles;
-using EdblockViewModel.Symbols.ConnectionPoints;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM;
+using EdblockViewModel.Symbols.ComponentsSymbolsVM.ConnectionPoints;
+using EdblockViewModel.Symbols.ComponentsSymbolsVM.ScaleRectangles;
 
 namespace EdblockViewModel.Symbols;
 

@@ -3,8 +3,14 @@ using System.Collections.Generic;
 using EdblockViewModel.ComponentsVM;
 using EdblockViewModel.AbstractionsVM;
 using EdblockViewModel.Symbols.LineSymbols;
+using SerializationEdblock.SymbolsSerializable;
+using EdblockViewModel.Symbols.ComponentsParallelActionSymbolVM;
+using EdblockModel.SymbolsModel;
+using EdblockViewModel.Symbols;
+using EdblockModel.SymbolsModel.LineSymbolsModel;
+using EdblockViewModel.Symbols.SwitchCaseConditionSymbolsVM;
 
-namespace EdblockViewModel.Symbols;
+namespace EdblockViewModel;
 
 internal class ProjectVM
 {
@@ -12,32 +18,54 @@ internal class ProjectVM
     private readonly ScaleAllSymbolVM scaleAllSymbolVM;
     private readonly CheckBoxLineGostVM checkBoxLineGostVM;
     private readonly SerializationProject serializationProject = new();
-
+    private readonly FactoryBlockSymbolVM factoryBlockSymbolVM;
+    private readonly Dictionary<string, BlockSymbolVM> blockSymbolsVMById = new();
     public ProjectVM(EdblockVM edblockVM)
     {
         canvasSymbolsVM = edblockVM.CanvasSymbolsVM;
         scaleAllSymbolVM = edblockVM.PopupBoxMenuVM.ScaleAllSymbolVM;
         checkBoxLineGostVM = edblockVM.PopupBoxMenuVM.CheckBoxLineGostVM;
+
+        factoryBlockSymbolVM = new(edblockVM);
     }
 
     public void Save(string filePath)
     {
-        var blocksSymbolSerializable = new List<BlockSymbolSerializable>();
+        var blockSymbolsSerializable = new List<BlockSymbolSerializable>();
         var drawnLinesSymbolSerializable = new List<DrawnLineSymbolSerializable>();
+        var parallelActionSymbolsSerializable = new List<ParallelActionSymbolSerializable>();
+        var switchCaseSymbolsSerializable = new List<SwitchCaseSymbolsSerializable>();
 
-        var SymbolsVM = canvasSymbolsVM.SymbolsVM;
+        var symbolsVM = canvasSymbolsVM.SymbolsVM;
 
-        foreach (var symbol in SymbolsVM)
+        foreach (var symbolVM in symbolsVM)
         {
-            if (symbol is BlockSymbolVM blockSymbolVM)
+            if (symbolVM is SwitchCaseSymbolVM switchCaseSymbolVM)
             {
-                var blockSymbolModel = blockSymbolVM.BlockSymbolModel;
-                var blockSymbolSerializable = FactorySymbolSerializable.CreateBlockSymbolSerializable(blockSymbolModel);
+                var switchCaseSymbolModel = (SwitchCaseSymbolModel)switchCaseSymbolVM.BlockSymbolModel;
+                var switchCaseSymbolSerializable = FactorySymbolSerializable.Create(switchCaseSymbolModel);
 
-                blocksSymbolSerializable.Add(blockSymbolSerializable);
+                switchCaseSymbolsSerializable.Add(switchCaseSymbolSerializable);
             }
 
-            if (symbol is DrawnLineSymbolVM drawnLineSymbolVM)
+            if (symbolVM is ParallelActionSymbolVM parallelActionSymbolVM)
+            {
+                var blockSymbolModel = (ParallelActionSymbolModel)parallelActionSymbolVM.BlockSymbolModel;
+                var blockSymbolSerializable = FactorySymbolSerializable.Create(blockSymbolModel);
+
+                parallelActionSymbolsSerializable.Add(blockSymbolSerializable);
+            }
+
+            if (symbolVM is BlockSymbolVM and not ParallelActionSymbolVM and not SwitchCaseSymbolVM)
+            {
+                var blockSymbolVM = (BlockSymbolVM)symbolVM;
+                var blockSymbolModel = blockSymbolVM.BlockSymbolModel;
+                var blockSymbolSerializable = FactorySymbolSerializable.Create(blockSymbolModel);
+
+                blockSymbolsSerializable.Add(blockSymbolSerializable);
+            }
+
+            if (symbolVM is DrawnLineSymbolVM drawnLineSymbolVM)
             {
                 var drawnLineSymbolModel = drawnLineSymbolVM.DrawnLineSymbolModel;
                 var drawnLineSymbolSerializable = FactorySymbolSerializable.CreateDrawnLineSymbolSerializable(drawnLineSymbolModel);
@@ -50,148 +78,162 @@ internal class ProjectVM
         {
             IsScaleAllSymbolVM = scaleAllSymbolVM.IsScaleAllSymbolVM,
             IsDrawingLinesAccordingGOST = checkBoxLineGostVM.IsDrawingLinesAccordingGOST,
-            BlocksSymbolSerializable = blocksSymbolSerializable,
+            BlockSymbolsSerializable = blockSymbolsSerializable,
             DrawnLinesSymbolSerializable = drawnLinesSymbolSerializable,
+            SwitchCaseSymbolsSerializable = switchCaseSymbolsSerializable,
+            ParallelActionSymbolsSerializable = parallelActionSymbolsSerializable,
         };
 
         serializationProject.Write(projectSerializable, filePath);
     }
 
-    //public async void Load(string filePath)
-    //{
-    //    var loadedProject = await _serializationProject.Read(filePath);
+    public async void Load(string filePath)
+    {
+        var loadedProject = await serializationProject.Read(filePath);
 
-    //    _scaleAllSymbolVM.IsScaleAllSymbolVM = loadedProject.IsScaleAllSymbolVM;
-    //    _checkBoxLineGostVM.IsDrawingLinesAccordingGOST = loadedProject.IsDrawingLinesAccordingGOST;
+        scaleAllSymbolVM.IsScaleAllSymbolVM = loadedProject.IsScaleAllSymbolVM;
+        checkBoxLineGostVM.IsDrawingLinesAccordingGOST = loadedProject.IsDrawingLinesAccordingGOST;
 
-    //    LoadBlocksSymbols(loadedProject);
-    //    LoadDrawnLinesSymbol(loadedProject);
-    //}
+        LoadBlocksSymbols(loadedProject);
+        LoadDrawnLinesSymbol(loadedProject);
+    }
 
-    //private void LoadBlocksSymbols(ProjectSerializable projectSerializable)
-    //{
-    //    _canvasSymbolsVM.SymbolsVM.Clear();
-    //    _blockSymbolsVMById.Clear();
+    private void LoadBlocksSymbols(ProjectSerializable projectSerializable)
+    {
+        blockSymbolsVMById.Clear();
+        canvasSymbolsVM.SymbolsVM.Clear();
 
-    //    var blocksSymbolSerializable = projectSerializable.BlocksSymbolSerializable;
+        var blockSymbolsSerializable = projectSerializable.BlockSymbolsSerializable;
 
-    //    foreach (var blockSymbolSerializable in blocksSymbolSerializable)
-    //    {
-    //        var blockSymbolVM = _factoryBlockSymbolVM.CreateBySerialization(blockSymbolSerializable);
+        if (blockSymbolsSerializable is not null)
+        {
+            foreach (var blockSymbolSerializable in blockSymbolsSerializable)
+            {
+                var blockSymbolVM = factoryBlockSymbolVM.CreateBlockSymbolVM(blockSymbolSerializable);
 
-    //        if (blockSymbolSerializable.Id != null)
-    //        {
-    //            _blockSymbolsVMById.Add(blockSymbolSerializable.Id, blockSymbolVM);
-    //        }
+                canvasSymbolsVM.SymbolsVM.Add(blockSymbolVM);
+                blockSymbolsVMById.Add(blockSymbolSerializable.Id, blockSymbolVM);
+            }
+        }
 
-    //        _canvasSymbolsVM.SymbolsVM.Add(blockSymbolVM);
-    //    }
-    //}
+        var switchCaseSymbolsSerializable = projectSerializable.SwitchCaseSymbolsSerializable;
 
-    //private static List<LineSymbolModel> LoadLinesSymbol(DrawnLineSymbolSerializable drawnLineSymbolSerializable)
-    //{
-    //    //var linesSymbolModel = new List<LineSymbolModel>();
+        if (switchCaseSymbolsSerializable is not null)
+        {
+            foreach (var switchCaseSymbolSerializable in switchCaseSymbolsSerializable)
+            {
+                var switchCaseSymbolVM = factoryBlockSymbolVM.CreateBlockSymbolVM(switchCaseSymbolSerializable);
 
-    //    //var linesSymbolSerializable = drawnLineSymbolSerializable.LinesSymbolSerializable;
+                canvasSymbolsVM.SymbolsVM.Add(switchCaseSymbolVM);
+                blockSymbolsVMById.Add(switchCaseSymbolSerializable.Id, switchCaseSymbolVM);
+            }
+        }
+    }
 
-    //    //if (linesSymbolSerializable != null)
-    //    //{
-    //    //    foreach (var lineSymbolSerializable in linesSymbolSerializable)
-    //    //    {
-    //    //        var lineSymbolModel = FactorySymbolSerializable.CreateLineSymbolModel(lineSymbolSerializable);
+    private static List<LineSymbolModel> LoadLinesSymbol(DrawnLineSymbolSerializable drawnLineSymbolSerializable)
+    {
+        var linesSymbolModel = new List<LineSymbolModel>();
 
-    //    //        linesSymbolModel.Add(lineSymbolModel);
-    //    //    }
-    //    //}
+        var linesSymbolSerializable = drawnLineSymbolSerializable.LinesSymbolSerializable;
 
-    //    //return linesSymbolModel;
-    //}
+        if (linesSymbolSerializable != null)
+        {
+            foreach (var lineSymbolSerializable in linesSymbolSerializable)
+            {
+                var lineSymbolModel = FactorySymbolSerializable.CreateLineSymbolModel(lineSymbolSerializable);
+
+                linesSymbolModel.Add(lineSymbolModel);
+            }
+        }
+
+        return linesSymbolModel;
+    }
 
     private void LoadDrawnLinesSymbol(ProjectSerializable projectSerializable)
     {
-        //_canvasSymbolsVM.BlockByDrawnLines.Clear();
+        canvasSymbolsVM.BlockByDrawnLines.Clear();
 
-        //var drawnLinesSymbolSerializable = projectSerializable.DrawnLinesSymbolSerializable;
+        var drawnLinesSymbolSerializable = projectSerializable.DrawnLinesSymbolSerializable;
 
-        //foreach (var drawnLineSymbolSerializable in drawnLinesSymbolSerializable)
-        //{
-        //    var linesSymbolModel = LoadLinesSymbol(drawnLineSymbolSerializable);
+        foreach (var drawnLineSymbolSerializable in drawnLinesSymbolSerializable)
+        {
+            var linesSymbolModel = LoadLinesSymbol(drawnLineSymbolSerializable);
 
-        //    var symbolOutgoingLine = drawnLineSymbolSerializable.SymbolOutgoingLine;
-        //    var symbolIncomingLine = drawnLineSymbolSerializable.SymbolIncomingLine;
+            var symbolOutgoingLine = drawnLineSymbolSerializable.SymbolOutgoingLine;
+            var symbolIncomingLine = drawnLineSymbolSerializable.SymbolIncomingLine;
 
-        //    if (symbolOutgoingLine == null)
-        //    {
-        //        continue;
-        //    }
+            if (symbolOutgoingLine == null)
+            {
+                continue;
+            }
 
-        //    if (symbolOutgoingLine.Id == null)
-        //    {
-        //        continue;
-        //    }
+            if (symbolOutgoingLine.Id == null)
+            {
+                continue;
+            }
 
-        //    if (symbolIncomingLine == null)
-        //    {
-        //        continue;
-        //    }
+            if (symbolIncomingLine == null)
+            {
+                continue;
+            }
 
-        //    if (symbolIncomingLine.Id == null)
-        //    {
-        //        continue;
-        //    }
+            if (symbolIncomingLine.Id == null)
+            {
+                continue;
+            }
 
-        //    var symbolOutgoingLineVM = _blockSymbolsVMById[symbolOutgoingLine.Id];
-        //    var symbolIncomingLineVM = _blockSymbolsVMById[symbolIncomingLine.Id];
+            var symbolOutgoingLineVM = blockSymbolsVMById[symbolOutgoingLine.Id];
+            var symbolIncomingLineVM = blockSymbolsVMById[symbolIncomingLine.Id];
 
-        //    var outgoingConnectionPoint = symbolOutgoingLineVM.GetConnectionPoint(drawnLineSymbolSerializable.OutgoingPosition);
-        //    var incomingConnectionPoint = symbolIncomingLineVM.GetConnectionPoint(drawnLineSymbolSerializable.IncomingPosition);
+            var outgoingConnectionPoint = symbolOutgoingLineVM.GetConnectionPoint(drawnLineSymbolSerializable.OutgoingPosition);
+            var incomingConnectionPoint = symbolIncomingLineVM.GetConnectionPoint(drawnLineSymbolSerializable.IncomingPosition);
 
-        //    outgoingConnectionPoint.IsHasConnectingLine = true;
-        //    incomingConnectionPoint.IsHasConnectingLine = true;
+            outgoingConnectionPoint.IsHasConnectingLine = true;
+            incomingConnectionPoint.IsHasConnectingLine = true;
 
-        //    var drawnLineSymbolVM = new DrawnLineSymbolVM(_canvasSymbolsVM, linesSymbolModel)
-        //    {
-        //        SymbolOutgoingLine = symbolOutgoingLineVM,
-        //        SymbolIncomingLine = symbolIncomingLineVM,
-        //        OutgoingConnectionPoint = outgoingConnectionPoint,
-        //        IncomingConnectionPoint = incomingConnectionPoint,
-        //        OutgoingPosition = outgoingConnectionPoint.Position,
-        //        IncomingPosition = incomingConnectionPoint.Position,
-        //        Text = drawnLineSymbolSerializable.Text,
-        //        Color = drawnLineSymbolSerializable.Color,
-        //    };
+            var drawnLineSymbolVM = new DrawnLineSymbolVM(canvasSymbolsVM, linesSymbolModel)
+            {
+                SymbolOutgoingLine = symbolOutgoingLineVM,
+                SymbolIncomingLine = symbolIncomingLineVM,
+                OutgoingConnectionPoint = outgoingConnectionPoint,
+                IncomingConnectionPoint = incomingConnectionPoint,
+                OutgoingPosition = outgoingConnectionPoint.Position,
+                IncomingPosition = incomingConnectionPoint.Position,
+                Text = drawnLineSymbolSerializable.Text,
+                Color = drawnLineSymbolSerializable.Color,
+            };
 
-        //    drawnLineSymbolVM.RedrawAllLines();
-            
-        //    if (!_canvasSymbolsVM.BlockByDrawnLines.ContainsKey(symbolOutgoingLineVM))
-        //    {
-        //        var drawnsLineSymbolVM = new List<DrawnLineSymbolVM>
-        //        {
-        //            drawnLineSymbolVM   
-        //        };
+            drawnLineSymbolVM.RedrawAllLines();
 
-        //        _canvasSymbolsVM.BlockByDrawnLines.Add(symbolOutgoingLineVM, drawnsLineSymbolVM);
-        //    }
-        //    else
-        //    {
-        //        _canvasSymbolsVM.BlockByDrawnLines[symbolOutgoingLineVM].Add(drawnLineSymbolVM);
-        //    }
+            if (!canvasSymbolsVM.BlockByDrawnLines.ContainsKey(symbolOutgoingLineVM))
+            {
+                var drawnsLineSymbolVM = new List<DrawnLineSymbolVM>
+                {
+                    drawnLineSymbolVM
+                };
 
-        //    if (!_canvasSymbolsVM.BlockByDrawnLines.ContainsKey(symbolIncomingLineVM))
-        //    {
-        //        var drawnsLineSymbolVM = new List<DrawnLineSymbolVM>
-        //        {
-        //            drawnLineSymbolVM
-        //        };
+                canvasSymbolsVM.BlockByDrawnLines.Add(symbolOutgoingLineVM, drawnsLineSymbolVM);
+            }
+            else
+            {
+                canvasSymbolsVM.BlockByDrawnLines[symbolOutgoingLineVM].Add(drawnLineSymbolVM);
+            }
 
-        //        _canvasSymbolsVM.BlockByDrawnLines.Add(symbolIncomingLineVM, drawnsLineSymbolVM);
-        //    }
-        //    else
-        //    {
-        //        _canvasSymbolsVM.BlockByDrawnLines[symbolIncomingLineVM].Add(drawnLineSymbolVM);
-        //    }
+            if (!canvasSymbolsVM.BlockByDrawnLines.ContainsKey(symbolIncomingLineVM))
+            {
+                var drawnsLineSymbolVM = new List<DrawnLineSymbolVM>
+                {
+                    drawnLineSymbolVM
+                };
 
-        //    _canvasSymbolsVM.SymbolsVM.Add(drawnLineSymbolVM);
-        //}
+                canvasSymbolsVM.BlockByDrawnLines.Add(symbolIncomingLineVM, drawnsLineSymbolVM);
+            }
+            else
+            {
+                canvasSymbolsVM.BlockByDrawnLines[symbolIncomingLineVM].Add(drawnLineSymbolVM);
+            }
+
+            canvasSymbolsVM.SymbolsVM.Add(drawnLineSymbolVM);
+        }
     }
 }

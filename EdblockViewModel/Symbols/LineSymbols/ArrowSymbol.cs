@@ -4,8 +4,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using EdblockModel.SymbolsModel.LineSymbolsModel;
-using EdblockModel.Enum;
 using EdblockModel.SymbolsModel.LineSymbolsModel.DecoratorLineSymbolsModel;
+using EdblockModel.EnumsModel;
 
 namespace EdblockViewModel.Symbols.LineSymbols;
 

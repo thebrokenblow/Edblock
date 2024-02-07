@@ -1,6 +1,6 @@
-﻿using EdblockModel.Enum;
+﻿using EdblockModel.EnumsModel;
 
-namespace EdblockModel.Symbols;
+namespace EdblockModel.SymbolsModel;
 
 public class ConnectionPointModel //TODO: Этого класса здесь быть не должно, эта логика должна быть в модели
 {

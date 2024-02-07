@@ -7,7 +7,8 @@
              xmlns:edblockVM="clr-namespace:EdblockView;assembly=EdblockViewModel" 
              xmlns:lineSymbolView="clr-namespace:EdblockView.SymbolsView.LineSymbolView"
              xmlns:lineSymbolVM="clr-namespace:EdblockViewModel.Symbols.LineSymbols;assembly=EdblockViewModel" 
-             d:DataContext="{d:DesignInstance Type=lineSymbolVM:DrawnLineSymbolVM}"
+             xmlns:edblockVM1="clr-namespace:EdblockViewModel;assembly=EdblockViewModel"
+           
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Canvas>
@@ -32,7 +33,7 @@
 
         <TextBox Style="{StaticResource TextFieldLineView}">
             <i:Interaction.Behaviors>
-                <edblockVM:ReadOnlyPropertyToVMBindingBehavior 
+                <edblockVM1:ReadOnlyPropertyToVMBindingBehavior 
                         ModelProperty="{Binding WidthTextField}" 
                         ReadOnlyDependencyProperty="{Binding ActualWidth, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=TextBox}}" />
             </i:Interaction.Behaviors>

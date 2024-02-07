@@ -1,12 +1,14 @@
 ﻿using System.Collections.Generic;
-using EdblockModel.Enum;
+using EdblockModel.EnumsModel;
 using EdblockViewModel.AbstractionsVM;
-using EdblockViewModel.Symbols.ScaleRectangles;
-using EdblockViewModel.Symbols.ConnectionPoints;
+using EdblockViewModel.AttributeVM;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM;
+using EdblockViewModel.Symbols.ComponentsSymbolsVM.ConnectionPoints;
+using EdblockViewModel.Symbols.ComponentsSymbolsVM.ScaleRectangles;
 
 namespace EdblockViewModel.Symbols;
 
+[SymbolType("ActionSymbolVM")]
 public class ActionSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnectionPoint, IHasScaleRectangles
 {
     public TextFieldSymbolVM TextFieldSymbolVM { get; init; }
@@ -24,10 +26,15 @@ public class ActionSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnectionPoin
     
     public ActionSymbolVM(EdblockVM edblockVM) : base(edblockVM)
     {
+        BlockSymbolModel = CreateBlockSymbolModel();
+
         Width = defaultWidth;
         Height = defaultHeigth;
 
-        TextFieldSymbolVM = new(edblockVM.CanvasSymbolsVM, this);
+        TextFieldSymbolVM = new(edblockVM.CanvasSymbolsVM, this)
+        {
+            Text = defaultText
+        };
 
         BuilderScaleRectangles = new(CanvasSymbolsVM, edblockVM.PopupBoxMenuVM.ScaleAllSymbolVM, this);
 
@@ -44,7 +51,6 @@ public class ActionSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnectionPoin
                         .Build();
 
         Color = defaultColor;
-        TextFieldSymbolVM.Text = defaultText;
 
         var topConnectionPoint = new ConnectionPointVM(CanvasSymbolsVM, this, _checkBoxLineGostVM, SideSymbol.Top);
         var rightConnectionPoint = new ConnectionPointVM(CanvasSymbolsVM, this, _checkBoxLineGostVM, SideSymbol.Right);

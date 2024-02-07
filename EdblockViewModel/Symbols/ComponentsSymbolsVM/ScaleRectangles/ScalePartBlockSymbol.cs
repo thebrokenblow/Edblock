@@ -4,7 +4,7 @@ using EdblockViewModel.ComponentsVM;
 using System.Collections.ObjectModel;
 using EdblockViewModel.AbstractionsVM;
 
-namespace EdblockViewModel.Symbols.ScaleRectangles;
+namespace EdblockViewModel.Symbols.ComponentsSymbolsVM.ScaleRectangles;
 
 public class ScalePartBlockSymbol
 {
@@ -34,7 +34,7 @@ public class ScalePartBlockSymbol
         InitialXCoordinateBlockSymbol = scalingBlockSymbol.XCoordinate;
         InitialYCoordinateBlockSymbol = scalingBlockSymbol.YCoordinate;
         _cursorWhenScaling = cursorWhenScaling;
-        _getWidthBlockSymbol = getWidthBlockSymbol; 
+        _getWidthBlockSymbol = getWidthBlockSymbol;
         _getHeigthBlockSymbol = getHeigthBlockSymbol;
         _scaleAllSymbolVM = scaleAllSymbolVM;
         _symbols = symbolsVM;

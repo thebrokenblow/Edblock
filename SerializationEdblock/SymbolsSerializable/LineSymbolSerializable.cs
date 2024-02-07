@@ -1,4 +1,4 @@
-﻿namespace SerializationEdblock;
+﻿namespace SerializationEdblock.SymbolsSerializable;
 
 public class LineSymbolSerializable
 {
