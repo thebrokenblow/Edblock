@@ -2,9 +2,9 @@
 
 public class ParallelActionSymbolSerializable
 {
-    public string? Id { get; init; }
-    public string? NameSymbol { get; init; }
-    public string? Color { get; init; }
+    public string Id { get; init; } = string.Empty;
+    public string NameSymbol { get; init; } = string.Empty;
+    public string Color { get; init; } = string.Empty;
     public double Width { get; init; }
     public double Height { get; init; }
     public double XCoordinate { get; init; }

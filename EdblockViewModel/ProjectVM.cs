@@ -128,6 +128,19 @@ internal class ProjectVM
                 blockSymbolsVMById.Add(switchCaseSymbolSerializable.Id, switchCaseSymbolVM);
             }
         }
+
+        var parallelActionSymbolsSerializable = projectSerializable.ParallelActionSymbolsSerializable;
+
+        if (parallelActionSymbolsSerializable is not null)
+        {
+            foreach (var parallelActionSymbolSerializable in parallelActionSymbolsSerializable)
+            {
+                var parallelActionSymbolVM = factoryBlockSymbolVM.CreateBlockSymbolVM(parallelActionSymbolSerializable);
+
+                canvasSymbolsVM.SymbolsVM.Add(parallelActionSymbolVM);
+                blockSymbolsVMById.Add(parallelActionSymbolSerializable.Id, parallelActionSymbolVM);
+            }
+        }
     }
 
     private static List<LineSymbolModel> LoadLinesSymbol(DrawnLineSymbolSerializable drawnLineSymbolSerializable)

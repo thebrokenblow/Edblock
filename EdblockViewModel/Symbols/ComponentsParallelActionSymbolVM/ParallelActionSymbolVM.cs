@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using EdblockModel.EnumsModel;
 using EdblockModel.SymbolsModel;
 using EdblockViewModel.AbstractionsVM;
+using EdblockViewModel.AttributeVM;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM.ConnectionPoints;
 
 namespace EdblockViewModel.Symbols.ComponentsParallelActionSymbolVM;
 
+[SymbolType("ParallelActionSymbolVM")]
 public class ParallelActionSymbolVM : BlockSymbolVM, IHasConnectionPoint
 {
     public LineParallelActionSymbolVM UpperHorizontalLine { get; set; } = new();
@@ -31,26 +33,19 @@ public class ParallelActionSymbolVM : BlockSymbolVM, IHasConnectionPoint
         _maxSymbols = Math.Max(countSymbolsIncoming, countSymbolsOutgoing);
         _sumCountSymbols = countSymbolsIncoming + countSymbolsOutgoing;
 
+        BlockSymbolModel = CreateBlockSymbolModel();
         ConnectionPoints = new(countSymbolsIncoming + countSymbolsOutgoing);
 
         for (int i = 0; i < countSymbolsIncoming; i++)
         {
-            var bottomConnectionPoint = new ConnectionPointVM(
-                CanvasSymbolsVM,
-                this,
-                _checkBoxLineGostVM,
-                SideSymbol.Top);
+            var bottomConnectionPoint = new ConnectionPointVM(CanvasSymbolsVM, this, _checkBoxLineGostVM, SideSymbol.Top);
 
             ConnectionPoints.Add(bottomConnectionPoint);
         }
 
         for (int i = 0; i < countSymbolsOutgoing; i++)
         {
-            var bottomConnectionPoint = new ConnectionPointVM(
-                CanvasSymbolsVM,
-                this,
-                _checkBoxLineGostVM,
-                SideSymbol.Bottom);
+            var bottomConnectionPoint = new ConnectionPointVM(CanvasSymbolsVM, this, _checkBoxLineGostVM, SideSymbol.Bottom);
 
             ConnectionPoints.Add(bottomConnectionPoint);
         }

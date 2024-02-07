@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using EdblockViewModel;
 using EdblockView.Abstraction;
+using EdblockViewModel.AbstractionsVM;
 
 namespace EdblockView;
 
@@ -27,6 +29,15 @@ public partial class Edblock : Window
             try
             {
                 var blockSymbolVM = factorySymbolVM.CreateBlockSymbolVM(edblockVM);
+
+                var isScaleAllSymbolVM = edblockVM.PopupBoxMenuVM.ScaleAllSymbolVM.IsScaleAllSymbolVM;
+
+                if (isScaleAllSymbolVM && edblockVM.CanvasSymbolsVM.SymbolsVM.FirstOrDefault() is BlockSymbolVM firstBlockSymbolVM)
+                {
+                    blockSymbolVM.SetWidth(firstBlockSymbolVM.Width);
+                    blockSymbolVM.SetHeight(firstBlockSymbolVM.Height);
+                }
+
                 edblockVM.AddBlockSymbol(blockSymbolVM);
             }
             catch (Exception ex)

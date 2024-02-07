@@ -29,8 +29,8 @@ internal class FactoryBlockSymbolVM
 
         var blockSymbolVM = (BlockSymbolVM)blockSymbol;
 
-        blockSymbolVM.Width = blockSymbolSerializable.Width;
-        blockSymbolVM.Height = blockSymbolSerializable.Height;
+        blockSymbolVM.SetWidth(blockSymbolSerializable.Width);
+        blockSymbolVM.SetHeight(blockSymbolSerializable.Height);
 
         blockSymbolVM.XCoordinate = blockSymbolSerializable.XCoordinate;
         blockSymbolVM.YCoordinate = blockSymbolSerializable.YCoordinate;
@@ -67,8 +67,8 @@ internal class FactoryBlockSymbolVM
 
         var switchCaseSymbolVM = (SwitchCaseSymbolVM)blockSymbol;
 
-        switchCaseSymbolVM.Width = switchCaseSymbolsSerializable.Width;
-        switchCaseSymbolVM.Height = switchCaseSymbolsSerializable.Height;
+        switchCaseSymbolVM.SetWidth(switchCaseSymbolsSerializable.Width);
+        switchCaseSymbolVM.SetHeight(switchCaseSymbolsSerializable.Height);
 
         switchCaseSymbolVM.XCoordinate = switchCaseSymbolsSerializable.XCoordinate;
         switchCaseSymbolVM.YCoordinate = switchCaseSymbolsSerializable.YCoordinate;
@@ -91,6 +91,32 @@ internal class FactoryBlockSymbolVM
         }
 
         return switchCaseSymbolVM;
+    }
+
+    public BlockSymbolVM CreateBlockSymbolVM(ParallelActionSymbolSerializable parallelActionSymbolSerializable)
+    {
+        var symbolType = GetTypeBlockSymbolVM(parallelActionSymbolSerializable.NameSymbol);
+
+        var blockSymbol = Activator.CreateInstance(
+            symbolType, 
+            _edblockVM, 
+            parallelActionSymbolSerializable.CountSymbolsIncoming, 
+            parallelActionSymbolSerializable.CountSymbolsOutgoing);
+
+        if (blockSymbol is not BlockSymbolVM)
+        {
+            throw new Exception($"Не удалось создать объект с именем {parallelActionSymbolSerializable.NameSymbol}");
+        }
+
+        var parallelActionSymbolVM = (BlockSymbolVM)blockSymbol;
+
+        parallelActionSymbolVM.SetWidth(parallelActionSymbolSerializable.Width);
+        parallelActionSymbolVM.SetHeight(parallelActionSymbolSerializable.Height);
+
+        parallelActionSymbolVM.XCoordinate = parallelActionSymbolSerializable.XCoordinate;
+        parallelActionSymbolVM.YCoordinate = parallelActionSymbolSerializable.YCoordinate;
+
+        return parallelActionSymbolVM;
     }
 
     private static Type GetTypeBlockSymbolVM(string nameSymbolVM)
