@@ -11,6 +11,7 @@
              xmlns:switchCaseConditionSymbolsVM="clr-namespace:EdblockViewModel.Symbols.SwitchCaseConditionSymbolsVM;assembly=EdblockViewModel"   
              xmlns:componentsCommentSymbolVM="clr-namespace:EdblockViewModel.Symbols.ComponentsCommentSymbolVM;assembly=EdblockViewModel"   
              xmlns:componentsParallelActionSymbolVM="clr-namespace:EdblockViewModel.Symbols.ComponentsParallelActionSymbolVM;assembly=EdblockViewModel"   
+             
              xmlns:lineSymbolView="clr-namespace:EdblockView.SymbolsView.LineSymbolView"
              xmlns:lineSymbolsVM="clr-namespace:EdblockViewModel.Symbols.LineSymbols;assembly=EdblockViewModel"
              d:DataContext="{d:DesignInstance Type=componentsVM:CanvasSymbolsVM}"
@@ -65,7 +66,7 @@
             <ItemsControl.Template>
                 <ControlTemplate>
                     <ScrollViewer MouseLeave="ScrollViewer_MouseLeave" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden">
-                        <Canvas  Cursor="{Binding Cursor}" Focusable="True" ClipToBounds="True" IsItemsHost="True">
+                        <Canvas Cursor="{Binding Cursor}" Focusable="True" ClipToBounds="True" IsItemsHost="True">
 
                             <i:Interaction.Behaviors>
                                 <edblockViewModel:MouseBehaviourVM 

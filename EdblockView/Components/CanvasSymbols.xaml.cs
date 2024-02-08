@@ -1,6 +1,6 @@
-﻿using System.Windows;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using System.Windows.Controls;
+using EdblockViewModel.AbstractionsVM;
 
 namespace EdblockView.Components;
 
@@ -9,8 +9,6 @@ namespace EdblockView.Components;
 /// </summary>
 public partial class CanvasSymbols : UserControl
 {
-    public static Canvas? Canvas { get; set; }
-
     public CanvasSymbols()
     {
         InitializeComponent();
@@ -51,10 +49,13 @@ public partial class CanvasSymbols : UserControl
         //    scrollViewer.ScrollToVerticalOffset(scrollViewer.VerticalOffset + canvasOffset);
         //}
     }
-   
 
-    private void LoadedCanvas(object sender, RoutedEventArgs e)
+    private void SelectBlockSymbol(object sender, MouseButtonEventArgs e)
     {
-        Canvas = (Canvas)sender;
+        var blockSymbolView = (UserControl)sender;
+        var blockSymbolVM = (BlockSymbolVM)blockSymbolView.DataContext;
+        blockSymbolVM.Select();
+
+        e.Handled = true;
     }
 }
