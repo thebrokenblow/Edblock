@@ -9,6 +9,7 @@ using EdblockViewModel.Symbols.LineSymbols;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM;
 using EdblockViewModel.AbstractionsVM;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM.ScaleRectangles;
+using System;
 
 namespace EdblockViewModel.ComponentsVM;
 
@@ -290,5 +291,15 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
                 redrawDrawnLine.Redraw();
             }
         }
+    }
+
+    public void RemoveSelectedSymbol()
+    {
+        foreach (var selectedBlockSymbol in SelectedBlockSymbols)
+        {
+            selectedBlockSymbol.IsSelected = false;
+        }
+
+        SelectedDrawnLineSymbol = null;
     }
 }

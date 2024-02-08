@@ -5,7 +5,6 @@ using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using Microsoft.Win32;
 using EdblockViewModel;
-using EdblockViewModel.ComponentsVM;
 
 namespace EdblockView.Components.PopupBoxControl;
 
@@ -43,8 +42,7 @@ public partial class ButtonSaveImg : UserControl
             FileName = FileName + FileExtension
         };
 
-
-        RemoveSelectedSymbol(canvasSymbolsVM);
+        canvasSymbolsVM.RemoveSelectedSymbol();
 
         if (saveFileDialog.ShowDialog() == true)
         {
@@ -56,18 +54,6 @@ public partial class ButtonSaveImg : UserControl
 
             canvasView.Background = originalBackground;
         }
-    }
-
-    private static void RemoveSelectedSymbol(CanvasSymbolsVM canvasSymbolsVM)
-    {
-        var selectedBlockSymbols = canvasSymbolsVM.SelectedBlockSymbols;
-
-        foreach (var selectedBlockSymbol in selectedBlockSymbols)
-        {
-            selectedBlockSymbol.IsSelected = false;
-        }
-
-        canvasSymbolsVM.SelectedDrawnLineSymbol = null;
     }
 
     private static void ToImageSource(Canvas canvasView, string fileName)
@@ -87,7 +73,9 @@ public partial class ButtonSaveImg : UserControl
             renderTargetBitmap.Render(canvasView);
 
             var pngBitmapEncoder = new PngBitmapEncoder();
-            pngBitmapEncoder.Frames.Add(BitmapFrame.Create(renderTargetBitmap));
+            var bitmapFrame = BitmapFrame.Create(renderTargetBitmap);
+
+            pngBitmapEncoder.Frames.Add(bitmapFrame);
 
             using var fileStream = File.Create(fileName);
             pngBitmapEncoder.Save(fileStream);

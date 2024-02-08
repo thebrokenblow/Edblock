@@ -30,7 +30,7 @@
 
             <popupboxcontrol:ButtonSaveImg DataContext="{Binding EdblockVM}" Margin="0 5"/>
 
-            <popupboxcontrol:ButtonPrintProject Margin="0 5"/>
+            <popupboxcontrol:ButtonPrintProject DataContext="{Binding EdblockVM}" Margin="0 5"/>
         </StackPanel>
     </materialDesign:PopupBox>
 </UserControl>

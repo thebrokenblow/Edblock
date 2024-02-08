@@ -19,6 +19,7 @@ public class ArrowSymbolModel
 
     public static List<(double, double)> GetFinalCoordinate((double x, double y) finalCoordinate)
     {
+
         if (arrowOrientation == ArrowOrientation.Top)
         {
             var coordinateArrow = GetCoordinateTop(finalCoordinate);

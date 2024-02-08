@@ -15,6 +15,7 @@
         <Button 
             Margin="20 0 0 0"
             Content="Печать"
+            Click="PrintImg"
             Style="{StaticResource ButtonSettingsMenu}"
             DockPanel.Dock="Right"/>
     </DockPanel>
