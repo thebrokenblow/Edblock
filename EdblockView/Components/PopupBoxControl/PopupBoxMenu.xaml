@@ -28,7 +28,7 @@
 
             <popupboxcontrol:ButtonLoadProject DataContext="{Binding EdblockVM}" x:Name="ButtonLoadProject" Margin="0 5"/>
 
-            <popupboxcontrol:ButtonSaveImg Margin="0 5"/>
+            <popupboxcontrol:ButtonSaveImg DataContext="{Binding EdblockVM}" Margin="0 5"/>
 
             <popupboxcontrol:ButtonPrintProject Margin="0 5"/>
         </StackPanel>

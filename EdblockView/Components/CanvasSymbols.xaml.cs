@@ -1,4 +1,5 @@
-﻿using System.Windows.Input;
+﻿using System.Windows;
+using System.Windows.Input;
 using System.Windows.Controls;
 using EdblockViewModel.AbstractionsVM;
 
@@ -9,6 +10,8 @@ namespace EdblockView.Components;
 /// </summary>
 public partial class CanvasSymbols : UserControl
 {
+    public static Canvas? Canvas { get; set; }
+
     public CanvasSymbols()
     {
         InitializeComponent();
@@ -57,5 +60,10 @@ public partial class CanvasSymbols : UserControl
         blockSymbolVM.Select();
 
         e.Handled = true;
+    }
+
+    private void LoadedCanvas(object sender, RoutedEventArgs e)
+    {
+        Canvas = (Canvas)sender;
     }
 }
