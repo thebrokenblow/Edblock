@@ -187,9 +187,10 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
         RemoveSelectDrawnLine();
         ClearSelectedBlockSymbols();
 
+        blockSymbolVM.FirstMove = true;
         MovableBlockSymbol = blockSymbolVM;
         MovableBlockSymbol.Select();
-
+        
         BlockSymbolVM.Add(blockSymbolVM);
     }
 
@@ -216,6 +217,11 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
         Cursor = Cursors.Arrow;
 
         DrawnLines = null;
+
+        if (MovableBlockSymbol is not null)
+        {
+            MovableBlockSymbol.FirstMove = false;
+        }
 
         MovableBlockSymbol = null;
 

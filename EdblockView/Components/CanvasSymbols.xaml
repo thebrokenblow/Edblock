@@ -22,7 +22,7 @@
             <ItemsControl ItemsSource="{Binding BlockSymbolVM}">
                 <ItemsControl.Resources>
                     <DataTemplate DataType="{x:Type blockSymbolsVM:ActionSymbolVM}">
-                        <blockSymbolView:ActionSymbolView />
+                        <blockSymbolView:ActionSymbolView MouseDown="SelectBlockSymbol"/>
                     </DataTemplate>
                     <DataTemplate DataType="{x:Type blockSymbolsVM:ConditionSymbolVM}">
                         <blockSymbolView:ConditionSymbolView MouseDown="SelectBlockSymbol"/>

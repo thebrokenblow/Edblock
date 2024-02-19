@@ -1,19 +1,19 @@
 ﻿using System;
 using System.Windows.Input;
-using Prism.Commands;
-using EdblockModel.SymbolsModel;
-using EdblockViewModel.ComponentsVM;
-using EdblockViewModel.Symbols.ComponentsSymbolsVM.ConnectionPoints;
-using EdblockViewModel.Symbols.ComponentsSymbolsVM.ScaleRectangles;
-using EdblockModel.EnumsModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using Prism.Commands;
+using EdblockModel.EnumsModel;
+using EdblockModel.SymbolsModel;
+using EdblockViewModel.ComponentsVM;
+using EdblockViewModel.Symbols.ComponentsSymbolsVM.ScaleRectangles;
+using EdblockViewModel.Symbols.ComponentsSymbolsVM.ConnectionPoints;
 
 namespace EdblockViewModel.AbstractionsVM;
 
 public abstract class BlockSymbolVM : INotifyPropertyChanged
 {
-    private string id;
+    private string id = string.Empty;
     public string Id 
     {
         get => id;
@@ -23,7 +23,7 @@ public abstract class BlockSymbolVM : INotifyPropertyChanged
         }
     }
 
-    private string color;
+    private string color = string.Empty;
     public string Color
     {
         get => color;
@@ -99,10 +99,12 @@ public abstract class BlockSymbolVM : INotifyPropertyChanged
         }
     }
 
+    public bool FirstMove { get; set; }
+
     public DelegateCommand MouseEnter { get; set; }
     public DelegateCommand MouseLeave { get; set; }
     public DelegateCommand MouseLeftButtonDown { get; set; }
-    public BlockSymbolModel BlockSymbolModel { get; init; }
+    public BlockSymbolModel BlockSymbolModel { get; init; } = null!;
     public CanvasSymbolsVM CanvasSymbolsVM { get; init; }
 
     protected readonly CheckBoxLineGostVM _checkBoxLineGostVM;
@@ -154,7 +156,7 @@ public abstract class BlockSymbolVM : INotifyPropertyChanged
 
         CanvasSymbolsVM.RemoveSelectDrawnLine();
 
-        if (XCoordinate == 0 || YCoordinate == 0) //TODO: здесь должна быть проверка на то что это новый симвоб
+        if (FirstMove)
         {
             XCoordinate = currentCoordinate.x - Width / 2;
             YCoordinate = currentCoordinate.y - Height / 2;

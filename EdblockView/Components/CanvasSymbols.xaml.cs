@@ -49,12 +49,12 @@ public partial class CanvasSymbols : UserControl
 
     private void Canvas_MouseLeave(object sender, MouseEventArgs e)
     {
-        var cursorPosition = e.MouseDevice.GetPosition(this);
-        var scrollViewer = (ScrollViewer)sender;
-        var canvasSymbols = (Canvas)scrollViewer.Content;
-        var canvasSymbolsVM = (CanvasSymbolsVM)DataContext;
+        //var cursorPosition = e.MouseDevice.GetPosition(this);
+        //var scrollViewer = (ScrollViewer)sender;
+        //var canvasSymbols = (Canvas)scrollViewer.Content;
+        //var canvasSymbolsVM = (CanvasSymbolsVM)DataContext;
 
-        canvasSymbols.Width = canvasSymbols.ActualWidth + 10;
-        scrollViewer.ScrollToHorizontalOffset(scrollViewer.HorizontalOffset + 10);
+        //canvasSymbols.Width = canvasSymbols.ActualWidth + 10;
+        //scrollViewer.ScrollToHorizontalOffset(scrollViewer.HorizontalOffset + 10);
     }
 }
