@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
         xmlns:componentsUI="clr-namespace:EdblockView.Components" 
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
-        xmlns:symbol="clr-namespace:EdblockView.SymbolsUI"
+        xmlns:symbol="clr-namespace:EdblockView.SymbolsUI"   
         xmlns:edblockViewModel="clr-namespace:EdblockViewModel;assembly=EdblockViewModel"
         d:DataContext="{d:DesignInstance Type=edblockViewModel:EdblockVM}"
         mc:Ignorable="d"
@@ -58,9 +58,8 @@
             </Button>
         </StackPanel>
 
-        <componentsUI:CanvasSymbols 
+        <componentsUI:CanvasSymbols
             DataContext="{Binding CanvasSymbolsVM}"
-            x:Name="CanvasSymbols" 
             Grid.Row="1"
             Grid.Column="1" />
 

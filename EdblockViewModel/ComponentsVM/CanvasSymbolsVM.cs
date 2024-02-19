@@ -9,7 +9,7 @@ using EdblockViewModel.Symbols.LineSymbols;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM;
 using EdblockViewModel.AbstractionsVM;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM.ScaleRectangles;
-using System;
+using EdblockViewModel.Symbols;
 
 namespace EdblockViewModel.ComponentsVM;
 
@@ -56,7 +56,9 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
     public DelegateCommand MouseUp { get; init; }
     public DelegateCommand MouseLeftButtonDown { get; init; }
 
-    public ObservableCollection<SymbolVM> SymbolsVM { get; init; }
+    public ObservableCollection<BlockSymbolVM> BlockSymbolVM { get; init; }
+    public ObservableCollection<DrawnLineSymbolVM> DrawnLinesSymbolVM { get; init; }
+
     public Dictionary<BlockSymbolVM, List<DrawnLineSymbolVM>> BlockByDrawnLines { get; init; }
 
     public BlockSymbolVM? MovableBlockSymbol { get; set; }
@@ -71,10 +73,12 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
     public event PropertyChangedEventHandler? PropertyChanged;
 
     private const int lengthGridCell = 20;
+
     public CanvasSymbolsVM()
     {
-        SymbolsVM = new();
+        BlockSymbolVM = new();
         BlockByDrawnLines = new();
+        DrawnLinesSymbolVM = new();
         SelectedBlockSymbols = new();
         MouseMove = new(RedrawSymbols);
         MouseUp = new(SetDefaultValue);
@@ -119,12 +123,12 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
                         incomingConnectionPoint.IsHasConnectingLine = false;
                     }
 
-                    SymbolsVM.Remove(line);
+                    DrawnLinesSymbolVM.Remove(line);
                 }
                 BlockByDrawnLines.Remove(symbol);
             }
 
-            SymbolsVM.Remove(symbol);
+            BlockSymbolVM.Remove(symbol);
         }
     }
 
@@ -140,7 +144,7 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
             return;
         }
 
-        SymbolsVM.Remove(СurrentDrawnLineSymbol);
+        DrawnLinesSymbolVM.Remove(СurrentDrawnLineSymbol);
 
         var outgoingConnectionPoint = СurrentDrawnLineSymbol.OutgoingConnectionPoint;
         outgoingConnectionPoint.IsHasConnectingLine = false;
@@ -173,7 +177,7 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
             incomingConnectionPoint.IsHasConnectingLine = false;
         }
 
-        SymbolsVM.Remove(SelectedDrawnLineSymbol);
+        DrawnLinesSymbolVM.Remove(SelectedDrawnLineSymbol);
 
         SelectedDrawnLineSymbol = null;
     }
@@ -186,7 +190,7 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
         MovableBlockSymbol = blockSymbolVM;
         MovableBlockSymbol.Select();
 
-        SymbolsVM.Add(blockSymbolVM);
+        BlockSymbolVM.Add(blockSymbolVM);
     }
 
     //TODO: Подумать над названием метода
@@ -221,7 +225,7 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
         previousXCoordinate = 0;
         previousYCoordinate = 0;
 
-        TextFieldSymbolVM.ChangeFocus(SymbolsVM);
+        TextFieldSymbolVM.ChangeFocus(BlockSymbolVM);
     }
 
     private void ClearSelectedBlockSymbols()
@@ -269,14 +273,12 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
         previousXCoordinate = xCoordinate;
         previousYCoordinate = yCoordinate;
 
-        if (DrawnLines == null)
+        if (DrawnLines is not null)
         {
-            return;
-        }
-        
-        foreach (var redrawDrawnLine in DrawnLines)
-        {
-            redrawDrawnLine.Redraw();
+            foreach (var redrawDrawnLine in DrawnLines)
+            {
+                redrawDrawnLine.Redraw();
+            }
         }
     }
 

@@ -185,7 +185,7 @@ public class TextFieldSymbolVM : INotifyPropertyChanged
         MouseLeftButtonDown = new(SetMovableSymbol);
     }
 
-    public static void ChangeFocus(ObservableCollection<SymbolVM> Symbols)
+    public static void ChangeFocus(ObservableCollection<BlockSymbolVM> Symbols)
     {
         foreach (var symbol in Symbols)
         {

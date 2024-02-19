@@ -5,6 +5,8 @@ using System.Windows.Input;
 using EdblockViewModel;
 using EdblockView.Abstraction;
 using EdblockViewModel.AbstractionsVM;
+using System.Collections.Generic;
+using System.Windows.Media;
 
 namespace EdblockView;
 
@@ -32,7 +34,7 @@ public partial class Edblock : Window
 
                 var isScaleAllSymbolVM = edblockVM.PopupBoxMenuVM.ScaleAllSymbolVM.IsScaleAllSymbolVM;
 
-                if (isScaleAllSymbolVM && edblockVM.CanvasSymbolsVM.SymbolsVM.FirstOrDefault() is BlockSymbolVM firstBlockSymbolVM)
+                if (isScaleAllSymbolVM && edblockVM.CanvasSymbolsVM.BlockSymbolVM.FirstOrDefault() is BlockSymbolVM firstBlockSymbolVM)
                 {
                     blockSymbolVM.SetWidth(firstBlockSymbolVM.Width);
                     blockSymbolVM.SetHeight(firstBlockSymbolVM.Height);

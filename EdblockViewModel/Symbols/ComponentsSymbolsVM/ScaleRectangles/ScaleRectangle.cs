@@ -125,6 +125,6 @@ public class ScaleRectangle : INotifyPropertyChanged
 
     private void SaveScaleRectangle()
     {
-        _canvasSymbolsVM.ScalePartBlockSymbol = new(_blockSymbolVM, _cursorScaling, _getWidthSymbol, _getHeightSymbol, _scaleAllSymbolVM, _canvasSymbolsVM.SymbolsVM);
+        _canvasSymbolsVM.ScalePartBlockSymbol = new(_blockSymbolVM, _cursorScaling, _getWidthSymbol, _getHeightSymbol, _scaleAllSymbolVM, _canvasSymbolsVM.BlockSymbolVM);
     }
 }

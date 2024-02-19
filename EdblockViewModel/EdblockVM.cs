@@ -7,7 +7,7 @@ namespace EdblockViewModel;
 public class EdblockVM
 {
     public DelegateCommand ClickDelete { get; init; }
-    public CanvasSymbolsVM CanvasSymbolsVM { get; init; }
+    public CanvasSymbolsVM CanvasSymbolsVM { get; init; } = new();
     public FontSizeControlVM FontSizeControlVM { get; init; }
     public FontFamilyControlVM FontFamilyControlVM { get; init; }
     public TextAlignmentControlVM TextAlignmentControlVM { get; init; }
@@ -18,8 +18,6 @@ public class EdblockVM
 
     public EdblockVM()
     {
-        CanvasSymbolsVM = new CanvasSymbolsVM();
-
         var selectedBlockSymbols = CanvasSymbolsVM.SelectedBlockSymbols;
 
         FontSizeControlVM = new FontSizeControlVM(selectedBlockSymbols);

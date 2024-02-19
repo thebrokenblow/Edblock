@@ -36,11 +36,11 @@ internal class ProjectVM
         var parallelActionSymbolsSerializable = new List<ParallelActionSymbolSerializable>();
         var switchCaseSymbolsSerializable = new List<SwitchCaseSymbolsSerializable>();
 
-        var symbolsVM = canvasSymbolsVM.SymbolsVM;
+        var blockSymbolsVM = canvasSymbolsVM.BlockSymbolVM;
 
-        foreach (var symbolVM in symbolsVM)
+        foreach (var blockSymbolVM in blockSymbolsVM)
         {
-            if (symbolVM is SwitchCaseSymbolVM switchCaseSymbolVM)
+            if (blockSymbolVM is SwitchCaseSymbolVM switchCaseSymbolVM)
             {
                 var switchCaseSymbolModel = (SwitchCaseSymbolModel)switchCaseSymbolVM.BlockSymbolModel;
                 var switchCaseSymbolSerializable = FactorySymbolSerializable.Create(switchCaseSymbolModel);
@@ -48,7 +48,7 @@ internal class ProjectVM
                 switchCaseSymbolsSerializable.Add(switchCaseSymbolSerializable);
             }
 
-            if (symbolVM is ParallelActionSymbolVM parallelActionSymbolVM)
+            if (blockSymbolVM is ParallelActionSymbolVM parallelActionSymbolVM)
             {
                 var blockSymbolModel = (ParallelActionSymbolModel)parallelActionSymbolVM.BlockSymbolModel;
                 var blockSymbolSerializable = FactorySymbolSerializable.Create(blockSymbolModel);
@@ -56,22 +56,23 @@ internal class ProjectVM
                 parallelActionSymbolsSerializable.Add(blockSymbolSerializable);
             }
 
-            if (symbolVM is BlockSymbolVM and not ParallelActionSymbolVM and not SwitchCaseSymbolVM)
+            if (blockSymbolVM is BlockSymbolVM and not ParallelActionSymbolVM and not SwitchCaseSymbolVM)
             {
-                var blockSymbolVM = (BlockSymbolVM)symbolVM;
                 var blockSymbolModel = blockSymbolVM.BlockSymbolModel;
                 var blockSymbolSerializable = FactorySymbolSerializable.Create(blockSymbolModel);
 
                 blockSymbolsSerializable.Add(blockSymbolSerializable);
             }
+        }
 
-            if (symbolVM is DrawnLineSymbolVM drawnLineSymbolVM)
-            {
-                var drawnLineSymbolModel = drawnLineSymbolVM.DrawnLineSymbolModel;
-                var drawnLineSymbolSerializable = FactorySymbolSerializable.CreateDrawnLineSymbolSerializable(drawnLineSymbolModel);
+        var drawnLinesSymbolsVM = canvasSymbolsVM.DrawnLinesSymbolVM;
 
-                drawnLinesSymbolSerializable.Add(drawnLineSymbolSerializable);
-            }
+        foreach(var drawnLineSymbolVM in drawnLinesSymbolsVM)
+        {
+            var drawnLineSymbolModel = drawnLineSymbolVM.DrawnLineSymbolModel;
+            var drawnLineSymbolSerializable = FactorySymbolSerializable.CreateDrawnLineSymbolSerializable(drawnLineSymbolModel);
+
+            drawnLinesSymbolSerializable.Add(drawnLineSymbolSerializable);
         }
 
         var projectSerializable = new ProjectSerializable()
@@ -101,7 +102,7 @@ internal class ProjectVM
     private void LoadBlocksSymbols(ProjectSerializable projectSerializable)
     {
         blockSymbolsVMById.Clear();
-        canvasSymbolsVM.SymbolsVM.Clear();
+        canvasSymbolsVM.BlockSymbolVM.Clear();
 
         var blockSymbolsSerializable = projectSerializable.BlockSymbolsSerializable;
 
@@ -111,7 +112,7 @@ internal class ProjectVM
             {
                 var blockSymbolVM = factoryBlockSymbolVM.CreateBlockSymbolVM(blockSymbolSerializable);
 
-                canvasSymbolsVM.SymbolsVM.Add(blockSymbolVM);
+                canvasSymbolsVM.BlockSymbolVM.Add(blockSymbolVM);
                 blockSymbolsVMById.Add(blockSymbolSerializable.Id, blockSymbolVM);
             }
         }
@@ -124,7 +125,7 @@ internal class ProjectVM
             {
                 var switchCaseSymbolVM = factoryBlockSymbolVM.CreateBlockSymbolVM(switchCaseSymbolSerializable);
 
-                canvasSymbolsVM.SymbolsVM.Add(switchCaseSymbolVM);
+                canvasSymbolsVM.BlockSymbolVM.Add(switchCaseSymbolVM);
                 blockSymbolsVMById.Add(switchCaseSymbolSerializable.Id, switchCaseSymbolVM);
             }
         }
@@ -137,7 +138,7 @@ internal class ProjectVM
             {
                 var parallelActionSymbolVM = factoryBlockSymbolVM.CreateBlockSymbolVM(parallelActionSymbolSerializable);
 
-                canvasSymbolsVM.SymbolsVM.Add(parallelActionSymbolVM);
+                canvasSymbolsVM.BlockSymbolVM.Add(parallelActionSymbolVM);
                 blockSymbolsVMById.Add(parallelActionSymbolSerializable.Id, parallelActionSymbolVM);
             }
         }
@@ -168,6 +169,11 @@ internal class ProjectVM
 
         var drawnLinesSymbolSerializable = projectSerializable.DrawnLinesSymbolSerializable;
 
+        if (drawnLinesSymbolSerializable is null)
+        {
+            return;
+        }
+
         foreach (var drawnLineSymbolSerializable in drawnLinesSymbolSerializable)
         {
             var linesSymbolModel = LoadLinesSymbol(drawnLineSymbolSerializable);
@@ -180,17 +186,7 @@ internal class ProjectVM
                 continue;
             }
 
-            if (symbolOutgoingLine.Id == null)
-            {
-                continue;
-            }
-
             if (symbolIncomingLine == null)
-            {
-                continue;
-            }
-
-            if (symbolIncomingLine.Id == null)
             {
                 continue;
             }
@@ -246,7 +242,7 @@ internal class ProjectVM
                 canvasSymbolsVM.BlockByDrawnLines[symbolIncomingLineVM].Add(drawnLineSymbolVM);
             }
 
-            canvasSymbolsVM.SymbolsVM.Add(drawnLineSymbolVM);
+            canvasSymbolsVM.DrawnLinesSymbolVM.Add(drawnLineSymbolVM);
         }
     }
 }

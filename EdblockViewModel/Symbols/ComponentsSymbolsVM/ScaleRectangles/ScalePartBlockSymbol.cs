@@ -16,7 +16,7 @@ public class ScalePartBlockSymbol
 
     private readonly ScaleAllSymbolVM _scaleAllSymbolVM;
     private readonly Cursor _cursorWhenScaling;
-    private readonly ObservableCollection<SymbolVM> _symbols;
+    private readonly ObservableCollection<BlockSymbolVM> _symbols;
     private readonly Func<ScalePartBlockSymbol, CanvasSymbolsVM, double>? _getWidthBlockSymbol;
     private readonly Func<ScalePartBlockSymbol, CanvasSymbolsVM, double>? _getHeigthBlockSymbol;
 
@@ -26,7 +26,7 @@ public class ScalePartBlockSymbol
         Func<ScalePartBlockSymbol, CanvasSymbolsVM, double>? getWidthBlockSymbol,
         Func<ScalePartBlockSymbol, CanvasSymbolsVM, double>? getHeigthBlockSymbol,
         ScaleAllSymbolVM scaleAllSymbolVM,
-        ObservableCollection<SymbolVM> symbolsVM)
+        ObservableCollection<BlockSymbolVM> symbolsVM)
     {
         ScalingBlockSymbol = scalingBlockSymbol;
         InitialWidthBlockSymbol = scalingBlockSymbol.Width;

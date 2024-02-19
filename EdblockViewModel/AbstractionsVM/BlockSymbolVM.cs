@@ -6,11 +6,12 @@ using EdblockViewModel.ComponentsVM;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM.ConnectionPoints;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM.ScaleRectangles;
 using EdblockModel.EnumsModel;
-using EdblockViewModel.Symbols.ComponentsSymbolsVM;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace EdblockViewModel.AbstractionsVM;
 
-public abstract class BlockSymbolVM : SymbolVM
+public abstract class BlockSymbolVM : INotifyPropertyChanged
 {
     private string id;
     public string Id 
@@ -22,8 +23,8 @@ public abstract class BlockSymbolVM : SymbolVM
         }
     }
 
-    private string? color;
-    public override string? Color
+    private string color;
+    public string Color
     {
         get => color;
         set
@@ -269,5 +270,12 @@ public abstract class BlockSymbolVM : SymbolVM
         }
 
         throw new Exception("Данный символ не содержит точек соединения");
+    }
+
+    public event PropertyChangedEventHandler? PropertyChanged;
+
+    public void OnPropertyChanged([CallerMemberName] string prop = "")
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
     }
 }

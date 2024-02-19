@@ -112,4 +112,24 @@ public class DrawnLineSymbolModel
 
         return currentCoordinate;
     }
+
+    public bool IsLineOutputAccordingGOST()
+    {
+        if (OutgoingPosition is SideSymbol.Bottom or SideSymbol.Right)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    public bool IsLineIncomingAccordingGOST()
+    {
+        if (IncomingPosition is SideSymbol.Top or SideSymbol.Left)
+        {
+            return true;
+        }
+
+        return false;
+    }
 }

@@ -39,7 +39,9 @@ public partial class DrawnLineSymbolView : UserControl
     {
         if (sender is Line lineView)
         {
-            if (lineView.DataContext is LineSymbolVM lineSymbolVM)
+            var lineSymbol = lineView.DataContext;
+
+            if (lineSymbol is LineSymbolVM lineSymbolVM)
             {
                 lineSymbolVM.FinishDrawingLine();
             }

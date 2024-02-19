@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using EdblockModel.SymbolsModel.LineSymbolsModel;
 using EdblockViewModel.Symbols.ComponentsParallelActionSymbolVM;
+using EdblockViewModel.AbstractionsVM;
+using EdblockViewModel.ComponentsVM;
 
 namespace EdblockViewModel.Symbols.LineSymbols;
 
@@ -91,36 +93,53 @@ public class LineSymbolVM : INotifyPropertyChanged
     {
         var currentDrawnLineSymbol = _drawnLineSymbolVM.CanvasSymbolsVM.СurrentDrawnLineSymbol;
 
-        if (currentDrawnLineSymbol != null)
+        if (currentDrawnLineSymbol is null)
         {
-            var symbolOutgoingLine = currentDrawnLineSymbol.SymbolOutgoingLine;
-
-            if (symbolOutgoingLine is ParallelActionSymbolVM)
-            {
-                return;
-            }
-
-            var firstLine = currentDrawnLineSymbol.LinesSymbolVM[0];
-            var lastLineSymbolVM = currentDrawnLineSymbol.LinesSymbolVM[^1];
-
-            if (x1 == x2 && lastLineSymbolVM.y1 == lastLineSymbolVM.y2)
-            {
-                lastLineSymbolVM.X2 = x2;
-               
-                currentDrawnLineSymbol.ArrowSymbol.ChangePosition((x2, lastLineSymbolVM.y2));
-            }
-            else if (y1 == y2 && lastLineSymbolVM.x1 == lastLineSymbolVM.x2)
-            {
-                lastLineSymbolVM.Y2 = y2;
-
-                currentDrawnLineSymbol.ArrowSymbol.ChangePosition((lastLineSymbolVM.x2, y2));
-            }
-            else
-            {
-                throw new Exception("Неправильное соединение линий");
-            }
-
-            _drawnLineSymbolVM.CanvasSymbolsVM.СurrentDrawnLineSymbol = null;
+            return;
         }
+
+        var symbolOutgoingLine = currentDrawnLineSymbol.SymbolOutgoingLine;
+
+        if (symbolOutgoingLine is ParallelActionSymbolVM or null)
+        {
+            return;
+        }
+
+        var lastLineSymbolVM = currentDrawnLineSymbol.LinesSymbolVM[^1];
+
+        if (x1 == x2 && lastLineSymbolVM.y1 == lastLineSymbolVM.y2)
+        {
+            lastLineSymbolVM.X2 = x2;
+
+            currentDrawnLineSymbol.ArrowSymbol.ChangePosition((x2, lastLineSymbolVM.y2));
+        }
+        else if (y1 == y2 && lastLineSymbolVM.x1 == lastLineSymbolVM.x2)
+        {
+            lastLineSymbolVM.Y2 = y2;
+
+            currentDrawnLineSymbol.ArrowSymbol.ChangePosition((lastLineSymbolVM.x2, y2));
+        }
+        else
+        {
+            throw new Exception("Неправильное соединение линий");
+        }
+
+        var blockByDrawnLines = _drawnLineSymbolVM.CanvasSymbolsVM.BlockByDrawnLines;
+
+        if (!blockByDrawnLines.ContainsKey(symbolOutgoingLine))
+        {
+            var drawnLinesSymbolVM = new List<DrawnLineSymbolVM>
+            {
+                _drawnLineSymbolVM
+            };
+
+            blockByDrawnLines.Add(symbolOutgoingLine, drawnLinesSymbolVM);
+        }
+        else
+        {
+            blockByDrawnLines[symbolOutgoingLine].Add(_drawnLineSymbolVM);
+        }
+
+        _drawnLineSymbolVM.CanvasSymbolsVM.СurrentDrawnLineSymbol = null;
     }
 }

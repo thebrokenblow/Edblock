@@ -1,5 +1,4 @@
 ﻿using Prism.Commands;
-using System.Windows;
 using System.Windows.Input;
 using System.ComponentModel;
 using System.Collections.Generic;
@@ -9,7 +8,7 @@ using EdblockViewModel.Symbols.LineSymbols;
 using EdblockModel.SymbolsModel.LineSymbolsModel;
 using EdblockViewModel.AbstractionsVM;
 using EdblockModel.EnumsModel;
-using EdblockModel.SymbolsModel;
+using System;
 
 namespace EdblockViewModel.Symbols.ComponentsSymbolsVM.ConnectionPoints;
 
@@ -85,13 +84,11 @@ public class ConnectionPointVM : INotifyPropertyChanged
 
     private readonly CanvasSymbolsVM _canvasSymbolsVM;
     private readonly CheckBoxLineGostVM _checkBoxLineGostVM;
-    private readonly ConnectionPointModel _connectionPointModel;
 
     public ConnectionPointVM(CanvasSymbolsVM canvasSymbolsVM, BlockSymbolVM blockSymbolVM, CheckBoxLineGostVM checkBoxLineGostVM, SideSymbol position)
     {
         _canvasSymbolsVM = canvasSymbolsVM;
         _checkBoxLineGostVM = checkBoxLineGostVM;
-        _connectionPointModel = new(position);
 
         Position = position;
 
@@ -152,16 +149,7 @@ public class ConnectionPointVM : INotifyPropertyChanged
 
     public void StarDrawLine()
     {
-        var isLineOutputAccordingGOST = _connectionPointModel.IsLineOutputAccordingGOST();
         var isDrawingLinesAccordingGOST = _checkBoxLineGostVM.IsDrawingLinesAccordingGOST;
-
-        if (isDrawingLinesAccordingGOST && !isLineOutputAccordingGOST)
-        {
-            MessageBox.Show("Выход линии должен быть снизу или справа");
-            return;
-        }
-
-        IsHasConnectingLine = true;
 
         var drawnLineSymbolVM = new DrawnLineSymbolVM(_canvasSymbolsVM)
         {
@@ -170,21 +158,26 @@ public class ConnectionPointVM : INotifyPropertyChanged
             OutgoingConnectionPoint = this
         };
 
+        var isLineOutputAccordingGOST = drawnLineSymbolVM.IsLineOutputAccordingGOST();
+        
+        if (isDrawingLinesAccordingGOST && !isLineOutputAccordingGOST)
+        {
+            throw new Exception("Выход линии должен быть снизу или справа");
+        }
+
+        IsHasConnectingLine = true;
+
         drawnLineSymbolVM.AddFirstLine(BlockSymbolVM.XCoordinate + XCoordinateLineDraw, BlockSymbolVM.YCoordinate + YCoordinateLineDraw);
         drawnLineSymbolVM.RedrawPartLines();
 
-        _canvasSymbolsVM.SymbolsVM.Add(drawnLineSymbolVM);
+        _canvasSymbolsVM.DrawnLinesSymbolVM.Add(drawnLineSymbolVM);
         _canvasSymbolsVM.СurrentDrawnLineSymbol = drawnLineSymbolVM;
     }
 
     public void FinishDrawLine()
     {
-        var isLineIncomingAccordingGOST = _connectionPointModel.IsLineIncomingAccordingGOST();
-        var isDrawingLinesAccordingGOST = _checkBoxLineGostVM.IsDrawingLinesAccordingGOST;
-
-        if (isDrawingLinesAccordingGOST && !isLineIncomingAccordingGOST)
+        if (_canvasSymbolsVM.СurrentDrawnLineSymbol is null)
         {
-            MessageBox.Show("Вход линии должен быть сверху или снизу");
             return;
         }
 
@@ -194,6 +187,18 @@ public class ConnectionPointVM : INotifyPropertyChanged
         {
             return;
         }
+        drawnLineSymbolVM.IncomingPosition = Position;
+
+
+        var isLineIncomingAccordingGOST = _canvasSymbolsVM.СurrentDrawnLineSymbol.IsLineIncomingAccordingGOST();
+        var isDrawingLinesAccordingGOST = _checkBoxLineGostVM.IsDrawingLinesAccordingGOST;
+
+
+        if (isDrawingLinesAccordingGOST && !isLineIncomingAccordingGOST)
+        {
+            throw new Exception("Вход линии должен быть сверху или снизу");
+        }
+
 
         var symbolOutgoingLine = drawnLineSymbolVM.SymbolOutgoingLine;
 
@@ -204,7 +209,6 @@ public class ConnectionPointVM : INotifyPropertyChanged
 
         IsHasConnectingLine = true;
 
-        drawnLineSymbolVM.IncomingPosition = Position;
         drawnLineSymbolVM.IncomingConnectionPoint = this;
         drawnLineSymbolVM.SymbolIncomingLine = BlockSymbolVM;
 

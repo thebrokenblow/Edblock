@@ -9,10 +9,12 @@ using EdblockViewModel.AbstractionsVM;
 using System.Windows.Input;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM.ConnectionPoints;
 using EdblockModel.EnumsModel;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace EdblockViewModel.Symbols.LineSymbols;
 
-public class DrawnLineSymbolVM : SymbolVM
+public class DrawnLineSymbolVM : INotifyPropertyChanged
 {
     public DrawnLineSymbolModel DrawnLineSymbolModel { get; set; }
     public ObservableCollection<LineSymbolVM> LinesSymbolVM { get; init; }
@@ -68,6 +70,7 @@ public class DrawnLineSymbolVM : SymbolVM
     }
 
     private const string defaultText = "да";
+    
     private string? text;
     public string? Text 
     {
@@ -80,8 +83,9 @@ public class DrawnLineSymbolVM : SymbolVM
     }
 
     private const string defaultColor = "#000000";
-    private string? color;
-    public override string? Color
+
+    private string color;
+    public string Color
     {
         get => color;
         set
@@ -441,5 +445,27 @@ public class DrawnLineSymbolVM : SymbolVM
     public void ShowTextField()
     {
         IsShowTextField = true;
+    }
+
+
+    public event PropertyChangedEventHandler? PropertyChanged;
+
+    public void OnPropertyChanged([CallerMemberName] string prop = "")
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
+    }
+
+    public bool IsLineOutputAccordingGOST()
+    {
+        var isLineOutputAccordingGOST = DrawnLineSymbolModel.IsLineOutputAccordingGOST();
+
+        return isLineOutputAccordingGOST;
+    }
+
+    public bool IsLineIncomingAccordingGOST()
+    {
+        var isLineIncomingAccordingGOST = DrawnLineSymbolModel.IsLineIncomingAccordingGOST();
+
+        return isLineIncomingAccordingGOST;
     }
 }

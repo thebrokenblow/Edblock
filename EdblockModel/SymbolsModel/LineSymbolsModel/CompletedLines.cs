@@ -14,6 +14,7 @@ public class CompletedLine
         linesSymbolModel = drawnLineSymbolModel.LinesSymbolModel;
         outgoingPosition = drawnLineSymbolModel.OutgoingPosition;
         incomingPosition = drawnLineSymbolModel.IncomingPosition;
+
         _finalCoordinate = finalCoordinate;
     }
 

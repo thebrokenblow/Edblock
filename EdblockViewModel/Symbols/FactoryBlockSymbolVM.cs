@@ -124,12 +124,15 @@ internal class FactoryBlockSymbolVM
         return Assembly.GetExecutingAssembly().GetTypes().FirstOrDefault(
             type =>
             {
-                var attr = type.GetCustomAttribute<SymbolTypeAttribute>();
-                if (attr is null)
+                var symbolTypeAttribute = type.GetCustomAttribute<SymbolTypeAttribute>();
+
+                if (symbolTypeAttribute is null)
                 {
                     return false;
                 }
-                return attr.NameSymbol == nameSymbolVM;
+
+                return symbolTypeAttribute.NameSymbol == nameSymbolVM;
+
             }) ?? throw new Exception($"Нет класса или атрибута с именем {nameSymbolVM}");
     }
 }
