@@ -9,7 +9,6 @@ using EdblockViewModel.Symbols.LineSymbols;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM;
 using EdblockViewModel.AbstractionsVM;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM.ScaleRectangles;
-using EdblockViewModel.Symbols;
 
 namespace EdblockViewModel.ComponentsVM;
 
@@ -85,6 +84,7 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
         MouseLeftButtonDown = new(AddLine);
 
         cursor = Cursors.Arrow;
+
         Grid = new Rect(-lengthGridCell, -lengthGridCell, lengthGridCell, lengthGridCell);
     }
 

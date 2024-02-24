@@ -8,6 +8,7 @@ using EdblockModel.SymbolsModel;
 using EdblockViewModel.ComponentsVM;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM.ScaleRectangles;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM.ConnectionPoints;
+using EdblockViewModel.Symbols.SwitchCaseConditionSymbolsVM;
 
 namespace EdblockViewModel.AbstractionsVM;
 
@@ -126,6 +127,8 @@ public abstract class BlockSymbolVM : INotifyPropertyChanged
 
         Id = Guid.NewGuid().ToString();
 
+        BlockSymbolModel = CreateBlockSymbolModel();
+
         MouseEnter = new(ShowAuxiliaryElements);
         MouseLeave = new(HideAuxiliaryElements);
         MouseLeftButtonDown = new(SetMovableSymbol);
@@ -136,10 +139,12 @@ public abstract class BlockSymbolVM : INotifyPropertyChanged
 
     public virtual BlockSymbolModel CreateBlockSymbolModel()
     {
+        var nameSymbol = GetType().Name.ToString();
+
         var blockSymbolModel = new BlockSymbolModel()
         {
             Id = Id,
-            NameSymbol = GetType().Name.ToString(),
+            NameSymbol = nameSymbol,
         };
 
         return blockSymbolModel;
@@ -178,7 +183,7 @@ public abstract class BlockSymbolVM : INotifyPropertyChanged
         var movableSymbol = CanvasSymbolsVM.MovableBlockSymbol;
         var scalePartBlockSymbolVM = CanvasSymbolsVM.ScalePartBlockSymbol;
 
-        if (movableSymbol is not null || scalePartBlockSymbolVM is not null) // Условие истино, когда символ перемещается и масштабируется(просто навёл курсор)
+        if (movableSymbol is not null || scalePartBlockSymbolVM is not null)
         {
             return;
         }
@@ -204,7 +209,7 @@ public abstract class BlockSymbolVM : INotifyPropertyChanged
     {
         if (this is IHasConnectionPoint symbolHasConnectionPoint)
         {
-            var connectionPoints = symbolHasConnectionPoint.ConnectionPoints;
+            var connectionPoints = symbolHasConnectionPoint.ConnectionPointsVM;
 
             ConnectionPointVM.SetDisplayConnectionPoints(connectionPoints, status);
         }
@@ -220,7 +225,7 @@ public abstract class BlockSymbolVM : INotifyPropertyChanged
         }
     }
 
-    protected void ChangeCoordinateAuxiliaryElements()
+    protected void ChangeCoordinateScaleRectangle()
     {
         if (this is IHasScaleRectangles symbolHasScaleRectangles)
         {
@@ -258,9 +263,22 @@ public abstract class BlockSymbolVM : INotifyPropertyChanged
 
     internal ConnectionPointVM GetConnectionPoint(SideSymbol incomingPosition)
     {
+        if (this is SwitchCaseSymbolVM switchCaseSymbolVM)
+        {
+            var connectionPointsSwitchCaseVM = switchCaseSymbolVM.ConnectionPointsSwitchCaseVM;
+
+            foreach (var connectionPointSwitchCaseVM in connectionPointsSwitchCaseVM)
+            {
+                if (connectionPointSwitchCaseVM.Position == incomingPosition && !connectionPointSwitchCaseVM.IsHasConnectingLine)
+                {
+                    return connectionPointSwitchCaseVM;
+                }
+            }
+        }
+
         if (this is IHasConnectionPoint blockSymbolHasConnectionPoint)
         {
-            var connectionPoints = blockSymbolHasConnectionPoint.ConnectionPoints;
+            var connectionPoints = blockSymbolHasConnectionPoint.ConnectionPointsVM;
 
             foreach(var connectionPoint in connectionPoints)
             {

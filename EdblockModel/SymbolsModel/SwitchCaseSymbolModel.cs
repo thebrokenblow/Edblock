@@ -2,5 +2,5 @@
 
 public class SwitchCaseSymbolModel : BlockSymbolModel
 {
-    public int CountLine { get; init; }
+    public int CountLine { get; set; }
 }

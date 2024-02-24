@@ -3,8 +3,8 @@ using System.Windows.Media;
 using System.Collections.Generic;
 using EdblockViewModel.AbstractionsVM;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM;
-using EdblockViewModel.Symbols.ComponentsSymbolsVM.ConnectionPoints;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM.ScaleRectangles;
+using EdblockViewModel.Symbols.ComponentsSymbolsVM.ConnectionPoints;
 
 namespace EdblockViewModel.Symbols;
 
@@ -12,7 +12,9 @@ public class CycleWhileEndSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnect
 {
     public TextFieldSymbolVM TextFieldSymbolVM { get; init; }
     public List<ScaleRectangle> ScaleRectangles { get; init; }
-    public List<ConnectionPointVM> ConnectionPoints { get; init; }
+    public List<ConnectionPointVM> ConnectionPointsVM { get; init; }
+    public CoordinateConnectionPointVM CoordinateConnectionPointVM { get; init; }
+    public BuilderConnectionPointsVM BuilderConnectionPointsVM { get; init; }
     public BuilderScaleRectangles BuilderScaleRectangles { get; init; }
 
     private PointCollection? points;
@@ -26,7 +28,6 @@ public class CycleWhileEndSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnect
         }
     }
 
-
     private const int defaultWidth = 140;
     private const int defaultHeigth = 60;
 
@@ -37,9 +38,26 @@ public class CycleWhileEndSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnect
     
     public CycleWhileEndSymbolVM(EdblockVM edblockVM) : base(edblockVM)
     {
-        TextFieldSymbolVM = new(edblockVM.CanvasSymbolsVM, this);
+        TextFieldSymbolVM = new(CanvasSymbolsVM, this);
 
-        BuilderScaleRectangles = new(CanvasSymbolsVM, edblockVM.PopupBoxMenuVM.ScaleAllSymbolVM, this);
+        BuilderConnectionPointsVM = new(
+            CanvasSymbolsVM,
+            this,
+            _checkBoxLineGostVM);
+
+        ConnectionPointsVM = BuilderConnectionPointsVM
+            .AddTopConnectionPoint()
+            .AddRightConnectionPoint()
+            .AddBottomConnectionPoint()
+            .AddLeftConnectionPoint()
+            .Create();
+
+        CoordinateConnectionPointVM = new(this);
+
+        BuilderScaleRectangles = new(
+            CanvasSymbolsVM, 
+            edblockVM.PopupBoxMenuVM.ScaleAllSymbolVM, 
+            this);
 
         ScaleRectangles =
             BuilderScaleRectangles
@@ -56,40 +74,30 @@ public class CycleWhileEndSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnect
         Color = defaultColor;
 
         TextFieldSymbolVM.Text = defaultText;
+        TextFieldSymbolVM.LeftOffset = sideProjection;
 
-        Width = defaultWidth;
-        Height = defaultHeigth;
-
-        SetWidth(Width);
-        SetHeight(Height);
+        SetWidth(defaultWidth);
+        SetHeight(defaultHeigth);
     }
 
     public override void SetWidth(double width)
     {
         Width = width;
-
-        var textFieldWidth = GetTextFieldWidth();
-        var textFieldLeftOffset = GetTextFieldLeftOffset();
-
-        TextFieldSymbolVM.Width = textFieldWidth;
-        TextFieldSymbolVM.LeftOffset = textFieldLeftOffset;
+        TextFieldSymbolVM.Width = width - sideProjection * 2;
 
         SetCoordinatePolygonPoints();
-        ChangeCoordinateAuxiliaryElements();
+        ChangeCoordinateScaleRectangle();
+        CoordinateConnectionPointVM.SetCoordinate();
     }
 
     public override void SetHeight(double height)
     {
         Height = height;
-
-        var textFieldHeight = GetTextFieldHeight();
-        var textFieldTopOffset = GetTextFieldTopOffset();
-
-        TextFieldSymbolVM.Height = textFieldHeight;
-        TextFieldSymbolVM.TopOffset = textFieldTopOffset;
+        TextFieldSymbolVM.Height = height;
 
         SetCoordinatePolygonPoints();
-        ChangeCoordinateAuxiliaryElements();
+        ChangeCoordinateScaleRectangle();
+        CoordinateConnectionPointVM.SetCoordinate();
     }
 
     public void SetCoordinatePolygonPoints()
@@ -103,45 +111,5 @@ public class CycleWhileEndSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnect
             new Point(Width, Height - sideProjection),
             new Point(Width, 0),
         };
-    }
-
-    public double GetTextFieldWidth()
-    {
-        return Width - sideProjection * 2;
-    }
-
-    public double GetTextFieldHeight()
-    {
-        return Height;
-    }
-
-    public double GetTextFieldLeftOffset()
-    {
-        return sideProjection;
-    }
-
-    public double GetTextFieldTopOffset()
-    {
-        return 0;
-    }
-
-    public (double x, double y) GetTopBorderCoordinate()
-    {
-        return (XCoordinate + Width / 2, YCoordinate);
-    }
-
-    public (double x, double y) GetBottomBorderCoordinate()
-    {
-        return (XCoordinate + Width / 2, YCoordinate + Height);
-    }
-
-    public (double x, double y) GetLeftBorderCoordinate()
-    {
-        return (XCoordinate, YCoordinate + Height / 2);
-    }
-
-    public (double x, double y) GetRightBorderCoordinate()
-    {
-        return (XCoordinate + Width, YCoordinate + Height / 2);
     }
 }

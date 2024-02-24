@@ -138,11 +138,12 @@ public class ConnectionPointVM : INotifyPropertyChanged
     {
         if (_canvasSymbolsVM.ScalePartBlockSymbol == null) //Код выполняется, если символ не масштабируется
         {
-            var connectionPoints = BlockSymbolHasConnectionPoint.ConnectionPoints;
+            var connectionPoints = BlockSymbolHasConnectionPoint.ConnectionPointsVM;
 
             SetDisplayConnectionPoints(connectionPoints, isEnterConnectionPoint);
 
             _canvasSymbolsVM.Cursor = cursorDisplaying;
+
             IsSelected = isSelectConnectionPoint;
         }
     }

@@ -43,8 +43,9 @@
         </TextBox>
 
         <symbolView:ScaleRectanglesView />
+        <symbolView:ConnectionPointsView />
 
-        <ItemsControl ItemsSource="{Binding ConnectionPoints}">
+        <ItemsControl ItemsSource="{Binding ConnectionPointsSwitchCaseVM}">
             <ItemsControl.ItemTemplate>
                 <DataTemplate DataType="Points">
                     <Ellipse MouseDown="TrackStageDrawLine" Style="{StaticResource ConnectionPointSwitchCaseView}">

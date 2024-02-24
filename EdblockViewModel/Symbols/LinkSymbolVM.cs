@@ -2,17 +2,19 @@
 using System.Collections.Generic;
 using EdblockViewModel.AbstractionsVM;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM;
-using EdblockViewModel.Symbols.ComponentsSymbolsVM.ConnectionPoints;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM.ScaleRectangles;
+using EdblockViewModel.Symbols.ComponentsSymbolsVM.ConnectionPoints;
 
 namespace EdblockViewModel.Symbols;
 
 public class LinkSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnectionPoint, IHasScaleRectangles
 {
     public TextFieldSymbolVM TextFieldSymbolVM { get; init; }
+    public List<ConnectionPointVM> ConnectionPointsVM { get; init; }
+    public BuilderConnectionPointsVM BuilderConnectionPointsVM { get; init; }
     public List<ScaleRectangle> ScaleRectangles { get; init; }
-    public List<ConnectionPointVM> ConnectionPoints { get; init; }
     public BuilderScaleRectangles BuilderScaleRectangles { get; init; }
+    public CoordinateConnectionPointVM CoordinateConnectionPointVM { get; init; }
 
     private const int defaultWidth = 60;
     private const int defaultHeigth = 60;
@@ -22,10 +24,26 @@ public class LinkSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnectionPoint,
 
     public LinkSymbolVM(EdblockVM edblockVM) : base(edblockVM)
     {
-        TextFieldSymbolVM = new(edblockVM.CanvasSymbolsVM, this);
+        TextFieldSymbolVM = new(CanvasSymbolsVM, this);
 
+        BuilderConnectionPointsVM = new(
+           CanvasSymbolsVM,
+           this,
+           _checkBoxLineGostVM);
 
-        BuilderScaleRectangles = new(CanvasSymbolsVM, edblockVM.PopupBoxMenuVM.ScaleAllSymbolVM, this);
+        ConnectionPointsVM = BuilderConnectionPointsVM
+            .AddTopConnectionPoint()
+            .AddRightConnectionPoint()
+            .AddBottomConnectionPoint()
+            .AddLeftConnectionPoint()
+            .Create();
+
+        CoordinateConnectionPointVM = new(this);
+
+        BuilderScaleRectangles = new(
+            CanvasSymbolsVM, 
+            edblockVM.PopupBoxMenuVM.ScaleAllSymbolVM, 
+            this);
 
         ScaleRectangles =
             BuilderScaleRectangles
@@ -39,11 +57,8 @@ public class LinkSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnectionPoint,
 
         TextFieldSymbolVM.Text = defaultText;
 
-        Width = defaultWidth;
-        Height = defaultHeigth;
-
-        SetWidth(Width);
-        SetHeight(Height);
+        SetWidth(defaultWidth);
+        SetHeight(defaultHeigth);
     }
 
     public override void SetHeight(double height)
@@ -61,58 +76,16 @@ public class LinkSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnectionPoint,
         Height = size;
         Width = size;
 
-        var textFieldWidth = GetTextFieldWidth();
-        var textFieldLeftOffset = GetTextFieldLeftOffset();
+        var textFieldSize = Math.Sqrt(size * size / 2);
+        var textFieldOffset = (size - Math.Sqrt(size * size / 2)) / 2;
 
-        var textFieldHeight = GetTextFieldHeight();
-        var textFieldTopOffset = GetTextFieldTopOffset();
+        TextFieldSymbolVM.Width = textFieldSize;
+        TextFieldSymbolVM.Height = textFieldSize;
 
-        TextFieldSymbolVM.Width = textFieldWidth;
-        TextFieldSymbolVM.Height = textFieldHeight;
+        TextFieldSymbolVM.LeftOffset = textFieldOffset;
+        TextFieldSymbolVM.TopOffset = textFieldOffset;
 
-        TextFieldSymbolVM.LeftOffset = textFieldLeftOffset;
-        TextFieldSymbolVM.TopOffset = textFieldTopOffset;
-
-        ChangeCoordinateAuxiliaryElements();
-    }
-
-    public double GetTextFieldWidth()
-    {
-        return Math.Sqrt(Height * Height / 2);
-    }
-
-    public double GetTextFieldHeight()
-    {
-        return Math.Sqrt(Height * Height / 2);
-    }
-
-    public double GetTextFieldLeftOffset()
-    {
-        return (Height - Math.Sqrt(Height * Height / 2)) / 2;
-    }
-
-    public double GetTextFieldTopOffset()
-    {
-        return (Height - Math.Sqrt(Height * Height / 2)) / 2;
-    }
-
-    public (double x, double y) GetTopBorderCoordinate()
-    {
-        return (XCoordinate + Width / 2, YCoordinate);
-    }
-
-    public (double x, double y) GetBottomBorderCoordinate()
-    {
-        return (XCoordinate + Width / 2, YCoordinate + Height);
-    }
-
-    public (double x, double y) GetLeftBorderCoordinate()
-    {
-        return (XCoordinate, YCoordinate + Height / 2);
-    }
-
-    public (double x, double y) GetRightBorderCoordinate()
-    {
-        return (XCoordinate + Width, YCoordinate + Height / 2);
+        ChangeCoordinateScaleRectangle();
+        CoordinateConnectionPointVM.SetCoordinate();
     }
 }

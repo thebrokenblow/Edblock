@@ -10,8 +10,8 @@ public class DrawnLineSymbolModel
     public CoordinateLineModel CoordinateLineModel { get; set; }
     public SideSymbol OutgoingPosition { get; set; }
     public SideSymbol IncomingPosition { get; set; }
-    public string? Color { get; set; }
-    public string? Text { get; set; }
+    public string Color { get; set; } = string.Empty;
+    public string Text { get; set; } = string.Empty;
 
     private readonly int offsetLine = 10;
 

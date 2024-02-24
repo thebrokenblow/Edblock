@@ -5,5 +5,5 @@ namespace EdblockViewModel.AbstractionsVM;
 
 public interface IHasConnectionPoint
 {
-    public List<ConnectionPointVM> ConnectionPoints { get; init; }
+    public List<ConnectionPointVM> ConnectionPointsVM { get; init; }
 }

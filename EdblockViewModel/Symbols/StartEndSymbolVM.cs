@@ -1,18 +1,19 @@
 ﻿using System.Collections.Generic;
-using EdblockModel.SymbolsModel;
 using EdblockViewModel.AbstractionsVM;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM;
-using EdblockViewModel.Symbols.ComponentsSymbolsVM.ConnectionPoints;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM.ScaleRectangles;
+using EdblockViewModel.Symbols.ComponentsSymbolsVM.ConnectionPoints;
 
 namespace EdblockViewModel.Symbols;
 
 public class StartEndSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnectionPoint, IHasScaleRectangles
 {
     public TextFieldSymbolVM TextFieldSymbolVM { get; init; }
+    public List<ConnectionPointVM> ConnectionPointsVM { get; init; }
+    public BuilderConnectionPointsVM BuilderConnectionPointsVM { get; init; }
     public List<ScaleRectangle> ScaleRectangles { get; init; }
-    public List<ConnectionPointVM> ConnectionPoints { get; init; }
     public BuilderScaleRectangles BuilderScaleRectangles { get; init; }
+    public CoordinateConnectionPointVM CoordinateConnectionPointVM { get; init; }
 
     private const int defaultWidth = 140;
     private const int defaultHeigth = 60;
@@ -26,8 +27,24 @@ public class StartEndSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnectionPo
     {
         TextFieldSymbolVM = new(edblockVM.CanvasSymbolsVM, this);
 
+        BuilderConnectionPointsVM = new(
+            CanvasSymbolsVM,
+            this,
+            _checkBoxLineGostVM);
 
-        BuilderScaleRectangles = new(CanvasSymbolsVM, edblockVM.PopupBoxMenuVM.ScaleAllSymbolVM, this);
+        ConnectionPointsVM = BuilderConnectionPointsVM
+            .AddTopConnectionPoint()
+            .AddRightConnectionPoint()
+            .AddBottomConnectionPoint()
+            .AddLeftConnectionPoint()
+            .Create();
+
+        CoordinateConnectionPointVM = new(this);
+
+        BuilderScaleRectangles = new(
+            CanvasSymbolsVM,
+            edblockVM.PopupBoxMenuVM.ScaleAllSymbolVM,
+            this);
 
         ScaleRectangles =
             BuilderScaleRectangles
@@ -45,56 +62,28 @@ public class StartEndSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnectionPo
 
         TextFieldSymbolVM.Text = defaultText;
 
-        Width = defaultWidth;
-        Height = defaultHeigth;
-
-        SetWidth(Width);
-        SetHeight(Height);
+        SetWidth(defaultWidth);
+        SetHeight(defaultHeigth);
     }
 
     public override void SetWidth(double width)
     {
         Width = width;
 
-        var textFieldWidth = GetTextFieldWidth();
-        var textFieldLeftOffset = GetTextFieldLeftOffset();
+        TextFieldSymbolVM.Width = Width - offsetTextField; 
+        TextFieldSymbolVM.LeftOffset = offsetTextField / 2; 
 
-        TextFieldSymbolVM.Width = textFieldWidth;
-        TextFieldSymbolVM.LeftOffset = textFieldLeftOffset;
-
-        ChangeCoordinateAuxiliaryElements();
+        ChangeCoordinateScaleRectangle();
+        CoordinateConnectionPointVM.SetCoordinate();
     }
 
     public override void SetHeight(double height)
     {
         Height = height;
 
-        var textFieldHeight = GetTextFieldHeight();
-        var textFieldTopOffset = GetTextFieldTopOffset();
+        TextFieldSymbolVM.Height = height;
 
-        TextFieldSymbolVM.Height = textFieldHeight;
-        TextFieldSymbolVM.TopOffset = textFieldTopOffset;
-
-        ChangeCoordinateAuxiliaryElements();
-    }
-
-    public double GetTextFieldWidth()
-    {
-        return Width - offsetTextField;
-    }
-
-    public double GetTextFieldHeight()
-    {
-        return Height;
-    }
-
-    public double GetTextFieldLeftOffset()
-    {
-        return offsetTextField / 2;
-    }
-
-    public double GetTextFieldTopOffset()
-    {
-        return 0;
+        ChangeCoordinateScaleRectangle();
+        CoordinateConnectionPointVM.SetCoordinate();
     }
 }

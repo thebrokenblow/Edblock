@@ -18,7 +18,7 @@
              d:DesignHeight="450" d:DesignWidth="800">
 
     <ScrollViewer MouseLeave="ScrollViewer_MouseLeave">
-        <Canvas MouseLeave="Canvas_MouseLeave">
+        <Canvas Cursor="{Binding Cursor}" MouseLeave="Canvas_MouseLeave">
             <ItemsControl ItemsSource="{Binding BlockSymbolVM}">
                 <ItemsControl.Resources>
                     <DataTemplate DataType="{x:Type blockSymbolsVM:ActionSymbolVM}">
@@ -31,7 +31,7 @@
                         <blockSymbolView:HorizontalConditionSymbolView MouseDown="SelectBlockSymbol"/>
                     </DataTemplate>
                     <DataTemplate DataType="{x:Type switchCaseConditionSymbolsVM:VerticalConditionSymbolVM}">
-                        <blockSymbolView:HorizontalConditionSymbolView MouseDown="SelectBlockSymbol"/>
+                        <blockSymbolView:VerticalConditionSymbolView MouseDown="SelectBlockSymbol"/>
                     </DataTemplate>
                     <DataTemplate DataType="{x:Type blockSymbolsVM:StartEndSymbolVM}">
                         <blockSymbolView:StartEndSymbolView MouseDown="SelectBlockSymbol"/>

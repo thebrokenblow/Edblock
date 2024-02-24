@@ -3,8 +3,8 @@ using System.Windows.Media;
 using System.Collections.Generic;
 using EdblockViewModel.AbstractionsVM;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM;
-using EdblockViewModel.Symbols.ComponentsSymbolsVM.ConnectionPoints;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM.ScaleRectangles;
+using EdblockViewModel.Symbols.ComponentsSymbolsVM.ConnectionPoints;
 
 namespace EdblockViewModel.Symbols;
 
@@ -12,7 +12,9 @@ public class CycleForSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnectionPo
 {
     public TextFieldSymbolVM TextFieldSymbolVM { get; init; }
     public List<ScaleRectangle> ScaleRectangles { get; init; }
-    public List<ConnectionPointVM> ConnectionPoints { get; init; }
+    public List<ConnectionPointVM> ConnectionPointsVM { get; init; }
+    public BuilderConnectionPointsVM BuilderConnectionPointsVM { get; init; }
+    public CoordinateConnectionPointVM CoordinateConnectionPointVM { get; init; }
     public BuilderScaleRectangles BuilderScaleRectangles { get; init; }
 
     private PointCollection? points;
@@ -36,9 +38,26 @@ public class CycleForSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnectionPo
 
     public CycleForSymbolVM(EdblockVM edblockVM) : base(edblockVM)
     {
-        TextFieldSymbolVM = new(edblockVM.CanvasSymbolsVM, this);
+        TextFieldSymbolVM = new(CanvasSymbolsVM, this);
 
-        BuilderScaleRectangles = new(CanvasSymbolsVM, edblockVM.PopupBoxMenuVM.ScaleAllSymbolVM, this);
+        CoordinateConnectionPointVM = new(this);
+
+        BuilderConnectionPointsVM = new(
+            CanvasSymbolsVM,
+            this,
+            _checkBoxLineGostVM);
+
+        ConnectionPointsVM = BuilderConnectionPointsVM
+            .AddTopConnectionPoint()
+            .AddRightConnectionPoint()
+            .AddBottomConnectionPoint()
+            .AddLeftConnectionPoint()
+            .Create();
+
+        BuilderScaleRectangles = new(
+            CanvasSymbolsVM,
+            edblockVM.PopupBoxMenuVM.ScaleAllSymbolVM,
+            this);
 
         ScaleRectangles =
             BuilderScaleRectangles
@@ -56,11 +75,8 @@ public class CycleForSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnectionPo
 
         TextFieldSymbolVM.Text = defaultText;
 
-        Width = defaultWidth;
-        Height = defaultHeigth;
-
-        SetWidth(Width);
-        SetHeight(Height);
+        SetWidth(defaultWidth);
+        SetHeight(defaultHeigth);
     }
 
     public override void SetWidth(double width)
@@ -71,21 +87,19 @@ public class CycleForSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnectionPo
         TextFieldSymbolVM.LeftOffset = sideProjection;
 
         SetCoordinatePolygonPoints();
-        ChangeCoordinateAuxiliaryElements();
+        ChangeCoordinateScaleRectangle();
+        CoordinateConnectionPointVM.SetCoordinate();
     }
 
     public override void SetHeight(double height)
     {
         Height = height;
 
-        var textFieldHeight = height;
-        var textFieldTopOffset = 0;
-
-        TextFieldSymbolVM.Height = textFieldHeight;
-        TextFieldSymbolVM.TopOffset = textFieldTopOffset;
+        TextFieldSymbolVM.Height = height;
 
         SetCoordinatePolygonPoints();
-        ChangeCoordinateAuxiliaryElements();
+        ChangeCoordinateScaleRectangle();
+        CoordinateConnectionPointVM.SetCoordinate();
     }
 
     public void SetCoordinatePolygonPoints()

@@ -1,11 +1,10 @@
 ﻿using System.Windows;
 using System.Windows.Media;
 using System.Collections.Generic;
-using EdblockModel.SymbolsModel;
 using EdblockViewModel.AbstractionsVM;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM;
-using EdblockViewModel.Symbols.ComponentsSymbolsVM.ConnectionPoints;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM.ScaleRectangles;
+using EdblockViewModel.Symbols.ComponentsSymbolsVM.ConnectionPoints;
 
 namespace EdblockViewModel.Symbols;
 
@@ -13,7 +12,9 @@ public class SubroutineSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnection
 {
     public TextFieldSymbolVM TextFieldSymbolVM { get; init; }
     public List<ScaleRectangle> ScaleRectangles { get; init; }
-    public List<ConnectionPointVM> ConnectionPoints { get; init; }
+    public List<ConnectionPointVM> ConnectionPointsVM { get; init; }
+    public BuilderConnectionPointsVM BuilderConnectionPointsVM { get; init; }
+    public CoordinateConnectionPointVM CoordinateConnectionPointVM { get; init; }
     public BuilderScaleRectangles BuilderScaleRectangles { get; init; }
 
     private PointCollection? points;
@@ -63,9 +64,14 @@ public class SubroutineSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnection
 
     public SubroutineSymbolVM(EdblockVM edblockVM) : base(edblockVM)
     {
-        TextFieldSymbolVM = new(edblockVM.CanvasSymbolsVM, this);
+        TextFieldSymbolVM = new(CanvasSymbolsVM, this);
 
-        BuilderScaleRectangles = new(CanvasSymbolsVM, edblockVM.PopupBoxMenuVM.ScaleAllSymbolVM, this);
+        CoordinateConnectionPointVM = new(this);
+
+        BuilderScaleRectangles = new(
+            CanvasSymbolsVM, 
+            edblockVM.PopupBoxMenuVM.ScaleAllSymbolVM, 
+            this);
 
         ScaleRectangles =
             BuilderScaleRectangles
@@ -82,12 +88,10 @@ public class SubroutineSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnection
         Color = defaultColor;
 
         TextFieldSymbolVM.Text = defaultText;
+        TextFieldSymbolVM.LeftOffset = leftOffsetBorder;
 
-        Width = defaultWidth;
-        Height = defaultHeigth;
-
-        SetWidth(Width);
-        SetHeight(Height);
+        SetWidth(defaultWidth);
+        SetHeight(defaultHeigth);
     }
 
     public override void SetWidth(double width)
@@ -95,31 +99,23 @@ public class SubroutineSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnection
         Width = width;
 
         WidthBorder = width - leftOffsetBorder * 2;
-
-        var textFieldWidth = GetTextFieldWidth();
-        var textFieldLeftOffset = GetTextFieldLeftOffset();
-
-        TextFieldSymbolVM.Width = textFieldWidth;
-        TextFieldSymbolVM.LeftOffset = textFieldLeftOffset;
+        TextFieldSymbolVM.Width = WidthBorder;
 
         SetCoordinatePolygonPoints();
-        ChangeCoordinateAuxiliaryElements();
+        ChangeCoordinateScaleRectangle();
+        CoordinateConnectionPointVM.SetCoordinate();
     }
 
     public override void SetHeight(double height)
     {
         Height = height;
-
         HeightBorder = height;
 
-        var textFieldHeight = GetTextFieldHeight();
-        var textFieldTopOffset = GetTextFieldTopOffset();
-
-        TextFieldSymbolVM.Height = textFieldHeight;
-        TextFieldSymbolVM.TopOffset = textFieldTopOffset;
+        TextFieldSymbolVM.Height = height;
 
         SetCoordinatePolygonPoints();
-        ChangeCoordinateAuxiliaryElements();
+        ChangeCoordinateScaleRectangle();
+        CoordinateConnectionPointVM.SetCoordinate();
     }
 
     public void SetCoordinatePolygonPoints()
@@ -131,25 +127,5 @@ public class SubroutineSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnection
             new Point(Width, Height),
             new Point(Width, 0)
         };
-    }
-
-    public double GetTextFieldWidth()
-    {
-        return Width - leftOffsetBorder * 2;
-    }
-
-    public double GetTextFieldHeight()
-    {
-        return Height;
-    }
-
-    public double GetTextFieldLeftOffset()
-    {
-        return leftOffsetBorder;
-    }
-
-    public double GetTextFieldTopOffset()
-    {
-        return 0;
     }
 }

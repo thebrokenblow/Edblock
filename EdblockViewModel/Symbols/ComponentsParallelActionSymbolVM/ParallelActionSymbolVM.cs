@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using EdblockModel.EnumsModel;
 using EdblockModel.SymbolsModel;
-using EdblockViewModel.AbstractionsVM;
 using EdblockViewModel.AttributeVM;
+using EdblockViewModel.AbstractionsVM;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM.ConnectionPoints;
 
 namespace EdblockViewModel.Symbols.ComponentsParallelActionSymbolVM;
@@ -13,7 +13,8 @@ public class ParallelActionSymbolVM : BlockSymbolVM, IHasConnectionPoint
 {
     public LineParallelActionSymbolVM UpperHorizontalLine { get; set; } = new();
     public LineParallelActionSymbolVM LowerHorizontalLine { get; set; } = new();
-    public List<ConnectionPointVM> ConnectionPoints { get; init; }
+    public List<ConnectionPointVM> ConnectionPointsVM { get; init; }
+    public BuilderConnectionPointsVM BuilderConnectionPointsVM { get; init; }
 
     private readonly int _maxSymbols;
     private readonly int _sumCountSymbols;
@@ -33,21 +34,32 @@ public class ParallelActionSymbolVM : BlockSymbolVM, IHasConnectionPoint
         _maxSymbols = Math.Max(countSymbolsIncoming, countSymbolsOutgoing);
         _sumCountSymbols = countSymbolsIncoming + countSymbolsOutgoing;
 
-        BlockSymbolModel = CreateBlockSymbolModel();
-        ConnectionPoints = new(countSymbolsIncoming + countSymbolsOutgoing);
+        var parallelActionSymbolModel = (ParallelActionSymbolModel)BlockSymbolModel;
+        parallelActionSymbolModel.CountSymbolsIncoming = _countSymbolsIncoming;
+        parallelActionSymbolModel.CountSymbolsOutgoing = _countSymbolsOutgoing;
+
+        ConnectionPointsVM = new(countSymbolsIncoming + countSymbolsOutgoing);
 
         for (int i = 0; i < countSymbolsIncoming; i++)
         {
-            var bottomConnectionPoint = new ConnectionPointVM(CanvasSymbolsVM, this, _checkBoxLineGostVM, SideSymbol.Top);
+            var bottomConnectionPoint = new ConnectionPointVM(
+                CanvasSymbolsVM, 
+                this, 
+                _checkBoxLineGostVM, 
+                SideSymbol.Top);
 
-            ConnectionPoints.Add(bottomConnectionPoint);
+            ConnectionPointsVM.Add(bottomConnectionPoint);
         }
 
         for (int i = 0; i < countSymbolsOutgoing; i++)
         {
-            var bottomConnectionPoint = new ConnectionPointVM(CanvasSymbolsVM, this, _checkBoxLineGostVM, SideSymbol.Bottom);
+            var bottomConnectionPoint = new ConnectionPointVM(
+                CanvasSymbolsVM, 
+                this, 
+                _checkBoxLineGostVM, 
+                SideSymbol.Bottom);
 
-            ConnectionPoints.Add(bottomConnectionPoint);
+            ConnectionPointsVM.Add(bottomConnectionPoint);
         }
 
 
@@ -57,12 +69,12 @@ public class ParallelActionSymbolVM : BlockSymbolVM, IHasConnectionPoint
 
     public override BlockSymbolModel CreateBlockSymbolModel()
     {
+        var nameSymbol = GetType().Name.ToString();
+
         var parallelActionSymbolModel = new ParallelActionSymbolModel()
         {
             Id = Id,
-            NameSymbol = GetType().Name.ToString(),
-            CountSymbolsIncoming = _countSymbolsIncoming,
-            CountSymbolsOutgoing = _countSymbolsOutgoing
+            NameSymbol = nameSymbol,
         };
 
         return parallelActionSymbolModel;
@@ -101,8 +113,8 @@ public class ParallelActionSymbolVM : BlockSymbolVM, IHasConnectionPoint
     {
         for (int i = begin; i < end; i++)
         {
-            ConnectionPoints[i].YCoordinate = Symbols;
-            ConnectionPoints[i].YCoordinateLineDraw = Symbols;
+            ConnectionPointsVM[i].YCoordinate = Symbols;
+            ConnectionPointsVM[i].YCoordinateLineDraw = Symbols;
         }
     }
 
@@ -141,8 +153,8 @@ public class ParallelActionSymbolVM : BlockSymbolVM, IHasConnectionPoint
 
         for (int i = begin; i < end; i++)
         {
-            ConnectionPoints[i].XCoordinate = widthSymbols * (2 * numberConnectionPoint + 1) + indentBetweenSymbol * numberConnectionPoint;
-            ConnectionPoints[i].XCoordinateLineDraw = widthSymbols * (2 * numberConnectionPoint + 1) + indentBetweenSymbol * numberConnectionPoint;
+            ConnectionPointsVM[i].XCoordinate = widthSymbols * (2 * numberConnectionPoint + 1) + indentBetweenSymbol * numberConnectionPoint;
+            ConnectionPointsVM[i].XCoordinateLineDraw = widthSymbols * (2 * numberConnectionPoint + 1) + indentBetweenSymbol * numberConnectionPoint;
 
             numberConnectionPoint++;
         }
@@ -153,20 +165,20 @@ public class ParallelActionSymbolVM : BlockSymbolVM, IHasConnectionPoint
     {
         if (end - begin == 1)
         {
-            ConnectionPoints[begin].XCoordinate = Width / 2;
-            ConnectionPoints[begin].XCoordinateLineDraw = Width / 2;
+            ConnectionPointsVM[begin].XCoordinate = Width / 2;
+            ConnectionPointsVM[begin].XCoordinateLineDraw = Width / 2;
         }
         else
         {
             var length = (Width - widthSymbols) / (end - begin - 1);
 
-            ConnectionPoints[begin].XCoordinate = widthSymbols / 2;
-            ConnectionPoints[begin].XCoordinateLineDraw = widthSymbols / 2;
+            ConnectionPointsVM[begin].XCoordinate = widthSymbols / 2;
+            ConnectionPointsVM[begin].XCoordinateLineDraw = widthSymbols / 2;
 
             for (int i = begin + 1; i < end; i++)
             {
-                ConnectionPoints[i].XCoordinate = ConnectionPoints[i - 1].XCoordinate + length;
-                ConnectionPoints[i].XCoordinateLineDraw = ConnectionPoints[i - 1].XCoordinateLineDraw + length;
+                ConnectionPointsVM[i].XCoordinate = ConnectionPointsVM[i - 1].XCoordinate + length;
+                ConnectionPointsVM[i].XCoordinateLineDraw = ConnectionPointsVM[i - 1].XCoordinateLineDraw + length;
             }
         }
     }
