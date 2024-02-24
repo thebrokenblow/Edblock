@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using EdblockModel.SymbolsModel;
+using EdblockViewModel.AttributeVM;
 using EdblockViewModel.ComponentsVM;
 using EdblockViewModel.AbstractionsVM;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM;
@@ -7,6 +7,7 @@ using EdblockViewModel.Symbols.ComponentsSymbolsVM.ConnectionPoints;
 
 namespace EdblockViewModel.Symbols.ComponentsCommentSymbolVM;
 
+[SymbolType("CommentSymbolVM")]
 public class CommentSymbolVM : BlockSymbolVM, IHasTextFieldVM
 {
     public List<CommentLine> HorizontalLines { get; set; } = new();

@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Media;
 using System.Collections.Generic;
+using EdblockViewModel.AttributeVM;
 using EdblockViewModel.AbstractionsVM;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM.ScaleRectangles;
@@ -8,14 +9,15 @@ using EdblockViewModel.Symbols.ComponentsSymbolsVM.ConnectionPoints;
 
 namespace EdblockViewModel.Symbols;
 
+[SymbolType("SubroutineSymbolVM")]
+
 public class SubroutineSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnectionPoint, IHasScaleRectangles
 {
     public TextFieldSymbolVM TextFieldSymbolVM { get; init; }
-    public List<ScaleRectangle> ScaleRectangles { get; init; }
-    public List<ConnectionPointVM> ConnectionPointsVM { get; init; }
-    public BuilderConnectionPointsVM BuilderConnectionPointsVM { get; init; }
-    public CoordinateConnectionPointVM CoordinateConnectionPointVM { get; init; }
-    public BuilderScaleRectangles BuilderScaleRectangles { get; init; }
+    public List<ScaleRectangle> ScaleRectangles { get; set; } = null!;
+    public List<ConnectionPointVM> ConnectionPointsVM { get; set; } = null!;
+
+    private readonly CoordinateConnectionPointVM coordinateConnectionPointVM;
 
     private PointCollection? points;
     public PointCollection? Points
@@ -64,31 +66,18 @@ public class SubroutineSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnection
 
     public SubroutineSymbolVM(EdblockVM edblockVM) : base(edblockVM)
     {
-        TextFieldSymbolVM = new(CanvasSymbolsVM, this);
-
-        CoordinateConnectionPointVM = new(this);
-
-        BuilderScaleRectangles = new(
-            CanvasSymbolsVM, 
-            edblockVM.PopupBoxMenuVM.ScaleAllSymbolVM, 
-            this);
-
-        ScaleRectangles =
-            BuilderScaleRectangles
-                        .AddMiddleTopRectangle()
-                        .AddRightTopRectangle()
-                        .AddRightMiddleRectangle()
-                        .AddRightBottomRectangle()
-                        .AddMiddleBottomRectangle()
-                        .AddLeftBottomRectangle()
-                        .AddLeftMiddleRectangle()
-                        .AddLeftTopRectangle()
-                        .Build();
+        TextFieldSymbolVM = new(CanvasSymbolsVM, this)
+        {
+            Text = defaultText,
+            LeftOffset = leftOffsetBorder
+        };
 
         Color = defaultColor;
 
-        TextFieldSymbolVM.Text = defaultText;
-        TextFieldSymbolVM.LeftOffset = leftOffsetBorder;
+        AddScaleRectangles();
+        AddConnectionPoints();
+
+        coordinateConnectionPointVM = new(this);
 
         SetWidth(defaultWidth);
         SetHeight(defaultHeigth);
@@ -97,25 +86,23 @@ public class SubroutineSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnection
     public override void SetWidth(double width)
     {
         Width = width;
-
         WidthBorder = width - leftOffsetBorder * 2;
         TextFieldSymbolVM.Width = WidthBorder;
 
         SetCoordinatePolygonPoints();
         ChangeCoordinateScaleRectangle();
-        CoordinateConnectionPointVM.SetCoordinate();
+        coordinateConnectionPointVM.SetCoordinate();
     }
 
     public override void SetHeight(double height)
     {
         Height = height;
         HeightBorder = height;
-
         TextFieldSymbolVM.Height = height;
 
         SetCoordinatePolygonPoints();
         ChangeCoordinateScaleRectangle();
-        CoordinateConnectionPointVM.SetCoordinate();
+        coordinateConnectionPointVM.SetCoordinate();
     }
 
     public void SetCoordinatePolygonPoints()
@@ -127,5 +114,40 @@ public class SubroutineSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnection
             new Point(Width, Height),
             new Point(Width, 0)
         };
+    }
+
+    private void AddConnectionPoints()
+    {
+        var builderConnectionPointsVM = new BuilderConnectionPointsVM(
+            CanvasSymbolsVM,
+            this,
+            _checkBoxLineGostVM);
+
+        ConnectionPointsVM = builderConnectionPointsVM
+            .AddTopConnectionPoint()
+            .AddRightConnectionPoint()
+            .AddBottomConnectionPoint()
+            .AddLeftConnectionPoint()
+            .Build();
+    }
+
+    private void AddScaleRectangles()
+    {
+        var builderScaleRectangles = new BuilderScaleRectangles(
+            CanvasSymbolsVM,
+           _scaleAllSymbolVM,
+           this);
+
+        ScaleRectangles =
+            builderScaleRectangles
+                        .AddMiddleTopRectangle()
+                        .AddRightTopRectangle()
+                        .AddRightMiddleRectangle()
+                        .AddRightBottomRectangle()
+                        .AddMiddleBottomRectangle()
+                        .AddLeftBottomRectangle()
+                        .AddLeftMiddleRectangle()
+                        .AddLeftTopRectangle()
+                        .Build();
     }
 }

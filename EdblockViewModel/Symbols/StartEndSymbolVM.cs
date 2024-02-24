@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using EdblockViewModel.AttributeVM;
 using EdblockViewModel.AbstractionsVM;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM.ScaleRectangles;
@@ -6,14 +7,15 @@ using EdblockViewModel.Symbols.ComponentsSymbolsVM.ConnectionPoints;
 
 namespace EdblockViewModel.Symbols;
 
+[SymbolType("StartEndSymbolVM")]
+
 public class StartEndSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnectionPoint, IHasScaleRectangles
 {
     public TextFieldSymbolVM TextFieldSymbolVM { get; init; }
-    public List<ConnectionPointVM> ConnectionPointsVM { get; init; }
-    public BuilderConnectionPointsVM BuilderConnectionPointsVM { get; init; }
-    public List<ScaleRectangle> ScaleRectangles { get; init; }
-    public BuilderScaleRectangles BuilderScaleRectangles { get; init; }
-    public CoordinateConnectionPointVM CoordinateConnectionPointVM { get; init; }
+    public List<ScaleRectangle> ScaleRectangles { get; set; } = null!;
+    public List<ConnectionPointVM> ConnectionPointsVM { get; set; } = null!;
+
+    private readonly CoordinateConnectionPointVM coordinateConnectionPointVM;
 
     private const int defaultWidth = 140;
     private const int defaultHeigth = 60;
@@ -25,29 +27,66 @@ public class StartEndSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnectionPo
 
     public StartEndSymbolVM(EdblockVM edblockVM) : base(edblockVM)
     {
-        TextFieldSymbolVM = new(edblockVM.CanvasSymbolsVM, this);
+        TextFieldSymbolVM = new(edblockVM.CanvasSymbolsVM, this)
+        {
+            Text = defaultText
+        };
 
-        BuilderConnectionPointsVM = new(
+        Color = defaultColor;
+        coordinateConnectionPointVM = new(this);
+
+        AddScaleRectangles();
+        AddConnectionPoints();
+
+        coordinateConnectionPointVM = new(this);
+
+        SetWidth(defaultWidth);
+        SetHeight(defaultHeigth);
+    }
+
+    public override void SetWidth(double width)
+    {
+        Width = width;
+        TextFieldSymbolVM.Width = width - offsetTextField; 
+        TextFieldSymbolVM.LeftOffset = offsetTextField / 2; 
+
+        ChangeCoordinateScaleRectangle();
+        coordinateConnectionPointVM.SetCoordinate();
+    }
+
+    public override void SetHeight(double height)
+    {
+        Height = height;
+        TextFieldSymbolVM.Height = height;
+
+        ChangeCoordinateScaleRectangle();
+        coordinateConnectionPointVM.SetCoordinate();
+    }
+
+    private void AddConnectionPoints()
+    {
+        var builderConnectionPointsVM = new BuilderConnectionPointsVM(
             CanvasSymbolsVM,
             this,
             _checkBoxLineGostVM);
 
-        ConnectionPointsVM = BuilderConnectionPointsVM
+        ConnectionPointsVM = builderConnectionPointsVM
             .AddTopConnectionPoint()
             .AddRightConnectionPoint()
             .AddBottomConnectionPoint()
             .AddLeftConnectionPoint()
-            .Create();
+            .Build();
+    }
 
-        CoordinateConnectionPointVM = new(this);
-
-        BuilderScaleRectangles = new(
+    private void AddScaleRectangles()
+    {
+        var builderScaleRectangles = new BuilderScaleRectangles(
             CanvasSymbolsVM,
-            edblockVM.PopupBoxMenuVM.ScaleAllSymbolVM,
-            this);
+           _scaleAllSymbolVM,
+           this);
 
         ScaleRectangles =
-            BuilderScaleRectangles
+            builderScaleRectangles
                         .AddMiddleTopRectangle()
                         .AddRightTopRectangle()
                         .AddRightMiddleRectangle()
@@ -57,33 +96,5 @@ public class StartEndSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnectionPo
                         .AddLeftMiddleRectangle()
                         .AddLeftTopRectangle()
                         .Build();
-
-        Color = defaultColor;
-
-        TextFieldSymbolVM.Text = defaultText;
-
-        SetWidth(defaultWidth);
-        SetHeight(defaultHeigth);
-    }
-
-    public override void SetWidth(double width)
-    {
-        Width = width;
-
-        TextFieldSymbolVM.Width = Width - offsetTextField; 
-        TextFieldSymbolVM.LeftOffset = offsetTextField / 2; 
-
-        ChangeCoordinateScaleRectangle();
-        CoordinateConnectionPointVM.SetCoordinate();
-    }
-
-    public override void SetHeight(double height)
-    {
-        Height = height;
-
-        TextFieldSymbolVM.Height = height;
-
-        ChangeCoordinateScaleRectangle();
-        CoordinateConnectionPointVM.SetCoordinate();
     }
 }

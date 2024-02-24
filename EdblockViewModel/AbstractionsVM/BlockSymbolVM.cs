@@ -109,6 +109,7 @@ public abstract class BlockSymbolVM : INotifyPropertyChanged
     public CanvasSymbolsVM CanvasSymbolsVM { get; init; }
 
     protected readonly CheckBoxLineGostVM _checkBoxLineGostVM;
+    protected readonly ScaleAllSymbolVM _scaleAllSymbolVM;
 
     private readonly FontFamilyControlVM _fontFamilyControlVM;
     private readonly FontSizeControlVM _fontSizeControlVM;
@@ -123,6 +124,7 @@ public abstract class BlockSymbolVM : INotifyPropertyChanged
         _fontFamilyControlVM = edblockVM.FontFamilyControlVM;
         _formatTextControlVM = edblockVM.FormatTextControlVM;
         _textAlignmentControlVM = edblockVM.TextAlignmentControlVM;
+        _scaleAllSymbolVM = edblockVM.PopupBoxMenuVM.ScaleAllSymbolVM;
         _checkBoxLineGostVM = edblockVM.PopupBoxMenuVM.CheckBoxLineGostVM;
 
         Id = Guid.NewGuid().ToString();

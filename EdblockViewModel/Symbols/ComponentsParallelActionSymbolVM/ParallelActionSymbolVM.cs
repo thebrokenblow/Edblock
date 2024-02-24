@@ -13,7 +13,7 @@ public class ParallelActionSymbolVM : BlockSymbolVM, IHasConnectionPoint
 {
     public LineParallelActionSymbolVM UpperHorizontalLine { get; set; } = new();
     public LineParallelActionSymbolVM LowerHorizontalLine { get; set; } = new();
-    public List<ConnectionPointVM> ConnectionPointsVM { get; init; }
+    public List<ConnectionPointVM> ConnectionPointsVM { get; set; } = null!;
     public BuilderConnectionPointsVM BuilderConnectionPointsVM { get; init; }
 
     private readonly int _maxSymbols;

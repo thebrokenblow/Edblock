@@ -1,14 +1,14 @@
-﻿using Prism.Commands;
+﻿using System;
 using System.Windows.Input;
 using System.ComponentModel;
 using System.Collections.Generic;
-using EdblockViewModel.ComponentsVM;
 using System.Runtime.CompilerServices;
-using EdblockViewModel.Symbols.LineSymbols;
-using EdblockModel.SymbolsModel.LineSymbolsModel;
-using EdblockViewModel.AbstractionsVM;
+using Prism.Commands;
 using EdblockModel.EnumsModel;
-using System;
+using EdblockModel.SymbolsModel.LineSymbolsModel;
+using EdblockViewModel.ComponentsVM;
+using EdblockViewModel.AbstractionsVM;
+using EdblockViewModel.Symbols.LineSymbols;
 
 namespace EdblockViewModel.Symbols.ComponentsSymbolsVM.ConnectionPoints;
 

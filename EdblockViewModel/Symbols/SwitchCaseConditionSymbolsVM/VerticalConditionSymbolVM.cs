@@ -14,12 +14,12 @@ namespace EdblockViewModel.Symbols.SwitchCaseConditionSymbolsVM;
 public class VerticalConditionSymbolVM : SwitchCaseSymbolVM, IHasTextFieldVM, IHasConnectionPoint, IHasScaleRectangles
 {
     public TextFieldSymbolVM TextFieldSymbolVM { get; init; }
-    public CoordinateConnectionPointVM CoordinateConnectionPointVM { get; init; }
-    public List<ConnectionPointVM> ConnectionPointsVM { get; init; }
-    public List<ScaleRectangle> ScaleRectangles { get; init; }
-    public BuilderScaleRectangles BuilderScaleRectangles { get; init; }
+    public List<ScaleRectangle> ScaleRectangles { get; set; } = null!;
+    public List<LineSwitchCase> LinesSwitchCase { get; set; } = null!;
+    public List<ConnectionPointVM> ConnectionPointsVM { get; set; } = null!;
     public LineSwitchCase VerticalLineSwitchCase { get; init; } = new();
-    public List<LineSwitchCase> LinesSwitchCase { get; init; }
+
+    private readonly CoordinateConnectionPointVM coordinateConnectionPointVM;
 
     private PointCollection? points;
     public PointCollection? Points
@@ -42,62 +42,18 @@ public class VerticalConditionSymbolVM : SwitchCaseSymbolVM, IHasTextFieldVM, IH
 
     public VerticalConditionSymbolVM(EdblockVM edblockVM, int countLines) : base(edblockVM, countLines)
     {
-        var canvasSymbolsVM = edblockVM.CanvasSymbolsVM;
-        var scaleAllSymbolVM = edblockVM.PopupBoxMenuVM.ScaleAllSymbolVM;
-
-        TextFieldSymbolVM = new(canvasSymbolsVM, this)
+        TextFieldSymbolVM = new(CanvasSymbolsVM, this)
         {
             Text = defaultText
         };
 
-        var BuilderConnectionPointsVM = new BuilderConnectionPointsVM(
-           CanvasSymbolsVM,
-           this,
-           _checkBoxLineGostVM);
-
-        ConnectionPointsVM = BuilderConnectionPointsVM
-            .AddTopConnectionPoint()
-            .AddRightConnectionPoint()
-            .AddLeftConnectionPoint()
-            .Create();
-
-        //ConnectionPoints = FactoryConnectionPointsVM.Create(
-        //    CanvasSymbolsVM,
-        //    this,
-        //    _checkBoxLineGostVM);
-
-        CoordinateConnectionPointVM = new(this);
-
-        BuilderScaleRectangles = new(canvasSymbolsVM, scaleAllSymbolVM, this);
-
-        ScaleRectangles =
-         BuilderScaleRectangles
-                     .AddMiddleTopRectangle()
-                     .AddRightTopRectangle()
-                     .AddRightMiddleRectangle()
-                     .AddRightBottomRectangle()
-                     .AddMiddleBottomRectangle()
-                     .AddLeftBottomRectangle()
-                     .AddLeftMiddleRectangle()
-                     .AddLeftTopRectangle()
-                     .Build();
-
-        LinesSwitchCase = new(countLines);
-
-        for (int i = 0; i < countLines; i++)
-        {
-            LinesSwitchCase.Add(new());
-
-            var bottomConnectionPoint = new ConnectionPointVM(
-                CanvasSymbolsVM,
-                this,
-                _checkBoxLineGostVM,
-                SideSymbol.Right);
-
-            ConnectionPointsSwitchCaseVM.Add(bottomConnectionPoint);
-        }
-
         Color = defaultColor;
+
+        AddScaleRectangles();
+        AddConnectionPoints();
+        AddLinesSwitchCase(countLines);
+
+        coordinateConnectionPointVM = new(this);
 
         SetWidth(defaultWidth);
         SetHeight(defaultHeigth);
@@ -112,15 +68,15 @@ public class VerticalConditionSymbolVM : SwitchCaseSymbolVM, IHasTextFieldVM, IH
 
         SetCoordinatePolygonPoints();
         ChangeCoordinateScaleRectangle();
-        CoordinateConnectionPointVM.SetCoordinate();
+        coordinateConnectionPointVM.SetCoordinate();
 
         SetCoordinateLinesCondition();
         SetCoordinateVerticalLineSwitchCase();
 
         for (int i = 0; i < ConnectionPointsSwitchCaseVM.Count; i++)
         {
-            base.ConnectionPointsSwitchCaseVM[i].XCoordinate = width;
-            base.ConnectionPointsSwitchCaseVM[i].XCoordinateLineDraw = width;
+            ConnectionPointsSwitchCaseVM[i].XCoordinate = width;
+            ConnectionPointsSwitchCaseVM[i].XCoordinateLineDraw = width;
         }
     }
 
@@ -133,7 +89,7 @@ public class VerticalConditionSymbolVM : SwitchCaseSymbolVM, IHasTextFieldVM, IH
 
         SetCoordinatePolygonPoints();
         ChangeCoordinateScaleRectangle();
-        CoordinateConnectionPointVM.SetCoordinate();
+        coordinateConnectionPointVM.SetCoordinate();
 
         SetCoordinateLinesCondition();
         SetCoordinateVerticalLineSwitchCase();
@@ -142,8 +98,8 @@ public class VerticalConditionSymbolVM : SwitchCaseSymbolVM, IHasTextFieldVM, IH
         {
             double heightLine = height / 2 + (height + indentBetweenSymbol) * i;
 
-            base.ConnectionPointsSwitchCaseVM[i - 1].YCoordinate = heightLine;
-            base.ConnectionPointsSwitchCaseVM[i - 1].YCoordinateLineDraw = heightLine;
+            ConnectionPointsSwitchCaseVM[i - 1].YCoordinate = heightLine;
+            ConnectionPointsSwitchCaseVM[i - 1].YCoordinateLineDraw = heightLine;
         }
     }
 
@@ -177,5 +133,57 @@ public class VerticalConditionSymbolVM : SwitchCaseSymbolVM, IHasTextFieldVM, IH
             new Point(Width / 2, 0),
             new Point(0, Height / 2)
         };
+    }
+
+    private void AddScaleRectangles()
+    {
+        var builderScaleRectangles = new BuilderScaleRectangles(
+            CanvasSymbolsVM,
+           _scaleAllSymbolVM,
+           this);
+
+        ScaleRectangles =
+            builderScaleRectangles
+                        .AddMiddleTopRectangle()
+                        .AddRightTopRectangle()
+                        .AddRightMiddleRectangle()
+                        .AddRightBottomRectangle()
+                        .AddMiddleBottomRectangle()
+                        .AddLeftBottomRectangle()
+                        .AddLeftMiddleRectangle()
+                        .AddLeftTopRectangle()
+                        .Build();
+    }
+
+    private void AddConnectionPoints()
+    {
+        var builderConnectionPointsVM = new BuilderConnectionPointsVM(
+            CanvasSymbolsVM,
+            this,
+            _checkBoxLineGostVM);
+
+        ConnectionPointsVM = builderConnectionPointsVM
+            .AddTopConnectionPoint()
+            .AddRightConnectionPoint()
+            .AddLeftConnectionPoint()
+            .Build();
+    }
+
+    private void AddLinesSwitchCase(int countLines)
+    {
+        LinesSwitchCase = new(countLines);
+
+        for (int i = 0; i < countLines; i++)
+        {
+            LinesSwitchCase.Add(new());
+
+            var bottomConnectionPoint = new ConnectionPointVM(
+                CanvasSymbolsVM,
+                this,
+                _checkBoxLineGostVM,
+                SideSymbol.Right);
+
+            ConnectionPointsSwitchCaseVM.Add(bottomConnectionPoint);
+        }
     }
 }

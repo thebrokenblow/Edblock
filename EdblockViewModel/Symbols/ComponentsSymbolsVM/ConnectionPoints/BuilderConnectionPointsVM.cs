@@ -7,22 +7,17 @@ namespace EdblockViewModel.Symbols.ComponentsSymbolsVM.ConnectionPoints;
 
 public class BuilderConnectionPointsVM
 {
+    private readonly FactoryConnectionPoint _factoryConnectionPoint;
     private readonly List<ConnectionPointVM> connectionPointsVM = new();
-
-    private readonly CanvasSymbolsVM _canvasSymbolsVM;
-    private readonly BlockSymbolVM _blockSymbolVM;
-    private readonly CheckBoxLineGostVM _checkBoxLineGostVM;
 
     public BuilderConnectionPointsVM(CanvasSymbolsVM canvasSymbolsVM, BlockSymbolVM blockSymbolVM, CheckBoxLineGostVM checkBoxLineGostVM)
     {
-        _canvasSymbolsVM = canvasSymbolsVM;
-        _blockSymbolVM = blockSymbolVM;
-        _checkBoxLineGostVM = checkBoxLineGostVM;
+        _factoryConnectionPoint = new(canvasSymbolsVM, blockSymbolVM, checkBoxLineGostVM);
     }
 
     public BuilderConnectionPointsVM AddTopConnectionPoint()
     {
-        var topConnectionPointVM = CreateConnectionPoint(SideSymbol.Top);
+        var topConnectionPointVM = _factoryConnectionPoint.Create(SideSymbol.Top);
 
         connectionPointsVM.Add(topConnectionPointVM);
 
@@ -31,7 +26,7 @@ public class BuilderConnectionPointsVM
 
     public BuilderConnectionPointsVM AddRightConnectionPoint()
     {
-        var rightConnectionPointVM = CreateConnectionPoint(SideSymbol.Right);
+        var rightConnectionPointVM = _factoryConnectionPoint.Create(SideSymbol.Right);
 
         connectionPointsVM.Add(rightConnectionPointVM);
 
@@ -40,7 +35,7 @@ public class BuilderConnectionPointsVM
 
     public BuilderConnectionPointsVM AddBottomConnectionPoint()
     {
-        var bottomConnectionPointVM = CreateConnectionPoint(SideSymbol.Bottom);
+        var bottomConnectionPointVM = _factoryConnectionPoint.Create(SideSymbol.Bottom);
 
         connectionPointsVM.Add(bottomConnectionPointVM);
 
@@ -49,27 +44,15 @@ public class BuilderConnectionPointsVM
 
     public BuilderConnectionPointsVM AddLeftConnectionPoint()
     {
-        var leftConnectionPointVM = CreateConnectionPoint(SideSymbol.Left);
+        var leftConnectionPointVM = _factoryConnectionPoint.Create(SideSymbol.Left);
 
         connectionPointsVM.Add(leftConnectionPointVM);
 
         return this;
     }
 
-    public List<ConnectionPointVM> Create() 
+    public List<ConnectionPointVM> Build() 
     {
         return connectionPointsVM;
-    }
-
-
-    private ConnectionPointVM CreateConnectionPoint(SideSymbol sideSymbol)
-    {
-        var connectionPointVM = new ConnectionPointVM(
-                _canvasSymbolsVM,
-                _blockSymbolVM,
-                _checkBoxLineGostVM,
-                sideSymbol);
-
-        return connectionPointVM;
     }
 }

@@ -24,7 +24,7 @@
             Y2="{Binding LowerHorizontalLine.Y2}" 
             Style="{StaticResource LineParallelActionSymbolView}" />
 
-            <ItemsControl ItemsSource="{Binding ConnectionPoints}">
+            <ItemsControl ItemsSource="{Binding ConnectionPointsVM}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate DataType="Points">
                         <Ellipse MouseDown="TrackStageDrawLine" Style="{StaticResource ConnectionPointParallelActionSymbolView}">
