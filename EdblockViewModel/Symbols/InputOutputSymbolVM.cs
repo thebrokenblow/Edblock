@@ -43,7 +43,7 @@ public class InputOutputSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnectio
         TextFieldSymbolVM = new(CanvasSymbolsVM, this)
         {
             Text = defaultText,
-            LeftOffset = sideProjection / 2
+            LeftOffset = sideProjection
         };
 
         Color = defaultColor;
@@ -60,8 +60,7 @@ public class InputOutputSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnectio
     public override void SetWidth(double width)
     {
         Width = width;
-
-        TextFieldSymbolVM.Width = width - sideProjection;
+        TextFieldSymbolVM.Width = width - sideProjection * 2;
 
         SetCoordinatePolygonPoints();
         ChangeCoordinateScaleRectangle();
@@ -71,7 +70,6 @@ public class InputOutputSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnectio
     public override void SetHeight(double height)
     {
         Height = height;
-
         TextFieldSymbolVM.Height = height;
 
         SetCoordinatePolygonPoints();

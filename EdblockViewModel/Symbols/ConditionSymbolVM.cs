@@ -79,12 +79,15 @@ public class ConditionSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnectionP
 
     public void SetCoordinatePolygonPoints()
     {
+        var halfWidth = Width / 2;
+        var halfHeight = Height / 2;
+
         Points = new()
         {
-            new Point(Width / 2, Height),
-            new Point(Width, Height / 2),
-            new Point(Width / 2, 0),
-            new Point(0, Height / 2)
+            new Point(halfWidth, Height),
+            new Point(Width, halfHeight),
+            new Point(halfWidth, 0),
+            new Point(0, halfHeight)
         };
     }
 
