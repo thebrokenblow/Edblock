@@ -2,9 +2,8 @@
 using System.Windows.Input;
 using System.Windows.Controls;
 using EdblockViewModel.AbstractionsVM;
-using EdblockViewModel.ComponentsVM;
-using System.Threading;
 using System;
+using System.Windows.Threading;
 
 namespace EdblockView.Components;
 
@@ -15,10 +14,15 @@ public partial class CanvasSymbols : UserControl
 {
     public static Canvas? Canvas { get; set; }
 
-
+    private readonly DispatcherTimer dispatcherTimer;
     public CanvasSymbols()
     {
         InitializeComponent();
+
+        dispatcherTimer = new DispatcherTimer()
+        {
+            Interval = TimeSpan.FromSeconds(3)
+        };
     }
 
     private void ScrollViewer_MouseLeave(object sender, MouseEventArgs e)
@@ -57,4 +61,5 @@ public partial class CanvasSymbols : UserControl
         //canvasSymbols.Width = canvasSymbols.ActualWidth + 10;
         //scrollViewer.ScrollToHorizontalOffset(scrollViewer.HorizontalOffset + 10);
     }
+
 }

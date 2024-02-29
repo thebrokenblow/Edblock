@@ -1,11 +1,8 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using EdblockModel.SymbolsModel.LineSymbolsModel;
 using EdblockViewModel.Symbols.ComponentsParallelActionSymbolVM;
-using EdblockViewModel.AbstractionsVM;
-using EdblockViewModel.ComponentsVM;
 
 namespace EdblockViewModel.Symbols.LineSymbols;
 
@@ -124,21 +121,6 @@ public class LineSymbolVM : INotifyPropertyChanged
             throw new Exception("Неправильное соединение линий");
         }
 
-        var blockByDrawnLines = _drawnLineSymbolVM.CanvasSymbolsVM.BlockByDrawnLines;
-
-        if (!blockByDrawnLines.ContainsKey(symbolOutgoingLine))
-        {
-            var drawnLinesSymbolVM = new List<DrawnLineSymbolVM>
-            {
-                _drawnLineSymbolVM
-            };
-
-            blockByDrawnLines.Add(symbolOutgoingLine, drawnLinesSymbolVM);
-        }
-        else
-        {
-            blockByDrawnLines[symbolOutgoingLine].Add(_drawnLineSymbolVM);
-        }
 
         _drawnLineSymbolVM.CanvasSymbolsVM.СurrentDrawnLineSymbol = null;
     }

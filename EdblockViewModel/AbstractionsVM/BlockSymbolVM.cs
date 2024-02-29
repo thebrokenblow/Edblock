@@ -6,9 +6,9 @@ using Prism.Commands;
 using EdblockModel.EnumsModel;
 using EdblockModel.SymbolsModel;
 using EdblockViewModel.ComponentsVM;
+using EdblockViewModel.Symbols.SwitchCaseConditionSymbolsVM;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM.ScaleRectangles;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM.ConnectionPoints;
-using EdblockViewModel.Symbols.SwitchCaseConditionSymbolsVM;
 
 namespace EdblockViewModel.AbstractionsVM;
 
@@ -102,6 +102,7 @@ public abstract class BlockSymbolVM : INotifyPropertyChanged
 
     public bool FirstMove { get; set; }
 
+    public EdblockVM EdblockVM { get; init; }
     public DelegateCommand MouseEnter { get; set; }
     public DelegateCommand MouseLeave { get; set; }
     public DelegateCommand MouseLeftButtonDown { get; set; }
@@ -118,6 +119,8 @@ public abstract class BlockSymbolVM : INotifyPropertyChanged
 
     public BlockSymbolVM(EdblockVM edblockVM)
     {
+        EdblockVM = edblockVM;
+
         CanvasSymbolsVM = edblockVM.CanvasSymbolsVM;
 
         _fontSizeControlVM = edblockVM.FontSizeControlVM;
@@ -156,7 +159,7 @@ public abstract class BlockSymbolVM : INotifyPropertyChanged
     {
         var currentDrawnLineSymbol = CanvasSymbolsVM.СurrentDrawnLineSymbol;
 
-        if (currentDrawnLineSymbol != null) //Условие истино, если не рисуется линия
+        if (currentDrawnLineSymbol != null)
         {
             return;
         }
@@ -271,7 +274,7 @@ public abstract class BlockSymbolVM : INotifyPropertyChanged
 
             foreach (var connectionPointSwitchCaseVM in connectionPointsSwitchCaseVM)
             {
-                if (connectionPointSwitchCaseVM.Position == incomingPosition && !connectionPointSwitchCaseVM.IsHasConnectingLine)
+                if (!connectionPointSwitchCaseVM.IsHasConnectingLine)
                 {
                     return connectionPointSwitchCaseVM;
                 }
