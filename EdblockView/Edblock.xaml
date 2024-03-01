@@ -43,7 +43,7 @@
             Grid.Column="2"/>
 
         <StackPanel 
-            Name="panel"
+            Name="PanelSymbols"
             Background="#f5f5f5"
             Width="50"
             Grid.Row="1"
@@ -64,7 +64,7 @@
 
         <ScrollViewer 
             x:Name="scrollViewer"
-            HorizontalScrollBarVisibility="Auto"
+            HorizontalScrollBarVisibility="Visible"
             Grid.Row="1"
             Grid.Column="1">
             <componentsUI:CanvasSymbols
