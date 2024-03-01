@@ -18,7 +18,7 @@
              d:DesignHeight="450" d:DesignWidth="800">
 
     <Canvas Cursor="{Binding Cursor}" Loaded="LoadedCanvas">
-        <ItemsControl ItemsSource="{Binding BlockSymbolVM}">
+        <ItemsControl ItemsSource="{Binding BlockSymbolsVM}">
             <ItemsControl.Resources>
                 <DataTemplate DataType="{x:Type blockSymbolsVM:ActionSymbolVM}">
                     <blockSymbolView:ActionSymbolView MouseDown="SelectBlockSymbol"/>

@@ -55,7 +55,7 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
     public DelegateCommand MouseUp { get; init; }
     public DelegateCommand MouseLeftButtonDown { get; init; }
 
-    public ObservableCollection<BlockSymbolVM> BlockSymbolVM { get; init; }
+    public ObservableCollection<BlockSymbolVM> BlockSymbolsVM { get; init; }
     public ObservableCollection<DrawnLineSymbolVM> DrawnLinesSymbolVM { get; init; }
 
     public Dictionary<BlockSymbolVM, List<DrawnLineSymbolVM>> BlockByDrawnLines { get; init; }
@@ -75,7 +75,7 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
 
     public CanvasSymbolsVM()
     {
-        BlockSymbolVM = new();
+        BlockSymbolsVM = new();
         BlockByDrawnLines = new();
         DrawnLinesSymbolVM = new();
         SelectedBlockSymbols = new();
@@ -128,7 +128,7 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
                 BlockByDrawnLines.Remove(symbol);
             }
 
-            BlockSymbolVM.Remove(symbol);
+            BlockSymbolsVM.Remove(symbol);
         }
     }
 
@@ -191,7 +191,7 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
         MovableBlockSymbol = blockSymbolVM;
         MovableBlockSymbol.Select();
         
-        BlockSymbolVM.Add(blockSymbolVM);
+        BlockSymbolsVM.Add(blockSymbolVM);
     }
 
     //TODO: Подумать над названием метода
@@ -231,7 +231,7 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
         previousXCoordinate = 0;
         previousYCoordinate = 0;
 
-        TextFieldSymbolVM.ChangeFocus(BlockSymbolVM);
+        TextFieldSymbolVM.ChangeFocus(BlockSymbolsVM);
     }
 
     private void ClearSelectedBlockSymbols()

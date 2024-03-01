@@ -2,10 +2,10 @@
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Threading;
 using EdblockViewModel;
 using EdblockView.Abstraction;
 using EdblockViewModel.AbstractionsVM;
-using System.Windows.Threading;
 
 namespace EdblockView;
 
@@ -49,9 +49,10 @@ public partial class Edblock : Window
             {
                 var blockSymbolVM = factorySymbolVM.CreateBlockSymbolVM(edblockVM);
 
+                var firstBlockSymbolsVM = edblockVM.CanvasSymbolsVM.BlockSymbolsVM.FirstOrDefault();
                 var isScaleAllSymbolVM = edblockVM.PopupBoxMenuVM.ScaleAllSymbolVM.IsScaleAllSymbolVM;
 
-                if (isScaleAllSymbolVM && edblockVM.CanvasSymbolsVM.BlockSymbolVM.FirstOrDefault() is BlockSymbolVM firstBlockSymbolVM)
+                if (isScaleAllSymbolVM && firstBlockSymbolsVM is BlockSymbolVM firstBlockSymbolVM)
                 {
                     blockSymbolVM.SetWidth(firstBlockSymbolVM.Width);
                     blockSymbolVM.SetHeight(firstBlockSymbolVM.Height);
@@ -87,29 +88,16 @@ public partial class Edblock : Window
 
     private void CanvasSymbols_MouseLeave(object sender, MouseEventArgs e)
     {
-        var t1 = scrollViewer.ContentHorizontalOffset;
-        var t2 = scrollViewer.ContentVerticalOffset;
+        var blockSymbolsVM = edblockVM.CanvasSymbolsVM.BlockSymbolsVM;
+        movableBlockSymbol = edblockVM.CanvasSymbolsVM.MovableBlockSymbol;
 
-        var t3 = scrollViewer.ExtentHeight;
-        var t4 = scrollViewer.ExtentWidth;
-        var t5 = scrollViewer.HorizontalOffset;
-        var t6 = scrollViewer.PanningDeceleration;
-
-        var t7 = scrollViewer.PanningRatio;
-        var t8 = scrollViewer.ScrollableHeight;
-
-        var t9 = scrollViewer.ScrollableWidth;
-        var t10 = scrollViewer.VerticalOffset;
-        var t11 = scrollViewer.ViewportWidth;
-
-        if (edblockVM.CanvasSymbolsVM.MovableBlockSymbol is null)
+        if (movableBlockSymbol is null || blockSymbolsVM.Count < 2)
         {
             return;
         }
 
         var positionCursor = e.GetPosition(this);
 
-        movableBlockSymbol = edblockVM.CanvasSymbolsVM.MovableBlockSymbol;
         movableBlockSymbol.FirstMove = true;
         eventArgs ??= e;
 
@@ -138,15 +126,15 @@ public partial class Edblock : Window
 
     private void ChangeWidthSizeCanvas()
     {
-        var firstBlockSymbolVM = edblockVM.CanvasSymbolsVM.BlockSymbolVM.First();
+        var firstBlockSymbolVM = edblockVM.CanvasSymbolsVM.BlockSymbolsVM.First();
 
         var maxXCoordinate = firstBlockSymbolVM.XCoordinate;
 
-        for (int i = 1; i < edblockVM.CanvasSymbolsVM.BlockSymbolVM.Count; i++)
+        for (int i = 1; i < edblockVM.CanvasSymbolsVM.BlockSymbolsVM.Count; i++)
         {
-            if (edblockVM.CanvasSymbolsVM.BlockSymbolVM[i].XCoordinate > maxXCoordinate)
+            if (edblockVM.CanvasSymbolsVM.BlockSymbolsVM[i].XCoordinate > maxXCoordinate)
             {
-                maxXCoordinate = edblockVM.CanvasSymbolsVM.BlockSymbolVM[i].XCoordinate;
+                maxXCoordinate = edblockVM.CanvasSymbolsVM.BlockSymbolsVM[i].XCoordinate;
             }
         }
 
@@ -158,15 +146,15 @@ public partial class Edblock : Window
 
     private void ChangeHeightSizeCanvas()
     {
-        var firstBlockSymbolVM = edblockVM.CanvasSymbolsVM.BlockSymbolVM.First();
+        var firstBlockSymbolVM = edblockVM.CanvasSymbolsVM.BlockSymbolsVM.First();
 
         var maxYCoordinate = firstBlockSymbolVM.YCoordinate;
 
-        for (int i = 1; i < edblockVM.CanvasSymbolsVM.BlockSymbolVM.Count; i++)
+        for (int i = 1; i < edblockVM.CanvasSymbolsVM.BlockSymbolsVM.Count; i++)
         {
-            if (edblockVM.CanvasSymbolsVM.BlockSymbolVM[i].YCoordinate > maxYCoordinate)
+            if (edblockVM.CanvasSymbolsVM.BlockSymbolsVM[i].YCoordinate > maxYCoordinate)
             {
-                maxYCoordinate = edblockVM.CanvasSymbolsVM.BlockSymbolVM[i].YCoordinate;
+                maxYCoordinate = edblockVM.CanvasSymbolsVM.BlockSymbolsVM[i].YCoordinate;
             }
         }
 
@@ -197,26 +185,8 @@ public partial class Edblock : Window
         {
             movableBlockSymbol.YCoordinate += offsetLeaveCanvas;
 
-            var contentVerticalOffset = scrollViewer.ContentVerticalOffset;
-            scrollViewer.ScrollToVerticalOffset(contentVerticalOffset + offsetLeaveCanvas);
-        }
-    }
-
-    private void DecreaseSizeVertical(object? sender, EventArgs e)
-    {
-        if (movableBlockSymbol is not null && (int)CanvasSymbolsView.ActualHeight + heightScroll >= (int)(heightWindow - TopSettingsPanelUI.ActualHeight))
-        {
-            var cursorYCoordinate = eventArgs.GetPosition(this).Y;
-
-            if (heightWindow - TopSettingsPanelUI.ActualHeight > cursorYCoordinate)
-            {
-                movableBlockSymbol.YCoordinate -= offsetLeaveCanvas;
-            }
-
-            var contentVerticalOffset = scrollViewer.ContentVerticalOffset;
-            scrollViewer.ScrollToVerticalOffset(contentVerticalOffset - offsetLeaveCanvas);
-
-            ChangeHeightSizeCanvas();
+            var verticalOffsetScrollViewer = scrollViewer.ContentVerticalOffset + offsetLeaveCanvas;
+            scrollViewer.ScrollToVerticalOffset(verticalOffsetScrollViewer);
         }
     }
 
@@ -228,26 +198,64 @@ public partial class Edblock : Window
         {
             movableBlockSymbol.XCoordinate += offsetLeaveCanvas;
 
-            var contentHorizontalOffset = scrollViewer.ContentHorizontalOffset;
-            scrollViewer.ScrollToHorizontalOffset(contentHorizontalOffset + offsetLeaveCanvas);
+            var horizontalOffsetScrollViewer = scrollViewer.ContentHorizontalOffset + offsetLeaveCanvas;
+            scrollViewer.ScrollToHorizontalOffset(horizontalOffsetScrollViewer);
         }
     }
 
     private void DecreaseSizeHorizontal(object? sender, EventArgs e)
     {
-        if (movableBlockSymbol is not null && (int)CanvasSymbolsView.ActualWidth >= (int)(widthWindow - PanelSymbols.ActualWidth))
+        if (movableBlockSymbol is null || eventArgs is null)
         {
-            var cursorXCoordinate = eventArgs.GetPosition(this).X;
-
-            if (widthWindow - PanelSymbols.ActualWidth > cursorXCoordinate)
-            {
-                movableBlockSymbol.XCoordinate -= offsetLeaveCanvas;
-            }
-
-            var contentHorizontalOffset = scrollViewer.ContentHorizontalOffset;
-            scrollViewer.ScrollToHorizontalOffset(contentHorizontalOffset - offsetLeaveCanvas);
-
-            ChangeWidthSizeCanvas();
+            return;
         }
+
+        var widthCanvas = (int)(widthWindow - PanelSymbols.ActualWidth);
+        var actualWidthCanvas = (int)CanvasSymbolsView.ActualWidth;
+
+        if (actualWidthCanvas < widthCanvas)
+        {
+            return;
+        }
+
+        var positionCursor = eventArgs.GetPosition(this);
+
+        if (widthCanvas > positionCursor.X)
+        {
+            movableBlockSymbol.XCoordinate -= offsetLeaveCanvas;
+        }
+
+        var horizontalOffsetScrollViewer = scrollViewer.ContentHorizontalOffset - offsetLeaveCanvas;
+        scrollViewer.ScrollToHorizontalOffset(horizontalOffsetScrollViewer);
+
+        ChangeWidthSizeCanvas();
+    }
+
+    private void DecreaseSizeVertical(object? sender, EventArgs e)
+    {
+        if (movableBlockSymbol is null || eventArgs is null)
+        {
+            return;
+        }
+
+        var heightCanvas = (int)(heightWindow - TopSettingsPanelUI.ActualHeight);
+        var actualHeightCanvas = (int)CanvasSymbolsView.ActualHeight + heightScroll;
+
+        if (actualHeightCanvas < heightCanvas)
+        {
+            return;
+        }
+
+        var positionCursor = eventArgs.GetPosition(this);
+
+        if (heightCanvas > positionCursor.Y)
+        {
+            movableBlockSymbol.YCoordinate -= offsetLeaveCanvas;
+        }
+
+        var verticalOffsetScrollViewer = scrollViewer.ContentVerticalOffset - offsetLeaveCanvas;
+        scrollViewer.ScrollToVerticalOffset(verticalOffsetScrollViewer);
+
+        ChangeHeightSizeCanvas();
     }
 }

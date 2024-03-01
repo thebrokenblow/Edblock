@@ -36,7 +36,7 @@ internal class ProjectVM
         var parallelActionSymbolsSerializable = new List<ParallelActionSymbolSerializable>();
         var switchCaseSymbolsSerializable = new List<SwitchCaseSymbolsSerializable>();
 
-        var blockSymbolsVM = canvasSymbolsVM.BlockSymbolVM;
+        var blockSymbolsVM = canvasSymbolsVM.BlockSymbolsVM;
 
         foreach (var blockSymbolVM in blockSymbolsVM)
         {
@@ -102,7 +102,7 @@ internal class ProjectVM
     private void LoadBlocksSymbols(ProjectSerializable projectSerializable)
     {
         blockSymbolsVMById.Clear();
-        canvasSymbolsVM.BlockSymbolVM.Clear();
+        canvasSymbolsVM.BlockSymbolsVM.Clear();
 
         var blockSymbolsSerializable = projectSerializable.BlockSymbolsSerializable;
 
@@ -112,7 +112,7 @@ internal class ProjectVM
             {
                 var blockSymbolVM = factoryBlockSymbolVM.CreateBlockSymbolVM(blockSymbolSerializable);
 
-                canvasSymbolsVM.BlockSymbolVM.Add(blockSymbolVM);
+                canvasSymbolsVM.BlockSymbolsVM.Add(blockSymbolVM);
                 blockSymbolsVMById.Add(blockSymbolSerializable.Id, blockSymbolVM);
             }
         }
@@ -125,7 +125,7 @@ internal class ProjectVM
             {
                 var switchCaseSymbolVM = factoryBlockSymbolVM.CreateBlockSymbolVM(switchCaseSymbolSerializable);
 
-                canvasSymbolsVM.BlockSymbolVM.Add(switchCaseSymbolVM);
+                canvasSymbolsVM.BlockSymbolsVM.Add(switchCaseSymbolVM);
                 blockSymbolsVMById.Add(switchCaseSymbolSerializable.Id, switchCaseSymbolVM);
             }
         }
@@ -138,7 +138,7 @@ internal class ProjectVM
             {
                 var parallelActionSymbolVM = factoryBlockSymbolVM.CreateBlockSymbolVM(parallelActionSymbolSerializable);
 
-                canvasSymbolsVM.BlockSymbolVM.Add(parallelActionSymbolVM);
+                canvasSymbolsVM.BlockSymbolsVM.Add(parallelActionSymbolVM);
                 blockSymbolsVMById.Add(parallelActionSymbolSerializable.Id, parallelActionSymbolVM);
             }
         }
