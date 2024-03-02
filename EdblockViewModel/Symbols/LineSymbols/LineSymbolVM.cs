@@ -88,7 +88,7 @@ public class LineSymbolVM : INotifyPropertyChanged
 
     public void FinishDrawingLine()
     {
-        var currentDrawnLineSymbol = _drawnLineSymbolVM.CanvasSymbolsVM.СurrentDrawnLineSymbol;
+        var currentDrawnLineSymbol = _drawnLineSymbolVM.CanvasSymbolsVM.CurrentDrawnLineSymbol;
 
         if (currentDrawnLineSymbol is null)
         {
@@ -122,6 +122,6 @@ public class LineSymbolVM : INotifyPropertyChanged
         }
 
 
-        _drawnLineSymbolVM.CanvasSymbolsVM.СurrentDrawnLineSymbol = null;
+        _drawnLineSymbolVM.CanvasSymbolsVM.CurrentDrawnLineSymbol = null;
     }
 }

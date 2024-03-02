@@ -157,7 +157,7 @@ public abstract class BlockSymbolVM : INotifyPropertyChanged
 
     public void SetCoordinate((int x, int y) currentCoordinate, (int x, int y) previousCoordinate)
     {
-        var currentDrawnLineSymbol = CanvasSymbolsVM.СurrentDrawnLineSymbol;
+        var currentDrawnLineSymbol = CanvasSymbolsVM.CurrentDrawnLineSymbol;
 
         if (currentDrawnLineSymbol != null)
         {

@@ -111,7 +111,7 @@ public class ConnectionPointVM : INotifyPropertyChanged
 
     public void Click()
     {
-        if (_canvasSymbolsVM.СurrentDrawnLineSymbol == null)
+        if (_canvasSymbolsVM.CurrentDrawnLineSymbol == null)
         {
             StarDrawLine();
         }
@@ -172,17 +172,17 @@ public class ConnectionPointVM : INotifyPropertyChanged
         drawnLineSymbolVM.RedrawPartLines();
 
         _canvasSymbolsVM.DrawnLinesSymbolVM.Add(drawnLineSymbolVM);
-        _canvasSymbolsVM.СurrentDrawnLineSymbol = drawnLineSymbolVM;
+        _canvasSymbolsVM.CurrentDrawnLineSymbol = drawnLineSymbolVM;
     }
 
     public void FinishDrawLine()
     {
-        if (_canvasSymbolsVM.СurrentDrawnLineSymbol is null)
+        if (_canvasSymbolsVM.CurrentDrawnLineSymbol is null)
         {
             return;
         }
 
-        var drawnLineSymbolVM = _canvasSymbolsVM.СurrentDrawnLineSymbol;
+        var drawnLineSymbolVM = _canvasSymbolsVM.CurrentDrawnLineSymbol;
 
         if (drawnLineSymbolVM == null)
         {
@@ -191,7 +191,7 @@ public class ConnectionPointVM : INotifyPropertyChanged
         drawnLineSymbolVM.IncomingPosition = Position;
 
 
-        var isLineIncomingAccordingGOST = _canvasSymbolsVM.СurrentDrawnLineSymbol.IsLineIncomingAccordingGOST();
+        var isLineIncomingAccordingGOST = _canvasSymbolsVM.CurrentDrawnLineSymbol.IsLineIncomingAccordingGOST();
         var isDrawingLinesAccordingGOST = _checkBoxLineGostVM.IsDrawingLinesAccordingGOST;
 
 
@@ -227,7 +227,7 @@ public class ConnectionPointVM : INotifyPropertyChanged
         AddBlockToLine(symbolOutgoingLine, drawnLineSymbolVM);
         AddBlockToLine(BlockSymbolVM, drawnLineSymbolVM);
 
-        _canvasSymbolsVM.СurrentDrawnLineSymbol = null;
+        _canvasSymbolsVM.CurrentDrawnLineSymbol = null;
     }
 
     private void AddBlockToLine(BlockSymbolVM blockSymbolVM, DrawnLineSymbolVM drawnLineSymbolVM)

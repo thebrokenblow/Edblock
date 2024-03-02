@@ -203,7 +203,7 @@ public class DrawnLineSymbolVM : INotifyPropertyChanged
 
         var selectDrawnLineSymbol = CanvasSymbolsVM.SelectedDrawnLineSymbol;
         var movableRectangleLine = CanvasSymbolsVM.MovableRectangleLine;
-        var drawnLineSymbol = CanvasSymbolsVM.СurrentDrawnLineSymbol;
+        var drawnLineSymbol = CanvasSymbolsVM.CurrentDrawnLineSymbol;
 
         if (selectDrawnLineSymbol != this && movableRectangleLine == null && drawnLineSymbol != this)
         {
@@ -265,7 +265,7 @@ public class DrawnLineSymbolVM : INotifyPropertyChanged
     public void SelectLine()
     {
         var selectDrawnLineSymbol = CanvasSymbolsVM.SelectedDrawnLineSymbol;
-        var drawnLineSymbol = CanvasSymbolsVM.СurrentDrawnLineSymbol;
+        var drawnLineSymbol = CanvasSymbolsVM.CurrentDrawnLineSymbol;
 
         if (selectDrawnLineSymbol != this && selectDrawnLineSymbol != null && drawnLineSymbol != null)
         {
@@ -300,7 +300,7 @@ public class DrawnLineSymbolVM : INotifyPropertyChanged
     private void SetHighlightColorLines()
     {
         var movableSymbol = CanvasSymbolsVM.MovableBlockSymbol;
-        var drawnLineSymbol = CanvasSymbolsVM.СurrentDrawnLineSymbol;
+        var drawnLineSymbol = CanvasSymbolsVM.CurrentDrawnLineSymbol;
 
         if (CanvasSymbolsVM.SelectedDrawnLineSymbol != null)
         {
