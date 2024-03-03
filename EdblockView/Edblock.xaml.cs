@@ -137,36 +137,13 @@ public partial class Edblock : Window
         var blockSymbolsVM = edblockVM.CanvasSymbolsVM.BlockSymbolsVM;
         var drawnLinesSymbolVM = edblockVM.CanvasSymbolsVM.DrawnLinesSymbolVM;
 
-        var firstBlockSymbolVM = blockSymbolsVM.First();
+        var maxXCoordinate = blockSymbolsVM.Max(vm => vm.XCoordinate + vm.Width);
 
-        var maxXCoordinate = firstBlockSymbolVM.XCoordinate + firstBlockSymbolVM.Width;
-
-        for (int i = 1; i < blockSymbolsVM.Count; i++)
+        foreach (var drawnLineSymbolVM in drawnLinesSymbolVM)
         {
-            var currentBlockSymbolsVM = blockSymbolsVM[i];
-            var xCoordinateWithWidth = currentBlockSymbolsVM.XCoordinate + currentBlockSymbolsVM.Width;
-
-            if (xCoordinateWithWidth > maxXCoordinate)
+            foreach (var lineSymbolVM in drawnLineSymbolVM.LinesSymbolVM)
             {
-                maxXCoordinate = xCoordinateWithWidth;
-            }
-        }
-
-        for (int i = 0; i < drawnLinesSymbolVM.Count; i++)
-        {
-            var linesSymbolVM = drawnLinesSymbolVM[i].LinesSymbolVM;
-
-            for (int j = 0; j < linesSymbolVM.Count; j++)
-            {
-                if (linesSymbolVM[j].X1 > maxXCoordinate)
-                {
-                    maxXCoordinate = linesSymbolVM[j].X1;
-                }
-
-                if (linesSymbolVM[j].X2 > maxXCoordinate)
-                {
-                    maxXCoordinate = linesSymbolVM[j].X2;
-                }
+                maxXCoordinate = Math.Max(maxXCoordinate, Math.Max(lineSymbolVM.X1, lineSymbolVM.X2));
             }
         }
 
@@ -178,36 +155,13 @@ public partial class Edblock : Window
         var blockSymbolsVM = edblockVM.CanvasSymbolsVM.BlockSymbolsVM;
         var drawnLinesSymbolVM = edblockVM.CanvasSymbolsVM.DrawnLinesSymbolVM;
 
-        var firstBlockSymbolVM = blockSymbolsVM.First();
+        var maxYCoordinate = blockSymbolsVM.Max(b => b.YCoordinate + b.Height);
 
-        var maxYCoordinate = firstBlockSymbolVM.YCoordinate + firstBlockSymbolVM.Height;
-
-        for (int i = 1; i < blockSymbolsVM.Count; i++)
+        foreach (var drawnLinesSymbol in drawnLinesSymbolVM)
         {
-            var currentBlockSymbolsVM = blockSymbolsVM[i];
-            var yCoordinateWithHeight = currentBlockSymbolsVM.YCoordinate + currentBlockSymbolsVM.Height;
-
-            if (yCoordinateWithHeight > maxYCoordinate)
+            foreach (var linesSymbol in drawnLinesSymbol.LinesSymbolVM)
             {
-                maxYCoordinate = yCoordinateWithHeight;
-            }
-        }
-
-        for (int i = 0; i < drawnLinesSymbolVM.Count; i++)
-        {
-            var linesSymbolVM = drawnLinesSymbolVM[i].LinesSymbolVM;
-
-            for (int j = 0; j < linesSymbolVM.Count; j++)
-            {
-                if (linesSymbolVM[j].Y1 > maxYCoordinate)
-                {
-                    maxYCoordinate = linesSymbolVM[j].Y1;
-                }
-
-                if (linesSymbolVM[j].Y2 > maxYCoordinate)
-                {
-                    maxYCoordinate = linesSymbolVM[j].Y2;
-                }
+                maxYCoordinate = Math.Max(maxYCoordinate, Math.Max(linesSymbol.Y1, linesSymbol.Y2));
             }
         }
 
