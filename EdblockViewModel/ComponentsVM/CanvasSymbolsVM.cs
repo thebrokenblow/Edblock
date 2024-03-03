@@ -1,9 +1,7 @@
-﻿using System;
-using System.Linq;
-using System.Windows;
+﻿using System.Windows;
+using Prism.Commands;
 using System.Windows.Input;
 using System.ComponentModel;
-using System.Windows.Threading;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Runtime.CompilerServices;
@@ -11,8 +9,6 @@ using EdblockViewModel.Symbols.LineSymbols;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM;
 using EdblockViewModel.AbstractionsVM;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM.ScaleRectangles;
-using Prism.Commands;
-using static EdblockViewModel.ComponentsVM.CanvasSymbolsVM;
 
 namespace EdblockViewModel.ComponentsVM;
 
@@ -55,28 +51,6 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
         }
     }
 
-    private int width;
-    public int Width
-    {
-        get => width;
-        set
-        {
-            width = value;
-            OnPropertyChanged();
-        }
-    }
-
-    private int height;  
-    public int Height
-    {
-        get => height;
-        set
-        {
-            height = value; 
-            OnPropertyChanged();
-        }
-    }
-
     public DelegateCommand MouseMove { get; init; }
     public DelegateCommand MouseUp { get; init; }
     public DelegateCommand MouseLeftButtonDown { get; init; }
@@ -99,25 +73,8 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
 
     private const int lengthGridCell = 20;
 
-
-    private readonly DispatcherTimer dispatcherTimer;
-
-    private int widthWindow;
-    private int heightWindow;
-    private int widthPanelSymbols;
-    private int heightTopSettingsPanel;
-
-    private const int offsetLeaveCanvas = 40;
-    private const int minIndentation = 40;
-    private const int heightScroll = 14;
-
     public CanvasSymbolsVM()
     {
-        dispatcherTimer = new DispatcherTimer()
-        {
-            Interval = TimeSpan.FromSeconds(0.05)
-        };
-
         BlockSymbolsVM = new();
         BlockByDrawnLines = new();
         DrawnLinesSymbolVM = new();
@@ -230,7 +187,7 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
         RemoveSelectDrawnLine();
         ClearSelectedBlockSymbols();
 
-        blockSymbolVM.IsMovingThroughMiddle = true;
+        blockSymbolVM.FirstMove = true;
         MovableBlockSymbol = blockSymbolVM;
         MovableBlockSymbol.Select();
         
@@ -263,7 +220,7 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
 
         if (MovableBlockSymbol is not null)
         {
-            MovableBlockSymbol.IsMovingThroughMiddle = false;
+            MovableBlockSymbol.FirstMove = false;
         }
 
         MovableBlockSymbol = null;
@@ -352,251 +309,5 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
         }
 
         SelectedDrawnLineSymbol = null;
-    }
-
-    public void SetActualSizeWindow(int actualWidth, int actualHeight, int actualWidthPanelSymbols, int actualHeightTopSettingsPanel)
-    {
-        widthWindow = actualWidth;
-        heightWindow = actualHeight;
-        widthPanelSymbols = actualWidthPanelSymbols;
-        heightTopSettingsPanel = actualHeightTopSettingsPanel;
-
-        if (Width < widthWindow)
-        {
-            Width = widthWindow - widthPanelSymbols - offsetLeaveCanvas;
-        }
-
-        if (Height < heightWindow)
-        {
-            Height = heightWindow - heightTopSettingsPanel - offsetLeaveCanvas - heightScroll;
-        }
-    }
-
-    public void SubscribeScalingMethod(Point positionCursor)
-    {
-        if (MovableBlockSymbol is null && CurrentDrawnLineSymbol is null)
-        {
-            return;
-        }
-
-        if (MovableBlockSymbol is not null)
-        {
-            MovableBlockSymbol.IsMovingThroughMiddle = true;
-        }
-
-        var sideLeave = GetSideLeave(positionCursor);
-
-        if (sideLeave == SideLeave.Top)
-        {
-            dispatcherTimer.Tick += DecreaseSizeVertical;
-        }
-        else if (sideLeave == SideLeave.Right)
-        {
-            dispatcherTimer.Tick += IncreaseSizeHorizontal;
-        }
-        else if (sideLeave == SideLeave.Bottom)
-        {
-            dispatcherTimer.Tick += IncreaseSizeVertical;
-        }
-        else if (sideLeave == SideLeave.Left)
-        {
-            dispatcherTimer.Tick += DecreaseSizeHorizontal;
-        }
-
-        dispatcherTimer.Start();
-    }
-
-    public void UnsubscribeScalingMethod()
-    {
-        dispatcherTimer.Tick -= IncreaseSizeVertical;
-        dispatcherTimer.Tick -= DecreaseSizeVertical;
-
-        dispatcherTimer.Tick -= IncreaseSizeHorizontal;
-        dispatcherTimer.Tick -= DecreaseSizeHorizontal;
-
-        dispatcherTimer.Stop();
-    }
-
-    private void IncreaseSizeVertical(object? sender, EventArgs e)
-    {
-        Height += offsetLeaveCanvas;
-
-        if (MovableBlockSymbol is null && CurrentDrawnLineSymbol is null)
-        {
-            return;
-        }
-
-        if (MovableBlockSymbol is not null)
-        {
-            MovableBlockSymbol.YCoordinate += offsetLeaveCanvas;
-        }
-        else if (CurrentDrawnLineSymbol is not null)
-        {
-            var lastLineSymbolVM = CurrentDrawnLineSymbol.LinesSymbolVM[^1];
-            lastLineSymbolVM.Y2 += offsetLeaveCanvas;
-
-            CurrentDrawnLineSymbol.ArrowSymbol.ChangePosition((lastLineSymbolVM.X2, lastLineSymbolVM.Y2));
-        }
-    }
-
-    private void IncreaseSizeHorizontal(object? sender, EventArgs e)
-    {
-        Width += offsetLeaveCanvas;
-
-        if (MovableBlockSymbol is null && CurrentDrawnLineSymbol is null)
-        {
-            return;
-        }
-
-        if (MovableBlockSymbol is not null)
-        {
-            MovableBlockSymbol.XCoordinate += offsetLeaveCanvas;
-        }
-        else if (CurrentDrawnLineSymbol is not null)
-        {
-            var lastLineSymbolVM = CurrentDrawnLineSymbol.LinesSymbolVM[^1];
-            lastLineSymbolVM.X2 += offsetLeaveCanvas;
-
-            CurrentDrawnLineSymbol.ArrowSymbol.ChangePosition((lastLineSymbolVM.X2, lastLineSymbolVM.Y2));
-        }
-    }
-
-    private void DecreaseSizeHorizontal(object? sender, EventArgs e)
-    {
-        if (MovableBlockSymbol is null && CurrentDrawnLineSymbol is null)
-        {
-            return;
-        }
-
-        if (Width < widthWindow - widthPanelSymbols - offsetLeaveCanvas)
-        {
-            return;
-        }
-
-        if (MovableBlockSymbol is not null)
-        {
-            var extremeCoordinateSymbolBehind = MovableBlockSymbol.XCoordinate + MovableBlockSymbol.Width / 2;
-
-            if (Width < widthWindow)
-            {
-                Width = widthWindow - widthPanelSymbols - offsetLeaveCanvas;
-            }
-
-            if (widthPanelSymbols <= extremeCoordinateSymbolBehind)
-            {
-                MovableBlockSymbol.XCoordinate -= offsetLeaveCanvas;
-            }
-        }
-
-        if (CurrentDrawnLineSymbol is not null)
-        {
-            var lastLineSymbolVM = CurrentDrawnLineSymbol.LinesSymbolVM[^1];
-            lastLineSymbolVM.X2 -= offsetLeaveCanvas;
-
-            CurrentDrawnLineSymbol.ArrowSymbol.ChangePosition((lastLineSymbolVM.X2, lastLineSymbolVM.Y2));
-        }
-
-        var maxXCoordinate = GetMaxXCoordinateSymbol();
-
-        if (Width > maxXCoordinate + minIndentation)
-        {
-            Width -= offsetLeaveCanvas;
-        }
-    }
-
-    private void DecreaseSizeVertical(object? sender, EventArgs e)
-    {
-        if (MovableBlockSymbol is null && CurrentDrawnLineSymbol is null)
-        {
-            return;
-        }
-
-        if (heightWindow - heightTopSettingsPanel - offsetLeaveCanvas >= Height)
-        {
-            return;
-        }
-
-        if (MovableBlockSymbol is not null)
-        {
-            var extremeCoordinateSymbolBehind = MovableBlockSymbol.YCoordinate + MovableBlockSymbol.Height / 2;
-
-            if (heightTopSettingsPanel <= extremeCoordinateSymbolBehind)
-            {
-                MovableBlockSymbol.YCoordinate -= offsetLeaveCanvas;
-            }
-        }
-
-        if (CurrentDrawnLineSymbol is not null)
-        {
-            var lastLineSymbolVM = CurrentDrawnLineSymbol.LinesSymbolVM[^1];
-            lastLineSymbolVM.Y2 -= offsetLeaveCanvas;
-
-            CurrentDrawnLineSymbol.ArrowSymbol.ChangePosition((lastLineSymbolVM.X2, lastLineSymbolVM.Y2));
-        }
-
-        var maxYCoordinate = GetMaxYCoordinateSymbol();
-
-        if (Height > maxYCoordinate + minIndentation)
-        {
-            Height -= offsetLeaveCanvas;
-        }
-    }
-
-    private double GetMaxXCoordinateSymbol()
-    {
-        var maxXCoordinate = BlockSymbolsVM.Max(blockSymbolVM => blockSymbolVM.XCoordinate + blockSymbolVM.Width);
-
-        foreach (var drawnLineSymbolVM in DrawnLinesSymbolVM)
-        {
-            foreach (var lineSymbolVM in drawnLineSymbolVM.LinesSymbolVM)
-            {
-                maxXCoordinate = Math.Max(maxXCoordinate, Math.Max(lineSymbolVM.X1, lineSymbolVM.X2));
-            }
-        }
-
-        return maxXCoordinate;
-    }
-
-    private double GetMaxYCoordinateSymbol()
-    {
-        var maxYCoordinate = BlockSymbolsVM.Max(blockSymbolsVM => blockSymbolsVM.YCoordinate + blockSymbolsVM.Height);
-
-        foreach (var drawnLinesSymbol in DrawnLinesSymbolVM)
-        {
-            foreach (var linesSymbol in drawnLinesSymbol.LinesSymbolVM)
-            {
-                maxYCoordinate = Math.Max(maxYCoordinate, Math.Max(linesSymbol.Y1, linesSymbol.Y2));
-            }
-        }
-
-        return maxYCoordinate;
-    }
-
-    public enum SideLeave
-    {
-        Top,
-        Right,
-        Bottom,
-        Left,
-    }
-
-    public SideLeave GetSideLeave(Point positionCursor)
-    {
-        if (positionCursor.X >= (widthWindow - widthPanelSymbols - offsetLeaveCanvas - heightScroll))
-        {
-            return SideLeave.Right;
-        }
-
-        if (positionCursor.X <= widthPanelSymbols)
-        {
-            return SideLeave.Left;
-        }
-
-        if (positionCursor.Y >= heightWindow - heightTopSettingsPanel - offsetLeaveCanvas - heightScroll)
-        {
-            return SideLeave.Bottom;
-        }
-        
-        return SideLeave.Top;
     }
 }

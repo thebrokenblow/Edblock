@@ -100,7 +100,7 @@ public abstract class BlockSymbolVM : INotifyPropertyChanged
         }
     }
 
-    public bool IsMovingThroughMiddle { get; set; }
+    public bool FirstMove { get; set; }
 
     public EdblockVM EdblockVM { get; init; }
     public DelegateCommand MouseEnter { get; set; }
@@ -166,7 +166,7 @@ public abstract class BlockSymbolVM : INotifyPropertyChanged
 
         CanvasSymbolsVM.RemoveSelectDrawnLine();
 
-        if (IsMovingThroughMiddle)
+        if (FirstMove)
         {
             XCoordinate = currentCoordinate.x - Width / 2;
             YCoordinate = currentCoordinate.y - Height / 2;

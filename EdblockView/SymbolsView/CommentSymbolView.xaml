@@ -4,8 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors" 
-             xmlns:componentsCommentSymbolVM="clr-namespace:EdblockViewModel.Symbols.ComponentsCommentSymbolVM;assembly=EdblockViewModel" 
-             xmlns:edblockVM="clr-namespace:EdblockViewModel;assembly=EdblockViewModel"
+             xmlns:edblockVM="clr-namespace:EdblockView;assembly=EdblockViewModel" 
+             xmlns:componentsCommentSymbolVM="clr-namespace:EdblockViewModel.Symbols.ComponentsCommentSymbolVM;assembly=EdblockViewModel" xmlns:edblockVM1="clr-namespace:EdblockViewModel;assembly=EdblockViewModel"
              d:DataContext="{d:DesignInstance Type=componentsCommentSymbolVM:CommentSymbolVM}"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
@@ -50,16 +50,17 @@
                   Stroke="Black"
                   StrokeThickness="1.25"/>
 
+
             <TextBox Style="{StaticResource TextFieldView}" 
                      Cursor="{x:Null}"
                      Height="Auto"
                      Width="Auto"
                      Foreground="Black">
                 <i:Interaction.Behaviors>
-                    <edblockVM:ReadOnlyPropertyToVMBindingBehavior 
+                    <edblockVM1:ReadOnlyPropertyToVMBindingBehavior 
                             ModelProperty="{Binding HeightTextField}"
                             ReadOnlyDependencyProperty="{Binding ActualHeight, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=TextBox}}"/>
-                    <edblockVM:ReadOnlyPropertyToVMBindingBehavior 
+                    <edblockVM1:ReadOnlyPropertyToVMBindingBehavior 
                             ModelProperty="{Binding WidthTextField}"
                             ReadOnlyDependencyProperty="{Binding ActualWidth, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=TextBox}}"/>
                 </i:Interaction.Behaviors>

@@ -13,141 +13,114 @@
              xmlns:componentsParallelActionSymbolVM="clr-namespace:EdblockViewModel.Symbols.ComponentsParallelActionSymbolVM;assembly=EdblockViewModel"   
              xmlns:lineSymbolView="clr-namespace:EdblockView.SymbolsView.LineSymbolView"
              xmlns:lineSymbolsVM="clr-namespace:EdblockViewModel.Symbols.LineSymbols;assembly=EdblockViewModel"
-             xmlns:edblockVM="clr-namespace:EdblockViewModel;assembly=EdblockViewModel"
              d:DataContext="{d:DesignInstance Type=componentsVM:CanvasSymbolsVM}"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
 
-    <ScrollViewer  
-        Name="scrollViewer"
-        HorizontalScrollBarVisibility="Visible">
-        
-        <i:Interaction.Behaviors>
-            <edblockVM:ReadOnlyPropertyToVMBindingBehavior 
-                ModelProperty="{Binding ContentHorizontalOffset}"
-                ReadOnlyDependencyProperty="{Binding ContentHorizontalOffset, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ScrollViewer}}"/>
-            <edblockVM:ReadOnlyPropertyToVMBindingBehavior 
-                ModelProperty="{Binding ContentVerticalOffset}"
-                ReadOnlyDependencyProperty="{Binding ContentVerticalOffset, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ScrollViewer}}"/>
-        </i:Interaction.Behaviors>
-        
-        <Canvas
-            Name="CanvasSymbolsView"
-            Width="{Binding Width}"
-            Height="{Binding Height}"
-            Cursor="{Binding Cursor}"
-            MouseLeave="LeaveSymbol"
-            MouseEnter="EnterSymbol"
-            Loaded="LoadedCanvas">
-            <ItemsControl ItemsSource="{Binding BlockSymbolsVM}">
-                <ItemsControl.Resources>
-                    <DataTemplate DataType="{x:Type blockSymbolsVM:ActionSymbolVM}">
-                        <blockSymbolView:ActionSymbolView MouseDown="SelectBlockSymbol"/>
-                    </DataTemplate>
-                    <DataTemplate DataType="{x:Type blockSymbolsVM:ConditionSymbolVM}">
-                        <blockSymbolView:ConditionSymbolView MouseDown="SelectBlockSymbol"/>
-                    </DataTemplate>
-                    <DataTemplate DataType="{x:Type switchCaseConditionSymbolsVM:HorizontalConditionSymbolVM}">
-                        <blockSymbolView:HorizontalConditionSymbolView MouseDown="SelectBlockSymbol"/>
-                    </DataTemplate>
-                    <DataTemplate DataType="{x:Type switchCaseConditionSymbolsVM:VerticalConditionSymbolVM}">
-                        <blockSymbolView:VerticalConditionSymbolView MouseDown="SelectBlockSymbol"/>
-                    </DataTemplate>
-                    <DataTemplate DataType="{x:Type blockSymbolsVM:StartEndSymbolVM}">
-                        <blockSymbolView:StartEndSymbolView MouseDown="SelectBlockSymbol"/>
-                    </DataTemplate>
-                    <DataTemplate DataType="{x:Type blockSymbolsVM:InputOutputSymbolVM}">
-                        <blockSymbolView:InputOutputSymbolView MouseDown="SelectBlockSymbol"/>
-                    </DataTemplate>
-                    <DataTemplate DataType="{x:Type blockSymbolsVM:SubroutineSymbolVM}">
-                        <blockSymbolView:SubroutineSymbolView MouseDown="SelectBlockSymbol"/>
-                    </DataTemplate>
-                    <DataTemplate DataType="{x:Type blockSymbolsVM:CycleForSymbolVM}">
-                        <blockSymbolView:CycleForSymbolView MouseDown="SelectBlockSymbol"/>
-                    </DataTemplate>
-                    <DataTemplate DataType="{x:Type blockSymbolsVM:CycleWhileBeginSymbolVM}">
-                        <blockSymbolView:CycleWhileBeginSymbolView MouseDown="SelectBlockSymbol"/>
-                    </DataTemplate>
-                    <DataTemplate DataType="{x:Type blockSymbolsVM:CycleWhileEndSymbolVM}">
-                        <blockSymbolView:CycleWhileEndSymbolView MouseDown="SelectBlockSymbol"/>
-                    </DataTemplate>
-                    <DataTemplate DataType="{x:Type blockSymbolsVM:LinkSymbolVM}">
-                        <blockSymbolView:LinkSymbolView MouseDown="SelectBlockSymbol"/>
-                    </DataTemplate>
-                    <DataTemplate DataType="{x:Type componentsCommentSymbolVM:CommentSymbolVM}">
-                        <blockSymbolView:CommentSymbolView MouseDown="SelectBlockSymbol"/>
-                    </DataTemplate>
-                    <DataTemplate DataType="{x:Type componentsParallelActionSymbolVM:ParallelActionSymbolVM}">
-                        <blockSymbolView:ParallelActionSymbolView MouseDown="SelectBlockSymbol"/>
-                    </DataTemplate>
-                </ItemsControl.Resources>
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <Canvas/>
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-                <ItemsControl.ItemContainerStyle>
-                    <Style TargetType="ContentPresenter">
-                        <Setter Property="Canvas.Left" Value="{Binding XCoordinate}" />
-                        <Setter Property="Canvas.Top" Value="{Binding YCoordinate}" />
-                    </Style>
-                </ItemsControl.ItemContainerStyle>
-            </ItemsControl>
+    <Canvas Cursor="{Binding Cursor}" Loaded="LoadedCanvas">
+        <ItemsControl ItemsSource="{Binding BlockSymbolsVM}">
+            <ItemsControl.Resources>
+                <DataTemplate DataType="{x:Type blockSymbolsVM:ActionSymbolVM}">
+                    <blockSymbolView:ActionSymbolView MouseDown="SelectBlockSymbol"/>
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type blockSymbolsVM:ConditionSymbolVM}">
+                    <blockSymbolView:ConditionSymbolView MouseDown="SelectBlockSymbol"/>
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type switchCaseConditionSymbolsVM:HorizontalConditionSymbolVM}">
+                    <blockSymbolView:HorizontalConditionSymbolView MouseDown="SelectBlockSymbol"/>
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type switchCaseConditionSymbolsVM:VerticalConditionSymbolVM}">
+                    <blockSymbolView:VerticalConditionSymbolView MouseDown="SelectBlockSymbol"/>
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type blockSymbolsVM:StartEndSymbolVM}">
+                    <blockSymbolView:StartEndSymbolView MouseDown="SelectBlockSymbol"/>
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type blockSymbolsVM:InputOutputSymbolVM}">
+                    <blockSymbolView:InputOutputSymbolView MouseDown="SelectBlockSymbol"/>
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type blockSymbolsVM:SubroutineSymbolVM}">
+                    <blockSymbolView:SubroutineSymbolView MouseDown="SelectBlockSymbol"/>
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type blockSymbolsVM:CycleForSymbolVM}">
+                    <blockSymbolView:CycleForSymbolView MouseDown="SelectBlockSymbol"/>
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type blockSymbolsVM:CycleWhileBeginSymbolVM}">
+                    <blockSymbolView:CycleWhileBeginSymbolView MouseDown="SelectBlockSymbol"/>
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type blockSymbolsVM:CycleWhileEndSymbolVM}">
+                    <blockSymbolView:CycleWhileEndSymbolView MouseDown="SelectBlockSymbol"/>
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type blockSymbolsVM:LinkSymbolVM}">
+                    <blockSymbolView:LinkSymbolView MouseDown="SelectBlockSymbol"/>
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type componentsCommentSymbolVM:CommentSymbolVM}">
+                    <blockSymbolView:CommentSymbolView MouseDown="SelectBlockSymbol"/>
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type componentsParallelActionSymbolVM:ParallelActionSymbolVM}">
+                    <blockSymbolView:ParallelActionSymbolView MouseDown="SelectBlockSymbol"/>
+                </DataTemplate>
+            </ItemsControl.Resources>
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Canvas/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemContainerStyle>
+                <Style TargetType="ContentPresenter">
+                    <Setter Property="Canvas.Left" Value="{Binding XCoordinate}" />
+                    <Setter Property="Canvas.Top" Value="{Binding YCoordinate}" />
+                </Style>
+            </ItemsControl.ItemContainerStyle>
+        </ItemsControl>
 
-            <ItemsControl ItemsSource="{Binding DrawnLinesSymbolVM}">
-                <ItemsControl.Resources>
-                    <DataTemplate DataType="{x:Type lineSymbolsVM:DrawnLineSymbolVM}">
-                        <lineSymbolView:DrawnLineSymbolView />
-                    </DataTemplate>
-                </ItemsControl.Resources>
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <Canvas/>
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-            </ItemsControl>
+        <ItemsControl ItemsSource="{Binding DrawnLinesSymbolVM}">
+            <ItemsControl.Resources>
+                <DataTemplate DataType="{x:Type lineSymbolsVM:DrawnLineSymbolVM}">
+                    <lineSymbolView:DrawnLineSymbolView />
+                </DataTemplate>
+            </ItemsControl.Resources>
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Canvas/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+        </ItemsControl>
 
-            <Canvas.Background>
-                <DrawingBrush 
+
+        <Canvas.Background>
+            <DrawingBrush 
                  TileMode="Tile" 
                  Viewport="{Binding Grid}" 
                  ViewportUnits="Absolute">
-                    <DrawingBrush.Drawing>
-                        <GeometryDrawing>
-                            <GeometryDrawing.Geometry>
-                                <RectangleGeometry Rect="0,0,50,50"/>
-                            </GeometryDrawing.Geometry>
-                            <GeometryDrawing.Pen>
-                                <Pen Brush="#CFCFCF" Thickness="1"/>
-                            </GeometryDrawing.Pen>
-                        </GeometryDrawing>
-                    </DrawingBrush.Drawing>
-                </DrawingBrush>
-            </Canvas.Background>
+                <DrawingBrush.Drawing>
+                    <GeometryDrawing>
+                        <GeometryDrawing.Geometry>
+                            <RectangleGeometry Rect="0,0,50,50"/>
+                        </GeometryDrawing.Geometry>
+                        <GeometryDrawing.Pen>
+                            <Pen Brush="#cfcfcf" Thickness="1"/>
+                        </GeometryDrawing.Pen>
+                    </GeometryDrawing>
+                </DrawingBrush.Drawing>
+            </DrawingBrush>
+        </Canvas.Background>
 
-            <i:Interaction.Behaviors>
-                <edblockViewModel:MouseBehaviourVM 
-                    MouseX="{Binding XCoordinate, Mode=OneWayToSource}" 
-                    MouseY="{Binding YCoordinate, Mode=OneWayToSource}" />
-                <edblockVM:ReadOnlyPropertyToVMBindingBehavior 
-                    ModelProperty="{Binding ActualWidth}"
-                    ReadOnlyDependencyProperty="{Binding ActualWidth, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Canvas}}"/>
-                <edblockVM:ReadOnlyPropertyToVMBindingBehavior 
-                    ModelProperty="{Binding ActualHeight}"
-                    ReadOnlyDependencyProperty="{Binding ActualHeight, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Canvas}}"/>
-            </i:Interaction.Behaviors>
+        <i:Interaction.Behaviors>
+            <edblockViewModel:MouseBehaviourVM 
+                 MouseX="{Binding XCoordinate, Mode=OneWayToSource}" 
+                 MouseY="{Binding YCoordinate, Mode=OneWayToSource}" />
+        </i:Interaction.Behaviors>
 
-            <i:Interaction.Triggers>
-                <i:EventTrigger EventName="MouseMove">
-                    <i:InvokeCommandAction Command="{Binding MouseMove}"/>
-                </i:EventTrigger>
-                <i:EventTrigger EventName="MouseLeftButtonDown">
-                    <i:InvokeCommandAction Command="{Binding MouseLeftButtonDown}"/>
-                </i:EventTrigger>
-                <i:EventTrigger EventName="MouseUp">
-                    <i:InvokeCommandAction Command="{Binding MouseUp}"/>
-                </i:EventTrigger>
-            </i:Interaction.Triggers>
-        </Canvas>
-    </ScrollViewer>
+        <i:Interaction.Triggers>
+            <i:EventTrigger EventName="MouseMove">
+                <i:InvokeCommandAction Command="{Binding MouseMove}"/>
+            </i:EventTrigger>
+            <i:EventTrigger EventName="MouseLeftButtonDown">
+                <i:InvokeCommandAction Command="{Binding MouseLeftButtonDown}"/>
+            </i:EventTrigger>
+            <i:EventTrigger EventName="MouseUp">
+                <i:InvokeCommandAction Command="{Binding MouseUp}"/>
+            </i:EventTrigger>
+        </i:Interaction.Triggers>
+    </Canvas>
 </UserControl>
