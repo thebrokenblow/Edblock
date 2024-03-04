@@ -3,7 +3,6 @@ using System.Windows.Input;
 using System.Windows.Controls;
 using EdblockViewModel.ComponentsVM;
 using EdblockViewModel.AbstractionsVM;
-using EdblockModel.EnumsModel;
 
 namespace EdblockView.Components;
 
@@ -35,24 +34,37 @@ public partial class CanvasSymbols : UserControl
 
     private void LeaveCursor(object sender, MouseEventArgs e)
     {
-        if (DataContext is CanvasSymbolsVM canvasSymbolsVM)
+        var canvasSymbolsVM = (CanvasSymbolsVM)DataContext;
+
+        if (canvasSymbolsVM.MovableBlockSymbol is not null || canvasSymbolsVM.CurrentDrawnLineSymbol is not null)
         {
-            if (canvasSymbolsVM.MovableBlockSymbol is not null || canvasSymbolsVM.CurrentDrawnLineSymbol is not null)
+            var cursorPosition = e.GetPosition(this);
+
+            var sideLeave = canvasSymbolsVM.GetSideLeave(cursorPosition);
+
+            if (sideLeave == CanvasSymbolsVM.SideLeave.Right)
             {
-                var cursorPosition = e.GetPosition(this);
-
-                var sideLeave = canvasSymbolsVM.GetSideLeave(cursorPosition);
-
-                if (sideLeave == CanvasSymbolsVM.SideLeave.Right)
-                {
-                    canvasSymbolsVM.SubscribeСanvasScalingEvents(ScrollToRightOffset, cursorPosition);
-                }
-                else if (sideLeave == CanvasSymbolsVM.SideLeave.Left)
-                {
-                    canvasSymbolsVM.SubscribeСanvasScalingEvents(ScrollToLeftOffset, cursorPosition);
-                }
+                canvasSymbolsVM.SubscribeСanvasScalingEvents(ScrollToRightOffset, cursorPosition);
+            }
+            else if (sideLeave == CanvasSymbolsVM.SideLeave.Left)
+            {
+                canvasSymbolsVM.SubscribeСanvasScalingEvents(ScrollToLeftOffset, cursorPosition);
+            }
+            else if (sideLeave == CanvasSymbolsVM.SideLeave.Top)
+            {
+                canvasSymbolsVM.SubscribeСanvasScalingEvents(ScrollToTopOffset, cursorPosition);
+            }
+            else if (sideLeave == CanvasSymbolsVM.SideLeave.Bottom)
+            {
+                canvasSymbolsVM.SubscribeСanvasScalingEvents(ScrollToBottomOffset, cursorPosition);
             }
         }
+    }
+
+    private void EnterCursor(object sender, MouseEventArgs e)
+    {
+        var canvasSymbolsVM = (CanvasSymbolsVM)DataContext;
+        canvasSymbolsVM.UnsubscribeСanvasScalingEvents();
     }
 
     private void ScrollToRightOffset()
@@ -77,13 +89,5 @@ public partial class CanvasSymbols : UserControl
     {
         var scrollOffset = scrollViewer.ContentVerticalOffset + CanvasSymbolsVM.OFFSET_LEAVE;
         scrollViewer.ScrollToVerticalOffset(scrollOffset);
-    }
-
-    private void Canvas_MouseEnter(object sender, MouseEventArgs e)
-    {
-        if (DataContext is CanvasSymbolsVM canvasSymbolsVM)
-        {
-            canvasSymbolsVM.UnsubscribeСanvasScalingEvents();
-        }
     }
 }

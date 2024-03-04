@@ -26,7 +26,7 @@
             Height="{Binding Height}"
             Cursor="{Binding Cursor}" 
             MouseLeave="LeaveCursor"
-            MouseEnter="Canvas_MouseEnter"
+            MouseEnter="EnterCursor"
             Loaded="LoadedCanvas">
             <ItemsControl ItemsSource="{Binding BlockSymbolsVM}">
                 <ItemsControl.Resources>
