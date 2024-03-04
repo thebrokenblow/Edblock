@@ -48,7 +48,7 @@ public class ArrowSymbolModel
     }
 
     //Получение координат стрелки во время рисования линии
-    public static List<(double, double)> GetCoordinateArrow((double x, double y) startCoordinateLine, (double x, double y) currentCoordinateLine, SideSymbol positionConnectionPoint)
+    public static List<(double, double)> GetCoordinateArrow((double x, double y) startCoordinateLine, (double x, double y) currentCoordinateLine, SideSymbol? positionConnectionPoint)
     {
         if (positionConnectionPoint == SideSymbol.Top || positionConnectionPoint == SideSymbol.Bottom)
         {
@@ -63,9 +63,14 @@ public class ArrowSymbolModel
     }
 
     //Получение координат стрелки при присоединение линии
-    public static List<(double, double)> GetCoordinateArrow((double x, double y) finalCoordinate, SideSymbol positionConnectionPoint)
+    public static List<(double, double)> GetCoordinateArrow((double x, double y) finalCoordinate, SideSymbol? positionConnectionPoint)
     {
-        var coordinateArror = coordinateArrorByPosition[positionConnectionPoint].Invoke(finalCoordinate);
+        if (positionConnectionPoint is null)
+        {
+            return null;
+        }
+
+        var coordinateArror = coordinateArrorByPosition[(SideSymbol)positionConnectionPoint].Invoke(finalCoordinate);
 
         return coordinateArror;
     }

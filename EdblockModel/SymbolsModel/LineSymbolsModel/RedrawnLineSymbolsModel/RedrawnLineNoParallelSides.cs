@@ -9,8 +9,8 @@ internal class RedrawnLineNoParallelSides
     private readonly BlockSymbolModel _symbolOutgoingLine;
     private readonly BuilderCoordinateDecorator _builderCoordinateDecorator;
     private readonly List<CoordinateLine> _decoratedCoordinatesLines;
-    private readonly SideSymbol _positionOutgoing;
-    private readonly SideSymbol _positionIncoming;
+    private readonly SideSymbol? _positionOutgoing;
+    private readonly SideSymbol? _positionIncoming;
     private readonly int _baseLineOffset;
     private const int linesOneDifferentPositions = 2;
     private const int linesTwoDifferentPositions = 4;

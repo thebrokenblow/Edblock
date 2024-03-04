@@ -8,8 +8,8 @@ public class RedrawnLine
     public List<CoordinateLine> DecoratedCoordinatesLines { get; set; }
     private readonly BlockSymbolModel? _symbolOutgoingLine;
     private readonly BlockSymbolModel? _symbolIncomingLine;
-    private readonly SideSymbol _positionOutgoing;
-    private readonly SideSymbol _positionIncoming;
+    private readonly SideSymbol? _positionOutgoing;
+    private readonly SideSymbol? _positionIncoming;
     private List<CoordinateLine> _coordinatesLines;
     private readonly RedrawnLineParallelSides redrawnParallelSides;
     private readonly RedrawnLineNoParallelSides redrawnLineNoParallelSides;

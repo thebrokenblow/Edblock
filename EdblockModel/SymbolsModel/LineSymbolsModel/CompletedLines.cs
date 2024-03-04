@@ -5,8 +5,8 @@ namespace EdblockModel.SymbolsModel.LineSymbolsModel;
 public class CompletedLine
 {
     private readonly List<LineSymbolModel> linesSymbolModel;
-    private readonly SideSymbol outgoingPosition;
-    private readonly SideSymbol incomingPosition;
+    private readonly SideSymbol? outgoingPosition;
+    private readonly SideSymbol? incomingPosition;
     private readonly (double x, double y) _finalCoordinate;
 
     public CompletedLine(DrawnLineSymbolModel drawnLineSymbolModel, (double x, double y) finalCoordinate)

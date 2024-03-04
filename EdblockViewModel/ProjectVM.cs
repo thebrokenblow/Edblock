@@ -9,6 +9,7 @@ using EdblockModel.SymbolsModel;
 using EdblockViewModel.Symbols;
 using EdblockModel.SymbolsModel.LineSymbolsModel;
 using EdblockViewModel.Symbols.SwitchCaseConditionSymbolsVM;
+using EdblockViewModel.Symbols.ComponentsSymbolsVM.ConnectionPoints;
 
 namespace EdblockViewModel;
 
@@ -181,24 +182,33 @@ internal class ProjectVM
             var symbolOutgoingLine = drawnLineSymbolSerializable.SymbolOutgoingLine;
             var symbolIncomingLine = drawnLineSymbolSerializable.SymbolIncomingLine;
 
-            if (symbolOutgoingLine == null)
+            BlockSymbolVM? symbolOutgoingLineVM = null;
+            BlockSymbolVM? symbolIncomingLineVM = null;
+
+            if (symbolOutgoingLine is not null)
             {
-                continue;
+                symbolOutgoingLineVM = blockSymbolsVMById[symbolOutgoingLine.Id];
             }
 
-            if (symbolIncomingLine == null)
+            if (symbolIncomingLine is not null)
             {
-                continue;
+                symbolIncomingLineVM = blockSymbolsVMById[symbolIncomingLine.Id];
             }
 
-            var symbolOutgoingLineVM = blockSymbolsVMById[symbolOutgoingLine.Id];
-            var symbolIncomingLineVM = blockSymbolsVMById[symbolIncomingLine.Id];
+            ConnectionPointVM? outgoingConnectionPoint = null;
+            ConnectionPointVM? incomingConnectionPoint = null;
 
-            var outgoingConnectionPoint = symbolOutgoingLineVM.GetConnectionPoint(drawnLineSymbolSerializable.OutgoingPosition);
-            var incomingConnectionPoint = symbolIncomingLineVM.GetConnectionPoint(drawnLineSymbolSerializable.IncomingPosition);
+            if (symbolOutgoingLineVM is not null)
+            {
+                outgoingConnectionPoint = symbolOutgoingLineVM.GetConnectionPoint(drawnLineSymbolSerializable.OutgoingPosition);
+                outgoingConnectionPoint.IsHasConnectingLine = true;
+            }
 
-            outgoingConnectionPoint.IsHasConnectingLine = true;
-            incomingConnectionPoint.IsHasConnectingLine = true;
+            if (symbolIncomingLineVM is not null)
+            {
+                incomingConnectionPoint = symbolIncomingLineVM.GetConnectionPoint(drawnLineSymbolSerializable.OutgoingPosition);
+                incomingConnectionPoint.IsHasConnectingLine = true;
+            }
 
             var drawnLineSymbolVM = new DrawnLineSymbolVM(canvasSymbolsVM, linesSymbolModel)
             {
@@ -206,11 +216,19 @@ internal class ProjectVM
                 SymbolIncomingLine = symbolIncomingLineVM,
                 OutgoingConnectionPoint = outgoingConnectionPoint,
                 IncomingConnectionPoint = incomingConnectionPoint,
-                OutgoingPosition = outgoingConnectionPoint.Position,
-                IncomingPosition = incomingConnectionPoint.Position,
                 Text = drawnLineSymbolSerializable.Text,
                 Color = drawnLineSymbolSerializable.Color,
             };
+
+            if (outgoingConnectionPoint is not null)
+            {
+                drawnLineSymbolVM.OutgoingPosition = outgoingConnectionPoint.Position;
+            }
+
+            if (incomingConnectionPoint is not null)
+            {
+                drawnLineSymbolVM.IncomingPosition = incomingConnectionPoint.Position;
+            }
 
             drawnLineSymbolVM.RedrawAllLines();
 
@@ -228,18 +246,21 @@ internal class ProjectVM
                 canvasSymbolsVM.BlockByDrawnLines[symbolOutgoingLineVM].Add(drawnLineSymbolVM);
             }
 
-            if (!canvasSymbolsVM.BlockByDrawnLines.ContainsKey(symbolIncomingLineVM))
+            if (symbolIncomingLineVM is not null)
             {
-                var drawnsLineSymbolVM = new List<DrawnLineSymbolVM>
+                if (!canvasSymbolsVM.BlockByDrawnLines.ContainsKey(symbolIncomingLineVM))
+                {
+                    var drawnsLineSymbolVM = new List<DrawnLineSymbolVM>
                 {
                     drawnLineSymbolVM
                 };
 
-                canvasSymbolsVM.BlockByDrawnLines.Add(symbolIncomingLineVM, drawnsLineSymbolVM);
-            }
-            else
-            {
-                canvasSymbolsVM.BlockByDrawnLines[symbolIncomingLineVM].Add(drawnLineSymbolVM);
+                    canvasSymbolsVM.BlockByDrawnLines.Add(symbolIncomingLineVM, drawnsLineSymbolVM);
+                }
+                else
+                {
+                    canvasSymbolsVM.BlockByDrawnLines[symbolIncomingLineVM].Add(drawnLineSymbolVM);
+                }
             }
 
             canvasSymbolsVM.DrawnLinesSymbolVM.Add(drawnLineSymbolVM);

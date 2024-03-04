@@ -47,8 +47,8 @@ public class DrawnLineSymbolVM : INotifyPropertyChanged
         }
     }
 
-    private SideSymbol outgoingPosition;
-    public SideSymbol OutgoingPosition
+    private SideSymbol? outgoingPosition;
+    public SideSymbol? OutgoingPosition
     {
         get => outgoingPosition;
         set
@@ -58,8 +58,8 @@ public class DrawnLineSymbolVM : INotifyPropertyChanged
         }
     }
 
-    private SideSymbol incomingPosition;
-    public SideSymbol IncomingPosition 
+    private SideSymbol? incomingPosition;
+    public SideSymbol? IncomingPosition 
     {
         get => incomingPosition;
         set

@@ -266,7 +266,7 @@ public abstract class BlockSymbolVM : INotifyPropertyChanged
         CanvasSymbolsVM.SelectedBlockSymbols.Add(this);
     }
 
-    internal ConnectionPointVM GetConnectionPoint(SideSymbol incomingPosition)
+    internal ConnectionPointVM GetConnectionPoint(SideSymbol? incomingPosition)
     {
         if (this is SwitchCaseSymbolVM switchCaseSymbolVM)
         {

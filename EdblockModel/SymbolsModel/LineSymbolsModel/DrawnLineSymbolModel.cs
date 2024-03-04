@@ -8,8 +8,8 @@ public class DrawnLineSymbolModel
     public BlockSymbolModel? SymbolOutgoingLine { get; set; }
     public BlockSymbolModel? SymbolIncomingLine { get; set; }
     public CoordinateLineModel CoordinateLineModel { get; set; }
-    public SideSymbol OutgoingPosition { get; set; }
-    public SideSymbol IncomingPosition { get; set; }
+    public SideSymbol? OutgoingPosition { get; set; }
+    public SideSymbol? IncomingPosition { get; set; }
     public string Color { get; set; } = string.Empty;
     public string Text { get; set; } = string.Empty;
 

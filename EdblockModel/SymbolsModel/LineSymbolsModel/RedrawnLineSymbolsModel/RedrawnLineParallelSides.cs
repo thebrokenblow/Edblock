@@ -8,8 +8,8 @@ internal class RedrawnLineParallelSides
     private readonly RedrawnLine _redrawLine;
     private readonly List<CoordinateLine> _decoratedCoordinatesLines;
     private readonly BuilderCoordinateDecorator _builderCoordinateDecorator;
-    private readonly SideSymbol _positionOutgoing;
-    private readonly SideSymbol _positionIncoming;
+    private readonly SideSymbol? _positionOutgoing;
+    private readonly SideSymbol? _positionIncoming;
     private readonly int _baseLineOffset;
     private const int linesSamePositions = 1;
     private const int linesOneDifferentPositions = 3;

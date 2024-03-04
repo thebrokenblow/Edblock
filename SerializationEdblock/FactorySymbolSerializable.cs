@@ -93,9 +93,14 @@ public class FactorySymbolSerializable
         BlockSymbolSerializable? symbolOutgoingLineSerializable = null;
         BlockSymbolSerializable? symbolIncomingLineSerializable = null;
 
-        if (symbolOutgoingLine is not null && symbolIncomingLine is not null)
+        if (symbolOutgoingLine is not null)
         {
             symbolOutgoingLineSerializable = Create(symbolOutgoingLine);
+            
+        }
+
+        if (symbolIncomingLine is not null)
+        {
             symbolIncomingLineSerializable = Create(symbolIncomingLine);
         }
 

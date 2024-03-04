@@ -39,13 +39,13 @@ public class ArrowSymbol : INotifyPropertyChanged
         SetCoodinate(coordinatesArrow);
     }
 
-    public void ChangeOrientation((double x, double y) startCoordinateLine, (double x, double y) currentCoordinateLine, SideSymbol positionConnectionPoint)
+    public void ChangeOrientation((double x, double y) startCoordinateLine, (double x, double y) currentCoordinateLine, SideSymbol? positionConnectionPoint)
     {
         var coordinatesArrow = ArrowSymbolModel.GetCoordinateArrow(startCoordinateLine, currentCoordinateLine, positionConnectionPoint);
         SetCoodinate(coordinatesArrow);
     }
 
-    public void ChangeOrientation((double x, double y) finalCoordinate, SideSymbol positionConnectionPoint)
+    public void ChangeOrientation((double x, double y) finalCoordinate, SideSymbol? positionConnectionPoint)
     {
         var coordinatesArrow = ArrowSymbolModel.GetCoordinateArrow(finalCoordinate, positionConnectionPoint);
         SetCoodinate(coordinatesArrow);
@@ -53,6 +53,11 @@ public class ArrowSymbol : INotifyPropertyChanged
 
     private void SetCoodinate(List<(double x, double y)> coordinatesArrow)
     {
+        if (coordinatesArrow is null)
+        {
+            return;
+        }
+
         var pointArrowSymbol = new PointCollection();
 
         foreach (var (x, y) in coordinatesArrow)

@@ -1,9 +1,9 @@
 ﻿using System.Windows;
 using System.Windows.Input;
 using System.Windows.Controls;
+using EdblockViewModel.ComponentsVM;
 using EdblockViewModel.AbstractionsVM;
-using System;
-using System.Windows.Threading;
+using EdblockModel.EnumsModel;
 
 namespace EdblockView.Components;
 
@@ -14,27 +14,14 @@ public partial class CanvasSymbols : UserControl
 {
     public static Canvas? Canvas { get; set; }
 
-    private readonly DispatcherTimer dispatcherTimer;
     public CanvasSymbols()
     {
         InitializeComponent();
-
-        dispatcherTimer = new DispatcherTimer()
-        {
-            Interval = TimeSpan.FromSeconds(3)
-        };
     }
 
-    private void ScrollViewer_MouseLeave(object sender, MouseEventArgs e)
+    private void LoadedCanvas(object sender, RoutedEventArgs e)
     {
-        //var cursorPosition = e.MouseDevice.GetPosition(this);
-        //var scrollViewer = (ScrollViewer)sender;
-        //var canvasSymbols = (Canvas)scrollViewer.Content;
-        //var canvasSymbolsVM = (CanvasSymbolsVM)DataContext;
-
-        //canvasSymbols.Width = canvasSymbols.ActualWidth + 10;
-        //scrollViewer.ScrollToHorizontalOffset(scrollViewer.HorizontalOffset + 10);
-
+        Canvas = (Canvas)sender;
     }
 
     private void SelectBlockSymbol(object sender, MouseButtonEventArgs e)
@@ -46,20 +33,57 @@ public partial class CanvasSymbols : UserControl
         e.Handled = true;
     }
 
-    private void LoadedCanvas(object sender, RoutedEventArgs e)
+    private void LeaveCursor(object sender, MouseEventArgs e)
     {
-        Canvas = (Canvas)sender;
+        if (DataContext is CanvasSymbolsVM canvasSymbolsVM)
+        {
+            if (canvasSymbolsVM.MovableBlockSymbol is not null || canvasSymbolsVM.CurrentDrawnLineSymbol is not null)
+            {
+                var cursorPosition = e.GetPosition(this);
+
+                var sideLeave = canvasSymbolsVM.GetSideLeave(cursorPosition);
+
+                if (sideLeave == CanvasSymbolsVM.SideLeave.Right)
+                {
+                    canvasSymbolsVM.SubscribeСanvasScalingEvents(ScrollToRightOffset, cursorPosition);
+                }
+                else if (sideLeave == CanvasSymbolsVM.SideLeave.Left)
+                {
+                    canvasSymbolsVM.SubscribeСanvasScalingEvents(ScrollToLeftOffset, cursorPosition);
+                }
+            }
+        }
     }
 
-    private void Canvas_MouseLeave(object sender, MouseEventArgs e)
+    private void ScrollToRightOffset()
     {
-        //var cursorPosition = e.MouseDevice.GetPosition(this);
-        //var scrollViewer = (ScrollViewer)sender;
-        //var canvasSymbols = (Canvas)scrollViewer.Content;
-        //var canvasSymbolsVM = (CanvasSymbolsVM)DataContext;
-
-        //canvasSymbols.Width = canvasSymbols.ActualWidth + 10;
-        //scrollViewer.ScrollToHorizontalOffset(scrollViewer.HorizontalOffset + 10);
+        var scrollOffset = scrollViewer.ContentHorizontalOffset + CanvasSymbolsVM.OFFSET_LEAVE;
+        scrollViewer.ScrollToHorizontalOffset(scrollOffset);
     }
 
+    private void ScrollToLeftOffset()
+    {
+        var scrollOffset = scrollViewer.ContentHorizontalOffset - CanvasSymbolsVM.OFFSET_LEAVE;
+        scrollViewer.ScrollToHorizontalOffset(scrollOffset);
+    }
+
+    private void ScrollToTopOffset()
+    {
+        var scrollOffset = scrollViewer.ContentVerticalOffset - CanvasSymbolsVM.OFFSET_LEAVE;
+        scrollViewer.ScrollToVerticalOffset(scrollOffset);
+    }
+
+    private void ScrollToBottomOffset()
+    {
+        var scrollOffset = scrollViewer.ContentVerticalOffset + CanvasSymbolsVM.OFFSET_LEAVE;
+        scrollViewer.ScrollToVerticalOffset(scrollOffset);
+    }
+
+    private void Canvas_MouseEnter(object sender, MouseEventArgs e)
+    {
+        if (DataContext is CanvasSymbolsVM canvasSymbolsVM)
+        {
+            canvasSymbolsVM.UnsubscribeСanvasScalingEvents();
+        }
+    }
 }

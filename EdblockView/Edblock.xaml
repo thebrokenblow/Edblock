@@ -62,20 +62,12 @@
             </Button>
         </StackPanel>
 
-        <ScrollViewer 
-            x:Name="scrollViewer"
-            HorizontalScrollBarVisibility="Visible"
+        <componentsUI:CanvasSymbols 
             Grid.Row="1"
-            Grid.Column="1">
-            <componentsUI:CanvasSymbols
-                x:Name="CanvasSymbolsView"
-                MouseLeave="CanvasSymbols_MouseLeave"
-                MouseEnter="CanvasSymbols_MouseEnter"
-                DataContext="{Binding CanvasSymbolsVM}"
-             />
-        </ScrollViewer>
+            Grid.Column="1"
+            DataContext="{Binding CanvasSymbolsVM}"/>
 
-        <Grid 
+            <Grid 
             x:Name="GridMenu" 
             Width="360" 
             HorizontalAlignment="Left" 
