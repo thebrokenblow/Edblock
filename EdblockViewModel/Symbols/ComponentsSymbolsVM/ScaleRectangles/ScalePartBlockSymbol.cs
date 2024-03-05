@@ -42,7 +42,7 @@ public class ScalePartBlockSymbol
 
     public void SetWidthBlockSymbol(CanvasSymbolsVM canvasSymbolsVM)
     {
-        canvasSymbolsVM.SetCurrentRedrawLines(ScalingBlockSymbol);
+        canvasSymbolsVM.RedrawDrawnLinesSymbol(ScalingBlockSymbol);
 
         if (_getWidthBlockSymbol == null)
         {
@@ -78,7 +78,7 @@ public class ScalePartBlockSymbol
 
     public void SetHeightBlockSymbol(CanvasSymbolsVM canvasSymbolsVM)
     {
-        canvasSymbolsVM.SetCurrentRedrawLines(ScalingBlockSymbol);
+        canvasSymbolsVM.RedrawDrawnLinesSymbol(ScalingBlockSymbol);
 
         if (_getHeigthBlockSymbol == null)
         {

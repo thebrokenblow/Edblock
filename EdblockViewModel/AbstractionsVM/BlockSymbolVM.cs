@@ -251,7 +251,6 @@ public abstract class BlockSymbolVM : INotifyPropertyChanged
         CanvasSymbolsVM.Cursor = Cursors.SizeAll;
 
         CanvasSymbolsVM.MovableBlockSymbol = this;
-        CanvasSymbolsVM.SetCurrentRedrawLines(this);
     }
 
     public void Select()

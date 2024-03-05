@@ -293,12 +293,14 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
         return roundedCoordinate;
     }
 
-    public void SetCurrentRedrawLines(BlockSymbolVM blockSymbolVM)
+    public List<DrawnLineSymbolVM>? GetCurrentRedrawLines(BlockSymbolVM blockSymbolVM)
     {
         if (BlockByDrawnLines.ContainsKey(blockSymbolVM))
         {
-            DrawnLines = BlockByDrawnLines[blockSymbolVM];
+            return BlockByDrawnLines[blockSymbolVM];
         }
+
+        return null;
     }
 
     public void RedrawSymbols()
@@ -306,27 +308,37 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
         var currentCoordinate = (xCoordinate, yCoordinate);
         var previousCoordinate = (previousXCoordinate, previousYCoordinate);
 
-        MovableBlockSymbol?.SetCoordinate(currentCoordinate, previousCoordinate);
+        RedrawDrawnLinesSymbol(MovableBlockSymbol);
+
         CurrentDrawnLineSymbol?.ChangeCoordination(currentCoordinate);
         MovableRectangleLine?.ChangeCoordinateLine(currentCoordinate);
+        MovableBlockSymbol?.SetCoordinate(currentCoordinate, previousCoordinate);
 
         previousXCoordinate = xCoordinate;
         previousYCoordinate = yCoordinate;
+    }
 
-        if (DrawnLines is not null)
+
+    public void RedrawDrawnLinesSymbol(BlockSymbolVM? blockSymbolVM)
+    {
+        if (blockSymbolVM is null || !BlockByDrawnLines.ContainsKey(blockSymbolVM))
         {
-            foreach (var redrawDrawnLine in DrawnLines)
-            {
-                redrawDrawnLine.Redraw();
-            }
+            return;
+        }
+
+        var drawnLines = BlockByDrawnLines[blockSymbolVM];
+
+        foreach (var drawnLine in drawnLines)
+        {
+            drawnLine.Redraw();
         }
     }
 
     public void RedrawnAllDrawnLines()
     {
-        foreach (var item in BlockByDrawnLines)
+        foreach (var blockByDrawnLine in BlockByDrawnLines)
         {
-            var drawnLines = BlockByDrawnLines[item.Key];
+            var drawnLines = BlockByDrawnLines[blockByDrawnLine.Key];
 
             foreach (var redrawDrawnLine in drawnLines)
             {
