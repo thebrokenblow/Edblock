@@ -11,9 +11,7 @@
         mc:Ignorable="d"
         MinHeight="800"
         MinWidth="1000"
-        
         Title="Edblock" Height="1350" Width="1700">
-    
     <Window.InputBindings>
         <KeyBinding Command="{Binding ClickDelete}" Key="Delete"/>
     </Window.InputBindings>
@@ -86,7 +84,6 @@
 
             <ScrollViewer>
                 <StackPanel Width="360">
-                    
                     <symbol:ActionSymbolUI 
                         Style="{StaticResource SymbolUI}"
                         MouseDown="AddSymbolView" />
@@ -142,16 +139,15 @@
             </ScrollViewer>
 
             <Button 
-                Style="{StaticResource ButtonOpenClose}"
-                x:Name="ButtonClose" 
-                Margin="10 0" >
+                Name="ButtonClose" 
+                Margin="10 0" 
+                Style="{StaticResource ButtonOpenClose}">
                 <materialDesign:PackIcon 
                     Width="20" 
                     Height="20"
                     Foreground="#212121"
                     Kind="Close" />
             </Button>
-
         </Grid>
     </Grid>
 </Window>

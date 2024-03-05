@@ -59,7 +59,7 @@ public partial class Edblock : Window
         var widthPanelSymbols = (int)edblock.PanelSymbols.ActualWidth;
         var heightTopSettingsPanel = (int)edblock.TopSettingsPanelUI.ActualHeight;
 
-        edblockVM.CanvasSymbolsVM.SetActualSize(
+        edblockVM.CanvasSymbolsVM.ScalingCanvasSymbolsVM.SetActualSize(
             widthWindow, 
             heightWindow, 
             widthPanelSymbols, 
