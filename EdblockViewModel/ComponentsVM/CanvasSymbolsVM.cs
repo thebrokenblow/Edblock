@@ -158,7 +158,7 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
             BlockSymbolsVM.Remove(symbol);
         }
 
-        ScalingCanvasSymbolsVM.Redraw();
+        ScalingCanvasSymbolsVM.Resize();
     }
 
     private void DeleteCurrentDrawnLineSymbol()

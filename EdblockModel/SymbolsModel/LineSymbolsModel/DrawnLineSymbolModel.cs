@@ -82,13 +82,6 @@ public class DrawnLineSymbolModel
                 currentCoordinate.x += offsetLine;
             }
         }
-        else
-        {
-            if (startCoordinate.y - offsetLine > currentCoordinate.y)
-            {
-                currentCoordinate.y += offsetLine;
-            }
-        }
 
         return currentCoordinate;
     }
@@ -100,13 +93,6 @@ public class DrawnLineSymbolModel
             if (startCoordinate.y > currentCoordinate.y)
             {
                 currentCoordinate.y += offsetLine;
-            }
-        }
-        else
-        {
-            if (startCoordinate.x - offsetLine > currentCoordinate.x)
-            {
-                currentCoordinate.x += offsetLine;
             }
         }
 

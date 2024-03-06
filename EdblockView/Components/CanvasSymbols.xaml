@@ -19,7 +19,6 @@
 
     <ScrollViewer 
         Name="scrollViewer"
-        
         HorizontalScrollBarVisibility="Visible">
         <Canvas
             Width="{Binding Width}"
@@ -95,8 +94,7 @@
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
             </ItemsControl>
-
-
+            
             <Canvas.Background>
                 <DrawingBrush 
                  TileMode="Tile" 
