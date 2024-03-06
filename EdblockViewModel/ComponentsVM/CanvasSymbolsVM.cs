@@ -24,7 +24,6 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
         set
         {
             xCoordinate = RoundCoordinate(value);
-            ScalePartBlockSymbol?.SetWidthBlockSymbol(this);
         }
     }
 
@@ -36,7 +35,6 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
         set
         {
             yCoordinate = RoundCoordinate(value);
-            ScalePartBlockSymbol?.SetHeightBlockSymbol(this);
         }
     }
 
@@ -117,8 +115,11 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
     public void DeleteSymbols()
     {
         MovableBlockSymbol = null;
+
         DeleteCurrentDrawnLineSymbol();
         DeleteSelectedDrawnLineSymbol();
+
+        ScalingCanvasSymbolsVM.SetMaxCoordinate();
 
         foreach (var symbol in SelectedBlockSymbols)
         {
@@ -156,6 +157,8 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
 
             BlockSymbolsVM.Remove(symbol);
         }
+
+        ScalingCanvasSymbolsVM.Redraw();
     }
 
     private void DeleteCurrentDrawnLineSymbol()
@@ -313,6 +316,8 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
         CurrentDrawnLineSymbol?.ChangeCoordination(currentCoordinate);
         MovableRectangleLine?.ChangeCoordinateLine(currentCoordinate);
         MovableBlockSymbol?.SetCoordinate(currentCoordinate, previousCoordinate);
+        ScalePartBlockSymbol?.SetWidthBlockSymbol(this);
+        ScalePartBlockSymbol?.SetHeightBlockSymbol(this);
 
         previousXCoordinate = xCoordinate;
         previousYCoordinate = yCoordinate;

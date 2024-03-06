@@ -37,13 +37,10 @@ public partial class CanvasSymbols : UserControl
     {
         var canvasSymbolsVM = (CanvasSymbolsVM)DataContext;
 
-        if (canvasSymbolsVM.MovableBlockSymbol is not null || canvasSymbolsVM.CurrentDrawnLineSymbol is not null)
-        {
-            var cursorPosition = e.GetPosition(this);
-            var scrollOffset = GetScrollOffset(canvasSymbolsVM, cursorPosition);
+        var cursorPosition = e.GetPosition(this);
+        var scrollOffset = GetScrollOffset(canvasSymbolsVM, cursorPosition);
 
-            canvasSymbolsVM.ScalingCanvasSymbolsVM.SubscribeСanvasScalingEvents(scrollOffset, cursorPosition);
-        }
+        canvasSymbolsVM.ScalingCanvasSymbolsVM.SubscribeСanvasScalingEvents(scrollOffset, cursorPosition);
     }
 
     private Action GetScrollOffset(CanvasSymbolsVM canvasSymbolsVM, Point cursorPosition)
@@ -80,14 +77,14 @@ public partial class CanvasSymbols : UserControl
 
     private void ScrollToLeftOffset()
     {
-        var scrollOffset = scrollViewer.ContentHorizontalOffset - ScalingCanvasSymbolsVM.OFFSET_LEAVE;
-        scrollViewer.ScrollToHorizontalOffset(scrollOffset);
+        //var scrollOffset = scrollViewer.ContentHorizontalOffset - ScalingCanvasSymbolsVM.OFFSET_LEAVE;
+        //scrollViewer.ScrollToHorizontalOffset(scrollOffset);
     }
 
     private void ScrollToTopOffset()
     {
-        var scrollOffset = scrollViewer.ContentVerticalOffset - ScalingCanvasSymbolsVM.OFFSET_LEAVE;
-        scrollViewer.ScrollToVerticalOffset(scrollOffset);
+        //var scrollOffset = scrollViewer.ContentVerticalOffset - ScalingCanvasSymbolsVM.OFFSET_LEAVE;
+        //scrollViewer.ScrollToVerticalOffset(scrollOffset);
     }
 
     private void ScrollToBottomOffset()

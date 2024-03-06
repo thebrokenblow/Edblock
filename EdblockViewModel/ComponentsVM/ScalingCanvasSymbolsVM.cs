@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Windows;
 using System.Windows.Threading;
-using EdblockViewModel.AbstractionsVM;
 using EdblockViewModel.Symbols.LineSymbols;
 
 namespace EdblockViewModel.ComponentsVM;
@@ -69,7 +68,12 @@ public class ScalingCanvasSymbolsVM
         var countBlockSymbolsVM = _canvasSymbolsVM.BlockSymbolsVM.Count;
         var currentDrawnLineSymbol = _canvasSymbolsVM.CurrentDrawnLineSymbol;
 
-        if ((movableBlockSymbol is null && currentDrawnLineSymbol is null) || (currentDrawnLineSymbol is null && countBlockSymbolsVM < minNumberSymbolsScaling))
+        //if ((movableBlockSymbol is null && currentDrawnLineSymbol is null && _canvasSymbolsVM.MovableRectangleLine is null) || (_canvasSymbolsVM.MovableRectangleLine is null || currentDrawnLineSymbol is null && countBlockSymbolsVM < minNumberSymbolsScaling))
+        //{
+        //    return;
+        //}
+
+        if (movableBlockSymbol is null && currentDrawnLineSymbol is null && _canvasSymbolsVM.MovableRectangleLine is null && _canvasSymbolsVM.ScalePartBlockSymbol is null)
         {
             return;
         }
@@ -99,11 +103,6 @@ public class ScalingCanvasSymbolsVM
         }
 
         dispatcherTimer.Start();
-    }
-
-    private void ScaleCanvas()
-    {
-        
     }
 
     public void UnsubscribeСanvasScalingEvents()
@@ -136,6 +135,49 @@ public class ScalingCanvasSymbolsVM
         return SideLeave.Top;
     }
 
+    private double predMaxXCoordinateSymbol;
+    private double predMaxYCoordinateSymbol;
+
+    public void SetMaxCoordinate()
+    {
+        predMaxXCoordinateSymbol = GetMaxXCoordinateSymbol();
+        predMaxYCoordinateSymbol = GetMaxYCoordinateSymbol();
+    }
+
+    public void Redraw()
+    {
+        var maxXCoordinateSymbol = GetMaxXCoordinateSymbol();
+        var maxYCoordinateSymbol = GetMaxYCoordinateSymbol();
+
+        if (predMaxXCoordinateSymbol != maxXCoordinateSymbol)
+        {
+            var widthCanvas = CalculateWidthCanvas();
+
+            if (maxXCoordinateSymbol + minIndentation > widthCanvas)
+            {
+                _canvasSymbolsVM.Width = (int)maxXCoordinateSymbol + minIndentation;
+            }
+            else
+            {
+                _canvasSymbolsVM.Width = widthCanvas;
+            }
+        }
+
+        if (predMaxYCoordinateSymbol != maxYCoordinateSymbol)
+        {
+            var heightCanvas = CalculateHeightCanvas();
+
+            if (maxYCoordinateSymbol + minIndentation > heightCanvas)
+            {
+                _canvasSymbolsVM.Height = (int)maxYCoordinateSymbol + minIndentation;
+            }
+            else
+            {
+                _canvasSymbolsVM.Height = heightCanvas;
+            }
+        }
+    }
+
     private void IncreaseSizeHorizontal(object? sender, EventArgs e)
     {
         _canvasSymbolsVM.Width += OFFSET_LEAVE;
@@ -148,6 +190,20 @@ public class ScalingCanvasSymbolsVM
         }
 
         var currentDrawnLineSymbol = _canvasSymbolsVM.CurrentDrawnLineSymbol;
+
+        //TODO: Масштабировать здесь
+        if (_canvasSymbolsVM.MovableRectangleLine is not null)
+        {
+            //_canvasSymbolsVM.MovableRectangleLine.ChangeCoordinateLine();
+        }
+
+        //TODO: Масштабировать здесь
+        if (_canvasSymbolsVM.ScalePartBlockSymbol is not null)
+        {
+            _canvasSymbolsVM.ScalePartBlockSymbol.ScalingBlockSymbol.Width = _canvasSymbolsVM.ScalePartBlockSymbol.ScalingBlockSymbol.Width + 20;
+            _canvasSymbolsVM.ScalePartBlockSymbol.ScalingBlockSymbol.SetWidth(_canvasSymbolsVM.ScalePartBlockSymbol.ScalingBlockSymbol.Width);
+            _canvasSymbolsVM.ScalePartBlockSymbol.SetWidthBlockSymbol(_canvasSymbolsVM);
+        }
 
         if (currentDrawnLineSymbol is not null)
         {
@@ -314,31 +370,37 @@ public class ScalingCanvasSymbolsVM
 
     private double GetMaxXCoordinateSymbol()
     {
-        return GetMaxCoordinateSymbol(
-            blockSymbolVM => blockSymbolVM.XCoordinate + blockSymbolVM.Width,
-            lineSymbolVM => Math.Max(lineSymbolVM.X1, lineSymbolVM.X2));
+        var blockSymbolsVM = _canvasSymbolsVM.BlockSymbolsVM;
+        var drawnLinesSymbolVM = _canvasSymbolsVM.DrawnLinesSymbolVM;
+
+        var maxXCoordinate = blockSymbolsVM.Max(vm => vm.XCoordinate + vm.Width);
+
+        foreach (var drawnLineSymbolVM in drawnLinesSymbolVM)
+        {
+            foreach (var lineSymbolVM in drawnLineSymbolVM.LinesSymbolVM)
+            {
+                maxXCoordinate = Math.Max(maxXCoordinate, Math.Max(lineSymbolVM.X1, lineSymbolVM.X2));
+            }
+        }
+
+        return maxXCoordinate;
     }
 
     private double GetMaxYCoordinateSymbol()
     {
-        return GetMaxCoordinateSymbol(
-            blockSymbolVM => blockSymbolVM.YCoordinate + blockSymbolVM.Height,
-            lineSymbolVM => Math.Max(lineSymbolVM.Y1, lineSymbolVM.Y2));
-    }
-
-    private double GetMaxCoordinateSymbol(Func<BlockSymbolVM, double> getMaxCoordinateBlockSymbol, Func<LineSymbolVM, double> getMaxCoordinateLineSymbol)
-    {
         var blockSymbolsVM = _canvasSymbolsVM.BlockSymbolsVM;
         var drawnLinesSymbolVM = _canvasSymbolsVM.DrawnLinesSymbolVM;
 
-        var maxCoordinate = blockSymbolsVM.Max(blockSymbolVM => getMaxCoordinateBlockSymbol(blockSymbolVM));
+        var maxYCoordinate = blockSymbolsVM.Max(b => b.YCoordinate + b.Height);
 
-        foreach (var drawnLineSymbol in drawnLinesSymbolVM)
+        foreach (var drawnLinesSymbol in drawnLinesSymbolVM)
         {
-            maxCoordinate = drawnLineSymbol.LinesSymbolVM.Max(
-                lineSymbolVM => Math.Max(maxCoordinate, getMaxCoordinateLineSymbol(lineSymbolVM)));
+            foreach (var linesSymbol in drawnLinesSymbol.LinesSymbolVM)
+            {
+                maxYCoordinate = Math.Max(maxYCoordinate, Math.Max(linesSymbol.Y1, linesSymbol.Y2));
+            }
         }
 
-        return maxCoordinate;
+        return maxYCoordinate;
     }
 }

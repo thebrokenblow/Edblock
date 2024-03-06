@@ -67,7 +67,7 @@ public class MovableRectangleLine : INotifyPropertyChanged
 
     private readonly DrawnLineSymbolVM _drawnLineSymbolVM;
     private readonly CanvasSymbolsVM _canvasSymbolsVM;
-    private readonly LineSymbolVM _lineSymbolVM;
+    public readonly LineSymbolVM _lineSymbolVM;
     public MovableRectangleLine(DrawnLineSymbolVM drawnLineSymbolVM, LineSymbolVM lineSymbolVM)
     {
         _drawnLineSymbolVM = drawnLineSymbolVM;
