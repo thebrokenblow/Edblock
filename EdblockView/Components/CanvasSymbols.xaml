@@ -18,7 +18,7 @@
              d:DesignHeight="450" d:DesignWidth="800">
 
     <ScrollViewer 
-        Name="scrollViewer"
+        Name="scroll"
         HorizontalScrollBarVisibility="Visible">
         <Canvas
             Width="{Binding Width}"

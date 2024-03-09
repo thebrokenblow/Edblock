@@ -83,25 +83,25 @@ public partial class CanvasSymbols : UserControl
 
     private void ScrollToRightOffset()
     {
-        var scrollOffset = scrollViewer.ContentHorizontalOffset + ScalingCanvasSymbolsVM.OFFSET_LEAVE;
-        scrollViewer.ScrollToHorizontalOffset(scrollOffset);
+        //var scrollOffset = scrollViewer.ContentHorizontalOffset + ScalingCanvasSymbolsVM.OFFSET_LEAVE;
+        //scrollViewer.ScrollToHorizontalOffset(scrollOffset);
     }
 
     private void ScrollToLeftOffset()
     {
-        var scrollOffset = scrollViewer.ContentHorizontalOffset - ScalingCanvasSymbolsVM.OFFSET_LEAVE;
-        scrollViewer.ScrollToHorizontalOffset(scrollOffset);
+        //var scrollOffset = scrollViewer.ContentHorizontalOffset - ScalingCanvasSymbolsVM.OFFSET_LEAVE;
+        //scrollViewer.ScrollToHorizontalOffset(scrollOffset);
     }
 
     private void ScrollToBottomOffset()
     {
-        var scrollOffset = scrollViewer.ContentVerticalOffset + ScalingCanvasSymbolsVM.OFFSET_LEAVE;
-        scrollViewer.ScrollToVerticalOffset(scrollOffset);
+        //var scrollOffset = scrollViewer.ContentVerticalOffset + ScalingCanvasSymbolsVM.OFFSET_LEAVE;
+        //scrollViewer.ScrollToVerticalOffset(scrollOffset);
     }
 
     private void ScrollToTopOffset()
     {
-        var scrollOffset = scrollViewer.ContentVerticalOffset + ScalingCanvasSymbolsVM.OFFSET_LEAVE;
-        scrollViewer.ScrollToVerticalOffset(scrollOffset);
+        //var scrollOffset = scroll.ContentVerticalOffset + ScalingCanvasSymbolsVM.OFFSET_LEAVE;
+        //scrollViewer.ScrollToVerticalOffset(scrollOffset);
     }
 }
