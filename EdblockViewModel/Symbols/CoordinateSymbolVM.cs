@@ -31,24 +31,6 @@ public class CoordinateSymbolVM
         return maxXCoordinate;
     }
 
-    public double GetMinXCoordinateSymbol()
-    {
-        var blockSymbolsVM = _canvasSymbolsVM.BlockSymbolsVM;
-        var drawnLinesSymbolVM = _canvasSymbolsVM.DrawnLinesSymbolVM;
-
-        var maxXCoordinate = blockSymbolsVM.Min(blockSymbolVM => blockSymbolVM.XCoordinate);
-
-        foreach (var drawnLineSymbolVM in drawnLinesSymbolVM)
-        {
-            foreach (var lineSymbolVM in drawnLineSymbolVM.LinesSymbolVM)
-            {
-                maxXCoordinate = Math.Min(maxXCoordinate, Math.Min(lineSymbolVM.X1, lineSymbolVM.X2));
-            }
-        }
-
-        return maxXCoordinate;
-    }
-
     public double GetMaxYCoordinateSymbol()
     {
         var blockSymbolsVM = _canvasSymbolsVM.BlockSymbolsVM;

@@ -3,9 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:i="http://schemas.microsoft.com/xaml/behaviors" 
-             xmlns:local="clr-namespace:EdblockView" 
              xmlns:edblockViewModel="clr-namespace:EdblockViewModel;assembly=EdblockViewModel"      
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors" 
              xmlns:componentsVM="clr-namespace:EdblockViewModel.ComponentsVM;assembly=EdblockViewModel"
              xmlns:blockSymbolView="clr-namespace:EdblockView.SymbolsView"
              xmlns:blockSymbolsVM="clr-namespace:EdblockViewModel.Symbols;assembly=EdblockViewModel"   
@@ -19,9 +18,7 @@
              d:DesignHeight="450" d:DesignWidth="800">
 
     <ScrollViewer 
-        Name="scrollViewer"
-        local:ScrollOffsetBinding.HorizontalOffset="{Binding ScalingCanvasSymbolsVM.ContentHorizontalOffset}"
-        local:ScrollOffsetBinding.VerticalOffset="{Binding ScalingCanvasSymbolsVM.ContentVerticalOffset}"
+        Name="scroll"
         HorizontalScrollBarVisibility="Visible">
         <Canvas
             Width="{Binding Width}"
@@ -97,7 +94,7 @@
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
             </ItemsControl>
-
+            
             <Canvas.Background>
                 <DrawingBrush 
                  TileMode="Tile" 
