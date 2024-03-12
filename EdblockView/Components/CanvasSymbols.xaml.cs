@@ -83,25 +83,41 @@ public partial class CanvasSymbols : UserControl
 
     private void ScrollToRightOffset()
     {
-        //var scrollOffset = scrollViewer.ContentHorizontalOffset + ScalingCanvasSymbolsVM.OFFSET_LEAVE;
-        //scrollViewer.ScrollToHorizontalOffset(scrollOffset);
+        var scrollOffset = scrollViewer.ContentHorizontalOffset + ScalingCanvasSymbolsVM.OFFSET_LEAVE;
+        scrollViewer.ScrollToHorizontalOffset(scrollOffset);
     }
 
     private void ScrollToLeftOffset()
     {
-        //var scrollOffset = scrollViewer.ContentHorizontalOffset - ScalingCanvasSymbolsVM.OFFSET_LEAVE;
-        //scrollViewer.ScrollToHorizontalOffset(scrollOffset);
+        var scrollOffset = scrollViewer.ContentHorizontalOffset - ScalingCanvasSymbolsVM.OFFSET_LEAVE;
+        scrollViewer.ScrollToHorizontalOffset(scrollOffset);
     }
 
     private void ScrollToBottomOffset()
     {
-        //var scrollOffset = scrollViewer.ContentVerticalOffset + ScalingCanvasSymbolsVM.OFFSET_LEAVE;
-        //scrollViewer.ScrollToVerticalOffset(scrollOffset);
+        var scrollOffset = scrollViewer.ContentVerticalOffset + ScalingCanvasSymbolsVM.OFFSET_LEAVE;
+        scrollViewer.ScrollToVerticalOffset(scrollOffset);
     }
 
     private void ScrollToTopOffset()
     {
-        //var scrollOffset = scroll.ContentVerticalOffset + ScalingCanvasSymbolsVM.OFFSET_LEAVE;
-        //scrollViewer.ScrollToVerticalOffset(scrollOffset);
+        var scrollOffset = scrollViewer.ContentVerticalOffset + ScalingCanvasSymbolsVM.OFFSET_LEAVE;
+        scrollViewer.ScrollToVerticalOffset(scrollOffset);
+    }
+
+    private void Canvas_SizeChanged(object sender, SizeChangedEventArgs e)
+    {
+        var canvasSymbolsVM = (CanvasSymbolsVM)DataContext;
+        if (canvasSymbolsVM is not null)
+        {
+           var t =  SystemParameters.HorizontalScrollBarHeight;
+
+            //var t = scrollViewer.Hor;
+
+            var horizontalOffset = scrollViewer.ActualWidth - scrollViewer.ContentHorizontalOffset;
+            var verticalOffset = scrollViewer.ActualHeight - scrollViewer.ContentVerticalOffset;
+
+            canvasSymbolsVM.ScalingCanvasSymbolsVM.SetOffsetScrollViewer(horizontalOffset, verticalOffset);
+        }
     }
 }

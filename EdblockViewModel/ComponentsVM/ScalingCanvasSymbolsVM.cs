@@ -19,13 +19,13 @@ public class ScalingCanvasSymbolsVM
     private SideLeave? sideLeave;
     private Action? _scrollOffset;
 
-    private int _widthWindow;
-    private int _heightWindow;
+    private int widthCanvas;
+    private int heightCanvas;
+
     private int _widthPanelSymbols;
     private int _heightTopSettingsPanel;
 
     private const int minIndentation = 40;
-    private const int thicknessScroll = 14;
     private const int minNumberSymbolsScaling = 2;
     private const double scalingInterval = 50;
 
@@ -47,19 +47,19 @@ public class ScalingCanvasSymbolsVM
 
     public void SetActualSize(int widthWindow, int heightWindow, int widthPanelSymbols, int heightTopSettingsPanel)
     {
-        _widthWindow = widthWindow;
-        _heightWindow = heightWindow;
         _widthPanelSymbols = widthPanelSymbols;
         _heightTopSettingsPanel = heightTopSettingsPanel;
 
         if (_canvasSymbolsVM.Width < widthWindow)
         {
-            _canvasSymbolsVM.Width = CalculateWidthCanvas();
+            widthCanvas = widthWindow - _widthPanelSymbols - OFFSET_LEAVE / 2 - (int)SystemParameters.VerticalScrollBarWidth;
+            _canvasSymbolsVM.Width = widthCanvas;
         }
 
         if (_canvasSymbolsVM.Height < heightWindow)
         {
-            _canvasSymbolsVM.Height = CalculateHeightCanvas();
+            heightCanvas = heightWindow - _heightTopSettingsPanel - OFFSET_LEAVE - (int)SystemParameters.HorizontalScrollBarHeight;
+            _canvasSymbolsVM.Height = heightCanvas;
         }
     }
 
@@ -100,7 +100,7 @@ public class ScalingCanvasSymbolsVM
 
     public SideLeave? GetSideLeave(Point cursotPoint)
     {
-        if (cursotPoint.X >= CalculateWidthCanvas())
+        if (cursotPoint.X >= widthCanvas)
         {
             return SideLeave.Right;
         }
@@ -110,7 +110,7 @@ public class ScalingCanvasSymbolsVM
             return SideLeave.Left;
         }
 
-        if (cursotPoint.Y >= CalculateHeightCanvas())
+        if (cursotPoint.Y >= heightCanvas)
         {
             return SideLeave.Bottom;
         }
@@ -128,19 +128,17 @@ public class ScalingCanvasSymbolsVM
 
     public void SetMaxCoordinate()
     {
-        predMaxXCoordinateSymbol = _coordinateSymbolVM.GetMaxXCoordinateSymbol();
-        predMaxYCoordinateSymbol = _coordinateSymbolVM.GetMaxYCoordinateSymbol();
+        predMaxXCoordinateSymbol = _coordinateSymbolVM.GetMaxX();
+        predMaxYCoordinateSymbol = _coordinateSymbolVM.GetMaxY();
     }
 
     public void Resize()
     {
-        var maxXCoordinateSymbol = _coordinateSymbolVM.GetMaxXCoordinateSymbol();
-        var maxYCoordinateSymbol = _coordinateSymbolVM.GetMaxYCoordinateSymbol();
+        var maxXCoordinateSymbol = _coordinateSymbolVM.GetMaxX();
+        var maxYCoordinateSymbol = _coordinateSymbolVM.GetMaxY();
 
         if (predMaxXCoordinateSymbol != maxXCoordinateSymbol)
         {
-            var widthCanvas = CalculateWidthCanvas();
-
             if (maxXCoordinateSymbol + minIndentation > widthCanvas)
             {
                 _canvasSymbolsVM.Width = (int)maxXCoordinateSymbol + minIndentation;
@@ -153,8 +151,6 @@ public class ScalingCanvasSymbolsVM
 
         if (predMaxYCoordinateSymbol != maxYCoordinateSymbol)
         {
-            var heightCanvas = CalculateHeightCanvas();
-
             if (maxYCoordinateSymbol + minIndentation > heightCanvas)
             {
                 _canvasSymbolsVM.Height = (int)maxYCoordinateSymbol + minIndentation;
@@ -168,10 +164,8 @@ public class ScalingCanvasSymbolsVM
 
     private void ScalingCanvas(object? sender, EventArgs e)
     {
-        var movableBlockSymbol = _canvasSymbolsVM.MovableBlockSymbol;
-
         SetSizeCanvas();
-        ChangeCoordinateMovableBlockSymbol(movableBlockSymbol);
+        ChangeCoordinateMovableBlockSymbol();
     }
 
     private void SetSizeCanvas()
@@ -186,15 +180,15 @@ public class ScalingCanvasSymbolsVM
         }
         else if (
             sideLeave == SideLeave.Left
-            && _canvasSymbolsVM.Width >= CalculateWidthCanvas() + OFFSET_LEAVE / 2
-            && _canvasSymbolsVM.Width > _coordinateSymbolVM.GetMaxXCoordinateSymbol() + minIndentation)
+            && _canvasSymbolsVM.Width >= widthCanvas + OFFSET_LEAVE / 2
+            && _canvasSymbolsVM.Width > _coordinateSymbolVM.GetMaxX() + minIndentation)
         {
             _canvasSymbolsVM.Width -= OFFSET_LEAVE;
         }
         else if (
             sideLeave == SideLeave.Top
-            && _canvasSymbolsVM.Height >= CalculateHeightCanvas() + OFFSET_LEAVE / 2
-            && _canvasSymbolsVM.Height > _coordinateSymbolVM.GetMaxYCoordinateSymbol() + minIndentation)
+            && _canvasSymbolsVM.Height >= heightCanvas + OFFSET_LEAVE / 2
+            && _canvasSymbolsVM.Height > _coordinateSymbolVM.GetMaxY() + minIndentation)
         {
             _canvasSymbolsVM.Height -= OFFSET_LEAVE;
         }
@@ -202,8 +196,10 @@ public class ScalingCanvasSymbolsVM
         _scrollOffset?.Invoke();
     }
 
-    private void ChangeCoordinateMovableBlockSymbol(BlockSymbolVM? movableBlockSymbol)
+    private void ChangeCoordinateMovableBlockSymbol()
     {
+        var movableBlockSymbol = _canvasSymbolsVM.MovableBlockSymbol;
+
         if (movableBlockSymbol is null)
         {
             return;
@@ -234,10 +230,4 @@ public class ScalingCanvasSymbolsVM
 
     private bool IsSymbolTopLeave(BlockSymbolVM movableBlockSymbol) =>
        _heightTopSettingsPanel <= movableBlockSymbol.YCoordinate + movableBlockSymbol.Height / 2;
-
-    private int CalculateWidthCanvas() =>
-        _widthWindow - _widthPanelSymbols - OFFSET_LEAVE / 2 - thicknessScroll;
-
-    private int CalculateHeightCanvas() =>
-        _heightWindow - _heightTopSettingsPanel - OFFSET_LEAVE - thicknessScroll;
 }

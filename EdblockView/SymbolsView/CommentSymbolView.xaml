@@ -4,8 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors" 
-             xmlns:edblockVM="clr-namespace:EdblockView;assembly=EdblockViewModel" 
-             xmlns:componentsCommentSymbolVM="clr-namespace:EdblockViewModel.Symbols.ComponentsCommentSymbolVM;assembly=EdblockViewModel" xmlns:edblockVM1="clr-namespace:EdblockViewModel;assembly=EdblockViewModel"
+             xmlns:componentsCommentSymbolVM="clr-namespace:EdblockViewModel.Symbols.ComponentsCommentSymbolVM;assembly=EdblockViewModel"
+             xmlns:edblockVM1="clr-namespace:EdblockViewModel;assembly=EdblockViewModel"
              d:DataContext="{d:DesignInstance Type=componentsCommentSymbolVM:CommentSymbolVM}"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
@@ -73,7 +73,6 @@
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </TextBox>
-
         </Canvas>
     </Border>
 </UserControl>

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Linq;
 using EdblockViewModel.ComponentsVM;
+using EdblockViewModel.AbstractionsVM;
+using EdblockViewModel.Symbols.LineSymbols;
 
 namespace EdblockViewModel.Symbols;
 
@@ -10,42 +12,37 @@ public class CoordinateSymbolVM
 
     public CoordinateSymbolVM(CanvasSymbolsVM canvasSymbolsVM)
     {
-        _canvasSymbolsVM = canvasSymbolsVM; 
+        _canvasSymbolsVM = canvasSymbolsVM;
     }
 
-    public double GetMaxXCoordinateSymbol()
+    public double GetMaxX() =>
+        GetMax(blockSymbolVM => blockSymbolVM.XCoordinate + blockSymbolVM.Width,
+            lineSymbolVM => Math.Max(lineSymbolVM.X1, lineSymbolVM.X2));
+
+    public double GetMaxY() =>
+        GetMax(blockSymbolVM => blockSymbolVM.YCoordinate + blockSymbolVM.Height,
+            lineSymbolVM => Math.Max(lineSymbolVM.Y1, lineSymbolVM.Y2));
+
+    private double GetMax(Func<BlockSymbolVM, double> getMaxCoordinateBlockSymbol, Func<LineSymbolVM, double> getMaxCoordinateLineSymbol)
     {
         var blockSymbolsVM = _canvasSymbolsVM.BlockSymbolsVM;
         var drawnLinesSymbolVM = _canvasSymbolsVM.DrawnLinesSymbolVM;
 
-        var maxXCoordinate = blockSymbolsVM.Max(blockSymbolVM => blockSymbolVM.XCoordinate + blockSymbolVM.Width);
+        if (blockSymbolsVM.Count < 1)
+        {
+            return 0;
+        }
+
+        var maxCoordinate = blockSymbolsVM.Max(blockSymbolVM => getMaxCoordinateBlockSymbol.Invoke(blockSymbolVM));
 
         foreach (var drawnLineSymbolVM in drawnLinesSymbolVM)
         {
             foreach (var lineSymbolVM in drawnLineSymbolVM.LinesSymbolVM)
             {
-                maxXCoordinate = Math.Max(maxXCoordinate, Math.Max(lineSymbolVM.X1, lineSymbolVM.X2));
+                maxCoordinate = Math.Max(maxCoordinate, getMaxCoordinateLineSymbol.Invoke(lineSymbolVM));
             }
         }
 
-        return maxXCoordinate;
-    }
-
-    public double GetMaxYCoordinateSymbol()
-    {
-        var blockSymbolsVM = _canvasSymbolsVM.BlockSymbolsVM;
-        var drawnLinesSymbolVM = _canvasSymbolsVM.DrawnLinesSymbolVM;
-
-        var maxYCoordinate = blockSymbolsVM.Max(blockSymbolVM => blockSymbolVM.YCoordinate + blockSymbolVM.Height);
-
-        foreach (var drawnLinesSymbol in drawnLinesSymbolVM)
-        {
-            foreach (var linesSymbol in drawnLinesSymbol.LinesSymbolVM)
-            {
-                maxYCoordinate = Math.Max(maxYCoordinate, Math.Max(linesSymbol.Y1, linesSymbol.Y2));
-            }
-        }
-
-        return maxYCoordinate;
+        return maxCoordinate;
     }
 }
