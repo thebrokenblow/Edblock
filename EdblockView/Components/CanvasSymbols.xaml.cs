@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Input;
 using System.Windows.Controls;
 using EdblockViewModel.ComponentsVM;
@@ -37,12 +38,70 @@ public partial class CanvasSymbols : UserControl
         var canvasSymbolsVM = (CanvasSymbolsVM)DataContext;
 
         var cursorPosition = e.GetPosition(this);
-        canvasSymbolsVM.ScalingCanvasSymbolsVM.SubscribeСanvasScalingEvents(cursorPosition);
+        var scrollOffset = GetScrollOffset(canvasSymbolsVM, cursorPosition);
+
+        if (scrollOffset is null)
+        {
+            return;
+        }
+
+        canvasSymbolsVM.ScalingCanvasSymbolsVM.SubscribeСanvasScalingEvents(scrollOffset, cursorPosition);
+    }
+
+    private Action? GetScrollOffset(CanvasSymbolsVM canvasSymbolsVM, Point cursorPosition)
+    {
+        var sideLeave = canvasSymbolsVM.ScalingCanvasSymbolsVM.GetSideLeave(cursorPosition);
+
+        if (sideLeave == ScalingCanvasSymbolsVM.SideLeave.Right)
+        {
+            return ScrollToRightOffset;
+        }
+
+        if (sideLeave == ScalingCanvasSymbolsVM.SideLeave.Left)
+        {
+            return ScrollToLeftOffset;
+        }
+
+        if (sideLeave == ScalingCanvasSymbolsVM.SideLeave.Bottom)
+        {
+            return ScrollToBottomOffset;
+        }
+
+        if (sideLeave == ScalingCanvasSymbolsVM.SideLeave.Top)
+        {
+            return ScrollToTopOffset;
+        }
+
+        return null;
     }
 
     private void EnterCursor(object sender, MouseEventArgs e)
     {
         var canvasSymbolsVM = (CanvasSymbolsVM)DataContext;
         canvasSymbolsVM.ScalingCanvasSymbolsVM.UnsubscribeСanvasScalingEvents();
+    }
+
+    private void ScrollToRightOffset()
+    {
+        //var scrollOffset = scrollViewer.ContentHorizontalOffset + ScalingCanvasSymbolsVM.OFFSET_LEAVE;
+        //scrollViewer.ScrollToHorizontalOffset(scrollOffset);
+    }
+
+    private void ScrollToLeftOffset()
+    {
+        //var scrollOffset = scrollViewer.ContentHorizontalOffset - ScalingCanvasSymbolsVM.OFFSET_LEAVE;
+        //scrollViewer.ScrollToHorizontalOffset(scrollOffset);
+    }
+
+    private void ScrollToBottomOffset()
+    {
+        //var scrollOffset = scrollViewer.ContentVerticalOffset + ScalingCanvasSymbolsVM.OFFSET_LEAVE;
+        //scrollViewer.ScrollToVerticalOffset(scrollOffset);
+    }
+
+    private void ScrollToTopOffset()
+    {
+        //var scrollOffset = scroll.ContentVerticalOffset + ScalingCanvasSymbolsVM.OFFSET_LEAVE;
+        //scrollViewer.ScrollToVerticalOffset(scrollOffset);
     }
 }

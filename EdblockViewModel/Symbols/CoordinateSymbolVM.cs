@@ -18,11 +18,6 @@ public class CoordinateSymbolVM
         var blockSymbolsVM = _canvasSymbolsVM.BlockSymbolsVM;
         var drawnLinesSymbolVM = _canvasSymbolsVM.DrawnLinesSymbolVM;
 
-        if (blockSymbolsVM.Count > 0)
-        {
-            return 0;
-        }
-
         var maxXCoordinate = blockSymbolsVM.Max(blockSymbolVM => blockSymbolVM.XCoordinate + blockSymbolVM.Width);
 
         foreach (var drawnLineSymbolVM in drawnLinesSymbolVM)
@@ -40,11 +35,6 @@ public class CoordinateSymbolVM
     {
         var blockSymbolsVM = _canvasSymbolsVM.BlockSymbolsVM;
         var drawnLinesSymbolVM = _canvasSymbolsVM.DrawnLinesSymbolVM;
-        
-        if (blockSymbolsVM.Count > 0)
-        {
-            return 0;
-        }
 
         var maxYCoordinate = blockSymbolsVM.Max(blockSymbolVM => blockSymbolVM.YCoordinate + blockSymbolVM.Height);
 
