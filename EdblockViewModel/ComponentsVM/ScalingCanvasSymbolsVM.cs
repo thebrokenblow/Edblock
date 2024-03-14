@@ -3,11 +3,35 @@ using System.Windows;
 using System.Windows.Threading;
 using EdblockViewModel.Symbols;
 using EdblockViewModel.AbstractionsVM;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace EdblockViewModel.ComponentsVM;
 
-public class ScalingCanvasSymbolsVM
+public class ScalingCanvasSymbolsVM : INotifyPropertyChanged
 {
+    private double verticalOffset = offsetLeave;
+    public double VerticalOffset
+    {
+        get => verticalOffset;
+        set
+        {
+            verticalOffset = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private double horizontalOffset = offsetLeave;
+    public double HorizontalOffset
+    {
+        get => horizontalOffset;
+        set
+        {
+            horizontalOffset = value;
+            OnPropertyChanged();
+        }
+    }
+
     private readonly DispatcherTimer dispatcherTimer = new()
     {
         Interval = TimeSpan.FromMilliseconds(scalingInterval) 
@@ -17,7 +41,6 @@ public class ScalingCanvasSymbolsVM
     private readonly CoordinateSymbolVM _coordinateSymbolVM;
 
     private SideLeave? sideLeave;
-    private Action? _scrollOffset;
 
     private int widthCanvas;
     private int heightCanvas;
@@ -29,7 +52,7 @@ public class ScalingCanvasSymbolsVM
     private const int minNumberSymbolsScaling = 2;
     private const double scalingInterval = 50;
 
-    public const int OFFSET_LEAVE = 40;
+    private const int offsetLeave = 40;
 
     public enum SideLeave
     {
@@ -52,30 +75,25 @@ public class ScalingCanvasSymbolsVM
 
         if (_canvasSymbolsVM.Width < widthWindow)
         {
-            widthCanvas = widthWindow - _widthPanelSymbols - OFFSET_LEAVE / 2 - (int)SystemParameters.VerticalScrollBarWidth;
+            widthCanvas = widthWindow - _widthPanelSymbols - offsetLeave / 2 - (int)SystemParameters.VerticalScrollBarWidth;
             _canvasSymbolsVM.Width = widthCanvas;
         }
 
         if (_canvasSymbolsVM.Height < heightWindow)
         {
-            heightCanvas = heightWindow - _heightTopSettingsPanel - OFFSET_LEAVE - (int)SystemParameters.HorizontalScrollBarHeight;
+            heightCanvas = heightWindow - _heightTopSettingsPanel - offsetLeave - (int)SystemParameters.HorizontalScrollBarHeight;
             _canvasSymbolsVM.Height = heightCanvas;
         }
     }
 
-    public void SubscribeСanvasScalingEvents(Action scrollOffset, Point cursotPoint)
+    public void SubscribeСanvasScalingEvents(Point cursotPoint)
     {
-        _scrollOffset = scrollOffset;
-
         var movableBlockSymbol = _canvasSymbolsVM.MovableBlockSymbol;
         var countBlockSymbolsVM = _canvasSymbolsVM.BlockSymbolsVM.Count;
 
         if (movableBlockSymbol is not null && countBlockSymbolsVM >= minNumberSymbolsScaling)
         {
-            if (movableBlockSymbol is not null)
-            {
-                movableBlockSymbol.MoveMiddle = true;
-            }
+            movableBlockSymbol.MoveMiddle = true;
 
             sideLeave = GetSideLeave(cursotPoint);
 
@@ -126,6 +144,12 @@ public class ScalingCanvasSymbolsVM
     private double predMaxXCoordinateSymbol;
     private double predMaxYCoordinateSymbol;
 
+    public event PropertyChangedEventHandler? PropertyChanged;
+    public void OnPropertyChanged([CallerMemberName] string prop = "")
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
+    }
+
     public void SetMaxCoordinate()
     {
         predMaxXCoordinateSymbol = _coordinateSymbolVM.GetMaxX();
@@ -166,34 +190,50 @@ public class ScalingCanvasSymbolsVM
     {
         SetSizeCanvas();
         ChangeCoordinateMovableBlockSymbol();
+
+
+        if (sideLeave == SideLeave.Right)
+        {
+           HorizontalOffset += offsetLeave;
+        }
+        else if (sideLeave == SideLeave.Bottom)
+        {
+            VerticalOffset += offsetLeave;
+        }
+        else if (sideLeave == SideLeave.Left)
+        {
+            HorizontalOffset -= offsetLeave;
+        }
+        else if (sideLeave == SideLeave.Top)
+        {
+            VerticalOffset -= offsetLeave;
+        }
     }
 
     private void SetSizeCanvas()
     {
         if (sideLeave == SideLeave.Right)
         {
-            _canvasSymbolsVM.Width += OFFSET_LEAVE;
+            _canvasSymbolsVM.Width += offsetLeave;
         }
         else if (sideLeave == SideLeave.Bottom)
         {
-            _canvasSymbolsVM.Height += OFFSET_LEAVE;
+            _canvasSymbolsVM.Height += offsetLeave;
         }
         else if (
             sideLeave == SideLeave.Left
-            && _canvasSymbolsVM.Width >= widthCanvas + OFFSET_LEAVE / 2
+            && _canvasSymbolsVM.Width >= widthCanvas + offsetLeave / 2
             && _canvasSymbolsVM.Width > _coordinateSymbolVM.GetMaxX() + minIndentation)
         {
-            _canvasSymbolsVM.Width -= OFFSET_LEAVE;
+            _canvasSymbolsVM.Width -= offsetLeave;
         }
         else if (
             sideLeave == SideLeave.Top
-            && _canvasSymbolsVM.Height >= heightCanvas + OFFSET_LEAVE / 2
+            && _canvasSymbolsVM.Height >= heightCanvas + offsetLeave / 2
             && _canvasSymbolsVM.Height > _coordinateSymbolVM.GetMaxY() + minIndentation)
         {
-            _canvasSymbolsVM.Height -= OFFSET_LEAVE;
+            _canvasSymbolsVM.Height -= offsetLeave;
         }
-
-        _scrollOffset?.Invoke();
     }
 
     private void ChangeCoordinateMovableBlockSymbol()
@@ -207,19 +247,19 @@ public class ScalingCanvasSymbolsVM
 
         if (sideLeave == SideLeave.Right)
         {
-            movableBlockSymbol.XCoordinate += OFFSET_LEAVE;
+            movableBlockSymbol.XCoordinate += offsetLeave;
         }
         else if (sideLeave == SideLeave.Bottom)
         {
-            movableBlockSymbol.YCoordinate += OFFSET_LEAVE;
+            movableBlockSymbol.YCoordinate += offsetLeave;
         }
         else if (sideLeave == SideLeave.Left && IsSymbolLeftLeave(movableBlockSymbol))
         {
-            movableBlockSymbol.XCoordinate -= OFFSET_LEAVE;
+            movableBlockSymbol.XCoordinate -= offsetLeave;
         }
         else if (sideLeave == SideLeave.Top && IsSymbolTopLeave(movableBlockSymbol))
         {
-            movableBlockSymbol.YCoordinate -= OFFSET_LEAVE;
+            movableBlockSymbol.YCoordinate -= offsetLeave;
         }
 
         _canvasSymbolsVM.RedrawDrawnLinesSymbol(movableBlockSymbol);

@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:EdblockView"
              xmlns:edblockViewModel="clr-namespace:EdblockViewModel;assembly=EdblockViewModel"      
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors" 
              xmlns:componentsVM="clr-namespace:EdblockViewModel.ComponentsVM;assembly=EdblockViewModel"
@@ -19,9 +20,10 @@
 
     <ScrollViewer 
         Name="scrollViewer"
-        HorizontalScrollBarVisibility="Visible">
+        HorizontalScrollBarVisibility="Visible"
+        local:ScrollOffsetBinding.VerticalOffset="{Binding ScalingCanvasSymbolsVM.VerticalOffset, Mode=TwoWay}"
+        local:ScrollOffsetBinding.HorizontalOffset="{Binding ScalingCanvasSymbolsVM.HorizontalOffset, Mode=TwoWay}">
         <Canvas
-            SizeChanged="Canvas_SizeChanged"
             Width="{Binding Width}"
             Height="{Binding Height}"
             Cursor="{Binding Cursor}" 
