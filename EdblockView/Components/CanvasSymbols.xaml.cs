@@ -13,6 +13,8 @@ public partial class CanvasSymbols : UserControl
 {
     public static Canvas? Canvas { get; set; }
 
+    private CanvasSymbolsVM? canvasSymbolsVM;
+
     public CanvasSymbols()
     {
         InitializeComponent();
@@ -32,9 +34,10 @@ public partial class CanvasSymbols : UserControl
         e.Handled = true;
     }
 
+    
     private void LeaveCursor(object sender, MouseEventArgs e)
     {
-        var canvasSymbolsVM = (CanvasSymbolsVM)DataContext;
+        canvasSymbolsVM ??= (CanvasSymbolsVM)DataContext;
 
         var cursorPosition = e.GetPosition(this);
         canvasSymbolsVM.ScalingCanvasSymbolsVM.SubscribeСanvasScalingEvents(cursorPosition);
@@ -42,7 +45,8 @@ public partial class CanvasSymbols : UserControl
 
     private void EnterCursor(object sender, MouseEventArgs e)
     {
-        var canvasSymbolsVM = (CanvasSymbolsVM)DataContext;
+        canvasSymbolsVM ??= (CanvasSymbolsVM)DataContext;
+
         canvasSymbolsVM.ScalingCanvasSymbolsVM.UnsubscribeСanvasScalingEvents();
     }
 }
