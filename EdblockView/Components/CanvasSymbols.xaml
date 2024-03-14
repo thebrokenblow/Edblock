@@ -20,6 +20,7 @@
 
     <ScrollViewer 
         Name="scrollViewer"
+        SizeChanged="scrollViewer_SizeChanged"
         HorizontalScrollBarVisibility="Visible"
         local:ScrollOffsetBinding.VerticalOffset="{Binding ScalingCanvasSymbolsVM.VerticalOffset, Mode=TwoWay}"
         local:ScrollOffsetBinding.HorizontalOffset="{Binding ScalingCanvasSymbolsVM.HorizontalOffset, Mode=TwoWay}">

@@ -64,7 +64,7 @@
             Grid.Column="1"
             DataContext="{Binding CanvasSymbolsVM}"/>
 
-            <Grid 
+        <Grid 
             x:Name="GridMenu" 
             Width="360" 
             HorizontalAlignment="Left" 

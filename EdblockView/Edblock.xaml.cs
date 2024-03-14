@@ -56,7 +56,7 @@ public partial class Edblock : Window
         var widthWindow = (int)edblock.ActualWidth;
         var heightWindow = (int)edblock.ActualHeight;
 
-        edblockVM.CanvasSymbolsVM.ScalingCanvasSymbolsVM.SetActualSize(
+        edblockVM.CanvasSymbolsVM.ScalingCanvasSymbolsVM.CalculateSizeUnscaledCanvas(
             widthWindow, 
             heightWindow);
     }

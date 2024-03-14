@@ -49,4 +49,11 @@ public partial class CanvasSymbols : UserControl
 
         canvasSymbolsVM.ScalingCanvasSymbolsVM.UnsubscribeСanvasScalingEvents();
     }
+
+    private void scrollViewer_SizeChanged(object sender, SizeChangedEventArgs e)
+    {
+        //var Canvas = (Canvas)sender;
+        //var width = Canvas.ActualWidth;
+        //var actualheigth = Canvas.ActualHeight;
+    }
 }
