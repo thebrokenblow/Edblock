@@ -138,49 +138,19 @@ public class ScalingCanvasSymbolsVM : INotifyPropertyChanged
         return null;
     }
 
-    private double predMaxXCoordinateSymbol;
-    private double predMaxYCoordinateSymbol;
-
     public event PropertyChangedEventHandler? PropertyChanged;
     public void OnPropertyChanged([CallerMemberName] string prop = "")
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
     }
 
-    public void SetMaxCoordinate()
-    {
-        predMaxXCoordinateSymbol = _coordinateSymbolVM.GetMaxX();
-        predMaxYCoordinateSymbol = _coordinateSymbolVM.GetMaxY();
-    }
-
     public void Resize()
     {
-        var maxXCoordinateSymbol = _coordinateSymbolVM.GetMaxX();
-        var maxYCoordinateSymbol = _coordinateSymbolVM.GetMaxY();
+        var maxXCoordinateSymbol = _coordinateSymbolVM.GetMaxX() + minIndentation;
+        var maxYCoordinateSymbol = _coordinateSymbolVM.GetMaxY() + minIndentation;
 
-        if (predMaxXCoordinateSymbol != maxXCoordinateSymbol)
-        {
-            if (maxXCoordinateSymbol + minIndentation > widthUnscaledCanvas)
-            {
-                _canvasSymbolsVM.Width = (int)maxXCoordinateSymbol + minIndentation;
-            }
-            else
-            {
-                _canvasSymbolsVM.Width = widthUnscaledCanvas;
-            }
-        }
-
-        if (predMaxYCoordinateSymbol != maxYCoordinateSymbol)
-        {
-            if (maxYCoordinateSymbol + minIndentation > heightUnscaledCanvas)
-            {
-                _canvasSymbolsVM.Height = (int)maxYCoordinateSymbol + minIndentation;
-            }
-            else
-            {
-                _canvasSymbolsVM.Height = heightUnscaledCanvas;
-            }
-        }
+        _canvasSymbolsVM.Width = Math.Max(maxXCoordinateSymbol, widthUnscaledCanvas);
+        _canvasSymbolsVM.Height = Math.Max(maxYCoordinateSymbol, heightUnscaledCanvas);
     }
 
     private void ScalingCanvas(object? sender, EventArgs e)
@@ -194,15 +164,15 @@ public class ScalingCanvasSymbolsVM : INotifyPropertyChanged
 
         if (sideLeave == SideLeave.Right)
         {
-            _canvasSymbolsVM.Width += offsetLeave;
             HorizontalOffset += offsetLeave;
+            _canvasSymbolsVM.Width += offsetLeave;
 
             movableBlockSymbol.XCoordinate += offsetLeave;
         }
         else if (sideLeave == SideLeave.Bottom)
         {
-            _canvasSymbolsVM.Height += offsetLeave;
             VerticalOffset += offsetLeave;
+            _canvasSymbolsVM.Height += offsetLeave;
 
             movableBlockSymbol.YCoordinate += offsetLeave;
         }
@@ -211,8 +181,8 @@ public class ScalingCanvasSymbolsVM : INotifyPropertyChanged
             && _canvasSymbolsVM.Width > widthUnscaledCanvas
             && _canvasSymbolsVM.Width > _coordinateSymbolVM.GetMaxX() + minIndentation)
         {
-            _canvasSymbolsVM.Width -= offsetLeave;
             HorizontalOffset -= offsetLeave;
+            _canvasSymbolsVM.Width -= offsetLeave;
 
             if (IsSymbolLeftLeave(movableBlockSymbol))
             {
@@ -224,8 +194,8 @@ public class ScalingCanvasSymbolsVM : INotifyPropertyChanged
             && _canvasSymbolsVM.Height > heightUnscaledCanvas
             && _canvasSymbolsVM.Height > _coordinateSymbolVM.GetMaxY() + minIndentation)
         {
-            _canvasSymbolsVM.Height -= offsetLeave;
             VerticalOffset -= offsetLeave;
+            _canvasSymbolsVM.Height -= offsetLeave;
 
             if (IsSymbolTopLeave(movableBlockSymbol))
             {

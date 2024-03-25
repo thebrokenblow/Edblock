@@ -35,11 +35,12 @@
         <Setter Property="Width" Value="200"/>
     </Style>
 
-    <Style x:Key="CheckBoxSettingsMenu" TargetType="CheckBox" BasedOn="{StaticResource MaterialDesignDarkCheckBox}">
+    <!--BasedOn="{StaticResource MaterialDesignCheckBox}"-->
+    <Style x:Key="CheckBoxSettingsMenu" TargetType="CheckBox">
         <Setter Property="Height" Value="40"/>
     </Style>
 
-    <Style x:Key="ComboBoxSettingsMenu" TargetType="ComboBox" BasedOn="{StaticResource MaterialDesignComboBox}">
+    <Style x:Key="ComboBoxSettingsMenu" TargetType="ComboBox">
         <Setter Property="IsEditable" Value="True"/>
         <Setter Property="Width" Value="100"/>
     </Style>
@@ -55,8 +56,8 @@
     </Style>
     
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.ToggleButton.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.ValidationErrorTemplate.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
 </ResourceDictionary>

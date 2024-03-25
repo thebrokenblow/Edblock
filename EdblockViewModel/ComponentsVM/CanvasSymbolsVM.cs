@@ -49,8 +49,8 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
         }
     }
 
-    private int width;
-    public int Width
+    private double width;
+    public double Width
     {
         get => width;
         set
@@ -60,8 +60,8 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
         }
     }
 
-    private int height;
-    public int Height
+    private double height;
+    public double Height
     {
         get => height;
         set
@@ -118,8 +118,6 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
 
         DeleteCurrentDrawnLineSymbol();
         DeleteSelectedDrawnLineSymbol();
-
-        ScalingCanvasSymbolsVM.SetMaxCoordinate();
 
         foreach (var symbol in SelectedBlockSymbols)
         {

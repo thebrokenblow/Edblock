@@ -1,19 +1,27 @@
 ﻿<Application x:Class="EdblockView.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             StartupUri="Edblock.xaml">
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"  
+             xmlns:pages="clr-namespace:EdblockView.Pages"
+             xmlns:pagesVM="clr-namespace:EdblockViewModel.PagesVM;assembly=EdblockViewModel">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Styles/StyleSymbolView.xaml" />
-                <ResourceDictionary Source="Styles/StyleSymbolUI.xaml" />
-                <ResourceDictionary Source="Styles/SettingsMenu.xaml" />
-                <ResourceDictionary Source="Styles/StyleMenu.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.DeepPurple.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Lime.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.TextBox.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.PasswordBox.xaml" />
+                <ResourceDictionary Source="Styles/Login.xaml" />
+                <ResourceDictionary Source="Styles/StyleMenu.xaml" />
+                <ResourceDictionary Source="Styles/SettingsMenu.xaml" />
+                <ResourceDictionary Source="Styles/StyleSymbolUI.xaml" />
+                <ResourceDictionary Source="Styles/StyleSymbolView.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            <DataTemplate DataType="{x:Type pagesVM:AuthenticationVM}">
+                <pages:Authentication />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type pagesVM:RegistrationVM}">
+                <pages:Registration />
+            </DataTemplate>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

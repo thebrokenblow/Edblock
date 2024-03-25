@@ -4,11 +4,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors" 
-             xmlns:edblockVM="clr-namespace:EdblockView;assembly=EdblockViewModel" 
              xmlns:lineSymbolView="clr-namespace:EdblockView.SymbolsView.LineSymbolView"
              xmlns:lineSymbolVM="clr-namespace:EdblockViewModel.Symbols.LineSymbols;assembly=EdblockViewModel" 
-             xmlns:edblockVM1="clr-namespace:EdblockViewModel;assembly=EdblockViewModel"
-           
+             xmlns:edblockVM="clr-namespace:EdblockViewModel;assembly=EdblockViewModel" 
+             d:DataContext="{d:DesignInstance Type=lineSymbolVM:DrawnLineSymbolVM}"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Canvas>
@@ -33,7 +32,7 @@
 
         <TextBox Style="{StaticResource TextFieldLineView}">
             <i:Interaction.Behaviors>
-                <edblockVM1:ReadOnlyPropertyToVMBindingBehavior 
+                <edblockVM:ReadOnlyPropertyToVMBindingBehavior 
                         ModelProperty="{Binding WidthTextField}" 
                         ReadOnlyDependencyProperty="{Binding ActualWidth, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=TextBox}}" />
             </i:Interaction.Behaviors>

@@ -37,7 +37,7 @@
         </Style.Triggers>
     </Style>
 
-    <Style x:Key="LabelSymbolMenu" TargetType="Label" BasedOn="{StaticResource MaterialDesignLabel}">
+    <Style x:Key="LabelSymbolMenu" TargetType="Label">
         <Setter Property="FontSize" Value="11.5"/>
         <Setter Property="HorizontalAlignment" Value="Center"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
@@ -45,7 +45,6 @@
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
 </ResourceDictionary>
