@@ -34,7 +34,6 @@ public partial class CanvasSymbols : UserControl
         e.Handled = true;
     }
 
-    
     private void LeaveCursor(object sender, MouseEventArgs e)
     {
         canvasSymbolsVM ??= (CanvasSymbolsVM)DataContext;
@@ -48,12 +47,5 @@ public partial class CanvasSymbols : UserControl
         canvasSymbolsVM ??= (CanvasSymbolsVM)DataContext;
 
         canvasSymbolsVM.ScalingCanvasSymbolsVM.UnsubscribeСanvasScalingEvents();
-    }
-
-    private void scrollViewer_SizeChanged(object sender, SizeChangedEventArgs e)
-    {
-        //var Canvas = (Canvas)sender;
-        //var width = Canvas.ActualWidth;
-        //var actualheigth = Canvas.ActualHeight;
     }
 }

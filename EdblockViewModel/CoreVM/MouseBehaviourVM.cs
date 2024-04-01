@@ -2,7 +2,7 @@
 using System.Windows.Input;
 using Microsoft.Xaml.Behaviors;
 
-namespace EdblockViewModel;
+namespace EdblockViewModel.CoreVM;
 
 public class MouseBehaviourVM : Behavior<FrameworkElement>
 {

@@ -11,7 +11,5 @@
         Width="800"
         MinHeight="500"
         MinWidth="450">
-    <Grid>
-        <ContentControl Grid.Column="1" Content="{Binding NavigationServices.CurrentView}"/>
-    </Grid>
+    <ContentControl Content="{Binding CurrentViewModel}"/>
 </Window>

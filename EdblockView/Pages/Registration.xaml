@@ -4,6 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
+             xmlns:pagesVM="clr-namespace:EdblockViewModel.PagesVM;assembly=EdblockViewModel" 
+             d:DataContext="{d:DesignInstance Type=pagesVM:RegistrationVM}"
              mc:Ignorable="d" 
              d:DesignHeight="500" 
              d:DesignWidth="800">
@@ -32,7 +34,7 @@
                 <StackPanel VerticalAlignment="Center">
                     <TextBlock Text="Sign in" Style="{StaticResource TitleText}" />
                     <TextBlock Text="If you also have an account, you can log in with your account" Opacity="0.8" Margin="20 30 20 30" Style="{StaticResource NormalText}" />
-                    <Button Content="Sign In" Command="{Binding NavigateToAuthenticationViewCommand}" Style="{StaticResource Button}" />
+                    <Button Content="Sign In" Command="{Binding NavigateToAuthentication}" Style="{StaticResource Button}" />
                 </StackPanel>
             </Grid>
         </Border>
@@ -90,7 +92,7 @@
                     </Grid>
                 </Border>
 
-                <Button Content="Sign Up" Command="{Binding NavigateToMenuViewCommand}" Style="{StaticResource MainButton}" />
+                <Button Content="Sign Up" Command="{Binding NavigateToMenu}" Style="{StaticResource MainButton}" />
             </StackPanel>
         </Border>
     </Grid>

@@ -3,8 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 
-namespace EdblockView;
-
+namespace EdblockViewModel.CoreVM;
 /// <summary>
 /// Attached behaviour which exposes the horizontal and vertical offset values
 /// for a ScrollViewer, permitting binding.
@@ -101,7 +100,7 @@ public static class ScrollOffsetBinding
             {
                 // if not, handle LayoutUpdated, which will be invoked after the
                 // template is applied and extract the scrollbar
-                scrollViewer.LayoutUpdated += (s, ev) =>
+                scrollViewer.LayoutUpdated += (obj, eventArgs) =>
                 {
                     if (scrollViewer.GetValue(VerticalScrollBarProperty) == null)
                     {
@@ -129,7 +128,7 @@ public static class ScrollOffsetBinding
             {
                 // if not, handle LayoutUpdated, which will be invoked after the
                 // template is applied and extract the scrollbar
-                scrollViewer.LayoutUpdated += (s, ev) =>
+                scrollViewer.LayoutUpdated += (obj, eventArgs) =>
                 {
                     if (scrollViewer.GetValue(HorizontalScrollBarProperty) == null)
                     {
@@ -152,6 +151,7 @@ public static class ScrollOffsetBinding
     private static void GetScrollBarsForScrollViewer(ScrollViewer scrollViewer)
     {
         var scroll = GetScrollBar(scrollViewer, Orientation.Vertical);
+
         if (scroll != null)
         {
             // save a reference to this scrollbar on the attached property
@@ -168,13 +168,14 @@ public static class ScrollOffsetBinding
         }
 
         scroll = GetScrollBar(scrollViewer, Orientation.Horizontal);
+
         if (scroll != null)
         {
             // save a reference to this scrollbar on the attached property
             scrollViewer.SetValue(HorizontalScrollBarProperty, scroll);
 
             // scroll the scrollviewer
-            scrollViewer.ScrollToHorizontalOffset(ScrollOffsetBinding.GetHorizontalOffset(scrollViewer));
+            scrollViewer.ScrollToHorizontalOffset(GetHorizontalOffset(scrollViewer));
 
             // handle the changed event to update the exposed HorizontalOffset
             scroll.ValueChanged += (s, e) =>

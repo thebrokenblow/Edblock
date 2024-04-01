@@ -1,33 +1,30 @@
-﻿using EdblockViewModel.Core;
-using EdblockViewModel.Interfaces;
+﻿using EdblockViewModel.CoreVM;
+using EdblockViewModel.StoresVM;
+using EdblockViewModel.ServicesVM.FactoryVM;
 
 namespace EdblockViewModel.PagesVM;
 
-public class MainWindowVM : ViewModel
+public class MainWindowVM : BaseVM
 {
-    private INavigationServices? _navigationServices;
-    public INavigationServices? NavigationServices
-    {
-        get => _navigationServices;
-        set
-        {
-            _navigationServices = value;
-            OnPropertyChanged();
+    private readonly NavigationStore _navigationStore;
 
-            NavigateToHomeCommand.Execute(null);
-        }
+    public BaseVM? CurrentViewModel => _navigationStore.CurrentViewModel;
+
+    public MainWindowVM(NavigationStore navigationStore)
+    {
+        _navigationStore = navigationStore;
+       
+        var navigationServiceRegistration = FactoryNavigationService.CreateNavigationService(
+            navigationStore, 
+            () => new RegistrationVM(navigationStore));
+
+        navigationServiceRegistration.Navigate();
+
+        navigationStore.CurrentViewModelChanged += OnCurrentViewModelChanged;
     }
 
-    public RelayCommand NavigateToHomeCommand { get; set; }
-    public RelayCommand NavigateToAccountViewCommand { get; set; }
-
-    public MainWindowVM(INavigationServices navigationServices)
+    private void OnCurrentViewModelChanged()
     {
-        _navigationServices = navigationServices;
-
-        NavigateToHomeCommand = new RelayCommand(_ => _navigationServices.NatigateTo<RegistrationVM>(), _ => true);
-        NavigateToAccountViewCommand = new RelayCommand(_ => _navigationServices.NatigateTo<AuthenticationVM>(), _ => true);
-
-        NavigateToHomeCommand.Execute(null);
+        OnPropertyChanged(nameof(CurrentViewModel));
     }
 }

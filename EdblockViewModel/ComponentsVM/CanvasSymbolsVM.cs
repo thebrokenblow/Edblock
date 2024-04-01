@@ -75,18 +75,18 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
     public DelegateCommand MouseUp { get; init; }
     public DelegateCommand MouseLeftButtonDown { get; init; }
 
-    public ObservableCollection<BlockSymbolVM> BlockSymbolsVM { get; init; }
-    public ObservableCollection<DrawnLineSymbolVM> DrawnLinesSymbolVM { get; init; }
+    public ObservableCollection<BlockSymbolVM> BlockSymbolsVM { get; init; } = [];
+    public ObservableCollection<DrawnLineSymbolVM> DrawnLinesSymbolVM { get; init; } = [];
 
-    public Dictionary<BlockSymbolVM, List<DrawnLineSymbolVM>> BlockByDrawnLines { get; init; }
+    public Dictionary<BlockSymbolVM, List<DrawnLineSymbolVM>> BlockByDrawnLines { get; init; } = [];
 
     public BlockSymbolVM? MovableBlockSymbol { get; set; }
     public ScalePartBlockSymbol? ScalePartBlockSymbol { get; set; }
 
     public DrawnLineSymbolVM? CurrentDrawnLineSymbol { get; set; }
     public DrawnLineSymbolVM? SelectedDrawnLineSymbol { get; set; }
-    public List<BlockSymbolVM> SelectedBlockSymbols { get; set; }
-    public List<DrawnLineSymbolVM>? DrawnLines { get; set; }
+    public List<BlockSymbolVM> SelectedBlockSymbols { get; set; } = [];
+    public List<DrawnLineSymbolVM>? DrawnLines { get; set; } = [];
     public MovableRectangleLine? MovableRectangleLine { get; set; }
 
     public ScalingCanvasSymbolsVM ScalingCanvasSymbolsVM { get; init; }
@@ -97,10 +97,6 @@ public class CanvasSymbolsVM : INotifyPropertyChanged
 
     public CanvasSymbolsVM()
     {
-        BlockSymbolsVM = new();
-        BlockByDrawnLines = new();
-        DrawnLinesSymbolVM = new();
-        SelectedBlockSymbols = new();
         MouseMove = new(RedrawSymbols);
         MouseUp = new(SetDefaultValue);
         MouseLeftButtonDown = new(AddLine);

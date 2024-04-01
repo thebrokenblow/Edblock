@@ -2,7 +2,7 @@
 using System.Windows.Media;
 using System.Collections.Generic;
 using EdblockModel.EnumsModel;
-using EdblockViewModel.AttributeVM;
+using EdblockViewModel.AttributesVM;
 using EdblockViewModel.AbstractionsVM;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM.ScaleRectangles;

@@ -3,7 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
+             xmlns:pagesVM="clr-namespace:EdblockViewModel.PagesVM;assembly=EdblockViewModel"
+             d:DataContext="{d:DesignInstance Type=pagesVM:AuthenticationVM}"
              mc:Ignorable="d" 
              d:DesignHeight="500" 
              d:DesignWidth="800">
@@ -32,7 +34,7 @@
                 <StackPanel VerticalAlignment="Center">
                     <TextBlock Text="Sign Up" Style="{StaticResource TitleText}" />
                     <TextBlock Text="Enter your personal info and create new account" Opacity="0.8" Margin="20 30 20 30" Style="{StaticResource NormalText}" />
-                    <Button Content="Sign Up" Command="{Binding NavigateToRegistrationViewCommand}" Style="{StaticResource Button}" />
+                    <Button Content="Sign Up" Command="{Binding NavigateToRegistration}" Style="{StaticResource Button}" />
                 </StackPanel>
             </Grid>
         </Border>
@@ -80,7 +82,7 @@
 
                 <CheckBox Style="{StaticResource CheckBox}" HorizontalAlignment="Right" Margin="70 7" Content="Show password"/>
 
-                <Button Content="Sign In" Command="{Binding NavigateToMenuViewCommand}" Style="{StaticResource MainButton}" />
+                <Button Content="Sign In" Command="{Binding NavigateToMenu}" Style="{StaticResource MainButton}" />
             </StackPanel>
         </Border>
     </Grid>

@@ -11,7 +11,9 @@
         mc:Ignorable="d"
         MinHeight="800"
         MinWidth="1000"
-        Title="Edblock" Height="1350" Width="1700">
+        Title="Edblock" 
+        Height="1350" 
+        Width="1700">
     
     <Window.InputBindings>
         <KeyBinding Command="{Binding ClickDelete}" Key="Delete"/>
@@ -41,7 +43,7 @@
             Grid.Column="1"/>
 
         <StackPanel 
-            Background="#f5f5f5"
+            Background="#F5F5F5"
             Width="50"
             Grid.Row="1"
             Grid.Column="0"
@@ -71,7 +73,7 @@
             Margin="-360 0 0 0" 
             Grid.Row="1" 
             RenderTransformOrigin="0.5,0.5" 
-            Background="#f5f5f5">
+            Background="#F5F5F5">
             <Grid.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>

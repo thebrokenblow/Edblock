@@ -1,13 +1,19 @@
-﻿using EdblockViewModel.Core;
-using EdblockViewModel.Interfaces;
+﻿using System.Windows.Input;
+using EdblockViewModel.CoreVM;
+using EdblockViewModel.StoresVM;
+using EdblockViewModel.CommandsVM.FactoriesVM;
 
 namespace EdblockViewModel.PagesVM;
 
-public class AuthenticationVM(INavigationServices navigationServices) : ViewModel
+public class AuthenticationVM(NavigationStore navigationStore) : BaseVM
 {
-    public RelayCommand NavigateToRegistrationViewCommand { get; } =
-            new RelayCommand(_ => navigationServices.NatigateTo<RegistrationVM>(), _ => true);
+    public ICommand NavigateToRegistration { get; } = 
+        FactoryNavigateCommand.CreateNavigateCommand(
+            navigationStore, 
+            () => new RegistrationVM(navigationStore));
 
-    public RelayCommand NavigateToMenuViewCommand { get; } =
-        new RelayCommand(_ => navigationServices.NatigateTo<MenuVM>(), _ => true);
+    public ICommand NavigateToMenu { get; } = 
+        FactoryNavigateCommand.CreateNavigateCommand(
+            navigationStore, 
+            () => new MenuVM(navigationStore));
 }

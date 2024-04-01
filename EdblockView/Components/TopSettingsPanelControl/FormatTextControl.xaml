@@ -10,8 +10,7 @@
              d:DesignHeight="40" d:DesignWidth="160">
     <ListBox
             SelectionMode="Extended"
-            Background="Transparent"
-            Style="{StaticResource MaterialDesignToolToggleFlatListBox}">
+            Background="Transparent">
 
         <ListBox.ItemsPanel>
             <ItemsPanelTemplate>

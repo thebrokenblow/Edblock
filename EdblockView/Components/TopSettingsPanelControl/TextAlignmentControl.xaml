@@ -11,8 +11,7 @@
     <ListBox
         SelectedItem="{Binding ItemTextAlignment}"
         SelectedIndex="1"
-        Background="Transparent"
-        Style="{StaticResource MaterialDesignToolToggleListBox}">
+        Background="Transparent">
         <ListBoxItem
                 Content="{materialDesign:PackIcon Kind=FormatAlignLeft}" />
         <ListBoxItem

@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using Microsoft.Xaml.Behaviors;
 
-namespace EdblockViewModel;
+namespace EdblockViewModel.CoreVM;
 
 public class ReadOnlyPropertyToVMBindingBehavior : Behavior<UIElement>
 {

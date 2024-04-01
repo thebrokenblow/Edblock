@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using EdblockModel.EnumsModel;
 using EdblockModel.SymbolsModel;
-using EdblockViewModel.AttributeVM;
+using EdblockViewModel.AttributesVM;
 using EdblockViewModel.AbstractionsVM;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM.ConnectionPoints;
 
@@ -13,8 +13,7 @@ public class ParallelActionSymbolVM : BlockSymbolVM, IHasConnectionPoint
 {
     public LineParallelActionSymbolVM UpperHorizontalLine { get; set; } = new();
     public LineParallelActionSymbolVM LowerHorizontalLine { get; set; } = new();
-    public List<ConnectionPointVM> ConnectionPointsVM { get; set; } = null!;
-    public BuilderConnectionPointsVM BuilderConnectionPointsVM { get; init; }
+    public List<ConnectionPointVM> ConnectionPointsVM { get; set; }
 
     private readonly int _maxSymbols;
     private readonly int _sumCountSymbols;

@@ -10,6 +10,7 @@
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.DeepPurple.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.TextBox.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.PasswordBox.xaml" />
+                <ResourceDictionary Source="Styles/Menu.xaml" />
                 <ResourceDictionary Source="Styles/Login.xaml" />
                 <ResourceDictionary Source="Styles/StyleMenu.xaml" />
                 <ResourceDictionary Source="Styles/SettingsMenu.xaml" />
@@ -21,6 +22,18 @@
             </DataTemplate>
             <DataTemplate DataType="{x:Type pagesVM:RegistrationVM}">
                 <pages:Registration />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type pagesVM:MenuVM}">
+                <pages:Menu />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type pagesVM:SettingsVM}">
+                <pages:Settings />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type pagesVM:HomeVM}">
+                <pages:Home />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type pagesVM:ProjectsVM}">
+                <pages:Projects />
             </DataTemplate>
         </ResourceDictionary>
     </Application.Resources>

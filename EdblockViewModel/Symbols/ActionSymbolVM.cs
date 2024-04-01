@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using EdblockViewModel.AttributeVM;
+using EdblockViewModel.AttributesVM;
 using EdblockViewModel.AbstractionsVM;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM.ScaleRectangles;

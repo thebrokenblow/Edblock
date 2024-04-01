@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace EdblockViewModel.AttributeVM;
+namespace EdblockViewModel.AttributesVM;
 
 [AttributeUsage(AttributeTargets.Class)]
 public class SymbolTypeAttribute : Attribute

@@ -34,8 +34,7 @@
     <Style x:Key="ButtonSettingsMenu" TargetType="Button" BasedOn="{StaticResource MaterialDesignRaisedDarkButton}">
         <Setter Property="Width" Value="200"/>
     </Style>
-
-    <!--BasedOn="{StaticResource MaterialDesignCheckBox}"-->
+    
     <Style x:Key="CheckBoxSettingsMenu" TargetType="CheckBox">
         <Setter Property="Height" Value="40"/>
     </Style>
@@ -54,10 +53,4 @@
         <Setter Property="HorizontalAlignment" Value="Right"/>
         <Setter Property="VerticalAlignment" Value="Top"/>
     </Style>
-    
-    <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.ToggleButton.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.ValidationErrorTemplate.xaml" />
-    </ResourceDictionary.MergedDictionaries>
-
 </ResourceDictionary>
