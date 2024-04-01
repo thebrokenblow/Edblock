@@ -6,12 +6,15 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:pagesVM="clr-namespace:EdblockViewModel.PagesVM;assembly=EdblockViewModel"
-    Width="1800"
-    Height="2400"
-    d:DataContext="{d:DesignInstance Type=pagesVM:EditorVM}"
+    xmlns:pagesvm="clr-namespace:EdblockViewModel.PagesVM;assembly=EdblockViewModel"
+    Width="1700"
+    Height="1350"
+    MinWidth="1000"
+    MinHeight="800"
     SizeChanged="ChangedSizeWindow"
+    d:DataContext="{d:DesignInstance Type=pagesvm:EditorVM}"
     mc:Ignorable="d">
+
     <UserControl.InputBindings>
         <KeyBinding Key="Delete" Command="{Binding ClickDelete}" />
     </UserControl.InputBindings>

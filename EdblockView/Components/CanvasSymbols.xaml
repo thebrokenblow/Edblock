@@ -23,8 +23,8 @@
         edblockVM:ScrollOffsetBinding.VerticalOffset="{Binding ScalingCanvasSymbolsVM.VerticalOffset, Mode=TwoWay}"
         HorizontalScrollBarVisibility="Visible">
         <Canvas
-            Width="{Binding Width}"
-            Height="{Binding Height}"
+            Width="2000"
+            Height="2000"
             Cursor="{Binding Cursor}"
             Loaded="LoadedCanvas"
             MouseEnter="EnterCursor"

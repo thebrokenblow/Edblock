@@ -13,8 +13,8 @@
 
     <ComboBox
         materialDesign:HintAssist.Hint="Шрифт"
+        BorderBrush="Gray"
         ItemsSource="{Binding FontFamilys}"
         SelectedItem="{Binding FontFamily}"
         Style="{StaticResource ComboBoxSettingsMenu}" />
-
 </UserControl>

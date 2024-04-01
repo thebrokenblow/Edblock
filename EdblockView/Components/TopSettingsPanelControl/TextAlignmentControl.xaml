@@ -13,7 +13,8 @@
     <ListBox
         Background="Transparent"
         SelectedIndex="1"
-        SelectedItem="{Binding ItemTextAlignment}">
+        SelectedItem="{Binding ItemTextAlignment}"
+        Style="{StaticResource MaterialDesignToolToggleListBox}">
         <ListBoxItem Content="{materialDesign:PackIcon Kind=FormatAlignLeft}" />
         <ListBoxItem Content="{materialDesign:PackIcon Kind=FormatAlignCenter}" />
         <ListBoxItem Content="{materialDesign:PackIcon Kind=FormatAlignRight}" />

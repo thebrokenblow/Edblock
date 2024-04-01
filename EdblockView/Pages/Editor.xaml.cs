@@ -1,8 +1,5 @@
-﻿using System;
-using System.Windows;
-using System.Windows.Input;
+﻿using System.Windows;
 using System.Windows.Controls;
-using EdblockView.Abstractions;
 using EdblockViewModel.PagesVM;
 
 namespace EdblockView.Pages;
