@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Reflection;
+using EdblockViewModel.PagesVM;
 using EdblockViewModel.AttributesVM;
 using EdblockViewModel.AbstractionsVM;
 using EdblockViewModel.Symbols.SwitchCaseConditionSymbolsVM;
@@ -8,19 +9,12 @@ using SerializationEdblock.SymbolsSerializable;
 
 namespace EdblockViewModel.Symbols;
 
-internal class FactoryBlockSymbolVM
+internal class FactoryBlockSymbolVM(EditorVM edblockVM)
 {
-    private readonly EdblockVM _edblockVM;
-
-    public FactoryBlockSymbolVM(EdblockVM edblockVM)
-    {
-        _edblockVM = edblockVM;
-    }
-
     public BlockSymbolVM CreateBlockSymbolVM(BlockSymbolSerializable blockSymbolSerializable)
     {
         var symbolType = GetTypeBlockSymbolVM(blockSymbolSerializable.NameSymbol);
-        var blockSymbol = Activator.CreateInstance(symbolType, _edblockVM);
+        var blockSymbol = Activator.CreateInstance(symbolType, edblockVM);
 
         if (blockSymbol is not BlockSymbolVM)
         {
@@ -58,7 +52,7 @@ internal class FactoryBlockSymbolVM
     public SwitchCaseSymbolVM CreateBlockSymbolVM(SwitchCaseSymbolsSerializable switchCaseSymbolsSerializable)
     {
         var symbolType = GetTypeBlockSymbolVM(switchCaseSymbolsSerializable.NameSymbol);
-        var blockSymbol = Activator.CreateInstance(symbolType, _edblockVM, switchCaseSymbolsSerializable.CountLines);
+        var blockSymbol = Activator.CreateInstance(symbolType, edblockVM, switchCaseSymbolsSerializable.CountLines);
 
         if (blockSymbol is not SwitchCaseSymbolVM)
         {
@@ -98,8 +92,8 @@ internal class FactoryBlockSymbolVM
         var symbolType = GetTypeBlockSymbolVM(parallelActionSymbolSerializable.NameSymbol);
 
         var blockSymbol = Activator.CreateInstance(
-            symbolType, 
-            _edblockVM, 
+            symbolType,
+            edblockVM, 
             parallelActionSymbolSerializable.CountSymbolsIncoming, 
             parallelActionSymbolSerializable.CountSymbolsOutgoing);
 

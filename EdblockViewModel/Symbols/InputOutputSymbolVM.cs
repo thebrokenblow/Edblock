@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Media;
 using System.Collections.Generic;
+using EdblockViewModel.PagesVM;
 using EdblockViewModel.AttributesVM;
 using EdblockViewModel.AbstractionsVM;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM;
@@ -38,7 +39,7 @@ public class InputOutputSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnectio
     private const string defaultText = "Ввод / Вывод";
     private const string defaultColor = "#FF008080";
 
-    public InputOutputSymbolVM(EdblockVM edblockVM) : base(edblockVM)
+    public InputOutputSymbolVM(EditorVM edblockVM) : base(edblockVM)
     {
         TextFieldSymbolVM = new(CanvasSymbolsVM, this)
         {

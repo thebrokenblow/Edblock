@@ -1,7 +1,7 @@
 ﻿using System.Windows.Controls;
-using EdblockView.Abstraction;
-using EdblockViewModel;
+using EdblockView.Abstractions;
 using EdblockViewModel.Symbols;
+using EdblockViewModel.PagesVM;
 using EdblockViewModel.AbstractionsVM;
 
 namespace EdblockView.SymbolsUI;
@@ -16,10 +16,8 @@ public partial class CycleWhileEndSymbolUI : UserControl, IFactorySymbolVM
         InitializeComponent();
     }
 
-    public BlockSymbolVM CreateBlockSymbolVM(EdblockVM edblockVM)
+    public BlockSymbolVM CreateBlockSymbolVM(EditorVM editorVM)
     {
-        var cycleWhileEndSymbolVM = new CycleWhileEndSymbolVM(edblockVM);
-
-        return cycleWhileEndSymbolVM;
+        return new CycleWhileEndSymbolVM(editorVM);
     }
 }

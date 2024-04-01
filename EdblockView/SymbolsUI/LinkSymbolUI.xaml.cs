@@ -1,8 +1,8 @@
-﻿using EdblockView.Abstraction;
-using EdblockViewModel;
-using EdblockViewModel.AbstractionsVM;
+﻿using System.Windows.Controls;
+using EdblockView.Abstractions;
 using EdblockViewModel.Symbols;
-using System.Windows.Controls;
+using EdblockViewModel.PagesVM;
+using EdblockViewModel.AbstractionsVM;
 
 namespace EdblockView.SymbolsUI;
 
@@ -16,10 +16,8 @@ public partial class LinkSymbolUI : UserControl, IFactorySymbolVM
         InitializeComponent();
     }
 
-    public BlockSymbolVM CreateBlockSymbolVM(EdblockVM edblockVM)
+    public BlockSymbolVM CreateBlockSymbolVM(EditorVM editorVM)
     {
-        var linkSymbolVM = new LinkSymbolVM(edblockVM);
-
-        return linkSymbolVM;
+        return new LinkSymbolVM(editorVM);
     }
 }

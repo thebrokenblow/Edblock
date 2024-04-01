@@ -4,7 +4,7 @@ using System.Windows.Media;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using Microsoft.Win32;
-using EdblockViewModel;
+using EdblockViewModel.PagesVM;
 
 namespace EdblockView.Components.PopupBoxControl;
 
@@ -31,9 +31,9 @@ public partial class ButtonSaveImg : UserControl
             return;
         }
 
-        var edblockVM = (EdblockVM)DataContext;
+        var editorVM = (EditorVM)DataContext;
         var canvasView = CanvasSymbols.Canvas;
-        var canvasSymbolsVM = edblockVM.CanvasSymbolsVM;
+        var canvasSymbolsVM = editorVM.CanvasSymbolsVM;
 
         var saveFileDialog = new SaveFileDialog
         {

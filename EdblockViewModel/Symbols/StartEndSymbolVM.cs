@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using EdblockViewModel.PagesVM;
 using EdblockViewModel.AttributesVM;
 using EdblockViewModel.AbstractionsVM;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM;
@@ -25,7 +26,7 @@ public class StartEndSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnectionPo
     private const string defaultText = "Начало / Конец";
     private const string defaultColor = "#FFF25252";
 
-    public StartEndSymbolVM(EdblockVM edblockVM) : base(edblockVM)
+    public StartEndSymbolVM(EditorVM edblockVM) : base(edblockVM)
     {
         TextFieldSymbolVM = new(edblockVM.CanvasSymbolsVM, this)
         {

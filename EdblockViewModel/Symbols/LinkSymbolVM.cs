@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using EdblockViewModel.PagesVM;
 using EdblockViewModel.AttributesVM;
 using EdblockViewModel.AbstractionsVM;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM;
@@ -24,7 +25,7 @@ public class LinkSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnectionPoint,
     private const string defaultText = "Ссылка";
     private const string defaultColor = "#FF5761A8";
 
-    public LinkSymbolVM(EdblockVM edblockVM) : base(edblockVM)
+    public LinkSymbolVM(EditorVM edblockVM) : base(edblockVM)
     {
         TextFieldSymbolVM = new(CanvasSymbolsVM, this)
         {

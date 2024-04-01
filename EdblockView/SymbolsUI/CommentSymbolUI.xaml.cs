@@ -1,8 +1,8 @@
-﻿using EdblockView.Abstraction;
-using EdblockViewModel;
+﻿using System.Windows.Controls;
+using EdblockView.Abstractions;
+using EdblockViewModel.PagesVM;
 using EdblockViewModel.AbstractionsVM;
 using EdblockViewModel.Symbols.ComponentsCommentSymbolVM;
-using System.Windows.Controls;
 
 namespace EdblockView.SymbolsUI;
 
@@ -16,10 +16,8 @@ public partial class CommentSymbolUI : UserControl, IFactorySymbolVM
         InitializeComponent();
     }
 
-    public BlockSymbolVM CreateBlockSymbolVM(EdblockVM edblockVM)
+    public BlockSymbolVM CreateBlockSymbolVM(EditorVM editorVM)
     {
-        var commentSymbolVM = new CommentSymbolVM(edblockVM);
-
-        return commentSymbolVM;
+        return new CommentSymbolVM(editorVM);
     }
 }

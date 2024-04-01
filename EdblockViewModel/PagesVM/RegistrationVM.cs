@@ -5,15 +5,15 @@ using EdblockViewModel.CommandsVM.FactoriesVM;
 
 namespace EdblockViewModel.PagesVM;
 
-public class RegistrationVM(NavigationStore navigationStore) : BaseVM
+public class RegistrationVM(NavigationStore navigationStoreMainWindow) : BaseVM
 {
     public ICommand NavigateToAuthentication { get; } = 
         FactoryNavigateCommand.CreateNavigateCommand(
-            navigationStore,
-            () => new AuthenticationVM(navigationStore));
+            navigationStoreMainWindow,
+            () => new AuthenticationVM(navigationStoreMainWindow));
 
     public ICommand NavigateToMenu { get; } =
         FactoryNavigateCommand.CreateNavigateCommand(
-            navigationStore,
-            () => new MenuVM(navigationStore));
+            navigationStoreMainWindow,
+            () => new MenuVM(navigationStoreMainWindow));
 }

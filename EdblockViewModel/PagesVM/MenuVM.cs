@@ -22,7 +22,7 @@ public class MenuVM : BaseVM
 
         NavigateToProjects = FactoryNavigateCommand.CreateNavigateCommand(
             navigationStoreMenu,
-            () => new ProjectsVM());
+            () => new ProjectsVM(navigationStoreMainWindow, navigationStoreMenu));
 
         NavigateToSettings = FactoryNavigateCommand.CreateNavigateCommand(
             navigationStoreMenu,

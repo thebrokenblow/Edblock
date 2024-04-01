@@ -3,6 +3,7 @@ using System.Windows.Media;
 using System.Windows.Controls;
 using System.Printing;
 using EdblockViewModel;
+using EdblockViewModel.PagesVM;
 
 namespace EdblockView.Components.PopupBoxControl;
 
@@ -27,8 +28,8 @@ public partial class ButtonPrintProject : UserControl
 
         var canvasView = CanvasSymbols.Canvas;
 
-        var edblockVM = (EdblockVM)DataContext;
-        var canvasSymbolsVM = edblockVM.CanvasSymbolsVM;
+        var editorVM = (EditorVM)DataContext;
+        var canvasSymbolsVM = editorVM.CanvasSymbolsVM;
         canvasSymbolsVM.RemoveSelectedSymbol();
 
         if (printDialog.ShowDialog() == true)

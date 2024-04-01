@@ -12,6 +12,7 @@
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.PasswordBox.xaml" />
                 <ResourceDictionary Source="Styles/Menu.xaml" />
                 <ResourceDictionary Source="Styles/Login.xaml" />
+                <ResourceDictionary Source="Styles/Settings.xaml" />
                 <ResourceDictionary Source="Styles/StyleMenu.xaml" />
                 <ResourceDictionary Source="Styles/SettingsMenu.xaml" />
                 <ResourceDictionary Source="Styles/StyleSymbolUI.xaml" />
@@ -34,6 +35,9 @@
             </DataTemplate>
             <DataTemplate DataType="{x:Type pagesVM:ProjectsVM}">
                 <pages:Projects />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type pagesVM:EditorVM}">
+                <pages:Editor />
             </DataTemplate>
         </ResourceDictionary>
     </Application.Resources>

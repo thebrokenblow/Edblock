@@ -12,9 +12,9 @@ public partial class App : Application
     private readonly NavigationStore naigationStoreMainWindow = new();
     protected override void OnStartup(StartupEventArgs e)
     {
-        MainWindow = new Edblock()
+        MainWindow = new MainWindow()
         {
-            ///DataContext = new MainWindowVM(naigationStoreMainWindow)
+            DataContext = new MainWindowVM(naigationStoreMainWindow)
         };
 
         MainWindow.Show();

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using EdblockViewModel.PagesVM;
 using EdblockViewModel.AttributesVM;
 using EdblockViewModel.ComponentsVM;
 using EdblockViewModel.AbstractionsVM;
@@ -10,7 +11,7 @@ namespace EdblockViewModel.Symbols.ComponentsCommentSymbolVM;
 [SymbolType("CommentSymbolVM")]
 public class CommentSymbolVM : BlockSymbolVM, IHasTextFieldVM
 {
-    public List<CommentLine> HorizontalLines { get; set; } = new();
+    public List<CommentLine> HorizontalLines { get; set; } = [];
     public CommentLine VerticalBaseline { get; set; } = new();
     public CommentLine UpperHorizontalBaseline { get; set; } = new();
     public CommentLine LowerHorizontalBaseline { get; set; } = new();
@@ -50,7 +51,7 @@ public class CommentSymbolVM : BlockSymbolVM, IHasTextFieldVM
     private const int countHorizontalLine = 3;
     private const int lengthHorizontalLine = 20;
     private const int spaceBetweenHorizontalLines = 10;
-    public CommentSymbolVM(EdblockVM edblockVM) : base(edblockVM)
+    public CommentSymbolVM(EditorVM edblockVM) : base(edblockVM)
     {
         _canvasSymbolsVM = edblockVM.CanvasSymbolsVM;
 

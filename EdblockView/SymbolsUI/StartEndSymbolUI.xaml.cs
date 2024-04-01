@@ -1,7 +1,7 @@
-﻿using EdblockView.Abstraction;
+﻿using System.Windows.Controls;
+using EdblockView.Abstractions;
 using EdblockViewModel.Symbols;
-using EdblockViewModel;
-using System.Windows.Controls;
+using EdblockViewModel.PagesVM;
 using EdblockViewModel.AbstractionsVM;
 
 namespace EdblockView.SymbolsUI;
@@ -11,15 +11,9 @@ namespace EdblockView.SymbolsUI;
 /// </summary>
 public partial class StartEndSymbolUI : UserControl, IFactorySymbolVM
 {
-    public StartEndSymbolUI()
-    {
-        InitializeComponent();
-    }
+    public StartEndSymbolUI() =>
+          InitializeComponent();
 
-    public BlockSymbolVM CreateBlockSymbolVM(EdblockVM edblockVM)
-    {
-        var startEndSymbolVM = new StartEndSymbolVM(edblockVM);
-
-        return startEndSymbolVM;
-    }
+    public BlockSymbolVM CreateBlockSymbolVM(EditorVM editorVM) =>
+        new StartEndSymbolVM(editorVM);
 }

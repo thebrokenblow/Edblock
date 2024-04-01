@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Media;
 using System.Collections.Generic;
+using EdblockViewModel.PagesVM;
 using EdblockViewModel.AttributesVM;
 using EdblockViewModel.AbstractionsVM;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM;
@@ -64,7 +65,7 @@ public class SubroutineSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnection
     private const string defaultText = "Подпрограмма";
     private const string defaultColor = "#FFBA64C8";
 
-    public SubroutineSymbolVM(EdblockVM edblockVM) : base(edblockVM)
+    public SubroutineSymbolVM(EditorVM edblockVM) : base(edblockVM)
     {
         TextFieldSymbolVM = new(CanvasSymbolsVM, this)
         {

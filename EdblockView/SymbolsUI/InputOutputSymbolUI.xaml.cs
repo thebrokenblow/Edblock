@@ -1,7 +1,7 @@
-﻿using EdblockViewModel;
-using System.Windows.Controls;
-using EdblockView.Abstraction;
+﻿using System.Windows.Controls;
+using EdblockView.Abstractions;
 using EdblockViewModel.Symbols;
+using EdblockViewModel.PagesVM;
 using EdblockViewModel.AbstractionsVM;
 
 namespace EdblockView.SymbolsUI;
@@ -16,10 +16,8 @@ public partial class InputOutputSymbolUI : UserControl, IFactorySymbolVM
         InitializeComponent();
     }
 
-    public BlockSymbolVM CreateBlockSymbolVM(EdblockVM edblockVM)
+    public BlockSymbolVM CreateBlockSymbolVM(EditorVM editorVM)
     {
-        var inputOutputSymbolVM = new InputOutputSymbolVM(edblockVM);
-
-        return inputOutputSymbolVM;
+        return new InputOutputSymbolVM(editorVM);
     }
 }

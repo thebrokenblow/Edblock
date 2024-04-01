@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using Microsoft.Win32;
-using EdblockViewModel;
 using System.Windows.Controls;
+using EdblockViewModel.PagesVM;
 
 namespace EdblockView.Components.PopupBoxControl;
 
@@ -24,7 +24,7 @@ public partial class ButtonLoadProject : UserControl
 
     private void LoadProject(object sender, RoutedEventArgs e)
     {
-        if (DataContext is EdblockVM edblockVM)
+        if (DataContext is EditorVM editorVM)
         {
             if (openFileDialog.ShowDialog() == true)
             {
@@ -32,7 +32,7 @@ public partial class ButtonLoadProject : UserControl
 
                 try
                 {
-                    edblockVM?.LoadProject(filePath);
+                    editorVM?.LoadProject(filePath);
                 }
                 catch
                 {

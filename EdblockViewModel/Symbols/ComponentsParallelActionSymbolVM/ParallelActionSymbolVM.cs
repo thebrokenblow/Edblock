@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using EdblockModel.EnumsModel;
 using EdblockModel.SymbolsModel;
+using EdblockViewModel.PagesVM;
 using EdblockViewModel.AttributesVM;
 using EdblockViewModel.AbstractionsVM;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM.ConnectionPoints;
@@ -25,7 +26,7 @@ public class ParallelActionSymbolVM : BlockSymbolVM, IHasConnectionPoint
     private const int defaultHeigth = 60;
     private const int indentBetweenSymbol = 20;
 
-    public ParallelActionSymbolVM(EdblockVM edblockVM, int countSymbolsIncoming, int countSymbolsOutgoing) : base(edblockVM)
+    public ParallelActionSymbolVM(EditorVM edblockVM, int countSymbolsIncoming, int countSymbolsOutgoing) : base(edblockVM)
     {
         _countSymbolsIncoming = countSymbolsIncoming;
         _countSymbolsOutgoing = countSymbolsOutgoing;

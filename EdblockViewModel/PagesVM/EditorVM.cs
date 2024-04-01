@@ -1,10 +1,11 @@
 ﻿using Prism.Commands;
+using EdblockViewModel.CoreVM;
+using EdblockViewModel.StoresVM;
 using EdblockViewModel.ComponentsVM;
-using EdblockViewModel.AbstractionsVM;
 
-namespace EdblockViewModel;
+namespace EdblockViewModel.PagesVM;
 
-public class EdblockVM
+public class EditorVM : BaseVM
 {
     public static int CellWidthPanelSymbols
     {
@@ -23,28 +24,30 @@ public class EdblockVM
     public TextAlignmentControlVM TextAlignmentControlVM { get; init; }
     public FormatTextControlVM FormatTextControlVM { get; init; }
     public PopupBoxMenuVM PopupBoxMenuVM { get; init; }
+    public ListSymbolsVM ListSymbolsVM { get; init; }
 
     private readonly ProjectVM projectVM;
 
     private const int cellHeightTopSettingsPanel = 60;
     private const int cellWidthPanelSymbols = 50;
 
-    public EdblockVM()
+    public EditorVM(NavigationStore navigationStoreMenu)
     {
         var selectedBlockSymbols = CanvasSymbolsVM.SelectedBlockSymbols;
 
         CanvasSymbolsVM.ScalingCanvasSymbolsVM.HeightTopSettingsPanel = cellHeightTopSettingsPanel;
         CanvasSymbolsVM.ScalingCanvasSymbolsVM.WidthPanelSymbols = cellWidthPanelSymbols;
 
-        FontSizeControlVM = new FontSizeControlVM(selectedBlockSymbols);
-        FontFamilyControlVM = new FontFamilyControlVM(selectedBlockSymbols);
-        TextAlignmentControlVM = new TextAlignmentControlVM(selectedBlockSymbols);
-        FormatTextControlVM = new FormatTextControlVM(selectedBlockSymbols);
-
         PopupBoxMenuVM = new(this);
+        FontSizeControlVM = new(selectedBlockSymbols);
+        FontFamilyControlVM = new(selectedBlockSymbols);
+        FormatTextControlVM = new(selectedBlockSymbols);
+        TextAlignmentControlVM = new(selectedBlockSymbols);
+
+        projectVM = new(this);
+        ListSymbolsVM = new(this);
 
         ClickDelete = new(CanvasSymbolsVM.DeleteSymbols);
-        projectVM = new(this);
     }
 
     public void SaveProject(string filePath)
@@ -55,10 +58,5 @@ public class EdblockVM
     public void LoadProject(string filePath)
     {
         projectVM.Load(filePath);
-    }
-
-    public void AddBlockSymbol(BlockSymbolVM blockSymbolVM)
-    {
-        CanvasSymbolsVM.AddBlockSymbol(blockSymbolVM);
     }
 }

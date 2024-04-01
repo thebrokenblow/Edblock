@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Media;
 using System.Collections.Generic;
+using EdblockViewModel.PagesVM;
 using EdblockViewModel.AttributesVM;
 using EdblockViewModel.AbstractionsVM;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM;
@@ -35,7 +36,7 @@ public class ConditionSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnectionP
     private const string defaultText = "Условие";
     private const string defaultColor = "#FF60B2D3";
 
-    public ConditionSymbolVM(EdblockVM edblockVM) : base(edblockVM)
+    public ConditionSymbolVM(EditorVM edblockVM) : base(edblockVM)
     {
         TextFieldSymbolVM = new(CanvasSymbolsVM, this)
         {

@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Media;
 using System.Collections.Generic;
+using EdblockViewModel.PagesVM;
 using EdblockViewModel.AttributesVM;
 using EdblockViewModel.AbstractionsVM;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM;
@@ -38,7 +39,7 @@ public class CycleWhileBeginSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConne
     private const string defaultText = "Начало цикла";
     private const string defaultColor = "#CCCCFF";
 
-    public CycleWhileBeginSymbolVM(EdblockVM edblockVM) : base(edblockVM)
+    public CycleWhileBeginSymbolVM(EditorVM edblockVM) : base(edblockVM)
     {
         TextFieldSymbolVM = new(CanvasSymbolsVM, this)
         {

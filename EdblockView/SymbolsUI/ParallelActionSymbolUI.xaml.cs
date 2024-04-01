@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Controls;
-using EdblockView.Abstraction;
-using EdblockViewModel;
+using EdblockView.Abstractions;
+using EdblockViewModel.PagesVM;
 using EdblockViewModel.AbstractionsVM;
 using EdblockViewModel.Symbols.ComponentsParallelActionSymbolVM;
 
@@ -19,12 +19,10 @@ public partial class ParallelActionSymbolUI : UserControl, IFactorySymbolVM
     private const int maxCountSymbolsOutgoing = 21;
 
 
-    public ParallelActionSymbolUI()
-    {
-        InitializeComponent();
-    }
+    public ParallelActionSymbolUI() =>
+         InitializeComponent();
 
-    public BlockSymbolVM CreateBlockSymbolVM(EdblockVM edblockVM)
+    public BlockSymbolVM CreateBlockSymbolVM(EditorVM editorVM)
     {
         var countSymbolsIncoming = Convert.ToInt32(сountSymbolsIncoming.Text);
         var countSymbolsOutgoing = Convert.ToInt32(сountSymbolsOutgoing.Text);
@@ -39,8 +37,6 @@ public partial class ParallelActionSymbolUI : UserControl, IFactorySymbolVM
             throw new Exception($"Количество выходов должно быть {minCountSymbolsOutgoing} или больше и меньше {maxCountSymbolsOutgoing}");
         }
 
-        var parallelActionSymbolVM = new ParallelActionSymbolVM(edblockVM, countSymbolsIncoming, countSymbolsOutgoing);
-
-        return parallelActionSymbolVM;
+        return new ParallelActionSymbolVM(editorVM, countSymbolsIncoming, countSymbolsOutgoing); ;
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Controls;
-using EdblockView.Abstraction;
-using EdblockViewModel;
+using EdblockView.Abstractions;
+using EdblockViewModel.PagesVM;
 using EdblockViewModel.AbstractionsVM;
 using EdblockViewModel.Symbols.SwitchCaseConditionSymbolsVM;
 
@@ -19,7 +19,7 @@ public partial class HorizontalConditionSymbolUI : UserControl, IFactorySymbolVM
         InitializeComponent();
     }
 
-    public BlockSymbolVM CreateBlockSymbolVM(EdblockVM edblockVM)
+    public BlockSymbolVM CreateBlockSymbolVM(EditorVM editorVM)
     {
         int countLines = Convert.ToInt32(textBoxCountLines.Text);
 
@@ -28,8 +28,6 @@ public partial class HorizontalConditionSymbolUI : UserControl, IFactorySymbolVM
             throw new Exception($"Количество выходов должно быть {minCountLines} или больше и меньше {maxCountLines}");
         }
 
-        var horizontalConditionSymbolVM = new HorizontalConditionSymbolVM(edblockVM, countLines);
-
-        return horizontalConditionSymbolVM;
+        return new HorizontalConditionSymbolVM(editorVM, countLines);
     }
 }

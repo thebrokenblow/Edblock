@@ -2,6 +2,7 @@
 using System.Windows.Media;
 using System.Collections.Generic;
 using EdblockModel.EnumsModel;
+using EdblockViewModel.PagesVM;
 using EdblockViewModel.AttributesVM;
 using EdblockViewModel.AbstractionsVM;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM;
@@ -46,7 +47,7 @@ public class HorizontalConditionSymbolVM : SwitchCaseSymbolVM, IHasTextFieldVM, 
     private const string defaultText = "Условие";
     private const string defaultColor = "#FF60B2D3";
 
-    public HorizontalConditionSymbolVM(EdblockVM edblockVM, int countLines) : base(edblockVM, countLines)
+    public HorizontalConditionSymbolVM(EditorVM edblockVM, int countLines) : base(edblockVM, countLines)
     {
         TextFieldSymbolVM = new(CanvasSymbolsVM, this)
         {

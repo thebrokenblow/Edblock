@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using EdblockModel.SymbolsModel;
+using EdblockViewModel.PagesVM;
 using EdblockViewModel.AbstractionsVM;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM.ConnectionPoints;
 
@@ -10,7 +11,7 @@ public abstract class SwitchCaseSymbolVM : BlockSymbolVM
     public List<ConnectionPointVM> ConnectionPointsSwitchCaseVM { get; init; }
     protected readonly int _countLines;
 
-    protected SwitchCaseSymbolVM(EdblockVM edblockVM, int countLine) : base(edblockVM)
+    protected SwitchCaseSymbolVM(EditorVM edblockVM, int countLine) : base(edblockVM)
     {
         _countLines = countLine;
         

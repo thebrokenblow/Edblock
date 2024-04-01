@@ -1,8 +1,8 @@
 ﻿using System.IO;
 using System.Windows;
 using Microsoft.Win32;
-using EdblockViewModel;
 using System.Windows.Controls;
+using EdblockViewModel.PagesVM;
 
 namespace EdblockView.Components.PopupBoxControl;
 
@@ -22,7 +22,7 @@ public partial class ButtonSaveProject : UserControl
 
     private void SaveProject(object sender, RoutedEventArgs e)
     {
-        if (DataContext is EdblockVM edblock)
+        if (DataContext is EditorVM editorVM)
         {
             var saveFileDialog = new SaveFileDialog
             {
@@ -43,7 +43,7 @@ public partial class ButtonSaveProject : UserControl
 
                 try
                 {
-                    edblock.SaveProject(filePath);
+                    editorVM.SaveProject(filePath);
                 }
                 catch
                 {

@@ -15,15 +15,11 @@ public partial class CanvasSymbols : UserControl
 
     private CanvasSymbolsVM? canvasSymbolsVM;
 
-    public CanvasSymbols()
-    {
+    public CanvasSymbols() =>
         InitializeComponent();
-    }
 
-    private void LoadedCanvas(object sender, RoutedEventArgs e)
-    {
-        Canvas = (Canvas)sender;
-    }
+    private void LoadedCanvas(object sender, RoutedEventArgs e) =>
+         Canvas = (Canvas)sender;
 
     private void SelectBlockSymbol(object sender, MouseButtonEventArgs e)
     {

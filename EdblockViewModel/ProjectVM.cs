@@ -10,25 +10,18 @@ using EdblockViewModel.Symbols;
 using EdblockModel.SymbolsModel.LineSymbolsModel;
 using EdblockViewModel.Symbols.SwitchCaseConditionSymbolsVM;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM.ConnectionPoints;
+using EdblockViewModel.PagesVM;
 
 namespace EdblockViewModel;
 
-internal class ProjectVM
+internal class ProjectVM(EditorVM editorVM)
 {
-    private readonly CanvasSymbolsVM canvasSymbolsVM;
-    private readonly ScaleAllSymbolVM scaleAllSymbolVM;
-    private readonly CheckBoxLineGostVM checkBoxLineGostVM;
+    private readonly CanvasSymbolsVM canvasSymbolsVM = editorVM.CanvasSymbolsVM;
+    private readonly ScaleAllSymbolVM scaleAllSymbolVM = editorVM.PopupBoxMenuVM.ScaleAllSymbolVM;
+    private readonly CheckBoxLineGostVM checkBoxLineGostVM = editorVM.PopupBoxMenuVM.CheckBoxLineGostVM;
     private readonly SerializationProject serializationProject = new();
-    private readonly FactoryBlockSymbolVM factoryBlockSymbolVM;
-    private readonly Dictionary<string, BlockSymbolVM> blockSymbolsVMById = new();
-    public ProjectVM(EdblockVM edblockVM)
-    {
-        canvasSymbolsVM = edblockVM.CanvasSymbolsVM;
-        scaleAllSymbolVM = edblockVM.PopupBoxMenuVM.ScaleAllSymbolVM;
-        checkBoxLineGostVM = edblockVM.PopupBoxMenuVM.CheckBoxLineGostVM;
-
-        factoryBlockSymbolVM = new(edblockVM);
-    }
+    private readonly FactoryBlockSymbolVM factoryBlockSymbolVM = new(editorVM);
+    private readonly Dictionary<string, BlockSymbolVM> blockSymbolsVMById = [];
 
     public void Save(string filePath)
     {

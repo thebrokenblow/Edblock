@@ -9,6 +9,7 @@ using EdblockViewModel.ComponentsVM;
 using EdblockViewModel.Symbols.SwitchCaseConditionSymbolsVM;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM.ScaleRectangles;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM.ConnectionPoints;
+using EdblockViewModel.PagesVM;
 
 namespace EdblockViewModel.AbstractionsVM;
 
@@ -102,7 +103,7 @@ public abstract class BlockSymbolVM : INotifyPropertyChanged
 
     public bool MoveMiddle { get; set; }
 
-    public EdblockVM EdblockVM { get; init; }
+    public EditorVM EdblockVM { get; init; }
     public DelegateCommand MouseEnter { get; set; }
     public DelegateCommand MouseLeave { get; set; }
     public DelegateCommand MouseLeftButtonDown { get; set; }
@@ -117,7 +118,7 @@ public abstract class BlockSymbolVM : INotifyPropertyChanged
     private readonly TextAlignmentControlVM _textAlignmentControlVM;
     private readonly FormatTextControlVM _formatTextControlVM;
 
-    public BlockSymbolVM(EdblockVM edblockVM)
+    public BlockSymbolVM(EditorVM edblockVM)
     {
         EdblockVM = edblockVM;
 

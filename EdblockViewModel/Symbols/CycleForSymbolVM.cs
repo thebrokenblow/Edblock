@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Media;
 using System.Collections.Generic;
+using EdblockViewModel.PagesVM;
 using EdblockViewModel.AttributesVM;
 using EdblockViewModel.AbstractionsVM;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM;
@@ -38,7 +39,7 @@ public class CycleForSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnectionPo
     private const string defaultText = "Цикл for";
     private const string defaultColor = "#FFC618";
 
-    public CycleForSymbolVM(EdblockVM edblockVM) : base(edblockVM)
+    public CycleForSymbolVM(EditorVM edblockVM) : base(edblockVM)
     {
         TextFieldSymbolVM = new(CanvasSymbolsVM, this)
         {

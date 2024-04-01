@@ -1,6 +1,6 @@
-﻿using EdblockViewModel;
-using System.Windows.Controls;
-using EdblockView.Abstraction;
+﻿using System.Windows.Controls;
+using EdblockView.Abstractions;
+using EdblockViewModel.PagesVM;
 using EdblockViewModel.Symbols;
 using EdblockViewModel.AbstractionsVM;
 
@@ -17,10 +17,8 @@ public partial class ConditionSymbolUI : UserControl, IFactorySymbolVM
         InitializeComponent();
     }
 
-    public BlockSymbolVM CreateBlockSymbolVM(EdblockVM edblockVM)
+    public BlockSymbolVM CreateBlockSymbolVM(EditorVM editorVM)
     {
-        var conditionSymbolVM = new ConditionSymbolVM(edblockVM);
-
-        return conditionSymbolVM;
+        return new ConditionSymbolVM(editorVM);
     }
 }

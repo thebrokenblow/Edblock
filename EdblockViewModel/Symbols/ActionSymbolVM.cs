@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using EdblockViewModel.PagesVM;
 using EdblockViewModel.AttributesVM;
 using EdblockViewModel.AbstractionsVM;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM;
@@ -23,7 +24,7 @@ public class ActionSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnectionPoin
     private const string defaultText = "Действие";
     private const string defaultColor = "#FF52C0AA";
 
-    public ActionSymbolVM(EdblockVM edblockVM) : base(edblockVM)
+    public ActionSymbolVM(EditorVM editorVM) : base(editorVM)
     {
         TextFieldSymbolVM = new(CanvasSymbolsVM, this)
         {

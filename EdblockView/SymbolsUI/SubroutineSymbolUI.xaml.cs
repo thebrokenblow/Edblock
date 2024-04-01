@@ -1,8 +1,8 @@
 ﻿using System.Windows.Controls;
-using EdblockView.Abstraction;
-using EdblockViewModel;
-using EdblockViewModel.AbstractionsVM;
+using EdblockView.Abstractions;
 using EdblockViewModel.Symbols;
+using EdblockViewModel.PagesVM;
+using EdblockViewModel.AbstractionsVM;
 
 namespace EdblockView.SymbolsUI;
 
@@ -11,15 +11,9 @@ namespace EdblockView.SymbolsUI;
 /// </summary>
 public partial class SubroutineSymbolUI : UserControl, IFactorySymbolVM
 {
-    public SubroutineSymbolUI()
-    {
-        InitializeComponent();
-    }
+    public SubroutineSymbolUI() =>
+         InitializeComponent();
 
-    public BlockSymbolVM CreateBlockSymbolVM(EdblockVM edblockVM)
-    {
-        var subroutineSymbolVM = new SubroutineSymbolVM(edblockVM);
-
-        return subroutineSymbolVM;
-    }
+    public BlockSymbolVM CreateBlockSymbolVM(EditorVM editorVM) =>
+        new SubroutineSymbolVM(editorVM);
 }
