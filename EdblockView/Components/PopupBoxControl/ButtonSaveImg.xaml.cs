@@ -19,10 +19,8 @@ public partial class ButtonSaveImg : UserControl
     private const double dpiX = 96d;
     private const double dpiY = 96d;
 
-    public ButtonSaveImg()
-    {
+    public ButtonSaveImg() =>
         InitializeComponent();
-    }
 
     private void CreateImg(object sender, RoutedEventArgs e)
     {
@@ -44,16 +42,17 @@ public partial class ButtonSaveImg : UserControl
 
         canvasSymbolsVM.RemoveSelectedSymbol();
 
-        if (saveFileDialog.ShowDialog() == true)
+        if (saveFileDialog.ShowDialog() == false)
         {
-            var originalBackground = canvasView.Background;
-
-            canvasView.Background = Brushes.White;
-
-            ToImageSource(canvasView, saveFileDialog.FileName);
-
-            canvasView.Background = originalBackground;
+            return;
         }
+
+        var originalBackground = canvasView.Background;
+        canvasView.Background = Brushes.White;
+
+        ToImageSource(canvasView, saveFileDialog.FileName);
+
+        canvasView.Background = originalBackground;
     }
 
     private static void ToImageSource(Canvas canvasView, string fileName)

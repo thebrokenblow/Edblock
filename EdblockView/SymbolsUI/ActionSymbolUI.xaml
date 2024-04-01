@@ -1,27 +1,27 @@
-﻿<UserControl x:Class="EdblockView.SymbolsUI.ActionSymbolUI"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:edblockviewmodel="clr-namespace:EdblockViewModel;assembly=EdblockViewModel"
-             d:DataContext="{d:DesignInstance Type=edblockviewmodel:EdblockVM}"
-             mc:Ignorable="d" 
-             d:DesignHeight="80" d:DesignWidth="360">
+﻿<UserControl
+    x:Class="EdblockView.SymbolsUI.ActionSymbolUI"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:edblockviewmodel="clr-namespace:EdblockViewModel;assembly=EdblockViewModel"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DataContext="{d:DesignInstance Type=edblockviewmodel:EdblockVM}"
+    d:DesignHeight="80"
+    d:DesignWidth="360"
+    mc:Ignorable="d">
     <StackPanel Orientation="Horizontal">
-        <Canvas 
+        <Canvas
             Width="140"
             Height="60"
-            Background="#FF52C0AA"
-            Margin="10 10 10 10">
+            Margin="10,10,10,10"
+            Background="#FF52C0AA">
             <TextBlock
-                Text="Действие" 
-                Width="140" 
+                Width="140"
                 Height="60"
-                Style="{StaticResource TextFieldUI}"/>
+                Style="{StaticResource TextFieldUI}"
+                Text="Действие" />
         </Canvas>
 
-        <Label 
-            Style="{StaticResource LabelSymbolMenu}"
-            Content="Действие (1)" />
+        <Label Content="Действие (1)" Style="{StaticResource LabelSymbolMenu}" />
     </StackPanel>
 </UserControl>

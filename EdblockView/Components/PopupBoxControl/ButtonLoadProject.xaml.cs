@@ -11,33 +11,30 @@ namespace EdblockView.Components.PopupBoxControl;
 public partial class ButtonLoadProject : UserControl
 {
     private const string fileFilter = "Files(*.json)|*.json|All(*.*)|*";
-    private readonly OpenFileDialog openFileDialog;
-    public ButtonLoadProject()
+    private readonly OpenFileDialog openFileDialog = new()
     {
-        InitializeComponent();
+        Filter = fileFilter
+    };
 
-        openFileDialog = new OpenFileDialog()
-        {
-            Filter = fileFilter
-        };
-    }
+    public ButtonLoadProject() =>
+        InitializeComponent();
 
     private void LoadProject(object sender, RoutedEventArgs e)
     {
         if (DataContext is EditorVM editorVM)
         {
-            if (openFileDialog.ShowDialog() == true)
+            if (openFileDialog.ShowDialog() == false)
             {
-                string filePath = openFileDialog.FileName;
+                return;
+            }
 
-                try
-                {
-                    editorVM?.LoadProject(filePath);
-                }
-                catch
-                {
-                    MessageBox.Show("Ошибка при чтении файл, вероятно файл испорчен");
-                }
+            try
+            {
+                editorVM?.LoadProject(openFileDialog.FileName);
+            }
+            catch
+            {
+                MessageBox.Show("Ошибка при чтении файл, вероятно файл испорчен");
             }
         }
     }

@@ -1,26 +1,27 @@
-﻿<UserControl x:Class="EdblockView.SymbolsView.InputOutputSymbolView"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:symbolView="clr-namespace:EdblockView.SymbolsView"
-             xmlns:symbolVM="clr-namespace:EdblockViewModel.Symbols;assembly=EdblockViewModel" 
-             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
-             d:DataContext="{d:DesignInstance Type=symbolVM:InputOutputSymbolVM}"
-             mc:Ignorable="d" 
-             d:DesignHeight="60" d:DesignWidth="140">
+﻿<UserControl
+    x:Class="EdblockView.SymbolsView.InputOutputSymbolView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:symbolVM="clr-namespace:EdblockViewModel.Symbols;assembly=EdblockViewModel"
+    xmlns:symbolView="clr-namespace:EdblockView.SymbolsView"
+    d:DataContext="{d:DesignInstance Type=symbolVM:InputOutputSymbolVM}"
+    d:DesignHeight="60"
+    d:DesignWidth="140"
+    mc:Ignorable="d">
     <Canvas>
-        <Polygon 
-            Style="{StaticResource SymbolByPolygonView}">
+        <Polygon Style="{StaticResource SymbolByPolygonView}">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="MouseLeftButtonDown">
-                    <i:InvokeCommandAction Command="{Binding MouseLeftButtonDown}"/>
+                    <i:InvokeCommandAction Command="{Binding MouseLeftButtonDown}" />
                 </i:EventTrigger>
                 <i:EventTrigger EventName="MouseEnter">
-                    <i:InvokeCommandAction Command="{Binding MouseEnter}"/>
+                    <i:InvokeCommandAction Command="{Binding MouseEnter}" />
                 </i:EventTrigger>
                 <i:EventTrigger EventName="MouseLeave">
-                    <i:InvokeCommandAction Command="{Binding MouseLeave}"/>
+                    <i:InvokeCommandAction Command="{Binding MouseLeave}" />
                 </i:EventTrigger>
             </i:Interaction.Triggers>
         </Polygon>
@@ -28,16 +29,16 @@
         <TextBox Style="{StaticResource TextFieldView}">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="MouseLeftButtonDown">
-                    <i:InvokeCommandAction Command="{Binding TextFieldSymbolVM.MouseLeftButtonDown}"/>
+                    <i:InvokeCommandAction Command="{Binding TextFieldSymbolVM.MouseLeftButtonDown}" />
                 </i:EventTrigger>
                 <i:EventTrigger EventName="PreviewMouseDoubleClick">
-                    <i:InvokeCommandAction Command="{Binding TextFieldSymbolVM.MouseDoubleClick}"/>
+                    <i:InvokeCommandAction Command="{Binding TextFieldSymbolVM.MouseDoubleClick}" />
                 </i:EventTrigger>
                 <i:EventTrigger EventName="MouseEnter">
-                    <i:InvokeCommandAction Command="{Binding MouseEnter}"/>
+                    <i:InvokeCommandAction Command="{Binding MouseEnter}" />
                 </i:EventTrigger>
                 <i:EventTrigger EventName="MouseLeave">
-                    <i:InvokeCommandAction Command="{Binding MouseLeave}"/>
+                    <i:InvokeCommandAction Command="{Binding MouseLeave}" />
                 </i:EventTrigger>
             </i:Interaction.Triggers>
         </TextBox>

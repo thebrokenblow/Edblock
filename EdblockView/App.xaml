@@ -1,8 +1,9 @@
-﻿<Application x:Class="EdblockView.App"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"  
-             xmlns:pages="clr-namespace:EdblockView.Pages"
-             xmlns:pagesVM="clr-namespace:EdblockViewModel.PagesVM;assembly=EdblockViewModel">
+﻿<Application
+    x:Class="EdblockView.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:pages="clr-namespace:EdblockView.Pages"
+    xmlns:pagesVM="clr-namespace:EdblockViewModel.PagesVM;assembly=EdblockViewModel">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>

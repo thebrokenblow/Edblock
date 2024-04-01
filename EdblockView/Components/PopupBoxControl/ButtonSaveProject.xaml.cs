@@ -15,10 +15,8 @@ public partial class ButtonSaveProject : UserControl
     private const string fileExtension = ".json";
     private const string fileFilter = "Files(*.json)|*.json|All(*.*)|*";
 
-    public ButtonSaveProject()
-    {
+    public ButtonSaveProject() =>
         InitializeComponent();
-    }
 
     private void SaveProject(object sender, RoutedEventArgs e)
     {
@@ -30,25 +28,27 @@ public partial class ButtonSaveProject : UserControl
                 FileName = fileName + fileExtension
             };
 
-            if (saveFileDialog.ShowDialog() == true)
+            if (saveFileDialog.ShowDialog() == false)
             {
-                var fileInfo = new FileInfo(saveFileDialog.FileName);
+                return;
+            }
 
-                if (fileInfo.Exists)
-                {
-                    fileInfo.Delete();
-                }
+            var fileInfo = new FileInfo(saveFileDialog.FileName);
 
-                var filePath = saveFileDialog.FileName.ToString();
+            if (fileInfo.Exists)
+            {
+                fileInfo.Delete();
+            }
 
-                try
-                {
-                    editorVM.SaveProject(filePath);
-                }
-                catch
-                {
-                    MessageBox.Show("Ошибка при сохранении проекта");
-                }
+            var filePath = saveFileDialog.FileName.ToString();
+
+            try
+            {
+                editorVM.SaveProject(filePath);
+            }
+            catch
+            {
+                MessageBox.Show("Ошибка при сохранении проекта");
             }
         }
     }

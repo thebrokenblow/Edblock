@@ -1,13 +1,14 @@
-﻿<Window x:Class="EdblockView.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-        xmlns:pagesVM="clr-namespace:EdblockViewModel.PagesVM;assembly=EdblockViewModel"
-        d:DataContext="{d:DesignInstance Type=pagesVM:MainWindowVM}"
-        mc:Ignorable="d"
-        Title="Edblock" 
-        MinHeight="800"
-        MinWidth="1000">
-    <ContentControl Content="{Binding CurrentViewModel}"/>
+﻿<Window
+    x:Class="EdblockView.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:pagesVM="clr-namespace:EdblockViewModel.PagesVM;assembly=EdblockViewModel"
+    Title="Edblock"
+    MinWidth="1000"
+    MinHeight="800"
+    d:DataContext="{d:DesignInstance Type=pagesVM:MainWindowVM}"
+    mc:Ignorable="d">
+    <ContentControl Content="{Binding CurrentViewModel}" />
 </Window>

@@ -1,28 +1,33 @@
-﻿<UserControl x:Class="EdblockView.SymbolsView.ParallelActionSymbolView"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
-             xmlns:symbolVM="clr-namespace:EdblockViewModel.Symbols.ComponentsParallelActionSymbolVM;assembly=EdblockViewModel" 
-             d:DataContext="{d:DesignInstance Type=symbolVM:ParallelActionSymbolVM}"
-             mc:Ignorable="d" 
-             d:DesignHeight="60" d:DesignWidth="140">
+﻿<UserControl
+    x:Class="EdblockView.SymbolsView.ParallelActionSymbolView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:symbolVM="clr-namespace:EdblockViewModel.Symbols.ComponentsParallelActionSymbolVM;assembly=EdblockViewModel"
+    d:DataContext="{d:DesignInstance Type=symbolVM:ParallelActionSymbolVM}"
+    d:DesignHeight="60"
+    d:DesignWidth="140"
+    mc:Ignorable="d">
     <Border Style="{StaticResource BorderSymbolView}">
-        <Canvas Width="{Binding UpperHorizontalLine.X2}" Height="{Binding Height}" Background="Transparent">
-            <Line 
-            X1="{Binding UpperHorizontalLine.X1}"
-            Y1="{Binding UpperHorizontalLine.Y1}" 
-            X2="{Binding UpperHorizontalLine.X2}" 
-            Y2="{Binding UpperHorizontalLine.Y2}" 
-            Style="{StaticResource LineParallelActionSymbolView}" />
+        <Canvas
+            Width="{Binding UpperHorizontalLine.X2}"
+            Height="{Binding Height}"
+            Background="Transparent">
+            <Line
+                Style="{StaticResource LineParallelActionSymbolView}"
+                X1="{Binding UpperHorizontalLine.X1}"
+                X2="{Binding UpperHorizontalLine.X2}"
+                Y1="{Binding UpperHorizontalLine.Y1}"
+                Y2="{Binding UpperHorizontalLine.Y2}" />
 
-            <Line 
-            X1="{Binding LowerHorizontalLine.X1}"
-            Y1="{Binding LowerHorizontalLine.Y1}" 
-            X2="{Binding LowerHorizontalLine.X2}" 
-            Y2="{Binding LowerHorizontalLine.Y2}" 
-            Style="{StaticResource LineParallelActionSymbolView}" />
+            <Line
+                Style="{StaticResource LineParallelActionSymbolView}"
+                X1="{Binding LowerHorizontalLine.X1}"
+                X2="{Binding LowerHorizontalLine.X2}"
+                Y1="{Binding LowerHorizontalLine.Y1}"
+                Y2="{Binding LowerHorizontalLine.Y2}" />
 
             <ItemsControl ItemsSource="{Binding ConnectionPointsVM}">
                 <ItemsControl.ItemTemplate>
@@ -54,13 +59,13 @@
 
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="MouseLeftButtonDown">
-                    <i:InvokeCommandAction Command="{Binding MouseLeftButtonDown}"/>
+                    <i:InvokeCommandAction Command="{Binding MouseLeftButtonDown}" />
                 </i:EventTrigger>
                 <i:EventTrigger EventName="MouseEnter">
-                    <i:InvokeCommandAction Command="{Binding MouseEnter}"/>
+                    <i:InvokeCommandAction Command="{Binding MouseEnter}" />
                 </i:EventTrigger>
                 <i:EventTrigger EventName="MouseLeave">
-                    <i:InvokeCommandAction Command="{Binding MouseLeave}"/>
+                    <i:InvokeCommandAction Command="{Binding MouseLeave}" />
                 </i:EventTrigger>
             </i:Interaction.Triggers>
         </Canvas>

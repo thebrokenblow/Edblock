@@ -1,65 +1,41 @@
-﻿<UserControl x:Class="EdblockView.Components.ListSymbols"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:symbol="clr-namespace:EdblockView.SymbolsUI"
-             mc:Ignorable="d" 
-             Background="White"
-             d:DesignHeight="1300" d:DesignWidth="360">
+﻿<UserControl
+    x:Class="EdblockView.Components.ListSymbols"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:symbol="clr-namespace:EdblockView.SymbolsUI"
+    d:DesignHeight="1300"
+    d:DesignWidth="360"
+    Background="White"
+    mc:Ignorable="d">
     <ScrollViewer>
         <StackPanel Width="360">
-            <symbol:ActionSymbolUI 
-         Style="{StaticResource SymbolUI}"
-         MouseDown="AddSymbolView" />
+            <symbol:ActionSymbolUI MouseDown="AddSymbolView" Style="{StaticResource SymbolUI}" />
 
-            <symbol:ConditionSymbolUI 
-         Style="{StaticResource SymbolUI}"
-         MouseDown="AddSymbolView" />
+            <symbol:ConditionSymbolUI MouseDown="AddSymbolView" Style="{StaticResource SymbolUI}" />
 
-            <symbol:VerticalConditionSymbolUI 
-         Style="{StaticResource SymbolUI}"
-         MouseDown="AddSymbolView"/>
+            <symbol:VerticalConditionSymbolUI MouseDown="AddSymbolView" Style="{StaticResource SymbolUI}" />
 
-            <symbol:HorizontalConditionSymbolUI 
-         Style="{StaticResource SymbolUI}" 
-         MouseDown="AddSymbolView"/>
+            <symbol:HorizontalConditionSymbolUI MouseDown="AddSymbolView" Style="{StaticResource SymbolUI}" />
 
-            <symbol:StartEndSymbolUI 
-         Style="{StaticResource SymbolUI}" 
-         MouseDown="AddSymbolView" />
+            <symbol:StartEndSymbolUI MouseDown="AddSymbolView" Style="{StaticResource SymbolUI}" />
 
-            <symbol:InputOutputSymbolUI 
-         Style="{StaticResource SymbolUI}" 
-         MouseDown="AddSymbolView" />
+            <symbol:InputOutputSymbolUI MouseDown="AddSymbolView" Style="{StaticResource SymbolUI}" />
 
-            <symbol:SubroutineSymbolUI
-         Style="{StaticResource SymbolUI}" 
-         MouseDown="AddSymbolView" />
+            <symbol:SubroutineSymbolUI MouseDown="AddSymbolView" Style="{StaticResource SymbolUI}" />
 
-            <symbol:CycleForSymbolUI 
-         Style="{StaticResource SymbolUI}"
-         MouseDown="AddSymbolView" />
+            <symbol:CycleForSymbolUI MouseDown="AddSymbolView" Style="{StaticResource SymbolUI}" />
 
-            <symbol:CycleWhileBeginSymbolUI 
-         Style="{StaticResource SymbolUI}"
-         MouseDown="AddSymbolView" />
+            <symbol:CycleWhileBeginSymbolUI MouseDown="AddSymbolView" Style="{StaticResource SymbolUI}" />
 
-            <symbol:CycleWhileEndSymbolUI 
-         Style="{StaticResource SymbolUI}" 
-         MouseDown="AddSymbolView" />
+            <symbol:CycleWhileEndSymbolUI MouseDown="AddSymbolView" Style="{StaticResource SymbolUI}" />
 
-            <symbol:LinkSymbolUI 
-         Style="{StaticResource SymbolUI}"
-         MouseDown="AddSymbolView" />
+            <symbol:LinkSymbolUI MouseDown="AddSymbolView" Style="{StaticResource SymbolUI}" />
 
-            <symbol:CommentSymbolUI 
-         Style="{StaticResource SymbolUI}"
-         MouseDown="AddSymbolView"/>
+            <symbol:CommentSymbolUI MouseDown="AddSymbolView" Style="{StaticResource SymbolUI}" />
 
-            <symbol:ParallelActionSymbolUI 
-         Style="{StaticResource SymbolUI}" 
-         MouseDown="AddSymbolView"/>
+            <symbol:ParallelActionSymbolUI MouseDown="AddSymbolView" Style="{StaticResource SymbolUI}" />
         </StackPanel>
     </ScrollViewer>
 </UserControl>

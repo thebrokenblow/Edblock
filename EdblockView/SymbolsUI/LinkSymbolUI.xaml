@@ -1,29 +1,29 @@
-﻿<UserControl x:Class="EdblockView.SymbolsUI.LinkSymbolUI"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             mc:Ignorable="d" 
-             d:DesignHeight="80" d:DesignWidth="300">
+﻿<UserControl
+    x:Class="EdblockView.SymbolsUI.LinkSymbolUI"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="80"
+    d:DesignWidth="300"
+    mc:Ignorable="d">
     <StackPanel Orientation="Horizontal">
         <Canvas
-            Width="60" 
+            Width="60"
             Height="60"
-            Margin="10 10 10 10">
+            Margin="10,10,10,10">
             <Ellipse
-                Fill="#5761A8"
-                Width="60" 
-                Height="60" />
+                Width="60"
+                Height="60"
+                Fill="#5761A8" />
 
-                <TextBlock
-                    Style="{StaticResource TextFieldUI}"
-                    Width="60"
-                    Canvas.Top="20"
-                    Text="Ссылка" />
+            <TextBlock
+                Canvas.Top="20"
+                Width="60"
+                Style="{StaticResource TextFieldUI}"
+                Text="Ссылка" />
         </Canvas>
 
-        <Label
-            Content="Ссылка (11)"
-            Style="{StaticResource LabelSymbolMenu}"/>
+        <Label Content="Ссылка (11)" Style="{StaticResource LabelSymbolMenu}" />
     </StackPanel>
 </UserControl>

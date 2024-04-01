@@ -1,77 +1,73 @@
-﻿<UserControl x:Class="EdblockView.SymbolsUI.VerticalConditionSymbolUI"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
-             mc:Ignorable="d" 
-             d:DesignHeight="175" d:DesignWidth="360">
+﻿<UserControl
+    x:Class="EdblockView.SymbolsUI.VerticalConditionSymbolUI"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="175"
+    d:DesignWidth="360"
+    mc:Ignorable="d">
     <StackPanel Orientation="Horizontal">
-        <Canvas Width="145"
-                Height="155"
-                Margin="10 10 10 10">
-            <Polygon 
-                Points="70 60 140 30 70 0 0 30"
-                Fill="#FF60B2D3" />
+        <Canvas
+            Width="145"
+            Height="155"
+            Margin="10,10,10,10">
+            <Polygon Fill="#FF60B2D3" Points="70 60 140 30 70 0 0 30" />
 
-            <TextBlock 
-                Style="{StaticResource TextFieldUI}"
-                Text="Условие" 
-                Height="20"
+            <TextBlock
+                Canvas.Top="20"
                 Width="140"
-                Canvas.Top="20"/>
+                Height="20"
+                Style="{StaticResource TextFieldUI}"
+                Text="Условие" />
 
-            <Line 
+            <Line
+                Style="{StaticResource LineConditionSymbolUI}"
                 X1="70"
-                Y1="60"
                 X2="70"
-                Y2="150"
-                Style="{StaticResource LineConditionSymbolUI}" />
+                Y1="60"
+                Y2="150" />
 
-            <Line 
+            <Line
+                Style="{StaticResource LineConditionSymbolUI}"
                 X1="70"
+                X2="140"
                 Y1="90"
-                X2="140"
-                Y2="90"
-                Style="{StaticResource LineConditionSymbolUI}" />
+                Y2="90" />
 
-            <Ellipse 
-                Margin="135 86" 
-                Style="{StaticResource ConnectionPointUI}" />
+            <Ellipse Margin="135,86" Style="{StaticResource ConnectionPointUI}" />
 
-            <Line 
+            <Line
+                Style="{StaticResource LineConditionSymbolUI}"
                 X1="70"
+                X2="140"
                 Y1="120"
-                X2="140"
-                Y2="120"
-                Style="{StaticResource LineConditionSymbolUI}" />
+                Y2="120" />
 
-            <Ellipse
-                Margin="135 116" 
-                Style="{StaticResource ConnectionPointUI}"/>
+            <Ellipse Margin="135,116" Style="{StaticResource ConnectionPointUI}" />
 
-            <Line 
+            <Line
+                Style="{StaticResource LineConditionSymbolUI}"
                 X1="70"
-                Y1="150"
                 X2="140"
-                Y2="150"
-                Style="{StaticResource LineConditionSymbolUI}" />
+                Y1="150"
+                Y2="150" />
 
-            <Ellipse 
-                Margin="135 146" 
-                Style="{StaticResource ConnectionPointUI}"/>
+            <Ellipse Margin="135,146" Style="{StaticResource ConnectionPointUI}" />
         </Canvas>
 
-        <StackPanel Margin="20 0 0 0" Height="70" Width="150">
-            <Label 
-                Style="{StaticResource LabelSymbolMenu}"
-                Content="Условие (3)" />
+        <StackPanel
+            Width="150"
+            Height="70"
+            Margin="20,0,0,0">
+            <Label Content="Условие (3)" Style="{StaticResource LabelSymbolMenu}" />
 
             <TextBox
-                Text="3"
                 Name="textBoxCountLines"
+                materialDesign:HintAssist.Hint="Количесво линий"
                 Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                materialDesign:HintAssist.Hint="Количесво линий" />
+                Text="3" />
         </StackPanel>
     </StackPanel>
 </UserControl>

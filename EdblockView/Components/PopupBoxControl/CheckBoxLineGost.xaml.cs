@@ -16,8 +16,6 @@ public partial class CheckBoxLineGost : UserControl
         }
     }
 
-    public CheckBoxLineGost()
-    {
-        InitializeComponent();
-    }
+    public CheckBoxLineGost() =>
+         InitializeComponent();
 }

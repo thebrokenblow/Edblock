@@ -1,45 +1,33 @@
-﻿<UserControl x:Class="EdblockView.Components.TopSettingsPanelControl.FormatTextControl"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
-             xmlns:componentsVM="clr-namespace:EdblockViewModel.ComponentsVM;assembly=EdblockViewModel" 
-             d:DataContext="{d:DesignInstance Type=componentsVM:FormatTextControlVM}"
-             mc:Ignorable="d" 
-             d:DesignHeight="40" d:DesignWidth="160">
-    <ListBox
-            SelectionMode="Extended"
-            Background="Transparent">
+﻿<UserControl
+    x:Class="EdblockView.Components.TopSettingsPanelControl.FormatTextControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:componentsVM="clr-namespace:EdblockViewModel.ComponentsVM;assembly=EdblockViewModel"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DataContext="{d:DesignInstance Type=componentsVM:FormatTextControlVM}"
+    d:DesignHeight="40"
+    d:DesignWidth="160"
+    mc:Ignorable="d">
+    <ListBox Background="Transparent" SelectionMode="Extended">
 
         <ListBox.ItemsPanel>
             <ItemsPanelTemplate>
-                <StackPanel Orientation="Horizontal"/>
+                <StackPanel Orientation="Horizontal" />
             </ItemsPanelTemplate>
         </ListBox.ItemsPanel>
 
-        <ListBoxItem 
-            IsSelected="{Binding IsTextBold}">
-            <materialDesign:PackIcon 
-                    Kind="FormatBold"
-                    Style="{StaticResource IconFormatText}">
-            </materialDesign:PackIcon>
+        <ListBoxItem IsSelected="{Binding IsTextBold}">
+            <materialDesign:PackIcon Kind="FormatBold" Style="{StaticResource IconFormatText}" />
         </ListBoxItem>
 
-        <ListBoxItem
-            IsSelected="{Binding IsFormatItalic}">
-            <materialDesign:PackIcon 
-                    Kind="FormatItalic"
-                    Style="{StaticResource IconFormatText}">
-            </materialDesign:PackIcon>
+        <ListBoxItem IsSelected="{Binding IsFormatItalic}">
+            <materialDesign:PackIcon Kind="FormatItalic" Style="{StaticResource IconFormatText}" />
         </ListBoxItem>
 
-        <ListBoxItem
-            IsSelected="{Binding IsFormatUnderline}">
-            <materialDesign:PackIcon 
-                    Kind="FormatUnderline"
-                    Style="{StaticResource IconFormatText}">
-            </materialDesign:PackIcon>
+        <ListBoxItem IsSelected="{Binding IsFormatUnderline}">
+            <materialDesign:PackIcon Kind="FormatUnderline" Style="{StaticResource IconFormatText}" />
         </ListBoxItem>
     </ListBox>
 </UserControl>

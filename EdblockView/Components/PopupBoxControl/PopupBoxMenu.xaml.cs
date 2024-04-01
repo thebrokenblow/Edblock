@@ -7,8 +7,6 @@ namespace EdblockView.Components.PopupBoxControl;
 /// </summary>
 public partial class PopupBoxMenu : UserControl
 {
-    public PopupBoxMenu()
-    {
-        InitializeComponent();
-    }
+    public PopupBoxMenu() =>
+         InitializeComponent();
 }

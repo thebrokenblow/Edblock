@@ -16,8 +16,6 @@ public partial class ScaleAllSymbol : UserControl
         }
     }
 
-    public ScaleAllSymbol()
-    {
+    public ScaleAllSymbol() =>
         InitializeComponent();
-    }
 }

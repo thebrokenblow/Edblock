@@ -2,7 +2,6 @@
 using System.Windows.Media;
 using System.Windows.Controls;
 using System.Printing;
-using EdblockViewModel;
 using EdblockViewModel.PagesVM;
 
 namespace EdblockView.Components.PopupBoxControl;
@@ -14,10 +13,8 @@ public partial class ButtonPrintProject : UserControl
 {
     private readonly PrintDialog printDialog = new();
 
-    public ButtonPrintProject()
-    {
-        InitializeComponent();
-    }
+    public ButtonPrintProject() =>
+         InitializeComponent();
 
     private void PrintImg(object sender, RoutedEventArgs e)
     {
@@ -32,26 +29,28 @@ public partial class ButtonPrintProject : UserControl
         var canvasSymbolsVM = editorVM.CanvasSymbolsVM;
         canvasSymbolsVM.RemoveSelectedSymbol();
 
-        if (printDialog.ShowDialog() == true)
+        if (printDialog.ShowDialog() == false)
         {
-            var actualWidth = (int)canvasView.ActualWidth;
-            var actualHeight = (int)canvasView.ActualHeight;
-
-            var size = new Size(actualWidth, actualHeight);
-            var rect = new Rect(size);
-
-            canvasView.Measure(size);
-            canvasView.Arrange(rect);
-
-            printDialog.PrintTicket.PageOrientation = PageOrientation.Landscape;
-
-            var originalBackground = canvasView.Background;
-
-            canvasView.Background = Brushes.White;
-
-            printDialog.PrintVisual(canvasView, "Распечатываем элемент Canvas");
-
-            canvasView.Background = originalBackground;
+            return;
         }
+
+        var actualWidth = (int)canvasView.ActualWidth;
+        var actualHeight = (int)canvasView.ActualHeight;
+
+        var size = new Size(actualWidth, actualHeight);
+        var rect = new Rect(size);
+
+        canvasView.Measure(size);
+        canvasView.Arrange(rect);
+
+        printDialog.PrintTicket.PageOrientation = PageOrientation.Landscape;
+
+        var originalBackground = canvasView.Background;
+
+        canvasView.Background = Brushes.White;
+
+        printDialog.PrintVisual(canvasView, "Распечатываем элемент Canvas");
+
+        canvasView.Background = originalBackground;
     }
 }

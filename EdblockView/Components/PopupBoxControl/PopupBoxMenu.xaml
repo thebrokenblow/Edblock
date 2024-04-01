@@ -1,36 +1,44 @@
-﻿<UserControl x:Class="EdblockView.Components.PopupBoxControl.PopupBoxMenu"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             xmlns:popupboxcontrol="clr-namespace:EdblockView.Components.PopupBoxControl"
-             xmlns:edblockViewModel="clr-namespace:EdblockViewModel.ComponentsVM;assembly=EdblockViewModel"
-             d:DataContext="{d:DesignInstance Type=edblockViewModel:PopupBoxMenuVM}"
-             mc:Ignorable="d" 
-             d:DesignHeight="40" d:DesignWidth="40">
-    <materialDesign:PopupBox 
+﻿<UserControl
+    x:Class="EdblockView.Components.PopupBoxControl.PopupBoxMenu"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:edblockViewModel="clr-namespace:EdblockViewModel.ComponentsVM;assembly=EdblockViewModel"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:popupboxcontrol="clr-namespace:EdblockView.Components.PopupBoxControl"
+    d:DataContext="{d:DesignInstance Type=edblockViewModel:PopupBoxMenuVM}"
+    d:DesignHeight="40"
+    d:DesignWidth="40"
+    mc:Ignorable="d">
+    <materialDesign:PopupBox
         Width="30"
         Height="40"
-        Foreground="#838383"
         HorizontalAlignment="Right"
+        Foreground="#838383"
         StaysOpen="True">
         <StackPanel
-            Margin="10" 
-            Width="260" 
+            Width="260"
+            Margin="10"
             Orientation="Vertical">
 
             <popupboxcontrol:CheckBoxLineGost DataContext="{Binding CheckBoxLineGostVM}" />
 
-            <popupboxcontrol:ScaleAllSymbol DataContext="{Binding ScaleAllSymbolVM}"/>
+            <popupboxcontrol:ScaleAllSymbol DataContext="{Binding ScaleAllSymbolVM}" />
 
-            <popupboxcontrol:ButtonSaveProject DataContext="{Binding EdblockVM}" x:Name="ButtonSaveProject" Margin="0 5"/>
+            <popupboxcontrol:ButtonSaveProject
+                x:Name="ButtonSaveProject"
+                Margin="0,5"
+                DataContext="{Binding EdblockVM}" />
 
-            <popupboxcontrol:ButtonLoadProject DataContext="{Binding EdblockVM}" x:Name="ButtonLoadProject" Margin="0 5"/>
+            <popupboxcontrol:ButtonLoadProject
+                x:Name="ButtonLoadProject"
+                Margin="0,5"
+                DataContext="{Binding EdblockVM}" />
 
-            <popupboxcontrol:ButtonSaveImg DataContext="{Binding EdblockVM}" Margin="0 5"/>
+            <popupboxcontrol:ButtonSaveImg Margin="0,5" DataContext="{Binding EdblockVM}" />
 
-            <popupboxcontrol:ButtonPrintProject DataContext="{Binding EdblockVM}" Margin="0 5"/>
+            <popupboxcontrol:ButtonPrintProject Margin="0,5" DataContext="{Binding EdblockVM}" />
         </StackPanel>
     </materialDesign:PopupBox>
 </UserControl>
