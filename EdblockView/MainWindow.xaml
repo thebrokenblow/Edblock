@@ -6,8 +6,6 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:pagesVM="clr-namespace:EdblockViewModel.PagesVM;assembly=EdblockViewModel"
     Title="Edblock"
-    MinWidth="1000"
-    MinHeight="800"
     d:DataContext="{d:DesignInstance Type=pagesVM:MainWindowVM}"
     mc:Ignorable="d">
     <ContentControl Content="{Binding CurrentViewModel}" />

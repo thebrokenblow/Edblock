@@ -8,9 +8,6 @@ public class NavigationService<TViewModel>(NavigationStore navigationStore, Func
 {
     public void Navigate()
     {
-        if (navigationStore.CurrentViewModel is not TViewModel)
-        {
-            navigationStore.CurrentViewModel = createViewModel.Invoke();
-        }
+        navigationStore.CurrentViewModel = createViewModel.Invoke();
     }
 }

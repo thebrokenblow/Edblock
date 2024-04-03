@@ -4,38 +4,36 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:symbol="clr-namespace:EdblockView.SymbolsUI"
-    d:DesignHeight="1300"
-    d:DesignWidth="360"
+    xmlns:symbolUI="clr-namespace:EdblockView.SymbolsUI"
     Background="White"
     mc:Ignorable="d">
     <ScrollViewer>
         <StackPanel Width="360">
-            <symbol:ActionSymbolUI MouseDown="AddSymbolView" Style="{StaticResource SymbolUI}" />
+            <symbolUI:ActionSymbolUI MouseDown="AddSymbolView" Style="{StaticResource SymbolUI}" />
 
-            <symbol:ConditionSymbolUI MouseDown="AddSymbolView" Style="{StaticResource SymbolUI}" />
+            <symbolUI:ConditionSymbolUI MouseDown="AddSymbolView" Style="{StaticResource SymbolUI}" />
 
-            <symbol:VerticalConditionSymbolUI MouseDown="AddSymbolView" Style="{StaticResource SymbolUI}" />
+            <symbolUI:VerticalConditionSymbolUI MouseDown="AddSymbolView" Style="{StaticResource SymbolUI}" />
 
-            <symbol:HorizontalConditionSymbolUI MouseDown="AddSymbolView" Style="{StaticResource SymbolUI}" />
+            <symbolUI:HorizontalConditionSymbolUI MouseDown="AddSymbolView" Style="{StaticResource SymbolUI}" />
 
-            <symbol:StartEndSymbolUI MouseDown="AddSymbolView" Style="{StaticResource SymbolUI}" />
+            <symbolUI:StartEndSymbolUI MouseDown="AddSymbolView" Style="{StaticResource SymbolUI}" />
 
-            <symbol:InputOutputSymbolUI MouseDown="AddSymbolView" Style="{StaticResource SymbolUI}" />
+            <symbolUI:InputOutputSymbolUI MouseDown="AddSymbolView" Style="{StaticResource SymbolUI}" />
 
-            <symbol:SubroutineSymbolUI MouseDown="AddSymbolView" Style="{StaticResource SymbolUI}" />
+            <symbolUI:SubroutineSymbolUI MouseDown="AddSymbolView" Style="{StaticResource SymbolUI}" />
 
-            <symbol:CycleForSymbolUI MouseDown="AddSymbolView" Style="{StaticResource SymbolUI}" />
+            <symbolUI:CycleForSymbolUI MouseDown="AddSymbolView" Style="{StaticResource SymbolUI}" />
 
-            <symbol:CycleWhileBeginSymbolUI MouseDown="AddSymbolView" Style="{StaticResource SymbolUI}" />
+            <symbolUI:CycleWhileBeginSymbolUI MouseDown="AddSymbolView" Style="{StaticResource SymbolUI}" />
 
-            <symbol:CycleWhileEndSymbolUI MouseDown="AddSymbolView" Style="{StaticResource SymbolUI}" />
+            <symbolUI:CycleWhileEndSymbolUI MouseDown="AddSymbolView" Style="{StaticResource SymbolUI}" />
 
-            <symbol:LinkSymbolUI MouseDown="AddSymbolView" Style="{StaticResource SymbolUI}" />
+            <symbolUI:LinkSymbolUI MouseDown="AddSymbolView" Style="{StaticResource SymbolUI}" />
 
-            <symbol:CommentSymbolUI MouseDown="AddSymbolView" Style="{StaticResource SymbolUI}" />
+            <symbolUI:CommentSymbolUI MouseDown="AddSymbolView" Style="{StaticResource SymbolUI}" />
 
-            <symbol:ParallelActionSymbolUI MouseDown="AddSymbolView" Style="{StaticResource SymbolUI}" />
+            <symbolUI:ParallelActionSymbolUI MouseDown="AddSymbolView" Style="{StaticResource SymbolUI}" />
         </StackPanel>
     </ScrollViewer>
 </UserControl>

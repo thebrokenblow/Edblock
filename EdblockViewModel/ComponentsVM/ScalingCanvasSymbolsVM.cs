@@ -213,8 +213,8 @@ public class ScalingCanvasSymbolsVM : INotifyPropertyChanged
        HeightTopSettingsPanel <= movableBlockSymbol.YCoordinate + movableBlockSymbol.Height / 2;
 
     private int CalculateWidthUnscaledCanvas(int widthWindow) =>
-     widthWindow - WidthPanelSymbols - (int)SystemParameters.VerticalScrollBarWidth - offsetLeave / 2;
+     widthWindow - WidthPanelSymbols - (int)SystemParameters.VerticalScrollBarWidth;
 
     private int CalculateHeightUnscaledCanvas(int heightWindow) =>
-         heightWindow - HeightTopSettingsPanel - (int)SystemParameters.HorizontalScrollBarHeight - offsetLeave;
+         heightWindow - HeightTopSettingsPanel - (int)SystemParameters.HorizontalScrollBarHeight;
 }

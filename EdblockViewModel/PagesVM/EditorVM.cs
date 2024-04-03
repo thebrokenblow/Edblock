@@ -2,6 +2,8 @@
 using EdblockViewModel.CoreVM;
 using EdblockViewModel.StoresVM;
 using EdblockViewModel.ComponentsVM;
+using System.Windows.Input;
+using EdblockViewModel.CommandsVM.FactoriesVM;
 
 namespace EdblockViewModel.PagesVM;
 
@@ -25,14 +27,19 @@ public class EditorVM : BaseVM
     public FormatTextControlVM FormatTextControlVM { get; init; }
     public PopupBoxMenuVM PopupBoxMenuVM { get; init; }
     public ListSymbolsVM ListSymbolsVM { get; init; }
+    public ICommand NavigateToMenu { get; init; }
 
     private readonly ProjectVM projectVM;
 
     private const int cellHeightTopSettingsPanel = 60;
     private const int cellWidthPanelSymbols = 50;
 
-    public EditorVM(NavigationStore navigationStoreMenu)
+    public EditorVM(NavigationStore navigationStoreMainWindow, NavigationStore navigationStoreMenu)
     {
+        NavigateToMenu = FactoryNavigateCommand.CreateNavigateCommand(
+            navigationStoreMainWindow,
+            () => new MenuVM(navigationStoreMainWindow));
+
         var selectedBlockSymbols = CanvasSymbolsVM.SelectedBlockSymbols;
 
         CanvasSymbolsVM.ScalingCanvasSymbolsVM.HeightTopSettingsPanel = cellHeightTopSettingsPanel;

@@ -7,8 +7,8 @@ namespace EdblockViewModel.PagesVM;
 
 public class ProjectsVM(NavigationStore navigationStoreMainWindow, NavigationStore navigationStoreMenu) : BaseVM
 {
-    public ICommand NavigateToEditor { get; } =
+    public ICommand NavigateToEditor { get; init; } =
         FactoryNavigateCommand.CreateNavigateCommand(
             navigationStoreMainWindow,
-            () => new EditorVM(navigationStoreMenu));
+            () => new EditorVM(navigationStoreMainWindow, navigationStoreMenu));
 }
