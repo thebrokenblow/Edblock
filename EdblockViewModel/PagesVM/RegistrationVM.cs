@@ -7,7 +7,7 @@ namespace EdblockViewModel.PagesVM;
 
 public class RegistrationVM(NavigationStore navigationStoreMainWindow) : BaseVM
 {
-    public ICommand NavigateToAuthentication { get; } = 
+    public ICommand NavigateToAuthentication { get; } =
         FactoryNavigateCommand.CreateNavigateCommand(
             navigationStoreMainWindow,
             () => new AuthenticationVM(navigationStoreMainWindow));

@@ -7,8 +7,6 @@ namespace EdblockView.Pages;
 /// </summary>
 public partial class Projects : UserControl
 {
-    public Projects()
-    {
-        InitializeComponent();
-    }
+    public Projects() =>
+         InitializeComponent();
 }

@@ -2,6 +2,7 @@
 using EdblockViewModel.CoreVM;
 using EdblockViewModel.StoresVM;
 using EdblockViewModel.CommandsVM.FactoriesVM;
+using System.Collections.ObjectModel;
 
 namespace EdblockViewModel.PagesVM;
 
@@ -11,4 +12,18 @@ public class ProjectsVM(NavigationStore navigationStoreMainWindow, NavigationSto
         FactoryNavigateCommand.CreateNavigateCommand(
             navigationStoreMainWindow,
             () => new EditorVM(navigationStoreMainWindow, navigationStoreMenu));
+
+    public ObservableCollection<string> Projects { get; init; } =
+        [
+            "test",
+            "test",
+            "test",
+            "test",
+            "test",
+            "test",
+            "test",
+            "test",
+            "test",
+            "test",
+        ];
 }
