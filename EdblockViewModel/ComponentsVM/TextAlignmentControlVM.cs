@@ -1,68 +1,46 @@
-﻿using System.Windows.Controls;
-using MaterialDesignThemes.Wpf;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using EdblockViewModel.AbstractionsVM;
 
 namespace EdblockViewModel.ComponentsVM;
 
-public class TextAlignmentControlVM
+public class TextAlignmentControlVM(List<BlockSymbolVM> selectedBlockSymbols)
 {
-    private string? textAlignment;
-    private ListBoxItem? itemTextAlignment;
-    public ListBoxItem? ItemTextAlignment
+    private const int defaultIndexFormatAlign = 1;
+    private int PreviousIndexFormatAlign { get; set; } = defaultIndexFormatAlign;
+
+    private int indexFormatAlign = defaultIndexFormatAlign;
+    public int IndexFormatAlign
     {
-        get => itemTextAlignment;
+        get => indexFormatAlign;
         set
         {
-            itemTextAlignment = value;
-
-            if (itemTextAlignment != null)
+            if (value != -1)
             {
-                var packIconTextAlignment = (PackIcon)itemTextAlignment.Content;
-                var kindTextAlignment = packIconTextAlignment.Kind;
-                textAlignment = textAlignmentByIconKind[kindTextAlignment];
+                indexFormatAlign = value;
                 SetFormatAlignment();
             }
         }
     }
 
-    private readonly Dictionary<PackIconKind, string> textAlignmentByIconKind;
-    private readonly List<BlockSymbolVM> _selectedBlockSymbols;
-
-    public TextAlignmentControlVM(List<BlockSymbolVM> selectedBlockSymbols)
+    private readonly Dictionary<int, string> textAlignmentByIndex = new()
     {
-        _selectedBlockSymbols = selectedBlockSymbols;
-
-        textAlignmentByIconKind = new()
-        {
-            { PackIconKind.FormatAlignLeft, "Left" },
-            { PackIconKind.FormatAlignJustify, "Justify" },
-            { PackIconKind.FormatAlignCentre, "Center" },
-            { PackIconKind.FormatAlignRight, "Right" }
-        };
-
-        var packIconTextAlignment = new PackIcon
-        {
-            Kind = PackIconKind.FormatAlignCentre
-        };
-
-        ItemTextAlignment = new()
-        {
-            Content = packIconTextAlignment,
-        };
-    }
+        { 0, "Left" },
+        { 1, "Justify" },
+        { 2, "Center" },
+        { 3, "Right" }
+    };
 
     public void SetFormatAlignment(BlockSymbolVM selectedBlockSymbol)
     {
         if (selectedBlockSymbol is IHasTextFieldVM symbolHasTextFieldVM)
         {
-            symbolHasTextFieldVM.TextFieldSymbolVM.TextAlignment = textAlignment;
+            symbolHasTextFieldVM.TextFieldSymbolVM.TextAlignment = textAlignmentByIndex[IndexFormatAlign];
         }
     }
 
     private void SetFormatAlignment()
     {
-        foreach (var selectedBlockSymbol in _selectedBlockSymbols)
+        foreach (var selectedBlockSymbol in selectedBlockSymbols)
         {
             SetFormatAlignment(selectedBlockSymbol);
         }

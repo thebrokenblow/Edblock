@@ -7,8 +7,11 @@ namespace EdblockView.Components.TopSettingsPanelControl;
 /// </summary>
 public partial class TextAlignmentControl : UserControl
 {
-    public TextAlignmentControl()
-    {
+
+    public TextAlignmentControl() =>
         InitializeComponent();
+
+    private void SelectFormatAlign(object sender, SelectionChangedEventArgs e)
+    {
     }
 }

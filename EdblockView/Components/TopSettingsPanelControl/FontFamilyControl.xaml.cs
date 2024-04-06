@@ -7,8 +7,6 @@ namespace EdblockView.Components.TopSettingsPanelControl;
 /// </summary>
 public partial class FontFamilyControl : UserControl
 {
-    public FontFamilyControl()
-    {
-        InitializeComponent();
-    }
+    public FontFamilyControl() =>
+         InitializeComponent();
 }

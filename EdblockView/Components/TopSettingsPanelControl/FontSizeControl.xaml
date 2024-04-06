@@ -7,16 +7,22 @@
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     d:DataContext="{d:DesignInstance Type=componentsVM:FontSizeControlVM}"
-    d:DesignHeight="25"
-    d:DesignWidth="100"
     mc:Ignorable="d">
+    <Grid Width="100">
+        <Label
+            Width="60"
+            HorizontalAlignment="Left"
+            Content="Font size:"
+            Style="{StaticResource LabelTopSettingsPanel}" />
 
-    <ComboBox
-        materialDesign:ComboBoxAssist.MaxLength="2"
-        materialDesign:HintAssist.Hint="Размер текста"
-        BorderBrush="Gray"
-        ItemsSource="{Binding FontSizes}"
-        SelectedItem="{Binding FontSize}"
-        Style="{StaticResource ComboBoxSettingsMenu}" />
+        <ComboBox
+            Width="40"
+            HorizontalAlignment="Right"
+            materialDesign:ComboBoxAssist.MaxLength="2"
+            ItemsSource="{Binding FontSizes}"
+            SelectedItem="{Binding FontSize}"
+            SelectedValue="12"
+            Style="{StaticResource ComboBoxTopSettingsPanel}" />
+    </Grid>
 
 </UserControl>

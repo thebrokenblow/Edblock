@@ -7,8 +7,6 @@ namespace EdblockView.Components.TopSettingsPanelControl;
 /// </summary>
 public partial class FontSizeControl : UserControl
 {
-    public FontSizeControl()
-    {
+    public FontSizeControl() =>
         InitializeComponent();
-    }
 }

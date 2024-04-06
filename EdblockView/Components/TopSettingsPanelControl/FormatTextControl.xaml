@@ -7,23 +7,10 @@
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     d:DataContext="{d:DesignInstance Type=componentsVM:FormatTextControlVM}"
-    d:DesignHeight="60"
-    d:DesignWidth="124"
     mc:Ignorable="d">
-    <ListBox Background="Transparent" SelectionMode="Extended">
-        <ListBox.ItemsPanel>
-            <ItemsPanelTemplate>
-                <StackPanel Orientation="Horizontal" />
-            </ItemsPanelTemplate>
-        </ListBox.ItemsPanel>
-        <ListBoxItem IsSelected="{Binding IsTextBold}">
-            <materialDesign:PackIcon Kind="FormatBold" Style="{StaticResource IconFormatText}" />
-        </ListBoxItem>
-        <ListBoxItem IsSelected="{Binding IsFormatItalic}">
-            <materialDesign:PackIcon Kind="FormatItalic" Style="{StaticResource IconFormatText}" />
-        </ListBoxItem>
-        <ListBoxItem IsSelected="{Binding IsFormatUnderline}">
-            <materialDesign:PackIcon Kind="FormatUnderline" Style="{StaticResource IconFormatText}" />
-        </ListBoxItem>
+    <ListBox SelectedIndex="{Binding SelectedIndex}" SelectionMode="Extended">
+        <ListBoxItem Content="{materialDesign:PackIcon Kind=FormatBold}" IsSelected="{Binding IsTextBold}" />
+        <ListBoxItem Content="{materialDesign:PackIcon Kind=FormatItalic}" IsSelected="{Binding IsFormatItalic}" />
+        <ListBoxItem Content="{materialDesign:PackIcon Kind=FormatUnderline}" IsSelected="{Binding IsFormatUnderline}" />
     </ListBox>
 </UserControl>

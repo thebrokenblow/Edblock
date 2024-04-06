@@ -7,14 +7,11 @@
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     d:DataContext="{d:DesignInstance Type=componentsVM:TextAlignmentControlVM}"
-    d:DesignHeight="40"
-    d:DesignWidth="200"
     mc:Ignorable="d">
     <ListBox
-        Background="Transparent"
-        SelectedIndex="1"
-        SelectedItem="{Binding ItemTextAlignment}"
-        Style="{StaticResource MaterialDesignToolToggleListBox}">
+        x:Name="FormatAligns"
+        SelectedIndex="{Binding IndexFormatAlign}"
+        SelectionChanged="SelectFormatAlign">
         <ListBoxItem Content="{materialDesign:PackIcon Kind=FormatAlignLeft}" />
         <ListBoxItem Content="{materialDesign:PackIcon Kind=FormatAlignCenter}" />
         <ListBoxItem Content="{materialDesign:PackIcon Kind=FormatAlignRight}" />

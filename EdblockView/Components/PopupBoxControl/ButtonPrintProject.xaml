@@ -19,6 +19,7 @@
             Click="PrintImg"
             Content="Печать"
             DockPanel.Dock="Right"
+            Foreground="White"
             Style="{StaticResource ButtonSettingsMenu}" />
     </DockPanel>
 </UserControl>

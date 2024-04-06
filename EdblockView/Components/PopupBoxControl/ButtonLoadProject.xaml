@@ -19,6 +19,7 @@
             Click="LoadProject"
             Content="Загрузить проект"
             DockPanel.Dock="Right"
+            Foreground="White"
             Style="{StaticResource ButtonSettingsMenu}" />
     </DockPanel>
 </UserControl>

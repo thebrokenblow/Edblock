@@ -4,17 +4,21 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:componentsVM="clr-namespace:EdblockViewModel.ComponentsVM;assembly=EdblockViewModel"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     d:DataContext="{d:DesignInstance Type=componentsVM:FontFamilyControlVM}"
-    d:DesignHeight="25"
-    d:DesignWidth="100"
     mc:Ignorable="d">
+    <Grid Width="220">
+        <Label
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Content="Font Family:"
+            Style="{StaticResource LabelTopSettingsPanel}" />
 
-    <ComboBox
-        materialDesign:HintAssist.Hint="Шрифт"
-        BorderBrush="Gray"
-        ItemsSource="{Binding FontFamilys}"
-        SelectedItem="{Binding FontFamily}"
-        Style="{StaticResource ComboBoxSettingsMenu}" />
+        <ComboBox
+            Width="140"
+            HorizontalAlignment="Right"
+            ItemsSource="{Binding FontFamilys}"
+            SelectedItem="{Binding FontFamily}"
+            Style="{StaticResource ComboBoxTopSettingsPanel}" />
+    </Grid>
 </UserControl>

@@ -32,15 +32,16 @@
         <Setter Property="Foreground" Value="#838383" />
     </Style>
 
-    <Style
-        x:Key="ButtonSettingsMenu"
-        BasedOn="{StaticResource MaterialDesignRaisedDarkButton}"
-        TargetType="Button">
-        <Setter Property="Width" Value="200" />
+    <Style x:Key="ButtonSettingsMenu" TargetType="Button">
+        <Setter Property="Width" Value="2500" />
+        <Setter Property="Background" Value="#623ED0" />
+        <Setter Property="Foreground" Value="White" />
     </Style>
 
-    <!--  BasedOn="{StaticResource MaterialDesignCheckBox}"  -->
-    <Style x:Key="CheckBoxSettingsMenu" TargetType="CheckBox">
+    <Style
+        x:Key="CheckBoxSettingsMenu"
+        BasedOn="{StaticResource MaterialDesignCheckBox}"
+        TargetType="CheckBox">
         <Setter Property="Height" Value="40" />
     </Style>
 
@@ -49,7 +50,6 @@
         BasedOn="{StaticResource MaterialDesignComboBox}"
         TargetType="ComboBox">
         <Setter Property="IsEditable" Value="True" />
-        <Setter Property="Width" Value="100" />
     </Style>
 
     <Style

@@ -8,7 +8,7 @@
     Background="White"
     mc:Ignorable="d">
     <ScrollViewer>
-        <StackPanel Width="360">
+        <StackPanel Width="360" Background="#F5F5F5">
             <symbolUI:ActionSymbolUI MouseDown="AddSymbolView" Style="{StaticResource SymbolUI}" />
 
             <symbolUI:ConditionSymbolUI MouseDown="AddSymbolView" Style="{StaticResource SymbolUI}" />

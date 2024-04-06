@@ -11,6 +11,16 @@ public class FormatTextControlVM
     private string? currentFontWeight;
 
     private bool isTextBold;
+
+    private int selectedIndex;
+    public int SelectedIndex
+    {
+        get => selectedIndex;
+        set
+        {
+            selectedIndex = value;
+        }
+    }
     public bool IsTextBold
     {
         get => isTextBold;

@@ -1,0 +1,45 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Style
+        x:Key="ButtonTopSettingsPanel"
+        BasedOn="{StaticResource MaterialDesignFlatButton}"
+        TargetType="Button">
+        <Setter Property="Foreground" Value="#747474" />
+        <Setter Property="Width" Value="54" />
+        <Setter Property="Height" Value="54" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border Background="{TemplateBinding Background}" BorderBrush="White">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="#d9d9d9" />
+                <Setter Property="Foreground" Value="#747474" />
+                <Setter Property="Cursor" Value="Hand" />
+            </Trigger>
+            <Trigger Property="IsMouseCaptured" Value="True">
+                <Setter Property="Background" Value="#d9d9d9" />
+                <Setter Property="Foreground" Value="#747474" />
+                <Setter Property="Cursor" Value="Hand" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="LabelTopSettingsPanel" TargetType="Label">
+        <Setter Property="Foreground" Value="#747474" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+    </Style>
+
+    <Style
+        x:Key="ComboBoxTopSettingsPanel"
+        BasedOn="{StaticResource MaterialDesignComboBox}"
+        TargetType="ComboBox">
+        <Setter Property="Foreground" Value="#747474" />
+        <Setter Property="IsEditable" Value="True" />
+    </Style>
+</ResourceDictionary>

@@ -33,22 +33,26 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <componentsUI:TopSettingsPanel Grid.Row="0" Grid.Column="1" />
+        <componentsUI:TopSettingsPanel
+            Grid.Row="0"
+            Grid.Column="1"
+            Margin="-5,0,0,0"
+            Background="#F5F5F5" />
 
         <StackPanel
             Grid.Row="1"
-            Grid.Column="0"
-            Width="50"
+            Width="54"
             HorizontalAlignment="Left"
             Background="#F5F5F5">
             <Button
                 x:Name="ButtonOpen"
-                Width="50"
-                Style="{StaticResource ButtonOpenClose}">
+                Width="54"
+                Height="54"
+                Style="{StaticResource ButtonTopSettingsPanel}">
                 <materialDesign:PackIcon
                     Width="30"
                     Height="30"
-                    Foreground="#212121"
+                    Foreground="#747474"
                     Kind="FlowchartOutline" />
             </Button>
         </StackPanel>
