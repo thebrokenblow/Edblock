@@ -1,4 +1,5 @@
 ﻿using System.Windows.Controls;
+using EdblockViewModel.ComponentsVM;
 
 namespace EdblockView.Components.TopSettingsPanelControl;
 
@@ -7,11 +8,18 @@ namespace EdblockView.Components.TopSettingsPanelControl;
 /// </summary>
 public partial class TextAlignmentControl : UserControl
 {
+    private TextAlignmentControlVM? textAlignmentControlVM;
 
     public TextAlignmentControl() =>
         InitializeComponent();
 
     private void SelectFormatAlign(object sender, SelectionChangedEventArgs e)
     {
+        textAlignmentControlVM ??= (TextAlignmentControlVM)DataContext;
+
+        if (textAlignmentControlVM.IndexFormatAlign == -1)
+        {
+            FormatAligns.SelectedIndex = textAlignmentControlVM.PreviousIndexFormatAlign;
+        }
     }
 }

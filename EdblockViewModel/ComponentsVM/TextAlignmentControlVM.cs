@@ -6,7 +6,7 @@ namespace EdblockViewModel.ComponentsVM;
 public class TextAlignmentControlVM(List<BlockSymbolVM> selectedBlockSymbols)
 {
     private const int defaultIndexFormatAlign = 1;
-    private int PreviousIndexFormatAlign { get; set; } = defaultIndexFormatAlign;
+    public int PreviousIndexFormatAlign { get; set; } = defaultIndexFormatAlign;
 
     private int indexFormatAlign = defaultIndexFormatAlign;
     public int IndexFormatAlign
@@ -14,27 +14,32 @@ public class TextAlignmentControlVM(List<BlockSymbolVM> selectedBlockSymbols)
         get => indexFormatAlign;
         set
         {
-            if (value != -1)
-            {
-                indexFormatAlign = value;
-                SetFormatAlignment();
-            }
+            PreviousIndexFormatAlign = indexFormatAlign;
+            indexFormatAlign = value;
+            SetFormatAlignment();
         }
     }
 
     private readonly Dictionary<int, string> textAlignmentByIndex = new()
     {
         { 0, "Left" },
-        { 1, "Justify" },
-        { 2, "Center" },
-        { 3, "Right" }
+        { 1, "Center" },
+        { 2, "Right" },
+        { 3, "Justify" }
     };
 
     public void SetFormatAlignment(BlockSymbolVM selectedBlockSymbol)
     {
         if (selectedBlockSymbol is IHasTextFieldVM symbolHasTextFieldVM)
         {
-            symbolHasTextFieldVM.TextFieldSymbolVM.TextAlignment = textAlignmentByIndex[IndexFormatAlign];
+            if (indexFormatAlign == -1)
+            {
+                symbolHasTextFieldVM.TextFieldSymbolVM.TextAlignment = textAlignmentByIndex[PreviousIndexFormatAlign];
+            }
+            else
+            {
+                symbolHasTextFieldVM.TextFieldSymbolVM.TextAlignment = textAlignmentByIndex[indexFormatAlign];
+            }
         }
     }
 
