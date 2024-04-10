@@ -1,8 +1,9 @@
 ﻿using System.Windows.Input;
+using System.Collections.ObjectModel;
 using EdblockViewModel.CoreVM;
 using EdblockViewModel.StoresVM;
+using EdblockViewModel.ComponentsVM;
 using EdblockViewModel.CommandsVM.FactoriesVM;
-using System.Collections.ObjectModel;
 
 namespace EdblockViewModel.PagesVM;
 
@@ -13,17 +14,55 @@ public class ProjectsVM(NavigationStore navigationStoreMainWindow, NavigationSto
             navigationStoreMainWindow,
             () => new EditorVM(navigationStoreMainWindow, navigationStoreMenu));
 
-    public ObservableCollection<string> Projects { get; init; } =
+    public ObservableCollection<CardProjectVM> Projects { get; init; } =
         [
-            "test",
-            "test",
-            "test",
-            "test",
-            "test",
-            "test",
-            "test",
-            "test",
-            "test",
-            "test",
+        new()
+            {
+                Name = "Неравенство",
+                Description="Уравнение ax + b > 0",
+                Project = ""
+            },
+        new()
+            {
+                Name = "Неравенство",
+                Description="Уравнение ax + b > 0",
+                Project = ""
+            },
+        new()
+            {
+                Name = "Неравенство",
+                Description="Уравнение ax + b > 0",
+                Project = ""
+            },
+        new()
+            {
+                Name = "Неравенство",
+                Description="Уравнение ax + b > 0",
+                Project = ""
+            },
+        new()
+            {
+                Name = "Неравенство",
+                Description="Уравнение ax + b > 0",
+                Project = ""
+            },
+        new()
+            {
+                Name = "Неравенство",
+                Description="Уравнение ax + b > 0",
+                Project = ""
+            },
+        new()
+            {
+                Name = "Неравенство",
+                Description="Уравнение ax + b > 0",
+                Project = ""
+            },
+        new()
+            {
+                Name = "Неравенство",
+                Description="Уравнение ax + b > 0",
+                Project = ""
+            }
         ];
 }

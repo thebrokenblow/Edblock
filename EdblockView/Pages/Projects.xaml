@@ -2,6 +2,8 @@
     x:Class="EdblockView.Pages.Projects"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:components="clr-namespace:EdblockView.Components"
+    xmlns:componentsVM="clr-namespace:EdblockViewModel.ComponentsVM;assembly=EdblockViewModel"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -41,44 +43,16 @@
         <ListBox
             Grid.Row="2"
             Margin="20,20,0,0"
-            HorizontalAlignment="Stretch"
-            HorizontalContentAlignment="Center"
-            ItemsSource="{Binding Projects}">
+            ItemsSource="{Binding Projects}"
+            Style="{StaticResource ListProjects}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <WrapPanel IsItemsHost="True" Orientation="Horizontal" />
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <materialDesign:Card Width="200">
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="140" />
-                                <RowDefinition Height="*" />
-                                <RowDefinition Height="Auto" />
-                            </Grid.RowDefinitions>
-                            <Image
-                                Height="140"
-                                Source="/Images/Lock.png"
-                                Stretch="UniformToFill" />
-                            <StackPanel Grid.Row="1" Margin="8,24,8,0">
-                                <TextBlock
-                                    FontWeight="Bold"
-                                    Text="Project Name"
-                                    TextWrapping="Wrap" />
-                                <TextBlock
-                                    VerticalAlignment="Center"
-                                    Text="Description of the project"
-                                    TextWrapping="Wrap" />
-                            </StackPanel>
-                            <StackPanel
-                                Grid.Row="2"
-                                Margin="8"
-                                HorizontalAlignment="Right"
-                                Orientation="Horizontal" />
-                        </Grid>
-                    </materialDesign:Card>
+                <DataTemplate DataType="{x:Type componentsVM:CardProjectVM}">
+                    <components:CardProject />
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ListBox>

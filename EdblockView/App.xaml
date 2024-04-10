@@ -8,16 +8,20 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.DeepPurple.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.TextBox.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.PasswordBox.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.ToolBar.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.ListBox.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.PasswordBox.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Button.xaml" />
+
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.DeepPurple.xaml" />
                 <ResourceDictionary Source="Styles/Menu.xaml" />
                 <ResourceDictionary Source="Styles/Login.xaml" />
                 <ResourceDictionary Source="Styles/Settings.xaml" />
                 <ResourceDictionary Source="Styles/StyleMenu.xaml" />
                 <ResourceDictionary Source="Styles/SettingsMenu.xaml" />
                 <ResourceDictionary Source="Styles/StyleSymbolUI.xaml" />
+                <ResourceDictionary Source="Styles/StylesProjects.xaml" />
                 <ResourceDictionary Source="Styles/StyleSymbolView.xaml" />
                 <ResourceDictionary Source="Styles/StylesTopSettingsPanel.xaml" />
             </ResourceDictionary.MergedDictionaries>
