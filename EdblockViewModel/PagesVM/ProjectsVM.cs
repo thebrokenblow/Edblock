@@ -19,49 +19,49 @@ public class ProjectsVM(NavigationStore navigationStoreMainWindow, NavigationSto
         new()
             {
                 Name = "Неравенство",
-                Description="Уравнение ax + b > 0",
+                Description = "Уравнение ax + b > 0",
                 Project = ""
             },
         new()
             {
                 Name = "Неравенство",
-                Description="Уравнение ax + b > 0",
+                Description = "Уравнение ax + b > 0",
                 Project = ""
             },
         new()
             {
                 Name = "Неравенство",
-                Description="Уравнение ax + b > 0",
+                Description = "Уравнение ax + b > 0",
                 Project = ""
             },
         new()
             {
                 Name = "Неравенство",
-                Description="Уравнение ax + b > 0",
+                Description = "Уравнение ax + b > 0",
                 Project = ""
             },
         new()
             {
                 Name = "Неравенство",
-                Description="Уравнение ax + b > 0",
+                Description = "Уравнение ax + b > 0",
                 Project = ""
             },
         new()
             {
                 Name = "Неравенство",
-                Description="Уравнение ax + b > 0",
+                Description = "Уравнение ax + b > 0",
                 Project = ""
             },
         new()
             {
                 Name = "Неравенство",
-                Description="Уравнение ax + b > 0",
+                Description = "Уравнение ax + b > 0",
                 Project = ""
             },
         new()
             {
                 Name = "Неравенство",
-                Description="Уравнение ax + b > 0",
+                Description = "Уравнение ax + b > 0",
                 Project = ""
             }
         ];

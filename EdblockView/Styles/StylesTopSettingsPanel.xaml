@@ -39,7 +39,7 @@
         x:Key="ComboBoxTopSettingsPanel"
         BasedOn="{StaticResource MaterialDesignComboBox}"
         TargetType="ComboBox">
-        <Setter Property="Foreground" Value="#747474" />
+
         <Setter Property="IsEditable" Value="True" />
     </Style>
 </ResourceDictionary>

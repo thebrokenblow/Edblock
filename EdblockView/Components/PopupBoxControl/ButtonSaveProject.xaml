@@ -5,21 +5,17 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    d:DesignHeight="40"
-    d:DesignWidth="245"
     mc:Ignorable="d">
-    <DockPanel>
+    <Grid Width="280">
         <materialDesign:PackIcon
-            DockPanel.Dock="Left"
+            HorizontalAlignment="Left"
             Kind="ContentSave"
             Style="{StaticResource IconSettingsMenu}" />
 
         <Button
-            Margin="20,0,0,0"
+            HorizontalAlignment="Right"
             Click="SaveProject"
             Content="Сохранить проект"
-            DockPanel.Dock="Right"
-            Foreground="White"
             Style="{StaticResource ButtonSettingsMenu}" />
-    </DockPanel>
+    </Grid>
 </UserControl>

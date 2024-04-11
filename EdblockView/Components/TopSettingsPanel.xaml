@@ -20,6 +20,7 @@
             Style="{StaticResource MaterialDesignToolBar}">
 
             <Button
+                Command="{Binding NavigateToMenu}"
                 Content="{materialDesign:PackIcon Kind=ArrowLeft}"
                 Style="{StaticResource ButtonTopSettingsPanel}"
                 ToolBar.OverflowMode="AsNeeded"
@@ -61,11 +62,11 @@
 
             <Separator />
 
-            <components:FontSizeControl DataContext="{Binding FontSizeControlVM}" />
+            <components:FontSizeControl Margin="0,0,5,0" DataContext="{Binding FontSizeControlVM}" />
 
             <Separator />
 
-            <components:FontFamilyControl DataContext="{Binding FontFamilyControlVM}" />
+            <components:FontFamilyControl Margin="0,0,5,0" DataContext="{Binding FontFamilyControlVM}" />
 
             <Separator />
 

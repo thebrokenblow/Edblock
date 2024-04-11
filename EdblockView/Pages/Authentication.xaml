@@ -110,8 +110,10 @@
                 <CheckBox
                     Margin="70,7"
                     HorizontalAlignment="Right"
+                    VerticalContentAlignment="Center"
+                    Background="#623ED0"
                     Content="Show password"
-                    Style="{StaticResource CheckBox}" />
+                    Style="{StaticResource MaterialDesignAccentCheckBox}" />
 
                 <Button
                     Command="{Binding NavigateToMenu}"

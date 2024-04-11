@@ -2,28 +2,26 @@
     x:Class="EdblockView.Components.PopupBoxControl.ScaleAllSymbol"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:componentsVM="clr-namespace:EdblockViewModel.ComponentsVM;assembly=EdblockViewModel"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    d:DesignHeight="40"
-    d:DesignWidth="255"
+    d:DataContext="{d:DesignInstance Type=componentsVM:ScaleAllSymbolVM}"
     mc:Ignorable="d">
-    <DockPanel>
+    <Grid Width="280">
         <materialDesign:PackIcon
-            DockPanel.Dock="Left"
+            HorizontalAlignment="Left"
             Kind="Resize"
             Style="{StaticResource IconSettingsMenu}" />
 
         <Label
-            Margin="5,0,5,0"
-            HorizontalContentAlignment="Center"
+            HorizontalAlignment="Center"
             Content="Масштабирование всех фигур"
             Style="{StaticResource LabelSettingsMenu}" />
 
         <CheckBox
-            HorizontalAlignment="Center"
-            DockPanel.Dock="Right"
+            HorizontalAlignment="Right"
             IsChecked="{Binding IsScaleAllSymbolVM}"
             Style="{StaticResource CheckBoxSettingsMenu}" />
-    </DockPanel>
+    </Grid>
 </UserControl>

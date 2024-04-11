@@ -7,7 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     d:DataContext="{d:DesignInstance Type=componentsVM:FontFamilyControlVM}"
     mc:Ignorable="d">
-    <Grid Width="220">
+    <Grid Width="230">
         <Label
             HorizontalAlignment="Left"
             VerticalAlignment="Center"
@@ -17,6 +17,7 @@
         <ComboBox
             Width="140"
             HorizontalAlignment="Right"
+            BorderBrush="Black"
             ItemsSource="{Binding FontFamilys}"
             SelectedItem="{Binding FontFamily}"
             Style="{StaticResource ComboBoxTopSettingsPanel}" />

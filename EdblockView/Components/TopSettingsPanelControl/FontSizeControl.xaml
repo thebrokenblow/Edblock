@@ -8,7 +8,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     d:DataContext="{d:DesignInstance Type=componentsVM:FontSizeControlVM}"
     mc:Ignorable="d">
-    <Grid Width="100">
+    <Grid Width="110">
         <Label
             Width="60"
             HorizontalAlignment="Left"
@@ -19,9 +19,9 @@
             Width="40"
             HorizontalAlignment="Right"
             materialDesign:ComboBoxAssist.MaxLength="2"
+            BorderBrush="Black"
             ItemsSource="{Binding FontSizes}"
             SelectedItem="{Binding FontSize}"
-            SelectedValue="12"
             Style="{StaticResource ComboBoxTopSettingsPanel}" />
     </Grid>
 

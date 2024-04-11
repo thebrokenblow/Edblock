@@ -8,17 +8,16 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:popupboxcontrol="clr-namespace:EdblockView.Components.PopupBoxControl"
     d:DataContext="{d:DesignInstance Type=edblockViewModel:PopupBoxMenuVM}"
-    d:DesignHeight="40"
-    d:DesignWidth="40"
     mc:Ignorable="d">
     <materialDesign:PopupBox
         Width="30"
         Height="40"
         HorizontalAlignment="Right"
+        Content="{materialDesign:PackIcon Kind=Menu}"
         Foreground="#838383"
         StaysOpen="True">
         <StackPanel
-            Width="260"
+            Width="280"
             Margin="10"
             Orientation="Vertical">
 

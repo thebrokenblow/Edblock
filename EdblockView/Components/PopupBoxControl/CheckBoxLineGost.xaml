@@ -7,25 +7,22 @@
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     d:DataContext="{d:DesignInstance Type=componentsVM:CheckBoxLineGostVM}"
-    d:DesignHeight="40"
-    d:DesignWidth="255"
     mc:Ignorable="d">
-    <DockPanel>
+    <Grid Width="280">
         <materialDesign:PackIcon
-            DockPanel.Dock="Left"
+            HorizontalAlignment="Left"
             Kind="FileDocument"
             Style="{StaticResource IconSettingsMenu}" />
 
         <Label
-            Margin="5,0,5,0"
-            HorizontalContentAlignment="Center"
+            HorizontalAlignment="Center"
             Content="Вход, выход линий по ГОСТ"
             Style="{StaticResource LabelSettingsMenu}" />
 
         <CheckBox
-            Height="40"
-            DockPanel.Dock="Right"
+            HorizontalAlignment="Right"
+            HorizontalContentAlignment="Center"
             IsChecked="{Binding IsDrawingLinesAccordingGOST}"
             Style="{StaticResource CheckBoxSettingsMenu}" />
-    </DockPanel>
+    </Grid>
 </UserControl>
