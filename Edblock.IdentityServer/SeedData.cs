@@ -5,12 +5,12 @@ using System;
 using System.Linq;
 using IdentityModel;
 using Edblock.IdentityServer.Data;
-using Edblock.IdentityServer.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 using Edblock.Library.Data;
+using Edblock.Library.UserManagementService.Models;
 
 namespace Edblock.IdentityServer;
 

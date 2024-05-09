@@ -15,6 +15,7 @@ using System.Reflection;
 using Edblock.Library.Data;
 using Edblock.Library.Constants;
 using Microsoft.Extensions.DependencyInjection;
+using Edblock.Library.UserManagementService.Models;
 
 namespace Edblock.IdentityServer;
 
@@ -27,7 +28,7 @@ public class Startup(IWebHostEnvironment environment, IConfiguration configurati
         services.AddDbContext<UsersDbContext>(options =>
              options.UseSqlServer(configuration.GetConnectionString(ConnectionNames.UsersConnection)));
 
-        services.AddIdentity<IdentityUser, IdentityRole>()
+        services.AddIdentity<ApplicationUser, IdentityRole>()
             .AddEntityFrameworkStores<UsersDbContext>()
             .AddDefaultTokenProviders();
 
@@ -47,7 +48,7 @@ public class Startup(IWebHostEnvironment environment, IConfiguration configurati
                 options.ConfigureDbContext = b => b.UseSqlServer(connectionString,
                     sql => sql.MigrationsAssembly(migrationsAssembly));
             })
-            .AddAspNetIdentity<IdentityUser>();
+            .AddAspNetIdentity<ApplicationUser>();
 
         builder.AddDeveloperSigningCredential();
 

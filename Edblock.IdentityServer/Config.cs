@@ -24,36 +24,36 @@ public static class Config
 
     public static IEnumerable<Client> Clients =>
         [
-                new Client
+            new Client
+            {
+                ClientId = "test.client",
+                ClientName = "Test client",
+
+                AllowedGrantTypes = GrantTypes.ClientCredentials,
+                ClientSecrets = { new Secret("511536EF-F270-4058-80CA-1C89C192F69A".Sha256()) },
+
+                AllowedScopes =
                 {
-                    ClientId = "test.client",
-                    ClientName = "Test client",
-
-                    AllowedGrantTypes = GrantTypes.ClientCredentials,
-                    ClientSecrets = { new Secret("511536EF-F270-4058-80CA-1C89C192F69A".Sha256()) },
-
-                    AllowedScopes =
-                    {
-                        IdentityServerConstants.StandardScopes.OpenId,
-                        IdentityServerConstants.StandardScopes.Profile,
-                        IdConstants.WebScope,
-                        IdConstants.ApiScope
-                    }
-                },
-
-                new Client
-                {
-                    ClientId = "external",
-                    ClientName = "External Client",
-                    AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
-                    RequireClientSecret = false,
-
-                    AllowedScopes =
-                    {
-                        IdentityServerConstants.StandardScopes.OpenId,
-                        IdentityServerConstants.StandardScopes.Profile,
-                        IdConstants.WebScope
-                    }
+                    IdentityServerConstants.StandardScopes.OpenId,
+                    IdentityServerConstants.StandardScopes.Profile,
+                    IdConstants.WebScope,
+                    IdConstants.ApiScope
                 }
+            },
+
+            new Client
+            {
+                ClientId = "external",
+                ClientName = "External Client",
+                AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
+                RequireClientSecret = false,
+
+                AllowedScopes =
+                {
+                    IdentityServerConstants.StandardScopes.OpenId,
+                    IdentityServerConstants.StandardScopes.Profile,
+                    IdConstants.WebScope
+                }
+            }
         ];
 }

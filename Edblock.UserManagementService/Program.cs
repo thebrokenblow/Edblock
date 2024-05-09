@@ -1,5 +1,6 @@
 using Edblock.Library.Constants;
 using Edblock.Library.Data;
+using Edblock.Library.UserManagementService.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -19,7 +20,7 @@ void ConfigureServices(IServiceCollection services, IConfiguration configuration
     services.AddDbContext<UsersDbContext>(options =>
         options.UseSqlServer(configuration.GetConnectionString(ConnectionNames.UsersConnection)));
 
-    services.AddIdentity<IdentityUser, IdentityRole>()
+    services.AddIdentity<ApplicationUser, IdentityRole>()
        .AddEntityFrameworkStores<UsersDbContext>()
        .AddDefaultTokenProviders();
 
@@ -40,14 +41,12 @@ void ConfigureServices(IServiceCollection services, IConfiguration configuration
         });
 
     // adds an authorization policy to make sure the token is for scope 'api1'
-    services.AddAuthorization(options =>
-    {
-        options.AddPolicy("ApiScope", policy =>
+    services.AddAuthorizationBuilder()
+        .AddPolicy("ApiScope", policy =>
         {
             policy.RequireAuthenticatedUser();
             policy.RequireClaim("scope", IdConstants.ApiScope);
         });
-    });
 }
 
 void Configure(IApplicationBuilder app, IWebHostEnvironment env)
