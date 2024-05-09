@@ -15,6 +15,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{D284B0BA
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Edblock.IdentityServer", "Edblock.IdentityServer\Edblock.IdentityServer.csproj", "{8BB566F3-3C13-4413-A815-5A3CB2DCFF30}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libraries", "Libraries", "{4A2350A8-B70B-4082-9D3E-EF179018E176}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Edblock.Library", "Edblock.Library\Edblock.Library.csproj", "{5DA58E08-8729-4ECA-B75C-800133CFB9EB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{C923E661-9DBD-4E80-85A8-7B8EEF446156}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Edblock.UserManagementService", "Edblock.UserManagementService\Edblock.UserManagementService.csproj", "{1491663D-FDAB-41E0-8250-832F90B90AB7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,12 +49,22 @@ Global
 		{8BB566F3-3C13-4413-A815-5A3CB2DCFF30}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8BB566F3-3C13-4413-A815-5A3CB2DCFF30}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8BB566F3-3C13-4413-A815-5A3CB2DCFF30}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5DA58E08-8729-4ECA-B75C-800133CFB9EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5DA58E08-8729-4ECA-B75C-800133CFB9EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5DA58E08-8729-4ECA-B75C-800133CFB9EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5DA58E08-8729-4ECA-B75C-800133CFB9EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1491663D-FDAB-41E0-8250-832F90B90AB7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1491663D-FDAB-41E0-8250-832F90B90AB7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1491663D-FDAB-41E0-8250-832F90B90AB7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1491663D-FDAB-41E0-8250-832F90B90AB7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{8BB566F3-3C13-4413-A815-5A3CB2DCFF30} = {D284B0BA-7E0F-4E45-A726-A86EC1543127}
+		{5DA58E08-8729-4ECA-B75C-800133CFB9EB} = {4A2350A8-B70B-4082-9D3E-EF179018E176}
+		{1491663D-FDAB-41E0-8250-832F90B90AB7} = {C923E661-9DBD-4E80-85A8-7B8EEF446156}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {788EDC0A-2FC7-48B5-BBD7-0322397804DB}

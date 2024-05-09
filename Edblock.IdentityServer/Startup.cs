@@ -1,16 +1,20 @@
 ﻿// Copyright (c) Brock Allen & Dominick Baier. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
-using IdentityServer4;
-using Edblock.IdentityServer.Data;
-using Edblock.IdentityServer.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using IdentityServer4.EntityFramework.DbContexts;
+using IdentityServer4.EntityFramework.Mappers;
+using System.Linq;
+using IdentityServerHost.Quickstart.UI;
+using System.Reflection;
+using Edblock.Library.Data;
+using Edblock.Library.Constants;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Edblock.IdentityServer;
 
@@ -20,35 +24,34 @@ public class Startup(IWebHostEnvironment environment, IConfiguration configurati
     {
         services.AddControllersWithViews();
 
-        services.AddDbContext<ApplicationDbContext>(options =>
-            options.UseSqlServer(configuration.GetConnectionString("UsersConnection")));
+        services.AddDbContext<UsersDbContext>(options =>
+             options.UseSqlServer(configuration.GetConnectionString(ConnectionNames.UsersConnection)));
 
-        services.AddIdentity<ApplicationUser, IdentityRole>()
-            .AddEntityFrameworkStores<ApplicationDbContext>()
+        services.AddIdentity<IdentityUser, IdentityRole>()
+            .AddEntityFrameworkStores<UsersDbContext>()
             .AddDefaultTokenProviders();
 
-        var builder = services.AddIdentityServer(options =>
-        {
-            options.Events.RaiseErrorEvents = true;
-            options.Events.RaiseInformationEvents = true;
-            options.Events.RaiseFailureEvents = true;
-            options.Events.RaiseSuccessEvents = true;
-            options.EmitStaticAudienceClaim = true;
-        })
-            .AddInMemoryIdentityResources(Config.IdentityResources)
-            .AddInMemoryApiScopes(Config.ApiScopes)
-            .AddInMemoryClients(Config.Clients)
-            .AddAspNetIdentity<ApplicationUser>();
+
+        var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
+        string connectionString = configuration.GetConnectionString(ConnectionNames.IdentityServerConnection);
+
+        var builder = services.AddIdentityServer()
+            .AddTestUsers(TestUsers.Users)
+            .AddConfigurationStore(options =>
+            {
+                options.ConfigureDbContext = b => b.UseSqlServer(connectionString,
+                    sql => sql.MigrationsAssembly(migrationsAssembly));
+            })
+            .AddOperationalStore(options =>
+            {
+                options.ConfigureDbContext = b => b.UseSqlServer(connectionString,
+                    sql => sql.MigrationsAssembly(migrationsAssembly));
+            })
+            .AddAspNetIdentity<IdentityUser>();
 
         builder.AddDeveloperSigningCredential();
 
-        services.AddAuthentication()
-            .AddGoogle(options =>
-            {
-                options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
-                options.ClientId = "copy client ID from Google here";
-                options.ClientSecret = "copy client secret from Google here";
-            });
+        services.AddAuthentication();
     }
 
     public void Configure(IApplicationBuilder app)
@@ -67,5 +70,45 @@ public class Startup(IWebHostEnvironment environment, IConfiguration configurati
         {
             endpoints.MapDefaultControllerRoute();
         });
+        InitializeDatabase(app);
+    }
+
+    private static void InitializeDatabase(IApplicationBuilder app)
+    {
+        using var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope();
+        serviceScope.ServiceProvider.GetRequiredService<PersistedGrantDbContext>().Database.Migrate();
+
+        var context = serviceScope.ServiceProvider.GetRequiredService<ConfigurationDbContext>();
+        context.Database.Migrate();
+
+        if (!context.Clients.Any())
+        {
+            foreach (var client in Config.Clients)
+            {
+                context.Clients.Add(client.ToEntity());
+            }
+
+            context.SaveChanges();
+        }
+
+        if (!context.IdentityResources.Any())
+        {
+            foreach (var resource in Config.IdentityResources)
+            {
+                context.IdentityResources.Add(resource.ToEntity());
+            }
+
+            context.SaveChanges();
+        }
+
+        if (!context.ApiScopes.Any())
+        {
+            foreach (var resource in Config.ApiScopes)
+            {
+                context.ApiScopes.Add(resource.ToEntity());
+            }
+
+            context.SaveChanges();
+        }
     }
 }
