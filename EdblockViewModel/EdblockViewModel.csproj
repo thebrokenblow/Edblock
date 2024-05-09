@@ -13,7 +13,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\EdblockModel\EdblockModel.csproj" />
     <ProjectReference Include="..\SerializationEdblock\SerializationEdblock.csproj" />
   </ItemGroup>
 

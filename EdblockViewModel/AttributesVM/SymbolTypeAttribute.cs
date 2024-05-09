@@ -3,12 +3,7 @@
 namespace EdblockViewModel.AttributesVM;
 
 [AttributeUsage(AttributeTargets.Class)]
-public class SymbolTypeAttribute : Attribute
+public class SymbolTypeAttribute(string nameSymbol) : Attribute
 {
-    public string NameSymbol { get; init; }
-
-    public SymbolTypeAttribute(string nameSymbol)
-    {
-        NameSymbol = nameSymbol;
-    }   
+    public string NameSymbol { get; init; } = nameSymbol;
 }

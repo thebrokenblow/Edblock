@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\EdblockModel\EdblockModel.csproj" />
+    <ProjectReference Include="..\Edblock.PagesViewModel\Edblock.PagesViewModel.csproj" />
   </ItemGroup>
 
 </Project>

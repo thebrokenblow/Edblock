@@ -1,0 +1,7 @@
+﻿namespace Edblock.SymbolsModel.Symbols;
+
+public class ParallelActionSymbolModel : BlockSymbolModel
+{
+    public int CountSymbolsIncoming { get; set; }
+    public int CountSymbolsOutgoing { get; set; }
+}

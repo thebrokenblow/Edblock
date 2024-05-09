@@ -3,7 +3,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Controls;
 using EdblockView.Abstractions;
-using EdblockViewModel.ComponentsVM;
+using Edblock.PagesViewModel.ComponentsViewModel;
 
 namespace EdblockView.Components;
 

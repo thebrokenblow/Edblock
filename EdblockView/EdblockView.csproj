@@ -22,6 +22,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Edblock.PagesViewModel\Edblock.PagesViewModel.csproj" />
+    <ProjectReference Include="..\Edblock.PagesView\Edblock.PagesView.csproj" />
     <ProjectReference Include="..\EdblockViewModel\EdblockViewModel.csproj" />
   </ItemGroup>
 

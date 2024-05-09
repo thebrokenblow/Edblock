@@ -1,16 +1,12 @@
 ﻿using SerializationEdblock;
 using System.Collections.Generic;
-using EdblockViewModel.ComponentsVM;
-using EdblockViewModel.AbstractionsVM;
 using EdblockViewModel.Symbols.LineSymbols;
 using SerializationEdblock.SymbolsSerializable;
 using EdblockViewModel.Symbols.ComponentsParallelActionSymbolVM;
-using EdblockModel.SymbolsModel;
-using EdblockViewModel.Symbols;
-using EdblockModel.SymbolsModel.LineSymbolsModel;
 using EdblockViewModel.Symbols.SwitchCaseConditionSymbolsVM;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM.ConnectionPoints;
 using EdblockViewModel.PagesVM;
+using Edblock.PagesViewModel.ComponentsViewModel;
 
 namespace EdblockViewModel;
 
