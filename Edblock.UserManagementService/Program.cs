@@ -1,3 +1,4 @@
+using Edblock.IdentityServer.Models;
 using Edblock.Library.Constants;
 using Edblock.Library.Data;
 using Microsoft.AspNetCore.Identity;
@@ -19,7 +20,7 @@ void ConfigureServices(IServiceCollection services, IConfiguration configuration
     services.AddDbContext<UsersDbContext>(options =>
         options.UseSqlServer(configuration.GetConnectionString(ConnectionNames.UsersConnection)));
 
-    services.AddIdentity<IdentityUser, IdentityRole>()
+    services.AddIdentity<ApplicationUser, IdentityRole>()
        .AddEntityFrameworkStores<UsersDbContext>()
        .AddDefaultTokenProviders();
 
@@ -39,15 +40,14 @@ void ConfigureServices(IServiceCollection services, IConfiguration configuration
             };
         });
 
-    // adds an authorization policy to make sure the token is for scope 'api1'
-    services.AddAuthorization(options =>
-    {
-        options.AddPolicy("ApiScope", policy =>
-        {
-            policy.RequireAuthenticatedUser();
-            policy.RequireClaim("scope", IdConstants.ApiScope);
-        });
-    });
+   //adds an authorization policy to make sure the token is for scope 'api1'
+
+   services.AddAuthorizationBuilder()
+       .AddPolicy("ApiScope", policy =>
+       {
+           policy.RequireAuthenticatedUser();
+           policy.RequireClaim("scope", IdConstants.ApiScope);
+       });
 }
 
 void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -70,6 +70,6 @@ void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     app.UseEndpoints(endpoints =>
     {
         endpoints.MapControllers()
-            .RequireAuthorization("ApiScope");
+        .RequireAuthorization("ApiScope");
     });
 }
