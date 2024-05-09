@@ -1,5 +1,5 @@
 ﻿using System.Windows.Controls;
-using Edblock.PagesViewModel.ComponentsViewModel;
+using EdblockViewModel.ComponentsVM;
 
 namespace EdblockView.Components.PopupBoxControl;
 

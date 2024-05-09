@@ -1,8 +1,8 @@
 ﻿using System.Windows;
 using System.Windows.Input;
 using System.Windows.Controls;
+using EdblockViewModel.ComponentsVM;
 using EdblockViewModel.AbstractionsVM;
-using Edblock.PagesViewModel.ComponentsViewModel;
 
 namespace EdblockView.Components;
 
