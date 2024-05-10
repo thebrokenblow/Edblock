@@ -33,6 +33,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "View", "View", "{E9EFC27A-4
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ViewModel", "ViewModel", "{710A85D7-3A06-4807-9036-53E90C72C369}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{3FD4F2D2-A011-4A6E-951F-502597B62398}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Edblock.UserManagementService.ConsoleAppTest", "Edblock.UserManagementService.ConsoleAppTest\Edblock.UserManagementService.ConsoleAppTest.csproj", "{E6DD1857-6105-4E68-AEB6-F384D1770EC0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -67,6 +71,10 @@ Global
 		{1491663D-FDAB-41E0-8250-832F90B90AB7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1491663D-FDAB-41E0-8250-832F90B90AB7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1491663D-FDAB-41E0-8250-832F90B90AB7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E6DD1857-6105-4E68-AEB6-F384D1770EC0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E6DD1857-6105-4E68-AEB6-F384D1770EC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E6DD1857-6105-4E68-AEB6-F384D1770EC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E6DD1857-6105-4E68-AEB6-F384D1770EC0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -83,6 +91,7 @@ Global
 		{993C183B-B49E-4BC6-9353-88E501ABE90A} = {C7CDAF23-584E-475E-A066-0D8CECF5E5AC}
 		{E9EFC27A-4CA0-425A-B4A3-43A15DA5ACA3} = {C7CDAF23-584E-475E-A066-0D8CECF5E5AC}
 		{710A85D7-3A06-4807-9036-53E90C72C369} = {C7CDAF23-584E-475E-A066-0D8CECF5E5AC}
+		{E6DD1857-6105-4E68-AEB6-F384D1770EC0} = {D284B0BA-7E0F-4E45-A726-A86EC1543127}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {788EDC0A-2FC7-48B5-BBD7-0322397804DB}

@@ -32,7 +32,6 @@ public class Startup(IWebHostEnvironment environment, IConfiguration configurati
             .AddEntityFrameworkStores<UsersDbContext>()
             .AddDefaultTokenProviders();
 
-
         var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
         string connectionString = configuration.GetConnectionString(ConnectionNames.IdentityServerConnection);
 
@@ -71,7 +70,6 @@ public class Startup(IWebHostEnvironment environment, IConfiguration configurati
         {
             endpoints.MapDefaultControllerRoute();
         });
-        InitializeDatabase(app);
     }
 
     private static void InitializeDatabase(IApplicationBuilder app)

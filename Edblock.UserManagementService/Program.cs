@@ -1,5 +1,5 @@
-using Edblock.Library.Constants;
 using Edblock.Library.Data;
+using Edblock.Library.Constants;
 using Edblock.Library.UserManagementService.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -61,7 +61,6 @@ void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     app.UseRouting();
     app.UseSwagger();
     app.UseSwaggerUI();
-
 
     app.UseAuthentication();
     app.UseAuthorization();

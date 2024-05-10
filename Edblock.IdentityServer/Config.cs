@@ -44,6 +44,7 @@ public static class Config
             new Client
             {
                 ClientId = "external",
+              
                 ClientName = "External Client",
                 AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
                 RequireClientSecret = false,

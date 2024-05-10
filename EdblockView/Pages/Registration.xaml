@@ -93,7 +93,7 @@
                         </Grid.ColumnDefinitions>
 
                         <Image Source="/Images/Email.png" Style="{StaticResource Icon}" />
-                        <TextBox materialDesign:HintAssist.Hint="E-mail" Style="{StaticResource TextBox}" />
+                        <TextBox materialDesign:HintAssist.Hint="Login" Style="{StaticResource TextBox}" />
                     </Grid>
                 </Border>
 

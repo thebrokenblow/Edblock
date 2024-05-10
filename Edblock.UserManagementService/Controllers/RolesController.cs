@@ -1,7 +1,7 @@
 ﻿using Edblock.Library.Constants;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Edblock.UserManagementService.Controllers;
 
@@ -11,28 +11,24 @@ namespace Edblock.UserManagementService.Controllers;
 public class RolesController(RoleManager<IdentityRole> roleManager) : ControllerBase
 {
     [HttpPost(RepoActions.Add)]
-    public Task<IdentityResult> Add(IdentityRole role)
-    {
-        var result = roleManager.CreateAsync(role);
-
-        return result;
-    }
+    public Task<IdentityResult> Add(IdentityRole identityRole) =>
+        roleManager.CreateAsync(identityRole);
 
     [HttpPost(RepoActions.Update)]
-    public async Task<IdentityResult> Update(IdentityRole role)
+    public async Task<IdentityResult> Update(IdentityRole identityRole)
     {
-        var roleToBeUpdated = await roleManager.FindByIdAsync(role.Id);
+        var roleToBeUpdated = await roleManager.FindByIdAsync(identityRole.Id);
 
         if (roleToBeUpdated is null)
         {
             return IdentityResult.Failed(
                 new IdentityError()
                 {
-                    Description = $"Role {role.Name} was not found."
+                    Description = $"Role {identityRole.Name} was not found."
                 });
         }
 
-        roleToBeUpdated.Name = role.Name;
+        roleToBeUpdated.Name = identityRole.Name;
 
         var result = await roleManager.UpdateAsync(roleToBeUpdated);
 
@@ -40,26 +36,14 @@ public class RolesController(RoleManager<IdentityRole> roleManager) : Controller
     }
 
     [HttpPost(RepoActions.Remove)]
-    public Task<IdentityResult> Remove(IdentityRole role)
-    {
-        var result = roleManager.DeleteAsync(role);
-
-        return result;
-    }
+    public Task<IdentityResult> Remove(IdentityRole identityRole) =>
+        roleManager.DeleteAsync(identityRole);
 
     [HttpGet]
-    public Task<IdentityRole?> Get(string name)
-    {
-        var result = roleManager.FindByNameAsync(name);
-
-        return result;
-    }
+    public Task<IdentityRole?> Get(string name) =>
+        roleManager.FindByNameAsync(name);
 
     [HttpGet(RepoActions.GetAll)]
-    public IEnumerable<IdentityRole> Get()
-    {
-        var result = roleManager.Roles.AsEnumerable();
-
-        return result;
-    }
+    public IEnumerable<IdentityRole> Get() =>
+        roleManager.Roles.AsEnumerable();
 }
