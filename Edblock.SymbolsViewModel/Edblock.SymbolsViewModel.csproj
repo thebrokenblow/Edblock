@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Prism.Core" Version="8.1.97" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Edblock.PagesViewModel\Edblock.PagesViewModel.csproj" />
+    <ProjectReference Include="..\EdblockModel\EdblockModel.csproj" />
+    <ProjectReference Include="..\SerializationEdblock\SerializationEdblock.csproj" />
+  </ItemGroup>
+
+</Project>

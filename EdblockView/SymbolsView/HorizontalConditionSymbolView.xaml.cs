@@ -4,6 +4,7 @@ using System.Windows.Controls;
 using System.ComponentModel;
 using System;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM.ConnectionPoints;
+using Edblock.SymbolsViewModel.Symbols.ComponentsSymbolsVM.ConnectionPoints;
 
 namespace EdblockView.SymbolsView;
 

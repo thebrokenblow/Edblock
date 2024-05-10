@@ -1,0 +1,54 @@
+﻿<UserControl
+    x:Class="EdblockView.SymbolsUI.ParallelActionSymbolUI"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="120"
+    d:DesignWidth="330"
+    mc:Ignorable="d">
+    <StackPanel Orientation="Horizontal">
+        <Canvas
+            Width="140"
+            Height="60"
+            Margin="10,10,10,10"
+            Background="Transparent">
+
+            <Line
+                Style="{StaticResource LineParallelActionSymbolUI}"
+                X1="0"
+                X2="140"
+                Y1="20"
+                Y2="20" />
+
+            <Ellipse Margin="70,16" Style="{StaticResource ConnectionPointUI}" />
+
+            <Line
+                Style="{StaticResource LineParallelActionSymbolUI}"
+                X1="0"
+                X2="140"
+                Y1="40"
+                Y2="40" />
+
+            <Ellipse Margin="70,36" Style="{StaticResource ConnectionPointUI}" />
+        </Canvas>
+
+        <StackPanel Margin="10,10,0,0">
+            <Label Content="Параллельные действия (13)" Style="{StaticResource LabelSymbolMenu}" />
+
+            <TextBox
+                Name="сountSymbolsIncoming"
+                materialDesign:HintAssist.Hint="Количесво входов"
+                Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                Text="1" />
+
+            <TextBox
+                Name="сountSymbolsOutgoing"
+                materialDesign:HintAssist.Hint="Количесво выходов"
+                Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                Text="1" />
+        </StackPanel>
+
+    </StackPanel>
+</UserControl>

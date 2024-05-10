@@ -1,4 +1,5 @@
-﻿using EdblockViewModel.Symbols.LineSymbols;
+﻿using Edblock.SymbolsViewModel.Symbols.LineSymbols;
+using EdblockViewModel.Symbols.LineSymbols;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Shapes;

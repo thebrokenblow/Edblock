@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Edblock.PagesView\Edblock.PagesView.csproj" />
+    <ProjectReference Include="..\Edblock.SymbolsUI\Edblock.SymbolsUI.csproj" />
     <ProjectReference Include="..\EdblockViewModel\EdblockViewModel.csproj" />
   </ItemGroup>
 

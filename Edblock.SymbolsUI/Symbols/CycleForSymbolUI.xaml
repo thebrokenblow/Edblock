@@ -1,0 +1,26 @@
+﻿<UserControl
+    x:Class="EdblockView.SymbolsUI.CycleForSymbolUI"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="80"
+    d:DesignWidth="300"
+    mc:Ignorable="d">
+    <StackPanel Orientation="Horizontal">
+        <Canvas
+            Width="140"
+            Height="60"
+            Margin="10,10,10,10">
+            <Polygon Fill="#FFC618" Points="10 0 0 10 0 50 10 60 130 60 140 50 140 10 130 0" />
+
+            <TextBlock
+                Width="140"
+                Height="60"
+                Style="{StaticResource TextFieldUI}"
+                Text="Цикл for" />
+        </Canvas>
+
+        <Label Content="Цикл (8) for" Style="{StaticResource LabelSymbolMenu}" />
+    </StackPanel>
+</UserControl>

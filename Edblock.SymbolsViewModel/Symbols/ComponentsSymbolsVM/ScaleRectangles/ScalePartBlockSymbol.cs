@@ -1,0 +1,114 @@
+﻿using System;
+using System.Windows.Input;
+using EdblockViewModel.ComponentsVM;
+using System.Collections.ObjectModel;
+using Edblock.SymbolsViewModel.Core;
+
+namespace Edblock.SymbolsViewModel.Symbols.ComponentsSymbolsVM.ScaleRectangles;
+
+public class ScalePartBlockSymbol
+{
+    public BlockSymbolViewModel ScalingBlockSymbol { get; init; }
+    public double InitialWidthBlockSymbol { get; init; }
+    public double InitialHeigthBlockSymbol { get; init; }
+    public double InitialXCoordinateBlockSymbol { get; init; }
+    public double InitialYCoordinateBlockSymbol { get; init; }
+
+    private readonly ScaleAllSymbolVM _scaleAllSymbolVM;
+    private readonly Cursor _cursorWhenScaling;
+    private readonly ObservableCollection<BlockSymbolViewModel> _symbols;
+    private readonly Func<ScalePartBlockSymbol, CanvasSymbolsVM, double>? _getWidthBlockSymbol;
+    private readonly Func<ScalePartBlockSymbol, CanvasSymbolsVM, double>? _getHeigthBlockSymbol;
+
+    public ScalePartBlockSymbol(
+        BlockSymbolViewModel scalingBlockSymbol,
+        Cursor cursorWhenScaling,
+        Func<ScalePartBlockSymbol, CanvasSymbolsVM, double>? getWidthBlockSymbol,
+        Func<ScalePartBlockSymbol, CanvasSymbolsVM, double>? getHeigthBlockSymbol,
+        ScaleAllSymbolVM scaleAllSymbolVM,
+        ObservableCollection<BlockSymbolViewModel> symbolsVM)
+    {
+        ScalingBlockSymbol = scalingBlockSymbol;
+        InitialWidthBlockSymbol = scalingBlockSymbol.Width;
+        InitialHeigthBlockSymbol = scalingBlockSymbol.Height;
+        InitialXCoordinateBlockSymbol = scalingBlockSymbol.XCoordinate;
+        InitialYCoordinateBlockSymbol = scalingBlockSymbol.YCoordinate;
+        _cursorWhenScaling = cursorWhenScaling;
+        _getWidthBlockSymbol = getWidthBlockSymbol;
+        _getHeigthBlockSymbol = getHeigthBlockSymbol;
+        _scaleAllSymbolVM = scaleAllSymbolVM;
+        _symbols = symbolsVM;
+    }
+
+    public void SetWidthBlockSymbol(CanvasSymbolsVM canvasSymbolsVM)
+    {
+        canvasSymbolsVM.RedrawDrawnLinesSymbol(ScalingBlockSymbol);
+
+        if (_getWidthBlockSymbol == null)
+        {
+            return;
+        }
+
+        double width = _getWidthBlockSymbol.Invoke(this, canvasSymbolsVM);
+
+        if (_scaleAllSymbolVM.IsScaleAllSymbolVM)
+        {
+            foreach (var symbol in _symbols)
+            {
+                if (symbol is BlockSymbolViewModel blockSymbolVM)
+                {
+                    blockSymbolVM.SetWidth(width);
+                }
+            }
+
+            canvasSymbolsVM.RedrawnAllDrawnLines();
+        }
+        else
+        {
+            ScalingBlockSymbol.SetWidth(width);
+        }
+
+        if (ScalingBlockSymbol is IHasTextField blockSymbolHasTextField)
+        {
+            blockSymbolHasTextField.TextFieldSymbolVM.Cursor = _cursorWhenScaling;
+        }
+
+        canvasSymbolsVM.Cursor = _cursorWhenScaling;
+    }
+
+    public void SetHeightBlockSymbol(CanvasSymbolsVM canvasSymbolsVM)
+    {
+        canvasSymbolsVM.RedrawDrawnLinesSymbol(ScalingBlockSymbol);
+
+        if (_getHeigthBlockSymbol == null)
+        {
+            return;
+        }
+
+        double height = _getHeigthBlockSymbol.Invoke(this, canvasSymbolsVM);
+
+        if (_scaleAllSymbolVM.IsScaleAllSymbolVM)
+        {
+            foreach (var symbol in _symbols)
+            {
+                if (symbol is BlockSymbolViewModel blockSymbolVM)
+                {
+                    blockSymbolVM.SetHeight(height);
+                }
+            }
+
+            canvasSymbolsVM.RedrawnAllDrawnLines();
+        }
+        else
+        {
+            ScalingBlockSymbol.SetHeight(height);
+        }
+
+        if (ScalingBlockSymbol is IHasTextField blockSymbolHasTextField)
+        {
+            blockSymbolHasTextField.TextFieldSymbolVM.Cursor = _cursorWhenScaling;
+        }
+
+        canvasSymbolsVM.Cursor = _cursorWhenScaling;
+    }
+}
