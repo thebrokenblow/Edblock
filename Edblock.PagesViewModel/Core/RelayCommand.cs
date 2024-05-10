@@ -10,9 +10,9 @@ public class RelayCommand(Action<object?> execute, Predicate<object?> canExecute
         remove => CommandManager.RequerySuggested -= value;
     }
 
-    public bool CanExecute(object? parameter) =>
+    public bool CanExecute(object? parameter = null) =>
         canExecute(parameter);
 
-    public void Execute(object? parameter) =>
+    public void Execute(object? parameter = null) =>
         execute(parameter);
 }
