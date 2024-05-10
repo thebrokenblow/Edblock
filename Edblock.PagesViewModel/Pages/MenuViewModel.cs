@@ -12,7 +12,7 @@ public class MenuViewModel : BaseViewModel
         set
         {
             navigationServiceMenu = value;
-            OnPropertyChange();
+            OnPropertyChanged();
         }
     }
 

@@ -50,7 +50,7 @@
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
-                <DataTemplate DataType="{x:Type componentsViewModel:CardProjectViewModel}">
+                <DataTemplate DataType="{x:Type componentsViewModel:ProjectViewModel}">
                     <componentsView:CardProjectView />
                 </DataTemplate>
             </ItemsControl.ItemTemplate>

@@ -7,4 +7,13 @@ public class EditorViewModel(INavigationService navigationService) : BaseViewMod
 {
     public RelayCommand NavigateToBack { get; } =
         FactoryNavigateService<RegistrationViewModel>.Create(navigationService, true);
+
+    public void LoadProject(string filePath)
+    {
+    }
+
+    public void SaveProject(string filePath)
+    {
+
+    }
 }

@@ -11,7 +11,7 @@ internal class NavigateService(Func<Type, BaseViewModel> viewModelFactory) : Obs
         private set
         {
             currentViewModel = value;
-            OnPropertyChange();
+            OnPropertyChanged();
         }
     }
 
