@@ -1,44 +1,48 @@
-﻿using System.Windows.Input;
+﻿using System;
+using System.Windows.Input;
 using EdblockViewModel.CoreVM;
-using EdblockViewModel.StoresVM;
-using EdblockViewModel.CommandsVM.FactoriesVM;
+using EdblockViewModel.Service;
 
 namespace EdblockViewModel.PagesVM;
 
-public class MenuVM : BaseVM
+public class MenuVM : BaseViewModel
 {
-    public ICommand NavigateToHome { get; }
-    public ICommand NavigateToProjects { get; }
-    public ICommand NavigateToSettings { get; }
-    public ICommand NavigateToLogout { get; }
-
-    private readonly NavigationStore navigationStoreMenu = new();
-    public BaseVM? CurrentViewModel => navigationStoreMenu.CurrentViewModel;
-    public MenuVM(NavigationStore navigationStoreMainWindow)
+    private INavigationService navigationServiceMenu;
+    public INavigationService NavigationServiceMenu
     {
-        NavigateToHome = FactoryNavigateCommand.CreateNavigateCommand(
-            navigationStoreMenu,
-            () => new HomeVM());
-
-        NavigateToProjects = FactoryNavigateCommand.CreateNavigateCommand(
-            navigationStoreMenu,
-            () => new ProjectsVM(navigationStoreMainWindow, navigationStoreMenu));
-
-        NavigateToSettings = FactoryNavigateCommand.CreateNavigateCommand(
-            navigationStoreMenu,
-            () => new SettingsVM());
-
-        NavigateToLogout = FactoryNavigateCommand.CreateNavigateCommand(
-            navigationStoreMainWindow,
-            () => new AuthenticationVM(navigationStoreMainWindow));
-
-        NavigateToHome.Execute(navigationStoreMenu);
-
-        navigationStoreMenu.CurrentViewModelChanged += OnCurrentViewModelChanged;
+        get => navigationServiceMenu;
+        set
+        {
+            navigationServiceMenu = value;
+            OnPropertyChange();
+        }
     }
 
-    private void OnCurrentViewModelChanged()
+    private readonly INavigationService _navigateServiceWindow;
+
+    public ICommand NavigateToHome { get; set; }
+    public ICommand NavigateToSettings { get; set; }
+    public ICommand NavigateToProjects { get; set; }
+    public ICommand NavigateToAuthentication { get; set; }
+
+    public MenuVM(INavigationService navigateServiceWindow, Func<Type, BaseViewModel> viewModelFactory)
     {
-        OnPropertyChanged(nameof(CurrentViewModel));
+        _navigateServiceWindow = navigateServiceWindow;
+
+        navigationServiceMenu = new NavigateService(viewModelFactory);
+
+        NavigateToHome =
+            FactoryNavigateService<HomeVM>.Create(navigationServiceMenu, true);
+
+        NavigateToSettings =
+            FactoryNavigateService<SettingsVM>.Create(navigationServiceMenu, true);
+
+        NavigateToProjects =
+            FactoryNavigateService<ProjectsVM>.Create(navigationServiceMenu, true);
+
+        NavigateToAuthentication =
+            FactoryNavigateService<AuthenticationVM>.Create(_navigateServiceWindow, true);
+
+        NavigateToSettings.Execute(null);
     }
 }

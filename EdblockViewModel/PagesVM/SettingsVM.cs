@@ -2,6 +2,6 @@
 
 namespace EdblockViewModel.PagesVM;
 
-public class SettingsVM : BaseVM
+public class SettingsVM : BaseViewModel
 {
 }

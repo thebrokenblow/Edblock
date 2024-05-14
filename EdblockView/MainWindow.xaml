@@ -8,5 +8,5 @@
     Title="Edblock"
     d:DataContext="{d:DesignInstance Type=pagesVM:MainWindowVM}"
     mc:Ignorable="d">
-    <ContentControl Content="{Binding CurrentViewModel}" />
+    <ContentControl Content="{Binding NavigationService.CurrentViewModel}" />
 </Window>

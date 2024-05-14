@@ -1,30 +1,17 @@
 ﻿using EdblockViewModel.CoreVM;
-using EdblockViewModel.StoresVM;
-using EdblockViewModel.ServicesVM.FactoryVM;
+using EdblockViewModel.Service;
 
 namespace EdblockViewModel.PagesVM;
 
-public class MainWindowVM : BaseVM
+public class MainWindowVM(INavigationService navigationService) : BaseViewModel
 {
-    private readonly NavigationStore _navigationStore;
-
-    public BaseVM? CurrentViewModel => _navigationStore.CurrentViewModel;
-
-    public MainWindowVM(NavigationStore navigationStore)
+    public INavigationService NavigationService
     {
-        _navigationStore = navigationStore;
-       
-        var navigationServiceRegistration = FactoryNavigationService.CreateNavigationService(
-            navigationStore, 
-            () => new RegistrationVM(navigationStore));
-
-        navigationServiceRegistration.Navigate();
-
-        navigationStore.CurrentViewModelChanged += OnCurrentViewModelChanged;
-    }
-
-    private void OnCurrentViewModelChanged()
-    {
-        OnPropertyChanged(nameof(CurrentViewModel));
+        get => navigationService;
+        set
+        {
+            navigationService = value;
+            OnPropertyChange();
+        }
     }
 }

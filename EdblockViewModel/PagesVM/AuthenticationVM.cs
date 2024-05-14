@@ -1,16 +1,12 @@
-﻿using System.Windows.Input;
+﻿using EdblockModel;
 using EdblockViewModel.CoreVM;
-using EdblockViewModel.StoresVM;
-using EdblockViewModel.CommandsVM.FactoriesVM;
+using EdblockViewModel.Service;
+using System.Windows.Input;
 using Prism.Commands;
-using System.Net.Http;
-using System;
-using IdentityModel.Client;
-using EdblockModel;
 
 namespace EdblockViewModel.PagesVM;
 
-public class AuthenticationVM : BaseVM
+public class AuthenticationVM : BaseViewModel
 {
     public string Login { get; set; } = string.Empty;
     public string Password { get; set; } = string.Empty;
@@ -22,22 +18,21 @@ public class AuthenticationVM : BaseVM
 
     private Authentication? authenticationModel;
 
-    public AuthenticationVM(NavigationStore navigationStoreMainWindow)
+    public AuthenticationVM(INavigationService navigationService)
     {
-        NavigateToRegistration = FactoryNavigateCommand.CreateNavigateCommand(
-            navigationStoreMainWindow,
-            () => new RegistrationVM(navigationStoreMainWindow));
+        NavigateToRegistration = 
+            FactoryNavigateService<RegistrationVM>.Create(navigationService, true);
 
-        NavigateToMenu = FactoryNavigateCommand.CreateNavigateCommand(
-            navigationStoreMainWindow,
-            () => new MenuVM(navigationStoreMainWindow));
+        NavigateToMenu = 
+            FactoryNavigateService<MenuVM>.Create(navigationService, true);
 
         Signin = new(SignInAccount);
     }
 
-    public async void SignInAccount()
+    public void SignInAccount()
     {
-        authenticationModel = new Authentication();
-        var tokenResponse = await authenticationModel.Authenticate(Login, Password);
+        NavigateToMenu.Execute(null);
+        //authenticationModel = new Authentication();
+        //var tokenResponse = await authenticationModel.Authenticate(Login, Password);
     }
 }

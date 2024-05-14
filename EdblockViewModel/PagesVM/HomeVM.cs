@@ -2,6 +2,6 @@
 
 namespace EdblockViewModel.PagesVM;
 
-public class HomeVM : BaseVM
+public class HomeVM : BaseViewModel
 {
 }

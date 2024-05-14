@@ -79,7 +79,7 @@
                             </StackPanel>
                         </Button>
 
-                        <Button Command="{Binding NavigateToLogout}" Style="{StaticResource menuButton}">
+                        <Button Command="{Binding NavigateToAuthentication}" Style="{StaticResource menuButton}">
                             <StackPanel Orientation="Horizontal">
                                 <materialDesign:PackIcon Kind="Logout" Style="{StaticResource menuButtonIcon}" />
                                 <TextBlock Text="Logout" />
@@ -94,7 +94,7 @@
             <ContentControl
                 Grid.Row="1"
                 Grid.Column="1"
-                Content="{Binding CurrentViewModel}" />
+                Content="{Binding NavigationServiceMenu.CurrentViewModel}" />
         </Grid>
     </Border>
 </UserControl>

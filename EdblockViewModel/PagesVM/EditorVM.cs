@@ -1,13 +1,11 @@
 ﻿using Prism.Commands;
 using EdblockViewModel.CoreVM;
-using EdblockViewModel.StoresVM;
 using EdblockViewModel.ComponentsVM;
 using System.Windows.Input;
-using EdblockViewModel.CommandsVM.FactoriesVM;
 
 namespace EdblockViewModel.PagesVM;
 
-public class EditorVM : BaseVM
+public class EditorVM : BaseViewModel
 {
     public static int CellWidthPanelSymbols
     {
@@ -34,12 +32,8 @@ public class EditorVM : BaseVM
     private const int cellHeightTopSettingsPanel = 60;
     private const int cellWidthPanelSymbols = 50;
 
-    public EditorVM(NavigationStore navigationStoreMainWindow, NavigationStore navigationStoreMenu)
+    public EditorVM()
     {
-        NavigateToMenu = FactoryNavigateCommand.CreateNavigateCommand(
-            navigationStoreMainWindow,
-            () => new MenuVM(navigationStoreMainWindow));
-
         var selectedBlockSymbols = CanvasSymbolsVM.SelectedBlockSymbols;
 
         CanvasSymbolsVM.ScalingCanvasSymbolsVM.HeightTopSettingsPanel = cellHeightTopSettingsPanel;
