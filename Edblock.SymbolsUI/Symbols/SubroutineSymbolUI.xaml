@@ -1,0 +1,33 @@
+﻿<UserControl
+    x:Class="Edblock.SymbolsUI.Symbols.SubroutineSymbolUI"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="80"
+    d:DesignWidth="300"
+    mc:Ignorable="d">
+    <StackPanel Orientation="Horizontal">
+        <Canvas
+            Width="140"
+            Height="60"
+            Margin="10,10,10,10"
+            Background="#FFBA64C8">
+
+            <Border
+                Canvas.Left="20"
+                Width="100"
+                Height="60"
+                BorderBrush="Black"
+                BorderThickness="1" />
+
+            <TextBlock
+                Width="140"
+                Height="60"
+                Style="{StaticResource TextFieldUI}"
+                Text="Подпрограмма" />
+        </Canvas>
+
+        <Label Content="Подпрограмма (7)" Style="{StaticResource LabelSymbolMenu}" />
+    </StackPanel>
+</UserControl>
