@@ -5,5 +5,5 @@ namespace EdblockView.Abstractions;
 
 internal interface IFactorySymbolVM
 {
-    public BlockSymbolVM CreateBlockSymbolVM(EditorVM editorVM);
+    BlockSymbolVM CreateBlockSymbolVM(EditorVM editorVM);
 }

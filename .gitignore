@@ -361,3 +361,7 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/Edblock.PagesView
+/Edblock.PagesViewModel
+/Edblock.SymbolsUI
+/Edblock.SymbolsViewModel

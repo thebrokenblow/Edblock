@@ -78,22 +78,21 @@
                         </StackPanel>
                     </Button>
 
-                        <Button Command="{Binding NavigateToAuthentication}" Style="{StaticResource menuButton}">
-                            <StackPanel Orientation="Horizontal">
-                                <materialDesign:PackIcon Kind="Logout" Style="{StaticResource menuButtonIcon}" />
-                                <TextBlock Text="Logout" />
-                            </StackPanel>
-                        </Button>
-                    </StackPanel>
-                </DockPanel>
-            </Border>
+                    <Button Command="{Binding NavigateToAuthentication}" Style="{StaticResource menuButton}">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="Logout" Style="{StaticResource menuButtonIcon}" />
+                            <TextBlock Text="Logout" />
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+            </DockPanel>
+        </Border>
 
         <Border Grid.Column="1" Background="#623ED0" />
 
-            <ContentControl
-                Grid.Row="1"
-                Grid.Column="1"
-                Content="{Binding NavigationServiceMenu.CurrentViewModel}" />
-        </Grid>
-    </Border>
+        <ContentControl
+            Grid.Row="1"
+            Grid.Column="1"
+            Content="{Binding NavigationServiceMenu.CurrentViewModel}" />
+    </Grid>
 </UserControl>

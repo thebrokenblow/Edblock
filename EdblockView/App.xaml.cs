@@ -25,6 +25,7 @@ public partial class App : Application
         services.AddScoped<MainWindowVM>();
         services.AddScoped<AuthenticationVM>();
         services.AddScoped<RegistrationVM>();
+        services.AddScoped<EditorVM>();
         services.AddScoped<MenuVM>();
         services.AddScoped<ProjectsVM>();
         services.AddScoped<HomeVM>();
