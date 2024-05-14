@@ -10,74 +10,73 @@
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
-    <Border Background="#EFF2F7">
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="200" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
+    <Grid Background="#EFF2F7">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
 
-            <Grid.RowDefinitions>
-                <RowDefinition Height="40" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
 
-            <!--  Left Menu  -->
-            <Border Grid.RowSpan="2" Background="#623ED0">
-                <DockPanel>
+        <!--  Left Menu  -->
+        <Border Grid.RowSpan="2" Background="#623ED0">
+            <DockPanel>
 
-                    <!--  Menu Titles  -->
-                    <TextBlock
-                        Margin="5,25,0,10"
-                        DockPanel.Dock="Top"
-                        FontSize="22"
-                        FontWeight="SemiBold"
-                        Foreground="White"
-                        Text="Edblock"
-                        TextAlignment="Center" />
+                <!--  Menu Titles  -->
+                <TextBlock
+                    Margin="5,25,0,10"
+                    DockPanel.Dock="Top"
+                    FontSize="22"
+                    FontWeight="SemiBold"
+                    Foreground="White"
+                    Text="Edblock"
+                    TextAlignment="Center" />
 
-                    <TextBlock
-                        DockPanel.Dock="Top"
-                        FontSize="14"
-                        FontWeight="SemiBold"
-                        Foreground="#D0BFFF"
-                        Text="Create your projects"
-                        TextAlignment="Center" />
+                <TextBlock
+                    DockPanel.Dock="Top"
+                    FontSize="14"
+                    FontWeight="SemiBold"
+                    Foreground="#D0BFFF"
+                    Text="Create your projects"
+                    TextAlignment="Center" />
 
-                    <!--  Menu Seprator  -->
-                    <Separator
-                        Height="0.8"
-                        Margin="25"
-                        Background="#7E5FDC"
-                        DockPanel.Dock="Top" />
+                <!--  Menu Seprator  -->
+                <Separator
+                    Height="0.8"
+                    Margin="25"
+                    Background="#7E5FDC"
+                    DockPanel.Dock="Top" />
 
-                    <!--  Menu Buttons  -->
-                    <StackPanel DockPanel.Dock="Top">
-                        <Button Command="{Binding NavigateToHome}" Style="{StaticResource menuButton}">
-                            <StackPanel Orientation="Horizontal">
-                                <materialDesign:PackIcon Kind="Home" Style="{StaticResource menuButtonIcon}" />
-                                <TextBlock Text="Home" />
-                            </StackPanel>
-                        </Button>
+                <!--  Menu Buttons  -->
+                <StackPanel DockPanel.Dock="Top">
+                    <Button Command="{Binding NavigateToHome}" Style="{StaticResource menuButton}">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="Home" Style="{StaticResource menuButtonIcon}" />
+                            <TextBlock Text="Home" />
+                        </StackPanel>
+                    </Button>
 
-                        <Button Command="{Binding NavigateToProjects}" Style="{StaticResource menuButton}">
-                            <StackPanel Orientation="Horizontal">
-                                <materialDesign:PackIcon Kind="Flowchart" Style="{StaticResource menuButtonIcon}" />
-                                <TextBlock Text="Projects" />
-                            </StackPanel>
-                        </Button>
-                    </StackPanel>
+                    <Button Command="{Binding NavigateToProjects}" Style="{StaticResource menuButton}">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="Flowchart" Style="{StaticResource menuButtonIcon}" />
+                            <TextBlock Text="Projects" />
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
 
-                    <StackPanel
-                        Margin="0,0,0,20"
-                        VerticalAlignment="Bottom"
-                        DockPanel.Dock="Bottom">
-                        <Button Command="{Binding NavigateToSettings}" Style="{StaticResource menuButton}">
-                            <StackPanel Orientation="Horizontal">
-                                <materialDesign:PackIcon Kind="Cog" Style="{StaticResource menuButtonIcon}" />
-                                <TextBlock Text="Settings" />
-                            </StackPanel>
-                        </Button>
+                <StackPanel
+                    Margin="0,0,0,20"
+                    VerticalAlignment="Bottom"
+                    DockPanel.Dock="Bottom">
+                    <Button Command="{Binding NavigateToSettings}" Style="{StaticResource menuButton}">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="Cog" Style="{StaticResource menuButtonIcon}" />
+                            <TextBlock Text="Settings" />
+                        </StackPanel>
+                    </Button>
 
                         <Button Command="{Binding NavigateToAuthentication}" Style="{StaticResource menuButton}">
                             <StackPanel Orientation="Horizontal">
@@ -89,7 +88,7 @@
                 </DockPanel>
             </Border>
 
-            <Border Grid.Column="1" Background="#623ED0" />
+        <Border Grid.Column="1" Background="#623ED0" />
 
             <ContentControl
                 Grid.Row="1"
