@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Controls;
-using EdblockView.Abstractions;
+using Edblock.SymbolsUI.Factories;
 using EdblockViewModel.ComponentsVM;
 
 namespace EdblockView.Components;
@@ -18,7 +18,7 @@ public partial class ListSymbols : UserControl
 
     private void AddSymbolView(object sender, MouseButtonEventArgs e)
     {
-        if (sender is IFactorySymbolVM factorySymbolVM)
+        if (sender is IFactorySymbolViewModel factorySymbolVM)
         {
             listSymbolsVM ??= (ListSymbolsVM)DataContext;
 
@@ -29,7 +29,7 @@ public partial class ListSymbols : UserControl
                     return;
                 }
 
-                var blockSymbolVM = factorySymbolVM.CreateBlockSymbolVM(listSymbolsVM.EditorVM);
+                var blockSymbolVM = factorySymbolVM.CreateBlockSymbolViewModel(listSymbolsVM.EditorVM);
                 listSymbolsVM.AddBlockSymbol(blockSymbolVM);
             }
             catch (Exception ex)
