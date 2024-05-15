@@ -68,6 +68,6 @@ void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     app.UseEndpoints(endpoints =>
     {
         endpoints.MapControllers()
-            .RequireAuthorization("ApiScope");
+        .RequireAuthorization("ApiScope");
     });
 }

@@ -93,7 +93,10 @@
                         </Grid.ColumnDefinitions>
 
                         <Image Source="/Images/Email.png" Style="{StaticResource Icon}" />
-                        <TextBox materialDesign:HintAssist.Hint="Login" Style="{StaticResource TextBox}" />
+                        <TextBox
+                            materialDesign:HintAssist.Hint="Login"
+                            Style="{StaticResource TextBox}"
+                            Text="{Binding Login}" />
                     </Grid>
                 </Border>
 
@@ -105,9 +108,10 @@
                         </Grid.ColumnDefinitions>
 
                         <Image Source="/Images/Lock.png" Style="{StaticResource Icon}" />
-                        <PasswordBox
+                        <TextBox
                             materialDesign:HintAssist.Hint="Password"
-                            Style="{StaticResource PasswordBox}"
+                            Style="{StaticResource TextBox}"
+                            Text="{Binding Password}"
                             Visibility="Visible" />
                     </Grid>
                 </Border>
@@ -120,15 +124,15 @@
                         </Grid.ColumnDefinitions>
 
                         <Image Source="/Images/Lock.png" Style="{StaticResource Icon}" />
-                        <PasswordBox
+                        <TextBox
                             materialDesign:HintAssist.Hint="Confirm password"
-                            Style="{StaticResource PasswordBox}"
+                            Style="{StaticResource TextBox}"
                             Visibility="Visible" />
                     </Grid>
                 </Border>
 
                 <Button
-                    Command="{Binding NavigateToMenu}"
+                    Command="{Binding Signin}"
                     Content="Sign Up"
                     Style="{StaticResource MainButton}" />
             </StackPanel>

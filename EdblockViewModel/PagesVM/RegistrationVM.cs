@@ -1,6 +1,9 @@
 ﻿using EdblockViewModel.CoreVM;
 using Prism.Commands;
 using EdblockViewModel.Service;
+using EdblockModel;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 namespace EdblockViewModel.PagesVM;
 
@@ -12,7 +15,7 @@ public class RegistrationVM : BaseViewModel
     public DelegateCommand Signin { get; set; }
 
     public RelayCommand NavigateToAuthentication { get; }
-    public RelayCommand NavigateToMenu { get; } 
+    public RelayCommand NavigateToMenu { get; }
 
     public RegistrationVM(INavigationService navigationService)
     {
@@ -25,10 +28,9 @@ public class RegistrationVM : BaseViewModel
         Signin = new(RegistrationAccount);
     }
 
-    public void RegistrationAccount()
+    public async void RegistrationAccount()
     {
-        NavigateToMenu.Execute();
-        //var registration = new Registration();
-        //registration.RegistrationAccount(Login, Password);
+        var registrationModel = new RegistrationModel();
+        var tokenResponse = await registrationModel.Registration(Login, Password);
     }
 }
