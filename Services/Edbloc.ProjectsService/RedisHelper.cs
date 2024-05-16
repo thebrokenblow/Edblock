@@ -1,6 +1,6 @@
 ﻿using StackExchange.Redis;
 
-namespace Edbloc.ProjectsService;
+namespace Edblock.ProjectsService;
 
 public class RedisHelper
 {

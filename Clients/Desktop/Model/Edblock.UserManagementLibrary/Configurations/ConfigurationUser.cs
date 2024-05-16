@@ -3,6 +3,7 @@ using Edblock.UserManagementLibrary.Clients;
 using Edblock.UserManagementLibrary.Clients.IdentityServer;
 using Edblock.UserManagementLibrary.Clients.UserManagementService;
 using Edblock.UserManagementLibrary.Options;
+using Edblock.UserManagementModel.Clients;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -22,6 +23,7 @@ public class ConfigurationUser
                    services.AddHttpClient<IdentityServerClient>();
                    services.AddHttpClient<UsersClient>();
                    services.AddTransient<Registration>();
+                   services.AddTransient<Authentication>();
 
                    var configurationBuilder = new ConfigurationBuilder()
                        .SetBasePath(Directory.GetCurrentDirectory())

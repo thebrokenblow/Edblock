@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Edblock.UserManagementLibrary\Edblock.UserManagementLibrary.csproj" />
+    <ProjectReference Include="..\Edblock.UserManagementLibrary\Edblock.UserManagementModel.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -30,7 +30,30 @@ public static class Config
                 ClientName = "Test client",
 
                 AllowedGrantTypes = GrantTypes.ClientCredentials,
-                ClientSecrets = { new Secret("511536EF-F270-4058-80CA-1C89C192F69A".Sha256()) },
+                ClientSecrets = 
+                { 
+                    new Secret("511536EF-F270-4058-80CA-1C89C192F69A".Sha256())
+                },
+
+                AllowedScopes =
+                {
+                    IdentityServerConstants.StandardScopes.OpenId,
+                    IdentityServerConstants.StandardScopes.Profile,
+                    IdConstants.WebScope,
+                    IdConstants.ApiScope
+                }
+            },
+
+            new Client
+            {
+                ClientId = "desktop.client",
+                ClientName = "Desktop client",
+
+                AllowedGrantTypes = GrantTypes.ClientCredentials,
+                ClientSecrets = 
+                { 
+                    new Secret("QrkrroMyiGt7XJ9fwYeB0ZKW8GoLXHujVwQ=".Sha256())
+                },
 
                 AllowedScopes =
                 {
@@ -44,7 +67,6 @@ public static class Config
             new Client
             {
                 ClientId = "external",
-              
                 ClientName = "External Client",
                 AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
                 RequireClientSecret = false,

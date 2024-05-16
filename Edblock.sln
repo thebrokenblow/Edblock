@@ -21,7 +21,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ViewModel", "ViewModel", "{
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{3FD4F2D2-A011-4A6E-951F-502597B62398}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Edblock.UserManagementLibrary", "Clients\Desktop\Model\Edblock.UserManagementLibrary\Edblock.UserManagementLibrary.csproj", "{8941A768-8621-4844-ADE4-2F0A60B79D26}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Edblock.UserManagementModel", "Clients\Desktop\Model\Edblock.UserManagementLibrary\Edblock.UserManagementModel.csproj", "{8941A768-8621-4844-ADE4-2F0A60B79D26}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EdblockModel", "Clients\Desktop\Model\EdblockModel\EdblockModel.csproj", "{30B4B30E-EC09-4729-8152-BE82D3B8E6EA}"
 EndProject
@@ -31,7 +31,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Edblock.SymbolsUI", "Client
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EdblockViewModel", "Clients\Desktop\ViewModel\EdblockViewModel\EdblockViewModel.csproj", "{5911FA4D-15C1-4F2E-8874-EB579E1B6D37}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Edbloc.ProjectsService", "Services\Edbloc.ProjectsService\Edbloc.ProjectsService.csproj", "{B596FCCF-18DC-4976-8B43-FA2826498E30}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Edblock.ProjectsService", "Services\Edbloc.ProjectsService\Edblock.ProjectsService.csproj", "{B596FCCF-18DC-4976-8B43-FA2826498E30}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Edblock.UserManagementService", "Services\Edblock.UserManagementService\Edblock.UserManagementService.csproj", "{571E0D97-9C80-4ED6-B220-27CF153B8732}"
 EndProject
@@ -42,6 +42,10 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Edblock.IdentityServer", "Tools\Edblock.IdentityServer\Edblock.IdentityServer.csproj", "{5F9AA5D8-4B9F-491E-8299-16FD40E8A6C3}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Edblock.UserManagementService.ConsoleAppTest", "Tools\Edblock.UserManagementService.ConsoleAppTest\Edblock.UserManagementService.ConsoleAppTest.csproj", "{F5F6BD4C-8600-4202-A38D-7414DBAC5E3E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Edblock.ProjectsServiceLibrary", "Edblock.ProjectsServiceLibrary\Edblock.ProjectsServiceLibrary.csproj", "{2CC42165-F1EB-4871-90F8-20FC7E31F0E5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Edblock.ProjectsManagementModel", "Edblock.ProjectsManagementModel\Edblock.ProjectsManagementModel.csproj", "{2E0B234E-3683-47CF-9B42-456249BBCC8E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -93,6 +97,14 @@ Global
 		{F5F6BD4C-8600-4202-A38D-7414DBAC5E3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F5F6BD4C-8600-4202-A38D-7414DBAC5E3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F5F6BD4C-8600-4202-A38D-7414DBAC5E3E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2CC42165-F1EB-4871-90F8-20FC7E31F0E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2CC42165-F1EB-4871-90F8-20FC7E31F0E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2CC42165-F1EB-4871-90F8-20FC7E31F0E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2CC42165-F1EB-4871-90F8-20FC7E31F0E5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E0B234E-3683-47CF-9B42-456249BBCC8E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E0B234E-3683-47CF-9B42-456249BBCC8E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E0B234E-3683-47CF-9B42-456249BBCC8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E0B234E-3683-47CF-9B42-456249BBCC8E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -113,6 +125,8 @@ Global
 		{C9937D70-60C6-4095-BD80-63291B2DABAC} = {4A2350A8-B70B-4082-9D3E-EF179018E176}
 		{5F9AA5D8-4B9F-491E-8299-16FD40E8A6C3} = {D284B0BA-7E0F-4E45-A726-A86EC1543127}
 		{F5F6BD4C-8600-4202-A38D-7414DBAC5E3E} = {D284B0BA-7E0F-4E45-A726-A86EC1543127}
+		{2CC42165-F1EB-4871-90F8-20FC7E31F0E5} = {4A2350A8-B70B-4082-9D3E-EF179018E176}
+		{2E0B234E-3683-47CF-9B42-456249BBCC8E} = {993C183B-B49E-4BC6-9353-88E501ABE90A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {788EDC0A-2FC7-48B5-BBD7-0322397804DB}

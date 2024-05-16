@@ -1,8 +1,8 @@
-﻿using IdentityModel.Client;
+﻿using Edblock.UserManagementModel.Clients;
 
 namespace EdblockModel;
 
 public interface IAuthentication
 {
-    Task<TokenResponse> Authenticate(string login, string password);
+    Task<UserModel> AuthenticateAccount(string login, string password);
 }

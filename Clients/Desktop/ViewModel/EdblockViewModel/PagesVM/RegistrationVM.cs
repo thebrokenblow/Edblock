@@ -2,7 +2,7 @@
 using EdblockModel;
 using EdblockViewModel.CoreVM;
 using EdblockViewModel.Service;
-using System.Windows.Input;
+using EdblockViewModel.Clients;
 
 namespace EdblockViewModel.PagesVM;
 
@@ -12,10 +12,12 @@ public class RegistrationVM : BaseViewModel
     public string Password { get; set; } = string.Empty;
 
     public DelegateCommand Signin { get; set; }
-    public ICommand NavigateToAuthentication { get; }
-    public ICommand NavigateToMenu { get; }
+    public RelayCommand NavigateToAuthentication { get; }
+    public RelayCommand NavigateToMenu { get; }
 
-    public RegistrationVM(INavigationService navigationService)
+    private readonly UserViewModel _userViewModel;
+
+    public RegistrationVM(INavigationService navigationService, UserViewModel userViewModel)
     {
         NavigateToAuthentication =
            FactoryNavigateService<AuthenticationVM>.Create(navigationService, true);
@@ -24,11 +26,15 @@ public class RegistrationVM : BaseViewModel
             FactoryNavigateService<MenuVM>.Create(navigationService, true);
 
         Signin = new(RegistrationAccount);
+
+        _userViewModel = userViewModel;
     }
 
     public async void RegistrationAccount()
     {
         var registrationModel = new RegistrationModel();
-        var tokenResponse = await registrationModel.Registration(Login, Password);
+        var userModel = await registrationModel.Registration(Login, Password);
+        _userViewModel.Id = userModel.Id;
+        NavigateToMenu.Execute();
     }
 }

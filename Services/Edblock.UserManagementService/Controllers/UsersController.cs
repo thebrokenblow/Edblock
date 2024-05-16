@@ -51,7 +51,7 @@ public class UsersController(UserManager<ApplicationUser> userManager) : Control
     public async Task<IdentityResult> Remove(ApplicationUser user) =>
         await userManager.DeleteAsync(user);
 
-    [HttpGet]
+    [HttpGet(RepoActions.GetByName)]
     public async Task<ApplicationUser?> Get(string name) =>
         await userManager.FindByNameAsync(name);
 

@@ -13,6 +13,9 @@ public class UsersClient(HttpClient httpClient, IOptions<ServiceAdressOptions> o
     public async Task<IdentityResult> Add(CreateUserRequest request) => 
         await SendPostRequest(request, $"/{UsersControllerRoutes.ControllerName}/{RepoActions.Add}");
 
+    public async Task<ApplicationUser> GetUserByName(string name) =>
+       await SendGetRequest($"/{UsersControllerRoutes.ControllerName}/{RepoActions.GetByName}?name={name}");
+
     public async Task<IdentityResult> ChangePassword(UserPasswordChangeRequest request) => 
         await SendPostRequest(request, $"/{UsersControllerRoutes.ControllerName}/{UsersControllerRoutes.ChangePassword}");
 

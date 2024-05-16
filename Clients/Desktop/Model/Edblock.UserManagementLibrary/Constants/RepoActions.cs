@@ -8,4 +8,5 @@ public class RepoActions
     public const string Remove = "remove";
     public const string RemoveRange = "removeRange";
     public const string GetAll = "all";
+    public const string GetByName = "getByName";
 }

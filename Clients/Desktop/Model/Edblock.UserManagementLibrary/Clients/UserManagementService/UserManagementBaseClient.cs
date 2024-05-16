@@ -1,4 +1,5 @@
-﻿using Edblock.UserManagementLibrary.Options;
+﻿using Edblock.Library.UserManagementService.Models;
+using Edblock.UserManagementLibrary.Options;
 using Edblock.UserManagementLibrary.UserManagementService.Responses;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
@@ -17,7 +18,24 @@ public abstract class UserManagementBaseClient
 
     public HttpClient HttpClient { get; init; }
 
-    //TODO Сделать сериализация и десириализацию ассинхронной
+    protected async Task<ApplicationUser> SendGetRequest(string path)
+    {
+        //https://localhost:7121/Users/getByName?name=alice
+        var requestResult = await HttpClient.GetAsync(path);
+
+        IdentityResult result;
+
+        if (requestResult.IsSuccessStatusCode)
+        {
+            var responseJson = await requestResult.Content.ReadAsStringAsync();
+            var applicationUser = JsonSerializer.Deserialize<ApplicationUser>(responseJson) ?? throw new NullReferenceException("Response is null");
+
+            return applicationUser;
+        }
+
+        throw new Exception("Не удалось получить пользователя");
+    }
+
     protected async Task<IdentityResult> SendPostRequest<TRequest>(TRequest request, string path)
     {
         var jsonContent = JsonSerializer.Serialize(request);

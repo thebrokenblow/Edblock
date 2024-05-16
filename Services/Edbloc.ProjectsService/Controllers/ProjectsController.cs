@@ -1,13 +1,16 @@
 ﻿using System.Text.Json;
+using Edblock.ProjectsServiceLibrary.Constants;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Edbloc.ProjectsService.Controllers;
+namespace Edblock.ProjectsService.Controllers;
 
 [ApiController]
 [Route("[controller]")]
+[Authorize(AuthenticationSchemes = "Bearer")]
 public class ProjectsController : ControllerBase
 {
-    [HttpGet("get")]
+    [HttpGet(RepoAction.GetAll)]
     public async Task<List<Project>> Get(string key)
     {
         var database = RedisHelper.RedisDatabase;
@@ -23,14 +26,15 @@ public class ProjectsController : ControllerBase
         return projects;
     }
 
-    [HttpPost("add")]
+    [HttpPost(RepoAction.Add)]
     public async Task Add(string key, Project project)
     {
         var database = RedisHelper.RedisDatabase;
-        await database.ListRightPushAsync(key, JsonSerializer.Serialize(project));
+        var projectRedis = JsonSerializer.Serialize(project);
+        await database.ListRightPushAsync(key, projectRedis);
     }
 
-    [HttpPut("update")]
+    [HttpPut(RepoAction.Update)]
     public async Task Update(string key, int index, Project project)
     {
         var database = RedisHelper.RedisDatabase;
@@ -47,7 +51,7 @@ public class ProjectsController : ControllerBase
         await database.ListSetByIndexAsync(key, index, resultProjectRedis);
     }
 
-    [HttpDelete("delete")]
+    [HttpDelete(RepoAction.Remove)]
     public async Task Delete(string key, int index)
     {
         var database = RedisHelper.RedisDatabase;

@@ -1,4 +1,4 @@
-﻿namespace Edbloc.ProjectsService;
+﻿namespace Edblock.ProjectsService;
 
 public class Project
 {

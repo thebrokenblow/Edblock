@@ -3,6 +3,7 @@ using EdblockViewModel.CoreVM;
 using EdblockViewModel.Service;
 using System.Windows.Input;
 using Prism.Commands;
+using EdblockViewModel.Clients;
 
 namespace EdblockViewModel.PagesVM;
 
@@ -16,9 +17,10 @@ public class AuthenticationVM : BaseViewModel
     public ICommand NavigateToMenu { get; }
     public ICommand NavigateToRegistration { get; }
 
-    private Authentication? authenticationModel;
+    private readonly AuthenticationModel authenticationModel = new();
 
-    public AuthenticationVM(INavigationService navigationService)
+    private readonly UserViewModel _userViewModel;
+    public AuthenticationVM(INavigationService navigationService, UserViewModel userViewModel)
     {
         NavigateToRegistration = 
             FactoryNavigateService<RegistrationVM>.Create(navigationService, true);
@@ -26,13 +28,15 @@ public class AuthenticationVM : BaseViewModel
         NavigateToMenu = 
             FactoryNavigateService<MenuVM>.Create(navigationService, true);
 
+        _userViewModel = userViewModel;
         Signin = new(SignInAccount);
     }
 
-    public void SignInAccount()
+    public async void SignInAccount()
     {
+        var userModel = await authenticationModel.AuthenticateAccount(Login, Password);
+        _userViewModel.Id = userModel.Id;
+
         NavigateToMenu.Execute(null);
-        //authenticationModel = new Authentication();
-        //var tokenResponse = await authenticationModel.Authenticate(Login, Password);
     }
 }

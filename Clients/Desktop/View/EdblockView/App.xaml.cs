@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows;
+using EdblockViewModel.Clients;
 using EdblockViewModel.CoreVM;
 using EdblockViewModel.PagesVM;
 using EdblockViewModel.Service;
@@ -30,6 +31,7 @@ public partial class App : Application
         services.AddScoped<ProjectsVM>();
         services.AddScoped<HomeVM>();
         services.AddScoped<SettingsVM>();
+        services.AddScoped<UserViewModel>();
         services.AddScoped<INavigationService, NavigateService>();
         services.AddScoped<Func<Type, BaseViewModel>>(
             serviceProvider =>

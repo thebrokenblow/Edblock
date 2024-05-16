@@ -70,6 +70,8 @@ public class Startup(IWebHostEnvironment environment, IConfiguration configurati
         {
             endpoints.MapDefaultControllerRoute();
         });
+
+        InitializeDatabase(app);
     }
 
     private static void InitializeDatabase(IApplicationBuilder app)

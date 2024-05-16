@@ -3,10 +3,11 @@ using System.Collections.ObjectModel;
 using EdblockViewModel.CoreVM;
 using EdblockViewModel.ComponentsVM;
 using EdblockViewModel.Service;
+using EdblockViewModel.Clients;
 
 namespace EdblockViewModel.PagesVM;
 
-public class ProjectsVM(INavigationService navigationService) : BaseViewModel
+public class ProjectsVM(INavigationService navigationService, UserViewModel userViewModel) : BaseViewModel
 {
     public ICommand NavigateToEditor { get; } = 
         FactoryNavigateService<EditorVM>.Create(navigationService, true);
