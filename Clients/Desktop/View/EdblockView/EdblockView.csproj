@@ -24,12 +24,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\ViewModel\EdblockViewModel\EdblockViewModel.csproj" />
     <ProjectReference Include="..\Edblock.SymbolsUI\Edblock.SymbolsUI.csproj" />
-    <ProjectReference Include="..\EdblockViewModel\EdblockViewModel.csproj" />
   </ItemGroup>
-
   <ItemGroup>
-    <Resource Include="Images\close.png">
+
+	<Resource Include="Images\close.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\Email.png">

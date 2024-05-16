@@ -5,7 +5,7 @@ using EdblockViewModel.PagesVM;
 using EdblockViewModel.AttributesVM;
 using EdblockViewModel.AbstractionsVM;
 using EdblockViewModel.Symbols.SwitchCaseConditionSymbolsVM;
-using SerializationEdblock.SymbolsSerializable;
+using Edblock.SymbolsSerialization.Symbols;
 
 namespace EdblockViewModel.Symbols;
 

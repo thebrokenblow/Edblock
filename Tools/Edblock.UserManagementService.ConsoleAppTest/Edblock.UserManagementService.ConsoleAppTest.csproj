@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Edblock.Library\Edblock.Library.csproj" />
+    <ProjectReference Include="..\..\Libraries\Edblock.Library\Edblock.Library.csproj" />
   </ItemGroup>
 
   <ItemGroup>

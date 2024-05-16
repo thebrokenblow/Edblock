@@ -1,7 +1,6 @@
-﻿using SerializationEdblock.SymbolsSerializable;
-using System.Collections.Generic;
+﻿using Edblock.SymbolsSerialization.Symbols;
 
-namespace SerializationEdblock;
+namespace Edblock.SymbolsSerialization;
 
 public class ProjectSerializable
 {
@@ -9,6 +8,6 @@ public class ProjectSerializable
     public bool IsDrawingLinesAccordingGOST { get; init; }
     public List<BlockSymbolSerializable>? BlockSymbolsSerializable { get; init; }
     public List<ParallelActionSymbolSerializable>? ParallelActionSymbolsSerializable { get; init; }
-    public List<SwitchCaseSymbolsSerializable>? SwitchCaseSymbolsSerializable { get; set; } 
+    public List<SwitchCaseSymbolsSerializable>? SwitchCaseSymbolsSerializable { get; set; }
     public List<DrawnLineSymbolSerializable>? DrawnLinesSymbolSerializable { get; init; }
 }

@@ -1,7 +1,6 @@
 ﻿using EdblockModel.EnumsModel;
-using System.Collections.Generic;
 
-namespace SerializationEdblock.SymbolsSerializable;
+namespace Edblock.SymbolsSerialization.Symbols;
 
 public class DrawnLineSymbolSerializable
 {

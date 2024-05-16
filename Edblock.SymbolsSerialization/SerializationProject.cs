@@ -1,11 +1,8 @@
-﻿using System.Text.Json;
+﻿using System.Text.Encodings.Web;
+using System.Text.Json;
 using System.Text.Unicode;
-using System.Text.Encodings.Web;
-using System.Threading.Tasks;
-using System.IO;
-using System;
 
-namespace SerializationEdblock;
+namespace Edblock.SymbolsSerialization;
 
 public class SerializationProject
 {
@@ -31,6 +28,6 @@ public class SerializationProject
         using var fileStream = new FileStream(pathFile, FileMode.Open);
         var projectSerializable = await JsonSerializer.DeserializeAsync<ProjectSerializable>(fileStream);
 
-        return projectSerializable == null ? throw new Exception("Ошибка при загрузи файла") : projectSerializable;
+        return projectSerializable ?? throw new Exception("Ошибка при загрузи файла");
     }
 }

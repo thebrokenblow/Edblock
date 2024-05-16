@@ -12,7 +12,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\EdblockViewModel\EdblockViewModel.csproj" />
+    <ProjectReference Include="..\..\ViewModel\EdblockViewModel\EdblockViewModel.csproj" />
   </ItemGroup>
+
 
 </Project>

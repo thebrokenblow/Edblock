@@ -14,8 +14,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\EdblockModel\EdblockModel.csproj" />
-    <ProjectReference Include="..\SerializationEdblock\SerializationEdblock.csproj" />
+    <ProjectReference Include="..\..\..\..\Edblock.SymbolsSerialization\Edblock.SymbolsSerialization.csproj" />
+    <ProjectReference Include="..\..\Model\EdblockModel\EdblockModel.csproj" />
   </ItemGroup>
 
 </Project>

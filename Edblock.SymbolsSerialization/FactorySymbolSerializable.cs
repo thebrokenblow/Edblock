@@ -1,9 +1,8 @@
-﻿using EdblockModel.SymbolsModel;
+﻿using Edblock.SymbolsSerialization.Symbols;
+using EdblockModel.SymbolsModel;
 using EdblockModel.SymbolsModel.LineSymbolsModel;
-using SerializationEdblock.SymbolsSerializable;
-using System.Collections.Generic;
 
-namespace SerializationEdblock;
+namespace Edblock.SymbolsSerialization;
 
 public class FactorySymbolSerializable
 {
@@ -97,7 +96,7 @@ public class FactorySymbolSerializable
         if (symbolOutgoingLine is not null)
         {
             symbolOutgoingLineSerializable = Create(symbolOutgoingLine);
-            
+
         }
 
         if (symbolIncomingLine is not null)
