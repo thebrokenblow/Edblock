@@ -1,9 +1,8 @@
-﻿using EdblockViewModel.CoreVM;
-using Prism.Commands;
-using EdblockViewModel.Service;
+﻿using Prism.Commands;
 using EdblockModel;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
+using EdblockViewModel.CoreVM;
+using EdblockViewModel.Service;
+using System.Windows.Input;
 
 namespace EdblockViewModel.PagesVM;
 
@@ -13,9 +12,8 @@ public class RegistrationVM : BaseViewModel
     public string Password { get; set; } = string.Empty;
 
     public DelegateCommand Signin { get; set; }
-
-    public RelayCommand NavigateToAuthentication { get; }
-    public RelayCommand NavigateToMenu { get; }
+    public ICommand NavigateToAuthentication { get; }
+    public ICommand NavigateToMenu { get; }
 
     public RegistrationVM(INavigationService navigationService)
     {
