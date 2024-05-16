@@ -3,25 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32825.248
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EdblockView", "EdblockView\EdblockView.csproj", "{B8BA6DB2-C4F3-4F6C-9AF5-CC41AE65A1DF}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EdblockViewModel", "EdblockViewModel\EdblockViewModel.csproj", "{2969BC6F-F644-4F52-AF3B-E9278A590256}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EdblockModel", "EdblockModel\EdblockModel.csproj", "{782124AC-32EB-41C8-A3F9-B676A5B09CF3}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SerializationEdblock", "SerializationEdblock\SerializationEdblock.csproj", "{19F5CE64-8B72-4E7C-86EF-227156627663}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{D284B0BA-7E0F-4E45-A726-A86EC1543127}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Edblock.IdentityServer", "Edblock.IdentityServer\Edblock.IdentityServer.csproj", "{8BB566F3-3C13-4413-A815-5A3CB2DCFF30}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libraries", "Libraries", "{4A2350A8-B70B-4082-9D3E-EF179018E176}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Edblock.Library", "Edblock.Library\Edblock.Library.csproj", "{5DA58E08-8729-4ECA-B75C-800133CFB9EB}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{C923E661-9DBD-4E80-85A8-7B8EEF446156}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Edblock.UserManagementService", "Edblock.UserManagementService\Edblock.UserManagementService.csproj", "{1491663D-FDAB-41E0-8250-832F90B90AB7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Clients", "Clients", "{58916A24-6CD5-44FB-BE46-E8C61AEE8856}"
 EndProject
@@ -35,9 +21,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ViewModel", "ViewModel", "{
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{3FD4F2D2-A011-4A6E-951F-502597B62398}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Edblock.UserManagementService.ConsoleAppTest", "Edblock.UserManagementService.ConsoleAppTest\Edblock.UserManagementService.ConsoleAppTest.csproj", "{E6DD1857-6105-4E68-AEB6-F384D1770EC0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Edblock.IdentityServer", "Tools\Edblock.IdentityServer\Edblock.IdentityServer.csproj", "{3C53A0F1-CC47-4068-B0BC-25C5BF1FACA6}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Edblock.SymbolsUI", "Edblock.SymbolsUI\Edblock.SymbolsUI.csproj", "{691B2DC8-5ABA-474F-BF20-A553D0D6EA92}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Edblock.UserManagementService.ConsoleAppTest", "Tools\Edblock.UserManagementService.ConsoleAppTest\Edblock.UserManagementService.ConsoleAppTest.csproj", "{E599433A-60C5-4C1B-8E24-578979535068}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Edblock.UserManagementLibrary", "Edblock.UserManagementLibrary\Edblock.UserManagementLibrary.csproj", "{33A63F4E-471B-4662-9FB0-092860BF6777}"
 EndProject
@@ -98,13 +84,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{B8BA6DB2-C4F3-4F6C-9AF5-CC41AE65A1DF} = {E9EFC27A-4CA0-425A-B4A3-43A15DA5ACA3}
-		{2969BC6F-F644-4F52-AF3B-E9278A590256} = {710A85D7-3A06-4807-9036-53E90C72C369}
-		{782124AC-32EB-41C8-A3F9-B676A5B09CF3} = {993C183B-B49E-4BC6-9353-88E501ABE90A}
-		{19F5CE64-8B72-4E7C-86EF-227156627663} = {993C183B-B49E-4BC6-9353-88E501ABE90A}
-		{8BB566F3-3C13-4413-A815-5A3CB2DCFF30} = {D284B0BA-7E0F-4E45-A726-A86EC1543127}
-		{5DA58E08-8729-4ECA-B75C-800133CFB9EB} = {4A2350A8-B70B-4082-9D3E-EF179018E176}
-		{1491663D-FDAB-41E0-8250-832F90B90AB7} = {C923E661-9DBD-4E80-85A8-7B8EEF446156}
 		{C7CDAF23-584E-475E-A066-0D8CECF5E5AC} = {58916A24-6CD5-44FB-BE46-E8C61AEE8856}
 		{993C183B-B49E-4BC6-9353-88E501ABE90A} = {C7CDAF23-584E-475E-A066-0D8CECF5E5AC}
 		{E9EFC27A-4CA0-425A-B4A3-43A15DA5ACA3} = {C7CDAF23-584E-475E-A066-0D8CECF5E5AC}
