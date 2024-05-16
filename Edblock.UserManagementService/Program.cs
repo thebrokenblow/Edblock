@@ -4,6 +4,7 @@ using Edblock.Library.UserManagementService.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using System.Text.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +15,7 @@ var app = builder.Build();
 Configure(app, builder.Environment);
 
 app.Run();
+
 
 void ConfigureServices(IServiceCollection services, IConfiguration configuration)
 {
