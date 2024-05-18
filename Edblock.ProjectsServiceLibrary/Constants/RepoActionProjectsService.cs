@@ -1,6 +1,6 @@
 ﻿namespace Edblock.ProjectsServiceLibrary.Constants;
 
-public class RepoAction
+public class RepoActionProjectsService
 {
     public const string Add = "add";
     public const string Update = "update";

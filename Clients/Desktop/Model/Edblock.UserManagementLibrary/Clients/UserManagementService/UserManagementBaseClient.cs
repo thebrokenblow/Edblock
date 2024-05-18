@@ -20,10 +20,7 @@ public abstract class UserManagementBaseClient
 
     protected async Task<ApplicationUser> SendGetRequest(string path)
     {
-        //https://localhost:7121/Users/getByName?name=alice
         var requestResult = await HttpClient.GetAsync(path);
-
-        IdentityResult result;
 
         if (requestResult.IsSuccessStatusCode)
         {

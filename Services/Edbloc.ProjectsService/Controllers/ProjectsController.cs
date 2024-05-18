@@ -2,46 +2,62 @@
 using Edblock.ProjectsServiceLibrary.Constants;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using StackExchange.Redis;
 
 namespace Edblock.ProjectsService.Controllers;
 
 [ApiController]
 [Route("[controller]")]
 [Authorize(AuthenticationSchemes = "Bearer")]
-public class ProjectsController : ControllerBase
+public class ProjectsController(IDatabase database) : ControllerBase
 {
-    [HttpGet(RepoAction.GetAll)]
-    public async Task<List<Project>> Get(string key)
+    [HttpGet(RepoActionProjectsService.GetAll)]
+    public async Task<ActionResult<List<Project>>> Get(string key)
     {
-        var database = RedisHelper.RedisDatabase;
-        var projects = new List<Project>();
-        var prejectsRedisValue = await database.ListRangeAsync(key);
-        
-        foreach (var prejectRedisValue in prejectsRedisValue) 
+        try
         {
-            var project = JsonSerializer.Deserialize<Project>(prejectRedisValue) ?? throw new Exception("Не удалось десериализовать проект");
-            projects.Add(project);
-        }
+            var projects = new List<Project>();
+            var prejectsRedisValue = await database.ListRangeAsync(key);
 
-        return projects;
+            foreach (var prejectRedisValue in prejectsRedisValue)
+            {
+                var project = JsonSerializer.Deserialize<Project>(prejectRedisValue.ToString());
+                if (project != null)
+                {
+                    projects.Add(project);
+                }
+                else
+                {
+                    return BadRequest("Не удалось десериализовать проект");
+                }
+            }
+
+            return projects;
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, ex.Message);
+        }
     }
 
-    [HttpPost(RepoAction.Add)]
+    [HttpPost(RepoActionProjectsService.Add)]
     public async Task Add(string key, Project project)
     {
-        var database = RedisHelper.RedisDatabase;
         var projectRedis = JsonSerializer.Serialize(project);
         await database.ListRightPushAsync(key, projectRedis);
     }
 
-    [HttpPut(RepoAction.Update)]
+    [HttpPut(RepoActionProjectsService.Update)]
     public async Task Update(string key, int index, Project project)
     {
-        var database = RedisHelper.RedisDatabase;
+        if (!await database.KeyExistsAsync(key))
+        {
+            throw new KeyNotFoundException("Ключ не найден");
+        }
 
         var projectForChangesRedis = await database.ListGetByIndexAsync(key, index);
 
-        var projectForChanges = JsonSerializer.Deserialize<Project>(projectForChangesRedis) ?? throw new Exception("Не удалось десериализовать проект");
+        var projectForChanges = JsonSerializer.Deserialize<Project>(projectForChangesRedis.ToString()) ?? throw new Exception("Не удалось десериализовать проект");
 
         projectForChanges.Name = project.Name;
         projectForChanges.Description = project.Description;
@@ -51,10 +67,14 @@ public class ProjectsController : ControllerBase
         await database.ListSetByIndexAsync(key, index, resultProjectRedis);
     }
 
-    [HttpDelete(RepoAction.Remove)]
+    [HttpDelete(RepoActionProjectsService.Remove)]
     public async Task Delete(string key, int index)
     {
-        var database = RedisHelper.RedisDatabase;
+        if (!(await database.ListLengthAsync(key) > index) || index < 0)
+        {
+            throw new IndexOutOfRangeException("Индекс вышел за границы спика проектов");
+        }
+
         var project = await database.ListGetByIndexAsync(key, index);
         await database.ListRemoveAsync(key, project, 1);
     }
