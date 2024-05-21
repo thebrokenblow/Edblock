@@ -12,7 +12,6 @@ namespace Edblock.UserManagementLibrary.Clients;
 
 public class Registration(IdentityServerClient identityServerClient, UsersClient usersClient, IOptions<IdentityServerApiOptions> options)
 {
-    private const string clientId = "external";
     private readonly IdentityServerApiOptions identityServerOptions = options.Value;
 
     public async Task<Token> GetToken() =>

@@ -1,24 +1,6 @@
-﻿using System.ComponentModel;
-using System.Runtime.CompilerServices;
+﻿namespace EdblockViewModel.ComponentsVM;
 
-namespace EdblockViewModel.ComponentsVM;
-
-public class ScaleAllSymbolVM : INotifyPropertyChanged
+public class ScaleAllSymbolVM
 {
-    private bool isScaleAllSymbolVM;
-    public bool IsScaleAllSymbolVM 
-    {
-        get => isScaleAllSymbolVM;
-        set
-        {
-            isScaleAllSymbolVM = value;
-            OnPropertyChanged();
-        }
-    }
-
-    public event PropertyChangedEventHandler? PropertyChanged;
-    public void OnPropertyChanged([CallerMemberName] string prop = "")
-    {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
-    }
+    public bool IsScaleAllSymbol { get; set; }
 }

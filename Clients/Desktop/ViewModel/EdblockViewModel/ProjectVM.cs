@@ -18,7 +18,7 @@ internal class ProjectVM(EditorVM editorVM)
 {
     private readonly CanvasSymbolsVM canvasSymbolsVM = editorVM.CanvasSymbolsVM;
     private readonly ScaleAllSymbolVM scaleAllSymbolVM = editorVM.PopupBoxMenuVM.ScaleAllSymbolVM;
-    private readonly CheckBoxLineGostVM checkBoxLineGostVM = editorVM.PopupBoxMenuVM.CheckBoxLineGostVM;
+    private readonly LineStateStandardVM checkBoxLineGostVM = editorVM.PopupBoxMenuVM.CheckBoxLineGostVM;
     private readonly SerializationProject serializationProject = new();
     private readonly FactoryBlockSymbolVM factoryBlockSymbolVM = new(editorVM);
     private readonly Dictionary<string, BlockSymbolVM> blockSymbolsVMById = [];
@@ -71,7 +71,7 @@ internal class ProjectVM(EditorVM editorVM)
 
         var projectSerializable = new ProjectSerializable()
         {
-            IsScaleAllSymbolVM = scaleAllSymbolVM.IsScaleAllSymbolVM,
+            IsScaleAllSymbolVM = scaleAllSymbolVM.IsScaleAllSymbol,
             IsDrawingLinesAccordingGOST = checkBoxLineGostVM.IsDrawingLinesAccordingGOST,
             BlockSymbolsSerializable = blockSymbolsSerializable,
             DrawnLinesSymbolSerializable = drawnLinesSymbolSerializable,
@@ -86,7 +86,7 @@ internal class ProjectVM(EditorVM editorVM)
     {
         var loadedProject = await serializationProject.Read(filePath);
 
-        scaleAllSymbolVM.IsScaleAllSymbolVM = loadedProject.IsScaleAllSymbolVM;
+        scaleAllSymbolVM.IsScaleAllSymbol = loadedProject.IsScaleAllSymbolVM;
         checkBoxLineGostVM.IsDrawingLinesAccordingGOST = loadedProject.IsDrawingLinesAccordingGOST;
 
         LoadBlocksSymbols(loadedProject);

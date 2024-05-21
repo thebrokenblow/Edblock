@@ -6,22 +6,20 @@ using Microsoft.Extensions.Options;
 
 namespace Edblock.Library.Clients.UserManagementService;
 
-public class RolesClient : UserManagementBaseClient, IRolesClient
+public class RolesClient(HttpClient httpClient, IOptions<ServiceAdressOptions> options) : UserManagementBaseClient(httpClient, options), IRolesClient
 {
-    public RolesClient(HttpClient httpClient, IOptions<ServiceAdressOptions> options) : base(httpClient, options) { }
-
     public async Task<IdentityResult> Add(IdentityRole role)
-        => await SendPostRequest(role, $"/{RolesControllerRoutes.ControllerName}/{RepoActions.Add}");
+        => await SendPostRequest(role, $"/{RolesControllerRoutes.ControllerName}/{RepositoryActions.Add}");
 
     public async Task<UserManagementServiceResponse<IdentityRole>> Get(string name)
         => await SendGetRequest<IdentityRole>($"{RolesControllerRoutes.ControllerName}?name={name}");
 
     public async Task<UserManagementServiceResponse<IEnumerable<IdentityRole>>> GetAll()
-        => await SendGetRequest<IEnumerable<IdentityRole>>($"/{RolesControllerRoutes.ControllerName}/{RepoActions.GetAll}");
+        => await SendGetRequest<IEnumerable<IdentityRole>>($"/{RolesControllerRoutes.ControllerName}/{RepositoryActions.GetAll}");
 
     public async Task<IdentityResult> Remove(IdentityRole role)
-        => await SendPostRequest(role, $"/{RolesControllerRoutes.ControllerName}/{RepoActions.Remove}");
+        => await SendPostRequest(role, $"/{RolesControllerRoutes.ControllerName}/{RepositoryActions.Remove}");
 
     public async Task<IdentityResult> Update(IdentityRole role)
-        => await SendPostRequest(role, $"/{RolesControllerRoutes.ControllerName}/{RepoActions.Update}");
+        => await SendPostRequest(role, $"/{RolesControllerRoutes.ControllerName}/{RepositoryActions.Update}");
 }

@@ -43,13 +43,19 @@
                 <StackPanel VerticalAlignment="Center">
                     <TextBlock Style="{StaticResource TitleText}" Text="Sign Up" />
                     <TextBlock
-                        Margin="20,30,20,30"
+                        Margin="20,30,20,0"
                         Opacity="0.8"
                         Style="{StaticResource NormalText}"
-                        Text="Enter your personal info and create new account" />
+                        Text="Enter your personal data and create a new account or use offline mode" />
                     <Button
+                        Margin="30,20,30,0"
                         Command="{Binding NavigateToRegistration}"
                         Content="Sign Up"
+                        Style="{StaticResource Button}" />
+                    <Button
+                        Margin="30,20,30,0"
+                        Command="{Binding NavigateToEditor}"
+                        Content="Offline Mode"
                         Style="{StaticResource Button}" />
                 </StackPanel>
             </Grid>

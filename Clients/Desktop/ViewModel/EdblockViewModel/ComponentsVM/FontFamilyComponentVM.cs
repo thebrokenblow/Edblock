@@ -3,9 +3,12 @@ using EdblockViewModel.AbstractionsVM;
 
 namespace EdblockViewModel.ComponentsVM;
 
-public class FontFamilyControlVM
+public class FontFamilyComponentVM(List<BlockSymbolVM> selectedBlocksSymbols)
 {
-    public List<string> FontFamilys { get; init; }
+    public List<string> FontFamilys { get; } =
+    [
+        "Times New Roman"
+    ];
 
     public string? fontFamily;
     public string? FontFamily 
@@ -18,17 +21,6 @@ public class FontFamilyControlVM
         }
     }
 
-    private readonly List<BlockSymbolVM> _selectedBlockSymbols;
-    public FontFamilyControlVM(List<BlockSymbolVM> selectedBlockSymbols)
-    {
-        _selectedBlockSymbols = selectedBlockSymbols;
-
-        FontFamilys = new()
-        {
-            "Times New Roman"
-        };
-    }
-
     public void SetFontFamily(BlockSymbolVM selectedBlockSymbol) 
     {
         if (selectedBlockSymbol is IHasTextFieldVM symbolHasTextFieldVM)
@@ -39,7 +31,7 @@ public class FontFamilyControlVM
 
     private void SetFontFamily()
     {
-        foreach (var selectedBlockSymbol in _selectedBlockSymbols)
+        foreach (var selectedBlockSymbol in selectedBlocksSymbols)
         {
             SetFontFamily(selectedBlockSymbol);
         }    

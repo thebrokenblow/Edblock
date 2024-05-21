@@ -1,7 +1,8 @@
 ﻿using System;
-using System.Windows.Input;
 using EdblockViewModel.CoreVM;
-using EdblockViewModel.Service;
+using EdblockViewModel.Services;
+using EdblockViewModel.Services.Factories.Interfaces;
+using EdblockViewModel.Services.Interfaces;
 
 namespace EdblockViewModel.PagesVM;
 
@@ -14,35 +15,38 @@ public class MenuVM : BaseViewModel
         set
         {
             navigationServiceMenu = value;
-            OnPropertyChange();
+            OnPropertyChanged();
         }
     }
 
     private readonly INavigationService _navigateServiceWindow;
 
-    public ICommand NavigateToHome { get; set; }
-    public ICommand NavigateToSettings { get; set; }
-    public ICommand NavigateToProjects { get; set; }
-    public ICommand NavigateToAuthentication { get; set; }
+    public RelayCommand NavigateToHome { get; set; }
+    public RelayCommand NavigateToSettings { get; set; }
+    public RelayCommand NavigateToProjects { get; set; }
+    public RelayCommand NavigateToAuthentication { get; set; }
 
-    public MenuVM(INavigationService navigateServiceWindow, Func<Type, BaseViewModel> viewModelFactory)
+    public MenuVM(
+        IFactoryNavigationService factoryNavigationService,
+        INavigationService navigateServiceWindow,
+        Func<Type, BaseViewModel> viewModelFactory)
     {
         _navigateServiceWindow = navigateServiceWindow;
 
         navigationServiceMenu = new NavigateService(viewModelFactory);
 
         NavigateToHome =
-            FactoryNavigateService<HomeVM>.Create(navigationServiceMenu, true);
+            factoryNavigationService.Create<HomeVM>(navigationServiceMenu, true);
 
         NavigateToSettings =
-            FactoryNavigateService<SettingsVM>.Create(navigationServiceMenu, true);
+            factoryNavigationService.Create<SettingsVM>(navigationServiceMenu, true);
 
         NavigateToProjects =
-            FactoryNavigateService<ProjectsVM>.Create(navigationServiceMenu, true);
+            factoryNavigationService.Create<ProjectsVM>(navigationServiceMenu, true);
 
         NavigateToAuthentication =
-            FactoryNavigateService<AuthenticationVM>.Create(_navigateServiceWindow, true);
+            factoryNavigationService.Create<AuthenticationVM>(_navigateServiceWindow, true);
 
-        NavigateToSettings.Execute(null);
+        NavigateToSettings.Execute();
     }
 }

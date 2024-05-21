@@ -1,6 +1,6 @@
 ﻿namespace Edblock.Library.Constants;
 
-public class RepoActions
+public class RepositoryActions
 {
     public const string Add = "add";
     public const string AddRange = "addRange";

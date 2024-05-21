@@ -14,7 +14,7 @@ public class ListSymbolsVM(EditorVM editorVM)
     public void AddBlockSymbol(BlockSymbolVM blockSymbolVM)
     {
         var firstBlockSymbolsVM = canvasSymbolsVM.BlockSymbolsVM.FirstOrDefault();
-        var isScaleAllSymbolVM = popupBoxMenuVM.ScaleAllSymbolVM.IsScaleAllSymbolVM;
+        var isScaleAllSymbolVM = popupBoxMenuVM.ScaleAllSymbolVM.IsScaleAllSymbol;
 
         if (isScaleAllSymbolVM && firstBlockSymbolsVM is BlockSymbolVM firstBlockSymbolVM)
         {

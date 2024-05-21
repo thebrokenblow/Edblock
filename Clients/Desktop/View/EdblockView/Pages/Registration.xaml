@@ -42,14 +42,23 @@
 
                 <StackPanel VerticalAlignment="Center">
                     <TextBlock Style="{StaticResource TitleText}" Text="Sign in" />
+
                     <TextBlock
-                        Margin="20,30,20,30"
+                        Margin="20,30,20,0"
                         Opacity="0.8"
                         Style="{StaticResource NormalText}"
-                        Text="If you also have an account, you can log in with your account" />
+                        Text="If you also have an account, you can log in with your account or use offline mode" />
+
                     <Button
+                        Margin="30,20,30,0"
                         Command="{Binding NavigateToAuthentication}"
                         Content="Sign In"
+                        Style="{StaticResource Button}" />
+
+                    <Button
+                        Margin="30,20,30,0"
+                        Command="{Binding NavigateToEditor}"
+                        Content="Offline Mode"
                         Style="{StaticResource Button}" />
                 </StackPanel>
             </Grid>

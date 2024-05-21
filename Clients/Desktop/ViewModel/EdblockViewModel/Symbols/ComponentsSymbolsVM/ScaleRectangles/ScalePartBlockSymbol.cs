@@ -51,7 +51,7 @@ public class ScalePartBlockSymbol
 
         double width = _getWidthBlockSymbol.Invoke(this, canvasSymbolsVM);
 
-        if (_scaleAllSymbolVM.IsScaleAllSymbolVM)
+        if (_scaleAllSymbolVM.IsScaleAllSymbol)
         {
             foreach (var symbol in _symbols)
             {
@@ -87,7 +87,7 @@ public class ScalePartBlockSymbol
 
         double height = _getHeigthBlockSymbol.Invoke(this, canvasSymbolsVM);
 
-        if (_scaleAllSymbolVM.IsScaleAllSymbolVM)
+        if (_scaleAllSymbolVM.IsScaleAllSymbol)
         {
             foreach (var symbol in _symbols)
             {

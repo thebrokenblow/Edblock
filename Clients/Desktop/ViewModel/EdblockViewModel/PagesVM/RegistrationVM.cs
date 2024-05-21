@@ -1,8 +1,9 @@
 ﻿using Prism.Commands;
 using EdblockModel;
 using EdblockViewModel.CoreVM;
-using EdblockViewModel.Service;
 using EdblockViewModel.Clients;
+using EdblockViewModel.Services.Interfaces;
+using EdblockViewModel.Services.Factories.Interfaces;
 
 namespace EdblockViewModel.PagesVM;
 
@@ -14,16 +15,23 @@ public class RegistrationVM : BaseViewModel
     public DelegateCommand Signin { get; set; }
     public RelayCommand NavigateToAuthentication { get; }
     public RelayCommand NavigateToMenu { get; }
+    public RelayCommand NavigateToEditor { get; }
 
     private readonly UserViewModel _userViewModel;
 
-    public RegistrationVM(INavigationService navigationService, UserViewModel userViewModel)
+    public RegistrationVM(
+        IFactoryNavigationService factoryNavigationService,
+        INavigationService navigationService,
+        UserViewModel userViewModel)
     {
         NavigateToAuthentication =
-           FactoryNavigateService<AuthenticationVM>.Create(navigationService, true);
+           factoryNavigationService.Create<AuthenticationVM>(navigationService, true);
 
         NavigateToMenu =
-            FactoryNavigateService<MenuVM>.Create(navigationService, true);
+            factoryNavigationService.Create<MenuVM>(navigationService, true);
+
+        NavigateToEditor =
+            factoryNavigationService.Create<EditorVM>(navigationService, true);
 
         Signin = new(RegistrationAccount);
 

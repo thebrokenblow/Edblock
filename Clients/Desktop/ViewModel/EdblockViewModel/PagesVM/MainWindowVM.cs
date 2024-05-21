@@ -1,5 +1,5 @@
 ﻿using EdblockViewModel.CoreVM;
-using EdblockViewModel.Service;
+using EdblockViewModel.Services.Interfaces;
 
 namespace EdblockViewModel.PagesVM;
 
@@ -11,7 +11,7 @@ public class MainWindowVM(INavigationService navigationService) : BaseViewModel
         set
         {
             navigationService = value;
-            OnPropertyChange();
+            OnPropertyChanged();
         }
     }
 }

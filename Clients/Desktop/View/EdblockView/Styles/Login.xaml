@@ -40,7 +40,6 @@
 
     <Style x:Key="Button" TargetType="{x:Type Button}">
         <Setter Property="FontSize" Value="14" />
-        <Setter Property="Width" Value="170" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Foreground" Value="#FDFEFE" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />

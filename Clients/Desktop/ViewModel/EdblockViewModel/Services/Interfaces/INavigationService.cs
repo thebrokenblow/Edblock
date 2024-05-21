@@ -1,6 +1,6 @@
 ﻿using EdblockViewModel.CoreVM;
 
-namespace EdblockViewModel.Service;
+namespace EdblockViewModel.Services.Interfaces;
 
 public interface INavigationService
 {

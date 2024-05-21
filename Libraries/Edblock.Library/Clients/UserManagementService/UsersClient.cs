@@ -11,7 +11,7 @@ namespace Edblock.Library.Clients.UserManagementService;
 public class UsersClient(HttpClient httpClient, IOptions<ServiceAdressOptions> options) : UserManagementBaseClient(httpClient, options), IUsersClient
 {
     public async Task<IdentityResult> Add(CreateUserRequest request)
-        => await SendPostRequest(request, $"/{UsersControllerRoutes.ControllerName}/{RepoActions.Add}");
+        => await SendPostRequest(request, $"/{UsersControllerRoutes.ControllerName}/{RepositoryActions.Add}");
 
     public async Task<IdentityResult> ChangePassword(UserPasswordChangeRequest request)
         => await SendPostRequest(request, $"/{UsersControllerRoutes.ControllerName}/{UsersControllerRoutes.ChangePassword}");
@@ -32,11 +32,11 @@ public class UsersClient(HttpClient httpClient, IOptions<ServiceAdressOptions> o
         => await SendGetRequest<ApplicationUser>($"{UsersControllerRoutes.ControllerName}?name={name}");
 
     public async Task<UserManagementServiceResponse<IEnumerable<ApplicationUser>>> GetAll()
-        => await SendGetRequest<IEnumerable<ApplicationUser>>($"/{UsersControllerRoutes.ControllerName}/{RepoActions.GetAll}");
+        => await SendGetRequest<IEnumerable<ApplicationUser>>($"/{UsersControllerRoutes.ControllerName}/{RepositoryActions.GetAll}");
 
     public async Task<IdentityResult> Remove(ApplicationUser user)
-        => await SendPostRequest(user, $"/{UsersControllerRoutes.ControllerName}/{RepoActions.Remove}");
+        => await SendPostRequest(user, $"/{UsersControllerRoutes.ControllerName}/{RepositoryActions.Remove}");
 
     public async Task<IdentityResult> Update(ApplicationUser user)
-        => await SendPostRequest(user, $"/{UsersControllerRoutes.ControllerName}/{RepoActions.Update}");
+        => await SendPostRequest(user, $"/{UsersControllerRoutes.ControllerName}/{RepositoryActions.Update}");
 }

@@ -83,9 +83,9 @@ public class ConnectionPointVM : INotifyPropertyChanged
     private const int diametr = 8;
 
     private readonly CanvasSymbolsVM _canvasSymbolsVM;
-    private readonly CheckBoxLineGostVM _checkBoxLineGostVM;
+    private readonly LineStateStandardVM _checkBoxLineGostVM;
 
-    public ConnectionPointVM(CanvasSymbolsVM canvasSymbolsVM, BlockSymbolVM blockSymbolVM, CheckBoxLineGostVM checkBoxLineGostVM, SideSymbol position)
+    public ConnectionPointVM(CanvasSymbolsVM canvasSymbolsVM, BlockSymbolVM blockSymbolVM, LineStateStandardVM checkBoxLineGostVM, SideSymbol position)
     {
         _canvasSymbolsVM = canvasSymbolsVM;
         _checkBoxLineGostVM = checkBoxLineGostVM;

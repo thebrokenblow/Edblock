@@ -43,8 +43,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Edblock.IdentityServer", "T
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Edblock.UserManagementService.ConsoleAppTest", "Tools\Edblock.UserManagementService.ConsoleAppTest\Edblock.UserManagementService.ConsoleAppTest.csproj", "{F5F6BD4C-8600-4202-A38D-7414DBAC5E3E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Edblock.ProjectsServiceLibrary", "Edblock.ProjectsServiceLibrary\Edblock.ProjectsServiceLibrary.csproj", "{2CC42165-F1EB-4871-90F8-20FC7E31F0E5}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Edblock.ProjectsManagementModel", "Edblock.ProjectsManagementModel\Edblock.ProjectsManagementModel.csproj", "{2E0B234E-3683-47CF-9B42-456249BBCC8E}"
 EndProject
 Global
@@ -97,10 +95,6 @@ Global
 		{F5F6BD4C-8600-4202-A38D-7414DBAC5E3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F5F6BD4C-8600-4202-A38D-7414DBAC5E3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F5F6BD4C-8600-4202-A38D-7414DBAC5E3E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2CC42165-F1EB-4871-90F8-20FC7E31F0E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2CC42165-F1EB-4871-90F8-20FC7E31F0E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2CC42165-F1EB-4871-90F8-20FC7E31F0E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2CC42165-F1EB-4871-90F8-20FC7E31F0E5}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2E0B234E-3683-47CF-9B42-456249BBCC8E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2E0B234E-3683-47CF-9B42-456249BBCC8E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2E0B234E-3683-47CF-9B42-456249BBCC8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -125,7 +119,6 @@ Global
 		{C9937D70-60C6-4095-BD80-63291B2DABAC} = {4A2350A8-B70B-4082-9D3E-EF179018E176}
 		{5F9AA5D8-4B9F-491E-8299-16FD40E8A6C3} = {D284B0BA-7E0F-4E45-A726-A86EC1543127}
 		{F5F6BD4C-8600-4202-A38D-7414DBAC5E3E} = {D284B0BA-7E0F-4E45-A726-A86EC1543127}
-		{2CC42165-F1EB-4871-90F8-20FC7E31F0E5} = {4A2350A8-B70B-4082-9D3E-EF179018E176}
 		{2E0B234E-3683-47CF-9B42-456249BBCC8E} = {993C183B-B49E-4BC6-9353-88E501ABE90A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution

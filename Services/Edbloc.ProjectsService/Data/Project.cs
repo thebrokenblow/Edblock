@@ -1,8 +1,8 @@
-﻿namespace Edblock.ProjectsService;
+﻿namespace Edblock.ProjectsServiceLibrary;
 
 public class Project
 {
     public required string Name { get; set; }
-    public string? Description { get; set; }
+    public required string? Description { get; set; }
     public required string Content { get; set; }
 }

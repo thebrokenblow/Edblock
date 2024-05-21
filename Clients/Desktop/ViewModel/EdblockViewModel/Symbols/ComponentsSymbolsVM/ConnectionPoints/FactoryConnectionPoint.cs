@@ -8,9 +8,9 @@ public class FactoryConnectionPoint
 {
     private readonly CanvasSymbolsVM _canvasSymbolsVM;
     private readonly BlockSymbolVM _blockSymbolVM;
-    private readonly CheckBoxLineGostVM _checkBoxLineGostVM;
+    private readonly LineStateStandardVM _checkBoxLineGostVM;
 
-    public FactoryConnectionPoint(CanvasSymbolsVM canvasSymbolsVM, BlockSymbolVM blockSymbolVM, CheckBoxLineGostVM checkBoxLineGostVM)
+    public FactoryConnectionPoint(CanvasSymbolsVM canvasSymbolsVM, BlockSymbolVM blockSymbolVM, LineStateStandardVM checkBoxLineGostVM)
     {
         _canvasSymbolsVM = canvasSymbolsVM;
         _blockSymbolVM = blockSymbolVM;

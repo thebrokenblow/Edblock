@@ -20,7 +20,7 @@ public class EditorVM : BaseViewModel
     public DelegateCommand ClickDelete { get; init; }
     public CanvasSymbolsVM CanvasSymbolsVM { get; init; } = new();
     public FontSizeControlVM FontSizeControlVM { get; init; }
-    public FontFamilyControlVM FontFamilyControlVM { get; init; }
+    public FontFamilyComponentVM FontFamilyControlVM { get; init; }
     public TextAlignmentControlVM TextAlignmentControlVM { get; init; }
     public FormatTextControlVM FormatTextControlVM { get; init; }
     public PopupBoxMenuVM PopupBoxMenuVM { get; init; }
@@ -39,7 +39,7 @@ public class EditorVM : BaseViewModel
         CanvasSymbolsVM.ScalingCanvasSymbolsVM.HeightTopSettingsPanel = cellHeightTopSettingsPanel;
         CanvasSymbolsVM.ScalingCanvasSymbolsVM.WidthPanelSymbols = cellWidthPanelSymbols;
 
-        PopupBoxMenuVM = new(this);
+        PopupBoxMenuVM = new();
         FontSizeControlVM = new(selectedBlockSymbols);
         FontFamilyControlVM = new(selectedBlockSymbols);
         FormatTextControlVM = new(selectedBlockSymbols);

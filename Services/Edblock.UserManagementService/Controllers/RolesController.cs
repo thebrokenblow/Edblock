@@ -10,11 +10,11 @@ namespace Edblock.UserManagementService.Controllers;
 [Authorize(AuthenticationSchemes = "Bearer")]
 public class RolesController(RoleManager<IdentityRole> roleManager) : ControllerBase
 {
-    [HttpPost(RepoActions.Add)]
+    [HttpPost(RepositoryActions.Add)]
     public Task<IdentityResult> Add(IdentityRole identityRole) =>
         roleManager.CreateAsync(identityRole);
 
-    [HttpPost(RepoActions.Update)]
+    [HttpPost(RepositoryActions.Update)]
     public async Task<IdentityResult> Update(IdentityRole identityRole)
     {
         var roleToBeUpdated = await roleManager.FindByIdAsync(identityRole.Id);
@@ -35,7 +35,7 @@ public class RolesController(RoleManager<IdentityRole> roleManager) : Controller
         return result;
     }
 
-    [HttpPost(RepoActions.Remove)]
+    [HttpPost(RepositoryActions.Remove)]
     public Task<IdentityResult> Remove(IdentityRole identityRole) =>
         roleManager.DeleteAsync(identityRole);
 
@@ -43,7 +43,7 @@ public class RolesController(RoleManager<IdentityRole> roleManager) : Controller
     public Task<IdentityRole?> Get(string name) =>
         roleManager.FindByNameAsync(name);
 
-    [HttpGet(RepoActions.GetAll)]
+    [HttpGet(RepositoryActions.GetAll)]
     public IEnumerable<IdentityRole> Get() =>
         roleManager.Roles.AsEnumerable();
 }

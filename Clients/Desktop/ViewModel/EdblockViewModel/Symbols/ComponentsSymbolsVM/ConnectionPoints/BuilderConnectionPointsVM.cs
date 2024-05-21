@@ -10,7 +10,7 @@ public class BuilderConnectionPointsVM
     private readonly FactoryConnectionPoint _factoryConnectionPoint;
     private readonly List<ConnectionPointVM> connectionPointsVM = new();
 
-    public BuilderConnectionPointsVM(CanvasSymbolsVM canvasSymbolsVM, BlockSymbolVM blockSymbolVM, CheckBoxLineGostVM checkBoxLineGostVM)
+    public BuilderConnectionPointsVM(CanvasSymbolsVM canvasSymbolsVM, BlockSymbolVM blockSymbolVM, LineStateStandardVM checkBoxLineGostVM)
     {
         _factoryConnectionPoint = new(canvasSymbolsVM, blockSymbolVM, checkBoxLineGostVM);
     }

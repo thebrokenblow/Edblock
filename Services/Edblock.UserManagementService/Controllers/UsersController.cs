@@ -12,12 +12,12 @@ namespace Edblock.UserManagementService.Controllers;
 [Authorize(AuthenticationSchemes = "Bearer")]
 public class UsersController(UserManager<ApplicationUser> userManager) : ControllerBase
 {
-    [HttpPost(RepoActions.Add)]
+    [HttpPost(RepositoryActions.Add)]
     public async Task<IdentityResult> Add(CreateUserRequest request) =>
         await userManager.CreateAsync(request.User, request.Password);
 
 
-    [HttpPost(RepoActions.Update)]
+    [HttpPost(RepositoryActions.Update)]
     public async Task<IdentityResult> Update(ApplicationUser user)
     {
         if (user.UserName is null)
@@ -47,15 +47,15 @@ public class UsersController(UserManager<ApplicationUser> userManager) : Control
         return result;
     }
 
-    [HttpPost(RepoActions.Remove)]
+    [HttpPost(RepositoryActions.Remove)]
     public async Task<IdentityResult> Remove(ApplicationUser user) =>
         await userManager.DeleteAsync(user);
 
-    [HttpGet(RepoActions.GetByName)]
+    [HttpGet(RepositoryActions.GetByName)]
     public async Task<ApplicationUser?> Get(string name) =>
         await userManager.FindByNameAsync(name);
 
-    [HttpGet(RepoActions.GetAll)]
+    [HttpGet(RepositoryActions.GetAll)]
     public IEnumerable<ApplicationUser> Get() =>
         userManager.Users.AsEnumerable();
 

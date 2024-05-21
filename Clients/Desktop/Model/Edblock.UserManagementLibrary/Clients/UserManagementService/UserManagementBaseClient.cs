@@ -44,7 +44,8 @@ public abstract class UserManagementBaseClient
         if (requestResult.IsSuccessStatusCode)
         {
             var responseJson = await requestResult.Content.ReadAsStringAsync();
-            var response = JsonSerializer.Deserialize<IdentityResultDto>(responseJson) ?? throw new NullReferenceException("Response is null");
+            var response = JsonSerializer.Deserialize<IdentityResultDto>(responseJson) ?? 
+                throw new NullReferenceException("Response is null");
             result = HandleResponse(response);
         }
         else

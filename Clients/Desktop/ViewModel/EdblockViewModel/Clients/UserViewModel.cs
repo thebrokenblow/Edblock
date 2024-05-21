@@ -2,5 +2,7 @@
 
 public class UserViewModel
 {
-    public string? Id { get; set; }
+    public required string Id { get; set; }
+    public string? Token { get; set; }
+
 }

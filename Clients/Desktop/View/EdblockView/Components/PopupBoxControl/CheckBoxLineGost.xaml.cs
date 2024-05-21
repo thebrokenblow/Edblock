@@ -8,7 +8,7 @@ namespace EdblockView.Components.PopupBoxControl;
 /// </summary>
 public partial class CheckBoxLineGost : UserControl
 {
-    public CheckBoxLineGostVM? CheckBoxLineGostVM
+    public LineStateStandardVM? CheckBoxLineGostVM
     {
         set
         {

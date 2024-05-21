@@ -1,7 +1,8 @@
-﻿using EdblockViewModel.CoreVM;
-using System;
+﻿using System;
+using EdblockViewModel.CoreVM;
+using EdblockViewModel.Services.Interfaces;
 
-namespace EdblockViewModel.Service;
+namespace EdblockViewModel.Services;
 
 public class NavigateService(Func<Type, BaseViewModel> viewModelFactory) : ObservableObject, INavigationService
 {
@@ -12,7 +13,7 @@ public class NavigateService(Func<Type, BaseViewModel> viewModelFactory) : Obser
         private set
         {
             currentViewModel = value;
-            OnPropertyChange();
+            OnPropertyChanged();
         }
     }
 

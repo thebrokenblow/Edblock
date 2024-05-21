@@ -110,10 +110,10 @@ public abstract class BlockSymbolVM : INotifyPropertyChanged
     public BlockSymbolModel BlockSymbolModel { get; init; } = null!;
     public CanvasSymbolsVM CanvasSymbolsVM { get; init; }
 
-    protected readonly CheckBoxLineGostVM _checkBoxLineGostVM;
+    protected readonly LineStateStandardVM _checkBoxLineGostVM;
     protected readonly ScaleAllSymbolVM _scaleAllSymbolVM;
 
-    private readonly FontFamilyControlVM _fontFamilyControlVM;
+    private readonly FontFamilyComponentVM _fontFamilyControlVM;
     private readonly FontSizeControlVM _fontSizeControlVM;
     private readonly TextAlignmentControlVM _textAlignmentControlVM;
     private readonly FormatTextControlVM _formatTextControlVM;

@@ -1,16 +1,12 @@
-﻿using EdblockViewModel.PagesVM;
-
-namespace EdblockViewModel.ComponentsVM;
+﻿namespace EdblockViewModel.ComponentsVM;
 
 public class PopupBoxMenuVM
 {
-    public EditorVM EdblockVM { get; set; }
     public ScaleAllSymbolVM ScaleAllSymbolVM { get; set; } 
-    public CheckBoxLineGostVM CheckBoxLineGostVM { get; set; }
+    public LineStateStandardVM CheckBoxLineGostVM { get; set; }
 
-    public PopupBoxMenuVM(EditorVM edblockVM)
+    public PopupBoxMenuVM()
     {
-        EdblockVM = edblockVM;
         ScaleAllSymbolVM = new();
         CheckBoxLineGostVM = new();
     }
