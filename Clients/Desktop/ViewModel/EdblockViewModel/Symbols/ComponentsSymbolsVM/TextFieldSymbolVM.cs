@@ -1,15 +1,14 @@
 ﻿using System.Windows.Input;
-using System.ComponentModel;
-using System.Collections.ObjectModel;
-using System.Runtime.CompilerServices;
 using Prism.Commands;
 using EdblockModel.SymbolsModel;
-using EdblockViewModel.ComponentsVM;
 using EdblockViewModel.AbstractionsVM;
+using EdblockViewModel.CoreVM;
+using EdblockViewModel.ComponentsVM.CanvasSymbols;
+using System.Collections.Generic;
 
 namespace EdblockViewModel.Symbols.ComponentsSymbolsVM;
 
-public class TextFieldSymbolVM : INotifyPropertyChanged
+public class TextFieldSymbolVM : ObservableObject
 {
     private bool focusable = false;
     public bool Focusable
@@ -162,10 +161,8 @@ public class TextFieldSymbolVM : INotifyPropertyChanged
         }
     }
 
-    public DelegateCommand MouseDoubleClick { get; init; }
-    public DelegateCommand MouseLeftButtonDown { get; init; }
-
-    public event PropertyChangedEventHandler? PropertyChanged;
+    public DelegateCommand MouseDoubleClick { get; }
+    public DelegateCommand MouseLeftButtonDown { get; }
 
     private readonly CanvasSymbolsVM _canvasSymbolsVM;
     private readonly BlockSymbolVM _blockSymbolVM;
@@ -183,27 +180,6 @@ public class TextFieldSymbolVM : INotifyPropertyChanged
         Cursor = Cursors.SizeAll;
         MouseDoubleClick = new(AddFocus);
         MouseLeftButtonDown = new(SetMovableSymbol);
-    }
-
-    public static void ChangeFocus(ObservableCollection<BlockSymbolVM> Symbols)
-    {
-        foreach (var symbol in Symbols)
-        {
-            if (symbol is IHasTextFieldVM blockTextFieldVM)
-            {
-                var textFieldSymbol = blockTextFieldVM.TextFieldSymbolVM;
-
-                if (textFieldSymbol.Focusable)
-                {
-                    textFieldSymbol.Focusable = false;
-                }
-            }
-        }
-    }
-
-    public void OnPropertyChanged([CallerMemberName] string prop = "")
-    {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
     }
 
     private void AddFocus()

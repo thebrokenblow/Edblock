@@ -1,9 +1,10 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using EdblockViewModel.CoreVM;
 
 namespace EdblockViewModel.Symbols.ComponentsCommentSymbolVM;
 
-public class CommentLine : INotifyPropertyChanged
+public class CommentLine : ObservableObject
 {
     private double x1;
     public double X1 
@@ -47,11 +48,5 @@ public class CommentLine : INotifyPropertyChanged
             y2 = value;
             OnPropertyChanged();
         }
-    }
-
-    public event PropertyChangedEventHandler? PropertyChanged;
-    public void OnPropertyChanged([CallerMemberName] string prop = "")
-    {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
     }
 }

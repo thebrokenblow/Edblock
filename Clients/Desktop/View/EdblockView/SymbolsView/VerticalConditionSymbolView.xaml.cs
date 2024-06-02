@@ -10,10 +10,8 @@ namespace EdblockView.SymbolsView;
 /// </summary>
 public partial class VerticalConditionSymbolView : UserControl
 {
-    public VerticalConditionSymbolView()
-    {
+    public VerticalConditionSymbolView() =>
         InitializeComponent();
-    }
 
     private void TrackStageDrawLine(object sender, MouseButtonEventArgs e)
     {
@@ -23,7 +21,7 @@ public partial class VerticalConditionSymbolView : UserControl
 
             if (contextEllipse is ConnectionPointVM connectionPointVM)
             {
-                connectionPointVM.Click();
+                //connectionPointVM.Click();
             }
         }
 

@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
-using EdblockViewModel.AbstractionsVM;
+﻿using EdblockViewModel.AbstractionsVM;
+using EdblockViewModel.ComponentsVM.CanvasSymbols.Interfaces;
+using EdblockViewModel.ComponentsVM.TopSettingsPanelComponent.Interfaces;
 
-namespace EdblockViewModel.ComponentsVM;
+namespace EdblockViewModel.ComponentsVM.TopSettingsPanelComponent;
 
-public class FormatTextControlVM
+public class FormatTextComponentVM(IListCanvasSymbolsVM listCanvasSymbolsVM) : IFormatTextComponentVM
 {
     private const string fontWeightBold = "Bold";
     private const string fontWeightNormal = "Normal";
@@ -41,7 +42,7 @@ public class FormatTextControlVM
         }
     }
 
-    
+
     private const string fontStyleItalic = "Italic";
     private const string fontStyleNormal = "Normal";
 
@@ -61,7 +62,7 @@ public class FormatTextControlVM
             }
             else
             {
-                currentFontStyle= fontStyleNormal;
+                currentFontStyle = fontStyleNormal;
             }
 
             SetFontText();
@@ -78,43 +79,36 @@ public class FormatTextControlVM
     {
         get => isFormatUnderline;
         set
-        { 
+        {
             isFormatUnderline = value;
 
             if (isFormatUnderline)
             {
                 currentTextDecorations = textDecorationsUnderline;
             }
-            else 
+            else
             {
                 currentTextDecorations = textDecorationsNone;
             }
 
             SetFontText();
         }
-    } 
-
-    private readonly List<BlockSymbolVM> _selectedBlockSymbols;
-    public FormatTextControlVM(List<BlockSymbolVM> selectedBlockSymbols)
-    {
-        _selectedBlockSymbols = selectedBlockSymbols;
     }
 
-    public void SetFontText(BlockSymbolVM selectedBlockSymbol)
+    public void SetFontText(IHasTextFieldVM selectedSymbolHasTextField)
     {
-        if (selectedBlockSymbol is IHasTextFieldVM symbolHasTextFieldVM)
-        {
-            symbolHasTextFieldVM.TextFieldSymbolVM.FontWeight = currentFontWeight;
-            symbolHasTextFieldVM.TextFieldSymbolVM.FontStyle = currentFontStyle;
-            symbolHasTextFieldVM.TextFieldSymbolVM.TextDecorations = currentTextDecorations;
-        }
+        var textFieldSymbolVM = selectedSymbolHasTextField.TextFieldSymbolVM;
+
+        textFieldSymbolVM.FontWeight = currentFontWeight;
+        textFieldSymbolVM.FontStyle = currentFontStyle;
+        textFieldSymbolVM.TextDecorations = currentTextDecorations;
     }
 
     private void SetFontText()
     {
-        foreach (var selectedBlockSymbol in _selectedBlockSymbols)
+        foreach (var selectedSymbolHasTextField in listCanvasSymbolsVM.SelectedSymbolsHasTextField)
         {
-            SetFontText(selectedBlockSymbol);
+            SetFontText(selectedSymbolHasTextField);
         }
     }
 }

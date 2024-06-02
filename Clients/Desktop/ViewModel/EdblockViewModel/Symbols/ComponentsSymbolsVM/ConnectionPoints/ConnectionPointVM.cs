@@ -1,18 +1,15 @@
-﻿using System;
-using System.Windows.Input;
-using System.ComponentModel;
+﻿using System.Windows.Input;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using Prism.Commands;
 using EdblockModel.EnumsModel;
-using EdblockModel.SymbolsModel.LineSymbolsModel;
 using EdblockViewModel.ComponentsVM;
 using EdblockViewModel.AbstractionsVM;
-using EdblockViewModel.Symbols.LineSymbols;
+using EdblockViewModel.CoreVM;
+using EdblockViewModel.ComponentsVM.CanvasSymbols;
 
 namespace EdblockViewModel.Symbols.ComponentsSymbolsVM.ConnectionPoints;
 
-public class ConnectionPointVM : INotifyPropertyChanged
+public class ConnectionPointVM : ObservableObject
 {
     private double xCoordinate;
     public double XCoordinate
@@ -78,8 +75,6 @@ public class ConnectionPointVM : INotifyPropertyChanged
     public IHasConnectionPoint BlockSymbolHasConnectionPoint { get; init; }
     public SideSymbol Position { get; init; }
 
-    public event PropertyChangedEventHandler? PropertyChanged;
-
     private const int diametr = 8;
 
     private readonly CanvasSymbolsVM _canvasSymbolsVM;
@@ -109,23 +104,6 @@ public class ConnectionPointVM : INotifyPropertyChanged
         SetDisplayConnectionPoint(Cursors.Arrow, false, false);
     }
 
-    public void Click()
-    {
-        if (_canvasSymbolsVM.CurrentDrawnLineSymbol == null)
-        {
-            StarDrawLine();
-        }
-        else
-        {
-            FinishDrawLine();
-        }
-    }
-
-    public void OnPropertyChanged([CallerMemberName] string nameProperty = "")
-    {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameProperty));
-    }
-
     public static void SetDisplayConnectionPoints(List<ConnectionPointVM> connectionPoints, bool isShow)
     {
         foreach (var connectionPoint in connectionPoints)
@@ -145,107 +123,6 @@ public class ConnectionPointVM : INotifyPropertyChanged
             _canvasSymbolsVM.Cursor = cursorDisplaying;
 
             IsSelected = isSelectConnectionPoint;
-        }
-    }
-
-    public void StarDrawLine()
-    {
-        var isDrawingLinesAccordingGOST = _checkBoxLineGostVM.IsDrawingLinesAccordingGOST;
-
-        var drawnLineSymbolVM = new DrawnLineSymbolVM(_canvasSymbolsVM)
-        {
-            SymbolOutgoingLine = BlockSymbolVM,
-            OutgoingPosition = Position,
-            OutgoingConnectionPoint = this
-        };
-
-        var isLineOutputAccordingGOST = drawnLineSymbolVM.IsLineOutputAccordingGOST();
-        
-        if (isDrawingLinesAccordingGOST && !isLineOutputAccordingGOST)
-        {
-            throw new Exception("Выход линии должен быть снизу или справа");
-        }
-
-        IsHasConnectingLine = true;
-
-        drawnLineSymbolVM.AddFirstLine(BlockSymbolVM.XCoordinate + XCoordinateLineDraw, BlockSymbolVM.YCoordinate + YCoordinateLineDraw);
-        drawnLineSymbolVM.RedrawPartLines();
-
-        _canvasSymbolsVM.DrawnLinesSymbolVM.Add(drawnLineSymbolVM);
-        _canvasSymbolsVM.CurrentDrawnLineSymbol = drawnLineSymbolVM;
-    }
-
-    public void FinishDrawLine()
-    {
-        if (_canvasSymbolsVM.CurrentDrawnLineSymbol is null)
-        {
-            return;
-        }
-
-        var drawnLineSymbolVM = _canvasSymbolsVM.CurrentDrawnLineSymbol;
-
-        if (drawnLineSymbolVM == null)
-        {
-            return;
-        }
-        drawnLineSymbolVM.IncomingPosition = Position;
-
-
-        var isLineIncomingAccordingGOST = _canvasSymbolsVM.CurrentDrawnLineSymbol.IsLineIncomingAccordingGOST();
-        var isDrawingLinesAccordingGOST = _checkBoxLineGostVM.IsDrawingLinesAccordingGOST;
-
-
-        if (isDrawingLinesAccordingGOST && !isLineIncomingAccordingGOST)
-        {
-            throw new Exception("Вход линии должен быть сверху или снизу");
-        }
-
-
-        var symbolOutgoingLine = drawnLineSymbolVM.SymbolOutgoingLine;
-
-        if (symbolOutgoingLine == null)
-        {
-            return;
-        }
-
-        IsHasConnectingLine = true;
-
-        drawnLineSymbolVM.IncomingConnectionPoint = this;
-        drawnLineSymbolVM.SymbolIncomingLine = BlockSymbolVM;
-
-        var drawnLineSymbolModel = drawnLineSymbolVM.DrawnLineSymbolModel;
-
-        var finalLineCoordinate = (BlockSymbolVM.XCoordinate + XCoordinateLineDraw, BlockSymbolVM.YCoordinate + YCoordinateLineDraw);
-
-        var completedLineModel = new CompletedLine(drawnLineSymbolModel, finalLineCoordinate);
-        var completeLinesSymbolModel = completedLineModel.GetCompleteLines();
-
-        drawnLineSymbolModel.LinesSymbolModel = completeLinesSymbolModel;
-
-        drawnLineSymbolVM.RedrawAllLines();
-
-        AddBlockToLine(symbolOutgoingLine, drawnLineSymbolVM);
-        AddBlockToLine(BlockSymbolVM, drawnLineSymbolVM);
-
-        _canvasSymbolsVM.CurrentDrawnLineSymbol = null;
-    }
-
-    private void AddBlockToLine(BlockSymbolVM blockSymbolVM, DrawnLineSymbolVM drawnLineSymbolVM)
-    {
-        var blockByDrawnLines = _canvasSymbolsVM.BlockByDrawnLines;
-
-        if (!blockByDrawnLines.ContainsKey(blockSymbolVM))
-        {
-            var drawnLinesSymbolVM = new List<DrawnLineSymbolVM>
-            {
-                drawnLineSymbolVM
-            };
-
-            blockByDrawnLines.Add(blockSymbolVM, drawnLinesSymbolVM);
-        }
-        else
-        {
-            blockByDrawnLines[blockSymbolVM].Add(drawnLineSymbolVM);
         }
     }
 }

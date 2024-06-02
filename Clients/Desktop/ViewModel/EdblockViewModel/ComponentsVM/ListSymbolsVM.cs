@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using EdblockViewModel.PagesVM;
 using EdblockViewModel.AbstractionsVM;
+using EdblockViewModel.ComponentsVM.CanvasSymbols;
 
 namespace EdblockViewModel.ComponentsVM;
 
@@ -13,7 +14,7 @@ public class ListSymbolsVM(EditorVM editorVM)
 
     public void AddBlockSymbol(BlockSymbolVM blockSymbolVM)
     {
-        var firstBlockSymbolsVM = canvasSymbolsVM.BlockSymbolsVM.FirstOrDefault();
+        var firstBlockSymbolsVM = canvasSymbolsVM.ListCanvasSymbolsVM.BlockSymbolsVM.FirstOrDefault();
         var isScaleAllSymbolVM = popupBoxMenuVM.ScaleAllSymbolVM.IsScaleAllSymbol;
 
         if (isScaleAllSymbolVM && firstBlockSymbolsVM is BlockSymbolVM firstBlockSymbolVM)
@@ -22,6 +23,6 @@ public class ListSymbolsVM(EditorVM editorVM)
             blockSymbolVM.SetHeight(firstBlockSymbolVM.Height);
         }
 
-        canvasSymbolsVM.AddBlockSymbol(blockSymbolVM);
+        canvasSymbolsVM.ListCanvasSymbolsVM.AddBlockSymbol(blockSymbolVM);
     }
 }

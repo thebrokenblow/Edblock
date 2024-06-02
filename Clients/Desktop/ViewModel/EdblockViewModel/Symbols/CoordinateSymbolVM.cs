@@ -1,47 +1,28 @@
 ﻿using System;
 using System.Linq;
-using EdblockViewModel.ComponentsVM;
 using EdblockViewModel.AbstractionsVM;
-using EdblockViewModel.Symbols.LineSymbols;
+using EdblockViewModel.ComponentsVM.CanvasSymbols;
 
 namespace EdblockViewModel.Symbols;
 
-public class CoordinateSymbolVM
+public class CoordinateSymbolVM(CanvasSymbolsVM canvasSymbolsVM)
 {
-    private readonly CanvasSymbolsVM _canvasSymbolsVM;
-
-    public CoordinateSymbolVM(CanvasSymbolsVM canvasSymbolsVM)
-    {
-        _canvasSymbolsVM = canvasSymbolsVM;
-    }
-
     public double GetMaxX() =>
-        GetMax(blockSymbolVM => blockSymbolVM.XCoordinate + blockSymbolVM.Width,
-            lineSymbolVM => Math.Max(lineSymbolVM.X1, lineSymbolVM.X2));
+        GetMax(blockSymbolVM => blockSymbolVM.XCoordinate + blockSymbolVM.Width);
 
     public double GetMaxY() =>
-        GetMax(blockSymbolVM => blockSymbolVM.YCoordinate + blockSymbolVM.Height,
-            lineSymbolVM => Math.Max(lineSymbolVM.Y1, lineSymbolVM.Y2));
+        GetMax(blockSymbolVM => blockSymbolVM.YCoordinate + blockSymbolVM.Height);
 
-    private double GetMax(Func<BlockSymbolVM, double> getMaxCoordinateBlockSymbol, Func<LineSymbolVM, double> getMaxCoordinateLineSymbol)
+    private double GetMax(Func<BlockSymbolVM, double> getMaxCoordinateBlockSymbol)
     {
-        var blockSymbolsVM = _canvasSymbolsVM.BlockSymbolsVM;
-        var drawnLinesSymbolVM = _canvasSymbolsVM.DrawnLinesSymbolVM;
+        var blockSymbolsVM = canvasSymbolsVM.ListCanvasSymbolsVM.BlockSymbolsVM;
 
         if (blockSymbolsVM.Count < 1)
         {
             return 0;
         }
 
-        var maxCoordinate = blockSymbolsVM.Max(blockSymbolVM => getMaxCoordinateBlockSymbol.Invoke(blockSymbolVM));
-
-        foreach (var drawnLineSymbolVM in drawnLinesSymbolVM)
-        {
-            foreach (var lineSymbolVM in drawnLineSymbolVM.LinesSymbolVM)
-            {
-                maxCoordinate = Math.Max(maxCoordinate, getMaxCoordinateLineSymbol.Invoke(lineSymbolVM));
-            }
-        }
+        var maxCoordinate = blockSymbolsVM.Max(getMaxCoordinateBlockSymbol.Invoke);
 
         return maxCoordinate;
     }

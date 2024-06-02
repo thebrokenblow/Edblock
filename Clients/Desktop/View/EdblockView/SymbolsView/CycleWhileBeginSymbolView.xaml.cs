@@ -7,8 +7,6 @@ namespace EdblockView.SymbolsView;
 /// </summary>
 public partial class CycleWhileBeginSymbolView : UserControl
 {
-    public CycleWhileBeginSymbolView()
-    {
+    public CycleWhileBeginSymbolView() =>
         InitializeComponent();
-    }
 }

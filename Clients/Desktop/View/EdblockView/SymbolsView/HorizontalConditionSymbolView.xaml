@@ -43,8 +43,7 @@
             </i:Interaction.Triggers>
         </TextBox>
 
-        <symbolView:ConnectionPointsView />
-        <symbolView:ScaleRectanglesView />
+
 
         <ItemsControl ItemsSource="{Binding ConnectionPointsSwitchCaseVM}">
             <ItemsControl.ItemTemplate>

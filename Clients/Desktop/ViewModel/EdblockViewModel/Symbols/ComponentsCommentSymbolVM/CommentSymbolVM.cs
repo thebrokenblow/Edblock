@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using EdblockViewModel.PagesVM;
 using EdblockViewModel.AttributesVM;
-using EdblockViewModel.ComponentsVM;
 using EdblockViewModel.AbstractionsVM;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM.ConnectionPoints;
+using EdblockViewModel.ComponentsVM.CanvasSymbols;
 
 namespace EdblockViewModel.Symbols.ComponentsCommentSymbolVM;
 

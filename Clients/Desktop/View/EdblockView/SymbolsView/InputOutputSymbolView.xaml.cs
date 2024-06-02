@@ -7,8 +7,6 @@ namespace EdblockView.SymbolsView;
 /// </summary>
 public partial class InputOutputSymbolView : UserControl
 {
-    public InputOutputSymbolView()
-    {
+    public InputOutputSymbolView() =>
         InitializeComponent();
-    }
 }

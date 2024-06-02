@@ -1,6 +1,10 @@
 ﻿using System;
 using System.Windows;
 using EdblockViewModel.Clients;
+using EdblockViewModel.ComponentsVM.CanvasSymbols;
+using EdblockViewModel.ComponentsVM.CanvasSymbols.Interfaces;
+using EdblockViewModel.ComponentsVM.TopSettingsPanelComponent;
+using EdblockViewModel.ComponentsVM.TopSettingsPanelComponent.Interfaces;
 using EdblockViewModel.CoreVM;
 using EdblockViewModel.PagesVM;
 using EdblockViewModel.Services;
@@ -34,6 +38,12 @@ public partial class App : Application
         services.AddScoped<HomeVM>();
         services.AddScoped<SettingsVM>();
         services.AddScoped<UserViewModel>();
+        services.AddScoped<CanvasSymbolsVM>();
+        services.AddScoped<IListCanvasSymbolsVM, ListCanvasSymbolsVM>();
+        services.AddScoped<IFontFamilyComponentVM, FontFamilyComponentVM>();
+        services.AddScoped<IFontSizeComponentVM, FontSizeComponentVM>();
+        services.AddScoped<IFormatTextComponentVM, FormatTextComponentVM>();
+        services.AddScoped<ITextAlignmentComponentVM, TextAlignmentComponentVM>();
 
         services.AddScoped<INavigationService, NavigateService>();
 

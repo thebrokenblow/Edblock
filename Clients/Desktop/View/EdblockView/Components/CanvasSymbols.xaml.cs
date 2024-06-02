@@ -1,8 +1,8 @@
 ﻿using System.Windows;
 using System.Windows.Input;
 using System.Windows.Controls;
-using EdblockViewModel.ComponentsVM;
 using EdblockViewModel.AbstractionsVM;
+using EdblockViewModel.ComponentsVM.CanvasSymbols;
 
 namespace EdblockView.Components;
 
@@ -25,7 +25,7 @@ public partial class CanvasSymbols : UserControl
     {
         var blockSymbolView = (UserControl)sender;
         var blockSymbolVM = (BlockSymbolVM)blockSymbolView.DataContext;
-        blockSymbolVM.Select();
+        blockSymbolVM.SetSelectedProperties();
 
         e.Handled = true;
     }

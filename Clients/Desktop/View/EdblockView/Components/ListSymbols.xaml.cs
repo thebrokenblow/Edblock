@@ -13,6 +13,7 @@ namespace EdblockView.Components;
 public partial class ListSymbols : UserControl
 {
     private ListSymbolsVM? listSymbolsVM;
+
     public ListSymbols() =>
         InitializeComponent();
 

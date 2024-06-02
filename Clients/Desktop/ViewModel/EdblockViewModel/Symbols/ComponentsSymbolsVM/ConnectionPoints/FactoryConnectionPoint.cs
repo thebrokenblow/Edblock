@@ -1,6 +1,7 @@
 ﻿using EdblockModel.EnumsModel;
 using EdblockViewModel.ComponentsVM;
 using EdblockViewModel.AbstractionsVM;
+using EdblockViewModel.ComponentsVM.CanvasSymbols;
 
 namespace EdblockViewModel.Symbols.ComponentsSymbolsVM.ConnectionPoints;
 

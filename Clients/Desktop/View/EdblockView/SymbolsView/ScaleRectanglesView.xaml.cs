@@ -7,8 +7,6 @@ namespace EdblockView.SymbolsView;
 /// </summary>
 public partial class ScaleRectanglesView : UserControl
 {
-    public ScaleRectanglesView()
-    {
+    public ScaleRectanglesView() =>
         InitializeComponent();
-    }
 }

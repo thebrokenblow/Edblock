@@ -27,7 +27,7 @@ public partial class ButtonPrintProject : UserControl
 
         var editorVM = (EditorVM)DataContext;
         var canvasSymbolsVM = editorVM.CanvasSymbolsVM;
-        canvasSymbolsVM.RemoveSelectedSymbol();
+        canvasSymbolsVM.ListCanvasSymbolsVM.ClearSelectedBlockSymbols();
 
         if (printDialog.ShowDialog() == false)
         {

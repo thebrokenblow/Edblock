@@ -11,7 +11,6 @@ using EdblockViewModel.Symbols.ComponentsSymbolsVM.ConnectionPoints;
 namespace EdblockViewModel.Symbols;
 
 [SymbolType("CycleForSymbolVM")]
-
 public class CycleForSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnectionPoint, IHasScaleRectangles
 {
     public TextFieldSymbolVM TextFieldSymbolVM { get; init; }

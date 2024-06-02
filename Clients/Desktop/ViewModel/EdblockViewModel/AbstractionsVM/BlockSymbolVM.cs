@@ -1,29 +1,21 @@
 ﻿using System;
 using System.Windows.Input;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using Prism.Commands;
-using EdblockModel.EnumsModel;
 using EdblockModel.SymbolsModel;
 using EdblockViewModel.ComponentsVM;
-using EdblockViewModel.Symbols.SwitchCaseConditionSymbolsVM;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM.ScaleRectangles;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM.ConnectionPoints;
 using EdblockViewModel.PagesVM;
+using EdblockViewModel.ComponentsVM.CanvasSymbols;
+using EdblockViewModel.CoreVM;
+using EdblockViewModel.ComponentsVM.TopSettingsPanelComponent.Interfaces;
+using EdblockViewModel.ComponentsVM.CanvasSymbols.Interfaces;
 
 namespace EdblockViewModel.AbstractionsVM;
 
-public abstract class BlockSymbolVM : INotifyPropertyChanged
+public abstract class BlockSymbolVM : ObservableObject
 {
-    private string id = string.Empty;
-    public string Id 
-    {
-        get => id;
-        set
-        {
-            id = value;
-        }
-    }
+    public string Id { get; set; } = string.Empty;
 
     private string color = string.Empty;
     public string Color
@@ -113,11 +105,11 @@ public abstract class BlockSymbolVM : INotifyPropertyChanged
     protected readonly LineStateStandardVM _checkBoxLineGostVM;
     protected readonly ScaleAllSymbolVM _scaleAllSymbolVM;
 
-    private readonly FontFamilyComponentVM _fontFamilyControlVM;
-    private readonly FontSizeControlVM _fontSizeControlVM;
-    private readonly TextAlignmentControlVM _textAlignmentControlVM;
-    private readonly FormatTextControlVM _formatTextControlVM;
-
+    private readonly IFontFamilyComponentVM _fontFamilyControlVM;
+    private readonly IFontSizeComponentVM _fontSizeControlVM;
+    private readonly ITextAlignmentComponentVM _textAlignmentControlVM;
+    private readonly IFormatTextComponentVM _formatTextControlVM;
+    private readonly IListCanvasSymbolsVM _listCanvasSymbolsVM;
     public BlockSymbolVM(EditorVM edblockVM)
     {
         EdblockVM = edblockVM;
@@ -138,6 +130,10 @@ public abstract class BlockSymbolVM : INotifyPropertyChanged
         MouseEnter = new(ShowAuxiliaryElements);
         MouseLeave = new(HideAuxiliaryElements);
         MouseLeftButtonDown = new(SetMovableSymbol);
+
+
+
+        _listCanvasSymbolsVM = edblockVM.CanvasSymbolsVM.ListCanvasSymbolsVM;
     }
 
     public abstract void SetWidth(double width);
@@ -158,15 +154,6 @@ public abstract class BlockSymbolVM : INotifyPropertyChanged
 
     public void SetCoordinate((int x, int y) currentCoordinate, (int x, int y) previousCoordinate)
     {
-        var currentDrawnLineSymbol = CanvasSymbolsVM.CurrentDrawnLineSymbol;
-
-        if (currentDrawnLineSymbol != null)
-        {
-            return;
-        }
-
-        CanvasSymbolsVM.RemoveSelectDrawnLine();
-
         if (MoveMiddle)
         {
             XCoordinate = currentCoordinate.x - Width / 2;
@@ -186,7 +173,7 @@ public abstract class BlockSymbolVM : INotifyPropertyChanged
     {
         CanvasSymbolsVM.Cursor = Cursors.SizeAll;
 
-        var movableSymbol = CanvasSymbolsVM.MovableBlockSymbol;
+        var movableSymbol = _listCanvasSymbolsVM.MovableBlockSymbol;
         var scalePartBlockSymbolVM = CanvasSymbolsVM.ScalePartBlockSymbol;
 
         if (movableSymbol is not null || scalePartBlockSymbolVM is not null)
@@ -251,56 +238,22 @@ public abstract class BlockSymbolVM : INotifyPropertyChanged
 
         CanvasSymbolsVM.Cursor = Cursors.SizeAll;
 
-        CanvasSymbolsVM.MovableBlockSymbol = this;
+        _listCanvasSymbolsVM.MovableBlockSymbol = this;
     }
 
-    public void Select()
+    public void SetSelectedProperties()
     {
         IsSelected = true;
 
-        _fontSizeControlVM.SetFontSize(this);
-        _formatTextControlVM.SetFontText(this);
-        _fontFamilyControlVM.SetFontFamily(this);
-        _textAlignmentControlVM.SetFormatAlignment(this);
-
-        CanvasSymbolsVM.SelectedBlockSymbols.Add(this);
-    }
-
-    internal ConnectionPointVM GetConnectionPoint(SideSymbol? incomingPosition)
-    {
-        if (this is SwitchCaseSymbolVM switchCaseSymbolVM)
+        if (this is IHasTextFieldVM selectedSymbolHasTextField)
         {
-            var connectionPointsSwitchCaseVM = switchCaseSymbolVM.ConnectionPointsSwitchCaseVM;
-
-            foreach (var connectionPointSwitchCaseVM in connectionPointsSwitchCaseVM)
-            {
-                if (!connectionPointSwitchCaseVM.IsHasConnectingLine)
-                {
-                    return connectionPointSwitchCaseVM;
-                }
-            }
+            _fontSizeControlVM.SetFontSize(selectedSymbolHasTextField);
+            _fontFamilyControlVM.SetFontFamily(selectedSymbolHasTextField);
+            _formatTextControlVM.SetFontText(selectedSymbolHasTextField);
+            _textAlignmentControlVM.SetFormatAlignment(selectedSymbolHasTextField);
+            _listCanvasSymbolsVM.SelectedSymbolsHasTextField.Add(selectedSymbolHasTextField);
         }
 
-        if (this is IHasConnectionPoint blockSymbolHasConnectionPoint)
-        {
-            var connectionPoints = blockSymbolHasConnectionPoint.ConnectionPointsVM;
-
-            foreach(var connectionPoint in connectionPoints)
-            {
-                if (connectionPoint.Position == incomingPosition && !connectionPoint.IsHasConnectingLine)
-                {
-                    return connectionPoint;
-                }    
-            }
-        }
-
-        throw new Exception("Данный символ не содержит точек соединения");
-    }
-
-    public event PropertyChangedEventHandler? PropertyChanged;
-
-    public void OnPropertyChanged([CallerMemberName] string prop = "")
-    {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
+        _listCanvasSymbolsVM.SelectedBlockSymbols.Add(this);
     }
 }

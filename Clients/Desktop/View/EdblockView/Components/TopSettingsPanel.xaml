@@ -10,7 +10,7 @@
     xmlns:popupBoxControl="clr-namespace:EdblockView.Components.PopupBoxControl"
     d:DataContext="{d:DesignInstance Type=pagesvm:EditorVM}"
     d:DesignHeight="60"
-    d:DesignWidth="1200"
+    d:DesignWidth="1300"
     Background="#F5F5F5"
     mc:Ignorable="d">
     <Grid Background="#F5F5F5">
@@ -43,6 +43,7 @@
             <Separator />
 
             <Button
+                Command="{Binding RemoveSelectedSymbols}"
                 Content="{materialDesign:PackIcon Kind=ContentCut}"
                 Style="{StaticResource ButtonTopSettingsPanel}"
                 ToolBar.OverflowMode="AsNeeded"

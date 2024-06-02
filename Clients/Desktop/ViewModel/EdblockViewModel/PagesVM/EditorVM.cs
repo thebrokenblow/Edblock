@@ -1,7 +1,8 @@
 ﻿using Prism.Commands;
 using EdblockViewModel.CoreVM;
 using EdblockViewModel.ComponentsVM;
-using System.Windows.Input;
+using EdblockViewModel.ComponentsVM.CanvasSymbols;
+using EdblockViewModel.ComponentsVM.TopSettingsPanelComponent.Interfaces;
 
 namespace EdblockViewModel.PagesVM;
 
@@ -17,38 +18,44 @@ public class EditorVM : BaseViewModel
         get => cellHeightTopSettingsPanel;
     }
 
-    public DelegateCommand ClickDelete { get; init; }
-    public CanvasSymbolsVM CanvasSymbolsVM { get; init; } = new();
-    public FontSizeControlVM FontSizeControlVM { get; init; }
-    public FontFamilyComponentVM FontFamilyControlVM { get; init; }
-    public TextAlignmentControlVM TextAlignmentControlVM { get; init; }
-    public FormatTextControlVM FormatTextControlVM { get; init; }
+    public DelegateCommand RemoveSelectedSymbols { get; init; }
+    public CanvasSymbolsVM CanvasSymbolsVM { get; init; }
+    public IFontSizeComponentVM FontSizeControlVM { get; init; }
+    public IFontFamilyComponentVM FontFamilyControlVM { get; init; }
+    public ITextAlignmentComponentVM TextAlignmentControlVM { get; init; }
+    public IFormatTextComponentVM FormatTextControlVM { get; init; }
     public PopupBoxMenuVM PopupBoxMenuVM { get; init; }
     public ListSymbolsVM ListSymbolsVM { get; init; }
-    public ICommand NavigateToMenu { get; init; }
 
     private readonly ProjectVM projectVM;
 
     private const int cellHeightTopSettingsPanel = 60;
     private const int cellWidthPanelSymbols = 50;
 
-    public EditorVM()
+    public EditorVM(
+        CanvasSymbolsVM canvasSymbolsVM, 
+        IFormatTextComponentVM formatTextControlVM, 
+        IFontSizeComponentVM fontSizeControlVM, 
+        IFontFamilyComponentVM fontFamilyComponentVM,
+        ITextAlignmentComponentVM textAlignmentComponentVM)
     {
-        var selectedBlockSymbols = CanvasSymbolsVM.SelectedBlockSymbols;
+        CanvasSymbolsVM = canvasSymbolsVM;
+
+        var selectedBlockSymbols = CanvasSymbolsVM.ListCanvasSymbolsVM.SelectedBlockSymbols;
 
         CanvasSymbolsVM.ScalingCanvasSymbolsVM.HeightTopSettingsPanel = cellHeightTopSettingsPanel;
         CanvasSymbolsVM.ScalingCanvasSymbolsVM.WidthPanelSymbols = cellWidthPanelSymbols;
 
         PopupBoxMenuVM = new();
-        FontSizeControlVM = new(selectedBlockSymbols);
-        FontFamilyControlVM = new(selectedBlockSymbols);
-        FormatTextControlVM = new(selectedBlockSymbols);
-        TextAlignmentControlVM = new(selectedBlockSymbols);
+        FontSizeControlVM = fontSizeControlVM;
+        FontFamilyControlVM = fontFamilyComponentVM;
+        FormatTextControlVM = formatTextControlVM;
+        TextAlignmentControlVM = textAlignmentComponentVM;
 
         projectVM = new(this);
         ListSymbolsVM = new(this);
 
-        ClickDelete = new(CanvasSymbolsVM.DeleteSymbols);
+        RemoveSelectedSymbols = new(CanvasSymbolsVM.RemoveSelectedSymbols);
     }
 
     public void SaveProject(string filePath)

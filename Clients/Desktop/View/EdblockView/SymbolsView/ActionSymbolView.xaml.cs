@@ -7,8 +7,6 @@ namespace EdblockView.SymbolsView;
 /// </summary>
 public partial class ActionSymbolView : UserControl
 {
-    public ActionSymbolView()
-    {
+    public ActionSymbolView() =>
         InitializeComponent();
-    }
 }

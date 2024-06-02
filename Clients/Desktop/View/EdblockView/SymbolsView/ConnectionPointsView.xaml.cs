@@ -10,10 +10,8 @@ namespace EdblockView.SymbolsView;
 /// </summary>
 public partial class ConnectionPointsView : UserControl
 {
-    public ConnectionPointsView()
-    {
+    public ConnectionPointsView() =>
         InitializeComponent();
-    }
 
     private void TrackStageDrawLine(object sender, MouseButtonEventArgs e)
     {
@@ -23,7 +21,7 @@ public partial class ConnectionPointsView : UserControl
 
             if (contextEllipse is ConnectionPointVM connectionPointVM)
             {
-                connectionPointVM.Click();
+                //connectionPointVM.Click();
             }           
         }
 

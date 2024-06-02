@@ -10,10 +10,8 @@ namespace EdblockView.SymbolsView;
 /// </summary>
 public partial class ParallelActionSymbolView : UserControl
 {
-    public ParallelActionSymbolView()
-    {
+    public ParallelActionSymbolView() => 
         InitializeComponent();
-    }
 
     private void TrackStageDrawLine(object sender, MouseButtonEventArgs e)
     {
@@ -23,7 +21,7 @@ public partial class ParallelActionSymbolView : UserControl
 
             if (contextEllipse is ConnectionPointVM connectionPointVM)
             {
-                connectionPointVM.Click();
+                //connectionPointVM.Click();
             }
         }
 

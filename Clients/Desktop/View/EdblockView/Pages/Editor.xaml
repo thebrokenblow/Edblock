@@ -11,7 +11,7 @@
     SizeChanged="ChangedSizeWindow"
     mc:Ignorable="d">
     <UserControl.InputBindings>
-        <KeyBinding Key="Delete" Command="{Binding ClickDelete}" />
+        <KeyBinding Key="Delete" Command="{Binding RemoveSelectedSymbols}" />
     </UserControl.InputBindings>
 
     <UserControl.Triggers>

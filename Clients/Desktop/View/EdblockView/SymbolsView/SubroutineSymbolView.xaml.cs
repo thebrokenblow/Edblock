@@ -7,8 +7,6 @@ namespace EdblockView.SymbolsView;
 /// </summary>
 public partial class SubroutineSymbolView : UserControl
 {
-    public SubroutineSymbolView()
-    {
+    public SubroutineSymbolView() =>
         InitializeComponent();
-    }
 }

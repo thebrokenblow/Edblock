@@ -7,8 +7,6 @@ namespace EdblockView.SymbolsView;
 /// </summary>
 public partial class StartEndSymbolView : UserControl
 {
-    public StartEndSymbolView()
-    {
+    public StartEndSymbolView() =>
         InitializeComponent();
-    }
 }

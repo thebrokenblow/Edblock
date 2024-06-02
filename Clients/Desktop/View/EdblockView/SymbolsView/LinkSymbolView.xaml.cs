@@ -7,8 +7,6 @@ namespace EdblockView.SymbolsView;
 /// </summary>
 public partial class LinkSymbolView : UserControl
 {
-    public LinkSymbolView()
-    {
-        InitializeComponent();
-    }
+    public LinkSymbolView() =>
+         InitializeComponent();
 }

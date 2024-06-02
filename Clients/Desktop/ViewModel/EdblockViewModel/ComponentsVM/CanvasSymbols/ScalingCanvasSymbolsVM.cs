@@ -3,12 +3,11 @@ using System.Windows;
 using System.Windows.Threading;
 using EdblockViewModel.Symbols;
 using EdblockViewModel.AbstractionsVM;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
+using EdblockViewModel.CoreVM;
 
-namespace EdblockViewModel.ComponentsVM;
+namespace EdblockViewModel.ComponentsVM.CanvasSymbols;
 
-public class ScalingCanvasSymbolsVM : INotifyPropertyChanged
+public class ScalingCanvasSymbolsVM(CanvasSymbolsVM canvasSymbolsVM) : ObservableObject
 {
     private double verticalOffset = offsetLeave;
     public double VerticalOffset
@@ -37,11 +36,10 @@ public class ScalingCanvasSymbolsVM : INotifyPropertyChanged
 
     private readonly DispatcherTimer dispatcherTimer = new()
     {
-        Interval = TimeSpan.FromMilliseconds(scalingInterval) 
+        Interval = TimeSpan.FromMilliseconds(scalingInterval)
     };
 
-    private readonly CanvasSymbolsVM _canvasSymbolsVM;
-    private readonly CoordinateSymbolVM _coordinateSymbolVM;
+    private readonly CoordinateSymbolVM coordinateSymbolVM = new(canvasSymbolsVM);
 
     private SideLeave? sideLeave;
 
@@ -62,31 +60,25 @@ public class ScalingCanvasSymbolsVM : INotifyPropertyChanged
         Left
     }
 
-    public ScalingCanvasSymbolsVM(CanvasSymbolsVM canvasSymbolsVM)
-    {
-        _canvasSymbolsVM = canvasSymbolsVM;
-        _coordinateSymbolVM = new(canvasSymbolsVM);
-    }
-
     public void CalculateSizeUnscaledCanvas(int widthWindow, int heightWindow)
     {
-        if (_canvasSymbolsVM.Width < widthWindow)
+        if (canvasSymbolsVM.Width < widthWindow)
         {
             widthUnscaledCanvas = CalculateWidthUnscaledCanvas(widthWindow);
-            _canvasSymbolsVM.Width = widthUnscaledCanvas;
+            canvasSymbolsVM.Width = widthUnscaledCanvas;
         }
 
-        if (_canvasSymbolsVM.Height < heightWindow)
+        if (canvasSymbolsVM.Height < heightWindow)
         {
             heightUnscaledCanvas = CalculateHeightUnscaledCanvas(heightWindow);
-            _canvasSymbolsVM.Height = heightUnscaledCanvas;
+            canvasSymbolsVM.Height = heightUnscaledCanvas;
         }
     }
 
     public void SubscribeСanvasScalingEvents(Point cursotPoint)
     {
-        var movableBlockSymbol = _canvasSymbolsVM.MovableBlockSymbol;
-        var countBlockSymbolsVM = _canvasSymbolsVM.BlockSymbolsVM.Count;
+        var movableBlockSymbol = canvasSymbolsVM.ListCanvasSymbolsVM.MovableBlockSymbol;
+        var countBlockSymbolsVM = canvasSymbolsVM.ListCanvasSymbolsVM.BlockSymbolsVM.Count;
 
         if (movableBlockSymbol is not null && countBlockSymbolsVM >= minNumberSymbolsScaling)
         {
@@ -138,24 +130,18 @@ public class ScalingCanvasSymbolsVM : INotifyPropertyChanged
         return null;
     }
 
-    public event PropertyChangedEventHandler? PropertyChanged;
-    public void OnPropertyChanged([CallerMemberName] string prop = "")
-    {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
-    }
-
     public void Resize()
     {
-        var maxXCoordinateSymbol = _coordinateSymbolVM.GetMaxX() + minIndentation;
-        var maxYCoordinateSymbol = _coordinateSymbolVM.GetMaxY() + minIndentation;
+        var maxXCoordinateSymbol = coordinateSymbolVM.GetMaxX() + minIndentation;
+        var maxYCoordinateSymbol = coordinateSymbolVM.GetMaxY() + minIndentation;
 
-        _canvasSymbolsVM.Width = Math.Max(maxXCoordinateSymbol, widthUnscaledCanvas);
-        _canvasSymbolsVM.Height = Math.Max(maxYCoordinateSymbol, heightUnscaledCanvas);
+        canvasSymbolsVM.Width = Math.Max(maxXCoordinateSymbol, widthUnscaledCanvas);
+        canvasSymbolsVM.Height = Math.Max(maxYCoordinateSymbol, heightUnscaledCanvas);
     }
 
     private void ScalingCanvas(object? sender, EventArgs e)
     {
-        var movableBlockSymbol = _canvasSymbolsVM.MovableBlockSymbol;
+        var movableBlockSymbol = canvasSymbolsVM.ListCanvasSymbolsVM.MovableBlockSymbol;
 
         if (movableBlockSymbol is null)
         {
@@ -165,24 +151,24 @@ public class ScalingCanvasSymbolsVM : INotifyPropertyChanged
         if (sideLeave == SideLeave.Right)
         {
             HorizontalOffset += offsetLeave;
-            _canvasSymbolsVM.Width += offsetLeave;
+            canvasSymbolsVM.Width += offsetLeave;
 
             movableBlockSymbol.XCoordinate += offsetLeave;
         }
         else if (sideLeave == SideLeave.Bottom)
         {
             VerticalOffset += offsetLeave;
-            _canvasSymbolsVM.Height += offsetLeave;
+            canvasSymbolsVM.Height += offsetLeave;
 
             movableBlockSymbol.YCoordinate += offsetLeave;
         }
         else if (
             sideLeave == SideLeave.Left
-            && _canvasSymbolsVM.Width > widthUnscaledCanvas
-            && _canvasSymbolsVM.Width > _coordinateSymbolVM.GetMaxX() + minIndentation)
+            && canvasSymbolsVM.Width > widthUnscaledCanvas
+            && canvasSymbolsVM.Width > coordinateSymbolVM.GetMaxX() + minIndentation)
         {
             HorizontalOffset -= offsetLeave;
-            _canvasSymbolsVM.Width -= offsetLeave;
+            canvasSymbolsVM.Width -= offsetLeave;
 
             if (IsSymbolLeftLeave(movableBlockSymbol))
             {
@@ -191,19 +177,17 @@ public class ScalingCanvasSymbolsVM : INotifyPropertyChanged
         }
         else if (
             sideLeave == SideLeave.Top
-            && _canvasSymbolsVM.Height > heightUnscaledCanvas
-            && _canvasSymbolsVM.Height > _coordinateSymbolVM.GetMaxY() + minIndentation)
+            && canvasSymbolsVM.Height > heightUnscaledCanvas
+            && canvasSymbolsVM.Height > coordinateSymbolVM.GetMaxY() + minIndentation)
         {
             VerticalOffset -= offsetLeave;
-            _canvasSymbolsVM.Height -= offsetLeave;
+            canvasSymbolsVM.Height -= offsetLeave;
 
             if (IsSymbolTopLeave(movableBlockSymbol))
             {
                 movableBlockSymbol.YCoordinate -= offsetLeave;
             }
         }
-
-        _canvasSymbolsVM.RedrawDrawnLinesSymbol(movableBlockSymbol);
     }
 
     private bool IsSymbolLeftLeave(BlockSymbolVM movableBlockSymbol) =>

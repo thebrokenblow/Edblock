@@ -3,6 +3,7 @@ using System.Windows.Input;
 using EdblockViewModel.ComponentsVM;
 using System.Collections.ObjectModel;
 using EdblockViewModel.AbstractionsVM;
+using EdblockViewModel.ComponentsVM.CanvasSymbols;
 
 namespace EdblockViewModel.Symbols.ComponentsSymbolsVM.ScaleRectangles;
 
@@ -42,7 +43,6 @@ public class ScalePartBlockSymbol
 
     public void SetWidthBlockSymbol(CanvasSymbolsVM canvasSymbolsVM)
     {
-        canvasSymbolsVM.RedrawDrawnLinesSymbol(ScalingBlockSymbol);
 
         if (_getWidthBlockSymbol == null)
         {
@@ -61,7 +61,7 @@ public class ScalePartBlockSymbol
                 }
             }
 
-            canvasSymbolsVM.RedrawnAllDrawnLines();
+           
         }
         else
         {
@@ -78,7 +78,7 @@ public class ScalePartBlockSymbol
 
     public void SetHeightBlockSymbol(CanvasSymbolsVM canvasSymbolsVM)
     {
-        canvasSymbolsVM.RedrawDrawnLinesSymbol(ScalingBlockSymbol);
+       
 
         if (_getHeigthBlockSymbol == null)
         {
@@ -97,7 +97,7 @@ public class ScalePartBlockSymbol
                 }
             }
 
-            canvasSymbolsVM.RedrawnAllDrawnLines();
+
         }
         else
         {

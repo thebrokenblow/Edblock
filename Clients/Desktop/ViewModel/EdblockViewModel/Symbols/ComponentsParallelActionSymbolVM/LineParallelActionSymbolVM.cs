@@ -1,9 +1,8 @@
-﻿using System.ComponentModel;
-using System.Runtime.CompilerServices;
+﻿using EdblockViewModel.CoreVM;
 
 namespace EdblockViewModel.Symbols.ComponentsParallelActionSymbolVM;
 
-public class LineParallelActionSymbolVM : INotifyPropertyChanged
+public class LineParallelActionSymbolVM : ObservableObject
 {
     private double x1;
     public double X1
@@ -12,7 +11,6 @@ public class LineParallelActionSymbolVM : INotifyPropertyChanged
         set
         {
             x1 = value;
-
             OnPropertyChanged();
         }
     }
@@ -24,7 +22,6 @@ public class LineParallelActionSymbolVM : INotifyPropertyChanged
         set
         {
             y1 = value;
-
             OnPropertyChanged();
         }
     }
@@ -36,7 +33,6 @@ public class LineParallelActionSymbolVM : INotifyPropertyChanged
         set
         {
             x2 = value;
-
             OnPropertyChanged();
         }
     }
@@ -48,15 +44,7 @@ public class LineParallelActionSymbolVM : INotifyPropertyChanged
         set
         {
             y2 = value;
-
             OnPropertyChanged();
         }
-    }
-
-    public event PropertyChangedEventHandler? PropertyChanged;
-
-    public void OnPropertyChanged([CallerMemberName] string prop = "")
-    {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
     }
 }

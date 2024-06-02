@@ -1,15 +1,15 @@
 ﻿using System;
 using Prism.Commands;
 using System.Windows.Input;
-using System.ComponentModel;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using EdblockViewModel.ComponentsVM;
 using EdblockViewModel.AbstractionsVM;
+using EdblockViewModel.CoreVM;
+using EdblockViewModel.ComponentsVM.CanvasSymbols;
 
 namespace EdblockViewModel.Symbols.ComponentsSymbolsVM.ScaleRectangles;
 
-public class ScaleRectangle : INotifyPropertyChanged
+public class ScaleRectangle : ObservableObject
 {
 
     private double xCoordinate;
@@ -45,10 +45,9 @@ public class ScaleRectangle : INotifyPropertyChanged
         }
     }
 
-    public DelegateCommand EnterCursor { get; init; }
-    public DelegateCommand LeaveCursor { get; init; }
-    public DelegateCommand ClickScaleRectangle { get; init; }
-    public event PropertyChangedEventHandler? PropertyChanged;
+    public DelegateCommand EnterCursor { get; }
+    public DelegateCommand LeaveCursor { get; }
+    public DelegateCommand ClickScaleRectangle { get; }
     private readonly CanvasSymbolsVM _canvasSymbolsVM;
     private readonly ScaleAllSymbolVM _scaleAllSymbolVM;
     private readonly BlockSymbolVM _blockSymbolVM;
@@ -95,11 +94,6 @@ public class ScaleRectangle : INotifyPropertyChanged
         }
     }
 
-    public void OnPropertyChanged([CallerMemberName] string prop = "")
-    {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
-    }
-
     private void ShowScaleRectangles()
     {
         if (_canvasSymbolsVM.ScalePartBlockSymbol == null)
@@ -125,6 +119,6 @@ public class ScaleRectangle : INotifyPropertyChanged
 
     private void SaveScaleRectangle()
     {
-        _canvasSymbolsVM.ScalePartBlockSymbol = new(_blockSymbolVM, _cursorScaling, _getWidthSymbol, _getHeightSymbol, _scaleAllSymbolVM, _canvasSymbolsVM.BlockSymbolsVM);
+        _canvasSymbolsVM.ScalePartBlockSymbol = new(_blockSymbolVM, _cursorScaling, _getWidthSymbol, _getHeightSymbol, _scaleAllSymbolVM, _canvasSymbolsVM.ListCanvasSymbolsVM.BlockSymbolsVM);
     }
 }

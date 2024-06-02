@@ -7,8 +7,6 @@ namespace EdblockView.SymbolsView;
 /// </summary>
 public partial class ConditionSymbolView : UserControl
 {
-    public ConditionSymbolView()
-    {
+    public ConditionSymbolView() =>
         InitializeComponent();
-    }
 }

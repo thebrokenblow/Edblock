@@ -7,8 +7,6 @@ namespace EdblockView.SymbolsView;
 /// </summary>
 public partial class CommentSymbolView : UserControl
 {
-    public CommentSymbolView()
-    {
+    public CommentSymbolView() =>
         InitializeComponent();
-    }
 }

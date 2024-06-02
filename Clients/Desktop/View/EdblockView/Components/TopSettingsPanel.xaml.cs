@@ -7,8 +7,6 @@ namespace EdblockView.Components;
 /// </summary>
 public partial class TopSettingsPanel : UserControl
 {
-    public TopSettingsPanel()
-    {
+    public TopSettingsPanel() =>
         InitializeComponent();
-    }
 }

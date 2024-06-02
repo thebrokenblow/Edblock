@@ -2,18 +2,14 @@
 using EdblockModel.EnumsModel;
 using EdblockViewModel.ComponentsVM;
 using EdblockViewModel.AbstractionsVM;
+using EdblockViewModel.ComponentsVM.CanvasSymbols;
 
 namespace EdblockViewModel.Symbols.ComponentsSymbolsVM.ConnectionPoints;
 
-public class BuilderConnectionPointsVM
+public class BuilderConnectionPointsVM(CanvasSymbolsVM canvasSymbolsVM, BlockSymbolVM blockSymbolVM, LineStateStandardVM checkBoxLineGostVM)
 {
-    private readonly FactoryConnectionPoint _factoryConnectionPoint;
-    private readonly List<ConnectionPointVM> connectionPointsVM = new();
-
-    public BuilderConnectionPointsVM(CanvasSymbolsVM canvasSymbolsVM, BlockSymbolVM blockSymbolVM, LineStateStandardVM checkBoxLineGostVM)
-    {
-        _factoryConnectionPoint = new(canvasSymbolsVM, blockSymbolVM, checkBoxLineGostVM);
-    }
+    private readonly FactoryConnectionPoint _factoryConnectionPoint = new(canvasSymbolsVM, blockSymbolVM, checkBoxLineGostVM);
+    private readonly List<ConnectionPointVM> connectionPointsVM = [];
 
     public BuilderConnectionPointsVM AddTopConnectionPoint()
     {

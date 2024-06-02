@@ -40,7 +40,7 @@ public partial class ButtonSaveImg : UserControl
             FileName = FileName + FileExtension
         };
 
-        canvasSymbolsVM.RemoveSelectedSymbol();
+        canvasSymbolsVM.ListCanvasSymbolsVM.ClearSelectedBlockSymbols();
 
         if (saveFileDialog.ShowDialog() == false)
         {

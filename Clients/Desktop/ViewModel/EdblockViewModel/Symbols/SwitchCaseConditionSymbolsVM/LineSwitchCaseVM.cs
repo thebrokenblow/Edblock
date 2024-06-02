@@ -1,9 +1,8 @@
-﻿using System.ComponentModel;
-using System.Runtime.CompilerServices;
+﻿using EdblockViewModel.CoreVM;
 
 namespace EdblockViewModel.Symbols.SwitchCaseConditionSymbolsVM;
 
-public class LineSwitchCase : INotifyPropertyChanged
+public class LineSwitchCase : ObservableObject
 {
     private double x1;
     public double X1
@@ -47,11 +46,5 @@ public class LineSwitchCase : INotifyPropertyChanged
             y2 = value;
             OnPropertyChanged();
         }
-    }
-
-    public event PropertyChangedEventHandler? PropertyChanged;
-    public void OnPropertyChanged([CallerMemberName] string prop = "")
-    {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
     }
 }
