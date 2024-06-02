@@ -43,7 +43,6 @@ public class ScalePartBlockSymbol
 
     public void SetWidthBlockSymbol(CanvasSymbolsVM canvasSymbolsVM)
     {
-
         if (_getWidthBlockSymbol == null)
         {
             return;
@@ -60,7 +59,6 @@ public class ScalePartBlockSymbol
                     blockSymbolVM.SetWidth(width);
                 }
             }
-
            
         }
         else
