@@ -1,4 +1,4 @@
-﻿using EdblockViewModel.AbstractionsVM;
+﻿using EdblockViewModel.Abstractions;
 
 namespace EdblockViewModel.Symbols.ComponentsSymbolsVM.ScaleRectangles;
 

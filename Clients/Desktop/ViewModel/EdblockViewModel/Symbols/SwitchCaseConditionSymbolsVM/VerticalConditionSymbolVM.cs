@@ -2,12 +2,12 @@
 using System.Windows.Media;
 using System.Collections.Generic;
 using EdblockModel.EnumsModel;
-using EdblockViewModel.PagesVM;
-using EdblockViewModel.AttributesVM;
-using EdblockViewModel.AbstractionsVM;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM.ScaleRectangles;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM.ConnectionPoints;
+using EdblockViewModel.Abstractions;
+using EdblockViewModel.Pages;
+using EdblockViewModel.Attributes;
 
 namespace EdblockViewModel.Symbols.SwitchCaseConditionSymbolsVM;
 
@@ -140,7 +140,7 @@ public class VerticalConditionSymbolVM : SwitchCaseSymbolVM, IHasTextFieldVM, IH
     {
         var builderScaleRectangles = new BuilderScaleRectangles(
             CanvasSymbolsVM,
-           _scaleAllSymbolVM,
+           scaleAllSymbolComponentVM,
            this);
 
         ScaleRectangles =
@@ -161,7 +161,7 @@ public class VerticalConditionSymbolVM : SwitchCaseSymbolVM, IHasTextFieldVM, IH
         var builderConnectionPointsVM = new BuilderConnectionPointsVM(
             CanvasSymbolsVM,
             this,
-            _checkBoxLineGostVM);
+            lineStateStandardComponentVM);
 
         ConnectionPointsVM = builderConnectionPointsVM
             .AddTopConnectionPoint()
@@ -180,8 +180,8 @@ public class VerticalConditionSymbolVM : SwitchCaseSymbolVM, IHasTextFieldVM, IH
 
             var bottomConnectionPoint = new ConnectionPointVM(
                 CanvasSymbolsVM,
+                lineStateStandardComponentVM,
                 this,
-                _checkBoxLineGostVM,
                 SideSymbol.Right);
 
             ConnectionPointsSwitchCaseVM.Add(bottomConnectionPoint);

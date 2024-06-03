@@ -1,4 +1,4 @@
-﻿using EdblockViewModel.ComponentsVM.CanvasSymbols;
+﻿using EdblockViewModel.Components.CanvasSymbols;
 
 namespace EdblockViewModel.Symbols.ComponentsSymbolsVM.ScaleRectangles;
 

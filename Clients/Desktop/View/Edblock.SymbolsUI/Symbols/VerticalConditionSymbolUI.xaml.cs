@@ -1,8 +1,8 @@
 ﻿using System.Windows.Controls;
-using EdblockViewModel.PagesVM;
-using EdblockViewModel.AbstractionsVM;
 using EdblockViewModel.Symbols.SwitchCaseConditionSymbolsVM;
 using Edblock.SymbolsUI.Factories;
+using EdblockViewModel.Abstractions;
+using EdblockViewModel.Pages;
 
 namespace Edblock.SymbolsUI.Symbols;
 

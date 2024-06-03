@@ -1,5 +1,5 @@
 ﻿using System.Windows.Controls;
-using EdblockViewModel.ComponentsVM.TopSettingsPanelComponent;
+using EdblockViewModel.Components.TopSettingsMenu;
 
 namespace EdblockView.Components.TopSettingsPanelControl;
 

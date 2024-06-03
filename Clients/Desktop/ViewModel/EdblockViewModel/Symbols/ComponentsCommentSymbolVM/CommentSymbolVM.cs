@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
-using EdblockViewModel.PagesVM;
-using EdblockViewModel.AttributesVM;
-using EdblockViewModel.AbstractionsVM;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM.ConnectionPoints;
-using EdblockViewModel.ComponentsVM.CanvasSymbols;
+using EdblockViewModel.Components.CanvasSymbols;
+using EdblockViewModel.Abstractions;
+using EdblockViewModel.Pages;
+using EdblockViewModel.Attributes;
 
 namespace EdblockViewModel.Symbols.ComponentsCommentSymbolVM;
 
@@ -17,8 +17,6 @@ public class CommentSymbolVM : BlockSymbolVM, IHasTextFieldVM
     public CommentLine LowerHorizontalBaseline { get; set; } = new();
     public BlockSymbolVM? BlockSymbolVM { get; set; }
     public ConnectionPointVM? ConnectionPointVM { get; set; }
-
-    private readonly CanvasSymbolsVM _canvasSymbolsVM;
 
     private double heightTextField;
     public double HeightTextField
@@ -53,8 +51,6 @@ public class CommentSymbolVM : BlockSymbolVM, IHasTextFieldVM
     private const int spaceBetweenHorizontalLines = 10;
     public CommentSymbolVM(EditorVM edblockVM) : base(edblockVM)
     {
-        _canvasSymbolsVM = edblockVM.CanvasSymbolsVM;
-
         HeightTextField = defaultHeight;
 
         InitHorizontalLine();
@@ -65,7 +61,7 @@ public class CommentSymbolVM : BlockSymbolVM, IHasTextFieldVM
         SetCoordinateUpperHorizontalBaseline(xCoordinateHorizontalLines);
         SetCoordinateLowerHorizontalBaseline(xCoordinateHorizontalLines);
 
-        TextFieldSymbolVM = new(_canvasSymbolsVM, this)
+        TextFieldSymbolVM = new(CanvasSymbolsVM, this)
         {
             Text = defaultText,
             LeftOffset = UpperHorizontalBaseline.X1,

@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using Prism.Commands;
 using EdblockModel.EnumsModel;
-using EdblockViewModel.ComponentsVM;
-using EdblockViewModel.AbstractionsVM;
-using EdblockViewModel.CoreVM;
-using EdblockViewModel.ComponentsVM.CanvasSymbols;
+using EdblockViewModel.Abstractions;
+using EdblockViewModel.Core;
+using EdblockViewModel.Components.CanvasSymbols.Interfaces;
+using EdblockViewModel.Components.TopSettingsMenu.PopupBoxMenu.Interfaces;
 
 namespace EdblockViewModel.Symbols.ComponentsSymbolsVM.ConnectionPoints;
 
@@ -77,13 +77,13 @@ public class ConnectionPointVM : ObservableObject
 
     private const int diametr = 8;
 
-    private readonly CanvasSymbolsVM _canvasSymbolsVM;
-    private readonly LineStateStandardVM _checkBoxLineGostVM;
+    private readonly ICanvasSymbolsVM _canvasSymbolsVM;
+    private readonly ILineStateStandardComponentVM _lineStateStandardComponentVM;
 
-    public ConnectionPointVM(CanvasSymbolsVM canvasSymbolsVM, BlockSymbolVM blockSymbolVM, LineStateStandardVM checkBoxLineGostVM, SideSymbol position)
+    public ConnectionPointVM(ICanvasSymbolsVM canvasSymbolsVM, ILineStateStandardComponentVM lineStateStandardComponentVM, BlockSymbolVM blockSymbolVM, SideSymbol position)
     {
         _canvasSymbolsVM = canvasSymbolsVM;
-        _checkBoxLineGostVM = checkBoxLineGostVM;
+        _lineStateStandardComponentVM = lineStateStandardComponentVM;
 
         Position = position;
 

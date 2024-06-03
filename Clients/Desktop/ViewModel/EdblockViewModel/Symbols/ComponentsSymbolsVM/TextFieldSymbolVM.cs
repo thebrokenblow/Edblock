@@ -1,10 +1,11 @@
 ﻿using System.Windows.Input;
 using Prism.Commands;
 using EdblockModel.SymbolsModel;
-using EdblockViewModel.AbstractionsVM;
-using EdblockViewModel.CoreVM;
-using EdblockViewModel.ComponentsVM.CanvasSymbols;
 using System.Collections.Generic;
+using EdblockViewModel.Components.CanvasSymbols;
+using EdblockViewModel.Abstractions;
+using EdblockViewModel.Core;
+using EdblockViewModel.Components.CanvasSymbols.Interfaces;
 
 namespace EdblockViewModel.Symbols.ComponentsSymbolsVM;
 
@@ -164,11 +165,11 @@ public class TextFieldSymbolVM : ObservableObject
     public DelegateCommand MouseDoubleClick { get; }
     public DelegateCommand MouseLeftButtonDown { get; }
 
-    private readonly CanvasSymbolsVM _canvasSymbolsVM;
+    private readonly ICanvasSymbolsVM _canvasSymbolsVM;
     private readonly BlockSymbolVM _blockSymbolVM;
     public TextFieldSymbolModel TextFieldModel { get; set; }
 
-    public TextFieldSymbolVM(CanvasSymbolsVM canvasSymbolsVM, BlockSymbolVM blockSymbolVM)
+    public TextFieldSymbolVM(ICanvasSymbolsVM canvasSymbolsVM, BlockSymbolVM blockSymbolVM)
     {
         _canvasSymbolsVM = canvasSymbolsVM;
         _blockSymbolVM = blockSymbolVM;

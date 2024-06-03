@@ -1,5 +1,5 @@
-﻿using EdblockViewModel.AbstractionsVM;
-using EdblockViewModel.PagesVM;
+﻿using EdblockViewModel.Abstractions;
+using EdblockViewModel.Pages;
 using EdblockViewModel.Symbols.ComponentsParallelActionSymbolVM;
 using System.Windows.Controls;
 

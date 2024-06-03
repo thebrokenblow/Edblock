@@ -2,10 +2,11 @@
 using Prism.Commands;
 using System.Windows.Input;
 using System.Collections.Generic;
-using EdblockViewModel.ComponentsVM;
-using EdblockViewModel.AbstractionsVM;
-using EdblockViewModel.CoreVM;
-using EdblockViewModel.ComponentsVM.CanvasSymbols;
+using EdblockViewModel.Components.CanvasSymbols;
+using EdblockViewModel.Abstractions;
+using EdblockViewModel.Core;
+using EdblockViewModel.Components.CanvasSymbols.Interfaces;
+using EdblockViewModel.Components.TopSettingsMenu.PopupBoxMenu.Interfaces;
 
 namespace EdblockViewModel.Symbols.ComponentsSymbolsVM.ScaleRectangles;
 
@@ -48,8 +49,8 @@ public class ScaleRectangle : ObservableObject
     public DelegateCommand EnterCursor { get; }
     public DelegateCommand LeaveCursor { get; }
     public DelegateCommand ClickScaleRectangle { get; }
-    private readonly CanvasSymbolsVM _canvasSymbolsVM;
-    private readonly ScaleAllSymbolVM _scaleAllSymbolVM;
+    private readonly ICanvasSymbolsVM _canvasSymbolsVM;
+    private readonly IScaleAllSymbolComponentVM _scaleAllSymbolVM;
     private readonly BlockSymbolVM _blockSymbolVM;
     private readonly Cursor _cursorScaling;
     private readonly Func<(double, double)> _getCoordinateScaleRectangle;
@@ -57,8 +58,8 @@ public class ScaleRectangle : ObservableObject
     private readonly Func<ScalePartBlockSymbol, CanvasSymbolsVM, double>? _getHeightSymbol;
 
     public ScaleRectangle(
-        CanvasSymbolsVM canvasSymbolsVM,
-        ScaleAllSymbolVM scaleAllSymbolVM,
+        ICanvasSymbolsVM canvasSymbolsVM,
+        IScaleAllSymbolComponentVM scaleAllSymbolVM,
         BlockSymbolVM blockSymbolVM,
         Cursor cursorScaling,
         Func<ScalePartBlockSymbol, CanvasSymbolsVM, double>? getWidthSymbol,

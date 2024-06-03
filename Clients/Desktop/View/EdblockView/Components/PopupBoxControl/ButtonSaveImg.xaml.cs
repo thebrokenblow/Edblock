@@ -4,7 +4,7 @@ using System.Windows.Media;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using Microsoft.Win32;
-using EdblockViewModel.PagesVM;
+using EdblockViewModel.Pages;
 
 namespace EdblockView.Components.PopupBoxControl;
 

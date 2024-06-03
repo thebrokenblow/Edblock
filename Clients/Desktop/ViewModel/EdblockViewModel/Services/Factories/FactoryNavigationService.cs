@@ -1,6 +1,6 @@
-﻿using EdblockViewModel.CoreVM;
-using EdblockViewModel.Services.Interfaces;
+﻿using EdblockViewModel.Services.Interfaces;
 using EdblockViewModel.Services.Factories.Interfaces;
+using EdblockViewModel.Core;
 
 namespace EdblockViewModel.Services.Factories;
 

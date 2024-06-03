@@ -1,8 +1,8 @@
 ﻿using System.Windows;
 using System.Windows.Input;
 using System.Windows.Controls;
-using EdblockViewModel.AbstractionsVM;
-using EdblockViewModel.ComponentsVM.CanvasSymbols;
+using EdblockViewModel.Components.CanvasSymbols;
+using EdblockViewModel.Abstractions;
 
 namespace EdblockView.Components;
 

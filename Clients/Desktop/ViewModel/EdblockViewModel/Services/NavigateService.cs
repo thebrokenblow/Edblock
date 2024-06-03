@@ -1,10 +1,10 @@
 ﻿using System;
-using EdblockViewModel.CoreVM;
+using EdblockViewModel.Core;
 using EdblockViewModel.Services.Interfaces;
 
 namespace EdblockViewModel.Services;
 
-public class NavigateService(Func<Type, BaseViewModel> viewModelFactory) : ObservableObject, INavigationService
+public class NavigateService(Func<Type, BaseViewModel> pageViewModelFactory) : ObservableObject, INavigationService
 {
     private BaseViewModel? currentViewModel;
     public BaseViewModel? CurrentViewModel
@@ -21,7 +21,7 @@ public class NavigateService(Func<Type, BaseViewModel> viewModelFactory) : Obser
     {
         if (CurrentViewModel is not T)
         {
-            CurrentViewModel = viewModelFactory.Invoke(typeof(T));
+            CurrentViewModel = pageViewModelFactory.Invoke(typeof(T));
         }
     }
 }

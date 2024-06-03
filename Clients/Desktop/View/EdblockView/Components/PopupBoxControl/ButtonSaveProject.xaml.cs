@@ -2,7 +2,7 @@
 using System.Windows;
 using Microsoft.Win32;
 using System.Windows.Controls;
-using EdblockViewModel.PagesVM;
+using EdblockViewModel.Pages;
 
 namespace EdblockView.Components.PopupBoxControl;
 

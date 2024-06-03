@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using EdblockModel.EnumsModel;
-using EdblockViewModel.AbstractionsVM;
+using EdblockViewModel.Abstractions;
 
 namespace EdblockViewModel.Symbols.ComponentsSymbolsVM.ConnectionPoints;
 

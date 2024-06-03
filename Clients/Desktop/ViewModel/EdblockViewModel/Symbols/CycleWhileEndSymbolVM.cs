@@ -1,12 +1,12 @@
 ﻿using System.Windows;
 using System.Windows.Media;
 using System.Collections.Generic;
-using EdblockViewModel.PagesVM;
-using EdblockViewModel.AttributesVM;
-using EdblockViewModel.AbstractionsVM;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM.ScaleRectangles;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM.ConnectionPoints;
+using EdblockViewModel.Abstractions;
+using EdblockViewModel.Pages;
+using EdblockViewModel.Attributes;
 
 namespace EdblockViewModel.Symbols;
 
@@ -95,7 +95,7 @@ public class CycleWhileEndSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnect
         var builderConnectionPointsVM = new BuilderConnectionPointsVM(
             CanvasSymbolsVM,
             this,
-            _checkBoxLineGostVM);
+            lineStateStandardComponentVM);
 
         ConnectionPointsVM = builderConnectionPointsVM
             .AddTopConnectionPoint()
@@ -109,7 +109,7 @@ public class CycleWhileEndSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnect
     {
         var builderScaleRectangles = new BuilderScaleRectangles(
             CanvasSymbolsVM,
-           _scaleAllSymbolVM,
+           scaleAllSymbolComponentVM,
            this);
 
         ScaleRectangles =

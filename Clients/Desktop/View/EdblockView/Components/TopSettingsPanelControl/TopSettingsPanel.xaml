@@ -1,0 +1,85 @@
+﻿<UserControl
+    x:Class="EdblockView.Components.TopSettingsPanel"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:components="clr-namespace:EdblockView.Components.TopSettingsPanelControl"
+    xmlns:componentsVM="clr-namespace:EdblockViewModel.Components.TopSettingsMenu;assembly=EdblockViewModel"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:popupBoxControl="clr-namespace:EdblockView.Components.PopupBoxControl"
+    d:DataContext="{d:DesignInstance Type=componentsVM:TopSettingsMenuComponentVM}"
+    d:DesignHeight="60"
+    d:DesignWidth="1300"
+    Background="#F5F5F5"
+    mc:Ignorable="d">
+    <Grid Background="#F5F5F5">
+        <ToolBar
+            HorizontalAlignment="Left"
+            ClipToBounds="True"
+            Style="{StaticResource MaterialDesignToolBar}">
+
+            <Button
+                Command="{Binding NavigateToMenu}"
+                Content="{materialDesign:PackIcon Kind=ArrowLeft}"
+                Style="{StaticResource ButtonTopSettingsPanel}"
+                ToolBar.OverflowMode="AsNeeded"
+                ToolTip="Back to menu" />
+
+            <Separator />
+
+            <Button
+                Content="{materialDesign:PackIcon Kind=ArrowLeftTop}"
+                Style="{StaticResource ButtonTopSettingsPanel}"
+                ToolBar.OverflowMode="AsNeeded"
+                ToolTip="Back to menu" />
+
+            <Button
+                Content="{materialDesign:PackIcon Kind=ArrowRightTop}"
+                Style="{StaticResource ButtonTopSettingsPanel}"
+                ToolBar.OverflowMode="AsNeeded"
+                ToolTip="Back to menu" />
+
+            <Separator />
+
+            <Button
+                Command="{Binding RemoveSelectedSymbols}"
+                Content="{materialDesign:PackIcon Kind=ContentCut}"
+                Style="{StaticResource ButtonTopSettingsPanel}"
+                ToolBar.OverflowMode="AsNeeded"
+                ToolTip="Cut Symbol" />
+
+            <Button
+                Content="{materialDesign:PackIcon Kind=ContentCopy}"
+                Style="{StaticResource ButtonTopSettingsPanel}"
+                ToolBar.OverflowMode="AsNeeded"
+                ToolTip="Copy symbols" />
+
+            <Button
+                Content="{materialDesign:PackIcon Kind=File}"
+                Style="{StaticResource ButtonTopSettingsPanel}"
+                ToolBar.OverflowMode="AsNeeded"
+                ToolTip="Insert symbols" />
+
+            <Separator />
+
+            <components:FontSizeControl Margin="0,0,5,0" DataContext="{Binding FontSizeControlVM}" />
+
+            <Separator />
+
+            <components:FontFamilyControl Margin="0,0,5,0" DataContext="{Binding FontFamilyControlVM}" />
+
+            <Separator />
+
+            <components:TextAlignmentControl DataContext="{Binding TextAlignmentControlVM}" />
+
+            <Separator />
+
+            <components:FormatTextControl DataContext="{Binding FormatTextControlVM}" />
+
+            <Separator />
+
+        </ToolBar>
+        <popupBoxControl:PopupBoxMenu HorizontalAlignment="Right" DataContext="{Binding PopupBoxMenuVM}" />
+    </Grid>
+</UserControl>

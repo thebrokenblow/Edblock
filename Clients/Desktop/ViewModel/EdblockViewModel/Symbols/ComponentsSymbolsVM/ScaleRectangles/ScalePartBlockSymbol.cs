@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Windows.Input;
-using EdblockViewModel.ComponentsVM;
 using System.Collections.ObjectModel;
-using EdblockViewModel.AbstractionsVM;
-using EdblockViewModel.ComponentsVM.CanvasSymbols;
+using EdblockViewModel.Components.CanvasSymbols;
+using EdblockViewModel.Abstractions;
+using EdblockViewModel.Components.TopSettingsMenu.PopupBoxMenu.Interfaces;
 
 namespace EdblockViewModel.Symbols.ComponentsSymbolsVM.ScaleRectangles;
 
@@ -15,7 +15,7 @@ public class ScalePartBlockSymbol
     public double InitialXCoordinateBlockSymbol { get; init; }
     public double InitialYCoordinateBlockSymbol { get; init; }
 
-    private readonly ScaleAllSymbolVM _scaleAllSymbolVM;
+    private readonly IScaleAllSymbolComponentVM _scaleAllSymbolVM;
     private readonly Cursor _cursorWhenScaling;
     private readonly ObservableCollection<BlockSymbolVM> _symbols;
     private readonly Func<ScalePartBlockSymbol, CanvasSymbolsVM, double>? _getWidthBlockSymbol;
@@ -26,7 +26,7 @@ public class ScalePartBlockSymbol
         Cursor cursorWhenScaling,
         Func<ScalePartBlockSymbol, CanvasSymbolsVM, double>? getWidthBlockSymbol,
         Func<ScalePartBlockSymbol, CanvasSymbolsVM, double>? getHeigthBlockSymbol,
-        ScaleAllSymbolVM scaleAllSymbolVM,
+        IScaleAllSymbolComponentVM scaleAllSymbolVM,
         ObservableCollection<BlockSymbolVM> symbolsVM)
     {
         ScalingBlockSymbol = scalingBlockSymbol;

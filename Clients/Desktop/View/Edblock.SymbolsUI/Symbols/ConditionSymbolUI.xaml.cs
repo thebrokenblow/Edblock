@@ -1,6 +1,6 @@
 ﻿using Edblock.SymbolsUI.Factories;
-using EdblockViewModel.AbstractionsVM;
-using EdblockViewModel.PagesVM;
+using EdblockViewModel.Abstractions;
+using EdblockViewModel.Pages;
 using EdblockViewModel.Symbols;
 using System.Windows.Controls;
 

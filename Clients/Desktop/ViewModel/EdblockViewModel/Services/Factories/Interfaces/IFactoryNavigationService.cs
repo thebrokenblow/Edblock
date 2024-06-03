@@ -1,4 +1,4 @@
-﻿using EdblockViewModel.CoreVM;
+﻿using EdblockViewModel.Core;
 using EdblockViewModel.Services.Interfaces;
 
 namespace EdblockViewModel.Services.Factories.Interfaces;

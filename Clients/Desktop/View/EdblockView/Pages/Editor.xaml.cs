@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
-using EdblockViewModel.PagesVM;
+using EdblockViewModel.Pages;
 
 namespace EdblockView.Pages;
 

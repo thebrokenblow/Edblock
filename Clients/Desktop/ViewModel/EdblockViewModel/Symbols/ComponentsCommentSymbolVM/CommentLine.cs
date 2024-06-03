@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using EdblockViewModel.CoreVM;
+using EdblockViewModel.Core;
 
 namespace EdblockViewModel.Symbols.ComponentsCommentSymbolVM;
 

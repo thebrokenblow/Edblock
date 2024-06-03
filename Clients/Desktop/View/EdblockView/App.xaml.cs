@@ -1,16 +1,22 @@
 ﻿using System;
 using System.Windows;
+using EdblockViewModel.Abstractions;
 using EdblockViewModel.Clients;
-using EdblockViewModel.ComponentsVM.CanvasSymbols;
-using EdblockViewModel.ComponentsVM.CanvasSymbols.Interfaces;
-using EdblockViewModel.ComponentsVM.TopSettingsPanelComponent;
-using EdblockViewModel.ComponentsVM.TopSettingsPanelComponent.Interfaces;
-using EdblockViewModel.CoreVM;
-using EdblockViewModel.PagesVM;
+using EdblockViewModel.Components.CanvasSymbols;
+using EdblockViewModel.Components.CanvasSymbols.Interfaces;
+using EdblockViewModel.Components.ListSymbols;
+using EdblockViewModel.Components.ListSymbols.Interfaces;
+using EdblockViewModel.Components.TopSettingsMenu;
+using EdblockViewModel.Components.TopSettingsMenu.Interfaces;
+using EdblockViewModel.Components.TopSettingsMenu.PopupBoxMenu;
+using EdblockViewModel.Components.TopSettingsMenu.PopupBoxMenu.Interfaces;
+using EdblockViewModel.Core;
+using EdblockViewModel.Pages;
 using EdblockViewModel.Services;
 using EdblockViewModel.Services.Factories;
 using EdblockViewModel.Services.Factories.Interfaces;
 using EdblockViewModel.Services.Interfaces;
+using EdblockViewModel.Symbols;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace EdblockView;
@@ -21,6 +27,7 @@ namespace EdblockView;
 public partial class App : Application
 {
     private readonly IServiceProvider serviceProvider;
+
     public App()
     {
         IServiceCollection services = new ServiceCollection();
@@ -39,11 +46,21 @@ public partial class App : Application
         services.AddScoped<SettingsVM>();
         services.AddScoped<UserViewModel>();
         services.AddScoped<CanvasSymbolsVM>();
+        services.AddScoped<EditorVM>();
+        services.AddScoped<ICanvasSymbolsVM, CanvasSymbolsVM>();
+        services.AddScoped<IPopupBoxMenuComponentVM, PopupBoxMenuComponentVM>();
+
+        services.AddScoped<IScaleAllSymbolComponentVM, ScaleAllSymbolComponentVM>();
+        services.AddScoped<ILineStateStandardComponentVM, LineStateStandardComponentVM>();
+        services.AddScoped<IListSymbolsVM, ListSymbolsVM>();
+        services.AddScoped<ITopSettingsMenuComponentVM, TopSettingsMenuComponentVM>();
         services.AddScoped<IListCanvasSymbolsVM, ListCanvasSymbolsVM>();
         services.AddScoped<IFontFamilyComponentVM, FontFamilyComponentVM>();
         services.AddScoped<IFontSizeComponentVM, FontSizeComponentVM>();
         services.AddScoped<IFormatTextComponentVM, FormatTextComponentVM>();
         services.AddScoped<ITextAlignmentComponentVM, TextAlignmentComponentVM>();
+
+        services.AddTransient<ActionSymbolVM>();
 
         services.AddScoped<INavigationService, NavigateService>();
 
@@ -51,8 +68,13 @@ public partial class App : Application
 
         services.AddScoped<Func<Type, BaseViewModel>>(
             serviceProvider =>
-            viewModelType =>
-            (BaseViewModel)serviceProvider.GetRequiredService(viewModelType));
+            pageTypeViewModel =>
+            (BaseViewModel)serviceProvider.GetRequiredService(pageTypeViewModel));
+
+        services.AddScoped<Func<Type, BlockSymbolVM>>(
+           serviceProvider =>
+           blockSymbolTypeVM =>
+           (BlockSymbolVM)serviceProvider.GetRequiredService(blockSymbolTypeVM));
 
         services.AddScoped<EditorVM>();
 

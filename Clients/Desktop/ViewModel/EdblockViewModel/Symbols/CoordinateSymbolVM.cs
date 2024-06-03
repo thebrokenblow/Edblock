@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Linq;
-using EdblockViewModel.AbstractionsVM;
-using EdblockViewModel.ComponentsVM.CanvasSymbols;
+using EdblockViewModel.Abstractions;
+using EdblockViewModel.Components.CanvasSymbols.Interfaces;
 
 namespace EdblockViewModel.Symbols;
 
-public class CoordinateSymbolVM(CanvasSymbolsVM canvasSymbolsVM)
+public class CoordinateSymbolVM(ICanvasSymbolsVM canvasSymbolsVM)
 {
     public double GetMaxX() =>
         GetMax(blockSymbolVM => blockSymbolVM.XCoordinate + blockSymbolVM.Width);

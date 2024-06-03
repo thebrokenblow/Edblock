@@ -1,4 +1,4 @@
-﻿using EdblockViewModel.CoreVM;
+﻿using EdblockViewModel.Core;
 
 namespace EdblockViewModel.Services.Interfaces;
 

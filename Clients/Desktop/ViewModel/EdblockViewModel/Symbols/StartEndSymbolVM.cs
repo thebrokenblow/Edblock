@@ -1,15 +1,14 @@
 ﻿using System.Collections.Generic;
-using EdblockViewModel.PagesVM;
-using EdblockViewModel.AttributesVM;
-using EdblockViewModel.AbstractionsVM;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM.ScaleRectangles;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM.ConnectionPoints;
+using EdblockViewModel.Abstractions;
+using EdblockViewModel.Pages;
+using EdblockViewModel.Attributes;
 
 namespace EdblockViewModel.Symbols;
 
 [SymbolType("StartEndSymbolVM")]
-
 public class StartEndSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnectionPoint, IHasScaleRectangles
 {
     public TextFieldSymbolVM TextFieldSymbolVM { get; init; }
@@ -69,7 +68,7 @@ public class StartEndSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnectionPo
         var builderConnectionPointsVM = new BuilderConnectionPointsVM(
             CanvasSymbolsVM,
             this,
-            _checkBoxLineGostVM);
+            lineStateStandardComponentVM);
 
         ConnectionPointsVM = builderConnectionPointsVM
             .AddTopConnectionPoint()
@@ -83,7 +82,7 @@ public class StartEndSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnectionPo
     {
         var builderScaleRectangles = new BuilderScaleRectangles(
             CanvasSymbolsVM,
-           _scaleAllSymbolVM,
+           scaleAllSymbolComponentVM,
            this);
 
         ScaleRectangles =

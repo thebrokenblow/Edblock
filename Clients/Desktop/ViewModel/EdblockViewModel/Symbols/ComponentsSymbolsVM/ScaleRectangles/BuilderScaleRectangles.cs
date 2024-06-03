@@ -1,12 +1,12 @@
 ﻿using System.Windows.Input;
 using System.Collections.Generic;
-using EdblockViewModel.ComponentsVM;
-using EdblockViewModel.AbstractionsVM;
-using EdblockViewModel.ComponentsVM.CanvasSymbols;
+using EdblockViewModel.Abstractions;
+using EdblockViewModel.Components.CanvasSymbols.Interfaces;
+using EdblockViewModel.Components.TopSettingsMenu.PopupBoxMenu.Interfaces;
 
 namespace EdblockViewModel.Symbols.ComponentsSymbolsVM.ScaleRectangles;
 
-public class BuilderScaleRectangles(CanvasSymbolsVM canvasSymbolsVM, ScaleAllSymbolVM scaleAllSymbolVM, BlockSymbolVM blockSymbolVM)
+public class BuilderScaleRectangles(ICanvasSymbolsVM canvasSymbolsVM, IScaleAllSymbolComponentVM scaleAllSymbolVM, BlockSymbolVM blockSymbolVM)
 {
     private readonly CoordinateScaleRectangle coordinateScaleRectangle = new(blockSymbolVM);
     private readonly List<ScaleRectangle> scaleRectangles = [];

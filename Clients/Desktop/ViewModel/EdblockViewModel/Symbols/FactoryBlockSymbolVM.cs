@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Linq;
 using System.Reflection;
-using EdblockViewModel.PagesVM;
-using EdblockViewModel.AttributesVM;
-using EdblockViewModel.AbstractionsVM;
 using EdblockViewModel.Symbols.SwitchCaseConditionSymbolsVM;
 using Edblock.SymbolsSerialization.Symbols;
+using EdblockViewModel.Abstractions;
+using EdblockViewModel.Attributes;
+using EdblockViewModel.Pages;
 
 namespace EdblockViewModel.Symbols;
 

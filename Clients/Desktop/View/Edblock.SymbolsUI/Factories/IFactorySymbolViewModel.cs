@@ -1,5 +1,5 @@
-﻿using EdblockViewModel.PagesVM;
-using EdblockViewModel.AbstractionsVM;
+﻿using EdblockViewModel.Abstractions;
+using EdblockViewModel.Pages;
 
 namespace Edblock.SymbolsUI.Factories;
 

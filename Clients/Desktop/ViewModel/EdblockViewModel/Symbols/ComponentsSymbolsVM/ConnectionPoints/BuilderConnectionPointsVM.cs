@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using EdblockModel.EnumsModel;
-using EdblockViewModel.ComponentsVM;
-using EdblockViewModel.AbstractionsVM;
-using EdblockViewModel.ComponentsVM.CanvasSymbols;
+using EdblockViewModel.Abstractions;
+using EdblockViewModel.Components.CanvasSymbols.Interfaces;
+using EdblockViewModel.Components.TopSettingsMenu.PopupBoxMenu.Interfaces;
 
 namespace EdblockViewModel.Symbols.ComponentsSymbolsVM.ConnectionPoints;
 
-public class BuilderConnectionPointsVM(CanvasSymbolsVM canvasSymbolsVM, BlockSymbolVM blockSymbolVM, LineStateStandardVM checkBoxLineGostVM)
+public class BuilderConnectionPointsVM(ICanvasSymbolsVM canvasSymbolsVM, BlockSymbolVM blockSymbolVM, ILineStateStandardComponentVM checkBoxLineGostVM)
 {
     private readonly FactoryConnectionPoint _factoryConnectionPoint = new(canvasSymbolsVM, blockSymbolVM, checkBoxLineGostVM);
     private readonly List<ConnectionPointVM> connectionPointsVM = [];

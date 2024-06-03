@@ -2,8 +2,8 @@
     x:Class="EdblockView.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:pages="clr-namespace:EdblockView.Pages"
-    xmlns:pagesVM="clr-namespace:EdblockViewModel.PagesVM;assembly=EdblockViewModel">
+    xmlns:pagesView="clr-namespace:EdblockView.Pages"
+    xmlns:pagesViewModel="clr-namespace:EdblockViewModel.Pages;assembly=EdblockViewModel">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -26,26 +26,26 @@
                 <ResourceDictionary Source="Styles/StyleSymbolView.xaml" />
                 <ResourceDictionary Source="Styles/StylesTopSettingsPanel.xaml" />
             </ResourceDictionary.MergedDictionaries>
-            <DataTemplate DataType="{x:Type pagesVM:AuthenticationVM}">
-                <pages:Authentication />
+            <DataTemplate DataType="{x:Type pagesViewModel:AuthenticationVM}">
+                <pagesView:Authentication />
             </DataTemplate>
-            <DataTemplate DataType="{x:Type pagesVM:RegistrationVM}">
-                <pages:Registration />
+            <DataTemplate DataType="{x:Type pagesViewModel:RegistrationVM}">
+                <pagesView:Registration />
             </DataTemplate>
-            <DataTemplate DataType="{x:Type pagesVM:MenuVM}">
-                <pages:Menu />
+            <DataTemplate DataType="{x:Type pagesViewModel:MenuVM}">
+                <pagesView:Menu />
             </DataTemplate>
-            <DataTemplate DataType="{x:Type pagesVM:SettingsVM}">
-                <pages:Settings />
+            <DataTemplate DataType="{x:Type pagesViewModel:SettingsVM}">
+                <pagesView:Settings />
             </DataTemplate>
-            <DataTemplate DataType="{x:Type pagesVM:HomeVM}">
-                <pages:Home />
+            <DataTemplate DataType="{x:Type pagesViewModel:HomeVM}">
+                <pagesView:Home />
             </DataTemplate>
-            <DataTemplate DataType="{x:Type pagesVM:ProjectsVM}">
-                <pages:Projects />
+            <DataTemplate DataType="{x:Type pagesViewModel:ProjectsVM}">
+                <pagesView:Projects />
             </DataTemplate>
-            <DataTemplate DataType="{x:Type pagesVM:EditorVM}">
-                <pages:Editor />
+            <DataTemplate DataType="{x:Type pagesViewModel:EditorVM}">
+                <pagesView:Editor />
             </DataTemplate>
         </ResourceDictionary>
     </Application.Resources>

@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
-using EdblockViewModel.PagesVM;
-using EdblockViewModel.AttributesVM;
-using EdblockViewModel.AbstractionsVM;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM.ScaleRectangles;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM.ConnectionPoints;
+using EdblockViewModel.Abstractions;
+using EdblockViewModel.Pages;
+using EdblockViewModel.Attributes;
 
 namespace EdblockViewModel.Symbols;
 
@@ -64,7 +64,7 @@ public class ActionSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnectionPoin
         var builderConnectionPointsVM = new BuilderConnectionPointsVM(
             CanvasSymbolsVM,
             this,
-            _checkBoxLineGostVM);
+            lineStateStandardComponentVM);
 
         ConnectionPointsVM = builderConnectionPointsVM
             .AddTopConnectionPoint()
@@ -78,7 +78,7 @@ public class ActionSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnectionPoin
     {
         var builderScaleRectangles = new BuilderScaleRectangles(
             CanvasSymbolsVM,
-           _scaleAllSymbolVM,
+           scaleAllSymbolComponentVM,
            this);
 
         ScaleRectangles =

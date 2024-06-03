@@ -6,7 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:pagesVM="clr-namespace:EdblockViewModel.PagesVM;assembly=EdblockViewModel"
+    xmlns:pagesVM="clr-namespace:EdblockViewModel.Pages;assembly=EdblockViewModel"
     d:DataContext="{d:DesignInstance Type=pagesVM:EditorVM}"
     SizeChanged="ChangedSizeWindow"
     mc:Ignorable="d">

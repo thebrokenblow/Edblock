@@ -1,5 +1,5 @@
 ﻿using System.Windows.Controls;
-using EdblockViewModel.ComponentsVM;
+using EdblockViewModel.Components.TopSettingsMenu.PopupBoxMenu;
 
 namespace EdblockView.Components.PopupBoxControl;
 
@@ -8,7 +8,7 @@ namespace EdblockView.Components.PopupBoxControl;
 /// </summary>
 public partial class ScaleAllSymbol : UserControl
 {
-    public ScaleAllSymbolVM ScaleAllSymbolVM
+    public ScaleAllSymbolComponentVM ScaleAllSymbolVM
     {
         set
         {

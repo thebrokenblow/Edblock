@@ -1,24 +1,23 @@
 ﻿using System.Collections.Generic;
-using EdblockViewModel.ComponentsVM;
-using EdblockViewModel.AbstractionsVM;
 using EdblockViewModel.Symbols.ComponentsParallelActionSymbolVM;
 using EdblockModel.SymbolsModel;
 using EdblockViewModel.Symbols;
 using EdblockModel.SymbolsModel.LineSymbolsModel;
 using EdblockViewModel.Symbols.SwitchCaseConditionSymbolsVM;
-using EdblockViewModel.Symbols.ComponentsSymbolsVM.ConnectionPoints;
-using EdblockViewModel.PagesVM;
 using Edblock.SymbolsSerialization;
 using Edblock.SymbolsSerialization.Symbols;
-using EdblockViewModel.ComponentsVM.CanvasSymbols;
+using EdblockViewModel.Abstractions;
+using EdblockViewModel.Pages;
+using EdblockViewModel.Components.CanvasSymbols.Interfaces;
+using EdblockViewModel.Components.TopSettingsMenu.PopupBoxMenu.Interfaces;
 
 namespace EdblockViewModel;
 
 internal class ProjectVM(EditorVM editorVM)
 {
-    private readonly CanvasSymbolsVM canvasSymbolsVM = editorVM.CanvasSymbolsVM;
-    private readonly ScaleAllSymbolVM scaleAllSymbolVM = editorVM.PopupBoxMenuVM.ScaleAllSymbolVM;
-    private readonly LineStateStandardVM checkBoxLineGostVM = editorVM.PopupBoxMenuVM.CheckBoxLineGostVM;
+    private readonly ICanvasSymbolsVM canvasSymbolsVM = editorVM.CanvasSymbolsVM;
+    private readonly IScaleAllSymbolComponentVM scaleAllSymbolComponentVM = editorVM.TopSettingsMenuComponentVM.PopupBoxMenuComponentVM.ScaleAllSymbolComponentVM;
+    private readonly ILineStateStandardComponentVM lineStateStandardComponentVM = editorVM.TopSettingsMenuComponentVM.PopupBoxMenuComponentVM.LineStateStandardComponentVM;
     private readonly SerializationProject serializationProject = new();
     private readonly FactoryBlockSymbolVM factoryBlockSymbolVM = new(editorVM);
     private readonly Dictionary<string, BlockSymbolVM> blockSymbolsVMById = [];
@@ -59,13 +58,10 @@ internal class ProjectVM(EditorVM editorVM)
             }
         }
 
-
-       
-
         var projectSerializable = new ProjectSerializable()
         {
-            IsScaleAllSymbolVM = scaleAllSymbolVM.IsScaleAllSymbol,
-            IsDrawingLinesAccordingGOST = checkBoxLineGostVM.IsDrawingLinesAccordingGOST,
+            IsScaleAllSymbolVM = scaleAllSymbolComponentVM.IsScaleAllSymbol,
+            IsDrawingLinesAccordingGOST = lineStateStandardComponentVM.IsDrawingLinesAccordingGOST,
             BlockSymbolsSerializable = blockSymbolsSerializable,
             DrawnLinesSymbolSerializable = drawnLinesSymbolSerializable,
             SwitchCaseSymbolsSerializable = switchCaseSymbolsSerializable,
@@ -79,8 +75,8 @@ internal class ProjectVM(EditorVM editorVM)
     {
         var loadedProject = await serializationProject.Read(filePath);
 
-        scaleAllSymbolVM.IsScaleAllSymbol = loadedProject.IsScaleAllSymbolVM;
-        checkBoxLineGostVM.IsDrawingLinesAccordingGOST = loadedProject.IsDrawingLinesAccordingGOST;
+        scaleAllSymbolComponentVM.IsScaleAllSymbol = loadedProject.IsScaleAllSymbolVM;
+        lineStateStandardComponentVM.IsDrawingLinesAccordingGOST = loadedProject.IsDrawingLinesAccordingGOST;
 
         LoadBlocksSymbols(loadedProject);
     }

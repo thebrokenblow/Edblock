@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using EdblockModel.EnumsModel;
 using EdblockModel.SymbolsModel;
-using EdblockViewModel.PagesVM;
-using EdblockViewModel.AttributesVM;
-using EdblockViewModel.AbstractionsVM;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM.ConnectionPoints;
+using EdblockViewModel.Abstractions;
+using EdblockViewModel.Pages;
+using EdblockViewModel.Attributes;
 
 namespace EdblockViewModel.Symbols.ComponentsParallelActionSymbolVM;
 
@@ -43,9 +43,9 @@ public class ParallelActionSymbolVM : BlockSymbolVM, IHasConnectionPoint
         for (int i = 0; i < countSymbolsIncoming; i++)
         {
             var bottomConnectionPoint = new ConnectionPointVM(
-                CanvasSymbolsVM, 
+                CanvasSymbolsVM,
+                lineStateStandardComponentVM,
                 this, 
-                _checkBoxLineGostVM, 
                 SideSymbol.Top);
 
             ConnectionPointsVM.Add(bottomConnectionPoint);
@@ -54,9 +54,9 @@ public class ParallelActionSymbolVM : BlockSymbolVM, IHasConnectionPoint
         for (int i = 0; i < countSymbolsOutgoing; i++)
         {
             var bottomConnectionPoint = new ConnectionPointVM(
-                CanvasSymbolsVM, 
-                this, 
-                _checkBoxLineGostVM, 
+                CanvasSymbolsVM,
+                lineStateStandardComponentVM,
+                this,  
                 SideSymbol.Bottom);
 
             ConnectionPointsVM.Add(bottomConnectionPoint);
