@@ -5,9 +5,9 @@ using EdblockModel.EnumsModel;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM.ScaleRectangles;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM.ConnectionPoints;
-using EdblockViewModel.Abstractions;
 using EdblockViewModel.Pages;
-using EdblockViewModel.Attributes;
+using EdblockViewModel.Symbols.Abstractions;
+using EdblockViewModel.Symbols.Attributes;
 
 namespace EdblockViewModel.Symbols.SwitchCaseConditionSymbolsVM;
 

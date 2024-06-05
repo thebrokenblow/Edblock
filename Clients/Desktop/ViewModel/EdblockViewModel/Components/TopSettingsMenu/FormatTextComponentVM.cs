@@ -1,6 +1,6 @@
-﻿using EdblockViewModel.Abstractions;
-using EdblockViewModel.Components.CanvasSymbols.Interfaces;
+﻿using EdblockViewModel.Components.CanvasSymbols.Interfaces;
 using EdblockViewModel.Components.TopSettingsMenu.Interfaces;
+using EdblockViewModel.Symbols.Abstractions;
 
 namespace EdblockViewModel.Components.TopSettingsMenu;
 

@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM.ConnectionPoints;
-using EdblockViewModel.Components.CanvasSymbols;
-using EdblockViewModel.Abstractions;
 using EdblockViewModel.Pages;
-using EdblockViewModel.Attributes;
+using EdblockViewModel.Symbols.Abstractions;
+using EdblockViewModel.Symbols.Attributes;
 
 namespace EdblockViewModel.Symbols.ComponentsCommentSymbolVM;
 

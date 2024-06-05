@@ -16,6 +16,7 @@ public interface ICanvasSymbolsVM
     DelegateCommand MouseMove { get; }
     DelegateCommand MouseUp { get; }
     DelegateCommand MouseLeftButtonDown { get; }
+    DelegateCommand RemoveSelectedSymbolsCommand { get; }
     ScalePartBlockSymbol? ScalePartBlockSymbol { get; set; }
     ScalingCanvasSymbolsVM ScalingCanvasSymbolsVM { get; }
     IListCanvasSymbolsVM ListCanvasSymbolsVM { get; }

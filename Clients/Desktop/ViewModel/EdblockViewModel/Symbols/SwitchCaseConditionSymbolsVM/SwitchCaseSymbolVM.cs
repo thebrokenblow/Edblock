@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using EdblockModel.SymbolsModel;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM.ConnectionPoints;
-using EdblockViewModel.Abstractions;
 using EdblockViewModel.Pages;
+using EdblockViewModel.Symbols.Abstractions;
 
 namespace EdblockViewModel.Symbols.SwitchCaseConditionSymbolsVM;
 

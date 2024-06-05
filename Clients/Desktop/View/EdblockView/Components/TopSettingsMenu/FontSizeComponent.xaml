@@ -1,0 +1,27 @@
+﻿<UserControl
+    x:Class="EdblockView.Components.TopSettingsMenu.FontSizeComponent"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:componentsTopSettingsMenuVM="clr-namespace:EdblockViewModel.Components.TopSettingsMenu.Interfaces;assembly=EdblockViewModel"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DataContext="{d:DesignInstance Type=componentsTopSettingsMenuVM:IFontSizeComponentVM}"
+    mc:Ignorable="d">
+    <Grid Width="110">
+        <Label
+            Width="60"
+            HorizontalAlignment="Left"
+            Content="Font size:"
+            Style="{StaticResource LabelTopSettingsPanel}" />
+
+        <ComboBox
+            Width="40"
+            HorizontalAlignment="Right"
+            materialDesign:ComboBoxAssist.MaxLength="2"
+            BorderBrush="Black"
+            ItemsSource="{Binding FontSizes}"
+            SelectedItem="{Binding FontSize}"
+            Style="{StaticResource ComboBoxTopSettingsPanel}" />
+    </Grid>
+</UserControl>

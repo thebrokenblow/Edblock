@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using Prism.Commands;
 using EdblockModel.EnumsModel;
-using EdblockViewModel.Abstractions;
 using EdblockViewModel.Core;
 using EdblockViewModel.Components.CanvasSymbols.Interfaces;
 using EdblockViewModel.Components.TopSettingsMenu.PopupBoxMenu.Interfaces;
+using EdblockViewModel.Symbols.Abstractions;
 
 namespace EdblockViewModel.Symbols.ComponentsSymbolsVM.ConnectionPoints;
 

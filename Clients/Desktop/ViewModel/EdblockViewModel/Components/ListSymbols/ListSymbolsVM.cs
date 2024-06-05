@@ -1,10 +1,10 @@
 ﻿using System;
 using Prism.Commands;
 using EdblockViewModel.Symbols;
-using EdblockViewModel.Abstractions;
 using EdblockViewModel.Components.ListSymbols.Interfaces;
 using EdblockViewModel.Components.CanvasSymbols.Interfaces;
 using System.Collections.Generic;
+using EdblockViewModel.Symbols.Abstractions;
 
 namespace EdblockViewModel.Components.ListSymbols;
 

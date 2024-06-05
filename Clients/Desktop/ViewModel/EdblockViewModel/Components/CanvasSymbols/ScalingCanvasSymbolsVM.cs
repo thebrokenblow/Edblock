@@ -2,9 +2,9 @@
 using System.Windows;
 using System.Windows.Threading;
 using EdblockViewModel.Symbols;
-using EdblockViewModel.Abstractions;
 using EdblockViewModel.Core;
 using EdblockViewModel.Components.CanvasSymbols.Interfaces;
+using EdblockViewModel.Symbols.Abstractions;
 
 namespace EdblockViewModel.Components.CanvasSymbols;
 

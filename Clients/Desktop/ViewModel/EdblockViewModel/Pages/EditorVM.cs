@@ -1,5 +1,4 @@
-﻿using Prism.Commands;
-using EdblockViewModel.Core;
+﻿using EdblockViewModel.Core;
 using EdblockViewModel.Components.ListSymbols.Interfaces;
 using EdblockViewModel.Components.CanvasSymbols.Interfaces;
 using EdblockViewModel.Components.TopSettingsMenu.Interfaces;
@@ -21,7 +20,6 @@ public class EditorVM : BaseViewModel
     public IListSymbolsVM ListSymbolsVM { get; }
     public ICanvasSymbolsVM CanvasSymbolsVM { get; }
     public ITopSettingsMenuComponentVM TopSettingsMenuComponentVM { get; }
-    public DelegateCommand RemoveSelectedSymbols { get; }
 
     private readonly ProjectVM projectVM;
 
@@ -41,16 +39,15 @@ public class EditorVM : BaseViewModel
         CanvasSymbolsVM.ScalingCanvasSymbolsVM.WidthPanelSymbols = cellWidthPanelSymbols;
 
         projectVM = new(this);
-        RemoveSelectedSymbols = new(CanvasSymbolsVM.RemoveSelectedSymbols);
     }
 
     public void SaveProject(string filePath)
     {
-        projectVM.Save(filePath);
+        projectVM.SaveProject(filePath);
     }
 
     public void LoadProject(string filePath)
     {
-        projectVM.Load(filePath);
+        projectVM.LoadProject(filePath);
     }
 }

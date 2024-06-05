@@ -1,10 +1,10 @@
-﻿using EdblockViewModel.Abstractions;
+﻿using EdblockViewModel.Symbols.Abstractions;
 
 namespace EdblockViewModel.Components.TopSettingsMenu.Interfaces;
 
 public interface ITextAlignmentComponentVM
 {
-    int PreviousIndexFormatAlign { get; set; }
     int IndexFormatAlign { get; set; }
+    int PreviousIndexFormatAlign { get; set; }
     void SetFormatAlignment(IHasTextFieldVM selectedSymbolHasTextField);
 }

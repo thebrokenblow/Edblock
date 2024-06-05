@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using EdblockModel.EnumsModel;
-using EdblockViewModel.Abstractions;
 using EdblockViewModel.Components.CanvasSymbols.Interfaces;
 using EdblockViewModel.Components.TopSettingsMenu.PopupBoxMenu.Interfaces;
+using EdblockViewModel.Symbols.Abstractions;
 
 namespace EdblockViewModel.Symbols.ComponentsSymbolsVM.ConnectionPoints;
 

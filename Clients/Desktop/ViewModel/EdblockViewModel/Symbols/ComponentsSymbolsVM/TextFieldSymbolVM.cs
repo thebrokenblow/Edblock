@@ -3,9 +3,9 @@ using Prism.Commands;
 using EdblockModel.SymbolsModel;
 using System.Collections.Generic;
 using EdblockViewModel.Components.CanvasSymbols;
-using EdblockViewModel.Abstractions;
 using EdblockViewModel.Core;
 using EdblockViewModel.Components.CanvasSymbols.Interfaces;
+using EdblockViewModel.Symbols.Abstractions;
 
 namespace EdblockViewModel.Symbols.ComponentsSymbolsVM;
 

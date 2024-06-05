@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using EdblockModel.EnumsModel;
 using EdblockModel.SymbolsModel;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM.ConnectionPoints;
-using EdblockViewModel.Abstractions;
 using EdblockViewModel.Pages;
-using EdblockViewModel.Attributes;
+using EdblockViewModel.Symbols.Abstractions;
+using EdblockViewModel.Symbols.Attributes;
 
 namespace EdblockViewModel.Symbols.ComponentsParallelActionSymbolVM;
 

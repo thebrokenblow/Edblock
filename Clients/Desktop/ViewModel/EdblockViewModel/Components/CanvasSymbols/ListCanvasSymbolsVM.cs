@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using EdblockViewModel.Abstractions;
 using EdblockViewModel.Components.CanvasSymbols.Interfaces;
 using EdblockViewModel.Components.TopSettingsMenu.PopupBoxMenu.Interfaces;
+using EdblockViewModel.Symbols.Abstractions;
 
 namespace EdblockViewModel.Components.CanvasSymbols;
 

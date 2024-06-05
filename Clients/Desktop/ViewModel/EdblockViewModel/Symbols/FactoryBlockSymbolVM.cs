@@ -3,9 +3,9 @@ using System.Linq;
 using System.Reflection;
 using EdblockViewModel.Symbols.SwitchCaseConditionSymbolsVM;
 using Edblock.SymbolsSerialization.Symbols;
-using EdblockViewModel.Abstractions;
-using EdblockViewModel.Attributes;
 using EdblockViewModel.Pages;
+using EdblockViewModel.Symbols.Attributes;
+using EdblockViewModel.Symbols.Abstractions;
 
 namespace EdblockViewModel.Symbols;
 

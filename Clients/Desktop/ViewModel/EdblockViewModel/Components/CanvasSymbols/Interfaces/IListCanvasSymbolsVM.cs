@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using EdblockViewModel.Abstractions;
+using EdblockViewModel.Symbols.Abstractions;
 
 namespace EdblockViewModel.Components.CanvasSymbols.Interfaces;
 

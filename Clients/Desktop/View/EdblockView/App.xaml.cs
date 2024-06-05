@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Windows;
-using EdblockViewModel.Abstractions;
 using EdblockViewModel.Clients;
 using EdblockViewModel.Components.CanvasSymbols;
 using EdblockViewModel.Components.CanvasSymbols.Interfaces;
@@ -17,6 +16,7 @@ using EdblockViewModel.Services.Factories;
 using EdblockViewModel.Services.Factories.Interfaces;
 using EdblockViewModel.Services.Interfaces;
 using EdblockViewModel.Symbols;
+using EdblockViewModel.Symbols.Abstractions;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace EdblockView;

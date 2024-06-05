@@ -6,10 +6,10 @@ using EdblockModel.SymbolsModel.LineSymbolsModel;
 using EdblockViewModel.Symbols.SwitchCaseConditionSymbolsVM;
 using Edblock.SymbolsSerialization;
 using Edblock.SymbolsSerialization.Symbols;
-using EdblockViewModel.Abstractions;
 using EdblockViewModel.Pages;
 using EdblockViewModel.Components.CanvasSymbols.Interfaces;
 using EdblockViewModel.Components.TopSettingsMenu.PopupBoxMenu.Interfaces;
+using EdblockViewModel.Symbols.Abstractions;
 
 namespace EdblockViewModel;
 
@@ -22,7 +22,7 @@ internal class ProjectVM(EditorVM editorVM)
     private readonly FactoryBlockSymbolVM factoryBlockSymbolVM = new(editorVM);
     private readonly Dictionary<string, BlockSymbolVM> blockSymbolsVMById = [];
 
-    public void Save(string filePath)
+    public void SaveProject(string filePath)
     {
         var blockSymbolsSerializable = new List<BlockSymbolSerializable>();
         var drawnLinesSymbolSerializable = new List<DrawnLineSymbolSerializable>();
@@ -71,7 +71,7 @@ internal class ProjectVM(EditorVM editorVM)
         serializationProject.Write(projectSerializable, filePath);
     }
 
-    public async void Load(string filePath)
+    public async void LoadProject(string filePath)
     {
         var loadedProject = await serializationProject.Read(filePath);
 

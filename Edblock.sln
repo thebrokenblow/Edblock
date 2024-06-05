@@ -45,6 +45,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Edblock.UserManagementServi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Edblock.ProjectsManagementModel", "Edblock.ProjectsManagementModel\Edblock.ProjectsManagementModel.csproj", "{2E0B234E-3683-47CF-9B42-456249BBCC8E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Edblock.SymbolsView", "Edblock.SymbolsView\Edblock.SymbolsView.csproj", "{C357213C-10E2-4FB4-8622-32F427142032}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -99,6 +101,10 @@ Global
 		{2E0B234E-3683-47CF-9B42-456249BBCC8E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2E0B234E-3683-47CF-9B42-456249BBCC8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2E0B234E-3683-47CF-9B42-456249BBCC8E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C357213C-10E2-4FB4-8622-32F427142032}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C357213C-10E2-4FB4-8622-32F427142032}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C357213C-10E2-4FB4-8622-32F427142032}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C357213C-10E2-4FB4-8622-32F427142032}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -120,6 +126,7 @@ Global
 		{5F9AA5D8-4B9F-491E-8299-16FD40E8A6C3} = {D284B0BA-7E0F-4E45-A726-A86EC1543127}
 		{F5F6BD4C-8600-4202-A38D-7414DBAC5E3E} = {D284B0BA-7E0F-4E45-A726-A86EC1543127}
 		{2E0B234E-3683-47CF-9B42-456249BBCC8E} = {993C183B-B49E-4BC6-9353-88E501ABE90A}
+		{C357213C-10E2-4FB4-8622-32F427142032} = {E9EFC27A-4CA0-425A-B4A3-43A15DA5ACA3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {788EDC0A-2FC7-48B5-BBD7-0322397804DB}

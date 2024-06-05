@@ -1,12 +1,14 @@
-﻿using EdblockViewModel.Components.TopSettingsMenu.PopupBoxMenu.Interfaces;
+﻿using EdblockViewModel.Components.CanvasSymbols.Interfaces;
+using EdblockViewModel.Components.TopSettingsMenu.PopupBoxMenu.Interfaces;
 
 namespace EdblockViewModel.Components.TopSettingsMenu.Interfaces;
 
 public interface ITopSettingsMenuComponentVM
 {
-    public IFontFamilyComponentVM FontFamilyComponentVM { get; }
-    public IFontSizeComponentVM FontSizeComponentVM { get; }
-    public IFormatTextComponentVM FormatTextComponentVM { get; }
-    public ITextAlignmentComponentVM TextAlignmentComponentVM { get; }
-    public IPopupBoxMenuComponentVM PopupBoxMenuComponentVM { get;}
+    IFontFamilyComponentVM FontFamilyComponentVM { get; }
+    IFontSizeComponentVM FontSizeComponentVM { get; }
+    IFormatTextComponentVM FormatTextComponentVM { get; }
+    ITextAlignmentComponentVM TextAlignmentComponentVM { get; }
+    IPopupBoxMenuComponentVM PopupBoxMenuComponentVM { get; }
+    ICanvasSymbolsVM CanvasSymbolsVM { get; }
 }

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
-using EdblockViewModel.Abstractions;
 using EdblockViewModel.Components.CanvasSymbols.Interfaces;
+using EdblockViewModel.Symbols.Abstractions;
 
 namespace EdblockViewModel.Symbols;
 

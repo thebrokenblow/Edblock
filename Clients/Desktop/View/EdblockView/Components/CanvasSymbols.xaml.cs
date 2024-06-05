@@ -2,7 +2,7 @@
 using System.Windows.Input;
 using System.Windows.Controls;
 using EdblockViewModel.Components.CanvasSymbols;
-using EdblockViewModel.Abstractions;
+using EdblockViewModel.Symbols.Abstractions;
 
 namespace EdblockView.Components;
 

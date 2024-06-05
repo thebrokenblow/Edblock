@@ -1,4 +1,4 @@
-﻿using EdblockViewModel.Abstractions;
+﻿using EdblockViewModel.Symbols.Abstractions;
 
 namespace EdblockViewModel.Components.TopSettingsMenu.Interfaces;
 

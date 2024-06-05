@@ -72,6 +72,7 @@ public class CanvasSymbolsVM : ObservableObject, ICanvasSymbolsVM
     public DelegateCommand MouseUp { get; }
 
     public DelegateCommand MouseLeftButtonDown { get; }
+    public DelegateCommand RemoveSelectedSymbolsCommand { get; }
     public ScalePartBlockSymbol? ScalePartBlockSymbol { get; set; }
     public ScalingCanvasSymbolsVM ScalingCanvasSymbolsVM { get; }
     public IListCanvasSymbolsVM ListCanvasSymbolsVM { get; }
@@ -85,6 +86,7 @@ public class CanvasSymbolsVM : ObservableObject, ICanvasSymbolsVM
         MouseMove = new(RedrawSymbols);
         MouseUp = new(SetDefaultValues);
         MouseLeftButtonDown = new(ClearSelectedSymbols);
+        RemoveSelectedSymbolsCommand = new(RemoveSelectedSymbols);
     }
 
     public void RemoveSelectedSymbols()
