@@ -5,7 +5,7 @@ using EdblockViewModel.Symbols.ComponentsSymbolsVM.ScaleRectangles;
 
 namespace EdblockViewModel.Components.CanvasSymbols.Interfaces;
 
-public interface ICanvasSymbolsVM
+public interface ICanvasSymbolsComponentVM
 {
     Rect Grid { get; }
     int XCoordinate { get; set; }
@@ -18,8 +18,8 @@ public interface ICanvasSymbolsVM
     DelegateCommand MouseLeftButtonDown { get; }
     DelegateCommand RemoveSelectedSymbolsCommand { get; }
     ScalePartBlockSymbol? ScalePartBlockSymbol { get; set; }
-    ScalingCanvasSymbolsVM ScalingCanvasSymbolsVM { get; }
-    IListCanvasSymbolsVM ListCanvasSymbolsVM { get; }
+    ScalingCanvasSymbolsComponentVM ScalingCanvasSymbolsVM { get; }
+    IListCanvasSymbolsComponentVM ListCanvasSymbolsComponentVM { get; }
 
     void RemoveSelectedSymbols();
     void SetDefaultValues();

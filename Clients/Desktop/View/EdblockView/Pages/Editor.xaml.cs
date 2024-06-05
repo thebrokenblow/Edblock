@@ -24,7 +24,7 @@ public partial class Editor : UserControl
 
         edblockVM ??= (EditorVM)DataContext;
 
-        edblockVM?.CanvasSymbolsVM.ScalingCanvasSymbolsVM.CalculateSizeUnscaledCanvas(
+        edblockVM?.CanvasSymbolsComponentVM.ScalingCanvasSymbolsVM.CalculateSizeUnscaledCanvas(
             widthWindow,
             heightWindow);
     }

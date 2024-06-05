@@ -6,7 +6,7 @@ using EdblockViewModel.Symbols.Abstractions;
 
 namespace EdblockViewModel.Symbols.ComponentsSymbolsVM.ScaleRectangles;
 
-public class BuilderScaleRectangles(ICanvasSymbolsVM canvasSymbolsVM, IScaleAllSymbolComponentVM scaleAllSymbolVM, BlockSymbolVM blockSymbolVM)
+public class BuilderScaleRectangles(ICanvasSymbolsComponentVM canvasSymbolsVM, IScaleAllSymbolComponentVM scaleAllSymbolVM, BlockSymbolVM blockSymbolVM)
 {
     private readonly CoordinateScaleRectangle coordinateScaleRectangle = new(blockSymbolVM);
     private readonly List<ScaleRectangle> scaleRectangles = [];

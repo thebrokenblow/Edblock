@@ -5,7 +5,7 @@ using EdblockViewModel.Symbols.Abstractions;
 
 namespace EdblockViewModel.Components.TopSettingsMenu;
 
-public class TextAlignmentComponentVM(IListCanvasSymbolsVM listCanvasSymbolsVM) : ITextAlignmentComponentVM
+public class TextAlignmentComponentVM(IListCanvasSymbolsComponentVM listCanvasSymbolsVM) : ITextAlignmentComponentVM
 {
     private const int defaultIndexFormatAlign = 1;
     public int PreviousIndexFormatAlign { get; set; } = defaultIndexFormatAlign;

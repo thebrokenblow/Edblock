@@ -1,18 +1,13 @@
 ﻿using System.Windows.Input;
 using System.Windows.Controls;
-using EdblockViewModel.Components.ListSymbols;
 
 namespace EdblockView.Components;
 
 /// <summary>
 /// Логика взаимодействия для ListSymbols.xaml
 /// </summary>
-public partial class ListSymbols : UserControl
+public partial class ListSymbolsComponent : UserControl
 {
-    public ListSymbols() =>
+    public ListSymbolsComponent() =>
         InitializeComponent();
-
-    private void AddSymbolView(object sender, MouseButtonEventArgs e)
-    {
-    }
 }

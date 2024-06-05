@@ -4,7 +4,7 @@ using EdblockViewModel.Symbols.Abstractions;
 
 namespace EdblockViewModel.Components.TopSettingsMenu;
 
-public class FormatTextComponentVM(IListCanvasSymbolsVM listCanvasSymbolsVM) : IFormatTextComponentVM
+public class FormatTextComponentVM(IListCanvasSymbolsComponentVM listCanvasSymbolsVM) : IFormatTextComponentVM
 {
     private const string fontWeightBold = "Bold";
     private const string fontWeightNormal = "Normal";

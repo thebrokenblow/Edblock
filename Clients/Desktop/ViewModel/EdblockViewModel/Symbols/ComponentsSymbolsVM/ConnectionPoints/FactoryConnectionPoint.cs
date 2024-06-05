@@ -5,7 +5,7 @@ using EdblockViewModel.Symbols.Abstractions;
 
 namespace EdblockViewModel.Symbols.ComponentsSymbolsVM.ConnectionPoints;
 
-public class FactoryConnectionPoint(ICanvasSymbolsVM canvasSymbolsVM, BlockSymbolVM blockSymbolVM, ILineStateStandardComponentVM lineStateStandardComponentVM)
+public class FactoryConnectionPoint(ICanvasSymbolsComponentVM canvasSymbolsVM, BlockSymbolVM blockSymbolVM, ILineStateStandardComponentVM lineStateStandardComponentVM)
 {
     public ConnectionPointVM Create(SideSymbol sideSymbol)
     {

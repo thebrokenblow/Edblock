@@ -23,8 +23,8 @@ public class FontSizeComponentVM : IFontSizeComponentVM
     private const int minFontSize = 2;
     private const int maxFontSize = 50;
 
-    private readonly IListCanvasSymbolsVM _listCanvasSymbolsVM;
-    public FontSizeComponentVM(IListCanvasSymbolsVM listCanvasSymbolsVM)
+    private readonly IListCanvasSymbolsComponentVM _listCanvasSymbolsVM;
+    public FontSizeComponentVM(IListCanvasSymbolsComponentVM listCanvasSymbolsVM)
     {
         _listCanvasSymbolsVM = listCanvasSymbolsVM;
 

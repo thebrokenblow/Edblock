@@ -18,16 +18,16 @@ public partial class PrintProjectComponent : UserControl
 
     private void PrintImg(object sender, RoutedEventArgs e)
     {
-        if (CanvasSymbols.Canvas is null)
+        if (CanvasSymbolsComponent.Canvas is null)
         {
             return;
         }
 
-        var canvasView = CanvasSymbols.Canvas;
+        var canvasView = CanvasSymbolsComponent.Canvas;
 
         var editorVM = (EditorVM)DataContext;
-        var canvasSymbolsVM = editorVM.CanvasSymbolsVM;
-        canvasSymbolsVM.ListCanvasSymbolsVM.ClearSelectedBlockSymbols();
+        var canvasSymbolsVM = editorVM.CanvasSymbolsComponentVM;
+        canvasSymbolsVM.ListCanvasSymbolsComponentVM.ClearSelectedBlockSymbols();
 
         if (printDialog.ShowDialog() == false)
         {

@@ -43,7 +43,7 @@
             <Separator />
 
             <Button
-                Command="{Binding CanvasSymbolsVM.RemoveSelectedSymbolsCommand}"
+                Command="{Binding CanvasSymbolsComponentVM.RemoveSelectedSymbolsCommand}"
                 Content="{materialDesign:PackIcon Kind=ContentCut}"
                 Style="{StaticResource ButtonTopSettingsPanel}"
                 ToolBar.OverflowMode="AsNeeded"

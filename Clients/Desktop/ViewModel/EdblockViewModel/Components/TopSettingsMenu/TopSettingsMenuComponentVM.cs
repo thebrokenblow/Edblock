@@ -10,13 +10,12 @@ public class TopSettingsMenuComponentVM(
     IFormatTextComponentVM formatTextComponentVM,
     ITextAlignmentComponentVM textAlignmentComponentVM,
     IPopupBoxMenuComponentVM popupBoxMenuComponentVM,
-    ICanvasSymbolsVM canvasSymbolsVM) : ITopSettingsMenuComponentVM
+    ICanvasSymbolsComponentVM canvasSymbolsComponentVM) : ITopSettingsMenuComponentVM
 {
     public IFontFamilyComponentVM FontFamilyComponentVM { get; } = fontFamilyComponentVM;
     public IFontSizeComponentVM FontSizeComponentVM { get; } = fontSizeComponentVM;
     public IFormatTextComponentVM FormatTextComponentVM { get; } = formatTextComponentVM;
     public ITextAlignmentComponentVM TextAlignmentComponentVM { get; } = textAlignmentComponentVM;
     public IPopupBoxMenuComponentVM PopupBoxMenuComponentVM { get; } = popupBoxMenuComponentVM;
-    public ICanvasSymbolsVM CanvasSymbolsVM { get; } = canvasSymbolsVM;
-
+    public ICanvasSymbolsComponentVM CanvasSymbolsComponentVM { get; } = canvasSymbolsComponentVM;
 }

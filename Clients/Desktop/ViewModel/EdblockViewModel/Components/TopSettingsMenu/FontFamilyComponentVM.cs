@@ -5,7 +5,7 @@ using EdblockViewModel.Symbols.Abstractions;
 
 namespace EdblockViewModel.Components.TopSettingsMenu;
 
-public class FontFamilyComponentVM(IListCanvasSymbolsVM listCanvasSymbolsVM) : IFontFamilyComponentVM
+public class FontFamilyComponentVM(IListCanvasSymbolsComponentVM listCanvasSymbolsVM) : IFontFamilyComponentVM
 {
     public List<string> FontFamilys { get; } =
     [

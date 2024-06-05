@@ -45,16 +45,16 @@ public partial class App : Application
         services.AddScoped<HomeVM>();
         services.AddScoped<SettingsVM>();
         services.AddScoped<UserViewModel>();
-        services.AddScoped<CanvasSymbolsVM>();
+        services.AddScoped<CanvasSymbolsComponentVM>();
         services.AddScoped<EditorVM>();
-        services.AddScoped<ICanvasSymbolsVM, CanvasSymbolsVM>();
+        services.AddScoped<ICanvasSymbolsComponentVM, CanvasSymbolsComponentVM>();
         services.AddScoped<IPopupBoxMenuComponentVM, PopupBoxMenuComponentVM>();
 
         services.AddScoped<IScaleAllSymbolComponentVM, ScaleAllSymbolComponentVM>();
         services.AddScoped<ILineStateStandardComponentVM, LineStateStandardComponentVM>();
-        services.AddScoped<IListSymbolsVM, ListSymbolsVM>();
+        services.AddScoped<IListSymbolsComponentVM, ListSymbolsComponentVM>();
         services.AddScoped<ITopSettingsMenuComponentVM, TopSettingsMenuComponentVM>();
-        services.AddScoped<IListCanvasSymbolsVM, ListCanvasSymbolsVM>();
+        services.AddScoped<IListCanvasSymbolsComponentVM, ListCanvasSymbolsComponentVM>();
         services.AddScoped<IFontFamilyComponentVM, FontFamilyComponentVM>();
         services.AddScoped<IFontSizeComponentVM, FontSizeComponentVM>();
         services.AddScoped<IFormatTextComponentVM, FormatTextComponentVM>();

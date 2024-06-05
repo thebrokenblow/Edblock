@@ -5,7 +5,7 @@ using EdblockViewModel.Symbols.Abstractions;
 
 namespace EdblockViewModel.Symbols;
 
-public class CoordinateSymbolVM(ICanvasSymbolsVM canvasSymbolsVM)
+public class CoordinateSymbolVM(ICanvasSymbolsComponentVM canvasSymbolsVM)
 {
     public double GetMaxX() =>
         GetMax(blockSymbolVM => blockSymbolVM.XCoordinate + blockSymbolVM.Width);
@@ -15,7 +15,7 @@ public class CoordinateSymbolVM(ICanvasSymbolsVM canvasSymbolsVM)
 
     private double GetMax(Func<BlockSymbolVM, double> getMaxCoordinateBlockSymbol)
     {
-        var blockSymbolsVM = canvasSymbolsVM.ListCanvasSymbolsVM.BlockSymbolsVM;
+        var blockSymbolsVM = canvasSymbolsVM.ListCanvasSymbolsComponentVM.BlockSymbolsVM;
 
         if (blockSymbolsVM.Count < 1)
         {

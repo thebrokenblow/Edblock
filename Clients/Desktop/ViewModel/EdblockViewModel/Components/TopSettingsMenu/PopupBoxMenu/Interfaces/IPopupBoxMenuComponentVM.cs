@@ -6,5 +6,4 @@ public interface IPopupBoxMenuComponentVM
 {
     ILineStateStandardComponentVM LineStateStandardComponentVM { get; }
     IScaleAllSymbolComponentVM ScaleAllSymbolComponentVM { get; }
-    EditorVM EditorVM { get; }
 }

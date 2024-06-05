@@ -12,7 +12,7 @@
     SizeChanged="ChangedSizeWindow"
     mc:Ignorable="d">
     <UserControl.InputBindings>
-        <KeyBinding Key="Delete" Command="{Binding CanvasSymbolsVM.RemoveSelectedSymbolsCommand}" />
+        <KeyBinding Key="Delete" Command="{Binding CanvasSymbolsComponentVM.RemoveSelectedSymbolsCommand}" />
     </UserControl.InputBindings>
 
     <UserControl.Triggers>
@@ -38,7 +38,8 @@
             Grid.Row="0"
             Grid.Column="1"
             Margin="-5,0,0,0"
-            Background="#F5F5F5" />
+            Background="#F5F5F5"
+            DataContext="{Binding TopSettingsMenuComponentVM}" />
 
         <StackPanel
             Grid.Row="1"
@@ -58,10 +59,10 @@
             </Button>
         </StackPanel>
 
-        <componentsUI:CanvasSymbols
+        <componentsUI:CanvasSymbolsComponent
             Grid.Row="1"
             Grid.Column="1"
-            DataContext="{Binding CanvasSymbolsVM}" />
+            DataContext="{Binding CanvasSymbolsComponentVM}" />
 
         <Grid
             x:Name="GridMenu"
@@ -80,7 +81,7 @@
                 </TransformGroup>
             </Grid.RenderTransform>
 
-            <componentsUI:ListSymbols DataContext="{Binding ListSymbolsVM}" />
+            <componentsUI:ListSymbolsComponent DataContext="{Binding ListSymbolsComponentVM}" />
 
             <Button
                 Name="ButtonClose"

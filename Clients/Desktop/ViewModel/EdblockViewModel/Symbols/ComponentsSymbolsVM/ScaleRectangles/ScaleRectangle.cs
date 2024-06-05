@@ -49,21 +49,21 @@ public class ScaleRectangle : ObservableObject
     public DelegateCommand EnterCursor { get; }
     public DelegateCommand LeaveCursor { get; }
     public DelegateCommand ClickScaleRectangle { get; }
-    private readonly ICanvasSymbolsVM _canvasSymbolsVM;
+    private readonly ICanvasSymbolsComponentVM _canvasSymbolsVM;
     private readonly IScaleAllSymbolComponentVM _scaleAllSymbolVM;
     private readonly BlockSymbolVM _blockSymbolVM;
     private readonly Cursor _cursorScaling;
     private readonly Func<(double, double)> _getCoordinateScaleRectangle;
-    private readonly Func<ScalePartBlockSymbol, CanvasSymbolsVM, double>? _getWidthSymbol;
-    private readonly Func<ScalePartBlockSymbol, CanvasSymbolsVM, double>? _getHeightSymbol;
+    private readonly Func<ScalePartBlockSymbol, CanvasSymbolsComponentVM, double>? _getWidthSymbol;
+    private readonly Func<ScalePartBlockSymbol, CanvasSymbolsComponentVM, double>? _getHeightSymbol;
 
     public ScaleRectangle(
-        ICanvasSymbolsVM canvasSymbolsVM,
+        ICanvasSymbolsComponentVM canvasSymbolsVM,
         IScaleAllSymbolComponentVM scaleAllSymbolVM,
         BlockSymbolVM blockSymbolVM,
         Cursor cursorScaling,
-        Func<ScalePartBlockSymbol, CanvasSymbolsVM, double>? getWidthSymbol,
-        Func<ScalePartBlockSymbol, CanvasSymbolsVM, double>? getHeightSymbol,
+        Func<ScalePartBlockSymbol, CanvasSymbolsComponentVM, double>? getWidthSymbol,
+        Func<ScalePartBlockSymbol, CanvasSymbolsComponentVM, double>? getHeightSymbol,
         Func<(double, double)> getCoordinateScaleRectangle
         )
     {
@@ -120,6 +120,6 @@ public class ScaleRectangle : ObservableObject
 
     private void SaveScaleRectangle()
     {
-        _canvasSymbolsVM.ScalePartBlockSymbol = new(_blockSymbolVM, _cursorScaling, _getWidthSymbol, _getHeightSymbol, _scaleAllSymbolVM, _canvasSymbolsVM.ListCanvasSymbolsVM.BlockSymbolsVM);
+        _canvasSymbolsVM.ScalePartBlockSymbol = new(_blockSymbolVM, _cursorScaling, _getWidthSymbol, _getHeightSymbol, _scaleAllSymbolVM, _canvasSymbolsVM.ListCanvasSymbolsComponentVM.BlockSymbolsVM);
     }
 }

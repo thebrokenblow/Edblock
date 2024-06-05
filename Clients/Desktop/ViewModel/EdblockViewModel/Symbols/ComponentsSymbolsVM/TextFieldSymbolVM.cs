@@ -165,11 +165,11 @@ public class TextFieldSymbolVM : ObservableObject
     public DelegateCommand MouseDoubleClick { get; }
     public DelegateCommand MouseLeftButtonDown { get; }
 
-    private readonly ICanvasSymbolsVM _canvasSymbolsVM;
+    private readonly ICanvasSymbolsComponentVM _canvasSymbolsVM;
     private readonly BlockSymbolVM _blockSymbolVM;
     public TextFieldSymbolModel TextFieldModel { get; set; }
 
-    public TextFieldSymbolVM(ICanvasSymbolsVM canvasSymbolsVM, BlockSymbolVM blockSymbolVM)
+    public TextFieldSymbolVM(ICanvasSymbolsComponentVM canvasSymbolsVM, BlockSymbolVM blockSymbolVM)
     {
         _canvasSymbolsVM = canvasSymbolsVM;
         _blockSymbolVM = blockSymbolVM;

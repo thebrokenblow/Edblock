@@ -8,7 +8,7 @@ using EdblockViewModel.Symbols.Abstractions;
 
 namespace EdblockViewModel.Components.CanvasSymbols;
 
-public class ScalingCanvasSymbolsVM(ICanvasSymbolsVM canvasSymbolsVM) : ObservableObject
+public class ScalingCanvasSymbolsComponentVM(ICanvasSymbolsComponentVM canvasSymbolsVM) : ObservableObject
 {
     private double verticalOffset = offsetLeave;
     public double VerticalOffset
@@ -78,8 +78,8 @@ public class ScalingCanvasSymbolsVM(ICanvasSymbolsVM canvasSymbolsVM) : Observab
 
     public void SubscribeСanvasScalingEvents(Point cursotPoint)
     {
-        var movableBlockSymbol = canvasSymbolsVM.ListCanvasSymbolsVM.MovableBlockSymbol;
-        var countBlockSymbolsVM = canvasSymbolsVM.ListCanvasSymbolsVM.BlockSymbolsVM.Count;
+        var movableBlockSymbol = canvasSymbolsVM.ListCanvasSymbolsComponentVM.MovableBlockSymbol;
+        var countBlockSymbolsVM = canvasSymbolsVM.ListCanvasSymbolsComponentVM.BlockSymbolsVM.Count;
 
         if (movableBlockSymbol is not null && countBlockSymbolsVM >= minNumberSymbolsScaling)
         {
@@ -142,7 +142,7 @@ public class ScalingCanvasSymbolsVM(ICanvasSymbolsVM canvasSymbolsVM) : Observab
 
     private void ScalingCanvas(object? sender, EventArgs e)
     {
-        var movableBlockSymbol = canvasSymbolsVM.ListCanvasSymbolsVM.MovableBlockSymbol;
+        var movableBlockSymbol = canvasSymbolsVM.ListCanvasSymbolsComponentVM.MovableBlockSymbol;
 
         if (movableBlockSymbol is null)
         {

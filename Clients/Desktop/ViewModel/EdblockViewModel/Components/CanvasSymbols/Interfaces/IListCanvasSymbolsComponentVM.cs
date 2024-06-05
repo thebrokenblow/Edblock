@@ -4,7 +4,7 @@ using EdblockViewModel.Symbols.Abstractions;
 
 namespace EdblockViewModel.Components.CanvasSymbols.Interfaces;
 
-public interface IListCanvasSymbolsVM
+public interface IListCanvasSymbolsComponentVM
 {
     ObservableCollection<BlockSymbolVM> BlockSymbolsVM { get; }
     List<BlockSymbolVM> SelectedBlockSymbols { get; }

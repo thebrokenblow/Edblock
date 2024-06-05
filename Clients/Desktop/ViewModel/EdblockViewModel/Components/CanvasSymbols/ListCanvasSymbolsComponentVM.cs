@@ -7,7 +7,7 @@ using EdblockViewModel.Symbols.Abstractions;
 
 namespace EdblockViewModel.Components.CanvasSymbols;
 
-public class ListCanvasSymbolsVM(IPopupBoxMenuComponentVM popupBoxMenuComponentVM) : IListCanvasSymbolsVM
+public class ListCanvasSymbolsComponentVM(IPopupBoxMenuComponentVM popupBoxMenuComponentVM) : IListCanvasSymbolsComponentVM
 {
     public ObservableCollection<BlockSymbolVM> BlockSymbolsVM { get; } = [];
     public List<BlockSymbolVM> SelectedBlockSymbols { get; } = [];

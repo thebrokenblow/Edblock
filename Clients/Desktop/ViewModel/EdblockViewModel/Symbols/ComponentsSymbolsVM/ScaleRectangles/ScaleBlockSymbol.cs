@@ -4,7 +4,7 @@ namespace EdblockViewModel.Symbols.ComponentsSymbolsVM.ScaleRectangles;
 
 internal class ScaleBlockSymbol
 {
-    internal static double GetWidthRigthPart(ScalePartBlockSymbol scalePartBlockSymbol, CanvasSymbolsVM canvasSymbolsVM)
+    internal static double GetWidthRigthPart(ScalePartBlockSymbol scalePartBlockSymbol, CanvasSymbolsComponentVM canvasSymbolsVM)
     {
         var blockSymbolModel = scalePartBlockSymbol.ScalingBlockSymbol.BlockSymbolModel;
 
@@ -19,7 +19,7 @@ internal class ScaleBlockSymbol
         return widthBlockSymbol;
     }
 
-    internal static double GetHeigthBottomPart(ScalePartBlockSymbol scalePartBlockSymbol, CanvasSymbolsVM canvasSymbolsVM)
+    internal static double GetHeigthBottomPart(ScalePartBlockSymbol scalePartBlockSymbol, CanvasSymbolsComponentVM canvasSymbolsVM)
     {
         var blockSymbolModel = scalePartBlockSymbol.ScalingBlockSymbol.BlockSymbolModel;
 
@@ -34,7 +34,7 @@ internal class ScaleBlockSymbol
         return heigthBlockSymbol;
     }
 
-    internal static double GetWidthLeftPart(ScalePartBlockSymbol scalePartBlockSymbol, CanvasSymbolsVM canvasSymbolsVM)
+    internal static double GetWidthLeftPart(ScalePartBlockSymbol scalePartBlockSymbol, CanvasSymbolsComponentVM canvasSymbolsVM)
     {
         var blockSymbolModel = scalePartBlockSymbol.ScalingBlockSymbol.BlockSymbolModel;
 
@@ -56,7 +56,7 @@ internal class ScaleBlockSymbol
         return widthBlockSymbol;
     }
 
-    internal static double GetHeigthTopPart(ScalePartBlockSymbol scalePartBlockSymbol, CanvasSymbolsVM canvasSymbolsVM)
+    internal static double GetHeigthTopPart(ScalePartBlockSymbol scalePartBlockSymbol, CanvasSymbolsComponentVM canvasSymbolsVM)
     {
         var blockSymbolModel = scalePartBlockSymbol.ScalingBlockSymbol.BlockSymbolModel;
 

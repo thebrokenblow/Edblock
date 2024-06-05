@@ -10,5 +10,5 @@ public interface ITopSettingsMenuComponentVM
     IFormatTextComponentVM FormatTextComponentVM { get; }
     ITextAlignmentComponentVM TextAlignmentComponentVM { get; }
     IPopupBoxMenuComponentVM PopupBoxMenuComponentVM { get; }
-    ICanvasSymbolsVM CanvasSymbolsVM { get; }
+    ICanvasSymbolsComponentVM CanvasSymbolsComponentVM { get; }
 }

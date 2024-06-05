@@ -77,10 +77,10 @@ public class ConnectionPointVM : ObservableObject
 
     private const int diametr = 8;
 
-    private readonly ICanvasSymbolsVM _canvasSymbolsVM;
+    private readonly ICanvasSymbolsComponentVM _canvasSymbolsVM;
     private readonly ILineStateStandardComponentVM _lineStateStandardComponentVM;
 
-    public ConnectionPointVM(ICanvasSymbolsVM canvasSymbolsVM, ILineStateStandardComponentVM lineStateStandardComponentVM, BlockSymbolVM blockSymbolVM, SideSymbol position)
+    public ConnectionPointVM(ICanvasSymbolsComponentVM canvasSymbolsVM, ILineStateStandardComponentVM lineStateStandardComponentVM, BlockSymbolVM blockSymbolVM, SideSymbol position)
     {
         _canvasSymbolsVM = canvasSymbolsVM;
         _lineStateStandardComponentVM = lineStateStandardComponentVM;

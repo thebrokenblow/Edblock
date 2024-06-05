@@ -9,13 +9,13 @@ namespace EdblockView.Components;
 /// <summary>
 /// Логика взаимодействия для CanvasSymbols.xaml
 /// </summary>
-public partial class CanvasSymbols : UserControl
+public partial class CanvasSymbolsComponent : UserControl
 {
     public static Canvas? Canvas { get; set; }
 
-    private CanvasSymbolsVM? canvasSymbolsVM;
+    private CanvasSymbolsComponentVM? canvasSymbolsVM;
 
-    public CanvasSymbols() =>
+    public CanvasSymbolsComponent() =>
         InitializeComponent();
 
     private void LoadedCanvas(object sender, RoutedEventArgs e) =>
@@ -32,7 +32,7 @@ public partial class CanvasSymbols : UserControl
 
     private void LeaveCursor(object sender, MouseEventArgs e)
     {
-        canvasSymbolsVM ??= (CanvasSymbolsVM)DataContext;
+        canvasSymbolsVM ??= (CanvasSymbolsComponentVM)DataContext;
 
         var cursorPosition = e.GetPosition(this);
         canvasSymbolsVM.ScalingCanvasSymbolsVM.SubscribeСanvasScalingEvents(cursorPosition);
@@ -40,7 +40,7 @@ public partial class CanvasSymbols : UserControl
 
     private void EnterCursor(object sender, MouseEventArgs e)
     {
-        canvasSymbolsVM ??= (CanvasSymbolsVM)DataContext;
+        canvasSymbolsVM ??= (CanvasSymbolsComponentVM)DataContext;
 
         canvasSymbolsVM.ScalingCanvasSymbolsVM.UnsubscribeСanvasScalingEvents();
     }

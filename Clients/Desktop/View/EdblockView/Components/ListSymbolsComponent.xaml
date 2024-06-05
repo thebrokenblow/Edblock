@@ -1,0 +1,120 @@
+﻿<UserControl
+    x:Class="EdblockView.Components.ListSymbolsComponent"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:listSymbolsComponentVM="clr-namespace:EdblockViewModel.Components.ListSymbols.Interfaces;assembly=EdblockViewModel"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:symbolUI="clr-namespace:Edblock.SymbolsUI.Symbols;assembly=Edblock.SymbolsUI"
+    d:DataContext="{d:DesignInstance Type=listSymbolsComponentVM:IListSymbolsComponentVM}"
+    Background="White"
+    mc:Ignorable="d">
+    <ScrollViewer>
+        <StackPanel Width="360" Background="#F5F5F5">
+            <symbolUI:ActionSymbolUI Style="{StaticResource SymbolUI}">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="MouseDown">
+                        <i:InvokeCommandAction Command="{Binding CreateBlockSymbolCommand}" CommandParameter="ActionSymbolVM" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </symbolUI:ActionSymbolUI>
+
+            <symbolUI:ConditionSymbolUI Style="{StaticResource SymbolUI}">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="MouseDown">
+                        <i:InvokeCommandAction Command="{Binding CreateBlockSymbolCommand}" CommandParameter="ConditionSymbolVM" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </symbolUI:ConditionSymbolUI>
+
+            <symbolUI:VerticalConditionSymbolUI Style="{StaticResource SymbolUI}">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="MouseDown">
+                        <i:InvokeCommandAction Command="{Binding CreateBlockSymbolCommand}" CommandParameter="VerticalConditionSymbolVM" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </symbolUI:VerticalConditionSymbolUI>
+
+            <symbolUI:HorizontalConditionSymbolUI Style="{StaticResource SymbolUI}">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="MouseDown">
+                        <i:InvokeCommandAction Command="{Binding CreateBlockSymbolCommand}" CommandParameter="HorizontalConditionSymbolVM" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </symbolUI:HorizontalConditionSymbolUI>
+
+            <symbolUI:StartEndSymbolUI Style="{StaticResource SymbolUI}">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="MouseDown">
+                        <i:InvokeCommandAction Command="{Binding CreateBlockSymbolCommand}" CommandParameter="StartEndSymbolVM" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </symbolUI:StartEndSymbolUI>
+
+            <symbolUI:InputOutputSymbolUI Style="{StaticResource SymbolUI}">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="MouseDown">
+                        <i:InvokeCommandAction Command="{Binding CreateBlockSymbolCommand}" CommandParameter="InputOutputSymbolVM" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </symbolUI:InputOutputSymbolUI>
+
+            <symbolUI:SubroutineSymbolUI Style="{StaticResource SymbolUI}">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="MouseDown">
+                        <i:InvokeCommandAction Command="{Binding CreateBlockSymbolCommand}" CommandParameter="SubroutineSymbolVM" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </symbolUI:SubroutineSymbolUI>
+
+            <symbolUI:CycleForSymbolUI Style="{StaticResource SymbolUI}">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="MouseDown">
+                        <i:InvokeCommandAction Command="{Binding CreateBlockSymbolCommand}" CommandParameter="CycleForSymbolVM" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </symbolUI:CycleForSymbolUI>
+
+            <symbolUI:CycleWhileBeginSymbolUI Style="{StaticResource SymbolUI}">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="MouseDown">
+                        <i:InvokeCommandAction Command="{Binding CreateBlockSymbolCommand}" CommandParameter="CycleWhileBeginSymbolVM" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </symbolUI:CycleWhileBeginSymbolUI>
+
+            <symbolUI:CycleWhileEndSymbolUI Style="{StaticResource SymbolUI}">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="MouseDown">
+                        <i:InvokeCommandAction Command="{Binding CreateBlockSymbolCommand}" CommandParameter="CycleWhileEndSymbolVM" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </symbolUI:CycleWhileEndSymbolUI>
+
+            <symbolUI:LinkSymbolUI Style="{StaticResource SymbolUI}">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="MouseDown">
+                        <i:InvokeCommandAction Command="{Binding CreateBlockSymbolCommand}" CommandParameter="LinkSymbolVM" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </symbolUI:LinkSymbolUI>
+
+            <symbolUI:CommentSymbolUI Style="{StaticResource SymbolUI}">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="MouseDown">
+                        <i:InvokeCommandAction Command="{Binding CreateBlockSymbolCommand}" CommandParameter="CommentSymbolVM" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </symbolUI:CommentSymbolUI>
+
+            <symbolUI:ParallelActionSymbolUI Style="{StaticResource SymbolUI}">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="MouseDown">
+                        <i:InvokeCommandAction Command="{Binding CreateBlockSymbolCommand}" CommandParameter="ParallelActionSymbolVM" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </symbolUI:ParallelActionSymbolUI>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

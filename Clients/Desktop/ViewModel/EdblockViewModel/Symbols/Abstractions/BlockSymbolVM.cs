@@ -99,24 +99,24 @@ public abstract class BlockSymbolVM : ObservableObject
     public DelegateCommand MouseLeave { get; set; }
     public DelegateCommand MouseLeftButtonDown { get; set; }
     public BlockSymbolModel BlockSymbolModel { get; init; } = null!;
-    public ICanvasSymbolsVM CanvasSymbolsVM { get; init; }
+    public ICanvasSymbolsComponentVM CanvasSymbolsVM { get; init; }
 
     protected readonly IScaleAllSymbolComponentVM scaleAllSymbolComponentVM;
     protected readonly ILineStateStandardComponentVM lineStateStandardComponentVM;
 
-    private readonly IListCanvasSymbolsVM listCanvasSymbolsVM;
+    private readonly IListCanvasSymbolsComponentVM listCanvasSymbolsVM;
     private readonly ITopSettingsMenuComponentVM topSettingsMenuComponentVM;
 
     public BlockSymbolVM(EditorVM edblockVM)
     {
         EdblockVM = edblockVM;
 
-        CanvasSymbolsVM = edblockVM.CanvasSymbolsVM;
+        CanvasSymbolsVM = edblockVM.CanvasSymbolsComponentVM;
         lineStateStandardComponentVM = edblockVM.TopSettingsMenuComponentVM.PopupBoxMenuComponentVM.LineStateStandardComponentVM;
         scaleAllSymbolComponentVM = edblockVM.TopSettingsMenuComponentVM.PopupBoxMenuComponentVM.ScaleAllSymbolComponentVM;
 
         topSettingsMenuComponentVM = edblockVM.TopSettingsMenuComponentVM;
-        listCanvasSymbolsVM = edblockVM.CanvasSymbolsVM.ListCanvasSymbolsVM;
+        listCanvasSymbolsVM = edblockVM.CanvasSymbolsComponentVM.ListCanvasSymbolsComponentVM;
 
         Id = Guid.NewGuid().ToString();
 

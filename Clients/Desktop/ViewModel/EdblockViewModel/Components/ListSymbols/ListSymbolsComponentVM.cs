@@ -8,22 +8,22 @@ using EdblockViewModel.Symbols.Abstractions;
 
 namespace EdblockViewModel.Components.ListSymbols;
 
-public class ListSymbolsVM : IListSymbolsVM
+public class ListSymbolsComponentVM : IListSymbolsComponentVM
 {
     public DelegateCommand<string> CreateBlockSymbolCommand { get; }
 
-    private readonly IListCanvasSymbolsVM _listCanvasSymbolsVM;
-    private readonly Func<Type, BlockSymbolVM> _factoryBlockSymbol;
+    private readonly IListCanvasSymbolsComponentVM _llistCanvasSymbolsComponentVM;
+    private readonly Func<Type, BlockSymbolVM> _factoryBlockSymbolVM;
 
     private readonly Dictionary<string, Type> nameByTypeBlockSymbol = new()
     {
         { "ActionSymbolVM", typeof(ActionSymbolVM)}
     };
 
-    public ListSymbolsVM(IListCanvasSymbolsVM listCanvasSymbolsVM, Func<Type, BlockSymbolVM> factoryBlockSymbol)
+    public ListSymbolsComponentVM(IListCanvasSymbolsComponentVM listCanvasSymbolsComponentVM, Func<Type, BlockSymbolVM> factoryBlockSymbol)
     {
-        _listCanvasSymbolsVM = listCanvasSymbolsVM;
-        _factoryBlockSymbol = factoryBlockSymbol;
+        _llistCanvasSymbolsComponentVM = listCanvasSymbolsComponentVM;
+        _factoryBlockSymbolVM = factoryBlockSymbol;
 
         CreateBlockSymbolCommand = new(CreateBlockSymbol);
     }
@@ -31,8 +31,8 @@ public class ListSymbolsVM : IListSymbolsVM
     public void CreateBlockSymbol(string nameBlockSymbol)
     {
         var typeBlockSymbol = nameByTypeBlockSymbol[nameBlockSymbol];
-        var blockSymbolVM = _factoryBlockSymbol.Invoke(typeBlockSymbol);
+        var blockSymbolVM = _factoryBlockSymbolVM.Invoke(typeBlockSymbol);
 
-        _listCanvasSymbolsVM.AddBlockSymbol(blockSymbolVM);
+        _llistCanvasSymbolsComponentVM.AddBlockSymbol(blockSymbolVM);
     }
 }

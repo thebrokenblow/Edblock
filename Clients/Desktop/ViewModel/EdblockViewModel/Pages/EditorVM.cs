@@ -17,8 +17,8 @@ public class EditorVM : BaseViewModel
         get => cellHeightTopSettingsPanel;
     }
 
-    public IListSymbolsVM ListSymbolsVM { get; }
-    public ICanvasSymbolsVM CanvasSymbolsVM { get; }
+    public IListSymbolsComponentVM ListSymbolsComponentVM { get; }
+    public ICanvasSymbolsComponentVM CanvasSymbolsComponentVM { get; }
     public ITopSettingsMenuComponentVM TopSettingsMenuComponentVM { get; }
 
     private readonly ProjectVM projectVM;
@@ -27,16 +27,16 @@ public class EditorVM : BaseViewModel
     private const int cellWidthPanelSymbols = 50;
 
     public EditorVM(
-        IListSymbolsVM listSymbolsVM,
-        ICanvasSymbolsVM canvasSymbolsVM,
+        IListSymbolsComponentVM listSymbolsComponentVM,
+        ICanvasSymbolsComponentVM canvasSymbolsComponentVM,
         ITopSettingsMenuComponentVM topSettingsMenuComponentVM)
     {
-        ListSymbolsVM = listSymbolsVM;
-        CanvasSymbolsVM = canvasSymbolsVM;
+        ListSymbolsComponentVM = listSymbolsComponentVM;
+        CanvasSymbolsComponentVM = canvasSymbolsComponentVM;
         TopSettingsMenuComponentVM = topSettingsMenuComponentVM;
 
-        CanvasSymbolsVM.ScalingCanvasSymbolsVM.HeightTopSettingsPanel = cellHeightTopSettingsPanel;
-        CanvasSymbolsVM.ScalingCanvasSymbolsVM.WidthPanelSymbols = cellWidthPanelSymbols;
+        CanvasSymbolsComponentVM.ScalingCanvasSymbolsVM.HeightTopSettingsPanel = cellHeightTopSettingsPanel;
+        CanvasSymbolsComponentVM.ScalingCanvasSymbolsVM.WidthPanelSymbols = cellWidthPanelSymbols;
 
         projectVM = new(this);
     }

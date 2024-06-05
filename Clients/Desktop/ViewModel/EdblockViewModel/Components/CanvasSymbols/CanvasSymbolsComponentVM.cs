@@ -7,7 +7,7 @@ using EdblockViewModel.Symbols.ComponentsSymbolsVM.ScaleRectangles;
 
 namespace EdblockViewModel.Components.CanvasSymbols;
 
-public class CanvasSymbolsVM : ObservableObject, ICanvasSymbolsVM
+public class CanvasSymbolsComponentVM : ObservableObject, ICanvasSymbolsComponentVM
 {
     public Rect Grid { get; } =
         new(-lengthGridCell, -lengthGridCell, lengthGridCell, lengthGridCell);
@@ -74,13 +74,13 @@ public class CanvasSymbolsVM : ObservableObject, ICanvasSymbolsVM
     public DelegateCommand MouseLeftButtonDown { get; }
     public DelegateCommand RemoveSelectedSymbolsCommand { get; }
     public ScalePartBlockSymbol? ScalePartBlockSymbol { get; set; }
-    public ScalingCanvasSymbolsVM ScalingCanvasSymbolsVM { get; }
-    public IListCanvasSymbolsVM ListCanvasSymbolsVM { get; }
+    public ScalingCanvasSymbolsComponentVM ScalingCanvasSymbolsVM { get; }
+    public IListCanvasSymbolsComponentVM ListCanvasSymbolsComponentVM { get; }
 
     private const int lengthGridCell = 20;
-    public CanvasSymbolsVM(IListCanvasSymbolsVM listCanvasSymbolsVM)
+    public CanvasSymbolsComponentVM(IListCanvasSymbolsComponentVM listCanvasSymbolsComponentVM)
     {
-        ListCanvasSymbolsVM = listCanvasSymbolsVM;
+        ListCanvasSymbolsComponentVM = listCanvasSymbolsComponentVM;
         ScalingCanvasSymbolsVM = new(this);
 
         MouseMove = new(RedrawSymbols);
@@ -91,7 +91,7 @@ public class CanvasSymbolsVM : ObservableObject, ICanvasSymbolsVM
 
     public void RemoveSelectedSymbols()
     {
-        ListCanvasSymbolsVM.RemoveSelectedBlockSymbols();
+        ListCanvasSymbolsComponentVM.RemoveSelectedBlockSymbols();
         ScalingCanvasSymbolsVM.Resize();
     }
 
@@ -99,16 +99,16 @@ public class CanvasSymbolsVM : ObservableObject, ICanvasSymbolsVM
     {
         Cursor = Cursors.Arrow;
 
-        ListCanvasSymbolsVM.ChangeFocusTextField();
+        ListCanvasSymbolsComponentVM.ChangeFocusTextField();
 
-        var movableBlockSymbol = ListCanvasSymbolsVM.MovableBlockSymbol;
+        var movableBlockSymbol = ListCanvasSymbolsComponentVM.MovableBlockSymbol;
         if (movableBlockSymbol is not null)
         {
             movableBlockSymbol.MoveMiddle = false;
         }
 
         ScalePartBlockSymbol = null;
-        ListCanvasSymbolsVM.MovableBlockSymbol = null;
+        ListCanvasSymbolsComponentVM.MovableBlockSymbol = null;
 
         previousXCoordinate = 0;
         previousYCoordinate = 0;
@@ -119,7 +119,7 @@ public class CanvasSymbolsVM : ObservableObject, ICanvasSymbolsVM
         var currentCoordinate = (xCoordinate, yCoordinate);
         var previousCoordinate = (previousXCoordinate, previousYCoordinate);
 
-        ListCanvasSymbolsVM.MovableBlockSymbol?.SetCoordinate(currentCoordinate, previousCoordinate);
+        ListCanvasSymbolsComponentVM.MovableBlockSymbol?.SetCoordinate(currentCoordinate, previousCoordinate);
         ScalePartBlockSymbol?.SetWidthBlockSymbol(this);
         ScalePartBlockSymbol?.SetHeightBlockSymbol(this);
 
@@ -129,8 +129,8 @@ public class CanvasSymbolsVM : ObservableObject, ICanvasSymbolsVM
 
     private void ClearSelectedSymbols()
     {
-        ListCanvasSymbolsVM.ChangeFocusTextField();
-        ListCanvasSymbolsVM.ClearSelectedBlockSymbols();
+        ListCanvasSymbolsComponentVM.ChangeFocusTextField();
+        ListCanvasSymbolsComponentVM.ClearSelectedBlockSymbols();
     }
 
     private static int RoundCoordinate(int coordinate) => //Округление координат, чтобы символ перемещался по сетке

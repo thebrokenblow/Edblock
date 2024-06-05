@@ -27,7 +27,7 @@ public class StartEndSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnectionPo
 
     public StartEndSymbolVM(EditorVM edblockVM) : base(edblockVM)
     {
-        TextFieldSymbolVM = new(edblockVM.CanvasSymbolsVM, this)
+        TextFieldSymbolVM = new(edblockVM.CanvasSymbolsComponentVM, this)
         {
             Text = defaultText
         };

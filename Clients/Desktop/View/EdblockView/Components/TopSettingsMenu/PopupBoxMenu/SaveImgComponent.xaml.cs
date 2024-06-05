@@ -24,14 +24,14 @@ public partial class SaveImgComponent : UserControl
 
     private void CreateImg(object sender, RoutedEventArgs e)
     {
-        if (CanvasSymbols.Canvas is null)
+        if (CanvasSymbolsComponent.Canvas is null)
         {
             return;
         }
 
         var editorVM = (EditorVM)DataContext;
-        var canvasView = CanvasSymbols.Canvas;
-        var canvasSymbolsVM = editorVM.CanvasSymbolsVM;
+        var canvasView = CanvasSymbolsComponent.Canvas;
+        var canvasSymbolsVM = editorVM.CanvasSymbolsComponentVM;
 
         var saveFileDialog = new SaveFileDialog
         {
@@ -40,7 +40,7 @@ public partial class SaveImgComponent : UserControl
             FileName = FileName + FileExtension
         };
 
-        canvasSymbolsVM.ListCanvasSymbolsVM.ClearSelectedBlockSymbols();
+        canvasSymbolsVM.ListCanvasSymbolsComponentVM.ClearSelectedBlockSymbols();
 
         if (saveFileDialog.ShowDialog() == false)
         {
