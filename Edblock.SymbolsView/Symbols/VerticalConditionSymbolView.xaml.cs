@@ -3,14 +3,14 @@ using System.Windows.Shapes;
 using System.Windows.Controls;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM.ConnectionPoints;
 
-namespace EdblockView.SymbolsView;
+namespace Edblock.SymbolsView.Symbols;
 
 /// <summary>
-/// Логика взаимодействия для ConnectionPoints.xaml
+/// Логика взаимодействия для VerticalConditionSymbolView.xaml
 /// </summary>
-public partial class ConnectionPointsView : UserControl
+public partial class VerticalConditionSymbolView : UserControl
 {
-    public ConnectionPointsView() =>
+    public VerticalConditionSymbolView() =>
         InitializeComponent();
 
     private void TrackStageDrawLine(object sender, MouseButtonEventArgs e)
@@ -22,7 +22,7 @@ public partial class ConnectionPointsView : UserControl
             if (contextEllipse is ConnectionPointVM connectionPointVM)
             {
                 //connectionPointVM.Click();
-            }           
+            }
         }
 
         e.Handled = true;

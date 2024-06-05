@@ -3,14 +3,14 @@ using System.Windows.Shapes;
 using System.Windows.Controls;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM.ConnectionPoints;
 
-namespace EdblockView.SymbolsView;
+namespace Edblock.SymbolsView.Symbols;
 
 /// <summary>
-/// Логика взаимодействия для VerticalConditionSymbolView.xaml
+/// Логика взаимодействия для HorizontalConditionSymbolView.xaml
 /// </summary>
-public partial class VerticalConditionSymbolView : UserControl
+public partial class HorizontalConditionSymbolView : UserControl
 {
-    public VerticalConditionSymbolView() =>
+    public HorizontalConditionSymbolView() =>
         InitializeComponent();
 
     private void TrackStageDrawLine(object sender, MouseButtonEventArgs e)

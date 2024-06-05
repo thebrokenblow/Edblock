@@ -1,10 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using Prism.Commands;
 using EdblockViewModel.Symbols;
+using EdblockViewModel.Symbols.Abstractions;
 using EdblockViewModel.Components.ListSymbols.Interfaces;
 using EdblockViewModel.Components.CanvasSymbols.Interfaces;
-using System.Collections.Generic;
-using EdblockViewModel.Symbols.Abstractions;
 
 namespace EdblockViewModel.Components.ListSymbols;
 
@@ -17,7 +17,8 @@ public class ListSymbolsComponentVM : IListSymbolsComponentVM
 
     private readonly Dictionary<string, Type> nameByTypeBlockSymbol = new()
     {
-        { "ActionSymbolVM", typeof(ActionSymbolVM)}
+        { "ActionSymbolVM", typeof(ActionSymbolVM) },
+        { "ConditionSymbolVM", typeof(ConditionSymbolVM) }
     };
 
     public ListSymbolsComponentVM(IListCanvasSymbolsComponentVM listCanvasSymbolsComponentVM, Func<Type, BlockSymbolVM> factoryBlockSymbol)

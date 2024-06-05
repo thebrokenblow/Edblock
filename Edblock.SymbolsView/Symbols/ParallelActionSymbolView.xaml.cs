@@ -3,7 +3,7 @@ using System.Windows.Shapes;
 using System.Windows.Controls;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM.ConnectionPoints;
 
-namespace EdblockView.SymbolsView;
+namespace Edblock.SymbolsView.Symbols;
 
 /// <summary>
 /// Логика взаимодействия для ParallelActionSymbolView.xaml

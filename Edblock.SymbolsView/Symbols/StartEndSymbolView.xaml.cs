@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace EdblockView.SymbolsView;
+namespace Edblock.SymbolsView.Symbols;
 
 /// <summary>
 /// Логика взаимодействия для StartEndSymbolView.xaml

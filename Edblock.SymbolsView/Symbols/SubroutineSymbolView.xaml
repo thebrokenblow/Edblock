@@ -1,18 +1,16 @@
 ﻿<UserControl
-    x:Class="EdblockView.SymbolsView.StartEndSymbolView"
+    x:Class="Edblock.SymbolsView.Symbols.SubroutineSymbolView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:symbolComponentsView="clr-namespace:Edblock.SymbolsView.Symbols.Components"
     xmlns:symbolVM="clr-namespace:EdblockViewModel.Symbols;assembly=EdblockViewModel"
-    xmlns:symbolView="clr-namespace:EdblockView.SymbolsView"
-    d:DataContext="{d:DesignInstance Type=symbolVM:StartEndSymbolVM}"
-    d:DesignHeight="60"
-    d:DesignWidth="140"
+    d:DataContext="{d:DesignInstance Type=symbolVM:SubroutineSymbolVM}"
     mc:Ignorable="d">
     <Canvas>
-        <Rectangle Style="{StaticResource SymbolByRectangleView}">
+        <Polygon Fill="{Binding Color}" Style="{StaticResource SymbolByPolygonView}">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="MouseLeftButtonDown">
                     <i:InvokeCommandAction Command="{Binding MouseLeftButtonDown}" />
@@ -24,7 +22,14 @@
                     <i:InvokeCommandAction Command="{Binding MouseLeave}" />
                 </i:EventTrigger>
             </i:Interaction.Triggers>
-        </Rectangle>
+        </Polygon>
+
+        <Border
+            Canvas.Left="{Binding LeftOffsetBorder}"
+            Width="{Binding WidthBorder}"
+            Height="{Binding HeightBorder}"
+            BorderBrush="Black"
+            BorderThickness="1" />
 
         <TextBox Style="{StaticResource TextFieldView}">
             <i:Interaction.Triggers>
@@ -42,7 +47,9 @@
                 </i:EventTrigger>
             </i:Interaction.Triggers>
         </TextBox>
-        <symbolView:ConnectionPointsView />
-        <symbolView:ScaleRectanglesView />
+
+        <symbolComponentsView:ConnectionPointsView />
+        <symbolComponentsView:ScaleRectanglesView />
+
     </Canvas>
 </UserControl>

@@ -61,6 +61,8 @@ public partial class App : Application
         services.AddScoped<ITextAlignmentComponentVM, TextAlignmentComponentVM>();
 
         services.AddTransient<ActionSymbolVM>();
+        services.AddTransient<ConditionSymbolVM>();
+
 
         services.AddScoped<INavigationService, NavigateService>();
 

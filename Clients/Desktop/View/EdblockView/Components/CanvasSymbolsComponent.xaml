@@ -2,7 +2,6 @@
     x:Class="EdblockView.Components.CanvasSymbolsComponent"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:blockSymbolView="clr-namespace:EdblockView.SymbolsView"
     xmlns:blockSymbolsVM="clr-namespace:EdblockViewModel.Symbols;assembly=EdblockViewModel"
     xmlns:canvassymbols="clr-namespace:EdblockViewModel.Components.CanvasSymbols.Interfaces;assembly=EdblockViewModel"
     xmlns:componentsCommentSymbolVM="clr-namespace:EdblockViewModel.Symbols.ComponentsCommentSymbolVM;assembly=EdblockViewModel"
@@ -12,6 +11,7 @@
     xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:switchCaseConditionSymbolsVM="clr-namespace:EdblockViewModel.Symbols.SwitchCaseConditionSymbolsVM;assembly=EdblockViewModel"
+    xmlns:symbolsView="clr-namespace:Edblock.SymbolsView.Symbols;assembly=Edblock.SymbolsView"
     d:DataContext="{d:DesignInstance Type=canvassymbols:ICanvasSymbolsComponentVM}"
     d:DesignHeight="450"
     d:DesignWidth="800"
@@ -30,43 +30,43 @@
             <ItemsControl ItemsSource="{Binding ListCanvasSymbolsComponentVM.BlockSymbolsVM}">
                 <ItemsControl.Resources>
                     <DataTemplate DataType="{x:Type blockSymbolsVM:ActionSymbolVM}">
-                        <blockSymbolView:ActionSymbolView MouseDown="SelectBlockSymbol" />
+                        <symbolsView:ActionSymbolView MouseDown="SelectBlockSymbol" />
                     </DataTemplate>
                     <DataTemplate DataType="{x:Type blockSymbolsVM:ConditionSymbolVM}">
-                        <blockSymbolView:ConditionSymbolView MouseDown="SelectBlockSymbol" />
+                        <symbolsView:ConditionSymbolView MouseDown="SelectBlockSymbol" />
                     </DataTemplate>
                     <DataTemplate DataType="{x:Type switchCaseConditionSymbolsVM:HorizontalConditionSymbolVM}">
-                        <blockSymbolView:HorizontalConditionSymbolView MouseDown="SelectBlockSymbol" />
+                        <symbolsView:HorizontalConditionSymbolView MouseDown="SelectBlockSymbol" />
                     </DataTemplate>
                     <DataTemplate DataType="{x:Type switchCaseConditionSymbolsVM:VerticalConditionSymbolVM}">
-                        <blockSymbolView:VerticalConditionSymbolView MouseDown="SelectBlockSymbol" />
+                        <symbolsView:VerticalConditionSymbolView MouseDown="SelectBlockSymbol" />
                     </DataTemplate>
                     <DataTemplate DataType="{x:Type blockSymbolsVM:StartEndSymbolVM}">
-                        <blockSymbolView:StartEndSymbolView MouseDown="SelectBlockSymbol" />
+                        <symbolsView:StartEndSymbolView MouseDown="SelectBlockSymbol" />
                     </DataTemplate>
                     <DataTemplate DataType="{x:Type blockSymbolsVM:InputOutputSymbolVM}">
-                        <blockSymbolView:InputOutputSymbolView MouseDown="SelectBlockSymbol" />
+                        <symbolsView:InputOutputSymbolView MouseDown="SelectBlockSymbol" />
                     </DataTemplate>
                     <DataTemplate DataType="{x:Type blockSymbolsVM:SubroutineSymbolVM}">
-                        <blockSymbolView:SubroutineSymbolView MouseDown="SelectBlockSymbol" />
+                        <symbolsView:SubroutineSymbolView MouseDown="SelectBlockSymbol" />
                     </DataTemplate>
                     <DataTemplate DataType="{x:Type blockSymbolsVM:CycleForSymbolVM}">
-                        <blockSymbolView:CycleForSymbolView MouseDown="SelectBlockSymbol" />
+                        <symbolsView:CycleForSymbolView MouseDown="SelectBlockSymbol" />
                     </DataTemplate>
                     <DataTemplate DataType="{x:Type blockSymbolsVM:CycleWhileBeginSymbolVM}">
-                        <blockSymbolView:CycleWhileBeginSymbolView MouseDown="SelectBlockSymbol" />
+                        <symbolsView:CycleWhileBeginSymbolView MouseDown="SelectBlockSymbol" />
                     </DataTemplate>
                     <DataTemplate DataType="{x:Type blockSymbolsVM:CycleWhileEndSymbolVM}">
-                        <blockSymbolView:CycleWhileEndSymbolView MouseDown="SelectBlockSymbol" />
+                        <symbolsView:CycleWhileEndSymbolView MouseDown="SelectBlockSymbol" />
                     </DataTemplate>
                     <DataTemplate DataType="{x:Type blockSymbolsVM:LinkSymbolVM}">
-                        <blockSymbolView:LinkSymbolView MouseDown="SelectBlockSymbol" />
+                        <symbolsView:LinkSymbolView MouseDown="SelectBlockSymbol" />
                     </DataTemplate>
                     <DataTemplate DataType="{x:Type componentsCommentSymbolVM:CommentSymbolVM}">
-                        <blockSymbolView:CommentSymbolView MouseDown="SelectBlockSymbol" />
+                        <symbolsView:CommentSymbolView MouseDown="SelectBlockSymbol" />
                     </DataTemplate>
                     <DataTemplate DataType="{x:Type componentsParallelActionSymbolVM:ParallelActionSymbolVM}">
-                        <blockSymbolView:ParallelActionSymbolView MouseDown="SelectBlockSymbol" />
+                        <symbolsView:ParallelActionSymbolView MouseDown="SelectBlockSymbol" />
                     </DataTemplate>
                 </ItemsControl.Resources>
                 <ItemsControl.ItemsPanel>
