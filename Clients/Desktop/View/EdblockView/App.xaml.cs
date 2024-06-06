@@ -17,6 +17,7 @@ using EdblockViewModel.Services.Factories.Interfaces;
 using EdblockViewModel.Services.Interfaces;
 using EdblockViewModel.Symbols;
 using EdblockViewModel.Symbols.Abstractions;
+using EdblockViewModel.Symbols.ComponentsCommentSymbolVM;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace EdblockView;
@@ -62,7 +63,14 @@ public partial class App : Application
 
         services.AddTransient<ActionSymbolVM>();
         services.AddTransient<ConditionSymbolVM>();
-
+        services.AddTransient<CycleForSymbolVM>();
+        services.AddTransient<CycleWhileBeginSymbolVM>();
+        services.AddTransient<CycleWhileEndSymbolVM>();
+        services.AddTransient<InputOutputSymbolVM>();
+        services.AddTransient<LinkSymbolVM>();
+        services.AddTransient<StartEndSymbolVM>();
+        services.AddTransient<SubroutineSymbolVM>();
+        services.AddTransient<CommentSymbolVM>();
 
         services.AddScoped<INavigationService, NavigateService>();
 

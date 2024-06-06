@@ -8,6 +8,9 @@ using EdblockViewModel.Symbols.ComponentsSymbolsVM.ConnectionPoints;
 using EdblockViewModel.Pages;
 using EdblockViewModel.Symbols.Abstractions;
 using EdblockViewModel.Symbols.Attributes;
+using EdblockViewModel.Components.CanvasSymbols.Interfaces;
+using EdblockViewModel.Components.TopSettingsMenu.Interfaces;
+using EdblockViewModel.Components.TopSettingsMenu.PopupBoxMenu.Interfaces;
 
 namespace EdblockViewModel.Symbols.SwitchCaseConditionSymbolsVM;
 
@@ -41,9 +44,13 @@ public class VerticalConditionSymbolVM : SwitchCaseSymbolVM, IHasTextFieldVM, IH
     private const string defaultText = "Условие";
     private const string defaultColor = "#FF60B2D3";
 
-    public VerticalConditionSymbolVM(EditorVM edblockVM, int countLines) : base(edblockVM, countLines)
+    public VerticalConditionSymbolVM(
+        ICanvasSymbolsComponentVM canvasSymbolsComponentVM,
+        IListCanvasSymbolsComponentVM listCanvasSymbolsComponentVM,
+        ITopSettingsMenuComponentVM topSettingsMenuComponentVM,
+        IPopupBoxMenuComponentVM popupBoxMenuComponentVM, int countLines) : base(canvasSymbolsComponentVM, listCanvasSymbolsComponentVM, topSettingsMenuComponentVM, popupBoxMenuComponentVM, countLines)
     {
-        TextFieldSymbolVM = new(CanvasSymbolsVM, this)
+        TextFieldSymbolVM = new(CanvasSymbolsComponentVM, this)
         {
             Text = defaultText
         };
@@ -139,7 +146,7 @@ public class VerticalConditionSymbolVM : SwitchCaseSymbolVM, IHasTextFieldVM, IH
     private void AddScaleRectangles()
     {
         var builderScaleRectangles = new BuilderScaleRectangles(
-            CanvasSymbolsVM,
+            CanvasSymbolsComponentVM,
            scaleAllSymbolComponentVM,
            this);
 
@@ -159,7 +166,7 @@ public class VerticalConditionSymbolVM : SwitchCaseSymbolVM, IHasTextFieldVM, IH
     private void AddConnectionPoints()
     {
         var builderConnectionPointsVM = new BuilderConnectionPointsVM(
-            CanvasSymbolsVM,
+            CanvasSymbolsComponentVM,
             this,
             lineStateStandardComponentVM);
 
@@ -179,7 +186,7 @@ public class VerticalConditionSymbolVM : SwitchCaseSymbolVM, IHasTextFieldVM, IH
             LinesSwitchCase.Add(new());
 
             var bottomConnectionPoint = new ConnectionPointVM(
-                CanvasSymbolsVM,
+                CanvasSymbolsComponentVM,
                 lineStateStandardComponentVM,
                 this,
                 SideSymbol.Right);

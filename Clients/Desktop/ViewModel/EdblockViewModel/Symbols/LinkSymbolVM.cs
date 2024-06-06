@@ -6,6 +6,9 @@ using EdblockViewModel.Symbols.ComponentsSymbolsVM.ConnectionPoints;
 using EdblockViewModel.Pages;
 using EdblockViewModel.Symbols.Abstractions;
 using EdblockViewModel.Symbols.Attributes;
+using EdblockViewModel.Components.CanvasSymbols.Interfaces;
+using EdblockViewModel.Components.TopSettingsMenu.Interfaces;
+using EdblockViewModel.Components.TopSettingsMenu.PopupBoxMenu.Interfaces;
 
 namespace EdblockViewModel.Symbols;
 
@@ -24,9 +27,13 @@ public class LinkSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnectionPoint,
     private const string defaultText = "Ссылка";
     private const string defaultColor = "#FF5761A8";
 
-    public LinkSymbolVM(EditorVM edblockVM) : base(edblockVM)
+    public LinkSymbolVM(
+        ICanvasSymbolsComponentVM canvasSymbolsComponentVM,
+        IListCanvasSymbolsComponentVM listCanvasSymbolsComponentVM,
+        ITopSettingsMenuComponentVM topSettingsMenuComponentVM,
+        IPopupBoxMenuComponentVM popupBoxMenuComponentVM) : base(canvasSymbolsComponentVM, listCanvasSymbolsComponentVM, topSettingsMenuComponentVM, popupBoxMenuComponentVM)
     {
-        TextFieldSymbolVM = new(CanvasSymbolsVM, this)
+        TextFieldSymbolVM = new(CanvasSymbolsComponentVM, this)
         {
             Text = defaultText
         };
@@ -73,7 +80,7 @@ public class LinkSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnectionPoint,
     private void AddConnectionPoints()
     {
         var builderConnectionPointsVM = new BuilderConnectionPointsVM(
-            CanvasSymbolsVM,
+            CanvasSymbolsComponentVM,
             this,
             lineStateStandardComponentVM);
 
@@ -88,7 +95,7 @@ public class LinkSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnectionPoint,
     private void AddScaleRectangles()
     {
         var builderScaleRectangles = new BuilderScaleRectangles(
-            CanvasSymbolsVM,
+            CanvasSymbolsComponentVM,
            scaleAllSymbolComponentVM,
            this);
 

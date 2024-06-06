@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
 using EdblockModel.SymbolsModel;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM.ConnectionPoints;
-using EdblockViewModel.Pages;
 using EdblockViewModel.Symbols.Abstractions;
+using EdblockViewModel.Components.CanvasSymbols.Interfaces;
+using EdblockViewModel.Components.TopSettingsMenu.Interfaces;
+using EdblockViewModel.Components.TopSettingsMenu.PopupBoxMenu.Interfaces;
 
 namespace EdblockViewModel.Symbols.SwitchCaseConditionSymbolsVM;
 
@@ -11,7 +13,13 @@ public abstract class SwitchCaseSymbolVM : BlockSymbolVM
     public List<ConnectionPointVM> ConnectionPointsSwitchCaseVM { get; init; }
     protected readonly int _countLines;
 
-    protected SwitchCaseSymbolVM(EditorVM edblockVM, int countLine) : base(edblockVM)
+
+    protected SwitchCaseSymbolVM(
+        ICanvasSymbolsComponentVM canvasSymbolsComponentVM,
+        IListCanvasSymbolsComponentVM listCanvasSymbolsComponentVM,
+        ITopSettingsMenuComponentVM topSettingsMenuComponentVM,
+        IPopupBoxMenuComponentVM popupBoxMenuComponentVM,
+        int countLine) : base(canvasSymbolsComponentVM, listCanvasSymbolsComponentVM, topSettingsMenuComponentVM, popupBoxMenuComponentVM)
     {
         _countLines = countLine;
         

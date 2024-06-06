@@ -7,6 +7,9 @@ using EdblockViewModel.Symbols.ComponentsSymbolsVM.ConnectionPoints;
 using EdblockViewModel.Pages;
 using EdblockViewModel.Symbols.Abstractions;
 using EdblockViewModel.Symbols.Attributes;
+using EdblockViewModel.Components.CanvasSymbols.Interfaces;
+using EdblockViewModel.Components.TopSettingsMenu.Interfaces;
+using EdblockViewModel.Components.TopSettingsMenu.PopupBoxMenu.Interfaces;
 
 namespace EdblockViewModel.Symbols;
 
@@ -35,9 +38,13 @@ public class ConditionSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnectionP
     private const string defaultText = "Условие";
     private const string defaultColor = "#FF60B2D3";
 
-    public ConditionSymbolVM(EditorVM edblockVM) : base(edblockVM)
+    public ConditionSymbolVM(
+        ICanvasSymbolsComponentVM canvasSymbolsComponentVM,
+        IListCanvasSymbolsComponentVM listCanvasSymbolsComponentVM,
+        ITopSettingsMenuComponentVM topSettingsMenuComponentVM,
+        IPopupBoxMenuComponentVM popupBoxMenuComponentVM) : base(canvasSymbolsComponentVM, listCanvasSymbolsComponentVM, topSettingsMenuComponentVM, popupBoxMenuComponentVM)
     {
-        TextFieldSymbolVM = new(CanvasSymbolsVM, this)
+        TextFieldSymbolVM = new(CanvasSymbolsComponentVM, this)
         {
             Text = defaultText
         };
@@ -94,7 +101,7 @@ public class ConditionSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnectionP
     private void AddConnectionPoints()
     {
         var builderConnectionPointsVM = new BuilderConnectionPointsVM(
-            CanvasSymbolsVM,
+            CanvasSymbolsComponentVM,
             this,
             lineStateStandardComponentVM);
 
@@ -109,7 +116,7 @@ public class ConditionSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnectionP
     private void AddScaleRectangles()
     {
         var builderScaleRectangles = new BuilderScaleRectangles(
-            CanvasSymbolsVM,
+            CanvasSymbolsComponentVM,
            scaleAllSymbolComponentVM,
            this);
 

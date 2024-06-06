@@ -5,6 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:symbolComponentsView="clr-namespace:Edblock.SymbolsView.Symbols.Components"
     xmlns:symbolVM="clr-namespace:EdblockViewModel.Symbols.SwitchCaseConditionSymbolsVM;assembly=EdblockViewModel"
     d:DataContext="{d:DesignInstance Type=symbolVM:HorizontalConditionSymbolVM}"
     d:DesignHeight="450"
@@ -41,7 +42,7 @@
                 </i:EventTrigger>
             </i:Interaction.Triggers>
         </TextBox>
-        
+
         <ItemsControl ItemsSource="{Binding ConnectionPointsSwitchCaseVM}">
             <ItemsControl.ItemTemplate>
                 <DataTemplate DataType="Points">
@@ -96,5 +97,8 @@
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
         </ItemsControl>
+
+        <symbolComponentsView:ConnectionPointsView />
+        <symbolComponentsView:ScaleRectanglesView />
     </Canvas>
 </UserControl>

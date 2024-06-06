@@ -7,6 +7,9 @@ using EdblockViewModel.Symbols.ComponentsSymbolsVM.ConnectionPoints;
 using EdblockViewModel.Pages;
 using EdblockViewModel.Symbols.Abstractions;
 using EdblockViewModel.Symbols.Attributes;
+using EdblockViewModel.Components.CanvasSymbols.Interfaces;
+using EdblockViewModel.Components.TopSettingsMenu.Interfaces;
+using EdblockViewModel.Components.TopSettingsMenu.PopupBoxMenu.Interfaces;
 
 namespace EdblockViewModel.Symbols;
 
@@ -64,9 +67,13 @@ public class SubroutineSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnection
     private const string defaultText = "Подпрограмма";
     private const string defaultColor = "#FFBA64C8";
 
-    public SubroutineSymbolVM(EditorVM edblockVM) : base(edblockVM)
+    public SubroutineSymbolVM(
+        ICanvasSymbolsComponentVM canvasSymbolsComponentVM,
+        IListCanvasSymbolsComponentVM listCanvasSymbolsComponentVM,
+        ITopSettingsMenuComponentVM topSettingsMenuComponentVM,
+        IPopupBoxMenuComponentVM popupBoxMenuComponentVM) : base(canvasSymbolsComponentVM, listCanvasSymbolsComponentVM, topSettingsMenuComponentVM, popupBoxMenuComponentVM)
     {
-        TextFieldSymbolVM = new(CanvasSymbolsVM, this)
+        TextFieldSymbolVM = new(CanvasSymbolsComponentVM, this)
         {
             Text = defaultText,
             LeftOffset = leftOffsetBorder
@@ -119,7 +126,7 @@ public class SubroutineSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnection
     private void AddConnectionPoints()
     {
         var builderConnectionPointsVM = new BuilderConnectionPointsVM(
-            CanvasSymbolsVM,
+            CanvasSymbolsComponentVM,
             this,
             lineStateStandardComponentVM);
 
@@ -134,7 +141,7 @@ public class SubroutineSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnection
     private void AddScaleRectangles()
     {
         var builderScaleRectangles = new BuilderScaleRectangles(
-            CanvasSymbolsVM,
+            CanvasSymbolsComponentVM,
            scaleAllSymbolComponentVM,
            this);
 

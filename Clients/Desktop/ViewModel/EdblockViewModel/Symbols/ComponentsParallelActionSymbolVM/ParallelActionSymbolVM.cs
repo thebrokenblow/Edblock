@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using EdblockModel.EnumsModel;
 using EdblockModel.SymbolsModel;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM.ConnectionPoints;
-using EdblockViewModel.Pages;
 using EdblockViewModel.Symbols.Abstractions;
 using EdblockViewModel.Symbols.Attributes;
+using EdblockViewModel.Components.CanvasSymbols.Interfaces;
+using EdblockViewModel.Components.TopSettingsMenu.Interfaces;
+using EdblockViewModel.Components.TopSettingsMenu.PopupBoxMenu.Interfaces;
 
 namespace EdblockViewModel.Symbols.ComponentsParallelActionSymbolVM;
 
@@ -26,7 +28,13 @@ public class ParallelActionSymbolVM : BlockSymbolVM, IHasConnectionPoint
     private const int defaultHeigth = 60;
     private const int indentBetweenSymbol = 20;
 
-    public ParallelActionSymbolVM(EditorVM edblockVM, int countSymbolsIncoming, int countSymbolsOutgoing) : base(edblockVM)
+    public ParallelActionSymbolVM(
+        ICanvasSymbolsComponentVM canvasSymbolsComponentVM,
+        IListCanvasSymbolsComponentVM listCanvasSymbolsComponentVM,
+        ITopSettingsMenuComponentVM topSettingsMenuComponentVM,
+        IPopupBoxMenuComponentVM popupBoxMenuComponentVM, 
+        int countSymbolsIncoming, 
+        int countSymbolsOutgoing) : base(canvasSymbolsComponentVM, listCanvasSymbolsComponentVM, topSettingsMenuComponentVM, popupBoxMenuComponentVM)
     {
         _countSymbolsIncoming = countSymbolsIncoming;
         _countSymbolsOutgoing = countSymbolsOutgoing;
@@ -43,7 +51,7 @@ public class ParallelActionSymbolVM : BlockSymbolVM, IHasConnectionPoint
         for (int i = 0; i < countSymbolsIncoming; i++)
         {
             var bottomConnectionPoint = new ConnectionPointVM(
-                CanvasSymbolsVM,
+                CanvasSymbolsComponentVM,
                 lineStateStandardComponentVM,
                 this, 
                 SideSymbol.Top);
@@ -54,7 +62,7 @@ public class ParallelActionSymbolVM : BlockSymbolVM, IHasConnectionPoint
         for (int i = 0; i < countSymbolsOutgoing; i++)
         {
             var bottomConnectionPoint = new ConnectionPointVM(
-                CanvasSymbolsVM,
+                CanvasSymbolsComponentVM,
                 lineStateStandardComponentVM,
                 this,  
                 SideSymbol.Bottom);

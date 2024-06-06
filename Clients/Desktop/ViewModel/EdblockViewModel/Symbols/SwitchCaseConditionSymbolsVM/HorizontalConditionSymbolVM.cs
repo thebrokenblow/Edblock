@@ -1,13 +1,14 @@
-﻿using System.Windows;
-using System.Windows.Media;
+﻿using System.Windows.Media;
 using System.Collections.Generic;
 using EdblockModel.EnumsModel;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM.ScaleRectangles;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM.ConnectionPoints;
-using EdblockViewModel.Pages;
 using EdblockViewModel.Symbols.Abstractions;
 using EdblockViewModel.Symbols.Attributes;
+using EdblockViewModel.Components.CanvasSymbols.Interfaces;
+using EdblockViewModel.Components.TopSettingsMenu.Interfaces;
+using EdblockViewModel.Components.TopSettingsMenu.PopupBoxMenu.Interfaces;
 
 namespace EdblockViewModel.Symbols.SwitchCaseConditionSymbolsVM;
 
@@ -46,9 +47,14 @@ public class HorizontalConditionSymbolVM : SwitchCaseSymbolVM, IHasTextFieldVM, 
     private const string defaultText = "Условие";
     private const string defaultColor = "#FF60B2D3";
 
-    public HorizontalConditionSymbolVM(EditorVM edblockVM, int countLines) : base(edblockVM, countLines)
+    public HorizontalConditionSymbolVM(
+        ICanvasSymbolsComponentVM canvasSymbolsComponentVM,
+        IListCanvasSymbolsComponentVM listCanvasSymbolsComponentVM,
+        ITopSettingsMenuComponentVM topSettingsMenuComponentVM,
+        IPopupBoxMenuComponentVM popupBoxMenuComponentVM, 
+        int countLines) : base(canvasSymbolsComponentVM, listCanvasSymbolsComponentVM, topSettingsMenuComponentVM, popupBoxMenuComponentVM, countLines)
     {
-        TextFieldSymbolVM = new(CanvasSymbolsVM, this)
+        TextFieldSymbolVM = new(CanvasSymbolsComponentVM, this)
         {
             Text = defaultText
         };
@@ -122,13 +128,16 @@ public class HorizontalConditionSymbolVM : SwitchCaseSymbolVM, IHasTextFieldVM, 
 
     public void SetCoordinatePolygonPoints()
     {
-        Points = new()
-        {
-            new Point(Width / 2, Height),
-            new Point(Width, Height / 2),
-            new Point(Width / 2, 0),
-            new Point(0, Height / 2)
-        };
+        double halfWidth = Width / 2;
+        double halfHeight = Height / 2;
+
+        Points =
+        [
+            new(halfWidth, Height),
+            new(Width, halfHeight),
+            new(halfWidth, 0),
+            new(0, halfHeight)
+        ];
     }
 
     private void SetCoordinateVerticalLine()
@@ -170,7 +179,7 @@ public class HorizontalConditionSymbolVM : SwitchCaseSymbolVM, IHasTextFieldVM, 
     private void AddScaleRectangles()
     {
         var builderScaleRectangles = new BuilderScaleRectangles(
-            CanvasSymbolsVM,
+            CanvasSymbolsComponentVM,
            scaleAllSymbolComponentVM,
            this);
 
@@ -190,7 +199,7 @@ public class HorizontalConditionSymbolVM : SwitchCaseSymbolVM, IHasTextFieldVM, 
     private void AddConnectionPoints()
     {
         var builderConnectionPointsVM = new BuilderConnectionPointsVM(
-            CanvasSymbolsVM,
+            CanvasSymbolsComponentVM,
             this,
             lineStateStandardComponentVM);
 
@@ -210,7 +219,7 @@ public class HorizontalConditionSymbolVM : SwitchCaseSymbolVM, IHasTextFieldVM, 
             LinesSwitchCase.Add(new());
 
             var bottomConnectionPoint = new ConnectionPointVM(
-                CanvasSymbolsVM,
+                CanvasSymbolsComponentVM,
                 lineStateStandardComponentVM,
                 this,
                 SideSymbol.Bottom);
