@@ -9,4 +9,5 @@ public class TextFieldSymbolModel
     public string? FontWeight { get; set; }
     public string? FontStyle { get; set; }
     public string? TextDecorations { get; set; }
+    public string? VerticalAlign { get; set; }
 }

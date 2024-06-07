@@ -126,7 +126,7 @@
                     VerticalContentAlignment="Center"
                     Background="#623ED0"
                     Content="Show password"
-                    Style="{StaticResource MaterialDesignAccentCheckBox}" />
+                    Style="{StaticResource MaterialDesignCheckBox}" />
 
                 <Button
                     Command="{Binding Signin}"

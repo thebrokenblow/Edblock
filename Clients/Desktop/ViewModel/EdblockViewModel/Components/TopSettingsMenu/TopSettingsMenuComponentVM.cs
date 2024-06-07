@@ -5,17 +5,21 @@ using EdblockViewModel.Components.TopSettingsMenu.PopupBoxMenu.Interfaces;
 namespace EdblockViewModel.Components.TopSettingsMenu;
 
 public class TopSettingsMenuComponentVM(
+    IColorSymbolComponentVM colorSymbolComponentVM,
     IFontFamilyComponentVM fontFamilyComponentVM,
     IFontSizeComponentVM fontSizeComponentVM,
     IFormatTextComponentVM formatTextComponentVM,
     ITextAlignmentComponentVM textAlignmentComponentVM,
+    IFormatVerticalAlignComponentVM formatVerticalAlignComponentVM,
     IPopupBoxMenuComponentVM popupBoxMenuComponentVM,
     ICanvasSymbolsComponentVM canvasSymbolsComponentVM) : ITopSettingsMenuComponentVM
 {
+    public IColorSymbolComponentVM ColorSymbolComponent { get; } = colorSymbolComponentVM;
     public IFontFamilyComponentVM FontFamilyComponentVM { get; } = fontFamilyComponentVM;
     public IFontSizeComponentVM FontSizeComponentVM { get; } = fontSizeComponentVM;
     public IFormatTextComponentVM FormatTextComponentVM { get; } = formatTextComponentVM;
     public ITextAlignmentComponentVM TextAlignmentComponentVM { get; } = textAlignmentComponentVM;
     public IPopupBoxMenuComponentVM PopupBoxMenuComponentVM { get; } = popupBoxMenuComponentVM;
     public ICanvasSymbolsComponentVM CanvasSymbolsComponentVM { get; } = canvasSymbolsComponentVM;
+    public IFormatVerticalAlignComponentVM FormatVerticalAlignComponentVM { get; } = formatVerticalAlignComponentVM;
 }

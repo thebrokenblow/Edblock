@@ -60,6 +60,8 @@ public partial class App : Application
         services.AddScoped<IFontSizeComponentVM, FontSizeComponentVM>();
         services.AddScoped<IFormatTextComponentVM, FormatTextComponentVM>();
         services.AddScoped<ITextAlignmentComponentVM, TextAlignmentComponentVM>();
+        services.AddScoped<IFormatVerticalAlignComponentVM, FormatVerticalAlignComponentVM>();
+        services.AddScoped<IColorSymbolComponentVM, ColorSymbolComponentVM>();
 
         services.AddTransient<ActionSymbolVM>();
         services.AddTransient<ConditionSymbolVM>();

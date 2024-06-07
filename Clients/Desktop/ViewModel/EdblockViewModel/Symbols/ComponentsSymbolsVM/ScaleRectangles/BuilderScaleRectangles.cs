@@ -1,12 +1,15 @@
 ﻿using System.Windows.Input;
 using System.Collections.Generic;
+using EdblockViewModel.Symbols.Abstractions;
 using EdblockViewModel.Components.CanvasSymbols.Interfaces;
 using EdblockViewModel.Components.TopSettingsMenu.PopupBoxMenu.Interfaces;
-using EdblockViewModel.Symbols.Abstractions;
 
 namespace EdblockViewModel.Symbols.ComponentsSymbolsVM.ScaleRectangles;
 
-public class BuilderScaleRectangles(ICanvasSymbolsComponentVM canvasSymbolsVM, IScaleAllSymbolComponentVM scaleAllSymbolVM, BlockSymbolVM blockSymbolVM)
+public class BuilderScaleRectangles(
+    ICanvasSymbolsComponentVM canvasSymbolsVM, 
+    IScaleAllSymbolComponentVM scaleAllSymbolVM, 
+    BlockSymbolVM blockSymbolVM)
 {
     private readonly CoordinateScaleRectangle coordinateScaleRectangle = new(blockSymbolVM);
     private readonly List<ScaleRectangle> scaleRectangles = [];
@@ -89,7 +92,8 @@ public class BuilderScaleRectangles(ICanvasSymbolsComponentVM canvasSymbolsVM, I
                  Cursors.SizeNS,
                  null,
                  ScaleBlockSymbol.GetHeigthTopPart,
-                 coordinateScaleRectangle.GetCoordinateMiddleTopRectangle);
+                 coordinateScaleRectangle.GetCoordinateMiddleTopRectangle,
+                 PositionScaleRectangle.MiddleTop);
 
         return middleTopRectangle;
     }
@@ -103,7 +107,8 @@ public class BuilderScaleRectangles(ICanvasSymbolsComponentVM canvasSymbolsVM, I
                 Cursors.SizeNESW,
                 ScaleBlockSymbol.GetWidthRigthPart,
                 ScaleBlockSymbol.GetHeigthTopPart,
-                coordinateScaleRectangle.GetCoordinateRightTopRectangle);
+                coordinateScaleRectangle.GetCoordinateRightTopRectangle,
+                PositionScaleRectangle.RightTop);
 
         return rightTopRectangle;
     }
@@ -117,7 +122,8 @@ public class BuilderScaleRectangles(ICanvasSymbolsComponentVM canvasSymbolsVM, I
                 Cursors.SizeWE,
                 ScaleBlockSymbol.GetWidthRigthPart,
                 null,
-                coordinateScaleRectangle.GetCoordinateRightMiddleRectangle);
+                coordinateScaleRectangle.GetCoordinateRightMiddleRectangle,
+                PositionScaleRectangle.RightMiddle);
 
         return rightMiddleRectangle;
     }
@@ -131,7 +137,8 @@ public class BuilderScaleRectangles(ICanvasSymbolsComponentVM canvasSymbolsVM, I
                 Cursors.SizeNWSE,
                 ScaleBlockSymbol.GetWidthRigthPart,
                 ScaleBlockSymbol.GetHeigthBottomPart,
-                coordinateScaleRectangle.GetCoordinateRightBottomRectangle);
+                coordinateScaleRectangle.GetCoordinateRightBottomRectangle,
+                PositionScaleRectangle.RightBottom);
 
         return rightBottomRectangle;
     }
@@ -145,7 +152,8 @@ public class BuilderScaleRectangles(ICanvasSymbolsComponentVM canvasSymbolsVM, I
                 Cursors.SizeNS,
                 null,
                 ScaleBlockSymbol.GetHeigthBottomPart,
-                coordinateScaleRectangle.GetCoordinateMiddleBottomRectangle);
+                coordinateScaleRectangle.GetCoordinateMiddleBottomRectangle,
+                PositionScaleRectangle.MiddleBottom);
 
         return middleBottomRectangle;
     }
@@ -159,7 +167,8 @@ public class BuilderScaleRectangles(ICanvasSymbolsComponentVM canvasSymbolsVM, I
                 Cursors.SizeNESW,
                 ScaleBlockSymbol.GetWidthLeftPart,
                 ScaleBlockSymbol.GetHeigthBottomPart,
-                coordinateScaleRectangle.GetCoordinateLeftBottomRectangle);
+                coordinateScaleRectangle.GetCoordinateLeftBottomRectangle,
+                PositionScaleRectangle.LeftBottom);
 
         return leftBottomRectangle;
     }
@@ -173,7 +182,8 @@ public class BuilderScaleRectangles(ICanvasSymbolsComponentVM canvasSymbolsVM, I
                 Cursors.SizeWE,
                 ScaleBlockSymbol.GetWidthLeftPart,
                 null,
-                coordinateScaleRectangle.GetCoordinateLeftMiddleRectangle);
+                coordinateScaleRectangle.GetCoordinateLeftMiddleRectangle,
+                PositionScaleRectangle.LeftMiddle);
 
         return leftMiddleRectangle;
     }
@@ -187,7 +197,8 @@ public class BuilderScaleRectangles(ICanvasSymbolsComponentVM canvasSymbolsVM, I
                 Cursors.SizeNWSE,
                 ScaleBlockSymbol.GetWidthLeftPart,
                 ScaleBlockSymbol.GetHeigthTopPart,
-                coordinateScaleRectangle.GetCoordinateLeftTopRectangle);
+                coordinateScaleRectangle.GetCoordinateLeftTopRectangle,
+                PositionScaleRectangle.LeftTop);
 
         return leftTopRectangle;
     }

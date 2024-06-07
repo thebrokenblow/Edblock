@@ -1,8 +1,6 @@
 ﻿using System.Windows.Input;
 using Prism.Commands;
 using EdblockModel.SymbolsModel;
-using System.Collections.Generic;
-using EdblockViewModel.Components.CanvasSymbols;
 using EdblockViewModel.Core;
 using EdblockViewModel.Components.CanvasSymbols.Interfaces;
 using EdblockViewModel.Symbols.Abstractions;
@@ -139,6 +137,18 @@ public class TextFieldSymbolVM : ObservableObject
             OnPropertyChanged();
         }
     }
+
+    private string? verticalAlign;
+    public string? VerticalAlign 
+    {
+        get => verticalAlign;
+        set
+        {
+            verticalAlign = value;
+            TextFieldModel.VerticalAlign = verticalAlign;
+            OnPropertyChanged();
+        }
+    } 
 
     private double leftOffset;
     public double LeftOffset

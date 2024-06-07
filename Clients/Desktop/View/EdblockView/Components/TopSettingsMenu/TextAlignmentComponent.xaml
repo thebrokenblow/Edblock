@@ -8,7 +8,10 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     d:DataContext="{d:DesignInstance Type=componentsTopSettingsMenuVM:ITextAlignmentComponentVM}"
     mc:Ignorable="d">
-    <ListBox x:Name="FormatAligns" SelectedIndex="{Binding IndexFormatAlign}">
+    <ListBox
+        x:Name="FormatAligns"
+        SelectionChanged="SelectFormatAlign"
+        SelectedIndex="{Binding IndexFormatAlign}">
         <ListBoxItem Content="{materialDesign:PackIcon Kind=FormatAlignLeft}" />
         <ListBoxItem Content="{materialDesign:PackIcon Kind=FormatAlignCenter}" />
         <ListBoxItem Content="{materialDesign:PackIcon Kind=FormatAlignRight}" />

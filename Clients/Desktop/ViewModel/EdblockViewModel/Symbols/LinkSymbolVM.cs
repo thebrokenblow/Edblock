@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM.ScaleRectangles;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM.ConnectionPoints;
-using EdblockViewModel.Pages;
 using EdblockViewModel.Symbols.Abstractions;
 using EdblockViewModel.Symbols.Attributes;
 using EdblockViewModel.Components.CanvasSymbols.Interfaces;
@@ -101,13 +100,9 @@ public class LinkSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnectionPoint,
 
         ScaleRectangles =
             builderScaleRectangles
-                        .AddMiddleTopRectangle()
                         .AddRightTopRectangle()
-                        .AddRightMiddleRectangle()
                         .AddRightBottomRectangle()
-                        .AddMiddleBottomRectangle()
                         .AddLeftBottomRectangle()
-                        .AddLeftMiddleRectangle()
                         .AddLeftTopRectangle()
                         .Build();
     }

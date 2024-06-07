@@ -13,9 +13,11 @@
         Width="30"
         Height="40"
         HorizontalAlignment="Right"
-        Content="{materialDesign:PackIcon Kind=Menu}"
         Foreground="#838383"
         StaysOpen="True">
+        <materialDesign:PopupBox.ToggleContent>
+            <materialDesign:PackIcon Height="22" Width="22" Kind="Menu" />
+        </materialDesign:PopupBox.ToggleContent>
         <StackPanel
             Width="280"
             Margin="10"

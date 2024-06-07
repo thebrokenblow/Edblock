@@ -49,6 +49,8 @@ public class ScaleRectangle : ObservableObject
     public DelegateCommand EnterCursor { get; }
     public DelegateCommand LeaveCursor { get; }
     public DelegateCommand ClickScaleRectangle { get; }
+    public PositionScaleRectangle PositionScaleRectangle { get; }
+
     private readonly ICanvasSymbolsComponentVM _canvasSymbolsVM;
     private readonly IScaleAllSymbolComponentVM _scaleAllSymbolVM;
     private readonly BlockSymbolVM _blockSymbolVM;
@@ -56,7 +58,6 @@ public class ScaleRectangle : ObservableObject
     private readonly Func<(double, double)> _getCoordinateScaleRectangle;
     private readonly Func<ScalePartBlockSymbol, CanvasSymbolsComponentVM, double>? _getWidthSymbol;
     private readonly Func<ScalePartBlockSymbol, CanvasSymbolsComponentVM, double>? _getHeightSymbol;
-
     public ScaleRectangle(
         ICanvasSymbolsComponentVM canvasSymbolsVM,
         IScaleAllSymbolComponentVM scaleAllSymbolVM,
@@ -64,7 +65,8 @@ public class ScaleRectangle : ObservableObject
         Cursor cursorScaling,
         Func<ScalePartBlockSymbol, CanvasSymbolsComponentVM, double>? getWidthSymbol,
         Func<ScalePartBlockSymbol, CanvasSymbolsComponentVM, double>? getHeightSymbol,
-        Func<(double, double)> getCoordinateScaleRectangle
+        Func<(double, double)> getCoordinateScaleRectangle,
+        PositionScaleRectangle positionScaleRectangle
         )
     {
         _blockSymbolVM = blockSymbolVM;
@@ -76,6 +78,8 @@ public class ScaleRectangle : ObservableObject
 
         _getCoordinateScaleRectangle = getCoordinateScaleRectangle;
         (XCoordinate, YCoordinate) = getCoordinateScaleRectangle.Invoke();
+
+        PositionScaleRectangle = positionScaleRectangle;
 
         EnterCursor = new(ShowScaleRectangles);
         LeaveCursor = new(HideScaleRectangles);
@@ -120,6 +124,12 @@ public class ScaleRectangle : ObservableObject
 
     private void SaveScaleRectangle()
     {
-        _canvasSymbolsVM.ScalePartBlockSymbol = new(_blockSymbolVM, _cursorScaling, _getWidthSymbol, _getHeightSymbol, _scaleAllSymbolVM, _canvasSymbolsVM.ListCanvasSymbolsComponentVM.BlockSymbolsVM);
+        _canvasSymbolsVM.ScalePartBlockSymbol = new(
+            _blockSymbolVM, 
+            _cursorScaling,
+            _getWidthSymbol, 
+            _getHeightSymbol, 
+            _scaleAllSymbolVM, 
+            _canvasSymbolsVM.ListCanvasSymbolsComponentVM.BlockSymbolsVM);
     }
 }

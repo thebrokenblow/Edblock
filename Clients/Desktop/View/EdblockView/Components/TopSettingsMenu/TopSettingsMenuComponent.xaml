@@ -10,7 +10,7 @@
     xmlns:topSettingsMenu="clr-namespace:EdblockView.Components.TopSettingsMenu"
     d:DataContext="{d:DesignInstance Type=componentsTopSettingsMenuVM:ITopSettingsMenuComponentVM}"
     d:DesignHeight="60"
-    d:DesignWidth="1300"
+    d:DesignWidth="1800"
     Background="#F5F5F5"
     mc:Ignorable="d">
     <Grid Background="#F5F5F5">
@@ -63,6 +63,10 @@
 
             <Separator />
 
+            <topSettingsMenu:ColorPickerComponent DataContext="{Binding ColorSymbolComponent}" />
+
+            <Separator />
+
             <topSettingsMenu:FontSizeComponent Margin="0,0,5,0" DataContext="{Binding FontSizeComponentVM}" />
 
             <Separator />
@@ -76,6 +80,10 @@
             <Separator />
 
             <topSettingsMenu:FormatTextComponent DataContext="{Binding FormatTextComponentVM}" />
+
+            <Separator />
+
+            <topSettingsMenu:FormatVerticalAlignComponent Margin="5,0,5,0" DataContext="{Binding FormatVerticalAlignComponentVM}" />
 
             <Separator />
 

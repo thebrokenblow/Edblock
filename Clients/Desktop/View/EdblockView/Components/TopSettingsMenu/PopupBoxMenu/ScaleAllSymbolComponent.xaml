@@ -19,9 +19,6 @@
             Content="Масштабирование всех фигур"
             Style="{StaticResource LabelSettingsMenu}" />
 
-        <CheckBox
-            HorizontalAlignment="Right"
-            IsChecked="{Binding IsScaleAllSymbol}"
-            Style="{StaticResource CheckBoxSettingsMenu}" />
+        <CheckBox HorizontalAlignment="Right" IsChecked="{Binding IsScaleAllSymbol}" />
     </Grid>
 </UserControl>
