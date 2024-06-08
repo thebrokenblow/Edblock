@@ -14,6 +14,7 @@
             Height="{Binding Height}"
             Background="Transparent">
             <Line
+                Stroke="{Binding Color}"
                 Style="{StaticResource LineParallelActionSymbolView}"
                 X1="{Binding UpperHorizontalLine.X1}"
                 X2="{Binding UpperHorizontalLine.X2}"
@@ -21,6 +22,7 @@
                 Y2="{Binding UpperHorizontalLine.Y2}" />
 
             <Line
+                Stroke="{Binding Color}"
                 Style="{StaticResource LineParallelActionSymbolView}"
                 X1="{Binding LowerHorizontalLine.X1}"
                 X2="{Binding LowerHorizontalLine.X2}"

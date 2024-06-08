@@ -22,7 +22,7 @@
             <ItemsControl ItemsSource="{Binding HorizontalLines}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate DataType="Line">
-                        <Line Style="{StaticResource LineCommentSymbolView}" />
+                        <Line Stroke="{Binding Color}" Style="{StaticResource LineCommentSymbolView}" />
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
                 <ItemsControl.ItemsPanel>
@@ -33,7 +33,7 @@
             </ItemsControl>
 
             <Line
-                Stroke="Black"
+                Stroke="{Binding Color}"
                 StrokeThickness="1.25"
                 X1="{Binding VerticalBaseline.X1}"
                 X2="{Binding VerticalBaseline.X2}"
@@ -41,7 +41,7 @@
                 Y2="{Binding VerticalBaseline.Y2}" />
 
             <Line
-                Stroke="Black"
+                Stroke="{Binding Color}"
                 StrokeThickness="1.25"
                 X1="{Binding UpperHorizontalBaseline.X1}"
                 X2="{Binding UpperHorizontalBaseline.X2}"
@@ -49,7 +49,7 @@
                 Y2="{Binding UpperHorizontalBaseline.Y2}" />
 
             <Line
-                Stroke="Black"
+                Stroke="{Binding Color}"
                 StrokeThickness="1.25"
                 X1="{Binding LowerHorizontalBaseline.X1}"
                 X2="{Binding LowerHorizontalBaseline.X2}"
@@ -60,7 +60,6 @@
             <TextBox
                 Width="Auto"
                 Height="Auto"
-                Cursor="{x:Null}"
                 Foreground="Black"
                 Style="{StaticResource TextFieldView}">
                 <i:Interaction.Behaviors>

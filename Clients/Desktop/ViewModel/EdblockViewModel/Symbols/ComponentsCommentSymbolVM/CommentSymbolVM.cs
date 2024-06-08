@@ -42,6 +42,22 @@ public class CommentSymbolVM : BlockSymbolVM, IHasTextFieldVM
         }
     }
 
+    private const string defaultColor = "Black";
+    public override string Color
+    {
+        get => color;
+        set
+        {
+            color = value;
+            foreach (var horizontalLine in HorizontalLines)
+            {
+                horizontalLine.Color = color;
+            }
+
+            OnPropertyChanged();
+        }
+    }
+
     public TextFieldSymbolVM TextFieldSymbolVM { get; init; }
 
     private const string defaultText = "Комментарий";
@@ -57,7 +73,7 @@ public class CommentSymbolVM : BlockSymbolVM, IHasTextFieldVM
         IPopupBoxMenuComponentVM popupBoxMenuComponentVM) : base(canvasSymbolsComponentVM, listCanvasSymbolsComponentVM, topSettingsMenuComponentVM, popupBoxMenuComponentVM)
     {
         HeightTextField = defaultHeight;
-
+        Color = defaultColor;
         InitHorizontalLine();
 
         double xCoordinateHorizontalLines = SetCoordinateHorizontalLines();

@@ -54,6 +54,7 @@
         <Setter Property="FontWeight" Value="{Binding TextFieldSymbolVM.FontWeight}" />
         <Setter Property="FontStyle" Value="{Binding TextFieldSymbolVM.FontStyle}" />
         <Setter Property="TextDecorations" Value="{Binding TextFieldSymbolVM.TextDecorations}" />
+        <Setter Property="VerticalContentAlignment" Value="{Binding TextFieldSymbolVM.VerticalAlign}" />
         <Setter Property="Width" Value="{Binding TextFieldSymbolVM.Width}" />
         <Setter Property="Height" Value="{Binding TextFieldSymbolVM.Height}" />
         <Setter Property="Cursor" Value="{Binding TextFieldSymbolVM.Cursor}" />

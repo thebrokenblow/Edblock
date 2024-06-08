@@ -28,6 +28,7 @@ public class ParallelActionSymbolVM : BlockSymbolVM, IHasConnectionPoint
     private const int defaultHeigth = 60;
     private const int indentBetweenSymbol = 20;
 
+    private const string defaultColor = "Black";
     public ParallelActionSymbolVM(
         ICanvasSymbolsComponentVM canvasSymbolsComponentVM,
         IListCanvasSymbolsComponentVM listCanvasSymbolsComponentVM,
@@ -41,7 +42,7 @@ public class ParallelActionSymbolVM : BlockSymbolVM, IHasConnectionPoint
 
         _maxSymbols = Math.Max(countSymbolsIncoming, countSymbolsOutgoing);
         _sumCountSymbols = countSymbolsIncoming + countSymbolsOutgoing;
-
+        Color = defaultColor;
         var parallelActionSymbolModel = (ParallelActionSymbolModel)BlockSymbolModel;
         parallelActionSymbolModel.CountSymbolsIncoming = _countSymbolsIncoming;
         parallelActionSymbolModel.CountSymbolsOutgoing = _countSymbolsOutgoing;
@@ -69,7 +70,6 @@ public class ParallelActionSymbolVM : BlockSymbolVM, IHasConnectionPoint
 
             ConnectionPointsVM.Add(bottomConnectionPoint);
         }
-
 
         SetWidth(defaultWidth);
         SetHeight(defaultHeigth);

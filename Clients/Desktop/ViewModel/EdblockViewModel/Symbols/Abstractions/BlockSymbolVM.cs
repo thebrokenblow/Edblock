@@ -15,8 +15,8 @@ public abstract class BlockSymbolVM : ObservableObject
 {
     public string Id { get; set; } = string.Empty;
 
-    private string color = string.Empty;
-    public string Color
+    protected string color = string.Empty;
+    public virtual string Color
     {
         get => color;
         set

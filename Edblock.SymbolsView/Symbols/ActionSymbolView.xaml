@@ -15,7 +15,7 @@
             Height="{Binding Height}"
             Background="{Binding Color}">
 
-            <TextBox VerticalContentAlignment="{Binding TextFieldSymbolVM.VerticalAlign}" Style="{StaticResource TextFieldView}">
+            <TextBox Style="{StaticResource TextFieldView}">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="MouseLeftButtonDown">
                         <i:InvokeCommandAction Command="{Binding TextFieldSymbolVM.MouseLeftButtonDown}" />

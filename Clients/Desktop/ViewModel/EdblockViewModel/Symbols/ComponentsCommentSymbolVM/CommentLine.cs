@@ -1,6 +1,4 @@
-﻿using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using EdblockViewModel.Core;
+﻿using EdblockViewModel.Core;
 
 namespace EdblockViewModel.Symbols.ComponentsCommentSymbolVM;
 
@@ -46,6 +44,18 @@ public class CommentLine : ObservableObject
         set
         {
             y2 = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private const string defaultColor = "Black"; 
+    private string color = defaultColor;
+    public string Color 
+    {
+        get => color;
+        set
+        {
+            color = value;
             OnPropertyChanged();
         }
     }
