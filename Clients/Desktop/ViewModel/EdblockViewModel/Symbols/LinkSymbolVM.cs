@@ -32,7 +32,7 @@ public class LinkSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnectionPoint,
         ITopSettingsMenuComponentVM topSettingsMenuComponentVM,
         IPopupBoxMenuComponentVM popupBoxMenuComponentVM) : base(canvasSymbolsComponentVM, listCanvasSymbolsComponentVM, topSettingsMenuComponentVM, popupBoxMenuComponentVM)
     {
-        TextFieldSymbolVM = new(CanvasSymbolsComponentVM, this)
+        TextFieldSymbolVM = new(base._canvasSymbolsComponentVM, this)
         {
             Text = defaultText
         };
@@ -79,7 +79,7 @@ public class LinkSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnectionPoint,
     private void AddConnectionPoints()
     {
         var builderConnectionPointsVM = new BuilderConnectionPointsVM(
-            CanvasSymbolsComponentVM,
+            _canvasSymbolsComponentVM,
             this,
             lineStateStandardComponentVM);
 
@@ -94,7 +94,7 @@ public class LinkSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnectionPoint,
     private void AddScaleRectangles()
     {
         var builderScaleRectangles = new BuilderScaleRectangles(
-            CanvasSymbolsComponentVM,
+            _canvasSymbolsComponentVM,
            scaleAllSymbolComponentVM,
            this);
 

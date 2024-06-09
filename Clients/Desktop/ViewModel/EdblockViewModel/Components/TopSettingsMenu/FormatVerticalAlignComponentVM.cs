@@ -7,7 +7,7 @@ namespace EdblockViewModel.Components.TopSettingsMenu;
 
 public class FormatVerticalAlignComponentVM(IListCanvasSymbolsComponentVM listCanvasSymbolsVM) : IFormatVerticalAlignComponentVM
 {
-    private const int defaultIndexFormatAlign = 0;
+    private const int defaultIndexFormatAlign = 2;
     public int PreviousIndexFormatVerticalAlign { get; set; } = defaultIndexFormatAlign;
 
     private int indexFormatVerticalAlign = defaultIndexFormatAlign;

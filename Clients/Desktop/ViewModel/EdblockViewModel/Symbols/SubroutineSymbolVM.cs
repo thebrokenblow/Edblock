@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM.ScaleRectangles;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM.ConnectionPoints;
-using EdblockViewModel.Pages;
 using EdblockViewModel.Symbols.Abstractions;
 using EdblockViewModel.Symbols.Attributes;
 using EdblockViewModel.Components.CanvasSymbols.Interfaces;
@@ -73,7 +72,7 @@ public class SubroutineSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnection
         ITopSettingsMenuComponentVM topSettingsMenuComponentVM,
         IPopupBoxMenuComponentVM popupBoxMenuComponentVM) : base(canvasSymbolsComponentVM, listCanvasSymbolsComponentVM, topSettingsMenuComponentVM, popupBoxMenuComponentVM)
     {
-        TextFieldSymbolVM = new(CanvasSymbolsComponentVM, this)
+        TextFieldSymbolVM = new(base._canvasSymbolsComponentVM, this)
         {
             Text = defaultText,
             LeftOffset = leftOffsetBorder
@@ -114,19 +113,19 @@ public class SubroutineSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnection
 
     public void SetCoordinatePolygonPoints()
     {
-        Points = new()
-        {
-            new Point(0, 0),
-            new Point(0, Height),
-            new Point(Width, Height),
-            new Point(Width, 0)
-        };
+        Points =
+        [
+            new(0, 0),
+            new(0, height),
+            new(width, height),
+            new(width, 0)
+        ];
     }
 
     private void AddConnectionPoints()
     {
         var builderConnectionPointsVM = new BuilderConnectionPointsVM(
-            CanvasSymbolsComponentVM,
+            _canvasSymbolsComponentVM,
             this,
             lineStateStandardComponentVM);
 
@@ -141,7 +140,7 @@ public class SubroutineSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnection
     private void AddScaleRectangles()
     {
         var builderScaleRectangles = new BuilderScaleRectangles(
-            CanvasSymbolsComponentVM,
+            _canvasSymbolsComponentVM,
            scaleAllSymbolComponentVM,
            this);
 

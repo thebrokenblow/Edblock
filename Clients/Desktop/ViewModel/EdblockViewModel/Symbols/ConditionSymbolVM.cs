@@ -1,10 +1,8 @@
-﻿using System.Windows;
-using System.Windows.Media;
+﻿using System.Windows.Media;
 using System.Collections.Generic;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM.ScaleRectangles;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM.ConnectionPoints;
-using EdblockViewModel.Pages;
 using EdblockViewModel.Symbols.Abstractions;
 using EdblockViewModel.Symbols.Attributes;
 using EdblockViewModel.Components.CanvasSymbols.Interfaces;
@@ -44,7 +42,7 @@ public class ConditionSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnectionP
         ITopSettingsMenuComponentVM topSettingsMenuComponentVM,
         IPopupBoxMenuComponentVM popupBoxMenuComponentVM) : base(canvasSymbolsComponentVM, listCanvasSymbolsComponentVM, topSettingsMenuComponentVM, popupBoxMenuComponentVM)
     {
-        TextFieldSymbolVM = new(CanvasSymbolsComponentVM, this)
+        TextFieldSymbolVM = new(base._canvasSymbolsComponentVM, this)
         {
             Text = defaultText
         };
@@ -89,19 +87,19 @@ public class ConditionSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnectionP
         var halfWidth = Width / 2;
         var halfHeight = Height / 2;
 
-        Points = new()
-        {
-            new Point(halfWidth, Height),
-            new Point(Width, halfHeight),
-            new Point(halfWidth, 0),
-            new Point(0, halfHeight)
-        };
+        Points =
+        [
+            new(halfWidth, height),
+            new(width, halfHeight),
+            new(halfWidth, 0),
+            new(0, halfHeight)
+        ];
     }
 
     private void AddConnectionPoints()
     {
         var builderConnectionPointsVM = new BuilderConnectionPointsVM(
-            CanvasSymbolsComponentVM,
+            _canvasSymbolsComponentVM,
             this,
             lineStateStandardComponentVM);
 
@@ -116,9 +114,9 @@ public class ConditionSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnectionP
     private void AddScaleRectangles()
     {
         var builderScaleRectangles = new BuilderScaleRectangles(
-            CanvasSymbolsComponentVM,
-           scaleAllSymbolComponentVM,
-           this);
+            _canvasSymbolsComponentVM,
+            scaleAllSymbolComponentVM,
+            this);
 
         ScaleRectangles =
             builderScaleRectangles

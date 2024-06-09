@@ -1,13 +1,11 @@
-﻿using System.Windows;
-using System.Windows.Media;
+﻿using System.Windows.Media;
 using System.Collections.Generic;
 using EdblockModel.EnumsModel;
+using EdblockViewModel.Symbols.Attributes;
+using EdblockViewModel.Symbols.Abstractions;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM.ScaleRectangles;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM.ConnectionPoints;
-using EdblockViewModel.Pages;
-using EdblockViewModel.Symbols.Abstractions;
-using EdblockViewModel.Symbols.Attributes;
 using EdblockViewModel.Components.CanvasSymbols.Interfaces;
 using EdblockViewModel.Components.TopSettingsMenu.Interfaces;
 using EdblockViewModel.Components.TopSettingsMenu.PopupBoxMenu.Interfaces;
@@ -50,7 +48,7 @@ public class VerticalConditionSymbolVM : SwitchCaseSymbolVM, IHasTextFieldVM, IH
         ITopSettingsMenuComponentVM topSettingsMenuComponentVM,
         IPopupBoxMenuComponentVM popupBoxMenuComponentVM, int countLines) : base(canvasSymbolsComponentVM, listCanvasSymbolsComponentVM, topSettingsMenuComponentVM, popupBoxMenuComponentVM, countLines)
     {
-        TextFieldSymbolVM = new(CanvasSymbolsComponentVM, this)
+        TextFieldSymbolVM = new(base._canvasSymbolsComponentVM, this)
         {
             Text = defaultText
         };
@@ -92,6 +90,8 @@ public class VerticalConditionSymbolVM : SwitchCaseSymbolVM, IHasTextFieldVM, IH
     {
         Height = height;
 
+        var halfHeight = height / 2;
+
         TextFieldSymbolVM.Height = height / 2;
         TextFieldSymbolVM.TopOffset = height / 4;
 
@@ -104,7 +104,7 @@ public class VerticalConditionSymbolVM : SwitchCaseSymbolVM, IHasTextFieldVM, IH
 
         for (int i = 1; i <= ConnectionPointsSwitchCaseVM.Count ; i++)
         {
-            double heightLine = height / 2 + (height + indentBetweenSymbol) * i;
+            double heightLine = halfHeight + (height + indentBetweenSymbol) * i;
 
             ConnectionPointsSwitchCaseVM[i - 1].YCoordinate = heightLine;
             ConnectionPointsSwitchCaseVM[i - 1].YCoordinateLineDraw = heightLine;
@@ -113,42 +113,48 @@ public class VerticalConditionSymbolVM : SwitchCaseSymbolVM, IHasTextFieldVM, IH
 
     private void SetCoordinateVerticalLineSwitchCase()
     {
-        VerticalLineSwitchCase.X1 = Width / 2;
-        VerticalLineSwitchCase.Y1 = Height;
-        VerticalLineSwitchCase.X2 = Width / 2;
-        VerticalLineSwitchCase.Y2 = Height / 2 + (Height + indentBetweenSymbol) * _countLines;
+        var halfWidth = width / 2;
+        var halfHeight = height / 2;
+
+        VerticalLineSwitchCase.X1 = halfWidth;
+        VerticalLineSwitchCase.Y1 = height;
+        VerticalLineSwitchCase.X2 = halfWidth;
+        VerticalLineSwitchCase.Y2 = halfHeight + (height + indentBetweenSymbol) * _countLines;
     }
 
     private void SetCoordinateLinesCondition()
     {
         for (int i = 1; i <= _countLines; i++)
         {
-            double heightLine = Height / 2 + (Height + indentBetweenSymbol) * i;
+            double heightLine = height / 2 + (height + indentBetweenSymbol) * i;
 
-            LinesSwitchCase[i - 1].X1 = Width / 2;
+            LinesSwitchCase[i - 1].X1 = width / 2;
             LinesSwitchCase[i - 1].Y1 = heightLine;
-            LinesSwitchCase[i - 1].X2 = Width;
+            LinesSwitchCase[i - 1].X2 = width;
             LinesSwitchCase[i - 1].Y2 = heightLine;
         }
     }
 
     private void SetCoordinatePolygonPoints()
     {
-        Points = new()
-        {
-            new Point(Width / 2, Height),
-            new Point(Width, Height / 2),
-            new Point(Width / 2, 0),
-            new Point(0, Height / 2)
-        };
+        var halfWidth = width / 2;
+        var halfHeight = height / 2;
+
+        Points =
+        [
+            new(halfWidth, height),
+            new(width, halfHeight),
+            new(halfWidth, 0),
+            new(0, halfHeight)
+        ];
     }
 
     private void AddScaleRectangles()
     {
         var builderScaleRectangles = new BuilderScaleRectangles(
-            CanvasSymbolsComponentVM,
-           scaleAllSymbolComponentVM,
-           this);
+            _canvasSymbolsComponentVM,
+            scaleAllSymbolComponentVM,
+            this);
 
         ScaleRectangles =
             builderScaleRectangles
@@ -166,7 +172,7 @@ public class VerticalConditionSymbolVM : SwitchCaseSymbolVM, IHasTextFieldVM, IH
     private void AddConnectionPoints()
     {
         var builderConnectionPointsVM = new BuilderConnectionPointsVM(
-            CanvasSymbolsComponentVM,
+            _canvasSymbolsComponentVM,
             this,
             lineStateStandardComponentVM);
 
@@ -181,17 +187,14 @@ public class VerticalConditionSymbolVM : SwitchCaseSymbolVM, IHasTextFieldVM, IH
     {
         LinesSwitchCase = new(countLines);
 
+        var factoryConnectionPoint = new FactoryConnectionPoint(_canvasSymbolsComponentVM, lineStateStandardComponentVM, this);
+
         for (int i = 0; i < countLines; i++)
         {
             LinesSwitchCase.Add(new());
 
-            var bottomConnectionPoint = new ConnectionPointVM(
-                CanvasSymbolsComponentVM,
-                lineStateStandardComponentVM,
-                this,
-                SideSymbol.Right);
-
-            ConnectionPointsSwitchCaseVM.Add(bottomConnectionPoint);
+            var rightConnectionPoint = factoryConnectionPoint.Create(SideSymbol.Right);
+            ConnectionPointsSwitchCaseVM.Add(rightConnectionPoint);
         }
     }
 }

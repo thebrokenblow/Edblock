@@ -12,9 +12,7 @@ public abstract class SwitchCaseSymbolVM : BlockSymbolVM
 {
     public List<ConnectionPointVM> ConnectionPointsSwitchCaseVM { get; init; }
     protected readonly int _countLines;
-
-
-    protected SwitchCaseSymbolVM(
+    public SwitchCaseSymbolVM(
         ICanvasSymbolsComponentVM canvasSymbolsComponentVM,
         IListCanvasSymbolsComponentVM listCanvasSymbolsComponentVM,
         ITopSettingsMenuComponentVM topSettingsMenuComponentVM,

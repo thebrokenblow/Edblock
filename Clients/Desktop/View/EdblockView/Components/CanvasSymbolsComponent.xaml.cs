@@ -1,8 +1,8 @@
 ﻿using System.Windows;
 using System.Windows.Input;
 using System.Windows.Controls;
-using EdblockViewModel.Components.CanvasSymbols;
 using EdblockViewModel.Symbols.Abstractions;
+using EdblockViewModel.Components.CanvasSymbols;
 
 namespace EdblockView.Components;
 
@@ -13,7 +13,7 @@ public partial class CanvasSymbolsComponent : UserControl
 {
     public static Canvas? Canvas { get; set; }
 
-    private CanvasSymbolsComponentVM? canvasSymbolsVM;
+    private CanvasSymbolsComponentVM? canvasSymbolsComponentVM;
 
     public CanvasSymbolsComponent() =>
         InitializeComponent();
@@ -32,16 +32,14 @@ public partial class CanvasSymbolsComponent : UserControl
 
     private void LeaveCursor(object sender, MouseEventArgs e)
     {
-        canvasSymbolsVM ??= (CanvasSymbolsComponentVM)DataContext;
-
         var cursorPosition = e.GetPosition(this);
-        canvasSymbolsVM.ScalingCanvasSymbolsVM.SubscribeСanvasScalingEvents(cursorPosition);
+        canvasSymbolsComponentVM ??= (CanvasSymbolsComponentVM)DataContext;
+        canvasSymbolsComponentVM.ScalingCanvasSymbolsVM.SubscribeСanvasScalingEvents(cursorPosition);
     }
 
     private void EnterCursor(object sender, MouseEventArgs e)
     {
-        canvasSymbolsVM ??= (CanvasSymbolsComponentVM)DataContext;
-
-        canvasSymbolsVM.ScalingCanvasSymbolsVM.UnsubscribeСanvasScalingEvents();
+        canvasSymbolsComponentVM ??= (CanvasSymbolsComponentVM)DataContext;
+        canvasSymbolsComponentVM.ScalingCanvasSymbolsVM.UnsubscribeСanvasScalingEvents();
     }
 }

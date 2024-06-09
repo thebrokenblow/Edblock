@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
+using EdblockViewModel.Symbols.Abstractions;
 using EdblockViewModel.Components.CanvasSymbols.Interfaces;
 using EdblockViewModel.Components.TopSettingsMenu.Interfaces;
-using EdblockViewModel.Symbols.Abstractions;
 
 namespace EdblockViewModel.Components.TopSettingsMenu;
 
@@ -9,23 +9,26 @@ public class FontFamilyComponentVM(IListCanvasSymbolsComponentVM listCanvasSymbo
 {
     public List<string> FontFamilys { get; } =
     [
-        "Times New Roman"
+        defaultFontFamily,
+        "Times New Roman",
     ];
 
-    public string? fontFamily;
-    public string? FontFamily
+    private const string defaultFontFamily = "Segoe UI";
+
+    public string? selectedFontFamily = defaultFontFamily;
+    public string? SelectedFontFamily
     {
-        get => fontFamily;
+        get => selectedFontFamily;
         set
         {
-            fontFamily = value;
+            selectedFontFamily = value;
             SetFontFamily();
         }
     }
 
     public void SetFontFamily(IHasTextFieldVM selectedSymbolHasTextField)
     {
-        selectedSymbolHasTextField.TextFieldSymbolVM.FontFamily = fontFamily;
+        selectedSymbolHasTextField.TextFieldSymbolVM.FontFamily = selectedFontFamily;
     }
 
     private void SetFontFamily()

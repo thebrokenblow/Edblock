@@ -6,9 +6,9 @@ using EdblockViewModel.Symbols.Abstractions;
 
 namespace EdblockViewModel.Symbols.ComponentsSymbolsVM.ConnectionPoints;
 
-public class BuilderConnectionPointsVM(ICanvasSymbolsComponentVM canvasSymbolsVM, BlockSymbolVM blockSymbolVM, ILineStateStandardComponentVM checkBoxLineGostVM)
+public class BuilderConnectionPointsVM(ICanvasSymbolsComponentVM canvasSymbolsVM, BlockSymbolVM blockSymbolVM, ILineStateStandardComponentVM lineStateStandardComponentVM)
 {
-    private readonly FactoryConnectionPoint _factoryConnectionPoint = new(canvasSymbolsVM, blockSymbolVM, checkBoxLineGostVM);
+    private readonly FactoryConnectionPoint _factoryConnectionPoint = new(canvasSymbolsVM, lineStateStandardComponentVM, blockSymbolVM);
     private readonly List<ConnectionPointVM> connectionPointsVM = [];
 
     public BuilderConnectionPointsVM AddTopConnectionPoint()

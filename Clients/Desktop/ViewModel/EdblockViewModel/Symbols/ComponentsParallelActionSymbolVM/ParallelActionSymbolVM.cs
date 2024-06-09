@@ -43,31 +43,27 @@ public class ParallelActionSymbolVM : BlockSymbolVM, IHasConnectionPoint
         _maxSymbols = Math.Max(countSymbolsIncoming, countSymbolsOutgoing);
         _sumCountSymbols = countSymbolsIncoming + countSymbolsOutgoing;
         Color = defaultColor;
+
         var parallelActionSymbolModel = (ParallelActionSymbolModel)BlockSymbolModel;
         parallelActionSymbolModel.CountSymbolsIncoming = _countSymbolsIncoming;
         parallelActionSymbolModel.CountSymbolsOutgoing = _countSymbolsOutgoing;
 
         ConnectionPointsVM = new(countSymbolsIncoming + countSymbolsOutgoing);
 
+        var factoryConnectionPoint = new FactoryConnectionPoint(
+            canvasSymbolsComponentVM, 
+            lineStateStandardComponentVM, 
+            this);
+
         for (int i = 0; i < countSymbolsIncoming; i++)
         {
-            var bottomConnectionPoint = new ConnectionPointVM(
-                CanvasSymbolsComponentVM,
-                lineStateStandardComponentVM,
-                this, 
-                SideSymbol.Top);
-
+            var bottomConnectionPoint = factoryConnectionPoint.Create(SideSymbol.Top);
             ConnectionPointsVM.Add(bottomConnectionPoint);
         }
 
         for (int i = 0; i < countSymbolsOutgoing; i++)
         {
-            var bottomConnectionPoint = new ConnectionPointVM(
-                CanvasSymbolsComponentVM,
-                lineStateStandardComponentVM,
-                this,  
-                SideSymbol.Bottom);
-
+            var bottomConnectionPoint = factoryConnectionPoint.Create(SideSymbol.Bottom);
             ConnectionPointsVM.Add(bottomConnectionPoint);
         }
 
@@ -117,12 +113,12 @@ public class ParallelActionSymbolVM : BlockSymbolVM, IHasConnectionPoint
         }
     }
 
-    private void SetYCoordinateCP(int begin, int end, double Symbols)
+    private void SetYCoordinateCP(int begin, int end, double yCoordinate)
     {
         for (int i = begin; i < end; i++)
         {
-            ConnectionPointsVM[i].YCoordinate = Symbols;
-            ConnectionPointsVM[i].YCoordinateLineDraw = Symbols;
+            ConnectionPointsVM[i].YCoordinate = yCoordinate;
+            ConnectionPointsVM[i].YCoordinateLineDraw = yCoordinate;
         }
     }
 
@@ -171,10 +167,12 @@ public class ParallelActionSymbolVM : BlockSymbolVM, IHasConnectionPoint
     //Установка x координат для Точек соединения для линии с минимальным кол-во точек соединений
     private void SetXCoordinateCPNotLeadingLine(int begin, int end, double widthSymbols)
     {
+        var halfWidth = Width / 2;
+
         if (end - begin == 1)
         {
-            ConnectionPointsVM[begin].XCoordinate = Width / 2;
-            ConnectionPointsVM[begin].XCoordinateLineDraw = Width / 2;
+            ConnectionPointsVM[begin].XCoordinate = halfWidth;
+            ConnectionPointsVM[begin].XCoordinateLineDraw = halfWidth;
         }
         else
         {

@@ -19,7 +19,7 @@
             HorizontalAlignment="Right"
             BorderBrush="Black"
             ItemsSource="{Binding FontFamilys}"
-            SelectedItem="{Binding FontFamily}"
+            SelectedItem="{Binding SelectedFontFamily}"
             Style="{StaticResource ComboBoxTopSettingsPanel}" />
     </Grid>
 </UserControl>

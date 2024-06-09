@@ -4,5 +4,5 @@ namespace EdblockViewModel.Symbols.Abstractions;
 
 public interface IHasTextFieldVM
 {
-    public TextFieldSymbolVM TextFieldSymbolVM { get; init; }
+    public TextFieldSymbolVM TextFieldSymbolVM { get; }
 }

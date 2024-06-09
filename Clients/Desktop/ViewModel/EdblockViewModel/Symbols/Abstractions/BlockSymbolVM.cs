@@ -1,19 +1,19 @@
 ﻿using System;
 using System.Windows.Input;
-using Prism.Commands;
 using EdblockModel.SymbolsModel;
+using EdblockViewModel.Core;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM.ScaleRectangles;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM.ConnectionPoints;
 using EdblockViewModel.Components.CanvasSymbols.Interfaces;
 using EdblockViewModel.Components.TopSettingsMenu.Interfaces;
-using EdblockViewModel.Core;
 using EdblockViewModel.Components.TopSettingsMenu.PopupBoxMenu.Interfaces;
+using Prism.Commands;
 
 namespace EdblockViewModel.Symbols.Abstractions;
 
 public abstract class BlockSymbolVM : ObservableObject
 {
-    public string Id { get; set; } = string.Empty;
+    public string Id { get; set; } = Guid.NewGuid().ToString();
 
     protected string color = string.Empty;
     public virtual string Color
@@ -28,7 +28,7 @@ public abstract class BlockSymbolVM : ObservableObject
         }
     }
 
-    private double width;
+    protected double width;
     public double Width
     {
         get => width;
@@ -41,14 +41,14 @@ public abstract class BlockSymbolVM : ObservableObject
         }
     }
 
-    private double heigth;
+    protected double height;
     public double Height
     {
-        get => heigth;
+        get => height;
         set
         {
-            heigth = value;
-            BlockSymbolModel.Height = heigth;
+            height = value;
+            BlockSymbolModel.Height = height;
 
             OnPropertyChanged();
         }
@@ -97,13 +97,17 @@ public abstract class BlockSymbolVM : ObservableObject
     public DelegateCommand MouseLeave { get; set; }
     public DelegateCommand MouseLeftButtonDown { get; set; }
     public BlockSymbolModel BlockSymbolModel { get; } = null!;
-    public ICanvasSymbolsComponentVM CanvasSymbolsComponentVM { get; }
 
     protected readonly IScaleAllSymbolComponentVM scaleAllSymbolComponentVM;
     protected readonly ILineStateStandardComponentVM lineStateStandardComponentVM;
+    protected readonly ICanvasSymbolsComponentVM _canvasSymbolsComponentVM;
 
     private readonly IListCanvasSymbolsComponentVM _listCanvasSymbolsComponentVM;
     private readonly ITopSettingsMenuComponentVM _topSettingsMenuComponentVM;
+
+    private readonly IHasConnectionPoint? _symbolHasConnectionPoint;
+    private readonly IHasScaleRectangles? _symbolHasScaleRectangles;
+    private readonly IHasTextFieldVM? _symbolHasTextField;
 
     public BlockSymbolVM(
         ICanvasSymbolsComponentVM canvasSymbolsComponentVM, 
@@ -111,15 +115,22 @@ public abstract class BlockSymbolVM : ObservableObject
         ITopSettingsMenuComponentVM topSettingsMenuComponentVM, 
         IPopupBoxMenuComponentVM popupBoxMenuComponentVM)
     {
-        CanvasSymbolsComponentVM = canvasSymbolsComponentVM;
-
         lineStateStandardComponentVM = popupBoxMenuComponentVM.LineStateStandardComponentVM;
         scaleAllSymbolComponentVM = popupBoxMenuComponentVM.ScaleAllSymbolComponentVM;
 
+        _canvasSymbolsComponentVM = canvasSymbolsComponentVM;
         _topSettingsMenuComponentVM = topSettingsMenuComponentVM;
         _listCanvasSymbolsComponentVM = listCanvasSymbolsComponentVM;
 
-        Id = Guid.NewGuid().ToString();
+        if (this is IHasConnectionPoint symbolHasConnectionPoint)
+        {
+            _symbolHasConnectionPoint = symbolHasConnectionPoint;
+        }
+
+        if (this is IHasScaleRectangles symbolHasScaleRectangles)
+        {
+            _symbolHasScaleRectangles = symbolHasScaleRectangles;
+        }
 
         BlockSymbolModel = CreateBlockSymbolModel();
 
@@ -163,10 +174,10 @@ public abstract class BlockSymbolVM : ObservableObject
 
     public void ShowAuxiliaryElements()
     {
-        CanvasSymbolsComponentVM.Cursor = Cursors.SizeAll;
+        _canvasSymbolsComponentVM.Cursor = Cursors.SizeAll;
 
         var movableSymbol = _listCanvasSymbolsComponentVM.MovableBlockSymbol;
-        var scalePartBlockSymbolVM = CanvasSymbolsComponentVM.ScalePartBlockSymbol;
+        var scalePartBlockSymbolVM = _canvasSymbolsComponentVM.ScalePartBlockSymbol;
 
         if (movableSymbol is not null || scalePartBlockSymbolVM is not null)
         {
@@ -187,39 +198,39 @@ public abstract class BlockSymbolVM : ObservableObject
         SetDisplayScaleRectangles(false);
         SetDisplayConnectionPoints(false);
 
-        CanvasSymbolsComponentVM.Cursor = Cursors.Arrow;
+        _canvasSymbolsComponentVM.Cursor = Cursors.Arrow;
     }
 
     private void SetDisplayConnectionPoints(bool status)
     {
-        if (this is IHasConnectionPoint symbolHasConnectionPoint)
+        if (_symbolHasConnectionPoint is null)
         {
-            var connectionPoints = symbolHasConnectionPoint.ConnectionPointsVM;
-
-            ConnectionPointVM.SetDisplayConnectionPoints(connectionPoints, status);
+            return;
         }
+
+        ConnectionPointVM.SetDisplayConnectionPoints(_symbolHasConnectionPoint.ConnectionPointsVM, status);
     }
 
     private void SetDisplayScaleRectangles(bool status)
     {
-        if (this is IHasScaleRectangles symbolHasScaleRectangles)
+        if (_symbolHasScaleRectangles is null)
         {
-            var scaleRectangles = symbolHasScaleRectangles.ScaleRectangles;
-
-            ScaleRectangle.SetStateDisplay(scaleRectangles, status);
+            return;
         }
+
+        ScaleRectangle.SetStateDisplay(_symbolHasScaleRectangles.ScaleRectangles, status);
     }
 
     protected void ChangeCoordinateScaleRectangle()
     {
-        if (this is IHasScaleRectangles symbolHasScaleRectangles)
+        if (_symbolHasScaleRectangles is null)
         {
-            var scaleRectangles = symbolHasScaleRectangles.ScaleRectangles;
+            return;
+        }
 
-            foreach (var scaleRectangle in scaleRectangles)
-            {
-                scaleRectangle.ChangeCoordination();
-            }
+        foreach (var scaleRectangle in _symbolHasScaleRectangles.ScaleRectangles)
+        {
+            scaleRectangle.ChangeCoordination();
         }
     }
 
@@ -228,7 +239,7 @@ public abstract class BlockSymbolVM : ObservableObject
         SetDisplayScaleRectangles(false);
         SetDisplayConnectionPoints(false);
 
-        CanvasSymbolsComponentVM.Cursor = Cursors.SizeAll;
+        _canvasSymbolsComponentVM.Cursor = Cursors.SizeAll;
 
         _listCanvasSymbolsComponentVM.MovableBlockSymbol = this;
     }
@@ -237,16 +248,18 @@ public abstract class BlockSymbolVM : ObservableObject
     {
         IsSelected = true;
 
-        if (this is IHasTextFieldVM selectedSymbolHasTextField)
+        if (_symbolHasTextField is null)
         {
-            _listCanvasSymbolsComponentVM.SelectedSymbolsHasTextField.Add(selectedSymbolHasTextField);
-
-            _topSettingsMenuComponentVM.FontSizeComponentVM.SetFontSize(selectedSymbolHasTextField);
-            _topSettingsMenuComponentVM.FontFamilyComponentVM.SetFontFamily(selectedSymbolHasTextField);
-            _topSettingsMenuComponentVM.FormatTextComponentVM.SetFontText(selectedSymbolHasTextField);
-            _topSettingsMenuComponentVM.TextAlignmentComponentVM.SetFormatAlignment(selectedSymbolHasTextField);
+            return;
         }
 
+        _topSettingsMenuComponentVM.FontSizeComponentVM.SetFontSize(_symbolHasTextField);
+        _topSettingsMenuComponentVM.FontFamilyComponentVM.SetFontFamily(_symbolHasTextField);
+        _topSettingsMenuComponentVM.FormatTextComponentVM.SetFontText(_symbolHasTextField);
+        _topSettingsMenuComponentVM.TextAlignmentComponentVM.SetFormatAlignment(_symbolHasTextField);
+        _topSettingsMenuComponentVM.FormatVerticalAlignComponentVM.SetFormatVerticalAlignment(_symbolHasTextField);
+
         _listCanvasSymbolsComponentVM.SelectedBlockSymbols.Add(this);
+        _listCanvasSymbolsComponentVM.SelectedSymbolsHasTextField.Add(_symbolHasTextField);
     }
 }

@@ -54,7 +54,7 @@ public class HorizontalConditionSymbolVM : SwitchCaseSymbolVM, IHasTextFieldVM, 
         IPopupBoxMenuComponentVM popupBoxMenuComponentVM, 
         int countLines) : base(canvasSymbolsComponentVM, listCanvasSymbolsComponentVM, topSettingsMenuComponentVM, popupBoxMenuComponentVM, countLines)
     {
-        TextFieldSymbolVM = new(CanvasSymbolsComponentVM, this)
+        TextFieldSymbolVM = new(base._canvasSymbolsComponentVM, this)
         {
             Text = defaultText
         };
@@ -124,17 +124,17 @@ public class HorizontalConditionSymbolVM : SwitchCaseSymbolVM, IHasTextFieldVM, 
     }
 
     private double CalculateDisplacementCoefficient() =>
-        (Width + indentBetweenSymbol) * (_countLines - 1) / 2;
+        (width + indentBetweenSymbol) * (_countLines - 1) / 2;
 
     public void SetCoordinatePolygonPoints()
     {
-        double halfWidth = Width / 2;
-        double halfHeight = Height / 2;
+        double halfWidth = width / 2;
+        double halfHeight = height / 2;
 
         Points =
         [
-            new(halfWidth, Height),
-            new(Width, halfHeight),
+            new(halfWidth, height),
+            new(width, halfHeight),
             new(halfWidth, 0),
             new(0, halfHeight)
         ];
@@ -142,21 +142,22 @@ public class HorizontalConditionSymbolVM : SwitchCaseSymbolVM, IHasTextFieldVM, 
 
     private void SetCoordinateVerticalLine()
     {
-        double x = Width / 2;
+        double halfWidth = width / 2;
 
-        VerticalLineSwitchCase.X1 = x;
-        VerticalLineSwitchCase.Y1 = Height;
-        VerticalLineSwitchCase.X2 = x;
-        VerticalLineSwitchCase.Y2 = Height + baselineLength;
+        VerticalLineSwitchCase.X1 = halfWidth;
+        VerticalLineSwitchCase.Y1 = height;
+        VerticalLineSwitchCase.X2 = halfWidth;
+        VerticalLineSwitchCase.Y2 = height + baselineLength;
     }
 
     private void SetCoordinateHorizontalLine()
     {
+        double halfWidth = width / 2;
         double y = Height + baselineLength;
 
-        HorizontalLineSwitchCase.X1 = -displacementCoefficient + Width / 2;
+        HorizontalLineSwitchCase.X1 = -displacementCoefficient + halfWidth;
         HorizontalLineSwitchCase.Y1 = y;
-        HorizontalLineSwitchCase.X2 = displacementCoefficient + Width / 2;
+        HorizontalLineSwitchCase.X2 = displacementCoefficient + halfWidth;
         HorizontalLineSwitchCase.Y2 = y;
     }
 
@@ -164,10 +165,11 @@ public class HorizontalConditionSymbolVM : SwitchCaseSymbolVM, IHasTextFieldVM, 
     {
         double y1 = Height + baselineLength;
         double y2 = y1 + conditionLineLength;
+        double halfWidth = width / 2;
 
         for (int i = 0; i < _countLines; i++)
         {
-            double xCoordinateLine = -displacementCoefficient + Width / 2 + (Width + indentBetweenSymbol) * i;
+            double xCoordinateLine = -displacementCoefficient + halfWidth + (width + indentBetweenSymbol) * i;
 
             LinesSwitchCase[i].X1 = xCoordinateLine;
             LinesSwitchCase[i].Y1 = y1;
@@ -179,9 +181,9 @@ public class HorizontalConditionSymbolVM : SwitchCaseSymbolVM, IHasTextFieldVM, 
     private void AddScaleRectangles()
     {
         var builderScaleRectangles = new BuilderScaleRectangles(
-            CanvasSymbolsComponentVM,
-           scaleAllSymbolComponentVM,
-           this);
+            _canvasSymbolsComponentVM,
+            scaleAllSymbolComponentVM,
+            this);
 
         ScaleRectangles =
             builderScaleRectangles
@@ -199,7 +201,7 @@ public class HorizontalConditionSymbolVM : SwitchCaseSymbolVM, IHasTextFieldVM, 
     private void AddConnectionPoints()
     {
         var builderConnectionPointsVM = new BuilderConnectionPointsVM(
-            CanvasSymbolsComponentVM,
+            _canvasSymbolsComponentVM,
             this,
             lineStateStandardComponentVM);
 
@@ -219,7 +221,7 @@ public class HorizontalConditionSymbolVM : SwitchCaseSymbolVM, IHasTextFieldVM, 
             LinesSwitchCase.Add(new());
 
             var bottomConnectionPoint = new ConnectionPointVM(
-                CanvasSymbolsComponentVM,
+                _canvasSymbolsComponentVM,
                 lineStateStandardComponentVM,
                 this,
                 SideSymbol.Bottom);

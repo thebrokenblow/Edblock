@@ -1,10 +1,8 @@
-﻿using System.Windows;
-using System.Windows.Media;
+﻿using System.Windows.Media;
 using System.Collections.Generic;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM.ScaleRectangles;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM.ConnectionPoints;
-using EdblockViewModel.Pages;
 using EdblockViewModel.Symbols.Abstractions;
 using EdblockViewModel.Symbols.Attributes;
 using EdblockViewModel.Components.CanvasSymbols.Interfaces;
@@ -47,7 +45,7 @@ public class CycleWhileBeginSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConne
         ITopSettingsMenuComponentVM topSettingsMenuComponentVM,
         IPopupBoxMenuComponentVM popupBoxMenuComponentVM) : base(canvasSymbolsComponentVM, listCanvasSymbolsComponentVM, topSettingsMenuComponentVM, popupBoxMenuComponentVM)
     {
-        TextFieldSymbolVM = new(CanvasSymbolsComponentVM, this)
+        TextFieldSymbolVM = new(base._canvasSymbolsComponentVM, this)
         {
             Text = defaultText,
             LeftOffset = sideProjection
@@ -86,21 +84,21 @@ public class CycleWhileBeginSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConne
 
     public void SetCoordinatePolygonPoints()
     {
-        Points = new()
-        {
-            new Point(0, Height),
-            new Point(0, sideProjection),
-            new Point(sideProjection, 0),
-            new Point(Width - sideProjection, 0),
-            new Point(Width, sideProjection),
-            new Point(Width, Height),
-        };
+        Points =
+        [
+            new(0, height),
+            new(0, sideProjection),
+            new(sideProjection, 0),
+            new(width - sideProjection, 0),
+            new(width, sideProjection),
+            new(width, height),
+        ];
     }
 
     private void AddConnectionPoints()
     {
         var builderConnectionPointsVM = new BuilderConnectionPointsVM(
-            CanvasSymbolsComponentVM,
+            _canvasSymbolsComponentVM,
             this,
             lineStateStandardComponentVM);
 
@@ -115,9 +113,9 @@ public class CycleWhileBeginSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConne
     private void AddScaleRectangles()
     {
         var builderScaleRectangles = new BuilderScaleRectangles(
-            CanvasSymbolsComponentVM,
-           scaleAllSymbolComponentVM,
-           this);
+            _canvasSymbolsComponentVM,
+            scaleAllSymbolComponentVM,
+            this);
 
         ScaleRectangles =
             builderScaleRectangles

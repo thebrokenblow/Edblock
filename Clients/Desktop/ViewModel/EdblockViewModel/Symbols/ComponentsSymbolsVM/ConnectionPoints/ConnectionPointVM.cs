@@ -80,7 +80,11 @@ public class ConnectionPointVM : ObservableObject
     private readonly ICanvasSymbolsComponentVM _canvasSymbolsVM;
     private readonly ILineStateStandardComponentVM _lineStateStandardComponentVM;
 
-    public ConnectionPointVM(ICanvasSymbolsComponentVM canvasSymbolsVM, ILineStateStandardComponentVM lineStateStandardComponentVM, BlockSymbolVM blockSymbolVM, SideSymbol position)
+    public ConnectionPointVM(
+        ICanvasSymbolsComponentVM canvasSymbolsVM, 
+        ILineStateStandardComponentVM lineStateStandardComponentVM, 
+        BlockSymbolVM blockSymbolVM, 
+        SideSymbol position)
     {
         _canvasSymbolsVM = canvasSymbolsVM;
         _lineStateStandardComponentVM = lineStateStandardComponentVM;

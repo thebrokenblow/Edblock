@@ -12,7 +12,6 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:switchCaseConditionSymbolsVM="clr-namespace:EdblockViewModel.Symbols.SwitchCaseConditionSymbolsVM;assembly=EdblockViewModel"
     xmlns:symbolsView="clr-namespace:Edblock.SymbolsView.Symbols;assembly=Edblock.SymbolsView"
-    d:DataContext="{d:DesignInstance Type=canvassymbols:ICanvasSymbolsComponentVM}"
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">

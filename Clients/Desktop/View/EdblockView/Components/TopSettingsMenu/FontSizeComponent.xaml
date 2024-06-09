@@ -21,7 +21,7 @@
             materialDesign:ComboBoxAssist.MaxLength="2"
             BorderBrush="Black"
             ItemsSource="{Binding FontSizes}"
-            SelectedItem="{Binding FontSize}"
+            SelectedItem="{Binding SelectedFontSize}"
             Style="{StaticResource ComboBoxTopSettingsPanel}" />
     </Grid>
 </UserControl>

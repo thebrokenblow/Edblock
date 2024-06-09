@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
+using EdblockViewModel.Symbols.Abstractions;
 using EdblockViewModel.Components.CanvasSymbols.Interfaces;
 using EdblockViewModel.Components.TopSettingsMenu.Interfaces;
-using EdblockViewModel.Symbols.Abstractions;
 
 namespace EdblockViewModel.Components.TopSettingsMenu;
 
@@ -9,13 +9,14 @@ public class FontSizeComponentVM : IFontSizeComponentVM
 {
     public List<double> FontSizes { get; } = [];
 
-    public double fontSize;
-    public double FontSize
+    private const int defaultFontSize = 12;
+    public double selectedFontSize = defaultFontSize;
+    public double SelectedFontSize
     {
-        get => fontSize;
+        get => selectedFontSize;
         set
         {
-            fontSize = value;
+            selectedFontSize = value;
             SetFontSize();
         }
     }
@@ -23,10 +24,10 @@ public class FontSizeComponentVM : IFontSizeComponentVM
     private const int minFontSize = 2;
     private const int maxFontSize = 50;
 
-    private readonly IListCanvasSymbolsComponentVM _listCanvasSymbolsVM;
+    private readonly List<IHasTextFieldVM> selectedSymbolsHasTextField;
     public FontSizeComponentVM(IListCanvasSymbolsComponentVM listCanvasSymbolsVM)
     {
-        _listCanvasSymbolsVM = listCanvasSymbolsVM;
+        selectedSymbolsHasTextField = listCanvasSymbolsVM.SelectedSymbolsHasTextField;
 
         for (int fontSize = minFontSize; fontSize <= maxFontSize; fontSize++)
         {
@@ -36,12 +37,12 @@ public class FontSizeComponentVM : IFontSizeComponentVM
 
     public void SetFontSize(IHasTextFieldVM selectedSymbolHasTextField)
     {
-        selectedSymbolHasTextField.TextFieldSymbolVM.FontSize = fontSize;
+        selectedSymbolHasTextField.TextFieldSymbolVM.FontSize = selectedFontSize;
     }
 
     private void SetFontSize()
     {
-        foreach (var selectedSymbolHasTextField in _listCanvasSymbolsVM.SelectedSymbolsHasTextField)
+        foreach (var selectedSymbolHasTextField in selectedSymbolsHasTextField)
         {
             SetFontSize(selectedSymbolHasTextField);
         }

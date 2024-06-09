@@ -6,7 +6,7 @@ namespace EdblockViewModel.Components.TopSettingsMenu.Interfaces;
 public interface IFontFamilyComponentVM
 {
     List<string> FontFamilys { get; }
-    string? FontFamily { get; set; }
+    string? SelectedFontFamily { get; set; }
 
     void SetFontFamily(IHasTextFieldVM selectedSymbolHasTextField);
 }

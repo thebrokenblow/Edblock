@@ -58,14 +58,14 @@ public class CommentSymbolVM : BlockSymbolVM, IHasTextFieldVM
         }
     }
 
-    public TextFieldSymbolVM TextFieldSymbolVM { get; init; }
-
-    private const string defaultText = "Комментарий";
+    public TextFieldSymbolVM TextFieldSymbolVM { get; }
 
     private const int defaultHeight = 60;
     private const int countHorizontalLine = 3;
     private const int lengthHorizontalLine = 20;
     private const int spaceBetweenHorizontalLines = 10;
+    private const string defaultText = "Комментарий";
+
     public CommentSymbolVM(
         ICanvasSymbolsComponentVM canvasSymbolsComponentVM,
         IListCanvasSymbolsComponentVM listCanvasSymbolsComponentVM,
@@ -82,7 +82,7 @@ public class CommentSymbolVM : BlockSymbolVM, IHasTextFieldVM
         SetCoordinateUpperHorizontalBaseline(xCoordinateHorizontalLines);
         SetCoordinateLowerHorizontalBaseline(xCoordinateHorizontalLines);
 
-        TextFieldSymbolVM = new(CanvasSymbolsComponentVM, this)
+        TextFieldSymbolVM = new(_canvasSymbolsComponentVM, this)
         {
             Text = defaultText,
             LeftOffset = UpperHorizontalBaseline.X1,
