@@ -31,7 +31,7 @@ public class ActionSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnectionPoin
         ITopSettingsMenuComponentVM topSettingsMenuComponentVM,
         IPopupBoxMenuComponentVM popupBoxMenuComponentVM) : base(canvasSymbolsComponentVM, listCanvasSymbolsComponentVM, topSettingsMenuComponentVM, popupBoxMenuComponentVM)
     {
-        TextFieldSymbolVM = new(base._canvasSymbolsComponentVM, this)
+        TextFieldSymbolVM = new(_canvasSymbolsComponentVM, this)
         {
             Text = defaultText
         };

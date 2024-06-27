@@ -98,7 +98,7 @@ public partial class App : Application
         var mainWindow = serviceProvider.GetRequiredService<MainWindow>();
         var mainViewModel = serviceProvider.GetRequiredService<MainWindowVM>();
 
-        mainViewModel.NavigationService.NavigateTo<AuthenticationVM>();
+        mainViewModel.NavigationService.NavigateTo<EditorVM>();
         mainWindow.Show();
 
         base.OnStartup(e);

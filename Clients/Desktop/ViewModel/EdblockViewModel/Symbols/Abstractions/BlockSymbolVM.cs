@@ -132,6 +132,11 @@ public abstract class BlockSymbolVM : ObservableObject
             _symbolHasScaleRectangles = symbolHasScaleRectangles;
         }
 
+        if (this is IHasTextFieldVM symbolHasTextField)
+        {
+            _symbolHasTextField = symbolHasTextField;
+        }
+
         BlockSymbolModel = CreateBlockSymbolModel();
 
         MouseEnter = new(ShowAuxiliaryElements);
@@ -261,5 +266,50 @@ public abstract class BlockSymbolVM : ObservableObject
 
         _listCanvasSymbolsComponentVM.SelectedBlockSymbols.Add(this);
         _listCanvasSymbolsComponentVM.SelectedSymbolsHasTextField.Add(_symbolHasTextField);
+    }
+
+    public virtual void MiddleTop(double height)
+    {
+        SetHeight(height);
+    }
+
+
+    public virtual void RightTop(double width, double height)
+    {
+        SetWidth(width);
+        SetHeight(height);
+    }
+
+    public virtual void RightMiddle(double width)
+    {
+        SetWidth(width);
+    }
+
+    public virtual void RightBottom(double width, double height)
+    {
+        SetWidth(width);
+        SetHeight(height);
+    }
+
+    public virtual void MiddleBottom(double height)
+    {
+        SetHeight(height);
+    }
+
+    public virtual void LeftBottom(double width, double height)
+    {
+        SetWidth(width);
+        SetHeight(height);
+    }
+
+    public virtual void LeftMiddle(double width)
+    {
+        SetWidth(width);
+    }
+
+    public virtual void LeftTop(double width, double height)
+    {
+        SetWidth(width);
+        SetHeight(height);
     }
 }

@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Windows.Input;
 using System.Collections.ObjectModel;
-using EdblockViewModel.Components.CanvasSymbols;
 using EdblockViewModel.Components.TopSettingsMenu.PopupBoxMenu.Interfaces;
 using EdblockViewModel.Symbols.Abstractions;
+using EdblockViewModel.Components.CanvasSymbols.Interfaces;
 
 namespace EdblockViewModel.Symbols.ComponentsSymbolsVM.ScaleRectangles;
 
 public class ScalePartBlockSymbol(
     BlockSymbolVM scalingBlockSymbol,
     Cursor cursorWhenScaling,
-    Func<ScalePartBlockSymbol, CanvasSymbolsComponentVM, double>? getWidthBlockSymbol,
-    Func<ScalePartBlockSymbol, CanvasSymbolsComponentVM, double>? getHeigthBlockSymbol,
+    Func<ScalePartBlockSymbol, ICanvasSymbolsComponentVM, double>? getWidthBlockSymbol,
+    Func<ScalePartBlockSymbol, ICanvasSymbolsComponentVM, double>? getHeigthBlockSymbol,
     IScaleAllSymbolComponentVM scaleAllSymbolVM,
     ObservableCollection<BlockSymbolVM> blockSymbolsVM)
 {
@@ -21,25 +21,41 @@ public class ScalePartBlockSymbol(
     public double InitialXCoordinateBlockSymbol { get; } = scalingBlockSymbol.XCoordinate;
     public double InitialYCoordinateBlockSymbol { get; } = scalingBlockSymbol.YCoordinate;
 
-    public void SetWidthBlockSymbol(CanvasSymbolsComponentVM canvasSymbolsVM)
+
+    public void SetSize(ICanvasSymbolsComponentVM canvasSymbolsComponentVM)
     {
-        if (getWidthBlockSymbol == null)
+        if (getWidthBlockSymbol != null)
         {
-            return;
-        }
+            double width = getWidthBlockSymbol.Invoke(this, canvasSymbolsComponentVM);
 
-        double width = getWidthBlockSymbol.Invoke(this, canvasSymbolsVM);
-
-        if (scaleAllSymbolVM.IsScaleAllSymbol)
-        {
-            foreach (var blockSymbolVM in blockSymbolsVM)
+            if (scaleAllSymbolVM.IsScaleAllSymbol)
             {
-                blockSymbolVM.SetWidth(width);
+                foreach (var blockSymbolVM in blockSymbolsVM)
+                {
+                    blockSymbolVM.SetWidth(width);
+                }
+            }
+            else
+            {
+                ScalingBlockSymbol.SetWidth(width);
             }
         }
-        else
+
+        if (getHeigthBlockSymbol != null)
         {
-            ScalingBlockSymbol.SetWidth(width);
+            double height = getHeigthBlockSymbol.Invoke(this, canvasSymbolsComponentVM);
+
+            if (scaleAllSymbolVM.IsScaleAllSymbol)
+            {
+                foreach (var blockSymbolsVM in blockSymbolsVM)
+                {
+                    blockSymbolsVM.SetHeight(height);
+                }
+            }
+            else
+            {
+                ScalingBlockSymbol.SetHeight(height);
+            }
         }
 
         if (ScalingBlockSymbol is IHasTextFieldVM blockSymbolHasTextField)
@@ -47,35 +63,6 @@ public class ScalePartBlockSymbol(
             blockSymbolHasTextField.TextFieldSymbolVM.Cursor = cursorWhenScaling;
         }
 
-        canvasSymbolsVM.Cursor = cursorWhenScaling;
-    }
-
-    public void SetHeightBlockSymbol(CanvasSymbolsComponentVM canvasSymbolsVM)
-    {
-        if (getHeigthBlockSymbol == null)
-        {
-            return;
-        }
-
-        double height = getHeigthBlockSymbol.Invoke(this, canvasSymbolsVM);
-
-        if (scaleAllSymbolVM.IsScaleAllSymbol)
-        {
-            foreach (var blockSymbolsVM in blockSymbolsVM)
-            {
-                blockSymbolsVM.SetHeight(height);
-            }
-        }
-        else
-        {
-            ScalingBlockSymbol.SetHeight(height);
-        }
-
-        if (ScalingBlockSymbol is IHasTextFieldVM blockSymbolHasTextField)
-        {
-            blockSymbolHasTextField.TextFieldSymbolVM.Cursor = cursorWhenScaling;
-        }
-
-        canvasSymbolsVM.Cursor = cursorWhenScaling;
+        canvasSymbolsComponentVM.Cursor = cursorWhenScaling;
     }
 }

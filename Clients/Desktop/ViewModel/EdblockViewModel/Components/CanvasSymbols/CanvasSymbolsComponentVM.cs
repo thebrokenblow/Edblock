@@ -120,8 +120,7 @@ public class CanvasSymbolsComponentVM : ObservableObject, ICanvasSymbolsComponen
         var previousCoordinate = (previousXCoordinate, previousYCoordinate);
 
         ListCanvasSymbolsComponentVM.MovableBlockSymbol?.SetCoordinate(currentCoordinate, previousCoordinate);
-        ScalePartBlockSymbol?.SetWidthBlockSymbol(this);
-        ScalePartBlockSymbol?.SetHeightBlockSymbol(this);
+        ScalePartBlockSymbol?.SetSize(this);
 
         previousXCoordinate = xCoordinate;
         previousYCoordinate = yCoordinate;

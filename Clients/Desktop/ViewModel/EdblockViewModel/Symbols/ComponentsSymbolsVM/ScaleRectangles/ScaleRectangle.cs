@@ -12,7 +12,6 @@ namespace EdblockViewModel.Symbols.ComponentsSymbolsVM.ScaleRectangles;
 
 public class ScaleRectangle : ObservableObject
 {
-
     private double xCoordinate;
     public double XCoordinate
     {
@@ -56,15 +55,15 @@ public class ScaleRectangle : ObservableObject
     private readonly BlockSymbolVM _blockSymbolVM;
     private readonly Cursor _cursorScaling;
     private readonly Func<(double, double)> _getCoordinateScaleRectangle;
-    private readonly Func<ScalePartBlockSymbol, CanvasSymbolsComponentVM, double>? _getWidthSymbol;
-    private readonly Func<ScalePartBlockSymbol, CanvasSymbolsComponentVM, double>? _getHeightSymbol;
+    private readonly Func<ScalePartBlockSymbol, ICanvasSymbolsComponentVM, double>? _getWidthSymbol;
+    private readonly Func<ScalePartBlockSymbol, ICanvasSymbolsComponentVM, double>? _getHeightSymbol;
     public ScaleRectangle(
         ICanvasSymbolsComponentVM canvasSymbolsVM,
         IScaleAllSymbolComponentVM scaleAllSymbolVM,
         BlockSymbolVM blockSymbolVM,
         Cursor cursorScaling,
-        Func<ScalePartBlockSymbol, CanvasSymbolsComponentVM, double>? getWidthSymbol,
-        Func<ScalePartBlockSymbol, CanvasSymbolsComponentVM, double>? getHeightSymbol,
+        Func<ScalePartBlockSymbol, ICanvasSymbolsComponentVM, double>? getWidthSymbol,
+        Func<ScalePartBlockSymbol, ICanvasSymbolsComponentVM, double>? getHeightSymbol,
         Func<(double, double)> getCoordinateScaleRectangle,
         PositionScaleRectangle positionScaleRectangle
         )

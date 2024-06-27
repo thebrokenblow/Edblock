@@ -83,10 +83,6 @@
 
             <Separator />
 
-            <topSettingsMenu:FormatVerticalAlignComponent Margin="5,0,5,0" DataContext="{Binding FormatVerticalAlignComponentVM}" />
-
-            <Separator />
-
         </ToolBar>
         <popupBoxMenu:PopupBoxMenuComponent HorizontalAlignment="Right" DataContext="{Binding PopupBoxMenuComponentVM}" />
     </Grid>

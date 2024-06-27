@@ -8,11 +8,10 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     d:DataContext="{d:DesignInstance Type=componentsTopSettingsMenuVM:IFontSizeComponentVM}"
     mc:Ignorable="d">
-    <Grid Width="110">
+    <Grid Width="160">
         <Label
-            Width="60"
             HorizontalAlignment="Left"
-            Content="Font size:"
+            Content="Размер шрифта :"
             Style="{StaticResource LabelTopSettingsPanel}" />
 
         <ComboBox

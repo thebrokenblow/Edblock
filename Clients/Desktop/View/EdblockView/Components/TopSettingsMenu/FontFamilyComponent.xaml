@@ -11,7 +11,7 @@
         <Label
             HorizontalAlignment="Left"
             VerticalAlignment="Center"
-            Content="Font Family:"
+            Content="Шрифт:"
             Style="{StaticResource LabelTopSettingsPanel}" />
 
         <ComboBox
