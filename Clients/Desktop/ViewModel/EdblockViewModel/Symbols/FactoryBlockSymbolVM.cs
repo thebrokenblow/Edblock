@@ -23,8 +23,8 @@ internal class FactoryBlockSymbolVM(EditorVM edblockVM)
 
         var blockSymbolVM = (BlockSymbolVM)blockSymbol;
 
-        blockSymbolVM.SetWidth(blockSymbolSerializable.Width);
-        blockSymbolVM.SetHeight(blockSymbolSerializable.Height);
+        //blockSymbolVM.SetWidth(blockSymbolSerializable.Width);
+        //blockSymbolVM.SetHeight(blockSymbolSerializable.Height);
 
         blockSymbolVM.XCoordinate = blockSymbolSerializable.XCoordinate;
         blockSymbolVM.YCoordinate = blockSymbolSerializable.YCoordinate;
@@ -61,8 +61,8 @@ internal class FactoryBlockSymbolVM(EditorVM edblockVM)
 
         var switchCaseSymbolVM = (SwitchCaseSymbolVM)blockSymbol;
 
-        switchCaseSymbolVM.SetWidth(switchCaseSymbolsSerializable.Width);
-        switchCaseSymbolVM.SetHeight(switchCaseSymbolsSerializable.Height);
+        //switchCaseSymbolVM.SetWidth(switchCaseSymbolsSerializable.Width);
+        //switchCaseSymbolVM.SetHeight(switchCaseSymbolsSerializable.Height);
 
         switchCaseSymbolVM.XCoordinate = switchCaseSymbolsSerializable.XCoordinate;
         switchCaseSymbolVM.YCoordinate = switchCaseSymbolsSerializable.YCoordinate;
@@ -104,8 +104,8 @@ internal class FactoryBlockSymbolVM(EditorVM edblockVM)
 
         var parallelActionSymbolVM = (BlockSymbolVM)blockSymbol;
 
-        parallelActionSymbolVM.SetWidth(parallelActionSymbolSerializable.Width);
-        parallelActionSymbolVM.SetHeight(parallelActionSymbolSerializable.Height);
+        //parallelActionSymbolVM.SetWidth(parallelActionSymbolSerializable.Width);
+        //parallelActionSymbolVM.SetHeight(parallelActionSymbolSerializable.Height);
 
         parallelActionSymbolVM.XCoordinate = parallelActionSymbolSerializable.XCoordinate;
         parallelActionSymbolVM.YCoordinate = parallelActionSymbolSerializable.YCoordinate;

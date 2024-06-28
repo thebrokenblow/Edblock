@@ -22,8 +22,8 @@ public class ListCanvasSymbolsComponentVM(IPopupBoxMenuComponentVM popupBoxMenuC
 
         if (isScaleAllSymbolVM && firstBlockSymbolsVM is not null)
         {
-            blockSymbolVM.SetWidth(firstBlockSymbolsVM.Width);
-            blockSymbolVM.SetHeight(firstBlockSymbolsVM.Height);
+            //blockSymbolVM.SetWidth(firstBlockSymbolsVM.Width);
+            //blockSymbolVM.SetHeight(firstBlockSymbolsVM.Height);
         }
 
         BlockSymbolsVM.Add(blockSymbolVM);

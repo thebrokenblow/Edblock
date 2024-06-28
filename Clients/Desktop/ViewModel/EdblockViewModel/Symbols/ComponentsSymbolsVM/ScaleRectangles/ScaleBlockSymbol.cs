@@ -1,14 +1,13 @@
-﻿using EdblockViewModel.Components.CanvasSymbols;
-using EdblockViewModel.Components.CanvasSymbols.Interfaces;
+﻿using EdblockViewModel.Components.CanvasSymbols.Interfaces;
 
 namespace EdblockViewModel.Symbols.ComponentsSymbolsVM.ScaleRectangles;
 
-internal class ScaleBlockSymbol
+public class ScaleBlockSymbol
 {
     private const double minWidth = 40;
     private const double minHeight = 40;
 
-    internal static double GetWidthRigthPart(ScalePartBlockSymbol scalePartBlockSymbol, ICanvasSymbolsComponentVM canvasSymbolsVM)
+    public static double GetWidthRigthPart(ScalePartBlockSymbol scalePartBlockSymbol, ICanvasSymbolsComponentVM canvasSymbolsVM)
     {
         double widthBlockSymbol = canvasSymbolsVM.XCoordinate - scalePartBlockSymbol.InitialXCoordinateBlockSymbol;
 
@@ -20,7 +19,7 @@ internal class ScaleBlockSymbol
         return widthBlockSymbol;
     }
 
-    internal static double GetHeigthBottomPart(ScalePartBlockSymbol scalePartBlockSymbol, ICanvasSymbolsComponentVM canvasSymbolsVM)
+    public static double GetHeigthBottomPart(ScalePartBlockSymbol scalePartBlockSymbol, ICanvasSymbolsComponentVM canvasSymbolsVM)
     {
         double heigthBlockSymbol = canvasSymbolsVM.YCoordinate - scalePartBlockSymbol.InitialYCoordinateBlockSymbol;
 
@@ -32,7 +31,7 @@ internal class ScaleBlockSymbol
         return heigthBlockSymbol;
     }
 
-    internal static double GetWidthLeftPart(ScalePartBlockSymbol scalePartBlockSymbol, ICanvasSymbolsComponentVM canvasSymbolsVM)
+    public static double GetWidthLeftPart(ScalePartBlockSymbol scalePartBlockSymbol, ICanvasSymbolsComponentVM canvasSymbolsVM)
     {
         int currentXCoordinateCursor = canvasSymbolsVM.XCoordinate;
         double initialWidth = scalePartBlockSymbol.InitialWidthBlockSymbol;
@@ -45,12 +44,12 @@ internal class ScaleBlockSymbol
             return minWidth;
         }
 
-        scalePartBlockSymbol.ScalingBlockSymbol.XCoordinate = initialXCoordinate - (widthBlockSymbol - initialWidth);
+        //scalePartBlockSymbol.ScalingBlockSymbol.XCoordinate = initialXCoordinate - (widthBlockSymbol - initialWidth);
 
         return widthBlockSymbol;
     }
 
-    internal static double GetHeigthTopPart(ScalePartBlockSymbol scalePartBlockSymbol, ICanvasSymbolsComponentVM canvasSymbolsVM)
+    public static double GetHeigthTopPart(ScalePartBlockSymbol scalePartBlockSymbol, ICanvasSymbolsComponentVM canvasSymbolsVM)
     {
         int currentYCoordinateCursor = canvasSymbolsVM.YCoordinate;
         double initialHeigth = scalePartBlockSymbol.InitialHeigthBlockSymbol;
@@ -63,7 +62,7 @@ internal class ScaleBlockSymbol
             return minHeight;
         }
 
-        scalePartBlockSymbol.ScalingBlockSymbol.YCoordinate = initialYCoordinate - (heigthBlockSymbol - initialHeigth);
+        //scalePartBlockSymbol.ScalingBlockSymbol.YCoordinate = initialYCoordinate - (heigthBlockSymbol - initialHeigth);
 
         return heigthBlockSymbol;
     }

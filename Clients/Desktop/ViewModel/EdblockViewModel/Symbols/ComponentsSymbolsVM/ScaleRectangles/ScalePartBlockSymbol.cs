@@ -1,6 +1,4 @@
-﻿using System;
-using System.Windows.Input;
-using System.Collections.ObjectModel;
+﻿using System.Windows.Input;
 using EdblockViewModel.Components.TopSettingsMenu.PopupBoxMenu.Interfaces;
 using EdblockViewModel.Symbols.Abstractions;
 using EdblockViewModel.Components.CanvasSymbols.Interfaces;
@@ -10,55 +8,30 @@ namespace EdblockViewModel.Symbols.ComponentsSymbolsVM.ScaleRectangles;
 public class ScalePartBlockSymbol(
     BlockSymbolVM scalingBlockSymbol,
     Cursor cursorWhenScaling,
-    Func<ScalePartBlockSymbol, ICanvasSymbolsComponentVM, double>? getWidthBlockSymbol,
-    Func<ScalePartBlockSymbol, ICanvasSymbolsComponentVM, double>? getHeigthBlockSymbol,
     IScaleAllSymbolComponentVM scaleAllSymbolVM,
-    ObservableCollection<BlockSymbolVM> blockSymbolsVM)
+    PositionScaleRectangle positionScaleRectangle)
 {
-    public BlockSymbolVM ScalingBlockSymbol { get; } = scalingBlockSymbol;
     public double InitialWidthBlockSymbol { get; } = scalingBlockSymbol.Width;
     public double InitialHeigthBlockSymbol { get; } = scalingBlockSymbol.Height;
     public double InitialXCoordinateBlockSymbol { get; } = scalingBlockSymbol.XCoordinate;
     public double InitialYCoordinateBlockSymbol { get; } = scalingBlockSymbol.YCoordinate;
-
+    public PositionScaleRectangle PositionScaleRectangle { get; } = positionScaleRectangle;
 
     public void SetSize(ICanvasSymbolsComponentVM canvasSymbolsComponentVM)
     {
-        if (getWidthBlockSymbol != null)
+        if (scaleAllSymbolVM.IsScaleAllSymbol)
         {
-            double width = getWidthBlockSymbol.Invoke(this, canvasSymbolsComponentVM);
-
-            if (scaleAllSymbolVM.IsScaleAllSymbol)
+            foreach (var blockSymbolVM in canvasSymbolsComponentVM.ListCanvasSymbolsComponentVM.BlockSymbolsVM)
             {
-                foreach (var blockSymbolVM in blockSymbolsVM)
-                {
-                    blockSymbolVM.SetWidth(width);
-                }
-            }
-            else
-            {
-                ScalingBlockSymbol.SetWidth(width);
+                blockSymbolVM.SetSize(this);
             }
         }
-
-        if (getHeigthBlockSymbol != null)
+        else
         {
-            double height = getHeigthBlockSymbol.Invoke(this, canvasSymbolsComponentVM);
-
-            if (scaleAllSymbolVM.IsScaleAllSymbol)
-            {
-                foreach (var blockSymbolsVM in blockSymbolsVM)
-                {
-                    blockSymbolsVM.SetHeight(height);
-                }
-            }
-            else
-            {
-                ScalingBlockSymbol.SetHeight(height);
-            }
+            scalingBlockSymbol.SetSize(this);
         }
 
-        if (ScalingBlockSymbol is IHasTextFieldVM blockSymbolHasTextField)
+        if (scalingBlockSymbol is IHasTextFieldVM blockSymbolHasTextField)
         {
             blockSymbolHasTextField.TextFieldSymbolVM.Cursor = cursorWhenScaling;
         }

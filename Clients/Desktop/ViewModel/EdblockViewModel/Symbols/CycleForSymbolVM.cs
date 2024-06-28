@@ -84,8 +84,8 @@ public class CycleForSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnectionPo
 
     public void SetCoordinatePolygonPoints()
     {
-        var heightSideProjection = Height - sideProjection;
-        var widthSideProjection = Width - sideProjection;
+        var heightSideProjection = height - sideProjection;
+        var widthSideProjection = width - sideProjection;
 
         Points =
         [
