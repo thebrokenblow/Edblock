@@ -6,7 +6,7 @@ using EdblockViewModel.Symbols.Attributes;
 using EdblockViewModel.Components.CanvasSymbols.Interfaces;
 using EdblockViewModel.Components.TopSettingsMenu.Interfaces;
 using EdblockViewModel.Components.TopSettingsMenu.PopupBoxMenu.Interfaces;
-using EdblockViewModel.Symbols.ComponentsSymbolsVM.ScaleRectangles;
+using EdblockViewModel.Symbols.ComponentsSymbolsVM.ScaleRectangles.Interfaces;
 
 namespace EdblockViewModel.Symbols.ComponentsCommentSymbolVM;
 
@@ -71,7 +71,11 @@ public class CommentSymbolVM : BlockSymbolVM, IHasTextFieldVM
         ICanvasSymbolsComponentVM canvasSymbolsComponentVM,
         IListCanvasSymbolsComponentVM listCanvasSymbolsComponentVM,
         ITopSettingsMenuComponentVM topSettingsMenuComponentVM,
-        IPopupBoxMenuComponentVM popupBoxMenuComponentVM) : base(canvasSymbolsComponentVM, listCanvasSymbolsComponentVM, topSettingsMenuComponentVM, popupBoxMenuComponentVM)
+        IPopupBoxMenuComponentVM popupBoxMenuComponentVM) : base(
+            canvasSymbolsComponentVM, 
+            listCanvasSymbolsComponentVM, 
+            topSettingsMenuComponentVM, 
+            popupBoxMenuComponentVM)
     {
         HeightTextField = defaultHeight;
         Color = defaultColor;
@@ -175,12 +179,12 @@ public class CommentSymbolVM : BlockSymbolVM, IHasTextFieldVM
         LowerHorizontalBaseline.Y2 = heightTextField;
     }
 
-    public override void SetWidth(double width)
+    public void SetWidth(double width)
     {
         Width = UpperHorizontalBaseline.X1 + width;
     }
 
-    public override void SetHeight(double height)
+    public void SetHeight(double height)
     {
         SetCoordinateHorizontalLines();
         SetHeightVerticalBaseline();

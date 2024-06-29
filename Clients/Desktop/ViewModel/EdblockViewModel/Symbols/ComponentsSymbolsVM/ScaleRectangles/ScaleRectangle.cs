@@ -50,19 +50,19 @@ public class ScaleRectangle : ObservableObject
 
     private readonly ICanvasSymbolsComponentVM _canvasSymbolsVM;
     private readonly IScaleAllSymbolComponentVM _scaleAllSymbolVM;
-    private readonly BlockSymbolVM _blockSymbolVM;
+    private readonly ScalableBlockSymbolVM _scalableBlockSymbolVM;
     private readonly Cursor _cursorScaling;
     private readonly Func<(double, double)> _getCoordinateScaleRectangle;
     private readonly PositionScaleRectangle _positionScaleRectangle;
     public ScaleRectangle(
         ICanvasSymbolsComponentVM canvasSymbolsVM,
         IScaleAllSymbolComponentVM scaleAllSymbolVM,
-        BlockSymbolVM blockSymbolVM,
+        ScalableBlockSymbolVM scalableBlockSymbolVM,
         Cursor cursorScaling,
         Func<(double, double)> getCoordinateScaleRectangle,
         PositionScaleRectangle positionScaleRectangle)
     {
-        _blockSymbolVM = blockSymbolVM;
+        _scalableBlockSymbolVM = scalableBlockSymbolVM;
         _cursorScaling = cursorScaling;
         _canvasSymbolsVM = canvasSymbolsVM;
         _scaleAllSymbolVM = scaleAllSymbolVM;
@@ -95,10 +95,7 @@ public class ScaleRectangle : ObservableObject
         {
             _canvasSymbolsVM.Cursor = _cursorScaling;
 
-            if (_blockSymbolVM is IHasScaleRectangles blockSymbolHasScaleRectangles)
-            {
-                SetStateDisplay(blockSymbolHasScaleRectangles.ScaleRectangles, true);
-            }
+            SetStateDisplay(_scalableBlockSymbolVM.ScaleRectangles, true);
         }
     }
 
@@ -106,18 +103,20 @@ public class ScaleRectangle : ObservableObject
     {
         _canvasSymbolsVM.Cursor = Cursors.Arrow;
 
-        if (_blockSymbolVM is IHasScaleRectangles blockSymbolHasScaleRectangles)
-        {
-            SetStateDisplay(blockSymbolHasScaleRectangles.ScaleRectangles, false);
-        }
+        SetStateDisplay(_scalableBlockSymbolVM.ScaleRectangles, false);
     }
 
     private void SaveScaleRectangle()
     {
-        _canvasSymbolsVM.ScalePartBlockSymbol = new(
-            _blockSymbolVM, 
-            _cursorScaling,
-            _scaleAllSymbolVM,
-            _positionScaleRectangle);
+        _canvasSymbolsVM.ScalePartBlockSymbol = new(_scaleAllSymbolVM)
+        {
+            InitialWidthBlockSymbol = _scalableBlockSymbolVM.Width,
+            InitialHeigthBlockSymbol = _scalableBlockSymbolVM.Height,
+            InitialXCoordinateBlockSymbol = _scalableBlockSymbolVM.XCoordinate,
+            InitialYCoordinateBlockSymbol = _scalableBlockSymbolVM.YCoordinate,
+            PositionScaleRectangle = _positionScaleRectangle,
+            CursorWhenScaling = _cursorScaling,
+            ScalingBlockSymbol = _scalableBlockSymbolVM,
+        };
     }
 }

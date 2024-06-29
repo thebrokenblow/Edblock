@@ -2,19 +2,18 @@
 using EdblockViewModel.Symbols.Attributes;
 using EdblockViewModel.Symbols.Abstractions;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM;
-using EdblockViewModel.Symbols.ComponentsSymbolsVM.ScaleRectangles;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM.ConnectionPoints;
 using EdblockViewModel.Components.CanvasSymbols.Interfaces;
 using EdblockViewModel.Components.TopSettingsMenu.Interfaces;
 using EdblockViewModel.Components.TopSettingsMenu.PopupBoxMenu.Interfaces;
+using EdblockViewModel.Symbols.ComponentsSymbolsVM.ScaleRectangles.Interfaces;
 
 namespace EdblockViewModel.Symbols;
 
 [SymbolType("ActionSymbolVM")]
-public class ActionSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnectionPoint, IHasScaleRectangles
+public class ActionSymbolVM : ScalableBlockSymbolVM, IHasTextFieldVM, IHasConnectionPoint
 {
-    public TextFieldSymbolVM TextFieldSymbolVM { get; init; }
-    public List<ScaleRectangle> ScaleRectangles { get; set; } = null!;
+    public TextFieldSymbolVM TextFieldSymbolVM { get; }
     public List<ConnectionPointVM> ConnectionPointsVM { get; set; } = null!;
 
     private readonly CoordinateConnectionPointVM coordinateConnectionPointVM;
@@ -26,10 +25,16 @@ public class ActionSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnectionPoin
     private const string defaultColor = "#FF52C0AA";
 
     public ActionSymbolVM(
+        IBuilderScaleRectangles builderScaleRectangles,
         ICanvasSymbolsComponentVM canvasSymbolsComponentVM,
         IListCanvasSymbolsComponentVM listCanvasSymbolsComponentVM,
         ITopSettingsMenuComponentVM topSettingsMenuComponentVM,
-        IPopupBoxMenuComponentVM popupBoxMenuComponentVM) : base(canvasSymbolsComponentVM, listCanvasSymbolsComponentVM, topSettingsMenuComponentVM, popupBoxMenuComponentVM)
+        IPopupBoxMenuComponentVM popupBoxMenuComponentVM) : base(
+            builderScaleRectangles, 
+            canvasSymbolsComponentVM, 
+            listCanvasSymbolsComponentVM, 
+            topSettingsMenuComponentVM, 
+            popupBoxMenuComponentVM)
     {
         TextFieldSymbolVM = new(_canvasSymbolsComponentVM, this)
         {
@@ -38,7 +43,6 @@ public class ActionSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnectionPoin
 
         Color = defaultColor;
 
-        AddScaleRectangles();
         AddConnectionPoints();
         
         coordinateConnectionPointVM = new(this);
@@ -78,25 +82,5 @@ public class ActionSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnectionPoin
             .AddBottomConnectionPoint()
             .AddLeftConnectionPoint()
             .Build();
-    }
-
-    private void AddScaleRectangles()
-    {
-        var builderScaleRectangles = new BuilderScaleRectangles(
-            _canvasSymbolsComponentVM,
-            scaleAllSymbolComponentVM,
-            this);
-
-        ScaleRectangles =
-            builderScaleRectangles
-                        .AddMiddleTopRectangle()
-                        .AddRightTopRectangle()
-                        .AddRightMiddleRectangle()
-                        .AddRightBottomRectangle()
-                        .AddMiddleBottomRectangle()
-                        .AddLeftBottomRectangle()
-                        .AddLeftMiddleRectangle()
-                        .AddLeftTopRectangle()
-                        .Build();
     }
 }

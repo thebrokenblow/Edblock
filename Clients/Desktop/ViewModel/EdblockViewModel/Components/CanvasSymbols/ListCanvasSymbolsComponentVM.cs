@@ -10,6 +10,7 @@ namespace EdblockViewModel.Components.CanvasSymbols;
 public class ListCanvasSymbolsComponentVM(IPopupBoxMenuComponentVM popupBoxMenuComponentVM) : IListCanvasSymbolsComponentVM
 {
     public ObservableCollection<BlockSymbolVM> BlockSymbolsVM { get; } = [];
+    public List<ScalableBlockSymbolVM> ScalableBlockSymbols { get; } = [];
     public List<BlockSymbolVM> SelectedBlockSymbols { get; } = [];
     public List<IHasTextFieldVM> SelectedSymbolsHasTextField { get; } = [];
     public BlockSymbolVM? MovableBlockSymbol { get; set; }
@@ -20,10 +21,12 @@ public class ListCanvasSymbolsComponentVM(IPopupBoxMenuComponentVM popupBoxMenuC
 
         var isScaleAllSymbolVM = popupBoxMenuComponentVM.ScaleAllSymbolComponentVM.IsScaleAllSymbol;
 
-        if (isScaleAllSymbolVM && firstBlockSymbolsVM is not null)
+        if (isScaleAllSymbolVM && firstBlockSymbolsVM is not null && blockSymbolVM is ScalableBlockSymbolVM scalableBlockSymbolVM)
         {
-            //blockSymbolVM.SetWidth(firstBlockSymbolsVM.Width);
-            //blockSymbolVM.SetHeight(firstBlockSymbolsVM.Height);
+            scalableBlockSymbolVM.SetWidth(firstBlockSymbolsVM.Width);
+            scalableBlockSymbolVM.SetHeight(firstBlockSymbolsVM.Height);
+
+            ScalableBlockSymbols.Add(scalableBlockSymbolVM);
         }
 
         BlockSymbolsVM.Add(blockSymbolVM);

@@ -1,21 +1,20 @@
 ﻿using System.Windows.Media;
 using System.Collections.Generic;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM;
-using EdblockViewModel.Symbols.ComponentsSymbolsVM.ScaleRectangles;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM.ConnectionPoints;
 using EdblockViewModel.Symbols.Abstractions;
 using EdblockViewModel.Symbols.Attributes;
 using EdblockViewModel.Components.CanvasSymbols.Interfaces;
 using EdblockViewModel.Components.TopSettingsMenu.Interfaces;
 using EdblockViewModel.Components.TopSettingsMenu.PopupBoxMenu.Interfaces;
+using EdblockViewModel.Symbols.ComponentsSymbolsVM.ScaleRectangles.Interfaces;
 
 namespace EdblockViewModel.Symbols;
 
 [SymbolType("CycleWhileBeginSymbolVM")]
-public class CycleWhileBeginSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnectionPoint, IHasScaleRectangles
+public class CycleWhileBeginSymbolVM : ScalableBlockSymbolVM, IHasTextFieldVM, IHasConnectionPoint
 {
-    public TextFieldSymbolVM TextFieldSymbolVM { get; init; }
-    public List<ScaleRectangle> ScaleRectangles { get; set; } = null!;
+    public TextFieldSymbolVM TextFieldSymbolVM { get; }
     public List<ConnectionPointVM> ConnectionPointsVM { get; set; } = null!;
 
     private readonly CoordinateConnectionPointVM coordinateConnectionPointVM;
@@ -40,12 +39,18 @@ public class CycleWhileBeginSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConne
     private const string defaultColor = "#CCCCFF";
 
     public CycleWhileBeginSymbolVM(
+        IBuilderScaleRectangles builderScaleRectangles,
         ICanvasSymbolsComponentVM canvasSymbolsComponentVM,
         IListCanvasSymbolsComponentVM listCanvasSymbolsComponentVM,
         ITopSettingsMenuComponentVM topSettingsMenuComponentVM,
-        IPopupBoxMenuComponentVM popupBoxMenuComponentVM) : base(canvasSymbolsComponentVM, listCanvasSymbolsComponentVM, topSettingsMenuComponentVM, popupBoxMenuComponentVM)
+        IPopupBoxMenuComponentVM popupBoxMenuComponentVM) : base(
+            builderScaleRectangles, 
+            canvasSymbolsComponentVM, 
+            listCanvasSymbolsComponentVM, 
+            topSettingsMenuComponentVM, 
+            popupBoxMenuComponentVM)
     {
-        TextFieldSymbolVM = new(base._canvasSymbolsComponentVM, this)
+        TextFieldSymbolVM = new(_canvasSymbolsComponentVM, this)
         {
             Text = defaultText,
             LeftOffset = sideProjection
@@ -53,7 +58,6 @@ public class CycleWhileBeginSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConne
 
         Color = defaultColor;
 
-        AddScaleRectangles();
         AddConnectionPoints();
 
         coordinateConnectionPointVM = new(this);
@@ -108,25 +112,5 @@ public class CycleWhileBeginSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConne
             .AddBottomConnectionPoint()
             .AddLeftConnectionPoint()
             .Build();
-    }
-
-    private void AddScaleRectangles()
-    {
-        var builderScaleRectangles = new BuilderScaleRectangles(
-            _canvasSymbolsComponentVM,
-            scaleAllSymbolComponentVM,
-            this);
-
-        ScaleRectangles =
-            builderScaleRectangles
-                        .AddMiddleTopRectangle()
-                        .AddRightTopRectangle()
-                        .AddRightMiddleRectangle()
-                        .AddRightBottomRectangle()
-                        .AddMiddleBottomRectangle()
-                        .AddLeftBottomRectangle()
-                        .AddLeftMiddleRectangle()
-                        .AddLeftTopRectangle()
-                        .Build();
     }
 }

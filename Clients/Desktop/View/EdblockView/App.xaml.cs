@@ -18,6 +18,8 @@ using EdblockViewModel.Services.Interfaces;
 using EdblockViewModel.Symbols;
 using EdblockViewModel.Symbols.Abstractions;
 using EdblockViewModel.Symbols.ComponentsCommentSymbolVM;
+using EdblockViewModel.Symbols.ComponentsSymbolsVM.ScaleRectangles;
+using EdblockViewModel.Symbols.ComponentsSymbolsVM.ScaleRectangles.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace EdblockView;
@@ -73,6 +75,7 @@ public partial class App : Application
         services.AddTransient<StartEndSymbolVM>();
         services.AddTransient<SubroutineSymbolVM>();
         services.AddTransient<CommentSymbolVM>();
+        services.AddTransient<IBuilderScaleRectangles, BuilderScaleRectangles>();
 
         services.AddScoped<INavigationService, NavigateService>();
 

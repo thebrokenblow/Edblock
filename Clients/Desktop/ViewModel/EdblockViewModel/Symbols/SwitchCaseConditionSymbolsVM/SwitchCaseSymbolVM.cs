@@ -5,19 +5,26 @@ using EdblockViewModel.Symbols.Abstractions;
 using EdblockViewModel.Components.CanvasSymbols.Interfaces;
 using EdblockViewModel.Components.TopSettingsMenu.Interfaces;
 using EdblockViewModel.Components.TopSettingsMenu.PopupBoxMenu.Interfaces;
+using EdblockViewModel.Symbols.ComponentsSymbolsVM.ScaleRectangles.Interfaces;
 
 namespace EdblockViewModel.Symbols.SwitchCaseConditionSymbolsVM;
 
-public abstract class SwitchCaseSymbolVM : BlockSymbolVM
+public abstract class SwitchCaseSymbolVM : ScalableBlockSymbolVM
 {
     public List<ConnectionPointVM> ConnectionPointsSwitchCaseVM { get; init; }
     protected readonly int _countLines;
     public SwitchCaseSymbolVM(
+        IBuilderScaleRectangles builderScaleRectangles,
         ICanvasSymbolsComponentVM canvasSymbolsComponentVM,
         IListCanvasSymbolsComponentVM listCanvasSymbolsComponentVM,
         ITopSettingsMenuComponentVM topSettingsMenuComponentVM,
         IPopupBoxMenuComponentVM popupBoxMenuComponentVM,
-        int countLine) : base(canvasSymbolsComponentVM, listCanvasSymbolsComponentVM, topSettingsMenuComponentVM, popupBoxMenuComponentVM)
+        int countLine) : base(
+            builderScaleRectangles, 
+            canvasSymbolsComponentVM, 
+            listCanvasSymbolsComponentVM, 
+            topSettingsMenuComponentVM,
+            popupBoxMenuComponentVM)
     {
         _countLines = countLine;
         

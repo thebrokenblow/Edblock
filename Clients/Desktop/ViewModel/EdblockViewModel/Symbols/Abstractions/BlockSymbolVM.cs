@@ -106,8 +106,9 @@ public abstract class BlockSymbolVM : ObservableObject
     private readonly IListCanvasSymbolsComponentVM _listCanvasSymbolsComponentVM;
     private readonly ITopSettingsMenuComponentVM _topSettingsMenuComponentVM;
 
+    private readonly ScalableBlockSymbolVM? _scalableBlockSymbolVM;
+
     private readonly IHasConnectionPoint? _symbolHasConnectionPoint;
-    private readonly IHasScaleRectangles? _symbolHasScaleRectangles;
     private readonly IHasTextFieldVM? _symbolHasTextField;
 
     public BlockSymbolVM(
@@ -123,14 +124,14 @@ public abstract class BlockSymbolVM : ObservableObject
         _topSettingsMenuComponentVM = topSettingsMenuComponentVM;
         _listCanvasSymbolsComponentVM = listCanvasSymbolsComponentVM;
 
+        if (this is ScalableBlockSymbolVM scalableBlockSymbolVM)
+        {
+            _scalableBlockSymbolVM = scalableBlockSymbolVM;
+        }
+
         if (this is IHasConnectionPoint symbolHasConnectionPoint)
         {
             _symbolHasConnectionPoint = symbolHasConnectionPoint;
-        }
-
-        if (this is IHasScaleRectangles symbolHasScaleRectangles)
-        {
-            _symbolHasScaleRectangles = symbolHasScaleRectangles;
         }
 
         if (this is IHasTextFieldVM symbolHasTextField)
@@ -143,173 +144,6 @@ public abstract class BlockSymbolVM : ObservableObject
         MouseEnter = new(ShowAuxiliaryElements);
         MouseLeave = new(HideAuxiliaryElements);
         MouseLeftButtonDown = new(SetMovableSymbol);
-    }
-
-    public abstract void SetWidth(double width);
-    public abstract void SetHeight(double height);
-
-    public virtual void SetSize(ScalePartBlockSymbol scalePartBlockSymbol)
-    {
-        if (scalePartBlockSymbol.PositionScaleRectangle == PositionScaleRectangle.RightMiddle)
-        {
-            double widthBlockSymbol = _canvasSymbolsComponentVM.XCoordinate - scalePartBlockSymbol.InitialXCoordinateBlockSymbol;
-
-            if (widthBlockSymbol < 40)
-            {
-                widthBlockSymbol = 40;
-            }
-
-            SetWidth(widthBlockSymbol);
-        }
-        else if (scalePartBlockSymbol.PositionScaleRectangle == PositionScaleRectangle.RightBottom)
-        {
-            double widthBlockSymbol = _canvasSymbolsComponentVM.XCoordinate - scalePartBlockSymbol.InitialXCoordinateBlockSymbol;
-            double heigthBlockSymbol = _canvasSymbolsComponentVM.YCoordinate - scalePartBlockSymbol.InitialYCoordinateBlockSymbol;
-
-            if (widthBlockSymbol < 40)
-            {
-                widthBlockSymbol = 40;
-            }
-
-            SetWidth(widthBlockSymbol);
-
-            if (heigthBlockSymbol < 40)
-            {
-                heigthBlockSymbol = 40;
-            }
-
-            SetHeight(heigthBlockSymbol);
-        }
-        else if (scalePartBlockSymbol.PositionScaleRectangle == PositionScaleRectangle.MiddleBottom)
-        {
-            double heigthBlockSymbol = _canvasSymbolsComponentVM.YCoordinate - scalePartBlockSymbol.InitialYCoordinateBlockSymbol;
-
-            if (heigthBlockSymbol < 40)
-            {
-                heigthBlockSymbol = 40;
-            }
-
-            SetHeight(heigthBlockSymbol);
-        }
-        else if (scalePartBlockSymbol.PositionScaleRectangle == PositionScaleRectangle.LeftBottom)
-        {
-            int currentXCoordinateCursor = _canvasSymbolsComponentVM.XCoordinate;
-            double initialWidth = scalePartBlockSymbol.InitialWidthBlockSymbol;
-            double initialXCoordinate = scalePartBlockSymbol.InitialXCoordinateBlockSymbol;
-
-            double widthBlockSymbol = initialWidth + (initialXCoordinate - currentXCoordinateCursor);
-
-            if (widthBlockSymbol < 40)
-            {
-                widthBlockSymbol = 40;
-            }
-
-            XCoordinate = initialXCoordinate - (widthBlockSymbol - initialWidth);
-
-            SetWidth(widthBlockSymbol);
-
-            double heigthBlockSymbol = _canvasSymbolsComponentVM.YCoordinate - scalePartBlockSymbol.InitialYCoordinateBlockSymbol;
-
-            if (heigthBlockSymbol < 40)
-            {
-                heigthBlockSymbol = 40;
-            }
-
-            SetHeight(heigthBlockSymbol);
-        }
-        else if (scalePartBlockSymbol.PositionScaleRectangle == PositionScaleRectangle.LeftMiddle)
-        {
-            int currentXCoordinateCursor = _canvasSymbolsComponentVM.XCoordinate;
-            double initialWidth = scalePartBlockSymbol.InitialWidthBlockSymbol;
-            double initialXCoordinate = scalePartBlockSymbol.InitialXCoordinateBlockSymbol;
-
-            double widthBlockSymbol = initialWidth + (initialXCoordinate - currentXCoordinateCursor);
-
-            if (widthBlockSymbol < 40)
-            {
-                widthBlockSymbol = 40;
-            }
-
-            XCoordinate = initialXCoordinate - (widthBlockSymbol - initialWidth);
-
-            SetWidth(widthBlockSymbol);
-        }
-        else if (scalePartBlockSymbol.PositionScaleRectangle == PositionScaleRectangle.LeftTop)
-        {
-            int currentXCoordinateCursor = _canvasSymbolsComponentVM.XCoordinate;
-            double initialWidth = scalePartBlockSymbol.InitialWidthBlockSymbol;
-            double initialXCoordinate = scalePartBlockSymbol.InitialXCoordinateBlockSymbol;
-
-            double widthBlockSymbol = initialWidth + (initialXCoordinate - currentXCoordinateCursor);
-
-            if (widthBlockSymbol < 40)
-            {
-                widthBlockSymbol = 40;
-            }
-
-            XCoordinate = initialXCoordinate - (widthBlockSymbol - initialWidth);
-
-            SetWidth(widthBlockSymbol);
-
-            int currentYCoordinateCursor = _canvasSymbolsComponentVM.YCoordinate;
-            double initialHeigth = scalePartBlockSymbol.InitialHeigthBlockSymbol;
-            double initialYCoordinate = scalePartBlockSymbol.InitialYCoordinateBlockSymbol;
-
-            double heigthBlockSymbol = initialHeigth + (initialYCoordinate - currentYCoordinateCursor);
-
-            if (heigthBlockSymbol < 40)
-            {
-                heigthBlockSymbol = 40;
-            }
-
-            SetHeight(heigthBlockSymbol);
-
-            YCoordinate = initialYCoordinate - (heigthBlockSymbol - initialHeigth);
-        }
-        else if (scalePartBlockSymbol.PositionScaleRectangle == PositionScaleRectangle.MiddleTop)
-        {
-
-            int currentYCoordinateCursor = _canvasSymbolsComponentVM.YCoordinate;
-            double initialHeigth = scalePartBlockSymbol.InitialHeigthBlockSymbol;
-            double initialYCoordinate = scalePartBlockSymbol.InitialYCoordinateBlockSymbol;
-
-            double heigthBlockSymbol = initialHeigth + (initialYCoordinate - currentYCoordinateCursor);
-
-            if (heigthBlockSymbol < 40)
-            {
-                heigthBlockSymbol = 40;
-            }
-
-            SetHeight(heigthBlockSymbol);
-
-            YCoordinate = initialYCoordinate - (heigthBlockSymbol - initialHeigth);
-        }
-        else if (scalePartBlockSymbol.PositionScaleRectangle == PositionScaleRectangle.RightTop)
-        {
-            double widthBlockSymbol = _canvasSymbolsComponentVM.XCoordinate - scalePartBlockSymbol.InitialXCoordinateBlockSymbol;
-
-            if (widthBlockSymbol < 40)
-            {
-                widthBlockSymbol = 40;
-            }
-
-            SetWidth(widthBlockSymbol);
-
-            int currentYCoordinateCursor = _canvasSymbolsComponentVM.YCoordinate;
-            double initialHeigth = scalePartBlockSymbol.InitialHeigthBlockSymbol;
-            double initialYCoordinate = scalePartBlockSymbol.InitialYCoordinateBlockSymbol;
-
-            double heigthBlockSymbol = initialHeigth + (initialYCoordinate - currentYCoordinateCursor);
-
-            if (heigthBlockSymbol < 40)
-            {
-                heigthBlockSymbol = 40;
-            }
-
-            SetHeight(heigthBlockSymbol);
-
-            YCoordinate = initialYCoordinate - (heigthBlockSymbol - initialHeigth);
-        }
     }
 
     public virtual BlockSymbolModel CreateBlockSymbolModel()
@@ -383,25 +217,12 @@ public abstract class BlockSymbolVM : ObservableObject
 
     private void SetDisplayScaleRectangles(bool status)
     {
-        if (_symbolHasScaleRectangles is null)
+        if (_scalableBlockSymbolVM is null)
         {
             return;
         }
 
-        ScaleRectangle.SetStateDisplay(_symbolHasScaleRectangles.ScaleRectangles, status);
-    }
-
-    protected void ChangeCoordinateScaleRectangle()
-    {
-        if (_symbolHasScaleRectangles is null)
-        {
-            return;
-        }
-
-        foreach (var scaleRectangle in _symbolHasScaleRectangles.ScaleRectangles)
-        {
-            scaleRectangle.ChangeCoordination();
-        }
+        ScaleRectangle.SetStateDisplay(_scalableBlockSymbolVM.ScaleRectangles, status);
     }
 
     public void SetMovableSymbol()

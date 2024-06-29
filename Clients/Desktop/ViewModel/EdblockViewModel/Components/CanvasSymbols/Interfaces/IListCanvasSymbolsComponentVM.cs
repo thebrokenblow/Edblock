@@ -8,6 +8,7 @@ public interface IListCanvasSymbolsComponentVM
 {
     ObservableCollection<BlockSymbolVM> BlockSymbolsVM { get; }
     List<BlockSymbolVM> SelectedBlockSymbols { get; }
+    List<ScalableBlockSymbolVM> ScalableBlockSymbols { get; }
     List<IHasTextFieldVM> SelectedSymbolsHasTextField { get; }
     BlockSymbolVM? MovableBlockSymbol { get; set; }
 

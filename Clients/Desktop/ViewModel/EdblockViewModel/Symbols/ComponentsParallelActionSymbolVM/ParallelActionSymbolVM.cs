@@ -9,11 +9,12 @@ using EdblockViewModel.Components.CanvasSymbols.Interfaces;
 using EdblockViewModel.Components.TopSettingsMenu.Interfaces;
 using EdblockViewModel.Components.TopSettingsMenu.PopupBoxMenu.Interfaces;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM.ScaleRectangles;
+using EdblockViewModel.Symbols.ComponentsSymbolsVM.ScaleRectangles.Interfaces;
 
 namespace EdblockViewModel.Symbols.ComponentsParallelActionSymbolVM;
 
 [SymbolType("ParallelActionSymbolVM")]
-public class ParallelActionSymbolVM : BlockSymbolVM, IHasConnectionPoint
+public class ParallelActionSymbolVM : ScalableBlockSymbolVM, IHasConnectionPoint
 {
     public LineParallelActionSymbolVM UpperHorizontalLine { get; set; } = new();
     public LineParallelActionSymbolVM LowerHorizontalLine { get; set; } = new();
@@ -31,12 +32,18 @@ public class ParallelActionSymbolVM : BlockSymbolVM, IHasConnectionPoint
 
     private const string defaultColor = "Black";
     public ParallelActionSymbolVM(
+        IBuilderScaleRectangles builderScaleRectangles, 
         ICanvasSymbolsComponentVM canvasSymbolsComponentVM,
         IListCanvasSymbolsComponentVM listCanvasSymbolsComponentVM,
         ITopSettingsMenuComponentVM topSettingsMenuComponentVM,
         IPopupBoxMenuComponentVM popupBoxMenuComponentVM, 
         int countSymbolsIncoming, 
-        int countSymbolsOutgoing) : base(canvasSymbolsComponentVM, listCanvasSymbolsComponentVM, topSettingsMenuComponentVM, popupBoxMenuComponentVM)
+        int countSymbolsOutgoing) : base(
+            builderScaleRectangles, 
+            canvasSymbolsComponentVM, 
+            listCanvasSymbolsComponentVM, 
+            topSettingsMenuComponentVM, 
+            popupBoxMenuComponentVM)
     {
         _countSymbolsIncoming = countSymbolsIncoming;
         _countSymbolsOutgoing = countSymbolsOutgoing;

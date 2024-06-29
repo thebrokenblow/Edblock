@@ -3,18 +3,30 @@ using System.Collections.Generic;
 using EdblockViewModel.Symbols.Abstractions;
 using EdblockViewModel.Components.CanvasSymbols.Interfaces;
 using EdblockViewModel.Components.TopSettingsMenu.PopupBoxMenu.Interfaces;
+using EdblockViewModel.Symbols.ComponentsSymbolsVM.ScaleRectangles.Interfaces;
 
 namespace EdblockViewModel.Symbols.ComponentsSymbolsVM.ScaleRectangles;
 
 public class BuilderScaleRectangles(
-    ICanvasSymbolsComponentVM canvasSymbolsVM, 
-    IScaleAllSymbolComponentVM scaleAllSymbolVM, 
-    BlockSymbolVM blockSymbolVM)
+    ICanvasSymbolsComponentVM canvasSymbolsComponentVM, 
+    IScaleAllSymbolComponentVM scaleAllSymbolComponentVM) : IBuilderScaleRectangles
 {
-    private readonly CoordinateScaleRectangle coordinateScaleRectangle = new(blockSymbolVM);
+    private ICoordinateScaleRectangle coordinateScaleRectangle = null!;
     private readonly List<ScaleRectangle> scaleRectangles = [];
 
-    public BuilderScaleRectangles AddMiddleTopRectangle()
+    private ScalableBlockSymbolVM scalableBlockSymbolVM = null!;
+
+    public ScalableBlockSymbolVM ScalableBlockSymbolVM
+    {
+        get => scalableBlockSymbolVM;
+        set
+        {
+            scalableBlockSymbolVM = value;
+            coordinateScaleRectangle = new CoordinateScaleRectangle(scalableBlockSymbolVM);
+        }
+    }
+
+    public IBuilderScaleRectangles AddMiddleTopRectangle()
     {
         var middleTopRectangle = CreateMiddleTopRectangle();
         scaleRectangles.Add(middleTopRectangle);
@@ -22,7 +34,7 @@ public class BuilderScaleRectangles(
         return this;
     }
 
-    public BuilderScaleRectangles AddRightTopRectangle()
+    public IBuilderScaleRectangles AddRightTopRectangle()
     {
         var rightTopRectangle = CreateRightTopRectangle();
         scaleRectangles.Add(rightTopRectangle);
@@ -30,7 +42,7 @@ public class BuilderScaleRectangles(
         return this;
     }
 
-    public BuilderScaleRectangles AddRightMiddleRectangle()
+    public IBuilderScaleRectangles AddRightMiddleRectangle()
     {
         var rightMiddleRectangle = CreateRightMiddleRectangle();
         scaleRectangles.Add(rightMiddleRectangle);
@@ -38,7 +50,7 @@ public class BuilderScaleRectangles(
         return this;
     }
 
-    public BuilderScaleRectangles AddRightBottomRectangle()
+    public IBuilderScaleRectangles AddRightBottomRectangle()
     {
         var rightBottomRectangle = CreateRightBottomRectangle();
         scaleRectangles.Add(rightBottomRectangle);
@@ -46,7 +58,7 @@ public class BuilderScaleRectangles(
         return this;
     }
 
-    public BuilderScaleRectangles AddMiddleBottomRectangle()
+    public IBuilderScaleRectangles AddMiddleBottomRectangle()
     {
         var middleBottomRectangle = CreateMiddleBottomRectangle();
         scaleRectangles.Add(middleBottomRectangle);
@@ -54,7 +66,7 @@ public class BuilderScaleRectangles(
         return this;
     }
 
-    public BuilderScaleRectangles AddLeftBottomRectangle()
+    public IBuilderScaleRectangles AddLeftBottomRectangle()
     {
         var leftBottomRectangle = CreateLeftBottomRectangle();
         scaleRectangles.Add(leftBottomRectangle);
@@ -62,7 +74,7 @@ public class BuilderScaleRectangles(
         return this;
     }
 
-    public BuilderScaleRectangles AddLeftMiddleRectangle()
+    public IBuilderScaleRectangles AddLeftMiddleRectangle()
     {
         var leftMiddleRectangle = CreateLeftMiddleRectangle();
         scaleRectangles.Add(leftMiddleRectangle);
@@ -70,7 +82,7 @@ public class BuilderScaleRectangles(
         return this;
     }
 
-    public BuilderScaleRectangles AddLeftTopRectangle()
+    public IBuilderScaleRectangles AddLeftTopRectangle()
     {
         var leftTopRectangle = CreateLeftTopRectangle();
         scaleRectangles.Add(leftTopRectangle);
@@ -78,112 +90,78 @@ public class BuilderScaleRectangles(
         return this;
     }
 
-    public List<ScaleRectangle> Build()
-    {
-        return scaleRectangles;
-    }
+    public List<ScaleRectangle> Build() =>
+        scaleRectangles;
 
-    private ScaleRectangle CreateMiddleTopRectangle()
-    {
-        var middleTopRectangle = new ScaleRectangle(
-            canvasSymbolsVM,
-            scaleAllSymbolVM,
-            blockSymbolVM,
+    private ScaleRectangle CreateMiddleTopRectangle() =>
+        new(
+            canvasSymbolsComponentVM,
+            scaleAllSymbolComponentVM,
+            scalableBlockSymbolVM,
             Cursors.SizeNS,
-            coordinateScaleRectangle.GetCoordinateMiddleTopRectangle,
+            coordinateScaleRectangle.GetCoordinateMiddleTop,
             PositionScaleRectangle.MiddleTop);
 
-        return middleTopRectangle;
-    }
-
-    private ScaleRectangle CreateRightTopRectangle()
-    {
-        var rightTopRectangle = new ScaleRectangle(
-            canvasSymbolsVM,
-            scaleAllSymbolVM,
-            blockSymbolVM,
+    private ScaleRectangle CreateRightTopRectangle() =>
+        new(
+            canvasSymbolsComponentVM,
+            scaleAllSymbolComponentVM,
+            scalableBlockSymbolVM,
             Cursors.SizeNESW,
-            coordinateScaleRectangle.GetCoordinateRightTopRectangle,
+            coordinateScaleRectangle.GetCoordinateRightTop,
             PositionScaleRectangle.RightTop);
 
-        return rightTopRectangle;
-    }
-
-    private ScaleRectangle CreateRightMiddleRectangle()
-    {
-        var rightMiddleRectangle = new ScaleRectangle(
-            canvasSymbolsVM,
-            scaleAllSymbolVM,
-            blockSymbolVM,
+    private ScaleRectangle CreateRightMiddleRectangle() =>
+        new(
+            canvasSymbolsComponentVM,
+            scaleAllSymbolComponentVM,
+            scalableBlockSymbolVM,
             Cursors.SizeWE,
-            coordinateScaleRectangle.GetCoordinateRightMiddleRectangle,
+            coordinateScaleRectangle.GetCoordinateRightMiddle,
             PositionScaleRectangle.RightMiddle);
 
-        return rightMiddleRectangle;
-    }
-
-    private ScaleRectangle CreateRightBottomRectangle()
-    {
-        var rightBottomRectangle = new ScaleRectangle(
-            canvasSymbolsVM,
-            scaleAllSymbolVM,
-            blockSymbolVM,
+    private ScaleRectangle CreateRightBottomRectangle() =>
+        new(
+            canvasSymbolsComponentVM,
+            scaleAllSymbolComponentVM,
+            scalableBlockSymbolVM,
             Cursors.SizeNWSE,
-            coordinateScaleRectangle.GetCoordinateRightBottomRectangle,
+            coordinateScaleRectangle.GetCoordinateRightBottom,
             PositionScaleRectangle.RightBottom);
 
-        return rightBottomRectangle;
-    }
-
-    private ScaleRectangle CreateMiddleBottomRectangle()
-    {
-        var middleBottomRectangle = new ScaleRectangle(
-            canvasSymbolsVM,
-            scaleAllSymbolVM,
-            blockSymbolVM,
+    private ScaleRectangle CreateMiddleBottomRectangle() =>
+        new(
+            canvasSymbolsComponentVM,
+            scaleAllSymbolComponentVM,
+            scalableBlockSymbolVM,
             Cursors.SizeNS,
-            coordinateScaleRectangle.GetCoordinateMiddleBottomRectangle,
+            coordinateScaleRectangle.GetCoordinateMiddleBottom,
             PositionScaleRectangle.MiddleBottom);
 
-        return middleBottomRectangle;
-    }
-
-    private ScaleRectangle CreateLeftBottomRectangle()
-    {
-        var leftBottomRectangle = new ScaleRectangle(
-            canvasSymbolsVM,
-            scaleAllSymbolVM,
-            blockSymbolVM,
+    private ScaleRectangle CreateLeftBottomRectangle() =>
+        new(
+            canvasSymbolsComponentVM,
+            scaleAllSymbolComponentVM,
+            scalableBlockSymbolVM,
             Cursors.SizeNESW,
-            coordinateScaleRectangle.GetCoordinateLeftBottomRectangle,
+            coordinateScaleRectangle.GetCoordinateLeftBottom,
             PositionScaleRectangle.LeftBottom);
 
-        return leftBottomRectangle;
-    }
-
-    private ScaleRectangle CreateLeftMiddleRectangle()
-    {
-        var leftMiddleRectangle = new ScaleRectangle(
-            canvasSymbolsVM,
-            scaleAllSymbolVM,
-            blockSymbolVM,
+    private ScaleRectangle CreateLeftMiddleRectangle() =>
+        new(
+            canvasSymbolsComponentVM,
+            scaleAllSymbolComponentVM,
+            scalableBlockSymbolVM,
             Cursors.SizeWE,
-            coordinateScaleRectangle.GetCoordinateLeftMiddleRectangle,
+            coordinateScaleRectangle.GetCoordinateLeftMiddle,
             PositionScaleRectangle.LeftMiddle);
 
-        return leftMiddleRectangle;
-    }
-
-    private ScaleRectangle CreateLeftTopRectangle()
-    {
-        var leftTopRectangle = new ScaleRectangle(
-            canvasSymbolsVM,
-            scaleAllSymbolVM,
-            blockSymbolVM,
+    private ScaleRectangle CreateLeftTopRectangle() =>
+        new(
+            canvasSymbolsComponentVM,
+            scaleAllSymbolComponentVM,
+            scalableBlockSymbolVM,
             Cursors.SizeNWSE,
-            coordinateScaleRectangle.GetCoordinateLeftTopRectangle,
+            coordinateScaleRectangle.GetCoordinateLeftTop,
             PositionScaleRectangle.LeftTop);
-
-        return leftTopRectangle;
-    }
 }

@@ -10,4 +10,7 @@ public class BlockSymbolModel
     public double Width { get; set; }
     public double Height { get; set; }
     public TextFieldSymbolModel? TextFieldSymbolModel { get; set; }
+
+    private const double MinWidth = 40;
+    private const double MinHeight = 40;
 }

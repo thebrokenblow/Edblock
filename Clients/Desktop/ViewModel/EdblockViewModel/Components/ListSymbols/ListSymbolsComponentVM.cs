@@ -14,6 +14,8 @@ using EdblockViewModel.Components.CanvasSymbols.Interfaces;
 using EdblockViewModel.Components.TopSettingsMenu.Interfaces;
 using EdblockViewModel.Components.TopSettingsMenu.PopupBoxMenu.Interfaces;
 using Prism.Commands;
+using EdblockViewModel.Symbols.ComponentsSymbolsVM.ScaleRectangles.Interfaces;
+using EdblockViewModel.Symbols.ComponentsSymbolsVM.ScaleRectangles;
 
 namespace EdblockViewModel.Components.ListSymbols;
 
@@ -197,17 +199,20 @@ public class ListSymbolsComponentVM : ObservableObject, IListSymbolsComponentVM,
 
     private readonly ErrorsViewModel errorsViewModel = new();
 
+    private readonly IBuilderScaleRectangles _builderScaleRectangles;
     private readonly ICanvasSymbolsComponentVM _canvasSymbolsComponentVM;
     private readonly IListCanvasSymbolsComponentVM _listCanvasSymbolsComponentVM;
     private readonly ITopSettingsMenuComponentVM _topSettingsMenuComponentVM;
     private readonly IPopupBoxMenuComponentVM _popupBoxMenuComponentVM;
     public ListSymbolsComponentVM(
+        IBuilderScaleRectangles builderScaleRectangles,
         ICanvasSymbolsComponentVM canvasSymbolsComponentVM,
         IListCanvasSymbolsComponentVM listCanvasSymbolsComponentVM,
         ITopSettingsMenuComponentVM topSettingsMenuComponentVM,
         IPopupBoxMenuComponentVM popupBoxMenuComponentVM, 
         Func<Type, BlockSymbolVM> factoryBlockSymbol)
     {
+        _builderScaleRectangles = builderScaleRectangles;
         _canvasSymbolsComponentVM = canvasSymbolsComponentVM;
         _listCanvasSymbolsComponentVM = listCanvasSymbolsComponentVM;
         _topSettingsMenuComponentVM = topSettingsMenuComponentVM;
@@ -243,6 +248,7 @@ public class ListSymbolsComponentVM : ObservableObject, IListSymbolsComponentVM,
         }
 
         var horizontalConditionSymbol = new HorizontalConditionSymbolVM(
+            _builderScaleRectangles,
             _canvasSymbolsComponentVM,
             _listCanvasSymbolsComponentVM,
             _topSettingsMenuComponentVM,
@@ -266,6 +272,7 @@ public class ListSymbolsComponentVM : ObservableObject, IListSymbolsComponentVM,
         }
 
         var verticalConditionSymbolVM = new VerticalConditionSymbolVM(
+            _builderScaleRectangles,
             _canvasSymbolsComponentVM,
             _listCanvasSymbolsComponentVM,
             _topSettingsMenuComponentVM,
@@ -296,6 +303,7 @@ public class ListSymbolsComponentVM : ObservableObject, IListSymbolsComponentVM,
         }
 
         var parallelActionSymbolVM = new ParallelActionSymbolVM(
+            _builderScaleRectangles,
             _canvasSymbolsComponentVM,
             _listCanvasSymbolsComponentVM,
             _topSettingsMenuComponentVM,

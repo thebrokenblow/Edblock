@@ -8,15 +8,14 @@ using EdblockViewModel.Symbols.Attributes;
 using EdblockViewModel.Components.CanvasSymbols.Interfaces;
 using EdblockViewModel.Components.TopSettingsMenu.Interfaces;
 using EdblockViewModel.Components.TopSettingsMenu.PopupBoxMenu.Interfaces;
-using EdblockViewModel.Components.CanvasSymbols;
+using EdblockViewModel.Symbols.ComponentsSymbolsVM.ScaleRectangles.Interfaces;
 
 namespace EdblockViewModel.Symbols;
 
 [SymbolType("LinkSymbolVM")]
-public class LinkSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnectionPoint, IHasScaleRectangles
+public class LinkSymbolVM : ScalableBlockSymbolVM, IHasTextFieldVM, IHasConnectionPoint
 {
-    public TextFieldSymbolVM TextFieldSymbolVM { get; init; }
-    public List<ScaleRectangle> ScaleRectangles { get; set; } = null!;
+    public TextFieldSymbolVM TextFieldSymbolVM { get; }
     public List<ConnectionPointVM> ConnectionPointsVM { get; set; } = null!;
 
     private readonly CoordinateConnectionPointVM coordinateConnectionPointVM;
@@ -28,19 +27,24 @@ public class LinkSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnectionPoint,
     private const string defaultColor = "#FF5761A8";
 
     public LinkSymbolVM(
+        IBuilderScaleRectangles builderScaleRectangles,
         ICanvasSymbolsComponentVM canvasSymbolsComponentVM,
         IListCanvasSymbolsComponentVM listCanvasSymbolsComponentVM,
         ITopSettingsMenuComponentVM topSettingsMenuComponentVM,
-        IPopupBoxMenuComponentVM popupBoxMenuComponentVM) : base(canvasSymbolsComponentVM, listCanvasSymbolsComponentVM, topSettingsMenuComponentVM, popupBoxMenuComponentVM)
+        IPopupBoxMenuComponentVM popupBoxMenuComponentVM) : base(
+            builderScaleRectangles, 
+            canvasSymbolsComponentVM, 
+            listCanvasSymbolsComponentVM, 
+            topSettingsMenuComponentVM, 
+            popupBoxMenuComponentVM)
     {
-        TextFieldSymbolVM = new(base._canvasSymbolsComponentVM, this)
+        TextFieldSymbolVM = new(_canvasSymbolsComponentVM, this)
         {
             Text = defaultText
         };
 
         Color = defaultColor;
 
-        AddScaleRectangles();
         AddConnectionPoints();
 
         coordinateConnectionPointVM = new(this);
@@ -49,31 +53,19 @@ public class LinkSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnectionPoint,
         SetHeight(defaultHeigth);
     }
 
+
     public override void SetSize(ScalePartBlockSymbol scalePartBlockSymbol)
     {
         if (scalePartBlockSymbol.PositionScaleRectangle == PositionScaleRectangle.LeftBottom)
         {
-            int currentXCoordinateCursor = _canvasSymbolsComponentVM.XCoordinate;
-            double initialWidth = scalePartBlockSymbol.InitialWidthBlockSymbol;
-            double initialXCoordinate = scalePartBlockSymbol.InitialXCoordinateBlockSymbol;
-
-            double widthBlockSymbol = initialWidth + (initialXCoordinate - currentXCoordinateCursor);
-
-            if (widthBlockSymbol < 40)
-            {
-                widthBlockSymbol = 40;
-            }
-
-            SetWidth(widthBlockSymbol);
-
-            XCoordinate = initialXCoordinate - (widthBlockSymbol - initialWidth);
+            SetWidthLeftPart(scalePartBlockSymbol);
         }
         else if (scalePartBlockSymbol.PositionScaleRectangle == PositionScaleRectangle.LeftTop)
         {
             int currentXCoordinateCursor = _canvasSymbolsComponentVM.XCoordinate;
             double initialWidth = scalePartBlockSymbol.InitialWidthBlockSymbol;
             double initialXCoordinate = scalePartBlockSymbol.InitialXCoordinateBlockSymbol;
-
+            double initialYCoordinate = scalePartBlockSymbol.InitialYCoordinateBlockSymbol;
             double widthBlockSymbol = initialWidth + (initialXCoordinate - currentXCoordinateCursor);
 
             if (widthBlockSymbol < 40)
@@ -84,40 +76,15 @@ public class LinkSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnectionPoint,
             SetWidth(widthBlockSymbol);
 
             XCoordinate = initialXCoordinate - (widthBlockSymbol - initialWidth);
-
-            int currentYCoordinateCursor = _canvasSymbolsComponentVM.YCoordinate;
-            double initialHeigth = scalePartBlockSymbol.InitialHeigthBlockSymbol;
-            double initialYCoordinate = scalePartBlockSymbol.InitialYCoordinateBlockSymbol;
-
             YCoordinate = initialYCoordinate - (widthBlockSymbol - initialWidth);
         }
         else if (scalePartBlockSymbol.PositionScaleRectangle == PositionScaleRectangle.RightTop)
         {
-            int currentYCoordinateCursor = _canvasSymbolsComponentVM.YCoordinate;
-            double initialHeigth = scalePartBlockSymbol.InitialHeigthBlockSymbol;
-            double initialYCoordinate = scalePartBlockSymbol.InitialYCoordinateBlockSymbol;
-
-            double heigthBlockSymbol = initialHeigth + (initialYCoordinate - currentYCoordinateCursor);
-
-            if (heigthBlockSymbol < 40)
-            {
-                heigthBlockSymbol = 40;
-            }
-
-            SetHeight(heigthBlockSymbol);
-
-            YCoordinate = initialYCoordinate - (heigthBlockSymbol - initialHeigth);
+            SetHeigthTopPart(scalePartBlockSymbol);
         }
         else if (scalePartBlockSymbol.PositionScaleRectangle == PositionScaleRectangle.RightBottom)
         {
-            double heigthBlockSymbol = _canvasSymbolsComponentVM.YCoordinate - scalePartBlockSymbol.InitialYCoordinateBlockSymbol;
-
-            if (heigthBlockSymbol < 40)
-            {
-                heigthBlockSymbol = 40;
-            }
-
-            SetHeight(heigthBlockSymbol);
+            SetHeigthBottomPart(scalePartBlockSymbol);
         }
     }
 
@@ -149,6 +116,14 @@ public class LinkSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnectionPoint,
         coordinateConnectionPointVM.SetCoordinate();
     }
 
+    protected override List<ScaleRectangle> CreateScaleRectangles() =>
+        BuilderScaleRectangles
+        .AddRightTopRectangle()
+        .AddRightBottomRectangle()
+        .AddLeftBottomRectangle()
+        .AddLeftTopRectangle()
+        .Build();
+
     private void AddConnectionPoints()
     {
         var builderConnectionPointsVM = new BuilderConnectionPointsVM(
@@ -162,21 +137,5 @@ public class LinkSymbolVM : BlockSymbolVM, IHasTextFieldVM, IHasConnectionPoint,
             .AddBottomConnectionPoint()
             .AddLeftConnectionPoint()
             .Build();
-    }
-
-    private void AddScaleRectangles()
-    {
-        var builderScaleRectangles = new BuilderScaleRectangles(
-            _canvasSymbolsComponentVM,
-           scaleAllSymbolComponentVM,
-           this);
-
-        ScaleRectangles =
-            builderScaleRectangles
-                        .AddRightTopRectangle()
-                        .AddRightBottomRectangle()
-                        .AddLeftBottomRectangle()
-                        .AddLeftTopRectangle()
-                        .Build();
     }
 }

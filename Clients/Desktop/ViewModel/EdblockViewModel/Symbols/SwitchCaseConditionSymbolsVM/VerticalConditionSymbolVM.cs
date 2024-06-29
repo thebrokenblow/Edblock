@@ -4,19 +4,18 @@ using EdblockModel.EnumsModel;
 using EdblockViewModel.Symbols.Attributes;
 using EdblockViewModel.Symbols.Abstractions;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM;
-using EdblockViewModel.Symbols.ComponentsSymbolsVM.ScaleRectangles;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM.ConnectionPoints;
 using EdblockViewModel.Components.CanvasSymbols.Interfaces;
 using EdblockViewModel.Components.TopSettingsMenu.Interfaces;
 using EdblockViewModel.Components.TopSettingsMenu.PopupBoxMenu.Interfaces;
+using EdblockViewModel.Symbols.ComponentsSymbolsVM.ScaleRectangles.Interfaces;
 
 namespace EdblockViewModel.Symbols.SwitchCaseConditionSymbolsVM;
 
 [SymbolType("VerticalConditionSymbolVM")]
-public class VerticalConditionSymbolVM : SwitchCaseSymbolVM, IHasTextFieldVM, IHasConnectionPoint, IHasScaleRectangles
+public class VerticalConditionSymbolVM : SwitchCaseSymbolVM, IHasTextFieldVM, IHasConnectionPoint
 {
     public TextFieldSymbolVM TextFieldSymbolVM { get; init; }
-    public List<ScaleRectangle> ScaleRectangles { get; set; } = null!;
     public List<LineSwitchCase> LinesSwitchCase { get; set; } = null!;
     public List<ConnectionPointVM> ConnectionPointsVM { get; set; } = null!;
     public LineSwitchCase VerticalLineSwitchCase { get; init; } = new();
@@ -43,19 +42,25 @@ public class VerticalConditionSymbolVM : SwitchCaseSymbolVM, IHasTextFieldVM, IH
     private const string defaultColor = "#FF60B2D3";
 
     public VerticalConditionSymbolVM(
+        IBuilderScaleRectangles builderScaleRectangles,
         ICanvasSymbolsComponentVM canvasSymbolsComponentVM,
         IListCanvasSymbolsComponentVM listCanvasSymbolsComponentVM,
         ITopSettingsMenuComponentVM topSettingsMenuComponentVM,
-        IPopupBoxMenuComponentVM popupBoxMenuComponentVM, int countLines) : base(canvasSymbolsComponentVM, listCanvasSymbolsComponentVM, topSettingsMenuComponentVM, popupBoxMenuComponentVM, countLines)
+        IPopupBoxMenuComponentVM popupBoxMenuComponentVM, int countLines) : base(
+            builderScaleRectangles, 
+            canvasSymbolsComponentVM, 
+            listCanvasSymbolsComponentVM, 
+            topSettingsMenuComponentVM, 
+            popupBoxMenuComponentVM, 
+            countLines)
     {
-        TextFieldSymbolVM = new(base._canvasSymbolsComponentVM, this)
+        TextFieldSymbolVM = new(_canvasSymbolsComponentVM, this)
         {
             Text = defaultText
         };
 
         Color = defaultColor;
 
-        AddScaleRectangles();
         AddConnectionPoints();
         AddLinesSwitchCase(countLines);
 
@@ -147,26 +152,6 @@ public class VerticalConditionSymbolVM : SwitchCaseSymbolVM, IHasTextFieldVM, IH
             new(halfWidth, 0),
             new(0, halfHeight)
         ];
-    }
-
-    private void AddScaleRectangles()
-    {
-        var builderScaleRectangles = new BuilderScaleRectangles(
-            _canvasSymbolsComponentVM,
-            scaleAllSymbolComponentVM,
-            this);
-
-        ScaleRectangles =
-            builderScaleRectangles
-                        .AddMiddleTopRectangle()
-                        .AddRightTopRectangle()
-                        .AddRightMiddleRectangle()
-                        .AddRightBottomRectangle()
-                        .AddMiddleBottomRectangle()
-                        .AddLeftBottomRectangle()
-                        .AddLeftMiddleRectangle()
-                        .AddLeftTopRectangle()
-                        .Build();
     }
 
     private void AddConnectionPoints()

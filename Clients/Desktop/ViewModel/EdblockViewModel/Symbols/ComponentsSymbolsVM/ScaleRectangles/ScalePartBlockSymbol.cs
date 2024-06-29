@@ -5,37 +5,35 @@ using EdblockViewModel.Components.CanvasSymbols.Interfaces;
 
 namespace EdblockViewModel.Symbols.ComponentsSymbolsVM.ScaleRectangles;
 
-public class ScalePartBlockSymbol(
-    BlockSymbolVM scalingBlockSymbol,
-    Cursor cursorWhenScaling,
-    IScaleAllSymbolComponentVM scaleAllSymbolVM,
-    PositionScaleRectangle positionScaleRectangle)
+public class ScalePartBlockSymbol(IScaleAllSymbolComponentVM scaleAllSymbolVM)
 {
-    public double InitialWidthBlockSymbol { get; } = scalingBlockSymbol.Width;
-    public double InitialHeigthBlockSymbol { get; } = scalingBlockSymbol.Height;
-    public double InitialXCoordinateBlockSymbol { get; } = scalingBlockSymbol.XCoordinate;
-    public double InitialYCoordinateBlockSymbol { get; } = scalingBlockSymbol.YCoordinate;
-    public PositionScaleRectangle PositionScaleRectangle { get; } = positionScaleRectangle;
+    public required double InitialWidthBlockSymbol { get; init; }
+    public required double InitialHeigthBlockSymbol { get; init; }
+    public required double InitialXCoordinateBlockSymbol { get; init; }
+    public required double InitialYCoordinateBlockSymbol { get; init; }
+    public required Cursor CursorWhenScaling { get; init; }
+    public required ScalableBlockSymbolVM ScalingBlockSymbol { get; init; }
+    public required PositionScaleRectangle PositionScaleRectangle { get; init; }
 
     public void SetSize(ICanvasSymbolsComponentVM canvasSymbolsComponentVM)
     {
         if (scaleAllSymbolVM.IsScaleAllSymbol)
         {
-            foreach (var blockSymbolVM in canvasSymbolsComponentVM.ListCanvasSymbolsComponentVM.BlockSymbolsVM)
+            foreach (var scalableBlockSymbols in canvasSymbolsComponentVM.ListCanvasSymbolsComponentVM.ScalableBlockSymbols)
             {
-                blockSymbolVM.SetSize(this);
+                scalableBlockSymbols.SetSize(this);
             }
         }
         else
         {
-            scalingBlockSymbol.SetSize(this);
+            ScalingBlockSymbol.SetSize(this);
         }
 
-        if (scalingBlockSymbol is IHasTextFieldVM blockSymbolHasTextField)
+        if (ScalingBlockSymbol is IHasTextFieldVM blockSymbolHasTextField)
         {
-            blockSymbolHasTextField.TextFieldSymbolVM.Cursor = cursorWhenScaling;
+            blockSymbolHasTextField.TextFieldSymbolVM.Cursor = CursorWhenScaling;
         }
 
-        canvasSymbolsComponentVM.Cursor = cursorWhenScaling;
+        canvasSymbolsComponentVM.Cursor = CursorWhenScaling;
     }
 }
