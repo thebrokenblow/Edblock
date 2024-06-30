@@ -12,7 +12,7 @@ using EdblockViewModel.Symbols.ComponentsSymbolsVM.ScaleRectangles.Interfaces;
 namespace EdblockViewModel.Symbols;
 
 [SymbolType("InputOutputSymbolVM")]
-public class InputOutputSymbolVM : ScalableBlockSymbolVM, IHasTextFieldVM, IHasConnectionPoint
+public sealed class InputOutputSymbolVM : ScalableBlockSymbolVM, IHasTextFieldVM, IHasConnectionPoint
 {
     public TextFieldSymbolVM TextFieldSymbolVM { get; init; }
     public List<ConnectionPointVM> ConnectionPointsVM { get; set; } = null!;

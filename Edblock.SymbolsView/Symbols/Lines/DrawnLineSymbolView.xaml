@@ -1,0 +1,23 @@
+﻿<UserControl
+    x:Class="Edblock.SymbolsView.Symbols.Lines.DrawnLineSymbolView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:linesSymbolVM="clr-namespace:EdblockViewModel.Symbols.LinesSymbolVM;assembly=EdblockViewModel"
+    xmlns:linesView="clr-namespace:Edblock.SymbolsView.Symbols.Lines"
+    xmlns:local="clr-namespace:Edblock.SymbolsView.Symbols.Lines"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+    <ItemsControl ItemsSource="{Binding LinesSymbolVM}">
+        <ItemsControl.ItemTemplate>
+            <DataTemplate DataType="{x:Type linesSymbolVM:LineSymbolVM}">
+                <linesView:LineSymbolView />
+            </DataTemplate>
+        </ItemsControl.ItemTemplate>
+        <ItemsControl.ItemsPanel>
+            <ItemsPanelTemplate>
+                <Canvas />
+            </ItemsPanelTemplate>
+        </ItemsControl.ItemsPanel>
+    </ItemsControl>
+</UserControl>

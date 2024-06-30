@@ -3,9 +3,9 @@ using Prism.Commands;
 using System.Windows.Input;
 using System.Collections.Generic;
 using EdblockViewModel.Core;
+using EdblockViewModel.Symbols.Abstractions;
 using EdblockViewModel.Components.CanvasSymbols.Interfaces;
 using EdblockViewModel.Components.TopSettingsMenu.PopupBoxMenu.Interfaces;
-using EdblockViewModel.Symbols.Abstractions;
 
 namespace EdblockViewModel.Symbols.ComponentsSymbolsVM.ScaleRectangles;
 

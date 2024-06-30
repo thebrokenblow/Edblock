@@ -4,12 +4,14 @@ using System.Linq;
 using EdblockViewModel.Components.CanvasSymbols.Interfaces;
 using EdblockViewModel.Components.TopSettingsMenu.PopupBoxMenu.Interfaces;
 using EdblockViewModel.Symbols.Abstractions;
+using EdblockViewModel.Symbols.LinesSymbolVM;
 
 namespace EdblockViewModel.Components.CanvasSymbols;
 
 public class ListCanvasSymbolsComponentVM(IPopupBoxMenuComponentVM popupBoxMenuComponentVM) : IListCanvasSymbolsComponentVM
 {
     public ObservableCollection<BlockSymbolVM> BlockSymbolsVM { get; } = [];
+    public ObservableCollection<DrawnLineVM> DrawnLinesVM { get; } = [];
     public List<ScalableBlockSymbolVM> ScalableBlockSymbols { get; } = [];
     public List<BlockSymbolVM> SelectedBlockSymbols { get; } = [];
     public List<IHasTextFieldVM> SelectedSymbolsHasTextField { get; } = [];

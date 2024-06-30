@@ -8,13 +8,11 @@ using EdblockViewModel.Symbols.Attributes;
 using EdblockViewModel.Components.CanvasSymbols.Interfaces;
 using EdblockViewModel.Components.TopSettingsMenu.Interfaces;
 using EdblockViewModel.Components.TopSettingsMenu.PopupBoxMenu.Interfaces;
-using EdblockViewModel.Symbols.ComponentsSymbolsVM.ScaleRectangles;
-using EdblockViewModel.Symbols.ComponentsSymbolsVM.ScaleRectangles.Interfaces;
 
 namespace EdblockViewModel.Symbols.ComponentsParallelActionSymbolVM;
 
 [SymbolType("ParallelActionSymbolVM")]
-public class ParallelActionSymbolVM : ScalableBlockSymbolVM, IHasConnectionPoint
+public sealed class ParallelActionSymbolVM : BlockSymbolVM, IHasConnectionPoint
 {
     public LineParallelActionSymbolVM UpperHorizontalLine { get; set; } = new();
     public LineParallelActionSymbolVM LowerHorizontalLine { get; set; } = new();
@@ -32,14 +30,12 @@ public class ParallelActionSymbolVM : ScalableBlockSymbolVM, IHasConnectionPoint
 
     private const string defaultColor = "Black";
     public ParallelActionSymbolVM(
-        IBuilderScaleRectangles builderScaleRectangles, 
         ICanvasSymbolsComponentVM canvasSymbolsComponentVM,
         IListCanvasSymbolsComponentVM listCanvasSymbolsComponentVM,
         ITopSettingsMenuComponentVM topSettingsMenuComponentVM,
         IPopupBoxMenuComponentVM popupBoxMenuComponentVM, 
         int countSymbolsIncoming, 
         int countSymbolsOutgoing) : base(
-            builderScaleRectangles, 
             canvasSymbolsComponentVM, 
             listCanvasSymbolsComponentVM, 
             topSettingsMenuComponentVM, 
@@ -79,11 +75,6 @@ public class ParallelActionSymbolVM : ScalableBlockSymbolVM, IHasConnectionPoint
         SetHeight(defaultHeigth);
     }
 
-    public override void SetSize(ScalePartBlockSymbol scalePartBlockSymbol)
-    {
-        throw new System.NotImplementedException();
-    }
-
     public override BlockSymbolModel CreateBlockSymbolModel()
     {
         var nameSymbol = GetType().Name.ToString();
@@ -97,7 +88,7 @@ public class ParallelActionSymbolVM : ScalableBlockSymbolVM, IHasConnectionPoint
         return parallelActionSymbolModel;
     }
 
-    public override void SetHeight(double height)
+    public void SetHeight(double height)
     {
         Height = height;
 
@@ -135,7 +126,7 @@ public class ParallelActionSymbolVM : ScalableBlockSymbolVM, IHasConnectionPoint
         }
     }
 
-    public override void SetWidth(double width)
+    public void SetWidth(double width)
     {
         Width = width * _maxSymbols + indentBetweenSymbol * (_maxSymbols - 1);
 

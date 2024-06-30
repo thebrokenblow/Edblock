@@ -9,8 +9,11 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:edblockVM="clr-namespace:EdblockViewModel.Core;assembly=EdblockViewModel"
     xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:lineSymbolView="clr-namespace:Edblock.SymbolsView.Symbols.Lines;assembly=Edblock.SymbolsView"
+    xmlns:linesSymbolVM="clr-namespace:EdblockViewModel.Symbols.LinesSymbolVM;assembly=EdblockViewModel"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:switchCaseConditionSymbolsVM="clr-namespace:EdblockViewModel.Symbols.SwitchCaseConditionSymbolsVM;assembly=EdblockViewModel"
+    xmlns:symbolViewModel="clr-namespace:EdblockViewModel.Symbols.LinesSymbolVM;assembly=EdblockViewModel"
     xmlns:symbolsView="clr-namespace:Edblock.SymbolsView.Symbols;assembly=Edblock.SymbolsView"
     d:DataContext="{d:DesignInstance Type=canvassymbols:CanvasSymbolsComponentVM}"
     d:DesignHeight="450"
@@ -80,6 +83,19 @@
                         <Setter Property="Canvas.Top" Value="{Binding YCoordinate}" />
                     </Style>
                 </ItemsControl.ItemContainerStyle>
+            </ItemsControl>
+
+            <ItemsControl ItemsSource="{Binding ListCanvasSymbolsComponentVM.DrawnLinesVM}">
+                <ItemsControl.Resources>
+                    <DataTemplate DataType="{x:Type linesSymbolVM:DrawnLineVM}">
+                        <lineSymbolView:DrawnLineSymbolView />
+                    </DataTemplate>
+                </ItemsControl.Resources>
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <Canvas />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
             </ItemsControl>
 
             <Canvas.Background>

@@ -12,7 +12,7 @@ using EdblockViewModel.Components.TopSettingsMenu.PopupBoxMenu.Interfaces;
 namespace EdblockViewModel.Symbols;
 
 [SymbolType("CycleForSymbolVM")]
-public class CycleForSymbolVM : ScalableBlockSymbolVM, IHasTextFieldVM, IHasConnectionPoint
+public sealed class CycleForSymbolVM : ScalableBlockSymbolVM, IHasTextFieldVM, IHasConnectionPoint
 {
     public TextFieldSymbolVM TextFieldSymbolVM { get; }
     public List<ConnectionPointVM> ConnectionPointsVM { get; set; } = null!;

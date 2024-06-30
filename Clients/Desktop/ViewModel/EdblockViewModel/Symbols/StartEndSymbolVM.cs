@@ -11,7 +11,7 @@ using EdblockViewModel.Symbols.ComponentsSymbolsVM.ScaleRectangles.Interfaces;
 namespace EdblockViewModel.Symbols;
 
 [SymbolType("StartEndSymbolVM")]
-public class StartEndSymbolVM : ScalableBlockSymbolVM, IHasTextFieldVM, IHasConnectionPoint
+public sealed class StartEndSymbolVM : ScalableBlockSymbolVM, IHasTextFieldVM, IHasConnectionPoint
 {
     public TextFieldSymbolVM TextFieldSymbolVM { get; }
     public List<ConnectionPointVM> ConnectionPointsVM { get; set; } = null!;

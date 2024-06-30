@@ -1,7 +1,7 @@
 ﻿using System.Windows.Input;
-using EdblockViewModel.Components.TopSettingsMenu.PopupBoxMenu.Interfaces;
 using EdblockViewModel.Symbols.Abstractions;
 using EdblockViewModel.Components.CanvasSymbols.Interfaces;
+using EdblockViewModel.Components.TopSettingsMenu.PopupBoxMenu.Interfaces;
 
 namespace EdblockViewModel.Symbols.ComponentsSymbolsVM.ScaleRectangles;
 

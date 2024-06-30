@@ -6,12 +6,11 @@ using EdblockViewModel.Symbols.Attributes;
 using EdblockViewModel.Components.CanvasSymbols.Interfaces;
 using EdblockViewModel.Components.TopSettingsMenu.Interfaces;
 using EdblockViewModel.Components.TopSettingsMenu.PopupBoxMenu.Interfaces;
-using EdblockViewModel.Symbols.ComponentsSymbolsVM.ScaleRectangles.Interfaces;
 
 namespace EdblockViewModel.Symbols.ComponentsCommentSymbolVM;
 
 [SymbolType("CommentSymbolVM")]
-public class CommentSymbolVM : BlockSymbolVM, IHasTextFieldVM
+public sealed class CommentSymbolVM : BlockSymbolVM, IHasTextFieldVM
 {
     public List<CommentLine> HorizontalLines { get; set; } = [];
     public CommentLine VerticalBaseline { get; set; } = new();

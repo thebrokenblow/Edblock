@@ -1,12 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using EdblockViewModel.Symbols.Abstractions;
+using EdblockViewModel.Symbols.LinesSymbolVM;
 
 namespace EdblockViewModel.Components.CanvasSymbols.Interfaces;
 
 public interface IListCanvasSymbolsComponentVM
 {
     ObservableCollection<BlockSymbolVM> BlockSymbolsVM { get; }
+    ObservableCollection<DrawnLineVM> DrawnLinesVM { get; }
     List<BlockSymbolVM> SelectedBlockSymbols { get; }
     List<ScalableBlockSymbolVM> ScalableBlockSymbols { get; }
     List<IHasTextFieldVM> SelectedSymbolsHasTextField { get; }

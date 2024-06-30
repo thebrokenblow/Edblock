@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using EdblockModel.EnumsModel;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM;
-using EdblockViewModel.Symbols.ComponentsSymbolsVM.ScaleRectangles;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM.ConnectionPoints;
 using EdblockViewModel.Symbols.Abstractions;
 using EdblockViewModel.Symbols.Attributes;
@@ -14,7 +13,7 @@ using EdblockViewModel.Symbols.ComponentsSymbolsVM.ScaleRectangles.Interfaces;
 namespace EdblockViewModel.Symbols.SwitchCaseConditionSymbolsVM;
 
 [SymbolType("HorizontalConditionSymbolVM")]
-public class HorizontalConditionSymbolVM : SwitchCaseSymbolVM, IHasTextFieldVM, IHasConnectionPoint
+public sealed class HorizontalConditionSymbolVM : SwitchCaseSymbolVM, IHasTextFieldVM, IHasConnectionPoint
 {
     public TextFieldSymbolVM TextFieldSymbolVM { get; }
     public List<LineSwitchCase> LinesSwitchCase { get; set; } = null!;

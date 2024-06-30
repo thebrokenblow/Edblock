@@ -303,7 +303,6 @@ public class ListSymbolsComponentVM : ObservableObject, IListSymbolsComponentVM,
         }
 
         var parallelActionSymbolVM = new ParallelActionSymbolVM(
-            _builderScaleRectangles,
             _canvasSymbolsComponentVM,
             _listCanvasSymbolsComponentVM,
             _topSettingsMenuComponentVM,

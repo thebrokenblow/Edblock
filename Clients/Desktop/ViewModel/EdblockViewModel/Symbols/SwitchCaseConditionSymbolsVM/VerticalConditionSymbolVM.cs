@@ -13,7 +13,7 @@ using EdblockViewModel.Symbols.ComponentsSymbolsVM.ScaleRectangles.Interfaces;
 namespace EdblockViewModel.Symbols.SwitchCaseConditionSymbolsVM;
 
 [SymbolType("VerticalConditionSymbolVM")]
-public class VerticalConditionSymbolVM : SwitchCaseSymbolVM, IHasTextFieldVM, IHasConnectionPoint
+public sealed class VerticalConditionSymbolVM : SwitchCaseSymbolVM, IHasTextFieldVM, IHasConnectionPoint
 {
     public TextFieldSymbolVM TextFieldSymbolVM { get; init; }
     public List<LineSwitchCase> LinesSwitchCase { get; set; } = null!;
