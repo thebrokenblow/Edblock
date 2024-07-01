@@ -21,10 +21,10 @@ public class CoordinateConnectionPointVM
 
         sideSymbolByCoordinate = new()
         {
-            { SideSymbol.Top, SetCoordinateTopConnectionPoint },
-            { SideSymbol.Right, SetCoordinateRightConnectionPoint },
-            { SideSymbol.Bottom, SetCoordinateBottomConnectionPoint },
-            { SideSymbol.Left, SetCoordinateLeftConnectionPoint }
+            { SideSymbol.Top, SetCoordinateTop },
+            { SideSymbol.Right, SetCoordinateRight },
+            { SideSymbol.Bottom, SetCoordinateBottom },
+            { SideSymbol.Left, SetCoordinateLeft }
         };
     }
 
@@ -37,47 +37,39 @@ public class CoordinateConnectionPointVM
         }
     }
 
-    private void SetCoordinateTopConnectionPoint(ConnectionPointVM topConnectionPoint)
+    private void SetCoordinateTop(ConnectionPointVM topConnectionPoint)
     {
-        var xCoordinate = _blockSymbolVM.Width / 2;
-
-        topConnectionPoint.XCoordinate = xCoordinate;
+        topConnectionPoint.XCoordinate = _blockSymbolVM.Width / 2;
         topConnectionPoint.YCoordinate = -offsetPositionConnectionPoint;
-
-        topConnectionPoint.XCoordinateLineDraw = xCoordinate;
-        topConnectionPoint.YCoordinateLineDraw = 0;
     }
 
-    private void SetCoordinateRightConnectionPoint(ConnectionPointVM rightConnectionPoint)
+    private void SetCoordinateRight(ConnectionPointVM rightConnectionPoint)
     {
-        var yCoordinate = _blockSymbolVM.Height / 2;
-
         rightConnectionPoint.XCoordinate = _blockSymbolVM.Width + offsetPositionConnectionPoint;
-        rightConnectionPoint.YCoordinate = yCoordinate;
-
-        rightConnectionPoint.XCoordinateLineDraw = _blockSymbolVM.Width;
-        rightConnectionPoint.YCoordinateLineDraw = yCoordinate;
+        rightConnectionPoint.YCoordinate = _blockSymbolVM.Height / 2;
     }
 
-    private void SetCoordinateBottomConnectionPoint(ConnectionPointVM bottomConnectionPoint)
+    private void SetCoordinateBottom(ConnectionPointVM bottomConnectionPoint)
     {
-        var xCoordinate = _blockSymbolVM.Width / 2;
-
-        bottomConnectionPoint.XCoordinate = xCoordinate;
+        bottomConnectionPoint.XCoordinate = _blockSymbolVM.Width / 2;
         bottomConnectionPoint.YCoordinate = _blockSymbolVM.Height + offsetPositionConnectionPoint;
-
-        bottomConnectionPoint.XCoordinateLineDraw = xCoordinate;
-        bottomConnectionPoint.YCoordinateLineDraw = _blockSymbolVM.Height;
     }
 
-    private void SetCoordinateLeftConnectionPoint(ConnectionPointVM leftConnectionPoint)
+    private void SetCoordinateLeft(ConnectionPointVM leftConnectionPoint)
     {
-        var yCoordinate = _blockSymbolVM.Height / 2;
-
         leftConnectionPoint.XCoordinate = -offsetPositionConnectionPoint;
-        leftConnectionPoint.YCoordinate = yCoordinate;
-
-        leftConnectionPoint.XCoordinateLineDraw = 0;
-        leftConnectionPoint.YCoordinateLineDraw = yCoordinate;
+        leftConnectionPoint.YCoordinate = _blockSymbolVM.Height / 2; ;
     }
+
+    public (double, double) GetCoordinateLineDrawTop() =>
+        (_blockSymbolVM.XCoordinate + _blockSymbolVM.Width / 2, _blockSymbolVM.YCoordinate);
+
+    public (double, double) GetCoordinateLineDrawRight() =>
+        (_blockSymbolVM.XCoordinate + _blockSymbolVM.Width, _blockSymbolVM.YCoordinate + _blockSymbolVM.Height / 2);
+
+    public (double, double) GetCoordinateLineDrawBottom() =>
+        (_blockSymbolVM.XCoordinate + _blockSymbolVM.Width / 2, _blockSymbolVM.YCoordinate + _blockSymbolVM.Height);
+
+    public (double, double) GetCoordinateLineDrawLeft() =>
+        (_blockSymbolVM.XCoordinate, _blockSymbolVM.YCoordinate + _blockSymbolVM.Height / 2);
 }

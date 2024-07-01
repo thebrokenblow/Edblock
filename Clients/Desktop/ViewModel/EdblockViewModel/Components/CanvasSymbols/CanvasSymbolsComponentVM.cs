@@ -4,6 +4,7 @@ using System.Windows.Input;
 using EdblockViewModel.Core;
 using EdblockViewModel.Components.CanvasSymbols.Interfaces;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM.ScaleRectangles;
+using EdblockViewModel.Symbols.LinesSymbolVM;
 
 namespace EdblockViewModel.Components.CanvasSymbols;
 
@@ -74,6 +75,7 @@ public class CanvasSymbolsComponentVM : ObservableObject, ICanvasSymbolsComponen
     public DelegateCommand MouseLeftButtonDown { get; }
     public DelegateCommand RemoveSelectedSymbolsCommand { get; }
     public ScalePartBlockSymbol? ScalePartBlockSymbol { get; set; }
+    public DrawnLineSymbolVM? CurrentDrawnLineSymbolVM { get; set; }
     public ScalingCanvasSymbolsComponentVM ScalingCanvasSymbolsVM { get; }
     public IListCanvasSymbolsComponentVM ListCanvasSymbolsComponentVM { get; }
 
@@ -91,6 +93,12 @@ public class CanvasSymbolsComponentVM : ObservableObject, ICanvasSymbolsComponen
 
     public void RemoveSelectedSymbols()
     {
+        if (CurrentDrawnLineSymbolVM is not null)
+        {
+            ListCanvasSymbolsComponentVM.DrawnLinesVM.Remove(CurrentDrawnLineSymbolVM);
+            CurrentDrawnLineSymbolVM = null;
+        }
+
         ListCanvasSymbolsComponentVM.RemoveSelectedBlockSymbols();
         ScalingCanvasSymbolsVM.Resize();
     }
@@ -107,6 +115,11 @@ public class CanvasSymbolsComponentVM : ObservableObject, ICanvasSymbolsComponen
             movableBlockSymbol.MoveMiddle = false;
         }
 
+        if (CurrentDrawnLineSymbolVM is not null)
+        {
+            CurrentDrawnLineSymbolVM.CreateFirstLine(CurrentDrawnLineSymbolVM.OutgoingConnectionPoint, xCoordinate, yCoordinate);
+        }
+
         ScalePartBlockSymbol = null;
         ListCanvasSymbolsComponentVM.MovableBlockSymbol = null;
 
@@ -121,12 +134,13 @@ public class CanvasSymbolsComponentVM : ObservableObject, ICanvasSymbolsComponen
 
         ListCanvasSymbolsComponentVM.MovableBlockSymbol?.SetCoordinate(currentCoordinate, previousCoordinate);
         ScalePartBlockSymbol?.SetSize(this);
+        CurrentDrawnLineSymbolVM?.DrawnLine(xCoordinate, yCoordinate);
 
         previousXCoordinate = xCoordinate;
         previousYCoordinate = yCoordinate;
     }
 
-    private void ClearSelectedSymbols()
+    public void ClearSelectedSymbols()
     {
         ListCanvasSymbolsComponentVM.ChangeFocusTextField();
         ListCanvasSymbolsComponentVM.ClearSelectedBlockSymbols();

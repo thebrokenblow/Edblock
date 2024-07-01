@@ -8,7 +8,7 @@ namespace EdblockViewModel.Components.CanvasSymbols.Interfaces;
 public interface IListCanvasSymbolsComponentVM
 {
     ObservableCollection<BlockSymbolVM> BlockSymbolsVM { get; }
-    ObservableCollection<DrawnLineVM> DrawnLinesVM { get; }
+    ObservableCollection<DrawnLineSymbolVM> DrawnLinesVM { get; }
     List<BlockSymbolVM> SelectedBlockSymbols { get; }
     List<ScalableBlockSymbolVM> ScalableBlockSymbols { get; }
     List<IHasTextFieldVM> SelectedSymbolsHasTextField { get; }

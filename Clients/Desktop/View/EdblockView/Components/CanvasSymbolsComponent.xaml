@@ -87,7 +87,7 @@
 
             <ItemsControl ItemsSource="{Binding ListCanvasSymbolsComponentVM.DrawnLinesVM}">
                 <ItemsControl.Resources>
-                    <DataTemplate DataType="{x:Type linesSymbolVM:DrawnLineVM}">
+                    <DataTemplate DataType="{x:Type linesSymbolVM:DrawnLineSymbolVM}">
                         <lineSymbolView:DrawnLineSymbolView />
                     </DataTemplate>
                 </ItemsControl.Resources>

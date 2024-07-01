@@ -54,22 +54,22 @@ public sealed class ParallelActionSymbolVM : BlockSymbolVM, IHasConnectionPoint
 
         ConnectionPointsVM = new(countSymbolsIncoming + countSymbolsOutgoing);
 
-        var factoryConnectionPoint = new FactoryConnectionPoint(
-            canvasSymbolsComponentVM, 
-            lineStateStandardComponentVM, 
-            this);
+        //FactoryConnectionPoint factoryConnectionPoint = null; new FactoryConnectionPoint(
+        //    canvasSymbolsComponentVM, 
+        //    lineStateStandardComponentVM, 
+        //    this);
 
-        for (int i = 0; i < countSymbolsIncoming; i++)
-        {
-            var bottomConnectionPoint = factoryConnectionPoint.Create(SideSymbol.Top);
-            ConnectionPointsVM.Add(bottomConnectionPoint);
-        }
+        //for (int i = 0; i < countSymbolsIncoming; i++)
+        //{
+        //    var bottomConnectionPoint = factoryConnectionPoint.Create(SideSymbol.Top);
+        //    ConnectionPointsVM.Add(bottomConnectionPoint);
+        //}
 
-        for (int i = 0; i < countSymbolsOutgoing; i++)
-        {
-            var bottomConnectionPoint = factoryConnectionPoint.Create(SideSymbol.Bottom);
-            ConnectionPointsVM.Add(bottomConnectionPoint);
-        }
+        //for (int i = 0; i < countSymbolsOutgoing; i++)
+        //{
+        //    var bottomConnectionPoint = factoryConnectionPoint.Create(SideSymbol.Bottom);
+        //    ConnectionPointsVM.Add(bottomConnectionPoint);
+        //}
 
         SetWidth(defaultWidth);
         SetHeight(defaultHeigth);

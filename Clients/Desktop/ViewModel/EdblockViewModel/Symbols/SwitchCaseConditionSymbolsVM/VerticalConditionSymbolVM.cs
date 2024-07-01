@@ -170,16 +170,16 @@ public sealed class VerticalConditionSymbolVM : SwitchCaseSymbolVM, IHasTextFiel
 
     private void AddLinesSwitchCase(int countLines)
     {
-        LinesSwitchCase = new(countLines);
+        //LinesSwitchCase = new(countLines);
 
-        var factoryConnectionPoint = new FactoryConnectionPoint(_canvasSymbolsComponentVM, lineStateStandardComponentVM, this);
+        //var factoryConnectionPoint = new FactoryConnectionPoint(_canvasSymbolsComponentVM, lineStateStandardComponentVM, this);
 
-        for (int i = 0; i < countLines; i++)
-        {
-            LinesSwitchCase.Add(new());
+        //for (int i = 0; i < countLines; i++)
+        //{
+        //    LinesSwitchCase.Add(new());
 
-            var rightConnectionPoint = factoryConnectionPoint.Create(SideSymbol.Right);
-            ConnectionPointsSwitchCaseVM.Add(rightConnectionPoint);
-        }
+        //    var rightConnectionPoint = factoryConnectionPoint.Create(SideSymbol.Right);
+        //    ConnectionPointsSwitchCaseVM.Add(rightConnectionPoint);
+        //}
     }
 }

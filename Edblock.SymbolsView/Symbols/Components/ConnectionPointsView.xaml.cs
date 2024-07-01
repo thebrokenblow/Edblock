@@ -21,7 +21,7 @@ public partial class ConnectionPointsView : UserControl
 
             if (contextEllipse is ConnectionPointVM connectionPointVM)
             {
-                //connectionPointVM.Click();
+                connectionPointVM.DrawLine();
             }           
         }
 

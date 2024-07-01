@@ -6,6 +6,8 @@ using EdblockViewModel.Core;
 using EdblockViewModel.Components.CanvasSymbols.Interfaces;
 using EdblockViewModel.Components.TopSettingsMenu.PopupBoxMenu.Interfaces;
 using EdblockViewModel.Symbols.Abstractions;
+using EdblockViewModel.Symbols.LinesSymbolVM;
+using System;
 
 namespace EdblockViewModel.Symbols.ComponentsSymbolsVM.ConnectionPoints;
 
@@ -69,14 +71,15 @@ public class ConnectionPointVM : ObservableObject
     public double XCoordinateLineDraw { get; set; }
     public double YCoordinateLineDraw { get; set; }
 
-    public DelegateCommand EnterCursor { get; init; }
-    public DelegateCommand LeaveCursor { get; init; }
-    public BlockSymbolVM BlockSymbolVM { get; init; }
-    public IHasConnectionPoint BlockSymbolHasConnectionPoint { get; init; }
-    public SideSymbol Position { get; init; }
+    public DelegateCommand EnterCursor { get; }
+    public DelegateCommand LeaveCursor { get; }
+    public BlockSymbolVM BlockSymbolVM { get; }
+    public IHasConnectionPoint BlockSymbolHasConnectionPoint { get; }
+    public SideSymbol Position { get; }
 
     private const int diametr = 8;
 
+    private readonly Func<(double, double)> _getCoordinateDrawLine;
     private readonly ICanvasSymbolsComponentVM _canvasSymbolsVM;
     private readonly ILineStateStandardComponentVM _lineStateStandardComponentVM;
 
@@ -84,8 +87,10 @@ public class ConnectionPointVM : ObservableObject
         ICanvasSymbolsComponentVM canvasSymbolsVM, 
         ILineStateStandardComponentVM lineStateStandardComponentVM, 
         BlockSymbolVM blockSymbolVM, 
-        SideSymbol position)
+        SideSymbol position,
+        Func<(double, double)> getCoordinateDrawLine)
     {
+        _getCoordinateDrawLine = getCoordinateDrawLine;
         _canvasSymbolsVM = canvasSymbolsVM;
         _lineStateStandardComponentVM = lineStateStandardComponentVM;
 
@@ -128,5 +133,30 @@ public class ConnectionPointVM : ObservableObject
 
             IsSelected = isSelectConnectionPoint;
         }
+    }
+
+    public void DrawLine()
+    {
+        if (_canvasSymbolsVM.CurrentDrawnLineSymbolVM is null)
+        {
+            CreateDrawnLine();
+            _canvasSymbolsVM.ClearSelectedSymbols();
+        }
+        else
+        {
+            var (xCoordinateDranLine, yCoordinateDranLine) = _getCoordinateDrawLine.Invoke();
+            _canvasSymbolsVM.CurrentDrawnLineSymbolVM.FinishDrawing(Position, (int)xCoordinateDranLine, (int)yCoordinateDranLine);
+            _canvasSymbolsVM.CurrentDrawnLineSymbolVM = null;
+        }
+    }
+
+    public void CreateDrawnLine()
+    {
+        var (xCoordinateDranLine, yCoordinateDranLine) = _getCoordinateDrawLine.Invoke();
+        var currentDrawnLineSymbolVM = new DrawnLineSymbolVM();
+        currentDrawnLineSymbolVM.CreateFirstLine(this, (int)xCoordinateDranLine, (int)yCoordinateDranLine);
+
+        _canvasSymbolsVM.CurrentDrawnLineSymbolVM = currentDrawnLineSymbolVM;
+        _canvasSymbolsVM.ListCanvasSymbolsComponentVM.DrawnLinesVM.Add(currentDrawnLineSymbolVM);
     }
 }

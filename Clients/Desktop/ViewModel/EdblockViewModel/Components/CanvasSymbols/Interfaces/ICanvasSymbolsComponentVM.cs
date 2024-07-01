@@ -1,6 +1,7 @@
 ﻿using Prism.Commands;
 using System.Windows;
 using System.Windows.Input;
+using EdblockViewModel.Symbols.LinesSymbolVM;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM.ScaleRectangles;
 
 namespace EdblockViewModel.Components.CanvasSymbols.Interfaces;
@@ -18,9 +19,11 @@ public interface ICanvasSymbolsComponentVM
     DelegateCommand MouseLeftButtonDown { get; }
     DelegateCommand RemoveSelectedSymbolsCommand { get; }
     ScalePartBlockSymbol? ScalePartBlockSymbol { get; set; }
+    DrawnLineSymbolVM? CurrentDrawnLineSymbolVM { get; set; }
     ScalingCanvasSymbolsComponentVM ScalingCanvasSymbolsVM { get; }
     IListCanvasSymbolsComponentVM ListCanvasSymbolsComponentVM { get; }
 
+    void ClearSelectedSymbols();
     void RemoveSelectedSymbols();
     void SetDefaultValues();
     void RedrawSymbols();

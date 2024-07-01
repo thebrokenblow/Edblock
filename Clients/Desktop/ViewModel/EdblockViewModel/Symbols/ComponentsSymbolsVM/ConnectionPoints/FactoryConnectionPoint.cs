@@ -2,6 +2,7 @@
 using EdblockViewModel.Symbols.Abstractions;
 using EdblockViewModel.Components.CanvasSymbols.Interfaces;
 using EdblockViewModel.Components.TopSettingsMenu.PopupBoxMenu.Interfaces;
+using System;
 
 namespace EdblockViewModel.Symbols.ComponentsSymbolsVM.ConnectionPoints;
 
@@ -10,14 +11,10 @@ public class FactoryConnectionPoint(
     ILineStateStandardComponentVM lineStateStandardComponentVM,
     BlockSymbolVM blockSymbolVM)
 {
-    public ConnectionPointVM Create(SideSymbol sideSymbol)
-    {
-        var connectionPointVM = new ConnectionPointVM(
-                canvasSymbolsVM,
-                lineStateStandardComponentVM,
-                blockSymbolVM,
-                sideSymbol);
-
-        return connectionPointVM;
-    }
+    public ConnectionPointVM Create(SideSymbol sideSymbol, Func<(double, double)> getCoordinateDrawLine) =>
+        new(canvasSymbolsVM,
+            lineStateStandardComponentVM,
+            blockSymbolVM,
+            sideSymbol,
+            getCoordinateDrawLine);
 }

@@ -205,13 +205,13 @@ public sealed class HorizontalConditionSymbolVM : SwitchCaseSymbolVM, IHasTextFi
         {
             LinesSwitchCase.Add(new());
 
-            var bottomConnectionPoint = new ConnectionPointVM(
-                _canvasSymbolsComponentVM,
-                lineStateStandardComponentVM,
-                this,
-                SideSymbol.Bottom);
+            //var bottomConnectionPoint = new ConnectionPointVM(
+            //    _canvasSymbolsComponentVM,
+            //    lineStateStandardComponentVM,
+            //    this,
+            //    SideSymbol.Bottom);
 
-            ConnectionPointsSwitchCaseVM.Add(bottomConnectionPoint);
+            //ConnectionPointsSwitchCaseVM.Add(bottomConnectionPoint);
         }
     }
 }
