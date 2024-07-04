@@ -145,7 +145,17 @@ public class ConnectionPointVM : ObservableObject
         else
         {
             var (xCoordinateDranLine, yCoordinateDranLine) = _getCoordinateDrawLine.Invoke();
-            _canvasSymbolsVM.CurrentDrawnLineSymbolVM.FinishDrawing(Position, (int)xCoordinateDranLine, (int)yCoordinateDranLine);
+            _canvasSymbolsVM.CurrentDrawnLineSymbolVM.FinishDrawing(this, xCoordinateDranLine, yCoordinateDranLine);
+
+            if (!_canvasSymbolsVM.ListCanvasSymbolsComponentVM.DrawnLinesByBlockSymbol.TryGetValue(BlockSymbolVM, out List<DrawnLineSymbolVM>? drawnLines))
+            {
+                _canvasSymbolsVM.ListCanvasSymbolsComponentVM.DrawnLinesByBlockSymbol.Add(BlockSymbolVM, [_canvasSymbolsVM.CurrentDrawnLineSymbolVM]);
+            }
+            else
+            {
+                drawnLines.Add(_canvasSymbolsVM.CurrentDrawnLineSymbolVM);
+            }
+
             _canvasSymbolsVM.CurrentDrawnLineSymbolVM = null;
         }
     }
@@ -154,8 +164,17 @@ public class ConnectionPointVM : ObservableObject
     {
         var (xCoordinateDranLine, yCoordinateDranLine) = _getCoordinateDrawLine.Invoke();
         var currentDrawnLineSymbolVM = new DrawnLineSymbolVM();
-        currentDrawnLineSymbolVM.CreateFirstLine(this, (int)xCoordinateDranLine, (int)yCoordinateDranLine);
+        currentDrawnLineSymbolVM.CreateFirstLine(this, xCoordinateDranLine, yCoordinateDranLine);
 
+        if (!_canvasSymbolsVM.ListCanvasSymbolsComponentVM.DrawnLinesByBlockSymbol.TryGetValue(BlockSymbolVM, out List<DrawnLineSymbolVM>? drawnLines))
+        {
+            _canvasSymbolsVM.ListCanvasSymbolsComponentVM.DrawnLinesByBlockSymbol.Add(BlockSymbolVM, [currentDrawnLineSymbolVM]);
+        }
+        else
+        {
+            drawnLines.Add(currentDrawnLineSymbolVM);
+        }
+        
         _canvasSymbolsVM.CurrentDrawnLineSymbolVM = currentDrawnLineSymbolVM;
         _canvasSymbolsVM.ListCanvasSymbolsComponentVM.DrawnLinesVM.Add(currentDrawnLineSymbolVM);
     }

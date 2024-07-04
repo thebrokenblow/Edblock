@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using EdblockModel.EnumsModel;
+using EdblockViewModel.Symbols.Abstractions;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM.ConnectionPoints;
 
 namespace EdblockViewModel.Symbols.LinesSymbolVM;
@@ -8,21 +9,29 @@ public class DrawnLineSymbolVM
 {
     public ObservableCollection<LineSymbolVM> LinesSymbolVM { get; set; } = [];
     public ConnectionPointVM? OutgoingConnectionPoint { get; set; }
-    public void CreateFirstLine(ConnectionPointVM? outgoingConnectionPoint, int startXCoordinate, int startYCoordinate)
-    {
-        OutgoingConnectionPoint = outgoingConnectionPoint;
-        var firstLine = new LineSymbolVM()
-        {
-            X1 = startXCoordinate,
-            Y1 = startYCoordinate,
-            X2 = startXCoordinate,
-            Y2 = startYCoordinate,
-        };
+    public BlockSymbolVM? OutgoingBlockSymbol { get; set; }
+    public BlockSymbolVM? IncommingConnectionPoint { get; set; }
 
-        LinesSymbolVM.Add(firstLine);
+    public void CreateFirstLine(ConnectionPointVM? outgoingConnectionPoint, double startXCoordinate, double startYCoordinate)
+    {
+        if (LinesSymbolVM.Count % 2 == 0)
+        {
+            OutgoingConnectionPoint = outgoingConnectionPoint;
+            OutgoingBlockSymbol = outgoingConnectionPoint?.BlockSymbolVM;
+
+            var firstLine = new LineSymbolVM()
+            {
+                X1 = startXCoordinate,
+                Y1 = startYCoordinate,
+                X2 = startXCoordinate,
+                Y2 = startYCoordinate,
+            };
+
+            LinesSymbolVM.Add(firstLine);
+        }
     }
 
-    public void DrawnLine(int xCoordinate, int yCoordinate)
+    public void DrawnLine(double xCoordinate, double yCoordinate)
     {
         if (OutgoingConnectionPoint is null)
         {
@@ -72,6 +81,7 @@ public class DrawnLineSymbolVM
             {
                 var firstLine = LinesSymbolVM[^1];
                 firstLine.Y2 = yCoordinate;
+
                 if (xCoordinate != firstLine.X1)
                 {
                     var secondLine = new LineSymbolVM()
@@ -104,32 +114,142 @@ public class DrawnLineSymbolVM
         }
     }
 
-    public void FinishDrawing(SideSymbol position, int xCoordinateDranLine, int yCoordinateDranLine)
+    public void FinishDrawing(ConnectionPointVM incommingConnectionPoint, double xCoordinateDranLine, double yCoordinateDranLine)
     {
+        IncommingConnectionPoint = incommingConnectionPoint.BlockSymbolVM;
+
         if (OutgoingConnectionPoint is null)
         {
             return;
         }
 
-        var lastLine = LinesSymbolVM[^1];
 
-        if (LinesSymbolVM.Count > 1)
+        if (LinesSymbolVM.Count % 2 == 0)
         {
-            if (OutgoingConnectionPoint.Position == SideSymbol.Left || OutgoingConnectionPoint.Position == SideSymbol.Right)
+            var lastLine = LinesSymbolVM[^1];
+            var penultimateLine = LinesSymbolVM[^2];
+
+            if (incommingConnectionPoint.Position == SideSymbol.Left || incommingConnectionPoint.Position == SideSymbol.Right)
             {
-                var penultimateLine = LinesSymbolVM[^2];
-                lastLine.X1 = xCoordinateDranLine;
-                penultimateLine.X2 = xCoordinateDranLine;
+                if (lastLine.LineIsVertical())
+                {
+                    lastLine.Y2 = yCoordinateDranLine;
+                    var line = new LineSymbolVM()
+                    {
+                        X1 = lastLine.X2,
+                        Y1 = lastLine.Y2,
+                        X2 = xCoordinateDranLine,
+                        Y2 = yCoordinateDranLine,
+                    };
+                    LinesSymbolVM.Add(line);
+                }
+                else
+                {
+                    penultimateLine.Y2 = yCoordinateDranLine;
+
+                    lastLine.Y1 = yCoordinateDranLine;
+                    lastLine.X2 = xCoordinateDranLine;
+                    lastLine.Y2 = yCoordinateDranLine;
+                }
             }
             else
             {
-                var penultimateLine = LinesSymbolVM[^2];
-                lastLine.Y1 = yCoordinateDranLine;
-                penultimateLine.Y2 = yCoordinateDranLine;
+                if (lastLine.LineIsHorizontal())
+                {
+                    lastLine.X2 = xCoordinateDranLine;
+                    var line = new LineSymbolVM()
+                    {
+                        X1 = lastLine.X2,
+                        Y1 = lastLine.Y2,
+                        X2 = xCoordinateDranLine,
+                        Y2 = yCoordinateDranLine,
+                    };
+                    LinesSymbolVM.Add(line);
+                }
+                else
+                {
+                    penultimateLine.X2 = xCoordinateDranLine;
+
+                    lastLine.X1 = xCoordinateDranLine;
+                    lastLine.X2 = xCoordinateDranLine;
+                    lastLine.Y2 = yCoordinateDranLine;
+                }
             }
         }
+        else
+        {
+            var lastLine = LinesSymbolVM[^1];
 
-        lastLine.X2 = xCoordinateDranLine;
-        lastLine.Y2 = yCoordinateDranLine;
+            if (incommingConnectionPoint.Position == SideSymbol.Left || incommingConnectionPoint.Position == SideSymbol.Right)
+            {
+                if (lastLine.LineIsVertical())
+                {
+                    var firstLine = new LineSymbolVM()
+                    {
+                        X1 = lastLine.X2,
+                        Y1 = lastLine.Y2,
+                        X2 = xCoordinateDranLine,
+                        Y2 = yCoordinateDranLine,
+                    };
+                    LinesSymbolVM.Add(firstLine);
+                }
+                else
+                {
+                    var secondLine = new LineSymbolVM()
+                    {
+                        X1 = lastLine.X2,
+                        Y1 = lastLine.Y2,
+                        X2 = lastLine.X2,
+                        Y2 = yCoordinateDranLine
+                    };
+
+                    var firstLine = new LineSymbolVM()
+                    {
+                        X1 = lastLine.X2,
+                        Y1 = yCoordinateDranLine,
+                        X2 = xCoordinateDranLine,
+                        Y2 = yCoordinateDranLine,
+                    };
+
+                    LinesSymbolVM.Add(secondLine);
+                    LinesSymbolVM.Add(firstLine);
+                }
+            }
+            else
+            {
+                if (lastLine.LineIsHorizontal())
+                {
+                    var firstLine = new LineSymbolVM()
+                    {
+                        X1 = lastLine.X2,
+                        Y1 = lastLine.Y2,
+                        X2 = xCoordinateDranLine,
+                        Y2 = yCoordinateDranLine,
+                    };
+                    LinesSymbolVM.Add(firstLine);
+                }
+                else
+                {
+                    var secondLine = new LineSymbolVM()
+                    {
+                        X1 = lastLine.X2,
+                        Y1 = lastLine.Y2,
+                        X2 = xCoordinateDranLine,
+                        Y2 = lastLine.Y2
+                    };
+
+                    var firstLine = new LineSymbolVM()
+                    {
+                        X1 = xCoordinateDranLine,
+                        Y1 = lastLine.Y2,
+                        X2 = xCoordinateDranLine,
+                        Y2 = yCoordinateDranLine,
+                    };
+
+                    LinesSymbolVM.Add(secondLine);
+                    LinesSymbolVM.Add(firstLine);
+                }
+            }
+        }
     }
 }

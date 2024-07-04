@@ -12,6 +12,7 @@ public class ListCanvasSymbolsComponentVM(IPopupBoxMenuComponentVM popupBoxMenuC
 {
     public ObservableCollection<BlockSymbolVM> BlockSymbolsVM { get; } = [];
     public ObservableCollection<DrawnLineSymbolVM> DrawnLinesVM { get; } = [];
+    public Dictionary<BlockSymbolVM, List<DrawnLineSymbolVM>> DrawnLinesByBlockSymbol { get; } = [];
     public List<ScalableBlockSymbolVM> ScalableBlockSymbols { get; } = [];
     public List<BlockSymbolVM> SelectedBlockSymbols { get; } = [];
     public List<IHasTextFieldVM> SelectedSymbolsHasTextField { get; } = [];
