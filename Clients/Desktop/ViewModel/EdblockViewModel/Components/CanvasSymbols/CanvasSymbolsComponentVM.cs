@@ -74,6 +74,7 @@ public class CanvasSymbolsComponentVM : ObservableObject, ICanvasSymbolsComponen
 
     public DelegateCommand MouseLeftButtonDown { get; }
     public DelegateCommand RemoveSelectedSymbolsCommand { get; }
+    public DelegateCommand AddLineCommand { get; }
     public ScalePartBlockSymbol? ScalePartBlockSymbol { get; set; }
     public DrawnLineSymbolVM? CurrentDrawnLineSymbolVM { get; set; }
     public ScalingCanvasSymbolsComponentVM ScalingCanvasSymbolsVM { get; }
@@ -85,10 +86,19 @@ public class CanvasSymbolsComponentVM : ObservableObject, ICanvasSymbolsComponen
         ListCanvasSymbolsComponentVM = listCanvasSymbolsComponentVM;
         ScalingCanvasSymbolsVM = new(this);
 
+        AddLineCommand = new(AddLine);
         MouseMove = new(RedrawSymbols);
         MouseUp = new(SetDefaultValues);
         MouseLeftButtonDown = new(ClearSelectedSymbols);
         RemoveSelectedSymbolsCommand = new(RemoveSelectedSymbols);
+    }
+
+    public void AddLine()
+    {
+        CurrentDrawnLineSymbolVM?.CreateFirstLine(
+            CurrentDrawnLineSymbolVM.OutgoingConnectionPoint, 
+            xCoordinate, 
+            yCoordinate);
     }
 
     public void RemoveSelectedSymbols()
@@ -113,11 +123,6 @@ public class CanvasSymbolsComponentVM : ObservableObject, ICanvasSymbolsComponen
         if (movableBlockSymbol is not null)
         {
             movableBlockSymbol.MoveMiddle = false;
-        }
-
-        if (CurrentDrawnLineSymbolVM is not null)
-        {
-            CurrentDrawnLineSymbolVM.CreateFirstLine(CurrentDrawnLineSymbolVM.OutgoingConnectionPoint, xCoordinate, yCoordinate);
         }
 
         ScalePartBlockSymbol = null;

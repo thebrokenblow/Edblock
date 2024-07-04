@@ -88,7 +88,16 @@
             <ItemsControl ItemsSource="{Binding ListCanvasSymbolsComponentVM.DrawnLinesVM}">
                 <ItemsControl.Resources>
                     <DataTemplate DataType="{x:Type linesSymbolVM:DrawnLineSymbolVM}">
-                        <lineSymbolView:DrawnLineSymbolView />
+                        <lineSymbolView:DrawnLineSymbolView>
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="MouseEnter">
+                                    <i:InvokeCommandAction Command="{Binding SelectDrawnLineCommand}" />
+                                </i:EventTrigger>
+                                <i:EventTrigger EventName="MouseLeave">
+                                    <i:InvokeCommandAction Command="{Binding UnselectDrawnLineCommand}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </lineSymbolView:DrawnLineSymbolView>
                     </DataTemplate>
                 </ItemsControl.Resources>
                 <ItemsControl.ItemsPanel>
@@ -129,6 +138,9 @@
                 </i:EventTrigger>
                 <i:EventTrigger EventName="MouseUp">
                     <i:InvokeCommandAction Command="{Binding MouseUp}" />
+                </i:EventTrigger>
+                <i:EventTrigger EventName="MouseDown">
+                    <i:InvokeCommandAction Command="{Binding AddLineCommand}" />
                 </i:EventTrigger>
             </i:Interaction.Triggers>
         </Canvas>

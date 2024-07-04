@@ -5,8 +5,6 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:Edblock.SymbolsView.Symbols.Lines"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:symbolViewModel="clr-namespace:EdblockViewModel.Symbols.LinesSymbolVM;assembly=EdblockViewModel"
-    d:DataContext="{d:DesignInstance Type=symbolViewModel:LineSymbolVM}"
     mc:Ignorable="d">
     <Line Style="{StaticResource LineSymbolView}" />
 </UserControl>

@@ -1,4 +1,5 @@
 ﻿using EdblockViewModel.Core;
+using System.Windows.Media;
 
 namespace EdblockViewModel.Symbols.LinesSymbolVM;
 
@@ -44,6 +45,17 @@ public class LineSymbolVM : ObservableObject
         set
         {
             y2 = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private Brush stroke = Brushes.Black;
+    public Brush Stroke
+    {
+        get => stroke;
+        set
+        {
+            stroke = value;
             OnPropertyChanged();
         }
     }

@@ -1,7 +1,14 @@
 ﻿using System.Collections.ObjectModel;
+using System.Threading;
+using System.Windows.Input;
+using System.Windows.Media;
 using EdblockModel.EnumsModel;
+using EdblockViewModel.Components.CanvasSymbols;
+using EdblockViewModel.Components.CanvasSymbols.Interfaces;
+using EdblockViewModel.Core;
 using EdblockViewModel.Symbols.Abstractions;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM.ConnectionPoints;
+using Prism.Commands;
 
 namespace EdblockViewModel.Symbols.LinesSymbolVM;
 
@@ -12,23 +19,71 @@ public class DrawnLineSymbolVM
     public BlockSymbolVM? OutgoingBlockSymbol { get; set; }
     public BlockSymbolVM? IncommingConnectionPoint { get; set; }
 
+    public DelegateCommand SelectDrawnLineCommand { get; }
+    public DelegateCommand UnselectDrawnLineCommand { get; }
+
+    private readonly Brush? selectedBrush;
+    private readonly ICanvasSymbolsComponentVM _canvasSymbolsComponentVM;
+    public DrawnLineSymbolVM(ICanvasSymbolsComponentVM canvasSymbolsComponentVM)
+    {
+        var selectedBrushConverter = new BrushConverter().ConvertFrom("#00FF00");
+
+        if (selectedBrushConverter is not null)
+        {
+            selectedBrush = (Brush)selectedBrushConverter;
+        }
+
+        _canvasSymbolsComponentVM = canvasSymbolsComponentVM;
+
+        SelectDrawnLineCommand = new(SelectDrawnLine);
+        UnselectDrawnLineCommand = new(UnselectDrawnLine);
+
+    }
+
+    private void SelectDrawnLine()
+    {
+        if (selectedBrush is null || _canvasSymbolsComponentVM.CurrentDrawnLineSymbolVM == this)
+        {
+            return;
+        }
+
+        foreach (var lineSymbolVM in LinesSymbolVM)
+        {
+            lineSymbolVM.Stroke = selectedBrush;
+        }
+
+        _canvasSymbolsComponentVM.Cursor = Cursors.Hand;
+    }
+
+    private void UnselectDrawnLine()
+    {
+        if (_canvasSymbolsComponentVM.CurrentDrawnLineSymbolVM == this)
+        {
+            return;
+        }
+
+        foreach (var lineSymbolVM in LinesSymbolVM)
+        {
+            lineSymbolVM.Stroke = Brushes.Black;
+        }
+
+        _canvasSymbolsComponentVM.Cursor = Cursors.Arrow;
+    }
+
     public void CreateFirstLine(ConnectionPointVM? outgoingConnectionPoint, double startXCoordinate, double startYCoordinate)
     {
-        if (LinesSymbolVM.Count % 2 == 0)
+        OutgoingConnectionPoint = outgoingConnectionPoint;
+        OutgoingBlockSymbol = outgoingConnectionPoint?.BlockSymbolVM;
+
+        var firstLine = new LineSymbolVM()
         {
-            OutgoingConnectionPoint = outgoingConnectionPoint;
-            OutgoingBlockSymbol = outgoingConnectionPoint?.BlockSymbolVM;
+            X1 = startXCoordinate,
+            Y1 = startYCoordinate,
+            X2 = startXCoordinate,
+            Y2 = startYCoordinate,
+        };
 
-            var firstLine = new LineSymbolVM()
-            {
-                X1 = startXCoordinate,
-                Y1 = startYCoordinate,
-                X2 = startXCoordinate,
-                Y2 = startYCoordinate,
-            };
-
-            LinesSymbolVM.Add(firstLine);
-        }
+        LinesSymbolVM.Add(firstLine);
     }
 
     public void DrawnLine(double xCoordinate, double yCoordinate)

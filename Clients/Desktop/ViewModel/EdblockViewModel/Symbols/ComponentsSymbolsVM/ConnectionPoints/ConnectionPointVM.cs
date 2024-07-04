@@ -8,6 +8,7 @@ using EdblockViewModel.Components.TopSettingsMenu.PopupBoxMenu.Interfaces;
 using EdblockViewModel.Symbols.Abstractions;
 using EdblockViewModel.Symbols.LinesSymbolVM;
 using System;
+using System.Windows;
 
 namespace EdblockViewModel.Symbols.ComponentsSymbolsVM.ConnectionPoints;
 
@@ -141,9 +142,25 @@ public class ConnectionPointVM : ObservableObject
         {
             CreateDrawnLine();
             _canvasSymbolsVM.ClearSelectedSymbols();
+            //IsHasConnectingLine = true;
         }
         else
         {
+            if (_canvasSymbolsVM.CurrentDrawnLineSymbolVM.OutgoingConnectionPoint is null)
+            {
+                return;
+            }
+
+            var outgoingConnectionPoint = _canvasSymbolsVM.CurrentDrawnLineSymbolVM.OutgoingConnectionPoint;
+            if (_canvasSymbolsVM.CurrentDrawnLineSymbolVM.OutgoingBlockSymbol == BlockSymbolVM)
+            {
+                outgoingConnectionPoint.IsHasConnectingLine = false;
+                MessageBox.Show("Линия не должна входить в тот же символ из которого выходит");
+                return;
+            }
+
+            //IsHasConnectingLine = true;
+
             var (xCoordinateDranLine, yCoordinateDranLine) = _getCoordinateDrawLine.Invoke();
             _canvasSymbolsVM.CurrentDrawnLineSymbolVM.FinishDrawing(this, xCoordinateDranLine, yCoordinateDranLine);
 
@@ -163,7 +180,7 @@ public class ConnectionPointVM : ObservableObject
     public void CreateDrawnLine()
     {
         var (xCoordinateDranLine, yCoordinateDranLine) = _getCoordinateDrawLine.Invoke();
-        var currentDrawnLineSymbolVM = new DrawnLineSymbolVM();
+        var currentDrawnLineSymbolVM = new DrawnLineSymbolVM(_canvasSymbolsVM);
         currentDrawnLineSymbolVM.CreateFirstLine(this, xCoordinateDranLine, yCoordinateDranLine);
 
         if (!_canvasSymbolsVM.ListCanvasSymbolsComponentVM.DrawnLinesByBlockSymbol.TryGetValue(BlockSymbolVM, out List<DrawnLineSymbolVM>? drawnLines))
