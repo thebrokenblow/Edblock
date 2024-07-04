@@ -100,23 +100,23 @@ public class CanvasSymbolsComponentVM : ObservableObject, ICanvasSymbolsComponen
             xCoordinate,
             yCoordinate);
 
-        foreach (var drawnLinesVM in ListCanvasSymbolsComponentVM.DrawnLinesVM)
-        {
-            drawnLinesVM.Unselect();
-        }
-
-        ListCanvasSymbolsComponentVM.SelectedDrawnLinesVM.Clear();
+        ListCanvasSymbolsComponentVM.RemoveSelectedDrawnLinesVM();
     }
 
     public void RemoveSelectedSymbols()
     {
         if (CurrentDrawnLineSymbolVM is not null)
         {
+            if (CurrentDrawnLineSymbolVM.OutgoingConnectionPoint is not null)
+            {
+                CurrentDrawnLineSymbolVM.OutgoingConnectionPoint.IsHasConnectingLine = false;
+            }
+
             ListCanvasSymbolsComponentVM.DrawnLinesVM.Remove(CurrentDrawnLineSymbolVM);
             CurrentDrawnLineSymbolVM = null;
         }
 
-        ListCanvasSymbolsComponentVM.RemoveSelectedDrawnLinesVM();
+        ListCanvasSymbolsComponentVM.RemoveDrawnLinesVM();
         ListCanvasSymbolsComponentVM.RemoveSelectedBlockSymbols();
         ScalingCanvasSymbolsVM.Resize();
     }
@@ -155,6 +155,7 @@ public class CanvasSymbolsComponentVM : ObservableObject, ICanvasSymbolsComponen
 
     public void ClearSelectedSymbols()
     {
+        ListCanvasSymbolsComponentVM.RemoveSelectedDrawnLinesVM();
         ListCanvasSymbolsComponentVM.ChangeFocusTextField();
         ListCanvasSymbolsComponentVM.ClearSelectedBlockSymbols();
     }

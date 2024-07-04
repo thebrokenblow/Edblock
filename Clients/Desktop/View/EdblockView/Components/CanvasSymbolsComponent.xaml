@@ -19,130 +19,133 @@
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
-    <ScrollViewer
-        edblockVM:ScrollOffsetBinding.HorizontalOffset="{Binding ScalingCanvasSymbolsVM.HorizontalOffset, Mode=TwoWay}"
-        edblockVM:ScrollOffsetBinding.VerticalOffset="{Binding ScalingCanvasSymbolsVM.VerticalOffset, Mode=TwoWay}"
-        HorizontalScrollBarVisibility="Visible">
-        <Canvas
-            Width="{Binding Width}"
-            Height="{Binding Height}"
-            Cursor="{Binding Cursor}"
-            Loaded="LoadedCanvas"
-            MouseEnter="EnterCursor"
-            MouseLeave="LeaveCursor">
-            <ItemsControl ItemsSource="{Binding ListCanvasSymbolsComponentVM.BlockSymbolsVM}">
-                <ItemsControl.Resources>
-                    <DataTemplate DataType="{x:Type blockSymbolsVM:ActionSymbolVM}">
-                        <symbolsView:ActionSymbolView MouseDown="SelectBlockSymbol" />
-                    </DataTemplate>
-                    <DataTemplate DataType="{x:Type blockSymbolsVM:ConditionSymbolVM}">
-                        <symbolsView:ConditionSymbolView MouseDown="SelectBlockSymbol" />
-                    </DataTemplate>
-                    <DataTemplate DataType="{x:Type switchCaseConditionSymbolsVM:HorizontalConditionSymbolVM}">
-                        <symbolsView:HorizontalConditionSymbolView MouseDown="SelectBlockSymbol" />
-                    </DataTemplate>
-                    <DataTemplate DataType="{x:Type switchCaseConditionSymbolsVM:VerticalConditionSymbolVM}">
-                        <symbolsView:VerticalConditionSymbolView MouseDown="SelectBlockSymbol" />
-                    </DataTemplate>
-                    <DataTemplate DataType="{x:Type blockSymbolsVM:StartEndSymbolVM}">
-                        <symbolsView:StartEndSymbolView MouseDown="SelectBlockSymbol" />
-                    </DataTemplate>
-                    <DataTemplate DataType="{x:Type blockSymbolsVM:InputOutputSymbolVM}">
-                        <symbolsView:InputOutputSymbolView MouseDown="SelectBlockSymbol" />
-                    </DataTemplate>
-                    <DataTemplate DataType="{x:Type blockSymbolsVM:SubroutineSymbolVM}">
-                        <symbolsView:SubroutineSymbolView MouseDown="SelectBlockSymbol" />
-                    </DataTemplate>
-                    <DataTemplate DataType="{x:Type blockSymbolsVM:CycleForSymbolVM}">
-                        <symbolsView:CycleForSymbolView MouseDown="SelectBlockSymbol" />
-                    </DataTemplate>
-                    <DataTemplate DataType="{x:Type blockSymbolsVM:CycleWhileBeginSymbolVM}">
-                        <symbolsView:CycleWhileBeginSymbolView MouseDown="SelectBlockSymbol" />
-                    </DataTemplate>
-                    <DataTemplate DataType="{x:Type blockSymbolsVM:CycleWhileEndSymbolVM}">
-                        <symbolsView:CycleWhileEndSymbolView MouseDown="SelectBlockSymbol" />
-                    </DataTemplate>
-                    <DataTemplate DataType="{x:Type blockSymbolsVM:LinkSymbolVM}">
-                        <symbolsView:LinkSymbolView MouseDown="SelectBlockSymbol" />
-                    </DataTemplate>
-                    <DataTemplate DataType="{x:Type componentsCommentSymbolVM:CommentSymbolVM}">
-                        <symbolsView:CommentSymbolView MouseDown="SelectBlockSymbol" />
-                    </DataTemplate>
-                    <DataTemplate DataType="{x:Type componentsParallelActionSymbolVM:ParallelActionSymbolVM}">
-                        <symbolsView:ParallelActionSymbolView MouseDown="SelectBlockSymbol" />
-                    </DataTemplate>
-                </ItemsControl.Resources>
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <Canvas />
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-                <ItemsControl.ItemContainerStyle>
-                    <Style TargetType="ContentPresenter">
-                        <Setter Property="Canvas.Left" Value="{Binding XCoordinate}" />
-                        <Setter Property="Canvas.Top" Value="{Binding YCoordinate}" />
-                    </Style>
-                </ItemsControl.ItemContainerStyle>
-            </ItemsControl>
+    <StackPanel>
+        <TextBlock Text="{Binding ListCanvasSymbolsComponentVM.DrawnLinesVM[2].LinesSymbolVM.Count}" />
+        <ScrollViewer
+            edblockVM:ScrollOffsetBinding.HorizontalOffset="{Binding ScalingCanvasSymbolsVM.HorizontalOffset, Mode=TwoWay}"
+            edblockVM:ScrollOffsetBinding.VerticalOffset="{Binding ScalingCanvasSymbolsVM.VerticalOffset, Mode=TwoWay}"
+            HorizontalScrollBarVisibility="Visible">
+            <Canvas
+                Width="{Binding Width}"
+                Height="{Binding Height}"
+                Cursor="{Binding Cursor}"
+                Loaded="LoadedCanvas"
+                MouseEnter="EnterCursor"
+                MouseLeave="LeaveCursor">
+                <ItemsControl ItemsSource="{Binding ListCanvasSymbolsComponentVM.BlockSymbolsVM}">
+                    <ItemsControl.Resources>
+                        <DataTemplate DataType="{x:Type blockSymbolsVM:ActionSymbolVM}">
+                            <symbolsView:ActionSymbolView MouseDown="SelectBlockSymbol" />
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type blockSymbolsVM:ConditionSymbolVM}">
+                            <symbolsView:ConditionSymbolView MouseDown="SelectBlockSymbol" />
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type switchCaseConditionSymbolsVM:HorizontalConditionSymbolVM}">
+                            <symbolsView:HorizontalConditionSymbolView MouseDown="SelectBlockSymbol" />
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type switchCaseConditionSymbolsVM:VerticalConditionSymbolVM}">
+                            <symbolsView:VerticalConditionSymbolView MouseDown="SelectBlockSymbol" />
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type blockSymbolsVM:StartEndSymbolVM}">
+                            <symbolsView:StartEndSymbolView MouseDown="SelectBlockSymbol" />
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type blockSymbolsVM:InputOutputSymbolVM}">
+                            <symbolsView:InputOutputSymbolView MouseDown="SelectBlockSymbol" />
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type blockSymbolsVM:SubroutineSymbolVM}">
+                            <symbolsView:SubroutineSymbolView MouseDown="SelectBlockSymbol" />
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type blockSymbolsVM:CycleForSymbolVM}">
+                            <symbolsView:CycleForSymbolView MouseDown="SelectBlockSymbol" />
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type blockSymbolsVM:CycleWhileBeginSymbolVM}">
+                            <symbolsView:CycleWhileBeginSymbolView MouseDown="SelectBlockSymbol" />
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type blockSymbolsVM:CycleWhileEndSymbolVM}">
+                            <symbolsView:CycleWhileEndSymbolView MouseDown="SelectBlockSymbol" />
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type blockSymbolsVM:LinkSymbolVM}">
+                            <symbolsView:LinkSymbolView MouseDown="SelectBlockSymbol" />
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type componentsCommentSymbolVM:CommentSymbolVM}">
+                            <symbolsView:CommentSymbolView MouseDown="SelectBlockSymbol" />
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type componentsParallelActionSymbolVM:ParallelActionSymbolVM}">
+                            <symbolsView:ParallelActionSymbolView MouseDown="SelectBlockSymbol" />
+                        </DataTemplate>
+                    </ItemsControl.Resources>
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <Canvas />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemContainerStyle>
+                        <Style TargetType="ContentPresenter">
+                            <Setter Property="Canvas.Left" Value="{Binding XCoordinate}" />
+                            <Setter Property="Canvas.Top" Value="{Binding YCoordinate}" />
+                        </Style>
+                    </ItemsControl.ItemContainerStyle>
+                </ItemsControl>
 
-            <ItemsControl ItemsSource="{Binding ListCanvasSymbolsComponentVM.DrawnLinesVM}">
-                <ItemsControl.Resources>
-                    <DataTemplate DataType="{x:Type linesSymbolVM:DrawnLineSymbolVM}">
-                        <lineSymbolView:DrawnLineSymbolView MouseDown="DrawnLineSymbolView_MouseDown">
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="MouseEnter">
-                                    <i:InvokeCommandAction Command="{Binding HighlightDrawnLineCommand}" />
-                                </i:EventTrigger>
-                                <i:EventTrigger EventName="MouseLeave">
-                                    <i:InvokeCommandAction Command="{Binding UnhighlightDrawnLineCommand}" />
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
-                        </lineSymbolView:DrawnLineSymbolView>
-                    </DataTemplate>
-                </ItemsControl.Resources>
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <Canvas />
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-            </ItemsControl>
+                <ItemsControl ItemsSource="{Binding ListCanvasSymbolsComponentVM.DrawnLinesVM}">
+                    <ItemsControl.Resources>
+                        <DataTemplate DataType="{x:Type linesSymbolVM:DrawnLineSymbolVM}">
+                            <lineSymbolView:DrawnLineSymbolView MouseDown="DrawnLineSymbolView_MouseDown">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="MouseEnter">
+                                        <i:InvokeCommandAction Command="{Binding HighlightDrawnLineCommand}" />
+                                    </i:EventTrigger>
+                                    <i:EventTrigger EventName="MouseLeave">
+                                        <i:InvokeCommandAction Command="{Binding UnhighlightDrawnLineCommand}" />
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </lineSymbolView:DrawnLineSymbolView>
+                        </DataTemplate>
+                    </ItemsControl.Resources>
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <Canvas />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
 
-            <Canvas.Background>
-                <DrawingBrush
-                    TileMode="Tile"
-                    Viewport="{Binding Grid}"
-                    ViewportUnits="Absolute">
-                    <DrawingBrush.Drawing>
-                        <GeometryDrawing>
-                            <GeometryDrawing.Geometry>
-                                <RectangleGeometry Rect="0,0,50,50" />
-                            </GeometryDrawing.Geometry>
-                            <GeometryDrawing.Pen>
-                                <Pen Brush="#CFCFCF" Thickness="1" />
-                            </GeometryDrawing.Pen>
-                        </GeometryDrawing>
-                    </DrawingBrush.Drawing>
-                </DrawingBrush>
-            </Canvas.Background>
+                <Canvas.Background>
+                    <DrawingBrush
+                        TileMode="Tile"
+                        Viewport="{Binding Grid}"
+                        ViewportUnits="Absolute">
+                        <DrawingBrush.Drawing>
+                            <GeometryDrawing>
+                                <GeometryDrawing.Geometry>
+                                    <RectangleGeometry Rect="0,0,50,50" />
+                                </GeometryDrawing.Geometry>
+                                <GeometryDrawing.Pen>
+                                    <Pen Brush="#CFCFCF" Thickness="1" />
+                                </GeometryDrawing.Pen>
+                            </GeometryDrawing>
+                        </DrawingBrush.Drawing>
+                    </DrawingBrush>
+                </Canvas.Background>
 
-            <i:Interaction.Behaviors>
-                <edblockVM:MouseBehaviourVM MouseX="{Binding XCoordinate, Mode=OneWayToSource}" MouseY="{Binding YCoordinate, Mode=OneWayToSource}" />
-            </i:Interaction.Behaviors>
+                <i:Interaction.Behaviors>
+                    <edblockVM:MouseBehaviourVM MouseX="{Binding XCoordinate, Mode=OneWayToSource}" MouseY="{Binding YCoordinate, Mode=OneWayToSource}" />
+                </i:Interaction.Behaviors>
 
-            <i:Interaction.Triggers>
-                <i:EventTrigger EventName="MouseMove">
-                    <i:InvokeCommandAction Command="{Binding MouseMove}" />
-                </i:EventTrigger>
-                <i:EventTrigger EventName="MouseLeftButtonDown">
-                    <i:InvokeCommandAction Command="{Binding MouseLeftButtonDown}" />
-                </i:EventTrigger>
-                <i:EventTrigger EventName="MouseUp">
-                    <i:InvokeCommandAction Command="{Binding MouseUp}" />
-                </i:EventTrigger>
-                <i:EventTrigger EventName="MouseDown">
-                    <i:InvokeCommandAction Command="{Binding AddLineCommand}" />
-                </i:EventTrigger>
-            </i:Interaction.Triggers>
-        </Canvas>
-    </ScrollViewer>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="MouseMove">
+                        <i:InvokeCommandAction Command="{Binding MouseMove}" />
+                    </i:EventTrigger>
+                    <i:EventTrigger EventName="MouseLeftButtonDown">
+                        <i:InvokeCommandAction Command="{Binding MouseLeftButtonDown}" />
+                    </i:EventTrigger>
+                    <i:EventTrigger EventName="MouseUp">
+                        <i:InvokeCommandAction Command="{Binding MouseUp}" />
+                    </i:EventTrigger>
+                    <i:EventTrigger EventName="MouseDown">
+                        <i:InvokeCommandAction Command="{Binding AddLineCommand}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Canvas>
+        </ScrollViewer>
+    </StackPanel>
 </UserControl>

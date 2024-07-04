@@ -76,13 +76,33 @@ public class ListCanvasSymbolsComponentVM(IPopupBoxMenuComponentVM popupBoxMenuC
         }
     }
 
+    public void RemoveDrawnLinesVM()
+    {
+        foreach (var selectedDrawnLinesVM in SelectedDrawnLinesVM)
+        {
+            if (selectedDrawnLinesVM.OutgoingConnectionPoint is not null)
+            {
+                selectedDrawnLinesVM.OutgoingConnectionPoint.IsHasConnectingLine = false;
+            }
+
+            if (selectedDrawnLinesVM.IncommingConnectionPoint is not null)
+            {
+                selectedDrawnLinesVM.IncommingConnectionPoint.IsHasConnectingLine = false;
+            }
+
+            DrawnLinesByBlockSymbol.Where(drawnLineByBlockSymbol => drawnLineByBlockSymbol.Value.Remove(selectedDrawnLinesVM));
+            DrawnLinesVM.Remove(selectedDrawnLinesVM);
+        }
+        SelectedDrawnLinesVM.Clear();
+    }
+
     public void RemoveSelectedDrawnLinesVM()
     {
         foreach (var selectedDrawnLinesVM in SelectedDrawnLinesVM)
         {
             selectedDrawnLinesVM.Unselect();
-            DrawnLinesVM.Remove(selectedDrawnLinesVM);
         }
+
         SelectedDrawnLinesVM.Clear();
     }
 }

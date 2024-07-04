@@ -142,7 +142,8 @@ public class ConnectionPointVM : ObservableObject
         {
             CreateDrawnLine();
             _canvasSymbolsVM.ClearSelectedSymbols();
-            //IsHasConnectingLine = true;
+
+            IsHasConnectingLine = true;
         }
         else
         {
@@ -159,7 +160,7 @@ public class ConnectionPointVM : ObservableObject
                 return;
             }
 
-            //IsHasConnectingLine = true;
+            IsHasConnectingLine = true;
 
             var (xCoordinateDranLine, yCoordinateDranLine) = _getCoordinateDrawLine.Invoke();
             _canvasSymbolsVM.CurrentDrawnLineSymbolVM.FinishDrawing(this, xCoordinateDranLine, yCoordinateDranLine);

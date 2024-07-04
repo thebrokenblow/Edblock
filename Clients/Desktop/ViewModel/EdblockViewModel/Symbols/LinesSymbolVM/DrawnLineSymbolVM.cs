@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.Threading;
+﻿using System.Collections.ObjectModel;
 using System.Windows.Input;
 using System.Windows.Media;
 using EdblockModel.EnumsModel;
-using EdblockViewModel.Components.CanvasSymbols;
 using EdblockViewModel.Components.CanvasSymbols.Interfaces;
-using EdblockViewModel.Core;
 using EdblockViewModel.Symbols.Abstractions;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM.ConnectionPoints;
 using Prism.Commands;
@@ -17,14 +13,14 @@ public class DrawnLineSymbolVM
 {
     public ObservableCollection<LineSymbolVM> LinesSymbolVM { get; set; } = [];
     public ConnectionPointVM? OutgoingConnectionPoint { get; set; }
+    public ConnectionPointVM? IncommingConnectionPoint { get; set; }
     public BlockSymbolVM? OutgoingBlockSymbol { get; set; }
-    public BlockSymbolVM? IncommingConnectionPoint { get; set; }
 
     public DelegateCommand HighlightDrawnLineCommand { get; }
     public DelegateCommand UnhighlightDrawnLineCommand { get; }
+    public ICanvasSymbolsComponentVM CanvasSymbolsComponentVM { get; }
 
     private readonly Brush? selectedBrush;
-    private readonly ICanvasSymbolsComponentVM _canvasSymbolsComponentVM;
     public DrawnLineSymbolVM(ICanvasSymbolsComponentVM canvasSymbolsComponentVM)
     {
         var selectedBrushConverter = new BrushConverter().ConvertFrom("#00FF00");
@@ -34,7 +30,7 @@ public class DrawnLineSymbolVM
             selectedBrush = (Brush)selectedBrushConverter;
         }
 
-        _canvasSymbolsComponentVM = canvasSymbolsComponentVM;
+        CanvasSymbolsComponentVM = canvasSymbolsComponentVM;
 
         HighlightDrawnLineCommand = new(HighlightDrawnLine);
         UnhighlightDrawnLineCommand = new(UnhighlightDrawnLine);
@@ -44,7 +40,7 @@ public class DrawnLineSymbolVM
 
     private void HighlightDrawnLine()
     {
-        if (selectedBrush is null || _canvasSymbolsComponentVM.CurrentDrawnLineSymbolVM == this || IsSelect)
+        if (selectedBrush is null || CanvasSymbolsComponentVM.CurrentDrawnLineSymbolVM == this || IsSelect)
         {
             return;
         }
@@ -54,12 +50,12 @@ public class DrawnLineSymbolVM
             lineSymbolVM.Stroke = selectedBrush;
         }
 
-        _canvasSymbolsComponentVM.Cursor = Cursors.Hand;
+        CanvasSymbolsComponentVM.Cursor = Cursors.Hand;
     }
 
     private void UnhighlightDrawnLine()
     {
-        if (_canvasSymbolsComponentVM.CurrentDrawnLineSymbolVM == this || IsSelect)
+        if (CanvasSymbolsComponentVM.CurrentDrawnLineSymbolVM == this || IsSelect)
         {
             return;
         }
@@ -69,7 +65,7 @@ public class DrawnLineSymbolVM
             lineSymbolVM.Stroke = Brushes.Black;
         }
 
-        _canvasSymbolsComponentVM.Cursor = Cursors.Arrow;
+        CanvasSymbolsComponentVM.Cursor = Cursors.Arrow;
     }
 
     public void CreateFirstLine(ConnectionPointVM? outgoingConnectionPoint, double startXCoordinate, double startYCoordinate)
@@ -77,7 +73,7 @@ public class DrawnLineSymbolVM
         OutgoingConnectionPoint = outgoingConnectionPoint;
         OutgoingBlockSymbol = outgoingConnectionPoint?.BlockSymbolVM;
 
-        var firstLine = new LineSymbolVM()
+        var firstLine = new LineSymbolVM(this)
         {
             X1 = startXCoordinate,
             Y1 = startYCoordinate,
@@ -104,7 +100,7 @@ public class DrawnLineSymbolVM
 
                 if (yCoordinate != firstLine.Y1)
                 {
-                    var secondLine = new LineSymbolVM()
+                    var secondLine = new LineSymbolVM(this)
                     {
                         X1 = firstLine.X2,
                         Y1 = firstLine.Y2,
@@ -142,7 +138,7 @@ public class DrawnLineSymbolVM
 
                 if (xCoordinate != firstLine.X1)
                 {
-                    var secondLine = new LineSymbolVM()
+                    var secondLine = new LineSymbolVM(this)
                     {
                         X1 = firstLine.X2,
                         Y1 = firstLine.Y2,
@@ -174,7 +170,7 @@ public class DrawnLineSymbolVM
 
     public void FinishDrawing(ConnectionPointVM incommingConnectionPoint, double xCoordinateDranLine, double yCoordinateDranLine)
     {
-        IncommingConnectionPoint = incommingConnectionPoint.BlockSymbolVM;
+        IncommingConnectionPoint = incommingConnectionPoint;
 
         if (OutgoingConnectionPoint is null)
         {
@@ -192,7 +188,7 @@ public class DrawnLineSymbolVM
                 if (lastLine.LineIsVertical())
                 {
                     lastLine.Y2 = yCoordinateDranLine;
-                    var line = new LineSymbolVM()
+                    var line = new LineSymbolVM(this)
                     {
                         X1 = lastLine.X2,
                         Y1 = lastLine.Y2,
@@ -215,7 +211,7 @@ public class DrawnLineSymbolVM
                 if (lastLine.LineIsHorizontal())
                 {
                     lastLine.X2 = xCoordinateDranLine;
-                    var line = new LineSymbolVM()
+                    var line = new LineSymbolVM(this)
                     {
                         X1 = lastLine.X2,
                         Y1 = lastLine.Y2,
@@ -242,7 +238,7 @@ public class DrawnLineSymbolVM
             {
                 if (lastLine.LineIsVertical())
                 {
-                    var firstLine = new LineSymbolVM()
+                    var firstLine = new LineSymbolVM(this)
                     {
                         X1 = lastLine.X2,
                         Y1 = lastLine.Y2,
@@ -253,7 +249,7 @@ public class DrawnLineSymbolVM
                 }
                 else
                 {
-                    var secondLine = new LineSymbolVM()
+                    var secondLine = new LineSymbolVM(this)
                     {
                         X1 = lastLine.X2,
                         Y1 = lastLine.Y2,
@@ -261,7 +257,7 @@ public class DrawnLineSymbolVM
                         Y2 = yCoordinateDranLine
                     };
 
-                    var firstLine = new LineSymbolVM()
+                    var firstLine = new LineSymbolVM(this)
                     {
                         X1 = lastLine.X2,
                         Y1 = yCoordinateDranLine,
@@ -277,7 +273,7 @@ public class DrawnLineSymbolVM
             {
                 if (lastLine.LineIsHorizontal())
                 {
-                    var firstLine = new LineSymbolVM()
+                    var firstLine = new LineSymbolVM(this)
                     {
                         X1 = lastLine.X2,
                         Y1 = lastLine.Y2,
@@ -288,7 +284,7 @@ public class DrawnLineSymbolVM
                 }
                 else
                 {
-                    var secondLine = new LineSymbolVM()
+                    var secondLine = new LineSymbolVM(this)
                     {
                         X1 = lastLine.X2,
                         Y1 = lastLine.Y2,
@@ -296,7 +292,7 @@ public class DrawnLineSymbolVM
                         Y2 = lastLine.Y2
                     };
 
-                    var firstLine = new LineSymbolVM()
+                    var firstLine = new LineSymbolVM(this)
                     {
                         X1 = xCoordinateDranLine,
                         Y1 = lastLine.Y2,
@@ -313,7 +309,7 @@ public class DrawnLineSymbolVM
 
     public void Select()
     {
-        _canvasSymbolsComponentVM.ListCanvasSymbolsComponentVM.SelectedDrawnLinesVM.Add(this);
+        CanvasSymbolsComponentVM.ListCanvasSymbolsComponentVM.SelectedDrawnLinesVM.Add(this);
         IsSelect = true;
     }
 

@@ -21,5 +21,6 @@ public interface IListCanvasSymbolsComponentVM
     void RemoveSelectedBlockSymbols();
     void ClearSelectedBlockSymbols();
     void ChangeFocusTextField();
+    void RemoveDrawnLinesVM();
     void RemoveSelectedDrawnLinesVM();
 }

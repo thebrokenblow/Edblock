@@ -1,9 +1,10 @@
 ﻿using EdblockViewModel.Core;
+using System.Windows;
 using System.Windows.Media;
 
 namespace EdblockViewModel.Symbols.LinesSymbolVM;
 
-public class LineSymbolVM : ObservableObject
+public class LineSymbolVM(DrawnLineSymbolVM drawnLineSymbolVM) : ObservableObject
 {
     private double x1;
     public double X1 
@@ -58,6 +59,51 @@ public class LineSymbolVM : ObservableObject
             stroke = value;
             OnPropertyChanged();
         }
+    }
+
+    public DrawnLineSymbolVM DrawnLineSymbolVM { get; } = drawnLineSymbolVM;
+
+    public void FinishDrawingLine()
+    {
+        if (DrawnLineSymbolVM.CanvasSymbolsComponentVM.CurrentDrawnLineSymbolVM is null)
+        {
+            return;
+        }
+
+        var currentDrawnLineSymbolVM = DrawnLineSymbolVM.CanvasSymbolsComponentVM.CurrentDrawnLineSymbolVM;
+        if (currentDrawnLineSymbolVM.LinesSymbolVM.Contains(this))
+        {
+            MessageBox.Show("Линия не должна входить в саму себя");
+            return;
+        }
+
+        var lastLine = currentDrawnLineSymbolVM.LinesSymbolVM[^1];
+
+        if (lastLine.LineIsVertical() && LineIsHorizontal())
+        {
+            lastLine.Y2 = y2;
+        }
+
+        if (lastLine.LineIsHorizontal() && LineIsVertical())
+        {
+            lastLine.X2 = x2;
+        }
+
+        if (lastLine.LineIsVertical() && LineIsVertical() && currentDrawnLineSymbolVM.LinesSymbolVM.Count > 1)
+        {
+            currentDrawnLineSymbolVM.LinesSymbolVM.Remove(lastLine);
+            lastLine = currentDrawnLineSymbolVM.LinesSymbolVM[^1];
+            lastLine.X2 = x2;
+        }
+
+        if (lastLine.LineIsHorizontal() && LineIsHorizontal() && currentDrawnLineSymbolVM.LinesSymbolVM.Count > 1)
+        {
+            currentDrawnLineSymbolVM.LinesSymbolVM.Remove(lastLine);
+            lastLine = currentDrawnLineSymbolVM.LinesSymbolVM[^1];
+            lastLine.Y2 = y2;
+        }
+
+        drawnLineSymbolVM.CanvasSymbolsComponentVM.CurrentDrawnLineSymbolVM = null;
     }
 
     public bool LineIsVertical() =>
