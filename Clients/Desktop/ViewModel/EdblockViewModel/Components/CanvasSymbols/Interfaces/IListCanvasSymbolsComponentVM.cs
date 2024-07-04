@@ -11,7 +11,8 @@ public interface IListCanvasSymbolsComponentVM
     ObservableCollection<BlockSymbolVM> BlockSymbolsVM { get; }
     ObservableCollection<DrawnLineSymbolVM> DrawnLinesVM { get; }
     Dictionary<BlockSymbolVM, List<DrawnLineSymbolVM>> DrawnLinesByBlockSymbol { get; }
-    List<BlockSymbolVM> SelectedBlockSymbols { get; }
+    List<BlockSymbolVM> SelectedBlockSymbolsVM { get; }
+    List<DrawnLineSymbolVM> SelectedDrawnLinesVM { get; }
     List<ScalableBlockSymbolVM> ScalableBlockSymbols { get; }
     List<IHasTextFieldVM> SelectedSymbolsHasTextField { get; }
     BlockSymbolVM? MovableBlockSymbol { get; set; }
@@ -20,4 +21,5 @@ public interface IListCanvasSymbolsComponentVM
     void RemoveSelectedBlockSymbols();
     void ClearSelectedBlockSymbols();
     void ChangeFocusTextField();
+    void RemoveSelectedDrawnLinesVM();
 }

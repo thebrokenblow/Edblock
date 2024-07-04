@@ -3,6 +3,8 @@ using System.Windows.Input;
 using System.Windows.Controls;
 using EdblockViewModel.Symbols.Abstractions;
 using EdblockViewModel.Components.CanvasSymbols;
+using EdblockViewModel.Symbols.LinesSymbolVM;
+using Edblock.SymbolsView.Symbols.Lines;
 
 namespace EdblockView.Components;
 
@@ -41,5 +43,18 @@ public partial class CanvasSymbolsComponent : UserControl
     {
         canvasSymbolsComponentVM ??= (CanvasSymbolsComponentVM)DataContext;
         canvasSymbolsComponentVM.ScalingCanvasSymbolsVM.UnsubscribeСanvasScalingEvents();
+    }
+
+    private void DrawnLineSymbolView_MouseDown(object sender, MouseButtonEventArgs e)
+    {
+        if (sender is DrawnLineSymbolView drawnLineSymbolView)
+        {
+            if (drawnLineSymbolView.DataContext is DrawnLineSymbolVM drawnLineSymbolVM)
+            {
+                drawnLineSymbolVM.Select();
+            }
+        }
+
+        e.Handled = true;
     }
 }

@@ -14,7 +14,8 @@ public class ListCanvasSymbolsComponentVM(IPopupBoxMenuComponentVM popupBoxMenuC
     public ObservableCollection<DrawnLineSymbolVM> DrawnLinesVM { get; } = [];
     public Dictionary<BlockSymbolVM, List<DrawnLineSymbolVM>> DrawnLinesByBlockSymbol { get; } = [];
     public List<ScalableBlockSymbolVM> ScalableBlockSymbols { get; } = [];
-    public List<BlockSymbolVM> SelectedBlockSymbols { get; } = [];
+    public List<DrawnLineSymbolVM> SelectedDrawnLinesVM { get; } = [];
+    public List<BlockSymbolVM> SelectedBlockSymbolsVM { get; } = [];
     public List<IHasTextFieldVM> SelectedSymbolsHasTextField { get; } = [];
     public BlockSymbolVM? MovableBlockSymbol { get; set; }
 
@@ -45,17 +46,17 @@ public class ListCanvasSymbolsComponentVM(IPopupBoxMenuComponentVM popupBoxMenuC
     {
         MovableBlockSymbol = null;
 
-        foreach (var symbol in SelectedBlockSymbols)
+        foreach (var symbol in SelectedBlockSymbolsVM)
         {
             BlockSymbolsVM.Remove(symbol);
         }
 
-        SelectedBlockSymbols.Clear();
+        SelectedBlockSymbolsVM.Clear();
     }
 
     public void ClearSelectedBlockSymbols()
     {
-        foreach (var selectedBlockSymbols in SelectedBlockSymbols)
+        foreach (var selectedBlockSymbols in SelectedBlockSymbolsVM)
         {
             if (selectedBlockSymbols != MovableBlockSymbol)
             {
@@ -63,7 +64,7 @@ public class ListCanvasSymbolsComponentVM(IPopupBoxMenuComponentVM popupBoxMenuC
             }
         }
 
-        SelectedBlockSymbols.RemoveAll(selectedBlockSymbol => selectedBlockSymbol != MovableBlockSymbol);
+        SelectedBlockSymbolsVM.RemoveAll(selectedBlockSymbol => selectedBlockSymbol != MovableBlockSymbol);
         SelectedSymbolsHasTextField.RemoveAll(selectedBlockSymbol => selectedBlockSymbol != MovableBlockSymbol);
     }
 
@@ -73,5 +74,15 @@ public class ListCanvasSymbolsComponentVM(IPopupBoxMenuComponentVM popupBoxMenuC
         {
             blockSymbolHasTextField.TextFieldSymbolVM.Focusable = false;
         }
+    }
+
+    public void RemoveSelectedDrawnLinesVM()
+    {
+        foreach (var selectedDrawnLinesVM in SelectedDrawnLinesVM)
+        {
+            selectedDrawnLinesVM.Unselect();
+            DrawnLinesVM.Remove(selectedDrawnLinesVM);
+        }
+        SelectedDrawnLinesVM.Clear();
     }
 }

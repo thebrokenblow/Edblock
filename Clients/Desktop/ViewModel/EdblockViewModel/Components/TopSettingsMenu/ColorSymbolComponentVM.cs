@@ -19,7 +19,7 @@ public class ColorSymbolComponentVM(IListCanvasSymbolsComponentVM listCanvasSymb
 
     private void SetFormatVerticalAlignment()
     {
-        foreach (var selectedBlockSymbol in listCanvasSymbolsVM.SelectedBlockSymbols)
+        foreach (var selectedBlockSymbol in listCanvasSymbolsVM.SelectedBlockSymbolsVM)
         {
             selectedBlockSymbol.Color = selectColor.ToString();
         }

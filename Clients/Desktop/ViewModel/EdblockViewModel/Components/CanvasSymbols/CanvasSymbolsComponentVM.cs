@@ -96,9 +96,16 @@ public class CanvasSymbolsComponentVM : ObservableObject, ICanvasSymbolsComponen
     public void AddLine()
     {
         CurrentDrawnLineSymbolVM?.CreateFirstLine(
-            CurrentDrawnLineSymbolVM.OutgoingConnectionPoint, 
-            xCoordinate, 
+            CurrentDrawnLineSymbolVM.OutgoingConnectionPoint,
+            xCoordinate,
             yCoordinate);
+
+        foreach (var drawnLinesVM in ListCanvasSymbolsComponentVM.DrawnLinesVM)
+        {
+            drawnLinesVM.Unselect();
+        }
+
+        ListCanvasSymbolsComponentVM.SelectedDrawnLinesVM.Clear();
     }
 
     public void RemoveSelectedSymbols()
@@ -109,6 +116,7 @@ public class CanvasSymbolsComponentVM : ObservableObject, ICanvasSymbolsComponen
             CurrentDrawnLineSymbolVM = null;
         }
 
+        ListCanvasSymbolsComponentVM.RemoveSelectedDrawnLinesVM();
         ListCanvasSymbolsComponentVM.RemoveSelectedBlockSymbols();
         ScalingCanvasSymbolsVM.Resize();
     }

@@ -239,7 +239,7 @@ public abstract class BlockSymbolVM : ObservableObject
     {
         IsSelected = true;
 
-        _listCanvasSymbolsComponentVM.SelectedBlockSymbols.Add(this);
+        _listCanvasSymbolsComponentVM.SelectedBlockSymbolsVM.Add(this);
 
         if (_symbolHasTextField is null)
         {

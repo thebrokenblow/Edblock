@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.Threading;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -19,8 +20,8 @@ public class DrawnLineSymbolVM
     public BlockSymbolVM? OutgoingBlockSymbol { get; set; }
     public BlockSymbolVM? IncommingConnectionPoint { get; set; }
 
-    public DelegateCommand SelectDrawnLineCommand { get; }
-    public DelegateCommand UnselectDrawnLineCommand { get; }
+    public DelegateCommand HighlightDrawnLineCommand { get; }
+    public DelegateCommand UnhighlightDrawnLineCommand { get; }
 
     private readonly Brush? selectedBrush;
     private readonly ICanvasSymbolsComponentVM _canvasSymbolsComponentVM;
@@ -35,14 +36,15 @@ public class DrawnLineSymbolVM
 
         _canvasSymbolsComponentVM = canvasSymbolsComponentVM;
 
-        SelectDrawnLineCommand = new(SelectDrawnLine);
-        UnselectDrawnLineCommand = new(UnselectDrawnLine);
-
+        HighlightDrawnLineCommand = new(HighlightDrawnLine);
+        UnhighlightDrawnLineCommand = new(UnhighlightDrawnLine);
     }
 
-    private void SelectDrawnLine()
+    public bool IsSelect { get; set; }
+
+    private void HighlightDrawnLine()
     {
-        if (selectedBrush is null || _canvasSymbolsComponentVM.CurrentDrawnLineSymbolVM == this)
+        if (selectedBrush is null || _canvasSymbolsComponentVM.CurrentDrawnLineSymbolVM == this || IsSelect)
         {
             return;
         }
@@ -55,9 +57,9 @@ public class DrawnLineSymbolVM
         _canvasSymbolsComponentVM.Cursor = Cursors.Hand;
     }
 
-    private void UnselectDrawnLine()
+    private void UnhighlightDrawnLine()
     {
-        if (_canvasSymbolsComponentVM.CurrentDrawnLineSymbolVM == this)
+        if (_canvasSymbolsComponentVM.CurrentDrawnLineSymbolVM == this || IsSelect)
         {
             return;
         }
@@ -306,6 +308,22 @@ public class DrawnLineSymbolVM
                     LinesSymbolVM.Add(firstLine);
                 }
             }
+        }
+    }
+
+    public void Select()
+    {
+        _canvasSymbolsComponentVM.ListCanvasSymbolsComponentVM.SelectedDrawnLinesVM.Add(this);
+        IsSelect = true;
+    }
+
+    public void Unselect()
+    {
+        IsSelect = false;
+
+        foreach(var linesSymbolVM in LinesSymbolVM)
+        {
+            linesSymbolVM.Stroke = Brushes.Black;
         }
     }
 }
