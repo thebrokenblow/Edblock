@@ -57,21 +57,22 @@ public class DrawnLineSymbolVM
                     LinesSymbolVM.Add(secondLine);
                 }
             }
-            else if (LinesSymbolVM.Count % 2 == 0)
+            else
             {
-                var firstLine = LinesSymbolVM[^2];
-                firstLine.X2 = xCoordinate;
+                var lastLine = LinesSymbolVM[^1];
+                var penultimateLine = LinesSymbolVM[^2];
 
-                if (yCoordinate == firstLine.Y1)
+                penultimateLine.X2 = xCoordinate;
+
+                if (yCoordinate == lastLine.Y1)
                 {
-                    LinesSymbolVM.Remove(LinesSymbolVM[^1]);
+                    LinesSymbolVM.Remove(lastLine);
                 }
                 else
                 {
-                    var secondLine = LinesSymbolVM[^1];
-                    secondLine.X1 = xCoordinate;
-                    secondLine.X2 = xCoordinate;
-                    secondLine.Y2 = yCoordinate;
+                    lastLine.X1 = xCoordinate;
+                    lastLine.X2 = xCoordinate;
+                    lastLine.Y2 = yCoordinate;
                 }
             }
         }
@@ -94,21 +95,21 @@ public class DrawnLineSymbolVM
                     LinesSymbolVM.Add(secondLine);
                 }
             }
-            else if (LinesSymbolVM.Count % 2 == 0)
+            else
             {
-                var firstLine = LinesSymbolVM[^2];
-                firstLine.Y2 = yCoordinate;
+                var lastLine = LinesSymbolVM[^1];
+                var penultimateLine = LinesSymbolVM[^2];
+                penultimateLine.Y2 = yCoordinate;
 
-                if (xCoordinate == firstLine.X1)
+                if (xCoordinate == lastLine.X1)
                 {
-                    LinesSymbolVM.Remove(LinesSymbolVM[^1]);
+                    LinesSymbolVM.Remove(lastLine);
                 }
                 else
                 {
-                    var secondLine = LinesSymbolVM[^1];
-                    secondLine.Y1 = yCoordinate;
-                    secondLine.Y2 = yCoordinate;
-                    secondLine.X2 = xCoordinate;
+                    lastLine.Y1 = yCoordinate;
+                    lastLine.Y2 = yCoordinate;
+                    lastLine.X2 = xCoordinate;
                 }
             }
         }
