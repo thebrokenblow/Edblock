@@ -1,6 +1,7 @@
-﻿using EdblockViewModel.Core;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Media;
+using EdblockViewModel.Core;
+using EdblockViewModel.Symbols.LinesSymbolVM.Components;
 
 namespace EdblockViewModel.Symbols.LinesSymbolVM;
 
@@ -62,6 +63,7 @@ public class LineSymbolVM(DrawnLineSymbolVM drawnLineSymbolVM) : ObservableObjec
     }
 
     public DrawnLineSymbolVM DrawnLineSymbolVM { get; } = drawnLineSymbolVM;
+    public MovableRectangleLineVM? MovableRectangleLineVM { get; set; }
 
     public void FinishDrawingLine()
     {
@@ -79,36 +81,39 @@ public class LineSymbolVM(DrawnLineSymbolVM drawnLineSymbolVM) : ObservableObjec
 
         var lastLine = currentDrawnLineSymbolVM.LinesSymbolVM[^1];
 
-        if (lastLine.LineIsVertical() && LineIsHorizontal())
+        if (lastLine.IsVertical() && IsHorizontal())
         {
             lastLine.Y2 = y2;
         }
 
-        if (lastLine.LineIsHorizontal() && LineIsVertical())
+        if (lastLine.IsHorizontal() && IsVertical())
         {
             lastLine.X2 = x2;
         }
 
-        if (lastLine.LineIsVertical() && LineIsVertical() && currentDrawnLineSymbolVM.LinesSymbolVM.Count > 1)
+        if (lastLine.IsVertical() && IsVertical() && currentDrawnLineSymbolVM.LinesSymbolVM.Count > 1)
         {
             currentDrawnLineSymbolVM.LinesSymbolVM.Remove(lastLine);
             lastLine = currentDrawnLineSymbolVM.LinesSymbolVM[^1];
             lastLine.X2 = x2;
         }
 
-        if (lastLine.LineIsHorizontal() && LineIsHorizontal() && currentDrawnLineSymbolVM.LinesSymbolVM.Count > 1)
+        if (lastLine.IsHorizontal() && IsHorizontal() && currentDrawnLineSymbolVM.LinesSymbolVM.Count > 1)
         {
             currentDrawnLineSymbolVM.LinesSymbolVM.Remove(lastLine);
             lastLine = currentDrawnLineSymbolVM.LinesSymbolVM[^1];
             lastLine.Y2 = y2;
         }
 
-        drawnLineSymbolVM.CanvasSymbolsComponentVM.CurrentDrawnLineSymbolVM = null;
+        DrawnLineSymbolVM.CanvasSymbolsComponentVM.CurrentDrawnLineSymbolVM = null;
     }
 
-    public bool LineIsVertical() =>
+    public bool IsVertical() =>
         X1 == X2;
 
-    public bool LineIsHorizontal() =>
+    public bool IsHorizontal() =>
         Y1 == Y2;
+
+    public bool IsZero() =>
+        IsVertical() && IsHorizontal();
 }

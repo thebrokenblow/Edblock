@@ -5,6 +5,7 @@ using EdblockViewModel.Core;
 using EdblockViewModel.Components.CanvasSymbols.Interfaces;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM.ScaleRectangles;
 using EdblockViewModel.Symbols.LinesSymbolVM;
+using EdblockViewModel.Symbols.LinesSymbolVM.Components;
 
 namespace EdblockViewModel.Components.CanvasSymbols;
 
@@ -76,6 +77,7 @@ public class CanvasSymbolsComponentVM : ObservableObject, ICanvasSymbolsComponen
     public DelegateCommand RemoveSelectedSymbolsCommand { get; }
     public DelegateCommand AddLineCommand { get; }
     public ScalePartBlockSymbol? ScalePartBlockSymbol { get; set; }
+    public MovableRectangleLineVM? MovableRectangleLineVM { get; set; }
     public DrawnLineSymbolVM? CurrentDrawnLineSymbolVM { get; set; }
     public ScalingCanvasSymbolsComponentVM ScalingCanvasSymbolsVM { get; }
     public IListCanvasSymbolsComponentVM ListCanvasSymbolsComponentVM { get; }
@@ -100,7 +102,7 @@ public class CanvasSymbolsComponentVM : ObservableObject, ICanvasSymbolsComponen
             xCoordinate,
             yCoordinate);
 
-        ListCanvasSymbolsComponentVM.RemoveSelectedDrawnLinesVM();
+        ListCanvasSymbolsComponentVM.ClearSelectedDrawnLinesVM();
     }
 
     public void RemoveSelectedSymbols()
@@ -116,7 +118,7 @@ public class CanvasSymbolsComponentVM : ObservableObject, ICanvasSymbolsComponen
             CurrentDrawnLineSymbolVM = null;
         }
 
-        ListCanvasSymbolsComponentVM.RemoveDrawnLinesVM();
+        ListCanvasSymbolsComponentVM.RemoveSelectedDrawnLinesVM();
         ListCanvasSymbolsComponentVM.RemoveSelectedBlockSymbols();
         ScalingCanvasSymbolsVM.Resize();
     }
@@ -132,8 +134,9 @@ public class CanvasSymbolsComponentVM : ObservableObject, ICanvasSymbolsComponen
         {
             movableBlockSymbol.MoveMiddle = false;
         }
-
+        
         ScalePartBlockSymbol = null;
+        MovableRectangleLineVM?.UnsubscribeToChangeCoordinates();
         ListCanvasSymbolsComponentVM.MovableBlockSymbol = null;
 
         previousXCoordinate = 0;
@@ -147,6 +150,7 @@ public class CanvasSymbolsComponentVM : ObservableObject, ICanvasSymbolsComponen
 
         ListCanvasSymbolsComponentVM.MovableBlockSymbol?.SetCoordinate(currentCoordinate, previousCoordinate);
         ScalePartBlockSymbol?.SetSize(this);
+        MovableRectangleLineVM?.ChangeCoordinateLine(xCoordinate, yCoordinate);
         CurrentDrawnLineSymbolVM?.DrawnLine(xCoordinate, yCoordinate);
 
         previousXCoordinate = xCoordinate;
@@ -155,8 +159,8 @@ public class CanvasSymbolsComponentVM : ObservableObject, ICanvasSymbolsComponen
 
     public void ClearSelectedSymbols()
     {
-        ListCanvasSymbolsComponentVM.RemoveSelectedDrawnLinesVM();
         ListCanvasSymbolsComponentVM.ChangeFocusTextField();
+        ListCanvasSymbolsComponentVM.ClearSelectedDrawnLinesVM();
         ListCanvasSymbolsComponentVM.ClearSelectedBlockSymbols();
     }
 

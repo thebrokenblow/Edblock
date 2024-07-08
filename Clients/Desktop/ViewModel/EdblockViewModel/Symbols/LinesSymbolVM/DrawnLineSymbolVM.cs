@@ -6,24 +6,30 @@ using EdblockViewModel.Components.CanvasSymbols.Interfaces;
 using EdblockViewModel.Symbols.Abstractions;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM.ConnectionPoints;
 using Prism.Commands;
+using EdblockViewModel.Symbols.LinesSymbolVM.Components;
 
 namespace EdblockViewModel.Symbols.LinesSymbolVM;
 
+/**
+ * View Model of one line 
+ */
 public class DrawnLineSymbolVM
 {
-    public ObservableCollection<LineSymbolVM> LinesSymbolVM { get; set; } = [];
+    public ObservableCollection<LineSymbolVM> LinesSymbolVM { get; } = [];
+    public ObservableCollection<MovableRectangleLineVM> MovableRectanglesLineVM { get; } = [];
     public ConnectionPointVM? OutgoingConnectionPoint { get; set; }
     public ConnectionPointVM? IncommingConnectionPoint { get; set; }
     public BlockSymbolVM? OutgoingBlockSymbol { get; set; }
+    public ICanvasSymbolsComponentVM CanvasSymbolsComponentVM { get; }
 
     public DelegateCommand HighlightDrawnLineCommand { get; }
     public DelegateCommand UnhighlightDrawnLineCommand { get; }
-    public ICanvasSymbolsComponentVM CanvasSymbolsComponentVM { get; }
 
-    private readonly Brush? selectedBrush;
+    private readonly Brush? selectedBrush;      //TODO: явно не принадлежит VM
+    private const string highlightStroke = "#00FF00";
     public DrawnLineSymbolVM(ICanvasSymbolsComponentVM canvasSymbolsComponentVM)
     {
-        var selectedBrushConverter = new BrushConverter().ConvertFrom("#00FF00");
+        var selectedBrushConverter = new BrushConverter().ConvertFrom(highlightStroke);
 
         if (selectedBrushConverter is not null)
         {
@@ -45,24 +51,35 @@ public class DrawnLineSymbolVM
             return;
         }
 
-        foreach (var lineSymbolVM in LinesSymbolVM)
+        SetStroke(selectedBrush);
+
+        foreach (var movableRectangleLineVM in MovableRectanglesLineVM)
         {
-            lineSymbolVM.Stroke = selectedBrush;
+            if (!movableRectangleLineVM.LinesSymbolVM.IsZero())
+            {
+                movableRectangleLineVM.IsShow = true;
+            }
+
         }
 
-        CanvasSymbolsComponentVM.Cursor = Cursors.Hand;
+        if (CanvasSymbolsComponentVM.Cursor != Cursors.SizeWE && CanvasSymbolsComponentVM.Cursor != Cursors.SizeNS)
+        {
+            CanvasSymbolsComponentVM.Cursor = Cursors.Hand;
+        }
     }
 
     private void UnhighlightDrawnLine()
     {
-        if (CanvasSymbolsComponentVM.CurrentDrawnLineSymbolVM == this || IsSelect)
+        if (CanvasSymbolsComponentVM.CurrentDrawnLineSymbolVM == this || IsSelect || CanvasSymbolsComponentVM.MovableRectangleLineVM is not null)
         {
             return;
         }
 
-        foreach (var lineSymbolVM in LinesSymbolVM)
+        SetStroke(Brushes.Black);
+        
+        foreach (var movableRectangleLineVM in MovableRectanglesLineVM)
         {
-            lineSymbolVM.Stroke = Brushes.Black;
+            movableRectangleLineVM.IsShow = false;
         }
 
         CanvasSymbolsComponentVM.Cursor = Cursors.Arrow;
@@ -185,7 +202,7 @@ public class DrawnLineSymbolVM
 
             if (incommingConnectionPoint.Position == SideSymbol.Left || incommingConnectionPoint.Position == SideSymbol.Right)
             {
-                if (lastLine.LineIsVertical())
+                if (lastLine.IsVertical())
                 {
                     lastLine.Y2 = yCoordinateDranLine;
                     var line = new LineSymbolVM(this)
@@ -208,7 +225,7 @@ public class DrawnLineSymbolVM
             }
             else
             {
-                if (lastLine.LineIsHorizontal())
+                if (lastLine.IsHorizontal())
                 {
                     lastLine.X2 = xCoordinateDranLine;
                     var line = new LineSymbolVM(this)
@@ -236,7 +253,7 @@ public class DrawnLineSymbolVM
 
             if (incommingConnectionPoint.Position == SideSymbol.Left || incommingConnectionPoint.Position == SideSymbol.Right)
             {
-                if (lastLine.LineIsVertical())
+                if (lastLine.IsVertical())
                 {
                     var firstLine = new LineSymbolVM(this)
                     {
@@ -271,7 +288,7 @@ public class DrawnLineSymbolVM
             }
             else
             {
-                if (lastLine.LineIsHorizontal())
+                if (lastLine.IsHorizontal())
                 {
                     var firstLine = new LineSymbolVM(this)
                     {
@@ -305,21 +322,43 @@ public class DrawnLineSymbolVM
                 }
             }
         }
+
+        SetMovableRectangle();
+    }
+
+    private void SetMovableRectangle()
+    {
+        for (int i = 1; i < LinesSymbolVM.Count - 1; i++)
+        {
+            var lineSymbolVM = LinesSymbolVM[i];
+            var movableRectangleLineVM = new MovableRectangleLineVM(lineSymbolVM);
+            MovableRectanglesLineVM.Add(movableRectangleLineVM);
+        }
     }
 
     public void Select()
     {
         CanvasSymbolsComponentVM.ListCanvasSymbolsComponentVM.SelectedDrawnLinesVM.Add(this);
+
         IsSelect = true;
     }
 
     public void Unselect()
     {
         IsSelect = false;
+        SetStroke(Brushes.Black);
 
-        foreach(var linesSymbolVM in LinesSymbolVM)
+        foreach (var movableRectangleLineVM in MovableRectanglesLineVM)
         {
-            linesSymbolVM.Stroke = Brushes.Black;
+            movableRectangleLineVM.IsShow = false;
+        }
+    }
+
+    private void SetStroke(Brush brushLine)
+    {
+        foreach (var linesSymbolVM in LinesSymbolVM)
+        {
+            linesSymbolVM.Stroke = brushLine;
         }
     }
 }

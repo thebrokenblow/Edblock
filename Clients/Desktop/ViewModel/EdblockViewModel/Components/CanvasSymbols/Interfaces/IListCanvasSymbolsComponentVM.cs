@@ -2,7 +2,6 @@
 using System.Collections.ObjectModel;
 using EdblockViewModel.Symbols.Abstractions;
 using EdblockViewModel.Symbols.LinesSymbolVM;
-using Microsoft.Identity.Client;
 
 namespace EdblockViewModel.Components.CanvasSymbols.Interfaces;
 
@@ -21,6 +20,6 @@ public interface IListCanvasSymbolsComponentVM
     void RemoveSelectedBlockSymbols();
     void ClearSelectedBlockSymbols();
     void ChangeFocusTextField();
-    void RemoveDrawnLinesVM();
     void RemoveSelectedDrawnLinesVM();
+    void ClearSelectedDrawnLinesVM();
 }

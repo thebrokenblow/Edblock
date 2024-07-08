@@ -42,6 +42,14 @@ public class ListCanvasSymbolsComponentVM(IPopupBoxMenuComponentVM popupBoxMenuC
         MovableBlockSymbol.SetSelectedProperties();
     }
 
+    public void ChangeFocusTextField()
+    {
+        foreach (var blockSymbolHasTextField in SelectedSymbolsHasTextField)
+        {
+            blockSymbolHasTextField.TextFieldSymbolVM.Focusable = false;
+        }
+    }
+
     public void RemoveSelectedBlockSymbols()
     {
         MovableBlockSymbol = null;
@@ -52,6 +60,31 @@ public class ListCanvasSymbolsComponentVM(IPopupBoxMenuComponentVM popupBoxMenuC
         }
 
         SelectedBlockSymbolsVM.Clear();
+    }
+
+    public void RemoveSelectedDrawnLinesVM()
+    {
+        foreach (var selectedDrawnLinesVM in SelectedDrawnLinesVM)
+        {
+            if (selectedDrawnLinesVM.OutgoingConnectionPoint != null)
+            {
+                selectedDrawnLinesVM.OutgoingConnectionPoint.IsHasConnectingLine = false;
+            }
+
+            if (selectedDrawnLinesVM.IncommingConnectionPoint != null)
+            {
+                selectedDrawnLinesVM.IncommingConnectionPoint.IsHasConnectingLine = false;
+            }
+
+            foreach (var drawnLineByBlockSymbol in DrawnLinesByBlockSymbol)
+            {
+                drawnLineByBlockSymbol.Value.Remove(selectedDrawnLinesVM);
+            }
+
+            DrawnLinesVM.Remove(selectedDrawnLinesVM);
+        }
+
+        SelectedDrawnLinesVM.Clear();
     }
 
     public void ClearSelectedBlockSymbols()
@@ -68,35 +101,7 @@ public class ListCanvasSymbolsComponentVM(IPopupBoxMenuComponentVM popupBoxMenuC
         SelectedSymbolsHasTextField.RemoveAll(selectedBlockSymbol => selectedBlockSymbol != MovableBlockSymbol);
     }
 
-    public void ChangeFocusTextField()
-    {
-        foreach (var blockSymbolHasTextField in SelectedSymbolsHasTextField)
-        {
-            blockSymbolHasTextField.TextFieldSymbolVM.Focusable = false;
-        }
-    }
-
-    public void RemoveDrawnLinesVM()
-    {
-        foreach (var selectedDrawnLinesVM in SelectedDrawnLinesVM)
-        {
-            if (selectedDrawnLinesVM.OutgoingConnectionPoint is not null)
-            {
-                selectedDrawnLinesVM.OutgoingConnectionPoint.IsHasConnectingLine = false;
-            }
-
-            if (selectedDrawnLinesVM.IncommingConnectionPoint is not null)
-            {
-                selectedDrawnLinesVM.IncommingConnectionPoint.IsHasConnectingLine = false;
-            }
-
-            DrawnLinesByBlockSymbol.Where(drawnLineByBlockSymbol => drawnLineByBlockSymbol.Value.Remove(selectedDrawnLinesVM));
-            DrawnLinesVM.Remove(selectedDrawnLinesVM);
-        }
-        SelectedDrawnLinesVM.Clear();
-    }
-
-    public void RemoveSelectedDrawnLinesVM()
+    public void ClearSelectedDrawnLinesVM()
     {
         foreach (var selectedDrawnLinesVM in SelectedDrawnLinesVM)
         {
