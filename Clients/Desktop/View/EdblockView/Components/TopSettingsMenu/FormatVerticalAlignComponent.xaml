@@ -6,10 +6,7 @@
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
-    <ListBox
-        x:Name="FormatVerticalAlign"
-        SelectedIndex="{Binding IndexFormatVerticalAlign}"
-        SelectionChanged="SelectFormatVerticalAlign">
+    <ListBox SelectedIndex="{Binding IndexFormatVerticalAlign}">
         <ListBoxItem Content="{materialDesign:PackIcon Kind=FormatVerticalAlignBottom}" />
         <ListBoxItem Content="{materialDesign:PackIcon Kind=FormatVerticalAlignCenter}" />
         <ListBoxItem Content="{materialDesign:PackIcon Kind=FormatVerticalAlignTop}" />

@@ -5,8 +5,8 @@ using EdblockViewModel.Symbols.Abstractions;
 using EdblockViewModel.Symbols.LinesSymbolVM;
 using EdblockViewModel.Components.CanvasSymbols.Interfaces;
 using EdblockViewModel.Components.TopSettingsMenu.PopupBoxMenu.Interfaces;
-using EdblockComponentsViewModel.Observers.Interfaces;
 using EdblockComponentsViewModel.Subjects.Interfaces;
+using EdblockComponentsViewModel.Observers.Interfaces;
 
 namespace EdblockViewModel.Components.CanvasSymbols;
 
@@ -135,7 +135,6 @@ public class ListCanvasSymbolsComponentVM(IPopupBoxMenuComponentVM popupBoxMenuC
 
         SelectedDrawnLinesVM.Clear();
     }
-
 
     private void RemoveLineByBlock(BlockSymbolVM blockSymbolVM, DrawnLineSymbolVM drawnLineSymbolVM)
     {

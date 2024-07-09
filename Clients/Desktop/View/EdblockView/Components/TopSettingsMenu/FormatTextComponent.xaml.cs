@@ -10,9 +10,4 @@ public partial class FormatTextComponent : UserControl
 {
     public FormatTextComponent() =>
         InitializeComponent();
-
-    private void ListBox_Unselected(object sender, RoutedEventArgs e)
-    {
-
-    }
 }

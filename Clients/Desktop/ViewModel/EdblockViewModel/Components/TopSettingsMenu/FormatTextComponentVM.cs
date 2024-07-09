@@ -1,10 +1,11 @@
 ﻿using EdblockViewModel.Components.CanvasSymbols.Interfaces;
 using EdblockViewModel.Components.TopSettingsMenu.Interfaces;
+using EdblockViewModel.Core;
 using EdblockViewModel.Symbols.Abstractions;
 
 namespace EdblockViewModel.Components.TopSettingsMenu;
 
-public class FormatTextComponentVM(IListCanvasSymbolsComponentVM listCanvasSymbolsVM) : IFormatTextComponentVM
+public class FormatTextComponentVM(IListCanvasSymbolsComponentVM listCanvasSymbolsVM) : ObservableObject, IFormatTextComponentVM
 {
     private const string fontWeightBold = "Bold";
     private const string fontWeightNormal = "Normal";
@@ -12,22 +13,21 @@ public class FormatTextComponentVM(IListCanvasSymbolsComponentVM listCanvasSymbo
     private string? currentFontWeight;
 
     private bool isTextBold;
-
-    private int selectedIndex;
-    public int SelectedIndex
-    {
-        get => selectedIndex;
-        set
-        {
-            selectedIndex = value;
-        }
-    }
     public bool IsTextBold
     {
         get => isTextBold;
         set
         {
-            isTextBold = value;
+            if (isTextBold && value)
+            {
+                isTextBold = false;
+            }
+            else
+            {
+                isTextBold = true;
+            }
+
+            OnPropertyChanged();
 
             if (isTextBold)
             {
@@ -54,7 +54,16 @@ public class FormatTextComponentVM(IListCanvasSymbolsComponentVM listCanvasSymbo
         get => isFormatItalic;
         set
         {
-            isFormatItalic = value;
+            if (isFormatItalic && value)
+            {
+                isFormatItalic = false;
+            }
+            else
+            {
+                isFormatItalic = true;
+            }
+
+            OnPropertyChanged();
 
             if (isFormatItalic)
             {
@@ -80,7 +89,16 @@ public class FormatTextComponentVM(IListCanvasSymbolsComponentVM listCanvasSymbo
         get => isFormatUnderline;
         set
         {
-            isFormatUnderline = value;
+            if (isFormatUnderline && value)
+            {
+                isFormatUnderline = false;
+            }
+            else
+            {
+                isFormatUnderline = true;
+            }
+
+            OnPropertyChanged();
 
             if (isFormatUnderline)
             {

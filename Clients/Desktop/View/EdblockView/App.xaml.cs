@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Windows;
-using System.Windows.Forms.Design;
-using EdblockComponentsViewModel.Observers.Interfaces;
 using EdblockComponentsViewModel.Subjects;
 using EdblockComponentsViewModel.Subjects.Interfaces;
 using EdblockViewModel.Clients;
@@ -82,20 +80,18 @@ public partial class App : Application
         services.AddTransient<IBuilderScaleRectangles, BuilderScaleRectangles>();
 
         services.AddScoped<INavigationService, NavigateService>();
-
         services.AddScoped(typeof(IFactoryNavigationService), typeof(FactoryNavigationService));
-
         services.AddScoped<Func<Type, BaseViewModel>>(
             serviceProvider =>
             pageTypeViewModel =>
             (BaseViewModel)serviceProvider.GetRequiredService(pageTypeViewModel));
-
+        
         services.AddScoped<Func<Type, BlockSymbolVM>>(
            serviceProvider =>
            blockSymbolTypeVM =>
            (BlockSymbolVM)serviceProvider.GetRequiredService(blockSymbolTypeVM));
+        
         services.AddScoped<EditorVM>();
-
         services.AddScoped<IFontSizeSubject<int>>(
             serviceProvider => new FontSizeSubject<int>(2, 300, 2));
 
