@@ -8,6 +8,7 @@ using EdblockViewModel.Components.CanvasSymbols.Interfaces;
 using EdblockViewModel.Components.TopSettingsMenu.Interfaces;
 using EdblockViewModel.Components.TopSettingsMenu.PopupBoxMenu.Interfaces;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM.ScaleRectangles.Interfaces;
+using System;
 
 namespace EdblockViewModel.Symbols.SwitchCaseConditionSymbolsVM;
 
@@ -84,14 +85,13 @@ public sealed class VerticalConditionSymbolVM : SwitchCaseSymbolVM, IHasTextFiel
             connectionPointsVM.SetCoordinate();
         }
 
+        foreach (var connectionPointsSwitchCaseVM in ConnectionPointsSwitchCaseVM)
+        {
+            connectionPointsSwitchCaseVM.SetCoordinate();
+        }
+
         SetCoordinateLinesCondition();
         SetCoordinateVerticalLineSwitchCase();
-
-        for (int i = 0; i < ConnectionPointsSwitchCaseVM.Count; i++)
-        {
-            ConnectionPointsSwitchCaseVM[i].XCoordinate = width;
-            ConnectionPointsSwitchCaseVM[i].XCoordinateLineDraw = width;
-        }
     }
 
     public override void SetHeight(double height)
@@ -111,16 +111,13 @@ public sealed class VerticalConditionSymbolVM : SwitchCaseSymbolVM, IHasTextFiel
             connectionPointsVM.SetCoordinate();
         }
 
+        foreach (var connectionPointsSwitchCaseVM in ConnectionPointsSwitchCaseVM)
+        {
+            connectionPointsSwitchCaseVM.SetCoordinate();
+        }
+
         SetCoordinateLinesCondition();
         SetCoordinateVerticalLineSwitchCase();
-
-        for (int i = 1; i <= ConnectionPointsSwitchCaseVM.Count ; i++)
-        {
-            double heightLine = halfHeight + (height + indentBetweenSymbol) * i;
-
-            ConnectionPointsSwitchCaseVM[i - 1].YCoordinate = heightLine;
-            ConnectionPointsSwitchCaseVM[i - 1].YCoordinateLineDraw = heightLine;
-        }
     }
 
     private void SetCoordinateVerticalLineSwitchCase()
@@ -177,16 +174,30 @@ public sealed class VerticalConditionSymbolVM : SwitchCaseSymbolVM, IHasTextFiel
 
     private void AddLinesSwitchCase(int countLines)
     {
-        //LinesSwitchCase = new(countLines);
+        LinesSwitchCase = new(countLines);
 
-        //var factoryConnectionPoint = new FactoryConnectionPoint(_canvasSymbolsComponentVM, lineStateStandardComponentVM, this);
+        var builderConnectionPointsVM = new BuilderConnectionPointsVM(
+           _canvasSymbolsComponentVM,
+           _lineStateStandardComponentVM,
+           this);
 
-        //for (int i = 0; i < countLines; i++)
-        //{
-        //    LinesSwitchCase.Add(new());
+        for (int i = 1; i <= countLines; i++)
+        {
+            LinesSwitchCase.Add(new());
+            builderConnectionPointsVM.AddBottomConnectionPoint(CreateCoordinateConnectionPoint(i), CreateCoordinateStartDrawLine(i));
 
-        //    var rightConnectionPoint = factoryConnectionPoint.Create(SideSymbol.Right);
-        //    ConnectionPointsSwitchCaseVM.Add(rightConnectionPoint);
-        //}
+        }
+
+        ConnectionPointsSwitchCaseVM = builderConnectionPointsVM.Build();
+    }
+
+    private Func<(double, double)> CreateCoordinateConnectionPoint(int numberConnectionPoint)
+    {
+        return () => (width, height / 2 + (height + indentBetweenSymbol) * numberConnectionPoint);
+    }
+
+    private Func<(double, double)> CreateCoordinateStartDrawLine(int numberConnectionPoint)
+    {
+        return () => (xCoordinate + width, yCoordinate + height / 2 + (height + indentBetweenSymbol) * numberConnectionPoint);
     }
 }

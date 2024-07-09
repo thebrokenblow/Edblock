@@ -54,7 +54,7 @@ public abstract class BlockSymbolVM : ObservableObject
         }
     }
 
-    private double xCoordinate;
+    protected double xCoordinate;
     public double XCoordinate
     {
         get => xCoordinate;
@@ -67,7 +67,7 @@ public abstract class BlockSymbolVM : ObservableObject
         }
     }
 
-    private double yCoordinate;
+    protected double yCoordinate;
     public double YCoordinate
     {
         get => yCoordinate;

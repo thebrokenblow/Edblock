@@ -271,8 +271,9 @@ public class ListSymbolsComponentVM : ObservableObject, IListSymbolsComponentVM,
             return;
         }
 
+        var builderScaleRectangles = new BuilderScaleRectangles(_canvasSymbolsComponentVM, _popupBoxMenuComponentVM.ScaleAllSymbolComponentVM);
         var verticalConditionSymbolVM = new VerticalConditionSymbolVM(
-            _builderScaleRectangles,
+            builderScaleRectangles,
             _canvasSymbolsComponentVM,
             _listCanvasSymbolsComponentVM,
             _topSettingsMenuComponentVM,

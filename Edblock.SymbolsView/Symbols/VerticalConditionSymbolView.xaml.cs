@@ -21,7 +21,7 @@ public partial class VerticalConditionSymbolView : UserControl
 
             if (contextEllipse is ConnectionPointVM connectionPointVM)
             {
-                //connectionPointVM.Click();
+                connectionPointVM.DrawLine();
             }
         }
 
