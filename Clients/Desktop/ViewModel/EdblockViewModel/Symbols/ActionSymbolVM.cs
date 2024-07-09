@@ -3,15 +3,17 @@ using EdblockViewModel.Symbols.Attributes;
 using EdblockViewModel.Symbols.Abstractions;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM.ConnectionPoints;
+using EdblockViewModel.Symbols.ComponentsSymbolsVM.ScaleRectangles.Interfaces;
 using EdblockViewModel.Components.CanvasSymbols.Interfaces;
 using EdblockViewModel.Components.TopSettingsMenu.Interfaces;
 using EdblockViewModel.Components.TopSettingsMenu.PopupBoxMenu.Interfaces;
-using EdblockViewModel.Symbols.ComponentsSymbolsVM.ScaleRectangles.Interfaces;
+using EdblockComponentsViewModel.Subjects.Interfaces;
+using EdblockComponentsViewModel.Observers.Interfaces;
 
 namespace EdblockViewModel.Symbols;
 
 [SymbolType("ActionSymbolVM")]
-public sealed class ActionSymbolVM : ScalableBlockSymbolVM, IHasTextFieldVM, IHasConnectionPoint
+public sealed class ActionSymbolVM : ScalableBlockSymbolVM, IHasTextFieldVM, IHasConnectionPoint, IObserverFontSize<int>
 {
     public TextFieldSymbolVM TextFieldSymbolVM { get; }
     public List<ConnectionPointVM> ConnectionPointsVM { get; set; } = null!;
@@ -29,7 +31,8 @@ public sealed class ActionSymbolVM : ScalableBlockSymbolVM, IHasTextFieldVM, IHa
         ICanvasSymbolsComponentVM canvasSymbolsComponentVM,
         IListCanvasSymbolsComponentVM listCanvasSymbolsComponentVM,
         ITopSettingsMenuComponentVM topSettingsMenuComponentVM,
-        IPopupBoxMenuComponentVM popupBoxMenuComponentVM) : base(
+        IPopupBoxMenuComponentVM popupBoxMenuComponentVM, 
+        IFontSizeSubject<int> fontSizeSubject) : base(
             builderScaleRectangles, 
             canvasSymbolsComponentVM, 
             listCanvasSymbolsComponentVM, 
@@ -46,7 +49,7 @@ public sealed class ActionSymbolVM : ScalableBlockSymbolVM, IHasTextFieldVM, IHa
         AddConnectionPoints();
         
         coordinateConnectionPointVM = new(this);
-
+        FontSizeSubject = fontSizeSubject;
         SetWidth(defaultWidth);
         SetHeight(defaultHeigth);
     }
@@ -82,5 +85,12 @@ public sealed class ActionSymbolVM : ScalableBlockSymbolVM, IHasTextFieldVM, IHa
             .AddBottomConnectionPoint()
             .AddLeftConnectionPoint()
             .Build();
+    }
+
+    public IFontSizeSubject<int> FontSizeSubject { get; }
+    
+    public void UpdateFontSize()
+    {
+        TextFieldSymbolVM.FontSize = FontSizeSubject.SelectedFontSize;
     }
 }

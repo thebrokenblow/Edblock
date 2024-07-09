@@ -1,4 +1,5 @@
-﻿using EdblockViewModel.Components.CanvasSymbols.Interfaces;
+﻿using EdblockComponentsViewModel.Subjects.Interfaces;
+using EdblockViewModel.Components.CanvasSymbols.Interfaces;
 using EdblockViewModel.Components.TopSettingsMenu.PopupBoxMenu.Interfaces;
 
 namespace EdblockViewModel.Components.TopSettingsMenu.Interfaces;
@@ -13,4 +14,5 @@ public interface ITopSettingsMenuComponentVM
     IFormatVerticalAlignComponentVM FormatVerticalAlignComponentVM { get; }
     IPopupBoxMenuComponentVM PopupBoxMenuComponentVM { get; }
     ICanvasSymbolsComponentVM CanvasSymbolsComponentVM { get; }
+    IFontSizeSubject<int> IFontSizeSubject { get; }
 }

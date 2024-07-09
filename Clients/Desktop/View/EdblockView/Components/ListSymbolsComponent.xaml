@@ -12,6 +12,7 @@
     mc:Ignorable="d">
     <ScrollViewer>
         <StackPanel Width="360" Background="#F5F5F5">
+            <Button Width="350" Height="30" Click="Button_Click"/>
             <symbolUI:ActionSymbolUI Style="{StaticResource SymbolUI}">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="MouseDown">

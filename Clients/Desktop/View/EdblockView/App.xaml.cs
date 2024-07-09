@@ -1,5 +1,9 @@
 ﻿using System;
 using System.Windows;
+using System.Windows.Forms.Design;
+using EdblockComponentsViewModel.Observers.Interfaces;
+using EdblockComponentsViewModel.Subjects;
+using EdblockComponentsViewModel.Subjects.Interfaces;
 using EdblockViewModel.Clients;
 using EdblockViewModel.Components.CanvasSymbols;
 using EdblockViewModel.Components.CanvasSymbols.Interfaces;
@@ -90,8 +94,10 @@ public partial class App : Application
            serviceProvider =>
            blockSymbolTypeVM =>
            (BlockSymbolVM)serviceProvider.GetRequiredService(blockSymbolTypeVM));
-
         services.AddScoped<EditorVM>();
+
+        services.AddScoped<IFontSizeSubject<int>>(
+            serviceProvider => new FontSizeSubject<int>(10, 150, 10));
 
         serviceProvider = services.BuildServiceProvider();
     }

@@ -24,6 +24,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\Edblock.SymbolsView\Edblock.SymbolsView.csproj" />
+    <ProjectReference Include="..\..\..\..\EdblockComponentsViewModel\EdblockComponentsViewModel.csproj" />
     <ProjectReference Include="..\..\ViewModel\EdblockViewModel\EdblockViewModel.csproj" />
     <ProjectReference Include="..\Edblock.SymbolsUI\Edblock.SymbolsUI.csproj" />
   </ItemGroup>

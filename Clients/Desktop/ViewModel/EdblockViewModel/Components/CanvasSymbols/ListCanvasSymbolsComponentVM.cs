@@ -5,10 +5,13 @@ using EdblockViewModel.Symbols.Abstractions;
 using EdblockViewModel.Symbols.LinesSymbolVM;
 using EdblockViewModel.Components.CanvasSymbols.Interfaces;
 using EdblockViewModel.Components.TopSettingsMenu.PopupBoxMenu.Interfaces;
+using EdblockComponentsViewModel.Observers.Interfaces;
+using EdblockViewModel.Components.TopSettingsMenu.Interfaces;
+using EdblockComponentsViewModel.Subjects.Interfaces;
 
 namespace EdblockViewModel.Components.CanvasSymbols;
 
-public class ListCanvasSymbolsComponentVM(IPopupBoxMenuComponentVM popupBoxMenuComponentVM) : IListCanvasSymbolsComponentVM
+public class ListCanvasSymbolsComponentVM(IPopupBoxMenuComponentVM popupBoxMenuComponentVM, IFontSizeSubject<int> fontSizeSubject) : IListCanvasSymbolsComponentVM
 {
     public ObservableCollection<BlockSymbolVM> BlockSymbolsVM { get; } = [];
     public ObservableCollection<DrawnLineSymbolVM> DrawnLinesVM { get; } = [];
@@ -21,6 +24,12 @@ public class ListCanvasSymbolsComponentVM(IPopupBoxMenuComponentVM popupBoxMenuC
 
     public void AddBlockSymbol(BlockSymbolVM blockSymbolVM)
     {
+        if (blockSymbolVM is IObserverFontSize<int> observerFontSize)
+        {
+            fontSizeSubject.RegisterObserver(observerFontSize);
+            observerFontSize.UpdateFontSize();
+        }
+
         var firstBlockSymbolsVM = BlockSymbolsVM.FirstOrDefault();
 
         var isScaleAllSymbolVM = popupBoxMenuComponentVM.ScaleAllSymbolComponentVM.IsScaleAllSymbol;
