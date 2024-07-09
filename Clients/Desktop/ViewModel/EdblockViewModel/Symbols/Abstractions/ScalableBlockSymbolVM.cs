@@ -136,11 +136,11 @@ public abstract class ScalableBlockSymbolVM : BlockSymbolVM
         }
         else if (scalePartBlockSymbol.PositionScaleRectangle == PositionScaleRectangle.MiddleTop)
         {
-            SetHeigthBottomPart(scalePartBlockSymbol);
+            SetHeigthTopPart(scalePartBlockSymbol);
         }
         else if (scalePartBlockSymbol.PositionScaleRectangle == PositionScaleRectangle.RightTop)
         {
-            SetWidthLeftPart(scalePartBlockSymbol);
+            SetWidthRigthPart(scalePartBlockSymbol);
             SetHeigthTopPart(scalePartBlockSymbol);
         }
     }

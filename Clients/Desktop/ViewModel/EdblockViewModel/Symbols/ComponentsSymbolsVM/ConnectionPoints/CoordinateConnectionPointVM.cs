@@ -1,75 +1,33 @@
-﻿using System;
-using System.Collections.Generic;
-using EdblockModel.EnumsModel;
-using EdblockViewModel.Symbols.Abstractions;
+﻿using EdblockViewModel.Symbols.Abstractions;
+using EdblockViewModel.Symbols.ComponentsSymbolsVM.ConnectionPoints.Interfaces;
 
 namespace EdblockViewModel.Symbols.ComponentsSymbolsVM.ConnectionPoints;
 
-public class CoordinateConnectionPointVM
+public class CoordinateConnectionPointVM(BlockSymbolVM blockSymbolVM) : ICoordinateConnectionPointVM
 {
-    private readonly BlockSymbolVM _blockSymbolVM;
-    private readonly List<ConnectionPointVM> сonnectionPointsVM;
     private const int offsetPositionConnectionPoint = 15;
-    private readonly Dictionary<SideSymbol, Action<ConnectionPointVM>> sideSymbolByCoordinate;
 
-    public CoordinateConnectionPointVM(BlockSymbolVM blockSymbolVM)
-    {
-        _blockSymbolVM = blockSymbolVM;
+    public (double, double) GetCoordinateTop() => 
+        (blockSymbolVM.Width / 2, -offsetPositionConnectionPoint);
 
-        var blockSymbolHasConnectionPoint = (IHasConnectionPoint)blockSymbolVM;
-        сonnectionPointsVM = blockSymbolHasConnectionPoint.ConnectionPointsVM;
+    public (double, double) GetCoordinateRight() =>
+        (blockSymbolVM.Width + offsetPositionConnectionPoint, blockSymbolVM.Height / 2);
 
-        sideSymbolByCoordinate = new()
-        {
-            { SideSymbol.Top, SetCoordinateTop },
-            { SideSymbol.Right, SetCoordinateRight },
-            { SideSymbol.Bottom, SetCoordinateBottom },
-            { SideSymbol.Left, SetCoordinateLeft }
-        };
-    }
+    public (double, double) GetCoordinateBottom() =>
+        (blockSymbolVM.Width / 2, blockSymbolVM.Height + offsetPositionConnectionPoint);
 
-    public void SetCoordinate()
-    {
-        foreach (var сonnectionPointVM in сonnectionPointsVM)
-        {
-            var position = сonnectionPointVM.Position;
-            sideSymbolByCoordinate[position].Invoke(сonnectionPointVM);
-        }
-    }
+    public (double, double) GetCoordinateLeft() =>
+        (-offsetPositionConnectionPoint, blockSymbolVM.Height / 2);
 
-    private void SetCoordinateTop(ConnectionPointVM topConnectionPoint)
-    {
-        topConnectionPoint.XCoordinate = _blockSymbolVM.Width / 2;
-        topConnectionPoint.YCoordinate = -offsetPositionConnectionPoint;
-    }
+    public (double, double) GetCoordinateStartDrawLineTop() =>
+        (blockSymbolVM.XCoordinate + blockSymbolVM.Width / 2, blockSymbolVM.YCoordinate);
 
-    private void SetCoordinateRight(ConnectionPointVM rightConnectionPoint)
-    {
-        rightConnectionPoint.XCoordinate = _blockSymbolVM.Width + offsetPositionConnectionPoint;
-        rightConnectionPoint.YCoordinate = _blockSymbolVM.Height / 2;
-    }
+    public (double, double) GetCoordinateStartDrawLineRight() =>
+        (blockSymbolVM.XCoordinate + blockSymbolVM.Width, blockSymbolVM.YCoordinate + blockSymbolVM.Height / 2);
+    
+    public (double, double) GetCoordinateStartDrawLineBottom() =>
+        (blockSymbolVM.XCoordinate + blockSymbolVM.Width / 2, blockSymbolVM.YCoordinate + blockSymbolVM.Height);
 
-    private void SetCoordinateBottom(ConnectionPointVM bottomConnectionPoint)
-    {
-        bottomConnectionPoint.XCoordinate = _blockSymbolVM.Width / 2;
-        bottomConnectionPoint.YCoordinate = _blockSymbolVM.Height + offsetPositionConnectionPoint;
-    }
-
-    private void SetCoordinateLeft(ConnectionPointVM leftConnectionPoint)
-    {
-        leftConnectionPoint.XCoordinate = -offsetPositionConnectionPoint;
-        leftConnectionPoint.YCoordinate = _blockSymbolVM.Height / 2; ;
-    }
-
-    public (double, double) GetCoordinateLineDrawTop() =>
-        (_blockSymbolVM.XCoordinate + _blockSymbolVM.Width / 2, _blockSymbolVM.YCoordinate);
-
-    public (double, double) GetCoordinateLineDrawRight() =>
-        (_blockSymbolVM.XCoordinate + _blockSymbolVM.Width, _blockSymbolVM.YCoordinate + _blockSymbolVM.Height / 2);
-
-    public (double, double) GetCoordinateLineDrawBottom() =>
-        (_blockSymbolVM.XCoordinate + _blockSymbolVM.Width / 2, _blockSymbolVM.YCoordinate + _blockSymbolVM.Height);
-
-    public (double, double) GetCoordinateLineDrawLeft() =>
-        (_blockSymbolVM.XCoordinate, _blockSymbolVM.YCoordinate + _blockSymbolVM.Height / 2);
+    public (double, double) GetCoordinateStartDrawLineLeft() =>
+        (blockSymbolVM.XCoordinate, blockSymbolVM.YCoordinate + blockSymbolVM.Height / 2);
 }

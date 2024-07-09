@@ -24,7 +24,7 @@ public class ListCanvasSymbolsComponentVM(IPopupBoxMenuComponentVM popupBoxMenuC
 
     public void AddBlockSymbol(BlockSymbolVM blockSymbolVM)
     {
-        if (blockSymbolVM is IObserverFontSize<int> observerFontSize)
+        if (blockSymbolVM is IObserverFontSize observerFontSize)
         {
             fontSizeSubject.RegisterObserver(observerFontSize);
             observerFontSize.UpdateFontSize();

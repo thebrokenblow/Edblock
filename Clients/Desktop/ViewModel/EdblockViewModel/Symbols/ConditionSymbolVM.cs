@@ -70,7 +70,11 @@ public class ConditionSymbolVM : ScalableBlockSymbolVM, IHasTextFieldVM, IHasCon
 
         SetCoordinatePolygonPoints();
         ChangeCoordinateScaleRectangle();
-        coordinateConnectionPointVM.SetCoordinate();
+
+        foreach (var connectionPointVM in ConnectionPointsVM)
+        {
+            connectionPointVM.SetCoordinate();
+        }
     }
 
     public override void SetHeight(double height)
@@ -82,7 +86,11 @@ public class ConditionSymbolVM : ScalableBlockSymbolVM, IHasTextFieldVM, IHasCon
 
         SetCoordinatePolygonPoints();
         ChangeCoordinateScaleRectangle();
-        coordinateConnectionPointVM.SetCoordinate();
+
+        foreach (var connectionPointVM in ConnectionPointsVM)
+        {
+            connectionPointVM.SetCoordinate();
+        }
     }
 
     public void SetCoordinatePolygonPoints()
@@ -103,8 +111,8 @@ public class ConditionSymbolVM : ScalableBlockSymbolVM, IHasTextFieldVM, IHasCon
     {
         var builderConnectionPointsVM = new BuilderConnectionPointsVM(
             _canvasSymbolsComponentVM,
-            this,
-            lineStateStandardComponentVM);
+            _lineStateStandardComponentVM,
+            this);
 
         ConnectionPointsVM = builderConnectionPointsVM
             .AddTopConnectionPoint()

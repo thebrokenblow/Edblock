@@ -24,7 +24,6 @@ public class ListSymbolsComponentVM : ObservableObject, IListSymbolsComponentVM,
     private const int minLinesHorizontalCondition = 2;
     private const int maxLinesHorizontalCondition = 20;
 
-
     private const int defaultLinesHorizontalCondition = 3;
     private int? correctLinesHorizontalCondition = defaultLinesHorizontalCondition;
     private string linesHorizontalCondition = defaultLinesHorizontalCondition.ToString();
@@ -247,8 +246,9 @@ public class ListSymbolsComponentVM : ObservableObject, IListSymbolsComponentVM,
             return;
         }
 
+        var builderScaleRectangles = new BuilderScaleRectangles(_canvasSymbolsComponentVM, _popupBoxMenuComponentVM.ScaleAllSymbolComponentVM);
         var horizontalConditionSymbol = new HorizontalConditionSymbolVM(
-            _builderScaleRectangles,
+            builderScaleRectangles,
             _canvasSymbolsComponentVM,
             _listCanvasSymbolsComponentVM,
             _topSettingsMenuComponentVM,

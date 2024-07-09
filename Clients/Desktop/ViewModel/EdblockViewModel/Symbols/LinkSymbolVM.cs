@@ -113,7 +113,11 @@ public sealed class LinkSymbolVM : ScalableBlockSymbolVM, IHasTextFieldVM, IHasC
         TextFieldSymbolVM.TopOffset = textFieldOffset;
 
         ChangeCoordinateScaleRectangle();
-        coordinateConnectionPointVM.SetCoordinate();
+
+        foreach (var connectionPointsVM in ConnectionPointsVM)
+        {
+            connectionPointsVM.SetCoordinate();
+        }
     }
 
     protected override List<ScaleRectangle> CreateScaleRectangles() =>
@@ -128,8 +132,8 @@ public sealed class LinkSymbolVM : ScalableBlockSymbolVM, IHasTextFieldVM, IHasC
     {
         var builderConnectionPointsVM = new BuilderConnectionPointsVM(
             _canvasSymbolsComponentVM,
-            this,
-            lineStateStandardComponentVM);
+            _lineStateStandardComponentVM,
+            this);
 
         ConnectionPointsVM = builderConnectionPointsVM
             .AddTopConnectionPoint()

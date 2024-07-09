@@ -97,7 +97,7 @@ public partial class App : Application
         services.AddScoped<EditorVM>();
 
         services.AddScoped<IFontSizeSubject<int>>(
-            serviceProvider => new FontSizeSubject<int>(10, 150, 10));
+            serviceProvider => new FontSizeSubject<int>(2, 300, 2));
 
         serviceProvider = services.BuildServiceProvider();
     }

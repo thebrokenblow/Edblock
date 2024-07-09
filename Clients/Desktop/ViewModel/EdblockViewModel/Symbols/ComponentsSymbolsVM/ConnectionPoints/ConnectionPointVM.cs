@@ -81,6 +81,8 @@ public class ConnectionPointVM : ObservableObject
     private const int diametr = 8;
 
     private readonly Func<(double, double)> _getCoordinateDrawLine;
+    private readonly Func<(double, double)> _getCoordinateConnectionPoint;
+
     private readonly ICanvasSymbolsComponentVM _canvasSymbolsVM;
     private readonly ILineStateStandardComponentVM _lineStateStandardComponentVM;
 
@@ -89,9 +91,11 @@ public class ConnectionPointVM : ObservableObject
         ILineStateStandardComponentVM lineStateStandardComponentVM, 
         BlockSymbolVM blockSymbolVM, 
         SideSymbol position,
+        Func<(double, double)> getCoordinateConnectionPoint,
         Func<(double, double)> getCoordinateDrawLine)
     {
         _getCoordinateDrawLine = getCoordinateDrawLine;
+        _getCoordinateConnectionPoint = getCoordinateConnectionPoint;
         _canvasSymbolsVM = canvasSymbolsVM;
         _lineStateStandardComponentVM = lineStateStandardComponentVM;
 
@@ -102,6 +106,13 @@ public class ConnectionPointVM : ObservableObject
 
         EnterCursor = new(ShowConnectionPoints);
         LeaveCursor = new(HideConnectionPoints);
+
+        SetCoordinate();
+    }
+
+    public void SetCoordinate()
+    {
+        (XCoordinate, YCoordinate) = _getCoordinateConnectionPoint.Invoke();
     }
 
     public void ShowConnectionPoints()

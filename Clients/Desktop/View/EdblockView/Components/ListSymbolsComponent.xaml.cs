@@ -1,5 +1,4 @@
-﻿using System.Windows.Input;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
 
 namespace EdblockView.Components;
 
@@ -10,9 +9,4 @@ public partial class ListSymbolsComponent : UserControl
 {
     public ListSymbolsComponent() =>
         InitializeComponent();
-
-    private void Button_Click(object sender, System.Windows.RoutedEventArgs e)
-    {
-        
-    }
 }

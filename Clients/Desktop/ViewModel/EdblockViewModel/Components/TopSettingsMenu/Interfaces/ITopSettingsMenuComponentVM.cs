@@ -14,5 +14,5 @@ public interface ITopSettingsMenuComponentVM
     IFormatVerticalAlignComponentVM FormatVerticalAlignComponentVM { get; }
     IPopupBoxMenuComponentVM PopupBoxMenuComponentVM { get; }
     ICanvasSymbolsComponentVM CanvasSymbolsComponentVM { get; }
-    IFontSizeSubject<int> IFontSizeSubject { get; }
+    IFontSizeSubject<int> FontSizeSubject { get; }
 }

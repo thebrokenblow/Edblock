@@ -7,7 +7,7 @@ namespace EdblockComponentsViewModel.Subjects;
 public class FontSizeSubject<T> : IFontSizeSubject<T> where T : INumber<T>
 {
     public List<T> FontSizes { get; } = [];
-    public List<IObserverFontSize<T>> Observers { get; } = [];
+    public List<IObserverFontSize> Observers { get; } = [];
 
     private T? selectedFontSize;
     public T? SelectedFontSize
@@ -43,7 +43,7 @@ public class FontSizeSubject<T> : IFontSizeSubject<T> where T : INumber<T>
         }
     }
 
-    public void RegisterObserver(IObserverFontSize<T> observerFontSize)
+    public void RegisterObserver(IObserverFontSize observerFontSize)
     {
         Observers.Add(observerFontSize);
     }

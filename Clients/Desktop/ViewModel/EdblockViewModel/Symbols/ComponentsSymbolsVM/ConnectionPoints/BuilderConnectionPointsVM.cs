@@ -1,54 +1,59 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using EdblockModel.EnumsModel;
+using EdblockViewModel.Symbols.Abstractions;
 using EdblockViewModel.Components.CanvasSymbols.Interfaces;
 using EdblockViewModel.Components.TopSettingsMenu.PopupBoxMenu.Interfaces;
-using EdblockViewModel.Symbols.Abstractions;
+using EdblockViewModel.Symbols.ComponentsSymbolsVM.ConnectionPoints.Interfaces;
 
 namespace EdblockViewModel.Symbols.ComponentsSymbolsVM.ConnectionPoints;
 
-public class BuilderConnectionPointsVM(ICanvasSymbolsComponentVM canvasSymbolsVM, BlockSymbolVM blockSymbolVM, ILineStateStandardComponentVM lineStateStandardComponentVM)
+public class BuilderConnectionPointsVM(ICanvasSymbolsComponentVM canvasSymbolsComponentVM, ILineStateStandardComponentVM lineStateStandardComponentVM, BlockSymbolVM blockSymbolVM) : IBuilderConnectionPointsVM
 {
-    private readonly FactoryConnectionPoint _factoryConnectionPoint = new(canvasSymbolsVM, lineStateStandardComponentVM, blockSymbolVM);
+    private readonly FactoryConnectionPoint _factoryConnectionPoint = new(canvasSymbolsComponentVM, lineStateStandardComponentVM, blockSymbolVM);
     private readonly List<ConnectionPointVM> connectionPointsVM = [];
     private readonly CoordinateConnectionPointVM coordinateConnectionPointVM = new(blockSymbolVM);
-    public BuilderConnectionPointsVM AddTopConnectionPoint()
-    {
-        var topConnectionPointVM = _factoryConnectionPoint.Create(SideSymbol.Top, coordinateConnectionPointVM.GetCoordinateLineDrawTop);
 
+    public IBuilderConnectionPointsVM AddTopConnectionPoint(Func<(double, double)>? getCoordinateConnectionPoint = null, Func<(double, double)>? getCoordinateStartDrawLine = null)
+    {
+        getCoordinateConnectionPoint ??= coordinateConnectionPointVM.GetCoordinateTop;
+        getCoordinateStartDrawLine ??= coordinateConnectionPointVM.GetCoordinateStartDrawLineTop;
+        var topConnectionPointVM = _factoryConnectionPoint.Create(SideSymbol.Top, getCoordinateConnectionPoint, getCoordinateStartDrawLine);
         connectionPointsVM.Add(topConnectionPointVM);
 
         return this;
     }
 
-    public BuilderConnectionPointsVM AddRightConnectionPoint()
+    public IBuilderConnectionPointsVM AddRightConnectionPoint(Func<(double, double)>? getCoordinateConnectionPoint = null, Func<(double, double)>? getCoordinateStartDrawLine = null)
     {
-        var rightConnectionPointVM = _factoryConnectionPoint.Create(SideSymbol.Right, coordinateConnectionPointVM.GetCoordinateLineDrawRight);
-
+        getCoordinateConnectionPoint ??= coordinateConnectionPointVM.GetCoordinateRight;
+        getCoordinateStartDrawLine ??= coordinateConnectionPointVM.GetCoordinateStartDrawLineRight;
+        var rightConnectionPointVM = _factoryConnectionPoint.Create(SideSymbol.Right, getCoordinateConnectionPoint, getCoordinateStartDrawLine);
         connectionPointsVM.Add(rightConnectionPointVM);
 
         return this;
     }
 
-    public BuilderConnectionPointsVM AddBottomConnectionPoint()
+    public IBuilderConnectionPointsVM AddBottomConnectionPoint(Func<(double, double)>? getCoordinateConnectionPoint = null, Func<(double, double)>? getCoordinateStartDrawLine = null)
     {
-        var bottomConnectionPointVM = _factoryConnectionPoint.Create(SideSymbol.Bottom, coordinateConnectionPointVM.GetCoordinateLineDrawBottom);
-
+        getCoordinateConnectionPoint ??= coordinateConnectionPointVM.GetCoordinateBottom;
+        getCoordinateStartDrawLine ??= coordinateConnectionPointVM.GetCoordinateStartDrawLineBottom;
+        var bottomConnectionPointVM = _factoryConnectionPoint.Create(SideSymbol.Bottom, getCoordinateConnectionPoint, getCoordinateStartDrawLine);
         connectionPointsVM.Add(bottomConnectionPointVM);
 
         return this;
     }
 
-    public BuilderConnectionPointsVM AddLeftConnectionPoint()
+    public IBuilderConnectionPointsVM AddLeftConnectionPoint(Func<(double, double)>? getCoordinateConnectionPoint = null, Func<(double, double)>? getCoordinateStartDrawLine = null)
     {
-        var leftConnectionPointVM = _factoryConnectionPoint.Create(SideSymbol.Left, coordinateConnectionPointVM.GetCoordinateLineDrawLeft);
-
+        getCoordinateConnectionPoint ??= coordinateConnectionPointVM.GetCoordinateLeft;
+        getCoordinateStartDrawLine ??= coordinateConnectionPointVM.GetCoordinateStartDrawLineLeft;
+        var leftConnectionPointVM = _factoryConnectionPoint.Create(SideSymbol.Left, getCoordinateConnectionPoint, getCoordinateStartDrawLine);
         connectionPointsVM.Add(leftConnectionPointVM);
 
         return this;
     }
 
-    public List<ConnectionPointVM> Build() 
-    {
-        return connectionPointsVM;
-    }
+    public List<ConnectionPointVM> Build() =>
+        connectionPointsVM;
 }

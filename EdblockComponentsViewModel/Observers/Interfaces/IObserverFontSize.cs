@@ -1,9 +1,6 @@
-﻿using EdblockComponentsViewModel.Subjects.Interfaces;
+﻿namespace EdblockComponentsViewModel.Observers.Interfaces;
 
-namespace EdblockComponentsViewModel.Observers.Interfaces;
-
-public interface IObserverFontSize<T>
+public interface IObserverFontSize
 {
-    IFontSizeSubject<T> FontSizeSubject { get; }
     void UpdateFontSize();
 }

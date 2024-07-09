@@ -61,7 +61,11 @@ public sealed class StartEndSymbolVM : ScalableBlockSymbolVM, IHasTextFieldVM, I
         TextFieldSymbolVM.LeftOffset = offsetTextField / 2; 
 
         ChangeCoordinateScaleRectangle();
-        coordinateConnectionPointVM.SetCoordinate();
+
+        foreach (var connectionPointsVM in ConnectionPointsVM)
+        {
+            connectionPointsVM.SetCoordinate();
+        }
     }
 
     public override void SetHeight(double height)
@@ -70,15 +74,19 @@ public sealed class StartEndSymbolVM : ScalableBlockSymbolVM, IHasTextFieldVM, I
         TextFieldSymbolVM.Height = height;
 
         ChangeCoordinateScaleRectangle();
-        coordinateConnectionPointVM.SetCoordinate();
+
+        foreach (var connectionPointsVM in ConnectionPointsVM)
+        {
+            connectionPointsVM.SetCoordinate();
+        }
     }
 
     private void AddConnectionPoints()
     {
         var builderConnectionPointsVM = new BuilderConnectionPointsVM(
             _canvasSymbolsComponentVM,
-            this,
-            lineStateStandardComponentVM);
+            _lineStateStandardComponentVM,
+            this);
 
         ConnectionPointsVM = builderConnectionPointsVM
             .AddTopConnectionPoint()

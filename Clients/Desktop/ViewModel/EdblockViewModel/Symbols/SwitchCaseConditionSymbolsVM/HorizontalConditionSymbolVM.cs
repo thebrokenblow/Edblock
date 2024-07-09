@@ -1,6 +1,6 @@
-﻿using System.Windows.Media;
+﻿using System;
+using System.Windows.Media;
 using System.Collections.Generic;
-using EdblockModel.EnumsModel;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM.ConnectionPoints;
 using EdblockViewModel.Symbols.Abstractions;
@@ -13,7 +13,7 @@ using EdblockViewModel.Symbols.ComponentsSymbolsVM.ScaleRectangles.Interfaces;
 namespace EdblockViewModel.Symbols.SwitchCaseConditionSymbolsVM;
 
 [SymbolType("HorizontalConditionSymbolVM")]
-public sealed class HorizontalConditionSymbolVM : SwitchCaseSymbolVM, IHasTextFieldVM, IHasConnectionPoint
+public class HorizontalConditionSymbolVM : SwitchCaseSymbolVM, IHasTextFieldVM, IHasConnectionPoint
 {
     public TextFieldSymbolVM TextFieldSymbolVM { get; }
     public List<LineSwitchCase> LinesSwitchCase { get; set; } = null!;
@@ -32,9 +32,10 @@ public sealed class HorizontalConditionSymbolVM : SwitchCaseSymbolVM, IHasTextFi
         }
     }
 
-    private readonly CoordinateConnectionPointVM coordinateConnectionPointVM;
-
-    private double displacementCoefficient;
+    private double DisplacementCoefficient 
+    { 
+        get => (width + indentBetweenSymbol) * (_countLines - 1) / 2;
+    }
 
     private const int defaultWidth = 140;
     private const int defaultHeigth = 60;
@@ -51,13 +52,13 @@ public sealed class HorizontalConditionSymbolVM : SwitchCaseSymbolVM, IHasTextFi
         ICanvasSymbolsComponentVM canvasSymbolsComponentVM,
         IListCanvasSymbolsComponentVM listCanvasSymbolsComponentVM,
         ITopSettingsMenuComponentVM topSettingsMenuComponentVM,
-        IPopupBoxMenuComponentVM popupBoxMenuComponentVM, 
+        IPopupBoxMenuComponentVM popupBoxMenuComponentVM,
         int countLines) : base(
             builderScaleRectangles,
-            canvasSymbolsComponentVM, 
+            canvasSymbolsComponentVM,
             listCanvasSymbolsComponentVM,
-            topSettingsMenuComponentVM, 
-            popupBoxMenuComponentVM, 
+            topSettingsMenuComponentVM,
+            popupBoxMenuComponentVM,
             countLines)
     {
         TextFieldSymbolVM = new(_canvasSymbolsComponentVM, this)
@@ -70,8 +71,6 @@ public sealed class HorizontalConditionSymbolVM : SwitchCaseSymbolVM, IHasTextFi
         AddConnectionPoints();
         AddLinesSwitchCase(countLines);
 
-        coordinateConnectionPointVM = new(this);
-
         SetWidth(defaultWidth);
         SetHeight(defaultHeigth);
     }
@@ -80,23 +79,20 @@ public sealed class HorizontalConditionSymbolVM : SwitchCaseSymbolVM, IHasTextFi
     {
         Width = width;
 
-        displacementCoefficient = CalculateDisplacementCoefficient();
-
         TextFieldSymbolVM.Width = width / 2;
         TextFieldSymbolVM.LeftOffset = width / 4;
 
         SetCoordinatePolygonPoints();
         ChangeCoordinateScaleRectangle();
-        coordinateConnectionPointVM.SetCoordinate();
 
-        var xCoordinateConnectionPoint = -displacementCoefficient + width / 2;
-        
-        foreach (var connectionPoint in ConnectionPointsSwitchCaseVM)
+        foreach (var connectionPointVM in ConnectionPointsVM)
         {
-            connectionPoint.XCoordinate = xCoordinateConnectionPoint;
-            connectionPoint.XCoordinateLineDraw = xCoordinateConnectionPoint;
+            connectionPointVM.SetCoordinate();
+        }
 
-            xCoordinateConnectionPoint += width + indentBetweenSymbol;
+        foreach (var connectionPointVM in ConnectionPointsSwitchCaseVM)
+        {
+            connectionPointVM.SetCoordinate();
         }
 
         SetCoordinateVerticalLine();
@@ -113,14 +109,15 @@ public sealed class HorizontalConditionSymbolVM : SwitchCaseSymbolVM, IHasTextFi
 
         SetCoordinatePolygonPoints();
         ChangeCoordinateScaleRectangle();
-        coordinateConnectionPointVM.SetCoordinate();
 
-        var yCoordinateConnectionPoint = height + baselineLength + conditionLineLength;
-
-        foreach (var connectionPoint in ConnectionPointsSwitchCaseVM)
+        foreach (var connectionPointVM in ConnectionPointsVM)
         {
-            connectionPoint.YCoordinate = yCoordinateConnectionPoint;
-            connectionPoint.YCoordinateLineDraw = yCoordinateConnectionPoint;
+            connectionPointVM.SetCoordinate();
+        }
+
+        foreach (var connectionPointVM in ConnectionPointsSwitchCaseVM)
+        {
+            connectionPointVM.SetCoordinate();
         }
 
         SetCoordinateVerticalLine();
@@ -160,9 +157,9 @@ public sealed class HorizontalConditionSymbolVM : SwitchCaseSymbolVM, IHasTextFi
         double halfWidth = width / 2;
         double y = Height + baselineLength;
 
-        HorizontalLineSwitchCase.X1 = -displacementCoefficient + halfWidth;
+        HorizontalLineSwitchCase.X1 = -DisplacementCoefficient + halfWidth;
         HorizontalLineSwitchCase.Y1 = y;
-        HorizontalLineSwitchCase.X2 = displacementCoefficient + halfWidth;
+        HorizontalLineSwitchCase.X2 = DisplacementCoefficient + halfWidth;
         HorizontalLineSwitchCase.Y2 = y;
     }
 
@@ -170,11 +167,10 @@ public sealed class HorizontalConditionSymbolVM : SwitchCaseSymbolVM, IHasTextFi
     {
         double y1 = Height + baselineLength;
         double y2 = y1 + conditionLineLength;
-        double halfWidth = width / 2;
 
         for (int i = 0; i < _countLines; i++)
         {
-            double xCoordinateLine = -displacementCoefficient + halfWidth + (width + indentBetweenSymbol) * i;
+            double xCoordinateLine = -DisplacementCoefficient + width / 2 + (width + indentBetweenSymbol) * i;
 
             LinesSwitchCase[i].X1 = xCoordinateLine;
             LinesSwitchCase[i].Y1 = y1;
@@ -187,8 +183,8 @@ public sealed class HorizontalConditionSymbolVM : SwitchCaseSymbolVM, IHasTextFi
     {
         var builderConnectionPointsVM = new BuilderConnectionPointsVM(
             _canvasSymbolsComponentVM,
-            this,
-            lineStateStandardComponentVM);
+            _lineStateStandardComponentVM,
+            this);
 
         ConnectionPointsVM = builderConnectionPointsVM
             .AddTopConnectionPoint()
@@ -201,17 +197,24 @@ public sealed class HorizontalConditionSymbolVM : SwitchCaseSymbolVM, IHasTextFi
     {
         LinesSwitchCase = new(countLines);
 
+        var builderConnectionPointsVM = new BuilderConnectionPointsVM(
+           _canvasSymbolsComponentVM,
+           _lineStateStandardComponentVM,
+           this);
+
         for (int i = 0; i < countLines; i++)
         {
             LinesSwitchCase.Add(new());
-
-            //var bottomConnectionPoint = new ConnectionPointVM(
-            //    _canvasSymbolsComponentVM,
-            //    lineStateStandardComponentVM,
-            //    this,
-            //    SideSymbol.Bottom);
-
-            //ConnectionPointsSwitchCaseVM.Add(bottomConnectionPoint);
+            builderConnectionPointsVM.AddBottomConnectionPoint(CreateCoordinateConnectionPoint(i), CreateCoordinateStartDrawLine(i));
+           
         }
+
+        ConnectionPointsSwitchCaseVM = builderConnectionPointsVM.Build();
     }
+
+    private Func<(double, double)> CreateCoordinateConnectionPoint(int numberConnectionPoint) => 
+        () => (-DisplacementCoefficient + Width / 2 + (Width + indentBetweenSymbol) * numberConnectionPoint, Height + baselineLength + conditionLineLength);
+
+    private Func<(double, double)> CreateCoordinateStartDrawLine(int numberConnectionPoint) =>
+        () => (XCoordinate + -DisplacementCoefficient + Width / 2 + (Width + indentBetweenSymbol) * numberConnectionPoint, YCoordinate + Height + baselineLength + conditionLineLength);
 }

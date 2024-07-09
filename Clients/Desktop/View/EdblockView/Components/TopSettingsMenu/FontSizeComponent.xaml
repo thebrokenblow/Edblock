@@ -16,7 +16,7 @@
         <ComboBox
             Width="40"
             HorizontalAlignment="Right"
-            materialDesign:ComboBoxAssist.MaxLength="2"
+            materialDesign:ComboBoxAssist.MaxLength="3"
             BorderBrush="Black"
             ItemsSource="{Binding FontSizes}"
             SelectedItem="{Binding SelectedFontSize}"

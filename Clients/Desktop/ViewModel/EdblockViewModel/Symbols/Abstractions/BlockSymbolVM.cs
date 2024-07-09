@@ -100,12 +100,11 @@ public abstract class BlockSymbolVM : ObservableObject
     public BlockSymbolModel BlockSymbolModel { get; }
 
     protected readonly IScaleAllSymbolComponentVM scaleAllSymbolComponentVM;
-    protected readonly ILineStateStandardComponentVM lineStateStandardComponentVM;
+    protected readonly ILineStateStandardComponentVM _lineStateStandardComponentVM;
     protected readonly ICanvasSymbolsComponentVM _canvasSymbolsComponentVM;
+    protected readonly ITopSettingsMenuComponentVM _topSettingsMenuComponentVM;
 
     private readonly IListCanvasSymbolsComponentVM _listCanvasSymbolsComponentVM;
-    private readonly ITopSettingsMenuComponentVM _topSettingsMenuComponentVM;
-
     private readonly ScalableBlockSymbolVM? _scalableBlockSymbolVM;
 
     private readonly IHasConnectionPoint? _symbolHasConnectionPoint;
@@ -117,7 +116,7 @@ public abstract class BlockSymbolVM : ObservableObject
         ITopSettingsMenuComponentVM topSettingsMenuComponentVM, 
         IPopupBoxMenuComponentVM popupBoxMenuComponentVM)
     {
-        lineStateStandardComponentVM = popupBoxMenuComponentVM.LineStateStandardComponentVM;
+        _lineStateStandardComponentVM = popupBoxMenuComponentVM.LineStateStandardComponentVM;
         scaleAllSymbolComponentVM = popupBoxMenuComponentVM.ScaleAllSymbolComponentVM;
 
         _canvasSymbolsComponentVM = canvasSymbolsComponentVM;

@@ -7,13 +7,12 @@ using EdblockViewModel.Symbols.ComponentsSymbolsVM.ScaleRectangles.Interfaces;
 using EdblockViewModel.Components.CanvasSymbols.Interfaces;
 using EdblockViewModel.Components.TopSettingsMenu.Interfaces;
 using EdblockViewModel.Components.TopSettingsMenu.PopupBoxMenu.Interfaces;
-using EdblockComponentsViewModel.Subjects.Interfaces;
 using EdblockComponentsViewModel.Observers.Interfaces;
 
 namespace EdblockViewModel.Symbols;
 
 [SymbolType("ActionSymbolVM")]
-public sealed class ActionSymbolVM : ScalableBlockSymbolVM, IHasTextFieldVM, IHasConnectionPoint, IObserverFontSize<int>
+public sealed class ActionSymbolVM : ScalableBlockSymbolVM, IHasTextFieldVM, IHasConnectionPoint, IObserverFontSize
 {
     public TextFieldSymbolVM TextFieldSymbolVM { get; }
     public List<ConnectionPointVM> ConnectionPointsVM { get; set; } = null!;
@@ -31,8 +30,7 @@ public sealed class ActionSymbolVM : ScalableBlockSymbolVM, IHasTextFieldVM, IHa
         ICanvasSymbolsComponentVM canvasSymbolsComponentVM,
         IListCanvasSymbolsComponentVM listCanvasSymbolsComponentVM,
         ITopSettingsMenuComponentVM topSettingsMenuComponentVM,
-        IPopupBoxMenuComponentVM popupBoxMenuComponentVM, 
-        IFontSizeSubject<int> fontSizeSubject) : base(
+        IPopupBoxMenuComponentVM popupBoxMenuComponentVM) : base(
             builderScaleRectangles, 
             canvasSymbolsComponentVM, 
             listCanvasSymbolsComponentVM, 
@@ -49,7 +47,6 @@ public sealed class ActionSymbolVM : ScalableBlockSymbolVM, IHasTextFieldVM, IHa
         AddConnectionPoints();
         
         coordinateConnectionPointVM = new(this);
-        FontSizeSubject = fontSizeSubject;
         SetWidth(defaultWidth);
         SetHeight(defaultHeigth);
     }
@@ -60,7 +57,11 @@ public sealed class ActionSymbolVM : ScalableBlockSymbolVM, IHasTextFieldVM, IHa
         TextFieldSymbolVM.Width = width;
 
         ChangeCoordinateScaleRectangle();
-        coordinateConnectionPointVM.SetCoordinate();
+
+        foreach (var connectionPointVM in ConnectionPointsVM)
+        {
+            connectionPointVM.SetCoordinate();
+        }
     }
 
     public override void SetHeight(double height)
@@ -69,15 +70,19 @@ public sealed class ActionSymbolVM : ScalableBlockSymbolVM, IHasTextFieldVM, IHa
         TextFieldSymbolVM.Height = height;
 
         ChangeCoordinateScaleRectangle();
-        coordinateConnectionPointVM.SetCoordinate();
+
+        foreach (var connectionPointVM in ConnectionPointsVM)
+        {
+            connectionPointVM.SetCoordinate();
+        }
     }
 
     private void AddConnectionPoints()
     {
         var builderConnectionPointsVM = new BuilderConnectionPointsVM(
             _canvasSymbolsComponentVM,
-            this,
-            lineStateStandardComponentVM);
+            _lineStateStandardComponentVM,
+            this);
 
         ConnectionPointsVM = builderConnectionPointsVM
             .AddTopConnectionPoint()
@@ -86,11 +91,9 @@ public sealed class ActionSymbolVM : ScalableBlockSymbolVM, IHasTextFieldVM, IHa
             .AddLeftConnectionPoint()
             .Build();
     }
-
-    public IFontSizeSubject<int> FontSizeSubject { get; }
     
     public void UpdateFontSize()
     {
-        TextFieldSymbolVM.FontSize = FontSizeSubject.SelectedFontSize;
+        TextFieldSymbolVM.FontSize = _topSettingsMenuComponentVM.FontSizeSubject.SelectedFontSize;
     }
 }

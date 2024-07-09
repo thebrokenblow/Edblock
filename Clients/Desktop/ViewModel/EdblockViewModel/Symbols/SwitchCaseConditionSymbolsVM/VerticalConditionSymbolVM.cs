@@ -1,6 +1,5 @@
 ﻿using System.Windows.Media;
 using System.Collections.Generic;
-using EdblockModel.EnumsModel;
 using EdblockViewModel.Symbols.Attributes;
 using EdblockViewModel.Symbols.Abstractions;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM;
@@ -79,7 +78,11 @@ public sealed class VerticalConditionSymbolVM : SwitchCaseSymbolVM, IHasTextFiel
 
         SetCoordinatePolygonPoints();
         ChangeCoordinateScaleRectangle();
-        coordinateConnectionPointVM.SetCoordinate();
+
+        foreach (var connectionPointsVM in ConnectionPointsVM)
+        {
+            connectionPointsVM.SetCoordinate();
+        }
 
         SetCoordinateLinesCondition();
         SetCoordinateVerticalLineSwitchCase();
@@ -102,7 +105,11 @@ public sealed class VerticalConditionSymbolVM : SwitchCaseSymbolVM, IHasTextFiel
 
         SetCoordinatePolygonPoints();
         ChangeCoordinateScaleRectangle();
-        coordinateConnectionPointVM.SetCoordinate();
+
+        foreach (var connectionPointsVM in ConnectionPointsVM)
+        {
+            connectionPointsVM.SetCoordinate();
+        }
 
         SetCoordinateLinesCondition();
         SetCoordinateVerticalLineSwitchCase();
@@ -158,8 +165,8 @@ public sealed class VerticalConditionSymbolVM : SwitchCaseSymbolVM, IHasTextFiel
     {
         var builderConnectionPointsVM = new BuilderConnectionPointsVM(
             _canvasSymbolsComponentVM,
-            this,
-            lineStateStandardComponentVM);
+            _lineStateStandardComponentVM,
+            this);
 
         ConnectionPointsVM = builderConnectionPointsVM
             .AddTopConnectionPoint()

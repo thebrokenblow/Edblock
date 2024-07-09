@@ -11,7 +11,7 @@ namespace EdblockViewModel.Symbols.SwitchCaseConditionSymbolsVM;
 
 public abstract class SwitchCaseSymbolVM : ScalableBlockSymbolVM
 {
-    public List<ConnectionPointVM> ConnectionPointsSwitchCaseVM { get; init; }
+    public List<ConnectionPointVM> ConnectionPointsSwitchCaseVM { get; set; } = null!;
     protected readonly int _countLines;
     public SwitchCaseSymbolVM(
         IBuilderScaleRectangles builderScaleRectangles,
@@ -27,8 +27,6 @@ public abstract class SwitchCaseSymbolVM : ScalableBlockSymbolVM
             popupBoxMenuComponentVM)
     {
         _countLines = countLine;
-        
-        ConnectionPointsSwitchCaseVM = new(countLine);
 
         var switchCaseSymbolModel = (SwitchCaseSymbolModel)BlockSymbolModel;
         switchCaseSymbolModel.CountLine = _countLines;

@@ -1,5 +1,4 @@
-﻿using EdblockComponentsViewModel.Subjects;
-using EdblockComponentsViewModel.Subjects.Interfaces;
+﻿using EdblockComponentsViewModel.Subjects.Interfaces;
 using EdblockViewModel.Components.CanvasSymbols.Interfaces;
 using EdblockViewModel.Components.TopSettingsMenu.Interfaces;
 using EdblockViewModel.Components.TopSettingsMenu.PopupBoxMenu.Interfaces;
@@ -25,5 +24,5 @@ public class TopSettingsMenuComponentVM(
     public IPopupBoxMenuComponentVM PopupBoxMenuComponentVM { get; } = popupBoxMenuComponentVM;
     public ICanvasSymbolsComponentVM CanvasSymbolsComponentVM { get; } = canvasSymbolsComponentVM;
     public IFormatVerticalAlignComponentVM FormatVerticalAlignComponentVM { get; } = formatVerticalAlignComponentVM;
-    public IFontSizeSubject<int> IFontSizeSubject { get; } = fontSizeSubject;
+    public IFontSizeSubject<int> FontSizeSubject { get; } = fontSizeSubject;
 }

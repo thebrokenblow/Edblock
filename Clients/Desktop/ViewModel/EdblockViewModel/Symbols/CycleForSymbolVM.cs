@@ -68,7 +68,11 @@ public sealed class CycleForSymbolVM : ScalableBlockSymbolVM, IHasTextFieldVM, I
 
         SetCoordinatePolygonPoints();
         ChangeCoordinateScaleRectangle();
-        coordinateConnectionPointVM.SetCoordinate();
+
+        foreach (var connectionPointsVM in ConnectionPointsVM)
+        {
+            connectionPointsVM.SetCoordinate();
+        }
     }
 
     public override void SetHeight(double height)
@@ -78,7 +82,11 @@ public sealed class CycleForSymbolVM : ScalableBlockSymbolVM, IHasTextFieldVM, I
 
         SetCoordinatePolygonPoints();
         ChangeCoordinateScaleRectangle();
-        coordinateConnectionPointVM.SetCoordinate();
+
+        foreach (var connectionPointsVM in ConnectionPointsVM)
+        {
+            connectionPointsVM.SetCoordinate();
+        }
     }
 
     public void SetCoordinatePolygonPoints()
@@ -103,8 +111,8 @@ public sealed class CycleForSymbolVM : ScalableBlockSymbolVM, IHasTextFieldVM, I
     {
         var builderConnectionPointsVM = new BuilderConnectionPointsVM(
             _canvasSymbolsComponentVM,
-            this,
-            lineStateStandardComponentVM);
+            _lineStateStandardComponentVM,
+            this);
 
         ConnectionPointsVM = builderConnectionPointsVM
             .AddTopConnectionPoint()
