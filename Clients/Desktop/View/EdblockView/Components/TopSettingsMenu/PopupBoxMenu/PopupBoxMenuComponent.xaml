@@ -16,16 +16,19 @@
         Foreground="#838383"
         StaysOpen="True">
         <materialDesign:PopupBox.ToggleContent>
-            <materialDesign:PackIcon Height="22" Width="22" Kind="Menu" />
+            <materialDesign:PackIcon
+                Width="22"
+                Height="22"
+                Kind="Menu" />
         </materialDesign:PopupBox.ToggleContent>
         <StackPanel
             Width="280"
             Margin="10"
             Orientation="Vertical">
 
-            <popupboxmenu:LineGostComponent DataContext="{Binding LineStateStandardComponentVM}" />
+            <popupboxmenu:LineGostComponent Margin="0,5" DataContext="{Binding LineStateStandardComponentVM}" />
 
-            <popupboxmenu:ScaleAllSymbolComponent DataContext="{Binding ScaleAllSymbolComponentVM}" />
+            <popupboxmenu:ScaleAllSymbolComponent Margin="0,5" DataContext="{Binding ScaleAllSymbolComponentVM}" />
 
             <popupboxmenu:SaveImgComponent
                 x:Name="ButtonSaveProject"

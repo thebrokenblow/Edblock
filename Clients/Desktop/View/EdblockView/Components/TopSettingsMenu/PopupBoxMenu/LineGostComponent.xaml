@@ -22,6 +22,7 @@
         <CheckBox
             HorizontalAlignment="Right"
             HorizontalContentAlignment="Center"
-            IsChecked="{Binding IsDrawingLinesAccordingGOST}" />
+            IsChecked="{Binding IsDrawingLinesAccordingGOST}"
+            Style="{StaticResource MaterialDesignCheckBox}" />
     </Grid>
 </UserControl>

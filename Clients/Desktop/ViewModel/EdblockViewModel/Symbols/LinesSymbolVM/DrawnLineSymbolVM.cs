@@ -20,6 +20,8 @@ public class DrawnLineSymbolVM
     public ConnectionPointVM? OutgoingConnectionPoint { get; set; }
     public ConnectionPointVM? IncommingConnectionPoint { get; set; }
     public BlockSymbolVM? OutgoingBlockSymbol { get; set; }
+    public BlockSymbolVM? IncommingBlockSymbol { get; set; }
+
     public ICanvasSymbolsComponentVM CanvasSymbolsComponentVM { get; }
 
     public DelegateCommand HighlightDrawnLineCommand { get; }
@@ -188,6 +190,7 @@ public class DrawnLineSymbolVM
     public void FinishDrawing(ConnectionPointVM incommingConnectionPoint, double xCoordinateDranLine, double yCoordinateDranLine)
     {
         IncommingConnectionPoint = incommingConnectionPoint;
+        IncommingBlockSymbol = incommingConnectionPoint.BlockSymbolVM;
 
         if (OutgoingConnectionPoint is null)
         {

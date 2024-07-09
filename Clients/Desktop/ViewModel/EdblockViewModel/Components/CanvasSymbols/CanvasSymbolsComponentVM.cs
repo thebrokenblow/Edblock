@@ -118,6 +118,7 @@ public class CanvasSymbolsComponentVM : ObservableObject, ICanvasSymbolsComponen
             CurrentDrawnLineSymbolVM = null;
         }
 
+
         ListCanvasSymbolsComponentVM.RemoveSelectedDrawnLinesVM();
         ListCanvasSymbolsComponentVM.RemoveSelectedBlockSymbols();
         ScalingCanvasSymbolsVM.Resize();
