@@ -1,25 +1,21 @@
-﻿using System.Text.Encodings.Web;
-using System.Text.Json;
+﻿using System.Text.Json;
 using System.Text.Unicode;
+using System.Text.Encodings.Web;
+using Edblock.SymbolsSerialization.Interfaces;
 
 namespace Edblock.SymbolsSerialization;
 
-public class SerializationProject
+public class SerializationProject : ISerializationProject
 {
-    private readonly JsonSerializerOptions jsonSerializerOptions;
-    public SerializationProject()
+    private readonly JsonSerializerOptions jsonSerializerOptions = new()
     {
-        jsonSerializerOptions = new JsonSerializerOptions
-        {
-            WriteIndented = true,
-            Encoder = JavaScriptEncoder.Create(UnicodeRanges.BasicLatin, UnicodeRanges.Cyrillic),
-        };
-    }
+        WriteIndented = true,
+        Encoder = JavaScriptEncoder.Create(UnicodeRanges.BasicLatin, UnicodeRanges.Cyrillic),
+    };
 
     public async void Write(ProjectSerializable projectSerializable, string pathFile)
     {
         using var fileStream = new FileStream(pathFile, FileMode.Create);
-
         await JsonSerializer.SerializeAsync(fileStream, projectSerializable, jsonSerializerOptions);
     }
 

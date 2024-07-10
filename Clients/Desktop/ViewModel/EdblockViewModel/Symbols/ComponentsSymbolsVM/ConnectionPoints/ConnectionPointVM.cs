@@ -153,11 +153,14 @@ public class ConnectionPointVM : ObservableObject
         {
             CreateDrawnLine();
             _canvasSymbolsVM.ClearSelectedSymbols();
+            _canvasSymbolsVM.CurrentDrawnLineSymbolVM?.SetCoordinateTextField();
 
             IsHasConnectingLine = true;
         }
         else
         {
+            _canvasSymbolsVM.CurrentDrawnLineSymbolVM.RemoveZeroLines();
+
             if (_canvasSymbolsVM.CurrentDrawnLineSymbolVM.OutgoingConnectionPoint is null)
             {
                 return;

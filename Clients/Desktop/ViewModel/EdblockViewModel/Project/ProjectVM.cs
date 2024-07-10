@@ -1,25 +1,24 @@
 ﻿using System.Collections.Generic;
 using EdblockViewModel.Symbols.ComponentsParallelActionSymbolVM;
 using EdblockModel.SymbolsModel;
-using EdblockViewModel.Symbols;
 using EdblockModel.SymbolsModel.LineSymbolsModel;
 using EdblockViewModel.Symbols.SwitchCaseConditionSymbolsVM;
 using Edblock.SymbolsSerialization;
 using Edblock.SymbolsSerialization.Symbols;
-using EdblockViewModel.Pages;
 using EdblockViewModel.Components.CanvasSymbols.Interfaces;
 using EdblockViewModel.Components.TopSettingsMenu.PopupBoxMenu.Interfaces;
 using EdblockViewModel.Symbols.Abstractions;
+using EdblockViewModel.Project.Interfaces;
 
-namespace EdblockViewModel;
+namespace EdblockViewModel.Project;
 
-internal class ProjectVM(EditorVM editorVM)
+public class ProjectVM(
+    ICanvasSymbolsComponentVM canvasSymbolsComponentVM,
+    IScaleAllSymbolComponentVM scaleAllSymbolComponentVM,
+    ILineStateStandardComponentVM lineStateStandardComponentVM,
+    IFactoryBlockSymbolVM factoryBlockSymbolVM) : IProjectVM
 {
-    private readonly ICanvasSymbolsComponentVM canvasSymbolsVM = editorVM.CanvasSymbolsComponentVM;
-    private readonly IScaleAllSymbolComponentVM scaleAllSymbolComponentVM = editorVM.TopSettingsMenuComponentVM.PopupBoxMenuComponentVM.ScaleAllSymbolComponentVM;
-    private readonly ILineStateStandardComponentVM lineStateStandardComponentVM = editorVM.TopSettingsMenuComponentVM.PopupBoxMenuComponentVM.LineStateStandardComponentVM;
     private readonly SerializationProject serializationProject = new();
-    private readonly FactoryBlockSymbolVM factoryBlockSymbolVM = new(editorVM);
     private readonly Dictionary<string, BlockSymbolVM> blockSymbolsVMById = [];
 
     public void SaveProject(string filePath)
@@ -29,7 +28,7 @@ internal class ProjectVM(EditorVM editorVM)
         var parallelActionSymbolsSerializable = new List<ParallelActionSymbolSerializable>();
         var switchCaseSymbolsSerializable = new List<SwitchCaseSymbolsSerializable>();
 
-        var blockSymbolsVM = canvasSymbolsVM.ListCanvasSymbolsComponentVM.BlockSymbolsVM;
+        var blockSymbolsVM = canvasSymbolsComponentVM.ListCanvasSymbolsComponentVM.BlockSymbolsVM;
 
         foreach (var blockSymbolVM in blockSymbolsVM)
         {
@@ -60,6 +59,8 @@ internal class ProjectVM(EditorVM editorVM)
 
         var projectSerializable = new ProjectSerializable()
         {
+            WidthCanvas = canvasSymbolsComponentVM.Width,
+            HeightCanvas = canvasSymbolsComponentVM.Height,
             IsScaleAllSymbolVM = scaleAllSymbolComponentVM.IsScaleAllSymbol,
             IsDrawingLinesAccordingGOST = lineStateStandardComponentVM.IsDrawingLinesAccordingGOST,
             BlockSymbolsSerializable = blockSymbolsSerializable,
@@ -73,8 +74,12 @@ internal class ProjectVM(EditorVM editorVM)
 
     public async void LoadProject(string filePath)
     {
+        //Начало вращение спиннера
         var loadedProject = await serializationProject.Read(filePath);
+        //Конец вращение спиннера
 
+        canvasSymbolsComponentVM.Width = loadedProject.WidthCanvas;
+        canvasSymbolsComponentVM.Height = loadedProject.HeightCanvas;
         scaleAllSymbolComponentVM.IsScaleAllSymbol = loadedProject.IsScaleAllSymbolVM;
         lineStateStandardComponentVM.IsDrawingLinesAccordingGOST = loadedProject.IsDrawingLinesAccordingGOST;
 
@@ -84,7 +89,7 @@ internal class ProjectVM(EditorVM editorVM)
     private void LoadBlocksSymbols(ProjectSerializable projectSerializable)
     {
         blockSymbolsVMById.Clear();
-        canvasSymbolsVM.ListCanvasSymbolsComponentVM.BlockSymbolsVM.Clear();
+        canvasSymbolsComponentVM.ListCanvasSymbolsComponentVM.BlockSymbolsVM.Clear();
 
         var blockSymbolsSerializable = projectSerializable.BlockSymbolsSerializable;
 
@@ -94,7 +99,7 @@ internal class ProjectVM(EditorVM editorVM)
             {
                 var blockSymbolVM = factoryBlockSymbolVM.CreateBlockSymbolVM(blockSymbolSerializable);
 
-                canvasSymbolsVM.ListCanvasSymbolsComponentVM.AddBlockSymbol(blockSymbolVM);
+                canvasSymbolsComponentVM.ListCanvasSymbolsComponentVM.LoadBlockSymbol(blockSymbolVM);
                 blockSymbolsVMById.Add(blockSymbolSerializable.Id, blockSymbolVM);
             }
         }
@@ -107,21 +112,8 @@ internal class ProjectVM(EditorVM editorVM)
             {
                 var switchCaseSymbolVM = factoryBlockSymbolVM.CreateBlockSymbolVM(switchCaseSymbolSerializable);
 
-                canvasSymbolsVM.ListCanvasSymbolsComponentVM.AddBlockSymbol(switchCaseSymbolVM);
+                canvasSymbolsComponentVM.ListCanvasSymbolsComponentVM.LoadBlockSymbol(switchCaseSymbolVM);
                 blockSymbolsVMById.Add(switchCaseSymbolSerializable.Id, switchCaseSymbolVM);
-            }
-        }
-
-        var parallelActionSymbolsSerializable = projectSerializable.ParallelActionSymbolsSerializable;
-
-        if (parallelActionSymbolsSerializable is not null)
-        {
-            foreach (var parallelActionSymbolSerializable in parallelActionSymbolsSerializable)
-            {
-                var parallelActionSymbolVM = factoryBlockSymbolVM.CreateBlockSymbolVM(parallelActionSymbolSerializable);
-
-                canvasSymbolsVM.ListCanvasSymbolsComponentVM.AddBlockSymbol(parallelActionSymbolVM);
-                blockSymbolsVMById.Add(parallelActionSymbolSerializable.Id, parallelActionSymbolVM);
             }
         }
     }

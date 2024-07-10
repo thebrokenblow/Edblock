@@ -3,47 +3,39 @@ using System.Linq;
 using System.Reflection;
 using EdblockViewModel.Symbols.SwitchCaseConditionSymbolsVM;
 using Edblock.SymbolsSerialization.Symbols;
-using EdblockViewModel.Pages;
 using EdblockViewModel.Symbols.Attributes;
 using EdblockViewModel.Symbols.Abstractions;
+using EdblockViewModel.Components.CanvasSymbols.Interfaces;
+using EdblockViewModel.Components.TopSettingsMenu.Interfaces;
+using EdblockViewModel.Components.TopSettingsMenu.PopupBoxMenu.Interfaces;
+using EdblockViewModel.Symbols.ComponentsSymbolsVM.ScaleRectangles;
 
 namespace EdblockViewModel.Symbols;
 
-internal class FactoryBlockSymbolVM(EditorVM edblockVM)
+public class FactoryBlockSymbolVM(
+    ICanvasSymbolsComponentVM canvasSymbolsComponentVM, 
+    IListCanvasSymbolsComponentVM listCanvasSymbolsComponentVM, 
+    ITopSettingsMenuComponentVM topSettingsMenuComponentVM, 
+    IPopupBoxMenuComponentVM popupBoxMenuComponentVM, 
+    Func<Type, BlockSymbolVM> factoryBlockSymbol) : IFactoryBlockSymbolVM
 {
     public BlockSymbolVM CreateBlockSymbolVM(BlockSymbolSerializable blockSymbolSerializable)
     {
         var symbolType = GetTypeBlockSymbolVM(blockSymbolSerializable.NameSymbol);
-        var blockSymbol = Activator.CreateInstance(symbolType, edblockVM);
+        var blockSymbolVM = factoryBlockSymbol.Invoke(symbolType) ?? throw new Exception($"Не удалось создать объект с именем {blockSymbolSerializable.NameSymbol}");
 
-        if (blockSymbol is not BlockSymbolVM)
+        if (blockSymbolVM is ScalableBlockSymbolVM scalableBlockSymbolVM)
         {
-            throw new Exception($"Не удалось создать объект с именем {blockSymbolSerializable.NameSymbol}");
+            scalableBlockSymbolVM.SetWidth(blockSymbolSerializable.Width);
+            scalableBlockSymbolVM.SetHeight(blockSymbolSerializable.Height);
         }
-
-        var blockSymbolVM = (BlockSymbolVM)blockSymbol;
-
-        //blockSymbolVM.SetWidth(blockSymbolSerializable.Width);
-        //blockSymbolVM.SetHeight(blockSymbolSerializable.Height);
 
         blockSymbolVM.XCoordinate = blockSymbolSerializable.XCoordinate;
         blockSymbolVM.YCoordinate = blockSymbolSerializable.YCoordinate;
 
         if (blockSymbolVM is IHasTextFieldVM blockSymbolHasTextFieldVM)
         {
-            var textField = blockSymbolHasTextFieldVM.TextFieldSymbolVM;
-            var textFieldSerializable = blockSymbolSerializable.TextFieldSerializable;
-
-            if (textFieldSerializable is not null)
-            {
-                textField.Text = textFieldSerializable.Text;
-                textField.FontFamily = textFieldSerializable.FontFamily;
-                textField.FontSize = textFieldSerializable.FontSize;
-                textField.TextAlignment = textFieldSerializable.TextAlignment;
-                textField.FontWeight = textFieldSerializable.FontWeight;
-                textField.FontStyle = textFieldSerializable.FontStyle;
-                textField.TextDecorations = textFieldSerializable.TextDecorations;
-            }
+            SeTextFieldProperties(blockSymbolSerializable, blockSymbolHasTextFieldVM);
         }
 
         return blockSymbolVM;
@@ -52,7 +44,16 @@ internal class FactoryBlockSymbolVM(EditorVM edblockVM)
     public SwitchCaseSymbolVM CreateBlockSymbolVM(SwitchCaseSymbolsSerializable switchCaseSymbolsSerializable)
     {
         var symbolType = GetTypeBlockSymbolVM(switchCaseSymbolsSerializable.NameSymbol);
-        var blockSymbol = Activator.CreateInstance(symbolType, edblockVM, switchCaseSymbolsSerializable.CountLines);
+
+        var builderScaleRectangles = new BuilderScaleRectangles(canvasSymbolsComponentVM, popupBoxMenuComponentVM.ScaleAllSymbolComponentVM);
+        var blockSymbol = Activator.CreateInstance(
+            symbolType,
+            builderScaleRectangles,
+            canvasSymbolsComponentVM,
+            listCanvasSymbolsComponentVM,
+            topSettingsMenuComponentVM,
+            popupBoxMenuComponentVM,
+            switchCaseSymbolsSerializable.CountLines);
 
         if (blockSymbol is not SwitchCaseSymbolVM)
         {
@@ -61,56 +62,18 @@ internal class FactoryBlockSymbolVM(EditorVM edblockVM)
 
         var switchCaseSymbolVM = (SwitchCaseSymbolVM)blockSymbol;
 
-        //switchCaseSymbolVM.SetWidth(switchCaseSymbolsSerializable.Width);
-        //switchCaseSymbolVM.SetHeight(switchCaseSymbolsSerializable.Height);
+        switchCaseSymbolVM.SetWidth(switchCaseSymbolsSerializable.Width);
+        switchCaseSymbolVM.SetHeight(switchCaseSymbolsSerializable.Height);
 
         switchCaseSymbolVM.XCoordinate = switchCaseSymbolsSerializable.XCoordinate;
         switchCaseSymbolVM.YCoordinate = switchCaseSymbolsSerializable.YCoordinate;
 
         if (switchCaseSymbolVM is IHasTextFieldVM blockSymbolHasTextFieldVM)
         {
-            var textField = blockSymbolHasTextFieldVM.TextFieldSymbolVM;
-            var textFieldSerializable = switchCaseSymbolsSerializable.TextFieldSerializable;
-
-            if (textFieldSerializable is not null)
-            {
-                textField.Text = textFieldSerializable.Text;
-                textField.FontFamily = textFieldSerializable.FontFamily;
-                textField.FontSize = textFieldSerializable.FontSize;
-                textField.TextAlignment = textFieldSerializable.TextAlignment;
-                textField.FontWeight = textFieldSerializable.FontWeight;
-                textField.FontStyle = textFieldSerializable.FontStyle;
-                textField.TextDecorations = textFieldSerializable.TextDecorations;
-            }
+            SeTextFieldProperties(switchCaseSymbolsSerializable, blockSymbolHasTextFieldVM);
         }
 
         return switchCaseSymbolVM;
-    }
-
-    public BlockSymbolVM CreateBlockSymbolVM(ParallelActionSymbolSerializable parallelActionSymbolSerializable)
-    {
-        var symbolType = GetTypeBlockSymbolVM(parallelActionSymbolSerializable.NameSymbol);
-
-        var blockSymbol = Activator.CreateInstance(
-            symbolType,
-            edblockVM, 
-            parallelActionSymbolSerializable.CountSymbolsIncoming, 
-            parallelActionSymbolSerializable.CountSymbolsOutgoing);
-
-        if (blockSymbol is not BlockSymbolVM)
-        {
-            throw new Exception($"Не удалось создать объект с именем {parallelActionSymbolSerializable.NameSymbol}");
-        }
-
-        var parallelActionSymbolVM = (BlockSymbolVM)blockSymbol;
-
-        //parallelActionSymbolVM.SetWidth(parallelActionSymbolSerializable.Width);
-        //parallelActionSymbolVM.SetHeight(parallelActionSymbolSerializable.Height);
-
-        parallelActionSymbolVM.XCoordinate = parallelActionSymbolSerializable.XCoordinate;
-        parallelActionSymbolVM.YCoordinate = parallelActionSymbolSerializable.YCoordinate;
-
-        return parallelActionSymbolVM;
     }
 
     private static Type GetTypeBlockSymbolVM(string nameSymbolVM)
@@ -128,5 +91,22 @@ internal class FactoryBlockSymbolVM(EditorVM edblockVM)
                 return symbolTypeAttribute.NameSymbol == nameSymbolVM;
 
             }) ?? throw new Exception($"Нет класса или атрибута с именем {nameSymbolVM}");
+    }
+
+    private static void SeTextFieldProperties(BlockSymbolSerializable blockSymbolSerializable, IHasTextFieldVM symbolHasTextField)
+    {
+        var textField = symbolHasTextField.TextFieldSymbolVM;
+        var textFieldSerializable = blockSymbolSerializable.TextFieldSerializable;
+
+        if (textFieldSerializable is not null)
+        {
+            textField.Text = textFieldSerializable.Text;
+            textField.FontFamily = textFieldSerializable.FontFamily;
+            textField.FontSize = textFieldSerializable.FontSize;
+            textField.TextAlignment = textFieldSerializable.TextAlignment;
+            textField.FontWeight = textFieldSerializable.FontWeight;
+            textField.FontStyle = textFieldSerializable.FontStyle;
+            textField.TextDecorations = textFieldSerializable.TextDecorations;
+        }
     }
 }

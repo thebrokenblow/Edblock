@@ -50,6 +50,21 @@ public class ListCanvasSymbolsComponentVM(IPopupBoxMenuComponentVM popupBoxMenuC
         MovableBlockSymbol.SetSelectedProperties();
     }
 
+    public void LoadBlockSymbol(BlockSymbolVM blockSymbolVM)
+    {
+        if (blockSymbolVM is IObserverFontSize observerFontSize)
+        {
+            fontSizeSubject.RegisterObserver(observerFontSize);
+        }
+
+        if (blockSymbolVM is ScalableBlockSymbolVM scalableBlockSymbolVM)
+        {
+            ScalableBlockSymbols.Add(scalableBlockSymbolVM);
+        }
+
+        BlockSymbolsVM.Add(blockSymbolVM);
+    }
+
     public void ChangeFocusTextField()
     {
         foreach (var blockSymbolHasTextField in SelectedSymbolsHasTextField)

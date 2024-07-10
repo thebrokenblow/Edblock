@@ -2,6 +2,7 @@
 using System.Windows.Controls;
 using Microsoft.Win32;
 using EdblockViewModel.Pages;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace EdblockView.Components.TopSettingsMenu.PopupBoxMenu;
 
@@ -15,15 +16,21 @@ public partial class LoadProjectComponent : UserControl
     {
         Filter = fileFilter
     };
-    private EditorVM? editorVM;
 
-    public LoadProjectComponent() =>
+    private readonly EditorVM? editorVM;
+
+    public LoadProjectComponent()
+    {
+        if (App.serviceProvider is not null)
+        {
+            editorVM = App.serviceProvider.GetRequiredService<EditorVM>();
+        }
+
         InitializeComponent();
+    }
 
     private void LoadProject(object sender, RoutedEventArgs e)
     {
-        editorVM ??= (EditorVM)DataContext;
-
         if (openFileDialog.ShowDialog() == false)
         {
             return;

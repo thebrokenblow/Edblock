@@ -57,4 +57,17 @@ public partial class CanvasSymbolsComponent : UserControl
 
         e.Handled = true;
     }
+
+    private void DrawnLineSymbolView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+    {
+        if (sender is DrawnLineSymbolView drawnLineSymbolView)
+        {
+            if (drawnLineSymbolView.DataContext is DrawnLineSymbolVM drawnLineSymbolVM)
+            {
+                drawnLineSymbolVM.IsShowTextField = true;
+            }
+        }
+
+        e.Handled = true;
+    }
 }

@@ -1,6 +1,4 @@
-﻿using EdblockViewModel.Pages;
-
-namespace EdblockViewModel.Components.TopSettingsMenu.PopupBoxMenu.Interfaces;
+﻿namespace EdblockViewModel.Components.TopSettingsMenu.PopupBoxMenu.Interfaces;
 
 public interface IPopupBoxMenuComponentVM
 {

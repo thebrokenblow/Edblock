@@ -2,6 +2,7 @@
 using EdblockViewModel.Components.ListSymbols.Interfaces;
 using EdblockViewModel.Components.CanvasSymbols.Interfaces;
 using EdblockViewModel.Components.TopSettingsMenu.Interfaces;
+using EdblockViewModel.Project.Interfaces;
 
 namespace EdblockViewModel.Pages;
 
@@ -21,12 +22,13 @@ public class EditorVM : BaseViewModel
     public ICanvasSymbolsComponentVM CanvasSymbolsComponentVM { get; }
     public ITopSettingsMenuComponentVM TopSettingsMenuComponentVM { get; }
 
-    private readonly ProjectVM projectVM;
+    private readonly IProjectVM _projectVM;
 
     private const int cellHeightTopSettingsPanel = 60;
     private const int cellWidthPanelSymbols = 50;
 
     public EditorVM(
+        IProjectVM projectVM,
         IListSymbolsComponentVM listSymbolsComponentVM,
         ICanvasSymbolsComponentVM canvasSymbolsComponentVM,
         ITopSettingsMenuComponentVM topSettingsMenuComponentVM)
@@ -38,16 +40,16 @@ public class EditorVM : BaseViewModel
         CanvasSymbolsComponentVM.ScalingCanvasSymbolsVM.HeightTopSettingsPanel = cellHeightTopSettingsPanel;
         CanvasSymbolsComponentVM.ScalingCanvasSymbolsVM.WidthPanelSymbols = cellWidthPanelSymbols;
 
-        projectVM = new(this);
+        _projectVM = projectVM;
     }
 
     public void SaveProject(string filePath)
     {
-        projectVM.SaveProject(filePath);
+        _projectVM.SaveProject(filePath);
     }
 
     public void LoadProject(string filePath)
     {
-        projectVM.LoadProject(filePath);
+        _projectVM.LoadProject(filePath);
     }
 }

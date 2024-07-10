@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using Microsoft.Win32;
 using EdblockViewModel.Pages;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace EdblockView.Components.TopSettingsMenu.PopupBoxMenu;
 
@@ -15,13 +16,23 @@ public partial class SaveProjectComponent : UserControl
     private const string fileExtension = ".json";
     private const string fileFilter = "Files(*.json)|*.json|All(*.*)|*";
 
-    private EditorVM? editorVM;
-    public SaveProjectComponent() =>
+    private readonly EditorVM? editorVM;
+    public SaveProjectComponent()
+    {
+        if (App.serviceProvider is not null)
+        {
+            editorVM = App.serviceProvider.GetRequiredService<EditorVM>();
+        }
+
         InitializeComponent();
+    }
 
     private void SaveProject(object sender, RoutedEventArgs e)
     {
-        editorVM ??= (EditorVM)DataContext;
+        if (editorVM is null)
+        {
+            return;
+        }
 
         var saveFileDialog = new SaveFileDialog
         {

@@ -198,20 +198,17 @@ public class ListSymbolsComponentVM : ObservableObject, IListSymbolsComponentVM,
 
     private readonly ErrorsViewModel errorsViewModel = new();
 
-    private readonly IBuilderScaleRectangles _builderScaleRectangles;
     private readonly ICanvasSymbolsComponentVM _canvasSymbolsComponentVM;
     private readonly IListCanvasSymbolsComponentVM _listCanvasSymbolsComponentVM;
     private readonly ITopSettingsMenuComponentVM _topSettingsMenuComponentVM;
     private readonly IPopupBoxMenuComponentVM _popupBoxMenuComponentVM;
     public ListSymbolsComponentVM(
-        IBuilderScaleRectangles builderScaleRectangles,
         ICanvasSymbolsComponentVM canvasSymbolsComponentVM,
         IListCanvasSymbolsComponentVM listCanvasSymbolsComponentVM,
         ITopSettingsMenuComponentVM topSettingsMenuComponentVM,
         IPopupBoxMenuComponentVM popupBoxMenuComponentVM, 
         Func<Type, BlockSymbolVM> factoryBlockSymbol)
     {
-        _builderScaleRectangles = builderScaleRectangles;
         _canvasSymbolsComponentVM = canvasSymbolsComponentVM;
         _listCanvasSymbolsComponentVM = listCanvasSymbolsComponentVM;
         _topSettingsMenuComponentVM = topSettingsMenuComponentVM;

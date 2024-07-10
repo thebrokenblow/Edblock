@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:components="clr-namespace:Edblock.SymbolsView.Symbols.Lines.Components"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:edblockVM="clr-namespace:EdblockViewModel.Core;assembly=EdblockViewModel"
     xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:linesSymbolVM="clr-namespace:EdblockViewModel.Symbols.LinesSymbolVM;assembly=EdblockViewModel"
     xmlns:linesView="clr-namespace:Edblock.SymbolsView.Symbols.Lines"
@@ -52,5 +53,17 @@
                 </Style>
             </ItemsControl.ItemContainerStyle>
         </ItemsControl>
+        <TextBox
+            Canvas.Left="{Binding LeftOffsetTextField}"
+            Canvas.Top="{Binding TopOffsetTextField}"
+            Height="{Binding HeightTextField}"
+            Background="Transparent"
+            BorderBrush="Transparent"
+            BorderThickness="0"
+            Text="ДА">
+            <i:Interaction.Behaviors>
+                <edblockVM:ReadOnlyPropertyToVMBindingBehavior ModelProperty="{Binding WidthTextField}" ReadOnlyDependencyProperty="{Binding ActualWidth, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=TextBox}}" />
+            </i:Interaction.Behaviors>
+        </TextBox>
     </Canvas>
 </UserControl>

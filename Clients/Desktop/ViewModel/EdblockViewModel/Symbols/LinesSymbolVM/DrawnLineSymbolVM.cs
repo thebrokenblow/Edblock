@@ -7,13 +7,15 @@ using EdblockViewModel.Symbols.Abstractions;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM.ConnectionPoints;
 using Prism.Commands;
 using EdblockViewModel.Symbols.LinesSymbolVM.Components;
+using EdblockViewModel.Core;
+using EdblockModel.Lines;
 
 namespace EdblockViewModel.Symbols.LinesSymbolVM;
 
 /**
  * View Model of one line 
  */
-public class DrawnLineSymbolVM
+public class DrawnLineSymbolVM : ObservableObject
 {
     public ObservableCollection<LineSymbolVM> LinesSymbolVM { get; } = [];
     public ObservableCollection<MovableRectangleLineVM> MovableRectanglesLineVM { get; } = [];
@@ -21,6 +23,7 @@ public class DrawnLineSymbolVM
     public ConnectionPointVM? IncommingConnectionPoint { get; set; }
     public BlockSymbolVM? OutgoingBlockSymbol { get; set; }
     public BlockSymbolVM? IncommingBlockSymbol { get; set; }
+    private readonly DrawnLineSymbolModel drawnLineSymbolModel = new(); 
 
     public ICanvasSymbolsComponentVM CanvasSymbolsComponentVM { get; }
 
@@ -43,6 +46,92 @@ public class DrawnLineSymbolVM
         HighlightDrawnLineCommand = new(HighlightDrawnLine);
         UnhighlightDrawnLineCommand = new(UnhighlightDrawnLine);
     }
+
+    private const string defaultText = "да";
+
+    private string? text;
+    public string? Text
+    {
+        get => text;
+        set
+        {
+            text = value;
+            drawnLineSymbolModel.Text = text;
+        }
+    }
+
+    private const int heightTextField = 20;
+    public static int HeightTextField
+    {
+        get => heightTextField;
+    }
+
+    private double widthTextField = 20;
+    public double WidthTextField
+    {
+        get => widthTextField;
+        set
+        {
+            widthTextField = value;
+
+            if (OutgoingConnectionPoint?.Position == SideSymbol.Left)
+            {
+                SetCoordinateTextField();
+            }
+        }
+    }
+
+    public void SetCoordinateTextField()
+    {
+        var firstLineSymbolModel = LinesSymbolVM[0];
+
+        LeftOffsetTextField = firstLineSymbolModel.X1;
+        TopOffsetTextField = firstLineSymbolModel.Y1;
+
+        if (OutgoingConnectionPoint?.Position != SideSymbol.Bottom)
+        {
+            TopOffsetTextField -= heightTextField;
+        }
+
+        if (OutgoingConnectionPoint?.Position == SideSymbol.Left)
+        {
+            LeftOffsetTextField -= widthTextField;
+        }
+    }
+
+    private double topOffsetTextField;
+    public double TopOffsetTextField
+    {
+        get => topOffsetTextField;
+        set
+        {
+            topOffsetTextField = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private double leftOffsetTextField;
+    public double LeftOffsetTextField
+    {
+        get => leftOffsetTextField;
+        set
+        {
+            leftOffsetTextField = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private bool isShowTextField;
+    public bool IsShowTextField
+    {
+        get => isShowTextField;
+        set
+        {
+            isShowTextField = value;
+            OnPropertyChanged();
+        }
+    }
+
 
     public bool IsSelect { get; set; }
 
@@ -362,6 +451,35 @@ public class DrawnLineSymbolVM
         foreach (var linesSymbolVM in LinesSymbolVM)
         {
             linesSymbolVM.Stroke = brushLine;
+        }
+    }
+
+    public void RemoveZeroLines()
+    {
+        for (int i = LinesSymbolVM.Count - 1; i != -1; i--)
+        {
+            if (LinesSymbolVM[i].IsZero())
+            {
+                LinesSymbolVM.RemoveAt(i);
+            }
+
+            if (i >= 0 && i < LinesSymbolVM.Count && i - 1 >= 0 && i - 1 < LinesSymbolVM.Count)
+            {
+                if (LinesSymbolVM[i].IsHorizontal() && LinesSymbolVM[i - 1].IsHorizontal())
+                {
+                    LinesSymbolVM[i - 1].X2 = LinesSymbolVM[i].X2;
+                    LinesSymbolVM.RemoveAt(i);
+                }   
+            }
+
+            if (i >= 0 && i < LinesSymbolVM.Count && i - 1 >= 0 && i - 1 < LinesSymbolVM.Count)
+            {
+                if (LinesSymbolVM[i].IsVertical() && LinesSymbolVM[i - 1].IsVertical())
+                {
+                    LinesSymbolVM[i - 1].Y2 = LinesSymbolVM[i].Y2;
+                    LinesSymbolVM.RemoveAt(i);
+                }
+            }
         }
     }
 }

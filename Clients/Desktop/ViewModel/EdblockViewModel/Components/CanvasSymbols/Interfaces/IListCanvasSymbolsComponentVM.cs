@@ -17,6 +17,7 @@ public interface IListCanvasSymbolsComponentVM
     BlockSymbolVM? MovableBlockSymbol { get; set; }
 
     void AddBlockSymbol(BlockSymbolVM blockSymbolVM);
+    void LoadBlockSymbol(BlockSymbolVM blockSymbolVM);
     void RemoveSelectedBlockSymbols();
     void ClearSelectedBlockSymbols();
     void ChangeFocusTextField();

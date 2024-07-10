@@ -88,7 +88,7 @@
             <ItemsControl ItemsSource="{Binding ListCanvasSymbolsComponentVM.DrawnLinesVM}">
                 <ItemsControl.Resources>
                     <DataTemplate DataType="{x:Type linesSymbolVM:DrawnLineSymbolVM}">
-                        <lineSymbolView:DrawnLineSymbolView MouseDown="DrawnLineSymbolView_MouseDown">
+                        <lineSymbolView:DrawnLineSymbolView MouseDoubleClick="DrawnLineSymbolView_MouseDoubleClick" MouseDown="DrawnLineSymbolView_MouseDown">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="MouseEnter">
                                     <i:InvokeCommandAction Command="{Binding HighlightDrawnLineCommand}" />

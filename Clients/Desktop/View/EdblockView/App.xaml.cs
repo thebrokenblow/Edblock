@@ -13,6 +13,8 @@ using EdblockViewModel.Components.TopSettingsMenu.PopupBoxMenu;
 using EdblockViewModel.Components.TopSettingsMenu.PopupBoxMenu.Interfaces;
 using EdblockViewModel.Core;
 using EdblockViewModel.Pages;
+using EdblockViewModel.Project;
+using EdblockViewModel.Project.Interfaces;
 using EdblockViewModel.Services;
 using EdblockViewModel.Services.Factories;
 using EdblockViewModel.Services.Factories.Interfaces;
@@ -31,7 +33,7 @@ namespace EdblockView;
 /// </summary>
 public partial class App : Application
 {
-    private readonly IServiceProvider serviceProvider;
+    public static IServiceProvider? serviceProvider;
 
     public App()
     {
@@ -52,8 +54,10 @@ public partial class App : Application
         services.AddScoped<UserViewModel>();
         services.AddScoped<CanvasSymbolsComponentVM>();
         services.AddScoped<EditorVM>();
+        services.AddScoped<IProjectVM, ProjectVM>();
         services.AddScoped<ICanvasSymbolsComponentVM, CanvasSymbolsComponentVM>();
         services.AddScoped<IPopupBoxMenuComponentVM, PopupBoxMenuComponentVM>();
+        services.AddScoped<IFactoryBlockSymbolVM, FactoryBlockSymbolVM>();
 
         services.AddScoped<IScaleAllSymbolComponentVM, ScaleAllSymbolComponentVM>();
         services.AddScoped<ILineStateStandardComponentVM, LineStateStandardComponentVM>();
@@ -100,6 +104,11 @@ public partial class App : Application
 
     protected override void OnStartup(StartupEventArgs e)
     {
+        if (serviceProvider is null)
+        {
+            return;
+        }
+
         var mainWindow = serviceProvider.GetRequiredService<MainWindow>();
         var mainViewModel = serviceProvider.GetRequiredService<MainWindowVM>();
 
