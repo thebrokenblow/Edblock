@@ -1,14 +1,13 @@
 ﻿using System.Windows.Input;
 using System.Collections.Generic;
 using Prism.Commands;
-using EdblockModel.EnumsModel;
 using EdblockViewModel.Core;
 using EdblockViewModel.Components.CanvasSymbols.Interfaces;
-using EdblockViewModel.Components.TopSettingsMenu.PopupBoxMenu.Interfaces;
 using EdblockViewModel.Symbols.Abstractions;
 using EdblockViewModel.Symbols.LinesSymbolVM;
 using System;
 using System.Windows;
+using EdblockViewModel.Components.PopupBoxMenu.Interfaces;
 
 namespace EdblockViewModel.Symbols.ComponentsSymbolsVM.ConnectionPoints;
 
@@ -159,8 +158,6 @@ public class ConnectionPointVM : ObservableObject
         }
         else
         {
-            _canvasSymbolsVM.CurrentDrawnLineSymbolVM.RemoveZeroLines();
-
             if (_canvasSymbolsVM.CurrentDrawnLineSymbolVM.OutgoingConnectionPoint is null)
             {
                 return;

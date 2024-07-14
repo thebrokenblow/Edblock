@@ -5,9 +5,9 @@ using EdblockViewModel.Core;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM.ScaleRectangles;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM.ConnectionPoints;
 using EdblockViewModel.Components.CanvasSymbols.Interfaces;
-using EdblockViewModel.Components.TopSettingsMenu.Interfaces;
-using EdblockViewModel.Components.TopSettingsMenu.PopupBoxMenu.Interfaces;
 using Prism.Commands;
+using EdblockViewModel.Components.PopupBoxMenu.Interfaces;
+using EdblockViewModel.Components.Interfaces;
 
 namespace EdblockViewModel.Symbols.Abstractions;
 
@@ -245,11 +245,11 @@ public abstract class BlockSymbolVM : ObservableObject
             return;
         }
 
-        _topSettingsMenuComponentVM.FontSizeComponentVM.SetFontSize(_symbolHasTextField);
-        _topSettingsMenuComponentVM.FontFamilyComponentVM.SetFontFamily(_symbolHasTextField);
-        _topSettingsMenuComponentVM.FormatTextComponentVM.SetFontText(_symbolHasTextField);
-        _topSettingsMenuComponentVM.TextAlignmentComponentVM.SetFormatAlignment(_symbolHasTextField);
-        _topSettingsMenuComponentVM.FormatVerticalAlignComponentVM.SetFormatVerticalAlignment(_symbolHasTextField);
+        //_topSettingsMenuComponentVM.FontSizeComponentVM.SetFontSize(_symbolHasTextField);
+        //_topSettingsMenuComponentVM.FontFamilyComponentVM.SetFontFamily(_symbolHasTextField);
+        //_topSettingsMenuComponentVM.FormatTextComponentVM.SetFontText(_symbolHasTextField);
+        //_topSettingsMenuComponentVM.TextAlignmentComponentVM.SetFormatAlignment(_symbolHasTextField);
+        //_topSettingsMenuComponentVM.FormatVerticalAlignComponentVM.SetFormatVerticalAlignment(_symbolHasTextField);
 
         _listCanvasSymbolsComponentVM.SelectedSymbolsHasTextField.Add(_symbolHasTextField);
     }

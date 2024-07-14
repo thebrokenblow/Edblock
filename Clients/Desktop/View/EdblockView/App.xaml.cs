@@ -1,16 +1,18 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows;
-using EdblockComponentsViewModel.Subjects;
-using EdblockComponentsViewModel.Subjects.Interfaces;
+using EdblockView.Components.TopSettingsMenu;
 using EdblockViewModel.Clients;
+using EdblockViewModel.Components;
 using EdblockViewModel.Components.CanvasSymbols;
 using EdblockViewModel.Components.CanvasSymbols.Interfaces;
+using EdblockViewModel.Components.Interfaces;
 using EdblockViewModel.Components.ListSymbols;
 using EdblockViewModel.Components.ListSymbols.Interfaces;
-using EdblockViewModel.Components.TopSettingsMenu;
-using EdblockViewModel.Components.TopSettingsMenu.Interfaces;
-using EdblockViewModel.Components.TopSettingsMenu.PopupBoxMenu;
-using EdblockViewModel.Components.TopSettingsMenu.PopupBoxMenu.Interfaces;
+using EdblockViewModel.Components.PopupBoxMenu;
+using EdblockViewModel.Components.PopupBoxMenu.Interfaces;
+using EdblockViewModel.Components.Subjects;
+using EdblockViewModel.Components.Subjects.Interfaces;
 using EdblockViewModel.Core;
 using EdblockViewModel.Pages;
 using EdblockViewModel.Project;
@@ -62,14 +64,10 @@ public partial class App : Application
         services.AddScoped<IScaleAllSymbolComponentVM, ScaleAllSymbolComponentVM>();
         services.AddScoped<ILineStateStandardComponentVM, LineStateStandardComponentVM>();
         services.AddScoped<IListSymbolsComponentVM, ListSymbolsComponentVM>();
-        services.AddScoped<ITopSettingsMenuComponentVM, TopSettingsMenuComponentVM>();
+        services.AddScoped<ITopSettingsMenuComponentVM, TopSettingsMenuVM>();
         services.AddScoped<IListCanvasSymbolsComponentVM, ListCanvasSymbolsComponentVM>();
-        services.AddScoped<IFontFamilyComponentVM, FontFamilyComponentVM>();
-        services.AddScoped<IFontSizeComponentVM, FontSizeComponentVM>();
-        services.AddScoped<IFormatTextComponentVM, FormatTextComponentVM>();
-        services.AddScoped<ITextAlignmentComponentVM, TextAlignmentComponentVM>();
-        services.AddScoped<IFormatVerticalAlignComponentVM, FormatVerticalAlignComponentVM>();
-        services.AddScoped<IColorSymbolComponentVM, ColorSymbolComponentVM>();
+        services.AddScoped<IFormatTextSubject, FormatTextSubject>();
+        services.AddScoped<ITextAlignmentSubject, TextAlignmentSubject>();
 
         services.AddTransient<ActionSymbolVM>();
         services.AddTransient<ConditionSymbolVM>();
@@ -96,8 +94,18 @@ public partial class App : Application
            (BlockSymbolVM)serviceProvider.GetRequiredService(blockSymbolTypeVM));
         
         services.AddScoped<EditorVM>();
+
         services.AddScoped<IFontSizeSubject<int>>(
             serviceProvider => new FontSizeSubject<int>(2, 300, 2));
+
+        services.AddScoped<IColorSubject, ColorSubject>();
+
+        services.AddScoped<IFontFamilySubject>(
+           serviceProvider => new FontFamilySubject(
+           [
+               "Times New Roman"
+           ], 
+           "Times New Roman"));
 
         serviceProvider = services.BuildServiceProvider();
     }

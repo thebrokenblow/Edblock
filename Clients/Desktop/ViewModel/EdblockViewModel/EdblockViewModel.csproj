@@ -16,8 +16,8 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\Edblock.ProjectsManagementModel\Edblock.ProjectsManagementModel.csproj" />
     <ProjectReference Include="..\..\..\..\Edblock.SymbolsSerialization\Edblock.SymbolsSerialization.csproj" />
-    <ProjectReference Include="..\..\..\..\EdblockComponentsViewModel\EdblockComponentsViewModel.csproj" />
     <ProjectReference Include="..\..\..\..\EdblockModel.Lines\EdblockModel.Lines.csproj" />
+    <ProjectReference Include="..\..\..\..\EdblockViewModel.Components\EdblockViewModel.Components.csproj" />
     <ProjectReference Include="..\..\Model\EdblockModel\EdblockModel.csproj" />
   </ItemGroup>
 

@@ -1,8 +1,9 @@
 ﻿using EdblockViewModel.Core;
 using EdblockViewModel.Components.ListSymbols.Interfaces;
 using EdblockViewModel.Components.CanvasSymbols.Interfaces;
-using EdblockViewModel.Components.TopSettingsMenu.Interfaces;
 using EdblockViewModel.Project.Interfaces;
+using System.Threading.Tasks;
+using EdblockViewModel.Components.Interfaces;
 
 namespace EdblockViewModel.Pages;
 
@@ -16,6 +17,17 @@ public class EditorVM : BaseViewModel
     public static int CellHeightTopSettingsPanel
     {
         get => cellHeightTopSettingsPanel;
+    }
+
+    private bool isLoadingProject;
+    public bool IsLoadingProject
+    {
+        get => isLoadingProject;
+        set
+        {
+            isLoadingProject = value;
+            OnPropertyChanged();
+        }
     }
 
     public IListSymbolsComponentVM ListSymbolsComponentVM { get; }
@@ -48,8 +60,10 @@ public class EditorVM : BaseViewModel
         _projectVM.SaveProject(filePath);
     }
 
-    public void LoadProject(string filePath)
+    public async Task LoadProject(string filePath)
     {
-        _projectVM.LoadProject(filePath);
+        //IsLoadingProject = true;   
+        await _projectVM.LoadProject(filePath);
+        //IsLoadingProject = false;
     }
 }

@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using EdblockModel.EnumsModel;
 using EdblockModel.SymbolsModel;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM.ConnectionPoints;
 using EdblockViewModel.Symbols.Abstractions;
 using EdblockViewModel.Symbols.Attributes;
 using EdblockViewModel.Components.CanvasSymbols.Interfaces;
-using EdblockViewModel.Components.TopSettingsMenu.Interfaces;
-using EdblockViewModel.Components.TopSettingsMenu.PopupBoxMenu.Interfaces;
+using EdblockViewModel.Components.Interfaces;
+using EdblockViewModel.Components.PopupBoxMenu.Interfaces;
 
 namespace EdblockViewModel.Symbols.ComponentsParallelActionSymbolVM;
 

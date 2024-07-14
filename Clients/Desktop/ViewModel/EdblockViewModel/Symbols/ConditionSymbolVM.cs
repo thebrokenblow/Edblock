@@ -5,9 +5,9 @@ using EdblockViewModel.Symbols.Abstractions;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM.ConnectionPoints;
 using EdblockViewModel.Components.CanvasSymbols.Interfaces;
-using EdblockViewModel.Components.TopSettingsMenu.Interfaces;
-using EdblockViewModel.Components.TopSettingsMenu.PopupBoxMenu.Interfaces;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM.ScaleRectangles.Interfaces;
+using EdblockViewModel.Components.PopupBoxMenu.Interfaces;
+using EdblockViewModel.Components.Interfaces;
 
 namespace EdblockViewModel.Symbols;
 

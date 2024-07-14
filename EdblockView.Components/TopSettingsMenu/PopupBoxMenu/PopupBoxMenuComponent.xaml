@@ -1,0 +1,42 @@
+﻿<UserControl
+    x:Class="EdblockView.Components.TopSettingsMenu.PopupBoxMenu.PopupBoxMenuComponent"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:components="clr-namespace:EdblockViewModel.Components.PopupBoxMenu;assembly=EdblockViewModel.Components"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:popupBoxMenu="clr-namespace:EdblockView.Components.TopSettingsMenu.PopupBoxMenu"
+    d:DataContext="{d:DesignInstance Type=components:PopupBoxMenuComponentVM}"
+    mc:Ignorable="d">
+    <materialDesign:PopupBox
+        Width="30"
+        Height="40"
+        HorizontalAlignment="Right"
+        Foreground="#838383"
+        StaysOpen="True">
+        <materialDesign:PopupBox.ToggleContent>
+            <materialDesign:PackIcon
+                Width="22"
+                Height="22"
+                Kind="Menu" />
+        </materialDesign:PopupBox.ToggleContent>
+        <StackPanel
+            Width="280"
+            Margin="10"
+            Orientation="Vertical">
+
+            <popupBoxMenu:LineGostComponent Margin="0,5" DataContext="{Binding LineStateStandardComponentVM}" />
+
+            <popupBoxMenu:ScaleAllSymbolComponent Margin="0,5" DataContext="{Binding ScaleAllSymbolComponentVM}" />
+
+            <popupBoxMenu:SaveImgComponent Margin="0,5" DataContext="{Binding EditorVM}" />
+
+            <popupBoxMenu:LoadProjectComponent Margin="0,5" DataContext="{Binding EditorVM}" />
+
+            <popupBoxMenu:SaveProjectComponent Margin="0,5" DataContext="{Binding EditorVM}" />
+
+            <popupBoxMenu:PrintProjectComponent Margin="0,5" DataContext="{Binding EditorVM}" />
+        </StackPanel>
+    </materialDesign:PopupBox>
+</UserControl>

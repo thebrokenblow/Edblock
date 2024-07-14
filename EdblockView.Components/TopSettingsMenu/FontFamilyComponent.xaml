@@ -1,0 +1,25 @@
+﻿<UserControl
+    x:Class="EdblockView.Components.TopSettingsMenu.FontFamilyComponent"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:componentsViewModel="clr-namespace:EdblockViewModel.Components.Subjects;assembly=EdblockViewModel.Components"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DataContext="{d:DesignInstance Type=componentsViewModel:FontFamilySubject}"
+    mc:Ignorable="d">
+    <Grid Width="230">
+        <Label
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Content="Шрифт:"
+            Style="{StaticResource LabelTopSettingsPanel}" />
+
+        <ComboBox
+            Width="140"
+            HorizontalAlignment="Right"
+            BorderBrush="Black"
+            ItemsSource="{Binding FontFamilies}"
+            SelectedItem="{Binding SelectedFontFamily}"
+            Style="{StaticResource ComboBoxTopSettingsPanel}" />
+    </Grid>
+</UserControl>

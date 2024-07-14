@@ -4,9 +4,9 @@ using System.Collections.ObjectModel;
 using EdblockViewModel.Symbols.Abstractions;
 using EdblockViewModel.Symbols.LinesSymbolVM;
 using EdblockViewModel.Components.CanvasSymbols.Interfaces;
-using EdblockViewModel.Components.TopSettingsMenu.PopupBoxMenu.Interfaces;
-using EdblockComponentsViewModel.Subjects.Interfaces;
-using EdblockComponentsViewModel.Observers.Interfaces;
+using EdblockViewModel.Components.Observers.Interfaces;
+using EdblockViewModel.Components.Subjects.Interfaces;
+using EdblockViewModel.Components.PopupBoxMenu.Interfaces;
 
 namespace EdblockViewModel.Components.CanvasSymbols;
 

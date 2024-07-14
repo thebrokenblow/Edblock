@@ -7,7 +7,7 @@ public class FactoryLineModel(IFactoryCoordinateDecorator factoryCoordinateDecor
     public LineModel Create(double firstXCoordinate, double firstYCoordinate, double secondXCoordinate, double secondYCoordinate)
     {
         var firstCoordinate = factoryCoordinateDecorator.Create(firstXCoordinate, firstYCoordinate);
-        var secondCoordinate = factoryCoordinateDecorator.Create(secondXCoordinate, firstYCoordinate);
+        var secondCoordinate = factoryCoordinateDecorator.Create(secondXCoordinate, secondYCoordinate);
 
         return new(firstCoordinate, secondCoordinate);
     }

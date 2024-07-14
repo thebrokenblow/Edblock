@@ -82,11 +82,11 @@
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderBrush" Value="Transparent" />
         <Setter Property="Visibility" Value="Visible" />
-        <!--<Style.Triggers>
+        <Style.Triggers>
             <DataTrigger Binding="{Binding IsShowTextField}" Value="True">
                 <Setter Property="Visibility" Value="Visible" />
             </DataTrigger>
-        </Style.Triggers>-->
+        </Style.Triggers>
     </Style>
 
     <Style x:Key="ConnectionPointView" TargetType="Ellipse">

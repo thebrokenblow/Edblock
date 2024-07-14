@@ -6,9 +6,10 @@ using EdblockViewModel.Symbols.SwitchCaseConditionSymbolsVM;
 using Edblock.SymbolsSerialization;
 using Edblock.SymbolsSerialization.Symbols;
 using EdblockViewModel.Components.CanvasSymbols.Interfaces;
-using EdblockViewModel.Components.TopSettingsMenu.PopupBoxMenu.Interfaces;
 using EdblockViewModel.Symbols.Abstractions;
 using EdblockViewModel.Project.Interfaces;
+using System.Threading.Tasks;
+using EdblockViewModel.Components.PopupBoxMenu.Interfaces;
 
 namespace EdblockViewModel.Project;
 
@@ -72,11 +73,9 @@ public class ProjectVM(
         serializationProject.Write(projectSerializable, filePath);
     }
 
-    public async void LoadProject(string filePath)
+    public async Task LoadProject(string filePath)
     {
-        //Начало вращение спиннера
         var loadedProject = await serializationProject.Read(filePath);
-        //Конец вращение спиннера
 
         canvasSymbolsComponentVM.Width = loadedProject.WidthCanvas;
         canvasSymbolsComponentVM.Height = loadedProject.HeightCanvas;

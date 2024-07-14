@@ -1,0 +1,27 @@
+﻿<UserControl
+    x:Class="EdblockView.Components.TopSettingsMenu.PopupBoxMenu.ScaleAllSymbolComponent"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:components="clr-namespace:EdblockViewModel.Components.PopupBoxMenu;assembly=EdblockViewModel.Components"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DataContext="{d:DesignInstance Type=components:ScaleAllSymbolComponentVM}"
+    mc:Ignorable="d">
+    <Grid Width="280">
+        <materialDesign:PackIcon
+            HorizontalAlignment="Left"
+            Kind="Resize"
+            Style="{StaticResource IconSettingsMenu}" />
+
+        <Label
+            HorizontalAlignment="Center"
+            Content="Масштабирование всех фигур"
+            Style="{StaticResource LabelSettingsMenu}" />
+
+        <CheckBox
+            HorizontalAlignment="Right"
+            IsChecked="{Binding IsScaleAllSymbol}"
+            Style="{StaticResource MaterialDesignCheckBox}" />
+    </Grid>
+</UserControl>
