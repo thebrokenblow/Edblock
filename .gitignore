@@ -365,3 +365,4 @@ FodyWeavers.xsd
 /Edblock.PagesViewModel
 /Edblock.SymbolsUI
 /Edblock.SymbolsViewModel
+/EdblockViewModel.Components/PopupBoxMenu/LineStateStandardComponentVM.cs
