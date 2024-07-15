@@ -43,6 +43,7 @@
             </Grid.RowDefinitions>
 
             <componentsView:TopSettingsMenuComponent
+                x:Name="topSettingsMenuComponent"
                 Grid.Row="0"
                 Grid.Column="1"
                 Margin="-5,0,0,0"
@@ -70,7 +71,8 @@
             <componentsUI:CanvasSymbolsComponent
                 Grid.Row="1"
                 Grid.Column="1"
-                DataContext="{Binding CanvasSymbolsComponentVM}" />
+                DataContext="{Binding CanvasSymbolsComponentVM}"
+                Loaded="CanvasSymbolsComponent_Loaded" />
 
             <Grid
                 x:Name="GridMenu"

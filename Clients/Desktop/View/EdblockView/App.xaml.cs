@@ -67,7 +67,6 @@ public partial class App : Application
         services.AddScoped<ITopSettingsMenuComponentVM, TopSettingsMenuVM>();
         services.AddScoped<IListCanvasSymbolsComponentVM, ListCanvasSymbolsComponentVM>();
         services.AddScoped<IFormatTextSubject, FormatTextSubject>();
-        services.AddScoped<ITextAlignmentSubject, TextAlignmentSubject>();
 
         services.AddTransient<ActionSymbolVM>();
         services.AddTransient<ConditionSymbolVM>();
@@ -96,7 +95,10 @@ public partial class App : Application
         services.AddScoped<EditorVM>();
 
         services.AddScoped<IFontSizeSubject<int>>(
-            serviceProvider => new FontSizeSubject<int>(2, 300, 2));
+            serviceProvider => new FontSizeSubject<int>(2, 300, 2, 12));
+
+        services.AddScoped<ITextAlignmentSubject>(
+            serviceProvider => new TextAlignmentSubject(1));
 
         services.AddScoped<IColorSubject, ColorSubject>();
 

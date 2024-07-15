@@ -12,12 +12,18 @@ using EdblockViewModel.Components.PopupBoxMenu.Interfaces;
 namespace EdblockViewModel.Symbols;
 
 [SymbolType("ActionSymbolVM")]
-public sealed class ActionSymbolVM : ScalableBlockSymbolVM, IHasTextFieldVM, IHasConnectionPoint, IObserverFontSize
+public sealed class ActionSymbolVM : 
+    ScalableBlockSymbolVM, 
+    IHasTextFieldVM, 
+    IHasConnectionPoint, 
+    IObserverColor, 
+    IObserverFontFamily, 
+    IObserverFontSize, 
+    IObserverFormatText,
+    IObserverTextAlignment
 {
     public TextFieldSymbolVM TextFieldSymbolVM { get; }
     public List<ConnectionPointVM> ConnectionPointsVM { get; set; } = null!;
-
-    private readonly CoordinateConnectionPointVM coordinateConnectionPointVM;
 
     private const int defaultWidth = 140;
     private const int defaultHeigth = 60;
@@ -46,7 +52,6 @@ public sealed class ActionSymbolVM : ScalableBlockSymbolVM, IHasTextFieldVM, IHa
 
         AddConnectionPoints();
         
-        coordinateConnectionPointVM = new(this);
         SetWidth(defaultWidth);
         SetHeight(defaultHeigth);
     }
@@ -95,5 +100,42 @@ public sealed class ActionSymbolVM : ScalableBlockSymbolVM, IHasTextFieldVM, IHa
     public void UpdateFontSize()
     {
         TextFieldSymbolVM.FontSize = _topSettingsMenuComponentVM.FontSizeSubject.SelectedFontSize;
+    }
+
+    public void UpdateColor()
+    {
+        Color = _topSettingsMenuComponentVM.ColorSubject.SelectedColor;
+    }
+
+    public void UpdateFontFamily()
+    {
+        TextFieldSymbolVM.FontFamily = _topSettingsMenuComponentVM.FontFamilySubject.SelectedFontFamily;
+    }
+
+    public void UpdateTextBold()
+    {
+        TextFieldSymbolVM.FontWeight = _topSettingsMenuComponentVM.FormatTextSubject.TextBold.ToString();
+    }
+
+    public void UpdateFormatItalic()
+    {
+        TextFieldSymbolVM.FontStyle = _topSettingsMenuComponentVM.FormatTextSubject.TextItalic.ToString();
+    }
+
+    public void UpdateTextDecorations()
+    {
+        TextFieldSymbolVM.TextDecorations = _topSettingsMenuComponentVM.FormatTextSubject.TextUnderline.ToString();
+    }
+
+    public void UpdateFormatText()
+    {
+        UpdateTextBold();
+        UpdateFormatItalic();
+        UpdateTextDecorations();
+    }
+
+    public void UpdateTextAlignment()
+    {
+        TextFieldSymbolVM.TextAlignment = _topSettingsMenuComponentVM.TextAlignmentSubject.SelectedTextAlignment.ToString();
     }
 }

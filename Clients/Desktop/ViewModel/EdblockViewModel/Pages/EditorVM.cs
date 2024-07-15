@@ -7,7 +7,7 @@ using EdblockViewModel.Components.Interfaces;
 
 namespace EdblockViewModel.Pages;
 
-public class EditorVM : BaseViewModel
+public class EditorVM : BaseViewModel, IProject
 {
     public static int CellWidthPanelSymbols
     {
@@ -53,17 +53,17 @@ public class EditorVM : BaseViewModel
         CanvasSymbolsComponentVM.ScalingCanvasSymbolsVM.WidthPanelSymbols = cellWidthPanelSymbols;
 
         _projectVM = projectVM;
+
+        TopSettingsMenuComponentVM.Project = this;
     }
 
-    public void SaveProject(string filePath)
+    public void Save(string filePath)
     {
         _projectVM.SaveProject(filePath);
     }
 
-    public async Task LoadProject(string filePath)
+    public void Load(string filePath)
     {
-        //IsLoadingProject = true;   
-        await _projectVM.LoadProject(filePath);
-        //IsLoadingProject = false;
+        _projectVM.LoadProject(filePath);
     }
 }

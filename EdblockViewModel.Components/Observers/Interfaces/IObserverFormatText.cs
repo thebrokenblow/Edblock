@@ -5,4 +5,5 @@ public interface IObserverFormatText
     void UpdateTextBold();
     void UpdateFormatItalic();
     void UpdateTextDecorations();
+    void UpdateFormatText();
 }

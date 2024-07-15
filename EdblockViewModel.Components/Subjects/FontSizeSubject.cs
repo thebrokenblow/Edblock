@@ -20,14 +20,14 @@ public class FontSizeSubject<T> : IFontSizeSubject<T> where T : INumber<T>
         }
     }
 
-    public FontSizeSubject(T minFontSize, T maxFontSize, T stepFontSize)
+    public FontSizeSubject(T minFontSize, T maxFontSize, T stepFontSize, T defaultFontSize)
     {
         for (T i = minFontSize; i <= maxFontSize; i += stepFontSize)
         {
             FontSizes.Add(i);
         }
 
-        selectedFontSize = minFontSize;
+        selectedFontSize = defaultFontSize;
     }
 
     public void NotifyObservers()

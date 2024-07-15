@@ -24,8 +24,6 @@ public class FormatTextSubject : IFormatTextSubject, INotifyPropertyChanged
         get => isTextBold;
         set
         {
-            isTextBold = value;
-
             if (isTextBold && value)
             {
                 isTextBold = false;
@@ -54,8 +52,6 @@ public class FormatTextSubject : IFormatTextSubject, INotifyPropertyChanged
         get => isTextItalic;
         set
         {
-            isTextItalic = value;
-
             if (isTextItalic && value)
             {
                 isTextItalic = false;
@@ -84,8 +80,6 @@ public class FormatTextSubject : IFormatTextSubject, INotifyPropertyChanged
         get => isTextUnderline;
         set
         {
-            isTextUnderline = value;
-
             if (isTextUnderline && value)
             {
                 isTextUnderline = false;

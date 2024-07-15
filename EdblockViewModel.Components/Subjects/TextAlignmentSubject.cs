@@ -3,19 +3,20 @@ using EdblockViewModel.Components.Subjects.Interfaces;
 
 namespace EdblockViewModel.Components.Subjects;
 
-public class TextAlignmentSubject : ITextAlignmentSubject
+public enum TextAlignment
 {
-    public enum TextAlignment
-    {
-        Left,
-        Center,
-        Right,
-        Justify
-    }
+    Left,
+    Center,
+    Right,
+    Justify
+}
+
+public class TextAlignmentSubject(int defaultIndexFormatAlign) : ITextAlignmentSubject
+{
 
     public List<IObserverTextAlignment> Observers { get; } = [];
 
-    private int indexFormatAlign;
+    private int indexFormatAlign = defaultIndexFormatAlign;
     public int IndexFormatAlign
     {
         get => indexFormatAlign;

@@ -8,6 +8,7 @@ using EdblockViewModel.Components.CanvasSymbols.Interfaces;
 using Prism.Commands;
 using EdblockViewModel.Components.PopupBoxMenu.Interfaces;
 using EdblockViewModel.Components.Interfaces;
+using EdblockViewModel.Components.Observers.Interfaces;
 
 namespace EdblockViewModel.Symbols.Abstractions;
 
@@ -15,8 +16,8 @@ public abstract class BlockSymbolVM : ObservableObject
 {
     public string Id { get; } = Guid.NewGuid().ToString();
 
-    protected string color = string.Empty;
-    public virtual string Color
+    protected string? color = string.Empty;
+    public virtual string? Color
     {
         get => color;
         set
@@ -245,11 +246,34 @@ public abstract class BlockSymbolVM : ObservableObject
             return;
         }
 
-        //_topSettingsMenuComponentVM.FontSizeComponentVM.SetFontSize(_symbolHasTextField);
-        //_topSettingsMenuComponentVM.FontFamilyComponentVM.SetFontFamily(_symbolHasTextField);
-        //_topSettingsMenuComponentVM.FormatTextComponentVM.SetFontText(_symbolHasTextField);
-        //_topSettingsMenuComponentVM.TextAlignmentComponentVM.SetFormatAlignment(_symbolHasTextField);
-        //_topSettingsMenuComponentVM.FormatVerticalAlignComponentVM.SetFormatVerticalAlignment(_symbolHasTextField);
+        if (this is IObserverColor observerColor)
+        {
+            _topSettingsMenuComponentVM.ColorSubject.RegisterObserver(observerColor);
+        }
+
+        if (this is IObserverFontFamily observerFontFamily)
+        {
+            _topSettingsMenuComponentVM.FontFamilySubject.RegisterObserver(observerFontFamily);
+            observerFontFamily.UpdateFontFamily();
+        }
+
+        if (this is IObserverFontSize observerFontSize)
+        {
+            _topSettingsMenuComponentVM.FontSizeSubject.RegisterObserver(observerFontSize);
+            observerFontSize.UpdateFontSize();
+        }
+
+        if (this is IObserverFormatText observerFormatText)
+        {
+            _topSettingsMenuComponentVM.FormatTextSubject.RegisterObserver(observerFormatText);
+            observerFormatText.UpdateFormatText();
+        }
+
+        if (this is IObserverTextAlignment observerTextAlignment)
+        {
+            _topSettingsMenuComponentVM.TextAlignmentSubject.RegisterObserver(observerTextAlignment);
+            observerTextAlignment.UpdateTextAlignment();
+        }
 
         _listCanvasSymbolsComponentVM.SelectedSymbolsHasTextField.Add(_symbolHasTextField);
     }

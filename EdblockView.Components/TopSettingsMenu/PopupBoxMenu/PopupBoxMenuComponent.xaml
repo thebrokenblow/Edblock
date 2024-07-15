@@ -30,13 +30,13 @@
 
             <popupBoxMenu:ScaleAllSymbolComponent Margin="0,5" DataContext="{Binding ScaleAllSymbolComponentVM}" />
 
-            <popupBoxMenu:SaveImgComponent Margin="0,5" DataContext="{Binding EditorVM}" />
+            <popupBoxMenu:SaveImgComponent x:Name="saveImgComponent" Margin="0,5" />
 
-            <popupBoxMenu:LoadProjectComponent Margin="0,5" DataContext="{Binding EditorVM}" />
+            <popupBoxMenu:LoadProjectComponent Margin="0,5" />
 
-            <popupBoxMenu:SaveProjectComponent Margin="0,5" DataContext="{Binding EditorVM}" />
+            <popupBoxMenu:SaveProjectComponent Margin="0,5" />
 
-            <popupBoxMenu:PrintProjectComponent Margin="0,5" DataContext="{Binding EditorVM}" />
+            <popupBoxMenu:PrintProjectComponent x:Name="printProjectComponent" Margin="0,5" />
         </StackPanel>
     </materialDesign:PopupBox>
 </UserControl>

@@ -1,5 +1,6 @@
-﻿using EdblockViewModel.Pages;
+﻿using EdblockViewModel.Components.Interfaces;
 using System.IO;
+using Microsoft.Win32;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -14,49 +15,45 @@ public partial class SaveProjectComponent : UserControl
     private const string fileExtension = ".json";
     private const string fileFilter = "Files(*.json)|*.json|All(*.*)|*";
 
-    private readonly EditorVM? editorVM;
+    private readonly IProject? project;
+
     public SaveProjectComponent()
     {
-        //if (App.serviceProvider is not null)
-        //{
-        //    editorVM = App.serviceProvider.GetRequiredService<EditorVM>();
-        //}
-
         InitializeComponent();
     }
 
     private void SaveProject(object sender, RoutedEventArgs e)
     {
-        //if (editorVM is null)
-        //{
-        //    return;
-        //}
+        if (project is null)
+        {
+            return;
+        }
 
-        //var saveFileDialog = new SaveFileDialog
-        //{
-        //    Filter = fileFilter,
-        //    FileName = fileName + fileExtension
-        //};
+        var saveFileDialog = new SaveFileDialog
+        {
+            Filter = fileFilter,
+            FileName = fileName + fileExtension
+        };
 
-        //if (saveFileDialog.ShowDialog() == false)
-        //{
-        //    return;
-        //}
+        if (saveFileDialog.ShowDialog() == false)
+        {
+            return;
+        }
 
-        //var fileInfo = new FileInfo(saveFileDialog.FileName);
-        //if (fileInfo.Exists)
-        //{
-        //    fileInfo.Delete();
-        //}
+        var fileInfo = new FileInfo(saveFileDialog.FileName);
+        if (fileInfo.Exists)
+        {
+            fileInfo.Delete();
+        }
 
-        //var filePath = saveFileDialog.FileName.ToString();
-        //try
-        //{
-        //    editorVM.SaveProject(filePath);
-        //}
-        //catch
-        //{
-        //    MessageBox.Show("Ошибка при сохранении проекта");
-        //}
+        var filePath = saveFileDialog.FileName.ToString();
+        try
+        {
+            project.Save(filePath);
+        }
+        catch
+        {
+            MessageBox.Show("Ошибка при сохранении проекта");
+        }
     }
 }

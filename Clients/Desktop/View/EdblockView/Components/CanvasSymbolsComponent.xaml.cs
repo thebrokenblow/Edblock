@@ -13,15 +13,10 @@ namespace EdblockView.Components;
 /// </summary>
 public partial class CanvasSymbolsComponent : UserControl
 {
-    public static Canvas? Canvas { get; set; }
-
     private CanvasSymbolsComponentVM? canvasSymbolsComponentVM;
 
     public CanvasSymbolsComponent() =>
         InitializeComponent();
-
-    private void LoadedCanvas(object sender, RoutedEventArgs e) =>
-         Canvas = (Canvas)sender;
 
     private void SelectBlockSymbol(object sender, MouseButtonEventArgs e)
     {

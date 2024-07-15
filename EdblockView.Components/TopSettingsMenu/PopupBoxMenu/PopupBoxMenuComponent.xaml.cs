@@ -7,6 +7,21 @@ namespace EdblockView.Components.TopSettingsMenu.PopupBoxMenu;
 /// </summary>
 public partial class PopupBoxMenuComponent : UserControl
 {
-    public PopupBoxMenuComponent() =>
+    private Canvas? canvasSymbolsComponent;
+    public Canvas? CanvasSymbolsComponent
+    {
+        get => canvasSymbolsComponent;
+        set
+        {
+            canvasSymbolsComponent = value;
+            printProjectComponent.CanvasSymbolsComponent = canvasSymbolsComponent;
+            saveImgComponent.CanvasSymbolsComponent = canvasSymbolsComponent;
+        }
+    }
+
+
+    public PopupBoxMenuComponent()
+    {
         InitializeComponent();
+    }
 }

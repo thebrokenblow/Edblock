@@ -1,7 +1,7 @@
 ﻿using Microsoft.Win32;
 using System.Windows;
 using System.Windows.Controls;
-using EdblockViewModel.Pages;
+using EdblockViewModel.Components.Interfaces;
 
 namespace EdblockView.Components.TopSettingsMenu.PopupBoxMenu;
 
@@ -16,14 +16,14 @@ public partial class LoadProjectComponent : UserControl
         Filter = fileFilter
     };
 
-    private readonly EditorVM? editorVM;
+    private readonly IProject? project;
 
     public LoadProjectComponent()
     {
         InitializeComponent();
     }
 
-    private async void LoadProject(object sender, RoutedEventArgs e)
+    private void LoadProject(object sender, RoutedEventArgs e)
     {
         if (openFileDialog.ShowDialog() == false)
         {
@@ -32,10 +32,7 @@ public partial class LoadProjectComponent : UserControl
 
         try
         {
-            editorVM.IsLoadingProject = true;
-            await editorVM?.LoadProject(openFileDialog.FileName);
-            editorVM.IsLoadingProject = false;
-
+            project?.Load(openFileDialog.FileName);
         }
         catch
         {

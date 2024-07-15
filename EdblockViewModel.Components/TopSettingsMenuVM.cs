@@ -18,4 +18,5 @@ public class TopSettingsMenuVM(
     public IFormatTextSubject FormatTextSubject { get; } = formatTextSubject;
     public ITextAlignmentSubject TextAlignmentSubject { get; } = textAlignmentSubject;
     public IPopupBoxMenuComponentVM PopupBoxMenuComponentVM { get; } = popupBoxMenuComponentVM;
+    public IProject? Project { get; set; }
 }

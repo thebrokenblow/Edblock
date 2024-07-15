@@ -10,7 +10,13 @@ using EdblockViewModel.Components.PopupBoxMenu.Interfaces;
 
 namespace EdblockViewModel.Components.CanvasSymbols;
 
-public class ListCanvasSymbolsComponentVM(IPopupBoxMenuComponentVM popupBoxMenuComponentVM, IFontSizeSubject<int> fontSizeSubject) : IListCanvasSymbolsComponentVM
+public class ListCanvasSymbolsComponentVM(
+    IPopupBoxMenuComponentVM popupBoxMenuComponentVM, 
+    IColorSubject colorSubject,
+    IFontFamilySubject fontFamilySubject,
+    IFontSizeSubject<int> fontSizeSubject,
+    IFormatTextSubject formatTextSubject,
+    ITextAlignmentSubject textAlignmentSubject) : IListCanvasSymbolsComponentVM
 {
     public ObservableCollection<BlockSymbolVM> BlockSymbolsVM { get; } = [];
     public ObservableCollection<DrawnLineSymbolVM> DrawnLinesVM { get; } = [];
@@ -23,10 +29,33 @@ public class ListCanvasSymbolsComponentVM(IPopupBoxMenuComponentVM popupBoxMenuC
 
     public void AddBlockSymbol(BlockSymbolVM blockSymbolVM)
     {
+        if (blockSymbolVM is IObserverColor observerColor)
+        {
+            colorSubject.RegisterObserver(observerColor);
+        }
+
+        if (blockSymbolVM is IObserverFontFamily observerFontFamily)
+        {
+            fontFamilySubject.RegisterObserver(observerFontFamily);
+            observerFontFamily.UpdateFontFamily();
+        }
+
         if (blockSymbolVM is IObserverFontSize observerFontSize)
         {
             fontSizeSubject.RegisterObserver(observerFontSize);
             observerFontSize.UpdateFontSize();
+        }
+
+        if (blockSymbolVM is IObserverFormatText observerFormatText)
+        {
+            formatTextSubject.RegisterObserver(observerFormatText);
+            observerFormatText.UpdateFormatText();
+        }
+
+        if (blockSymbolVM is IObserverTextAlignment observerTextAlignment)
+        {
+            textAlignmentSubject.RegisterObserver(observerTextAlignment);
+            observerTextAlignment.UpdateTextAlignment();
         }
 
         var firstBlockSymbolsVM = BlockSymbolsVM.FirstOrDefault();

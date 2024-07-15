@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using EdblockView.Components;
 using EdblockViewModel.Pages;
 
 namespace EdblockView.Pages;
@@ -27,5 +28,11 @@ public partial class Editor : UserControl
         edblockVM?.CanvasSymbolsComponentVM.ScalingCanvasSymbolsVM.CalculateSizeUnscaledCanvas(
             widthWindow,
             heightWindow);
+    }
+
+    private void CanvasSymbolsComponent_Loaded(object sender, RoutedEventArgs e)
+    {
+        var canvasSymbolsComponent = (CanvasSymbolsComponent)sender;
+        topSettingsMenuComponent.CanvasSymbolsComponent = canvasSymbolsComponent.canvasSymbolsComponent;
     }
 }

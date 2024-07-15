@@ -7,6 +7,17 @@ namespace EdblockView.Components.TopSettingsMenu;
 /// </summary>
 public partial class TopSettingsMenuComponent : UserControl
 {
+    private Canvas? canvasSymbolsComponent;
+    public Canvas? CanvasSymbolsComponent
+    {
+        get => canvasSymbolsComponent;
+        set
+        {
+            canvasSymbolsComponent = value;
+            popupBoxMenuComponent.CanvasSymbolsComponent = canvasSymbolsComponent;
+        }
+    }
+
     public TopSettingsMenuComponent() =>
         InitializeComponent();
 }

@@ -1,8 +1,7 @@
-﻿using EdblockViewModel.Components.CanvasSymbols;
-using EdblockViewModel.Pages;
-using System.Printing;
+﻿using System.Printing;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace EdblockView.Components.TopSettingsMenu.PopupBoxMenu;
 
@@ -11,10 +10,11 @@ namespace EdblockView.Components.TopSettingsMenu.PopupBoxMenu;
 /// </summary>
 public partial class PrintProjectComponent : UserControl
 {
+    public Canvas? CanvasSymbolsComponent { get; set; }
+
     private readonly PrintDialog printDialog = new();
     private const string printVisualDescription = "Печать проекта";
 
-    private readonly EditorVM? editorVM;
     public PrintProjectComponent()
     {
         InitializeComponent();
@@ -22,34 +22,30 @@ public partial class PrintProjectComponent : UserControl
 
     private void PrintImg(object sender, RoutedEventArgs e)
     {
-        //if (CanvasSymbolsComponent.Canvas is null || editorVM is null)
-        //{
-        //    return;
-        //}
+        if (CanvasSymbolsComponent is null)
+        {
+            return;
+        }
 
-        //var canvasView = CanvasSymbolsComponent.Canvas;
-        //var canvasSymbolsVM = editorVM.CanvasSymbolsComponentVM;
-        //canvasSymbolsVM.ListCanvasSymbolsComponentVM.ClearSelectedBlockSymbols();
+        if (printDialog.ShowDialog() == false)
+        {
+            return;
+        }
 
-        //if (printDialog.ShowDialog() == false)
-        //{
-        //    return;
-        //}
+        var actualWidth = CanvasSymbolsComponent.ActualWidth;
+        var actualHeight = CanvasSymbolsComponent.ActualHeight;
 
-        //var actualWidth = canvasView.ActualWidth;
-        //var actualHeight = canvasView.ActualHeight;
+        var size = new Size(actualWidth, actualHeight);
+        var rect = new Rect(size);
 
-        //var size = new Size(actualWidth, actualHeight);
-        //var rect = new Rect(size);
+        CanvasSymbolsComponent.Measure(size);
+        CanvasSymbolsComponent.Arrange(rect);
 
-        //canvasView.Measure(size);
-        //canvasView.Arrange(rect);
+        printDialog.PrintTicket.PageOrientation = PageOrientation.Landscape;
 
-        //printDialog.PrintTicket.PageOrientation = PageOrientation.Landscape;
-
-        //var originalBackground = canvasView.Background;
-        //canvasView.Background = Brushes.White;
-        //printDialog.PrintVisual(canvasView, printVisualDescription);
-        //canvasView.Background = originalBackground;
+        var originalBackground = CanvasSymbolsComponent.Background;
+        CanvasSymbolsComponent.Background = Brushes.White;
+        printDialog.PrintVisual(CanvasSymbolsComponent, printVisualDescription);
+        CanvasSymbolsComponent.Background = originalBackground;
     }
 }
