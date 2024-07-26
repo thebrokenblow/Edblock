@@ -24,12 +24,4 @@ public partial class LineSymbolView : UserControl
             }
         }
     }
-
-    private void Line_MouseMove(object sender, MouseEventArgs e)
-    {
-        if (e.LeftButton == MouseButtonState.Pressed)
-        {
-            
-        }
-    }
 }

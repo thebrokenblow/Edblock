@@ -7,6 +7,7 @@ namespace EdblockModel.Lines;
 public class DrawnLineSymbolModel
 {
     public List<LineModel> Lines { get; set; } = [];
+    public ArrowLineModel ArrowLineModel { get; set; } = new();
     public string Text { get; set; } = string.Empty;
     public string Color { get; set; } = string.Empty;
     public SideSymbol OutgoingPosition { get; set; }
@@ -89,7 +90,50 @@ public class DrawnLineSymbolModel
             }
         }
 
+        ArrowLineModel.Redraw(Lines.Last().SecondCoordinate.X, Lines.Last().SecondCoordinate.Y, GetLineDirection(Lines.Last()));
+
         return Lines;
+    }
+
+    private LineDirection GetLineDirection(LineModel lastLine)
+    {
+        if (lastLine.IsZero())
+        {
+            if (OutgoingPosition == SideSymbol.Left)
+            {
+                return LineDirection.Left;
+            }
+
+            if (OutgoingPosition == SideSymbol.Right)
+            {
+                return LineDirection.Right;
+            }
+
+            if (OutgoingPosition == SideSymbol.Top)
+            {
+                return LineDirection.Top;
+            }
+            
+            return LineDirection.Bottom;
+        }
+        if (lastLine.IsHorizontal())
+        {
+            if (lastLine.SecondCoordinate.X < lastLine.FirstCoordinate.X)
+            {
+                return LineDirection.Left;
+            }
+
+            return LineDirection.Right;
+        }
+        else
+        {
+            if (lastLine.SecondCoordinate.Y > lastLine.FirstCoordinate.Y)
+            {
+                return LineDirection.Bottom;
+            }
+
+            return LineDirection.Top;
+        }
     }
 
     public List<LineModel> FinishDrawing(SideSymbol incommingPosition, double finishXCoordinate, double finishYCoordinate)
@@ -173,6 +217,26 @@ public class DrawnLineSymbolModel
         }
 
         RemoveZeroLines();
+
+        if (incommingPosition == SideSymbol.Left)
+        {
+            ArrowLineModel.Redraw(finishXCoordinate, finishYCoordinate, LineDirection.Right);
+        }
+
+        if (incommingPosition == SideSymbol.Right)
+        {
+            ArrowLineModel.Redraw(finishXCoordinate, finishYCoordinate, LineDirection.Left);
+        }
+
+        if (incommingPosition == SideSymbol.Top)
+        {
+            ArrowLineModel.Redraw(finishXCoordinate, finishYCoordinate, LineDirection.Bottom);
+        }
+
+        if (incommingPosition == SideSymbol.Bottom)
+        {
+            ArrowLineModel.Redraw(finishXCoordinate, finishYCoordinate, LineDirection.Top);
+        }
 
         return Lines;
     }

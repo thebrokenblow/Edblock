@@ -21,6 +21,8 @@ public class DrawnLineSymbolVM : ObservableObject
     public ConnectionPointVM? IncommingConnectionPoint { get; set; }
     public BlockSymbolVM? OutgoingBlockSymbol { get; set; }
     public BlockSymbolVM? IncommingBlockSymbol { get; set; }
+    public ArrowLineVM ArrowLineVM { get; set; }
+
     private readonly DrawnLineSymbolModel drawnLineSymbolModel = new(); 
 
     public ICanvasSymbolsComponentVM CanvasSymbolsComponentVM { get; }
@@ -39,6 +41,8 @@ public class DrawnLineSymbolVM : ObservableObject
         {
             selectedBrush = (Brush)selectedBrushConverter;
         }
+
+        ArrowLineVM = new(drawnLineSymbolModel.ArrowLineModel);
 
         CanvasSymbolsComponentVM = canvasSymbolsComponentVM;
 
@@ -211,6 +215,8 @@ public class DrawnLineSymbolVM : ObservableObject
             var lineVM = factoryLineVM.CreateLineByModel(this, lineModel);
             LinesSymbolVM.Add(lineVM);
         }
+
+        ArrowLineVM.Redraw();
     }
 
     public void FinishDrawing(ConnectionPointVM incommingConnectionPoint, double xCoordinateDranLine, double yCoordinateDranLine)
@@ -221,6 +227,7 @@ public class DrawnLineSymbolVM : ObservableObject
         RedrawLines(linesModel);
 
         SetMovableRectangle();
+        ArrowLineVM.Redraw();
     }
 
     private void SetMovableRectangle()

@@ -1,6 +1,6 @@
 ﻿namespace EdblockModel.Lines;
 
-public enum SideSymbol
+public enum LineDirection
 {
     Top,
     Right,

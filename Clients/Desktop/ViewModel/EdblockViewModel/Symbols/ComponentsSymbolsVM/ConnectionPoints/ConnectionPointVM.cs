@@ -8,6 +8,8 @@ using EdblockViewModel.Symbols.LinesSymbolVM;
 using System;
 using System.Windows;
 using EdblockViewModel.Components.PopupBoxMenu.Interfaces;
+using EdblockModel.Lines;
+
 
 namespace EdblockViewModel.Symbols.ComponentsSymbolsVM.ConnectionPoints;
 

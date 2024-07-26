@@ -82,6 +82,7 @@ public partial class App : Application
 
         services.AddScoped<INavigationService, NavigateService>();
         services.AddScoped(typeof(IFactoryNavigationService), typeof(FactoryNavigationService));
+
         services.AddScoped<Func<Type, BaseViewModel>>(
             serviceProvider =>
             pageTypeViewModel =>

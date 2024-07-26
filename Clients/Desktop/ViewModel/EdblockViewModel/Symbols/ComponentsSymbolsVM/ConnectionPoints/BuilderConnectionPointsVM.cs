@@ -4,6 +4,7 @@ using EdblockViewModel.Symbols.Abstractions;
 using EdblockViewModel.Components.CanvasSymbols.Interfaces;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM.ConnectionPoints.Interfaces;
 using EdblockViewModel.Components.PopupBoxMenu.Interfaces;
+using EdblockModel.Lines;
 
 namespace EdblockViewModel.Symbols.ComponentsSymbolsVM.ConnectionPoints;
 

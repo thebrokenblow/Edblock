@@ -1,5 +1,5 @@
 ﻿using System;
-using EdblockModel.EnumsModel;
+using EdblockModel.Lines;
 
 namespace EdblockViewModel.Symbols.ComponentsSymbolsVM.ConnectionPoints.Interfaces;
 
