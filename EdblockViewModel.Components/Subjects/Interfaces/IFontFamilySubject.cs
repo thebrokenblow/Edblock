@@ -4,6 +4,7 @@ namespace EdblockViewModel.Components.Subjects.Interfaces;
 
 public interface IFontFamilySubject
 {
+    List<IObserverFontFamily> Observers { get; }
     List<string> FontFamilies { get; }
     string? SelectedFontFamily { get; set; }
 

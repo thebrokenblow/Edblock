@@ -1,6 +1,4 @@
-﻿using EdblockModel.Lines.DecoratorLine.Interfaces;
-
-namespace EdblockModel.Lines.Factories.Interfaces;
+﻿namespace EdblockModel.Lines.Factories.Interfaces;
 
 public interface IFactoryLineModel
 {

@@ -6,6 +6,7 @@ using EdblockViewModel.Components.CanvasSymbols.Interfaces;
 using EdblockViewModel.Symbols.ComponentsSymbolsVM.ScaleRectangles;
 using EdblockViewModel.Symbols.LinesSymbolVM;
 using EdblockViewModel.Symbols.LinesSymbolVM.Components;
+using EdblockViewModel.Components.Interfaces;
 
 namespace EdblockViewModel.Components.CanvasSymbols;
 
@@ -81,10 +82,12 @@ public class CanvasSymbolsComponentVM : ObservableObject, ICanvasSymbolsComponen
     public DrawnLineSymbolVM? CurrentDrawnLineSymbolVM { get; set; }
     public ScalingCanvasSymbolsComponentVM ScalingCanvasSymbolsVM { get; }
     public IListCanvasSymbolsComponentVM ListCanvasSymbolsComponentVM { get; }
+    public ITopSettingsMenuComponentVM TopSettingsMenuComponentVM { get; }
 
     private const int lengthGridCell = 20;
-    public CanvasSymbolsComponentVM(IListCanvasSymbolsComponentVM listCanvasSymbolsComponentVM)
+    public CanvasSymbolsComponentVM(ITopSettingsMenuComponentVM topSettingsMenuComponentVM, IListCanvasSymbolsComponentVM listCanvasSymbolsComponentVM)
     {
+        TopSettingsMenuComponentVM = topSettingsMenuComponentVM;
         ListCanvasSymbolsComponentVM = listCanvasSymbolsComponentVM;
         ScalingCanvasSymbolsVM = new(this);
 
@@ -160,6 +163,12 @@ public class CanvasSymbolsComponentVM : ObservableObject, ICanvasSymbolsComponen
 
     public void ClearSelectedSymbols()
     {
+        TopSettingsMenuComponentVM.ColorSubject.Observers.Clear();
+        TopSettingsMenuComponentVM.FontFamilySubject.Observers.Clear();
+        TopSettingsMenuComponentVM.FontSizeSubject.Observers.Clear();
+        TopSettingsMenuComponentVM.FormatTextSubject.Observers.Clear();
+        TopSettingsMenuComponentVM.TextAlignmentSubject.Observers.Clear();
+
         ListCanvasSymbolsComponentVM.ChangeFocusTextField();
         ListCanvasSymbolsComponentVM.ClearSelectedDrawnLinesVM();
         ListCanvasSymbolsComponentVM.ClearSelectedBlockSymbols();

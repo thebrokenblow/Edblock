@@ -25,14 +25,12 @@ public class ArrowLineModel
 
         if (CurrentArrowCoordinates.Count == 0)
         {
-            foreach (var coordinateArrow in coordinatesArrow)
-            {
-                CurrentArrowCoordinates.Add(coordinateArrow);
-            }
+            CurrentArrowCoordinates.AddRange(coordinatesArrow);
         }
         else
         {
             int numberPointArrow = 0;
+
             foreach (var coordinateArrow in coordinatesArrow)
             {
                 CurrentArrowCoordinates[numberPointArrow++] = coordinateArrow;

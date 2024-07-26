@@ -63,7 +63,7 @@
 
             <Separator />
 
-            <components:ColorPickerComponent />
+            <components:ColorPickerComponent DataContext="{Binding ColorSubject}" />
 
             <Separator />
 

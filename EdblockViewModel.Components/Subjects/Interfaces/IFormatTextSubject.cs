@@ -5,6 +5,7 @@ namespace EdblockViewModel.Components.Subjects.Interfaces;
 
 public interface IFormatTextSubject
 {
+    List<IObserverFormatText> Observers { get; }
     public bool IsTextBold { get; set; }
     public bool IsTextItalic { get; set; }
     public bool IsTextUnderline { get; set; }

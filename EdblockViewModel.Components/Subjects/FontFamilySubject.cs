@@ -1,5 +1,5 @@
-﻿using EdblockViewModel.Components.Observers.Interfaces;
-using EdblockViewModel.Components.Subjects.Interfaces;
+﻿using EdblockViewModel.Components.Subjects.Interfaces;
+using EdblockViewModel.Components.Observers.Interfaces;
 
 namespace EdblockViewModel.Components.Subjects;
 
@@ -15,6 +15,7 @@ public class FontFamilySubject(List<string> fontFamilies, string defaultFontFami
         set
         {
             selectedFontFamily = value;
+            NotifyObservers();
         }
     }
 

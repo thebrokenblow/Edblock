@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using EdblockViewModel.Components;
+using System.Windows.Controls;
 
 namespace EdblockView.Components.TopSettingsMenu;
 

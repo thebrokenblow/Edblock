@@ -106,7 +106,8 @@ public partial class App : Application
         services.AddScoped<IFontFamilySubject>(
            serviceProvider => new FontFamilySubject(
            [
-               "Times New Roman"
+               "Times New Roman",
+               "Segoe UI"
            ], 
            "Times New Roman"));
 

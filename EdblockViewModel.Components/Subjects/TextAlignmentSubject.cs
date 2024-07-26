@@ -11,12 +11,16 @@ public enum TextAlignment
     Justify
 }
 
-public class TextAlignmentSubject(int defaultIndexFormatAlign) : ITextAlignmentSubject
+public class TextAlignmentSubject : ITextAlignmentSubject
 {
+    public TextAlignmentSubject(int defaultIndexFormatAlig)
+    {
+        IndexFormatAlign = defaultIndexFormatAlig;
+    }
 
     public List<IObserverTextAlignment> Observers { get; } = [];
 
-    private int indexFormatAlign = defaultIndexFormatAlign;
+    private int indexFormatAlign;
     public int IndexFormatAlign
     {
         get => indexFormatAlign;
@@ -24,6 +28,7 @@ public class TextAlignmentSubject(int defaultIndexFormatAlign) : ITextAlignmentS
         {
             indexFormatAlign = value;
             SelectedTextAlignment = textAlignmentByIndex[indexFormatAlign];
+            NotifyObservers();
         }
     }
 

@@ -43,6 +43,8 @@ public class FormatTextSubject : IFormatTextSubject, INotifyPropertyChanged
             {
                 TextBold = SelectedFormatText.Normal;
             }
+
+            NotifyObserversTextBold();
         }
     }
 
@@ -71,6 +73,8 @@ public class FormatTextSubject : IFormatTextSubject, INotifyPropertyChanged
             {
                 TextItalic = SelectedFormatText.Normal;
             }
+
+            NotifyObserversFormatItalic();
         }
     }
 
@@ -99,10 +103,12 @@ public class FormatTextSubject : IFormatTextSubject, INotifyPropertyChanged
             {
                 TextUnderline = SelectedFormatText.None;
             }
+
+            NotifyObserversTextDecorations();
         }
     }
 
-    private SelectedFormatText textBold;
+    private SelectedFormatText textBold = SelectedFormatText.Normal;
     public SelectedFormatText TextBold
     {
         get => textBold;
@@ -112,7 +118,7 @@ public class FormatTextSubject : IFormatTextSubject, INotifyPropertyChanged
         }
     }
 
-    private SelectedFormatText textItalic;
+    private SelectedFormatText textItalic = SelectedFormatText.Normal;
     public SelectedFormatText TextItalic
     {
         get => textItalic;
@@ -122,7 +128,7 @@ public class FormatTextSubject : IFormatTextSubject, INotifyPropertyChanged
         }
     }
 
-    private SelectedFormatText textUnderline;
+    private SelectedFormatText textUnderline = SelectedFormatText.None;
     public SelectedFormatText TextUnderline
     {
         get => textUnderline;

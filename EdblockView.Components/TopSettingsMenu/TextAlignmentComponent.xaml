@@ -8,7 +8,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     d:DataContext="{d:DesignInstance Type=componentsViewModel:TextAlignmentSubject}"
     mc:Ignorable="d">
-    <ListBox SelectedIndex="{Binding SelectedTextAlignment}">
+    <ListBox SelectedIndex="{Binding IndexFormatAlign}">
         <ListBoxItem Content="{materialDesign:PackIcon Kind=FormatAlignLeft}" />
         <ListBoxItem Content="{materialDesign:PackIcon Kind=FormatAlignCenter}" />
         <ListBoxItem Content="{materialDesign:PackIcon Kind=FormatAlignRight}" />

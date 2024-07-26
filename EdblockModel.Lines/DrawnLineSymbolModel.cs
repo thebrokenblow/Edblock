@@ -1,6 +1,7 @@
 ﻿using EdblockModel.Lines.Factories;
 using EdblockModel.Lines.DecoratorLine;
 using EdblockModel.Lines.DecoratorLine.Interfaces;
+using EdblockModel.Lines.Extensions;
 
 namespace EdblockModel.Lines;
 
@@ -21,7 +22,7 @@ public class DrawnLineSymbolModel
         {
             if (Lines.Count % 2 == 1)
             {
-                var lastLine = Lines[^1];
+                var lastLine = Lines.Last();
                 lastLine.SecondCoordinate.X = currentCoordinate.X;
 
                 if (currentCoordinate.Y != lastLine.FirstCoordinate.Y)
@@ -37,8 +38,8 @@ public class DrawnLineSymbolModel
             }
             else
             {
-                var lastLine = Lines[^1];
-                var penultimateLine = Lines[^2];
+                var lastLine = Lines.Last();
+                var penultimateLine = Lines.Penultimate();
                 penultimateLine.SecondCoordinate.X = currentCoordinate.X;
 
                 if (currentCoordinate.Y == lastLine.FirstCoordinate.Y)
@@ -57,7 +58,7 @@ public class DrawnLineSymbolModel
         {
             if (Lines.Count % 2 == 1)
             {
-                var lastLine = Lines[^1];
+                var lastLine = Lines.Last();
                 lastLine.SecondCoordinate.Y = currentCoordinate.Y;
 
                 if (currentCoordinate.X != lastLine.FirstCoordinate.X)
@@ -73,8 +74,8 @@ public class DrawnLineSymbolModel
             }
             else
             {
-                var lastLine = Lines[^1];
-                var penultimateLine = Lines[^2];
+                var lastLine = Lines.Last();
+                var penultimateLine = Lines.Penultimate();
                 penultimateLine.SecondCoordinate.Y = currentCoordinate.Y;
 
                 if (currentCoordinate.X == lastLine.FirstCoordinate.X)
@@ -90,7 +91,11 @@ public class DrawnLineSymbolModel
             }
         }
 
-        ArrowLineModel.Redraw(Lines.Last().SecondCoordinate.X, Lines.Last().SecondCoordinate.Y, GetLineDirection(Lines.Last()));
+
+        ArrowLineModel.Redraw(
+            Lines.Last().SecondCoordinate.X, 
+            Lines.Last().SecondCoordinate.Y, 
+            GetLineDirection(Lines.Last()));
 
         return Lines;
     }
@@ -103,12 +108,10 @@ public class DrawnLineSymbolModel
             {
                 return LineDirection.Left;
             }
-
             if (OutgoingPosition == SideSymbol.Right)
             {
                 return LineDirection.Right;
             }
-
             if (OutgoingPosition == SideSymbol.Top)
             {
                 return LineDirection.Top;
@@ -116,6 +119,7 @@ public class DrawnLineSymbolModel
             
             return LineDirection.Bottom;
         }
+
         if (lastLine.IsHorizontal())
         {
             if (lastLine.SecondCoordinate.X < lastLine.FirstCoordinate.X)
@@ -125,15 +129,13 @@ public class DrawnLineSymbolModel
 
             return LineDirection.Right;
         }
-        else
-        {
-            if (lastLine.SecondCoordinate.Y > lastLine.FirstCoordinate.Y)
-            {
-                return LineDirection.Bottom;
-            }
 
-            return LineDirection.Top;
+        if (lastLine.SecondCoordinate.Y > lastLine.FirstCoordinate.Y)
+        {
+            return LineDirection.Bottom;
         }
+
+        return LineDirection.Top;
     }
 
     public List<LineModel> FinishDrawing(SideSymbol incommingPosition, double finishXCoordinate, double finishYCoordinate)
